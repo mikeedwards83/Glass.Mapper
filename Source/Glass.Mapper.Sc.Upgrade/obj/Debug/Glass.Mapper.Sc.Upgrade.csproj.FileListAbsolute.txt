@@ -1,5 +1,0 @@
-F:\Glass\Glass.Mapper\Source\Glass.Mapper.Sc.Upgrade\bin\Debug\Glass.Mapper.Sc.Upgrade.dll
-F:\Glass\Glass.Mapper\Source\Glass.Mapper.Sc.Upgrade\bin\Debug\Glass.Mapper.Sc.Upgrade.pdb
-F:\Glass\Glass.Mapper\Source\Glass.Mapper.Sc.Upgrade\obj\Debug\ResolveAssemblyReference.cache
-F:\Glass\Glass.Mapper\Source\Glass.Mapper.Sc.Upgrade\obj\Debug\Glass.Mapper.Sc.Upgrade.dll
-F:\Glass\Glass.Mapper\Source\Glass.Mapper.Sc.Upgrade\obj\Debug\Glass.Mapper.Sc.Upgrade.pdb

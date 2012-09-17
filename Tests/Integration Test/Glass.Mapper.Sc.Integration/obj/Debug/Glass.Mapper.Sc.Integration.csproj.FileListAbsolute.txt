@@ -1,5 +1,0 @@
-F:\Glass\Glass.Mapper\Tests\Integration Test\Glass.Mapper.Sc.Integration\bin\Debug\Glass.Mapper.Sc.Integration.dll
-F:\Glass\Glass.Mapper\Tests\Integration Test\Glass.Mapper.Sc.Integration\bin\Debug\Glass.Mapper.Sc.Integration.pdb
-F:\Glass\Glass.Mapper\Tests\Integration Test\Glass.Mapper.Sc.Integration\obj\Debug\ResolveAssemblyReference.cache
-F:\Glass\Glass.Mapper\Tests\Integration Test\Glass.Mapper.Sc.Integration\obj\Debug\Glass.Mapper.Sc.Integration.dll
-F:\Glass\Glass.Mapper\Tests\Integration Test\Glass.Mapper.Sc.Integration\obj\Debug\Glass.Mapper.Sc.Integration.pdb
