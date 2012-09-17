@@ -43,6 +43,15 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\Attributes\" />
+    <Folder Include="FieldTypes\" />
+    <Folder Include="Pipelines\ContentResolver\" />
+    <Folder Include="Pipelines\MappingPipeline\" />
+    <Folder Include="Pipelines\ObjectConstruction\" />
+    <Folder Include="Pipelines\TypeResolver\" />
+    <Folder Include="Proxies\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
