@@ -1,0 +1,11 @@
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\obj\Debug\ResolveAssemblyReference.cache
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\Glass.Mapper.Tests.dll
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\Glass.Mapper.Tests.pdb
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\Glass.Mapper.dll
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\NSubstitute.dll
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\nunit.framework.dll
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\Glass.Mapper.pdb
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\NSubstitute.xml
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\bin\Debug\nunit.framework.xml
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\obj\Debug\Glass.Mapper.Tests.dll
+F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Tests\obj\Debug\Glass.Mapper.Tests.pdb

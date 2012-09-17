@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
+    <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
+    <Compile Include="Pipelines\IPipelineTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

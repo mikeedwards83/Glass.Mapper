@@ -1,0 +1,5 @@
+F:\Glass\Glass.Mapper\Source\Glass.Mapper.Umb\bin\Debug\Glass.Mapper.Umb.dll
+F:\Glass\Glass.Mapper\Source\Glass.Mapper.Umb\bin\Debug\Glass.Mapper.Umb.pdb
+F:\Glass\Glass.Mapper\Source\Glass.Mapper.Umb\obj\Debug\ResolveAssemblyReference.cache
+F:\Glass\Glass.Mapper\Source\Glass.Mapper.Umb\obj\Debug\Glass.Mapper.Umb.dll
+F:\Glass\Glass.Mapper\Source\Glass.Mapper.Umb\obj\Debug\Glass.Mapper.Umb.pdb
