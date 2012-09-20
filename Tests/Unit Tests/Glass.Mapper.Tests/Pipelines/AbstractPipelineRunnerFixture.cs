@@ -69,9 +69,10 @@ namespace Glass.Mapper.Tests.Pipelines
         public void Run_CreatesAPipelineArgs_ReturnsAnEmptyClass()
         {
             //Assign
+            var args = new StubAbstractPipelineArgs();
             
             //Act
-            var result = _runner.Run();
+            var result = _runner.Run(args);
 
             //Assert
             Assert.IsNotNull(result);
@@ -84,6 +85,7 @@ namespace Glass.Mapper.Tests.Pipelines
             //Assign
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
+            var args = new StubAbstractPipelineArgs();
 
             _runner.Add(task1);
             _runner.Add(task2);
@@ -92,7 +94,7 @@ namespace Glass.Mapper.Tests.Pipelines
             Assert.IsFalse(task2.HasExecuted);
 
             //Act
-            _runner.Run();
+            _runner.Run(args);
 
             //Assert
             Assert.IsTrue(task1.HasExecuted);
@@ -105,14 +107,16 @@ namespace Glass.Mapper.Tests.Pipelines
             //Assign
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
+            var args = new StubAbstractPipelineArgs();
 
             _runner.Add(task1);
             _runner.Add(task2);
 
+            
            
 
             //Act
-            var args = _runner.Run();
+            var args = _runner.Run(args);
 
             //Assert
             Assert.AreEqual(2, args.CalledTasks.Count);

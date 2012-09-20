@@ -47,10 +47,8 @@ namespace Glass.Mapper.Pipelines
         /// Runs a pipeline and returns the resultant arguments
         /// </summary>
         /// <returns></returns>
-        public T Run()
+        public T Run(T args)
         {
-            var args = new T();
-
             foreach (var task in _tasks)
             {
                 task.Execute(args);
