@@ -8,7 +8,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
     public class ObjectConstructionArgs : AbstractPipelineArgs
     {
         
-        private readonly AbstractItemContext _itemContext;
 
         /// <summary>
         /// Context of the item being created
@@ -41,9 +40,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
 
         }
 
-        public ObjectConstructionArgs(AbstractItemContext itemContext, bool isLazy)
+        public ObjectConstructionArgs(AbstractItemContext itemContext)
         {
-            _itemContext = itemContext;
+            ItemContext = itemContext;
         }
 
 

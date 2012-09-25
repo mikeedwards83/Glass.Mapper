@@ -47,16 +47,17 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateLazyObject(ObjectConstructionArgs args)
         {
-            return  _generator.CreateInterfaceProxyWithoutTarget(args.ItemContext.Type, new LazyObjectInterceptor(args));
+            return  _generator.CreateClassProxy(args.ItemContext.Type, new LazyObjectInterceptor(args));
         }
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
             var type = args.ItemContext.Type;
 
-            var parameters = args.ConstructorParameters == null || !args.ConstructorParameters.Any() ? Type.EmptyTypes : args.ConstructorParameters.Select(x => x.GetType());
+            var parameters = 
+                args.ConstructorParameters == null || !args.ConstructorParameters.Any() ? Type.EmptyTypes : args.ConstructorParameters.Select(x => x.GetType()).ToArray();
 
-            ConstructorInfo constructor = type.GetConstructor(parameters.ToArray());
+            ConstructorInfo constructor = type.GetConstructor(parameters);
 
             if (constructor == null)
                 throw new ObjectConstructionException(

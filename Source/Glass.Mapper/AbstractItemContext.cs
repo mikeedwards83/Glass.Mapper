@@ -13,13 +13,12 @@ namespace Glass.Mapper
     {
         public AbstractItemContext()
         {
-            ConstructorMethods = new Dictionary<ConstructorInfo, Delegate>();
         }
 
 
         public Type Type { get; set; }
 
-        public Dictionary<ConstructorInfo, Delegate> ConstructorMethods { get; private set; }
+        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
 
         public IEnumerable<AbstractDataMapper> DataMappers { get; set; }
 
