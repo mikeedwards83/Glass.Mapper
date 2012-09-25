@@ -43,8 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AbstractDataMapper.cs" />
+    <Compile Include="AbstractDataMappingContext.cs" />
+    <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
+    <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="AbstractItemContext.cs" />
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
@@ -52,6 +57,9 @@
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionRunner.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectProxyHook.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceProxyHook.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />

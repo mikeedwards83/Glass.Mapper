@@ -7,6 +7,8 @@ namespace Glass.Mapper
 {
     public static class ExtensionMethods
     {
+        #region String
+
         public static string Formatted(this string target, params object[] args)
         {
             return string.Format(target, args);
@@ -21,5 +23,19 @@ namespace Glass.Mapper
             return !IsNullOrEmpty(target);
         }
 
+        #endregion
+
+        #region IEnumerable<T>
+        
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action )
+        {
+            foreach (var item in list)
+            {
+                action(item);
+                yield return item;
+            }
+        }
+
+        #endregion
     }
 }

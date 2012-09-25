@@ -116,12 +116,12 @@ namespace Glass.Mapper.Tests.Pipelines
            
 
             //Act
-            var args = _runner.Run(args);
+            var result = _runner.Run(args);
 
             //Assert
-            Assert.AreEqual(2, args.CalledTasks.Count);
-            Assert.IsTrue(args.CalledTasks.Any(x => x == task1));
-            Assert.IsTrue(args.CalledTasks.Any(x => x == task2));
+            Assert.AreEqual(2, result.CalledTasks.Count);
+            Assert.IsTrue(result.CalledTasks.Any(x => x == task1));
+            Assert.IsTrue(result.CalledTasks.Any(x => x == task2));
         }
 
         #endregion

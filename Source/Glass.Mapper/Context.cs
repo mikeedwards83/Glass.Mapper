@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Glass.Mapper
 {
-    public class Class1
+    /// <summary>
+    /// The context contains the configuration of Glass.Mapper
+    /// </summary>
+    public class Context
     {
     }
 }

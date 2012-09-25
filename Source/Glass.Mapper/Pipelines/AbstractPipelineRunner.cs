@@ -47,7 +47,7 @@ namespace Glass.Mapper.Pipelines
         /// Runs a pipeline and returns the resultant arguments
         /// </summary>
         /// <returns></returns>
-        public T Run(T args)
+        public virtual T Run(T args)
         {
             foreach (var task in _tasks)
             {

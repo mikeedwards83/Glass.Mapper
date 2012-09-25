@@ -10,5 +10,7 @@ namespace Glass.Mapper.Pipelines
     /// </summary>
     public abstract class AbstractPipelineArgs
     {
+
+        public bool AbortPipeline { get; set; }
     }
 }
