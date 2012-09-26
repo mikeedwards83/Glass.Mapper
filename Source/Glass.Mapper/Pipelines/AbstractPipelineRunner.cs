@@ -52,6 +52,8 @@ namespace Glass.Mapper.Pipelines
             foreach (var task in _tasks)
             {
                 task.Execute(args);
+                if (args.AbortPipeline)
+                    break;
             }
 
             return args;

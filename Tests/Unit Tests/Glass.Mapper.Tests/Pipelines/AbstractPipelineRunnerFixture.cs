@@ -112,9 +112,6 @@ namespace Glass.Mapper.Tests.Pipelines
             _runner.Add(task1);
             _runner.Add(task2);
 
-            
-           
-
             //Act
             var result = _runner.Run(args);
 
@@ -122,6 +119,28 @@ namespace Glass.Mapper.Tests.Pipelines
             Assert.AreEqual(2, result.CalledTasks.Count);
             Assert.IsTrue(result.CalledTasks.Any(x => x == task1));
             Assert.IsTrue(result.CalledTasks.Any(x => x == task2));
+        }
+
+        [Test]
+        public void Run_PipelineAborted_RunsOnlyOneTask()
+        {
+            //Assign
+            var task1 = new StubPipelineTask();
+            task1.TaskToPerform = (tArgs) => tArgs.AbortPipeline = true;
+            
+            var task2 = new StubPipelineTask();
+
+            var args = new StubAbstractPipelineArgs();
+
+            _runner.Add(task1);
+            _runner.Add(task2);
+
+            //Act
+            var result = _runner.Run(args);
+
+            //Assert
+            Assert.AreEqual(1, result.CalledTasks.Count);
+            Assert.IsTrue(result.CalledTasks.Any(x => x == task1));
         }
 
         #endregion
@@ -144,9 +163,13 @@ namespace Glass.Mapper.Tests.Pipelines
 
         public class StubPipelineTask : IPipelineTask<StubAbstractPipelineArgs>
         {
+            public Action<StubAbstractPipelineArgs> TaskToPerform { get; set; } 
 
             public void Execute(StubAbstractPipelineArgs args)
             {
+                if (TaskToPerform != null) 
+                    TaskToPerform(args);
+
                 args.CalledTasks.Add(this);
                 HasExecuted = true;
             }
