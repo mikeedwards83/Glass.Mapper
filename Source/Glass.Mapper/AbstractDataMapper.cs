@@ -24,6 +24,8 @@ namespace Glass.Mapper
         {
 
             var result  = MapFromCms(mappingContext);
+
+            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
             if (result != null)
                 Property.SetValue(mappingContext.Object, result, null);
         }
