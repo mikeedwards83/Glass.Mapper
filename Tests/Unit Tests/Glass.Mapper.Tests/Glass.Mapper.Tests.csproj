@@ -47,7 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\AbstractPropertyAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\ChildrenAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\FieldAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\IdAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\InfoAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\LinkedAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\NodeAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\ParentAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\QueryAttributeFixture.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

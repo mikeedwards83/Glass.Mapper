@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\packages\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,16 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\Attributes\" />
     <Folder Include="FieldTypes\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\ObjectConstruction\" />
     <Folder Include="Pipelines\TypeResolver\" />
     <Folder Include="Proxies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -47,6 +47,16 @@
     <Compile Include="AbstractDataMappingContext.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
+    <Compile Include="Configuration\Attributes\AbstractPropertyAttribute.cs" />
+    <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\AbstractClassAttribute.cs" />
+    <Compile Include="Configuration\Attributes\IdAttribute.cs" />
+    <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
+    <Compile Include="Configuration\Attributes\LinkedAttribute.cs" />
+    <Compile Include="Configuration\Attributes\NodeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\ParentAttribute.cs" />
+    <Compile Include="Configuration\Attributes\FieldAttribute.cs" />
+    <Compile Include="Configuration\Attributes\QueryAttribute.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractItemContext.cs" />
@@ -66,7 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\Attributes\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\TypeResolver\" />
