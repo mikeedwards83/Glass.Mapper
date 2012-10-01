@@ -46,6 +46,5 @@ upload/
 Builds/
 !*.textile
 Source/Glass.Sitecore.Mapper.Demo/data/
-Glass.Sitecore.suo
-Glass.Sitecore.suo
-Glass.Sitecore.suo
+*.suo
+packages/Sitecore/*
