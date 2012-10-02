@@ -20,7 +20,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         [Test]
         [TestCase("IsLazy")]
         [TestCase("InferType")]
-        public void Does_ChildrenAttribute_Have_Properties(string propertyName)
+        public void Does_SitecoreChildrenAttribute_Have_Properties(string propertyName)
         {
             var properties = typeof(SitecoreChildrenAttribute).GetProperties();
             Assert.IsTrue(properties.Any(x => x.Name == propertyName));

@@ -5,8 +5,15 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
-    public class FieldAttribute : AbstractPropertyAttribute
+    public abstract class FieldAttribute : AbstractPropertyAttribute
     {
+        public FieldAttribute()
+        { }
+
+        public FieldAttribute(string fieldName)
+        {
+            FieldName = fieldName;
+        }
         /// <summary>
         /// The name of the field  to use if it is different to the property name
         /// </summary>

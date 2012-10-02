@@ -10,7 +10,7 @@ using Sitecore.Data;
 namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 {
     [TestFixture]
-    public class SitecoreIdAttributeFixture
+    public abstract class SitecoreIdAttributeFixture
     {
         [Test]
         public void Does_SitecoreIdAttribute_Extend_IdAttribute()

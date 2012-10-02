@@ -45,7 +45,13 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreClassAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreInfoAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreLinkedAttribute.cs" />
+    <Compile Include="Configuration\SitecoreFieldSettings.cs" />
+    <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

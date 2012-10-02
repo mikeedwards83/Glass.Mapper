@@ -18,6 +18,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         [Test]
         [TestCase("IsLazy")]
+        [TestCase("InferType")]
         public void Does_QueryAttribute_Have_Properties(string propertyName)
         {
             var properties = typeof(LinkedAttribute).GetProperties();
