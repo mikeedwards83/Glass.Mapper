@@ -34,14 +34,14 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             {
                 //here we create a lazy loaded version of the class
                 args.Object = CreateLazyObject(args);
-                args.AbortPipeline = true;
+                args.AbortPipeline();
 
             }
             else
             {
                 //here we create a concrete version of the class
                 args.Object = CreateObject(args);
-                args.AbortPipeline = true;
+                args.AbortPipeline();
             }
         }
 

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
@@ -47,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractPropertyAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttributeFixture.cs" />
@@ -57,7 +61,12 @@
     <Compile Include="Configuration\Attributes\NodeAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\ParentAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\QueryAttributeFixture.cs" />
+    <Compile Include="AbstractDataMapperFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTaskFixture.cs" />
+    <Compile Include="UtilitiesFixture.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTaskFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

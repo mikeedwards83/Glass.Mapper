@@ -10,7 +10,14 @@ namespace Glass.Mapper.Pipelines
     /// </summary>
     public abstract class AbstractPipelineArgs
     {
+        public Context Context { get; set; }
 
-        public bool AbortPipeline { get; set; }
+        public bool IsAborted { get; private set; }
+
+        public bool AbortPipeline ()
+        {
+            IsAborted = true;
+            return IsAborted;
+        }
     }
 }

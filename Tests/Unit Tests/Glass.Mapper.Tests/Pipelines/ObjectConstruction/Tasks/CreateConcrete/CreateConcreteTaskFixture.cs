@@ -35,7 +35,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.AbortPipeline);
+            Assert.IsFalse(args.IsAborted);
             Assert.IsNull(args.Object);
 
         }
@@ -54,7 +54,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsTrue(args.AbortPipeline);
+            Assert.IsTrue(args.IsAborted);
             Assert.IsNotNull(args.Object);
             Assert.IsTrue(args.Object is StubClass);
             Assert.IsFalse(args.Object.GetType() == typeof(StubClass));
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsTrue(args.AbortPipeline);
+            Assert.IsTrue(args.IsAborted);
             Assert.IsNotNull(args.Object);
             Assert.IsTrue(args.Object is StubClass);
             Assert.IsTrue(args.Object.GetType() == typeof(StubClass));

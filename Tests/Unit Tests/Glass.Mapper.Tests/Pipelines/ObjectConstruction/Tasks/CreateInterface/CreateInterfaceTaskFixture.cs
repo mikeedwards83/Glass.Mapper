@@ -36,7 +36,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             //Assert
             Assert.IsNull(args.Object);
-            Assert.IsFalse(args.AbortPipeline);
+            Assert.IsFalse(args.IsAborted);
 
         }
 
@@ -54,7 +54,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             //Assert
             Assert.IsNotNull(args.Object);
-            Assert.IsTrue(args.AbortPipeline);
+            Assert.IsTrue(args.IsAborted);
             Assert.IsTrue(args.Object is IStubInterface);
             Assert.IsFalse(args.Object.GetType() == typeof(IStubInterface));
         }

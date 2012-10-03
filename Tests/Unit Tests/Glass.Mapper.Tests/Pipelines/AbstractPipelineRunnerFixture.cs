@@ -126,7 +126,7 @@ namespace Glass.Mapper.Tests.Pipelines
         {
             //Assign
             var task1 = new StubPipelineTask();
-            task1.TaskToPerform = (tArgs) => tArgs.AbortPipeline = true;
+            task1.TaskToPerform = (tArgs) => tArgs.AbortPipeline();
             
             var task2 = new StubPipelineTask();
 

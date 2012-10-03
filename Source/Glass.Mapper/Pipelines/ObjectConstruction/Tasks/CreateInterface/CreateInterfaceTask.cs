@@ -29,7 +29,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             if (args.ItemContext.Type.IsInterface)
             {
                 args.Object = _generator.CreateInterfaceProxyWithoutTarget(args.ItemContext.Type, new InterfacePropertyInterceptor(args));
-                args.AbortPipeline = true;
+                args.AbortPipeline();
             }
         }
     }
