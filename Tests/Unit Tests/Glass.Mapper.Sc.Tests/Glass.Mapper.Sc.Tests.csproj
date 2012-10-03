@@ -54,6 +54,8 @@
     <Compile Include="Configuration\Attributes\SitecoreIdAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreInfoAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreLinkedAttributeTestFixture.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreNodeAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

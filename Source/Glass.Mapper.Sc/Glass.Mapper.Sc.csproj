@@ -50,7 +50,11 @@
     <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreInfoAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreLinkedAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreNodeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreParentAttribute.cs" />
     <Compile Include="Configuration\SitecoreFieldSettings.cs" />
+    <Compile Include="Configuration\SitecoreInfoType.cs" />
+    <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
