@@ -1,0 +1,7 @@
+<browsers>
+  <browser refID="Default">
+    <controlAdapters>
+      <adapter controlType="Sitecore.Web.UI.XamlSharp.Xaml.XamlPage" adapterType="Sitecore.Web.UI.XamlSharp.Xaml.XamlPageAdapter" />
+    </controlAdapters>
+  </browser>
+</browsers>

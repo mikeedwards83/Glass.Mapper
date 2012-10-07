@@ -1,0 +1,41 @@
+﻿/* Sitecore Default Stylesheet */
+
+html {
+  height:100%;
+}
+
+body {
+  font-family: Tahoma, Arial, sans-serif;
+  margin:0px;
+  padding:0px;
+  width:100%;
+  height:100%;
+}
+
+#MainPanel {
+  background:#e9e9e9;
+  text-align:center;
+  height:100%;
+}
+
+#CenterColumn 
+{
+  text-align:left;
+  margin:auto;
+  width:800px;
+}
+
+#Banner 
+{
+  background:white;
+  border-bottom:1px solid #bfbfbf;
+  padding:8px;
+}
+
+#Content {
+  background:white;
+  margin:10px 0px 0px 0px;
+  border-bottom:1px solid #bfbfbf;
+  padding:16px 16px 48px 16px;
+}
+
