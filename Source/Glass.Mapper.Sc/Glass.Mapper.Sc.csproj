@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\packages\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
