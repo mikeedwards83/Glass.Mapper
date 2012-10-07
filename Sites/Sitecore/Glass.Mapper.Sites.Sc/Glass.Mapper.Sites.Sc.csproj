@@ -148,7 +148,9 @@
     <None Include="App_Config\Include\DataFolder.config.example" />
     <None Include="App_Config\Include\EventHandler.config.example" />
     <None Include="App_Config\Include\ForwardingSecurityEvents.config.example" />
-    <Content Include="App_Config\Include\Glass.Config" />
+    <Content Include="App_Config\Include\Glass.Config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="App_Config\Include\ja-JP.config.example" />
     <None Include="App_Config\Include\LiveMode.config.example" />
     <None Include="App_Config\Include\ScalabilitySettings.config.example" />

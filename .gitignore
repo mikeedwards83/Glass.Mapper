@@ -48,3 +48,4 @@ Builds/
 Source/Glass.Sitecore.Mapper.Demo/data/
 *.suo
 packages/Sitecore/*
+Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/Data/license.xml
