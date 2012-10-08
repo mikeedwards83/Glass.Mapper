@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         [Test]
         public void Does_SitecoreClassAttribute_Extend_AbstractClassAttribute()
         {
-            Assert.IsTrue(typeof(AbstractClassAttribute).IsAssignableFrom(typeof(SitecoreClassAttribute)));
+            Assert.IsTrue(typeof(AbstractTypeAttribute).IsAssignableFrom(typeof(SitecoreTypeAttribute)));
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         [TestCase("BranchId")]
         public void Does_SitecoreClassAttribute_Have_Properties(string propertyName)
         {
-            var properties = typeof(SitecoreClassAttribute).GetProperties();
+            var properties = typeof(SitecoreTypeAttribute).GetProperties();
             Assert.IsTrue(properties.Any(x => x.Name == propertyName));
         }
     }

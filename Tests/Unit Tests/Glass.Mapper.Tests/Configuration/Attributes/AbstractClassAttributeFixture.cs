@@ -13,7 +13,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         [Test]
         public void Is_Attribute_Multiple_False()
         {
-            var attributes = (IList<AttributeUsageAttribute>)typeof(AbstractClassAttribute).GetCustomAttributes(typeof(AttributeUsageAttribute), false);
+            var attributes = (IList<AttributeUsageAttribute>)typeof(AbstractTypeAttribute).GetCustomAttributes(typeof(AttributeUsageAttribute), false);
             Assert.AreEqual(1, attributes.Count);
 
             var attribute = attributes[0];
@@ -23,7 +23,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         [Test]
         public void Is_Attribute_Calss()
         {
-            var attributes = (IList<AttributeUsageAttribute>)typeof(AbstractClassAttribute).GetCustomAttributes(typeof(AttributeUsageAttribute), false);
+            var attributes = (IList<AttributeUsageAttribute>)typeof(AbstractTypeAttribute).GetCustomAttributes(typeof(AttributeUsageAttribute), false);
             Assert.AreEqual(1, attributes.Count);
 
             var attribute = attributes[0];

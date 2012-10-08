@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
 {
@@ -10,6 +8,12 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public abstract class AbstractTypeConfiguration
     {
+        public Type Type { get; private set; }
 
+        public virtual void Configure(AbstractTypeAttribute attr, Type type)
+        {
+            Type = type;
+        }
     }
 }
+

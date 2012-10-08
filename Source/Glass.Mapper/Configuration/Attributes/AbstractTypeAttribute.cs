@@ -6,9 +6,9 @@ using System.Text;
 namespace Glass.Mapper.Configuration.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public abstract class AbstractClassAttribute : Attribute
+    public abstract class AbstractTypeAttribute : Attribute
     {
-        public AbstractClassAttribute()
+        public AbstractTypeAttribute()
         { }
     }
 }

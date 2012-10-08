@@ -6,7 +6,7 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
 {
-    public class SitecoreClassAttribute : AbstractClassAttribute
+    public class SitecoreTypeAttribute : AbstractTypeAttribute
     {
         /// <summary>
         /// Indicates the template to use when trying to create an item
