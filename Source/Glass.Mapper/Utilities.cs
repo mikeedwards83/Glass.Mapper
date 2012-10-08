@@ -66,5 +66,18 @@ namespace Glass.Mapper
 
             return dic;
         }
+
+        public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
+
+        /// <summary>
+        /// Gets a property based on the type and name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetProperty(Type type, string name)
+        {
+            return type.GetProperty(name, Flags);
+        }
     }
 }

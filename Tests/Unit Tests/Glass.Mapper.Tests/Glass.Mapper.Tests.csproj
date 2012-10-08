@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AbstractTypeConfigurationFixture.cs" />
+    <Compile Include="Configuration\Attributes\AttributeConfigurationLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractPropertyAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttributeFixture.cs" />

@@ -20,21 +20,23 @@ namespace Glass.Mapper.Tests.Configuration
             _configuration = new StubAbstractTypeConfiguration();
         }
 
-        #region Method - Configure
+        
+
+
+        #region Method - AddProperty
 
         [Test]
-        public void Configure_ConfigureMethodCalled_SetsStandardProperties()
+        public void AddProperty_PropertyAdded_PropertiesListContainsOneItem()
         {
             //Assign
-            var type = this.GetType();
-            var attribute = Substitute.For<AbstractTypeAttribute>();
+            var property = Substitute.For<AbstractPropertyConfiguration>();
 
             //Act
-            _configuration.Configure(attribute, type);
+            _configuration.AddProperty(property);
 
             //Assert
-            Assert.AreEqual(type, _configuration.Type);
-
+            Assert.AreEqual(1, _configuration.Properties.Count());
+            Assert.AreEqual(property, _configuration.Properties.First());
         }
 
         #endregion

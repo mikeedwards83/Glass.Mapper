@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Configuration.Attributes;
 using NUnit.Framework;
 
-namespace Glass.Mapper.Tests.Configuration
+namespace Glass.Mapper.Tests.Configuration.Attributes
 {
     [TestFixture]
     public class AttributeConfigurationLoaderFixture
     {
-        private StubAttributeConfigurationLoader<StubTypeConfiguration> _loader;
+        private StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration> _loader;
 
 
         [SetUp]
         public void Setup()
         {
-            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration>();
+            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>();
 
         }
 
@@ -49,7 +47,15 @@ namespace Glass.Mapper.Tests.Configuration
            
         }
 
-        public class StubAttributeConfigurationLoader<T> : AttributeConfigurationLoader<T> where T: AbstractTypeConfiguration, new()
+        public class StubPropertyConfiguration : AbstractPropertyConfiguration
+        {
+           
+        }
+
+        public class StubAttributeConfigurationLoader<T,K> : AttributeConfigurationLoader<T, K>
+            where T : AbstractTypeConfiguration, new() 
+            where K : AbstractPropertyConfiguration, new ()
+        
         {
             public IEnumerable<T> LoadFromAssembly(Assembly assembly)
             {
@@ -59,7 +65,6 @@ namespace Glass.Mapper.Tests.Configuration
 
         public class StubAbstractTypeAttribute : AbstractTypeAttribute
         {
-
         }
 
         [StubAbstractType]

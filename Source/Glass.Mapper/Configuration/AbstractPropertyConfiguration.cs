@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
 {
@@ -10,5 +12,6 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public abstract class AbstractPropertyConfiguration
     {
+        public PropertyInfo PropertyInfo { get;  set; }
     }
 }
