@@ -77,7 +77,49 @@ namespace Glass.Mapper
         /// <returns></returns>
         public static PropertyInfo GetProperty(Type type, string name)
         {
-            return type.GetProperty(name, Flags);
+            var property = type.GetProperty(name, Flags);
+            
+            if(property == null)
+            {
+                var interfaces = type.GetInterfaces();
+                foreach (var inter in interfaces)
+                {
+                      property = inter.GetProperty(name);
+                      if (property != null)
+                          return property;
+                }
+            }
+
+            return property;
+        }
+
+        /// <summary>
+        /// Gets all properties on a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static IEnumerable<PropertyInfo> GetAllProperties(Type type)
+        {
+            List<Type> typeList = new List<Type>();
+            typeList.Add(type);
+
+            if (type.IsInterface)
+            {
+                typeList.AddRange(type.GetInterfaces());
+            }
+
+            List<PropertyInfo> propertyList = new List<PropertyInfo>();
+
+            foreach (Type interfaceType in typeList)
+            {
+                foreach (PropertyInfo property in interfaceType.GetProperties(Flags))
+                {
+                    var finalProperty = GetProperty(property.DeclaringType, property.Name);
+                    propertyList.Add(finalProperty);
+                }
+            }
+
+            return propertyList;
         }
     }
 }

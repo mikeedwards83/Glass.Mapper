@@ -64,44 +64,49 @@ namespace Glass.Mapper.Configuration.Attributes
 
         protected IEnumerable<AbstractPropertyConfiguration> LoadFromType(Type type)
         {
-            //we have to get the property definition fromt he declaring type so that 
+            //we have to get the property definition from the declaring type so that 
             //we can set private setters.
-            var finalInfo = Utilities.GetProperty(type.DeclaringType, type.Name);
+            var properties = Utilities.GetAllProperties(type);
 
-
-            if (finalInfo != null)
+            foreach(var property in properties)
             {
-                var attr = GetPropertyAttribute(finalInfo);
-                
+                yield return ProcessProperty(property);
+            }
+           
+        }
+        protected AbstractPropertyConfiguration ProcessProperty(PropertyInfo property)
+        {
+            if (property != null)
+            {
+                var attr = GetPropertyAttribute(property);
+
                 //if we can't get a Sitecore attribute from current property we search down the 
                 // inheritence chain to find the first declared attribute.
                 if (attr == null)
                 {
-                    var interfaces = finalInfo.DeclaringType.GetInterfaces();
-                    string propertyName = finalInfo.Name;
+                    var interfaces = property.DeclaringType.GetInterfaces();
 
+                    //TODO: put a check in here to check that two interface don't implement an attribute
                     foreach (var inter in interfaces)
                     {
-                        finalInfo = inter.GetProperty(propertyName);
-                        if (finalInfo != null)
-                            attr = GetPropertyAttribute(finalInfo);
+                        var interProperty = inter.GetProperty(property.Name);
+                        if (interProperty != null)
+                            attr = GetPropertyAttribute(interProperty);
 
                         if (attr != null) break;
                     }
-
-                    if (attr != null)
-                    {
-                        var config = new K();
-                        attr.Configure(finalInfo, config);
-                        yield return config;
-                    }
+                }
+                
+                if (attr != null)
+                {
+                    var config = new K();
+                    attr.Configure(property, config);
+                    return config;
                 }
 
-                yield return null;
-
             }
+            return null;
 
-           
         }
 
         public static AbstractPropertyAttribute GetPropertyAttribute(PropertyInfo info)

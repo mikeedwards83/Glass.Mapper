@@ -9,10 +9,10 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 {
     [TestFixture]
-    public class SitecoreClassAttributeFixture
+    public class SitecoreTypeAttributeFixture
     {
         [Test]
-        public void Does_SitecoreClassAttribute_Extend_AbstractClassAttribute()
+        public void Does_SitecoreTypeAttribute_Extend_AbstractClassAttribute()
         {
             Assert.IsTrue(typeof(AbstractTypeAttribute).IsAssignableFrom(typeof(SitecoreTypeAttribute)));
         }
@@ -20,7 +20,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         [Test]
         [TestCase("TemplateId")]
         [TestCase("BranchId")]
-        public void Does_SitecoreClassAttribute_Have_Properties(string propertyName)
+        public void Does_SitecoreTypeAttribute_Have_Properties(string propertyName)
         {
             var properties = typeof(SitecoreTypeAttribute).GetProperties();
             Assert.IsTrue(properties.Any(x => x.Name == propertyName));

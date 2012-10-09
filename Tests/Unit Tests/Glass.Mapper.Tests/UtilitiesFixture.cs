@@ -149,7 +149,91 @@ namespace Glass.Mapper.Tests
 
         #endregion
 
+        #region Method - GetProperty
 
+        [Test]
+        public void GetProperty_GetPropertyOnClass_ReturnsProperty()
+        {
+            //Assign
+            string name = "Property";
+            Type type = typeof (StubClass);
+
+            //Act
+            var result = Utilities.GetProperty(type, name);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(name, result.Name);
+        }
+
+        [Test]
+        public void GetProperty_GetPropertyOnSubClass_ReturnsProperty()
+        {
+            //Assign
+            string name = "Property";
+            Type type = typeof(StubSubClass);
+
+            //Act
+            var result = Utilities.GetProperty(type, name);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(name, result.Name);
+        }
+
+        [Test]
+        public void GetProperty_GetPropertyOnInterface_ReturnsProperty()
+        {
+            //Assign
+            string name = "Property";
+            Type type = typeof (StubInterface);
+
+            //Act
+            var result = Utilities.GetProperty(type, name);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(name, result.Name);
+        }
+
+        [Test]
+        public void GetProperty_GetPropertyOnSubInterface_ReturnsProperty()
+        {
+            //Assign
+            string name = "Property";
+            Type type = typeof(StubSubInterface);
+
+            //Act
+            var result = Utilities.GetProperty(type, name);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(name, result.Name);
+        }
+
+        #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public string Property { get; set; }
+        }
+
+        public class StubSubClass : StubClass
+        {
+        }
+
+        public interface StubInterface
+        {
+            string Property { get; set; }
+        }
+
+        public interface StubSubInterface : StubInterface
+        {
+        }
+
+        #endregion
 
     }
 }

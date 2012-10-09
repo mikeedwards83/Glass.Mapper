@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreClassAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreTypeAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreInfoAttributeFixture.cs" />
