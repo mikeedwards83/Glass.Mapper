@@ -44,7 +44,7 @@ namespace Glass.Mapper.Configuration.Attributes
                             configs.Add(config);
 
                             //load the properties on the type
-                            foreach(var property in LoadFromType(type))
+                            foreach(var property in LoadPropertiesFromType(type))
                             {
                                 if(property != null)
                                     config.AddProperty(property);
@@ -62,7 +62,7 @@ namespace Glass.Mapper.Configuration.Attributes
             return configs;
         }
 
-        protected IEnumerable<AbstractPropertyConfiguration> LoadFromType(Type type)
+        protected IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
         {
             //we have to get the property definition from the declaring type so that 
             //we can set private setters.
@@ -70,7 +70,9 @@ namespace Glass.Mapper.Configuration.Attributes
 
             foreach(var property in properties)
             {
-                yield return ProcessProperty(property);
+                var config = ProcessProperty(property);
+                if (config == null) continue;
+                yield return config;
             }
            
         }

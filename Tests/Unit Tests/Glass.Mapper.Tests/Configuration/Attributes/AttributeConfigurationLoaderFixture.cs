@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Configuration;
@@ -33,7 +34,24 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.IsTrue(results.Any());
-            Assert.AreEqual(1, results.Count(x=>x.Type == typeof(StubClassWithClassAttribute)));
+            Assert.AreEqual(1, results.Count(x=>x.Type == typeof(StubClassWithTypeAttribute)));
+
+        }
+
+        [Test]
+        public void LoadFromAssembly_TypesDefinedInThisAssemblyWithTwoProperties_LoadsAtLeastOneTypeWithTwoProperties()
+        {
+            //Assign
+            var assembly = Assembly.GetExecutingAssembly();
+
+            //Act
+            var results = _loader.LoadFromAssembly(assembly);
+
+            //Assert
+            Assert.IsTrue(results.Any());
+            Assert.AreEqual(1, results.Count(x => x.Type == typeof(StubClassWithTypeAttributeAndProperties)));
+            var config = results.First(x => x.Type == typeof (StubClassWithTypeAttributeAndProperties));
+            Assert.AreEqual(2, config.Properties.Count());
 
         }
 
@@ -169,6 +187,24 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         #endregion
 
+        #region Method - LoadPropertiesFromType
+
+        [Test]
+        public void LoadPropertiesFromType_LoadsTypeWithProperty_ReturnsTypeConfigAndPropertyConfig()
+        {
+            //Assign
+            var type = typeof (StubClassWithProperties);
+
+            //Act
+            var result = _loader.LoadPropertiesFromType(type);
+
+            //Assert
+            Assert.AreEqual(1, result.Count());
+
+        }
+
+        #endregion
+
         #region Stubs
 
         public class StubTypeConfiguration : AbstractTypeConfiguration
@@ -194,6 +230,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             {
                 return base.ProcessProperty(property);
             }
+
+            public IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
+            {
+                return base.LoadPropertiesFromType(type);
+            }
         }
 
         public class StubAbstractTypeAttribute : AbstractTypeAttribute
@@ -206,9 +247,18 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         }
 
         [StubAbstractType]
-        public class StubClassWithClassAttribute
+        public class StubClassWithTypeAttribute
         {
 
+        }
+
+        [StubAbstractType]
+        public class StubClassWithTypeAttributeAndProperties
+        {
+            [StubAbstractProperty]
+            public string PropertyWithAttribute1 { get; set; }
+            [StubAbstractProperty]
+            public string PropertyWithAttribute2 { get; set; }
         }
 
         public class StubClassWithProperties
