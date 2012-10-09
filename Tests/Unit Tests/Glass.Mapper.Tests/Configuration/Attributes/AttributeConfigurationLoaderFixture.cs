@@ -21,6 +21,64 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         }
 
+        #region Method - Load
+
+        [Test]
+        public void Load_LoadsTypesUsingAssemblyNameWithDllAtEnd_TypeReturnedWithTwoProperties()
+        {
+
+            //Assign
+            string assemblyName = "Glass.Mapper.Tests.dll";
+
+            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+
+            //Act
+            var results = _loader.Load();
+
+            //Assert
+            Assert.IsTrue(results.Any());
+            Assert.AreEqual(1, results.Count(x => x.Type == typeof(StubClassWithTypeAttributeAndProperties)));
+            var config = results.First(x => x.Type == typeof(StubClassWithTypeAttributeAndProperties));
+            Assert.AreEqual(2, config.Properties.Count());
+        }
+
+        [Test]
+        public void Load_LoadsTypesUsingAssemblyNameWithoutDllAtEnd_TypeReturnedWithTwoProperties()
+        {
+
+            //Assign
+            string assemblyName = "Glass.Mapper.Tests";
+
+            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+
+            //Act
+            var results = _loader.Load();
+
+            //Assert
+            Assert.IsTrue(results.Any());
+            Assert.AreEqual(1, results.Count(x => x.Type == typeof(StubClassWithTypeAttributeAndProperties)));
+            var config = results.First(x => x.Type == typeof(StubClassWithTypeAttributeAndProperties));
+            Assert.AreEqual(2, config.Properties.Count());
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(ConfigurationException))]
+        public void Load_AssemblyDoesntExist_ThrowsException()
+        {
+            //Assign
+            string assemblyName = "DoesNotExist";
+
+            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+
+            //Act
+            var results = _loader.Load();
+
+            //Exception
+        }
+
+        #endregion
+
         #region Method - LoadFromAssembly
 
         [Test]
@@ -222,6 +280,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             where K : AbstractPropertyConfiguration, new ()
         
         {
+
+            public StubAttributeConfigurationLoader(params string [] assemblies):base(assemblies)
+            {
+            }
+
             public IEnumerable<T> LoadFromAssembly(Assembly assembly)
             {
                 return base.LoadFromAssembly(assembly);

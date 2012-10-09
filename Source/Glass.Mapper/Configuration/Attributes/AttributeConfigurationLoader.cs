@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -9,12 +10,45 @@ namespace Glass.Mapper.Configuration.Attributes
         where T : AbstractTypeConfiguration, new() 
         where K: AbstractPropertyConfiguration, new ()
     {
+        private readonly string[] _assemblies;
 
 
+        public AttributeConfigurationLoader(params string [] assemblies)
+        {
+            _assemblies = assemblies;
+        }
+
+        public static Assembly FindAssembly(string assemblyName)
+        {
+            try
+            {
+                assemblyName = assemblyName.ToLowerInvariant();
+                if (assemblyName.EndsWith(".dll") || assemblyName.EndsWith(".exe"))
+                {
+                    return Assembly.LoadFrom(assemblyName);
+                }
+                else
+                {
+                    //try to find a dll or exe
+                    return Assembly.LoadFrom(assemblyName + ".dll") ?? Assembly.LoadFrom(assemblyName + ".exe");
+                }
+            }catch(FileNotFoundException ex)
+            {
+                throw new ConfigurationException("Could not find assembly called {0}".Formatted(assemblyName), ex);
+            }
+        }
 
         public IEnumerable<AbstractTypeConfiguration> Load()
         {
-            throw new NotImplementedException();
+            //this should mean that things evaluate lazily
+            return _assemblies
+                .Select(assemblyName =>
+                            {
+                                var assembly = FindAssembly(assemblyName);
+                                return LoadFromAssembly(assembly);
+                            })
+                .Aggregate((x, y) => x.Union(y));
+         
         }
 
         /// <summary>
