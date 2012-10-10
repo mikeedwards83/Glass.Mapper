@@ -65,7 +65,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                                                       .Select(x => x.GetType().FullName)
                                                       .Aggregate((x, y) => x + "," + y)));
 
-            Delegate conMethod = args.ItemContext.ConstructorMethods[constructor];
+            Delegate conMethod = args.ItemContext.Configuration.ConstructorMethods[constructor];
             
             var obj = conMethod.DynamicInvoke(parameters);
 

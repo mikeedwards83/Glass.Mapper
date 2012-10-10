@@ -14,6 +14,8 @@ namespace Glass.Mapper.Configuration.Attributes
         public virtual void Configure(Type type, AbstractTypeConfiguration config)
         {
             config.Type = type;
+            config.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
@@ -18,7 +19,16 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public Type Type { get;  set; }
 
+        /// <summary>
+        /// A list of the properties configured on a type
+        /// </summary>
         public IEnumerable<AbstractPropertyConfiguration> Properties { get { return _properties; } }
+
+        /// <summary>
+        /// A list of the constructors on a type
+        /// </summary>
+        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
+
 
         public AbstractTypeConfiguration()
         {

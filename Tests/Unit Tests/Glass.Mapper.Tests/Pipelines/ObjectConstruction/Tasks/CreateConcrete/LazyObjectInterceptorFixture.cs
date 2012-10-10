@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Castle.DynamicProxy;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NSubstitute;
@@ -21,7 +22,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //Assign
             AbstractItemContext context = Substitute.For<AbstractItemContext>();
             context.Type = typeof (StubClass);
-            context.ConstructorMethods = Utilities.CreateConstructorDelegates(typeof(StubClass));
+
+            context.Configuration = Substitute.For<AbstractTypeConfiguration>();
+            context.Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(typeof(StubClass));
 
             ObjectConstructionArgs args = new ObjectConstructionArgs(context);
             args.IsLazy = true;

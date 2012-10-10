@@ -110,6 +110,7 @@ namespace Glass.Mapper.Configuration.Attributes
             }
            
         }
+   
         protected AbstractPropertyConfiguration ProcessProperty(PropertyInfo property)
         {
             if (property != null)
