@@ -23,6 +23,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         public void Execute(ObjectConstructionArgs args)
         {
+            if (args.Result != null)
+                return;
+
             var type = args.Configuration.Type;
 
             if(type.IsInterface)

@@ -74,6 +74,33 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             Assert.IsFalse(args.Result.GetType() == typeof(IStubInterface));
         }
 
+        [Test]
+        public void Execute_ResultAlreadySet_DoesNoWork()
+        {
+            //Assign
+            Type type = typeof(IStubInterface);
+
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(typeof(IStubInterface));
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
+            args.Result = string.Empty;
+
+            //Act
+            _task.Execute(args);
+
+            //Assert
+            Assert.IsNotNull(args.Result);
+            Assert.IsFalse(args.IsAborted);
+            Assert.IsTrue(args.Result is string);
+            Assert.IsTrue(args.Result.GetType() == typeof(string));
+        }
+
 
 
         #endregion

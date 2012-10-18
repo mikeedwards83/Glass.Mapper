@@ -103,6 +103,33 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Assert.IsTrue(args.Result.GetType() == typeof(StubClass));
         }
 
+        [Test]
+        public void Execute_ResultAlreadySet_DoesNoWork()
+        {
+            //Assign
+            Type type = typeof (StubClass);
+
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(typeof (StubClass));
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
+            args.Result = string.Empty;
+
+            //Act
+            _task.Execute(args);
+
+            //Assert
+            Assert.IsFalse(args.IsAborted);
+            Assert.IsNotNull(args.Result);
+            Assert.IsTrue(args.Result is string);
+        }
+
         #endregion
 
 

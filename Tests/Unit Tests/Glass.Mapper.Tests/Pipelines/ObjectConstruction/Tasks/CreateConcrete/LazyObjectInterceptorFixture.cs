@@ -25,8 +25,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             Context context = Context.Load();
 
-            
-
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(type);
             dataContext.IsLazy = true;
