@@ -7,6 +7,8 @@ using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
+using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -24,6 +26,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Type type = typeof (StubClass);
 
             Context context = Context.Load();
+            context.ObjectConstructionTasks.Add(new CreateConcreteTask());
+            context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
+            context.TypeResolverTasks.Add(new TypeStandardResolverTask());
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(type);

@@ -59,13 +59,6 @@ namespace Glass.Mapper
             ObjectConstructionTasks = new List<IObjectConstructionTask>();
             TypeResolverTasks = new List<ITypeResolverTask>();
             ConfigurationResolverTasks = new List<IConfigurationResolverTask>();
-
-            //TODO: ME - not sure if this is the best place for this
-            ObjectConstructionTasks.Add(new CreateConcreteTask());
-            ObjectConstructionTasks.Add(new CreateInterfaceTask());
-
-            TypeResolverTasks.Add(new TypeStandardResolverTask());
-
         }
 
         private void LoadContext(IConfigurationLoader [] loaders)

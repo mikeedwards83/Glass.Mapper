@@ -98,7 +98,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             Assert.IsNotNull(args.Result);
             Assert.IsFalse(args.IsAborted);
             Assert.IsTrue(args.Result is string);
-            Assert.IsTrue(args.Result.GetType() == typeof(string));
         }
 
 
