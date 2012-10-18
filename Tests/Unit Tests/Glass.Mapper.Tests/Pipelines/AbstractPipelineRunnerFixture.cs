@@ -10,12 +10,10 @@ namespace Glass.Mapper.Tests.Pipelines
     [TestFixture]
     public class AbstractPipelineRunnerFixture
     {
-        StubAbstractPipelineRunner _runner;
 
         [SetUp]
         public void Setup()
         {
-            _runner = new StubAbstractPipelineRunner();
         }
 
         #region Method - Add
@@ -27,14 +25,17 @@ namespace Glass.Mapper.Tests.Pipelines
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
 
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+
             //Act
-            _runner.Add(task1);
-            _runner.Add(task2);
+
+            runner.Add(task1);
+            runner.Add(task2);
 
             //Assert
-            Assert.AreEqual(2, _runner.Tasks.Count());
-            Assert.AreEqual(task1, _runner.Tasks.First());
-            Assert.AreEqual(task2, _runner.Tasks.Skip(1).First());
+            Assert.AreEqual(2, runner.Tasks.Count());
+            Assert.AreEqual(task1, runner.Tasks.First());
+            Assert.AreEqual(task2, runner.Tasks.Skip(1).First());
         }
 
         #endregion
@@ -48,17 +49,19 @@ namespace Glass.Mapper.Tests.Pipelines
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
 
-            _runner.Add(task1);
-            _runner.Add(task2);
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+
+            runner.Add(task1);
+            runner.Add(task2);
 
 
             //Act
-            _runner.Remove(task1);
+            runner.Remove(task1);
          
             //Assert
-            Assert.AreEqual(1, _runner.Tasks.Count());
-            Assert.AreEqual(task2, _runner.Tasks.First());
-            Assert.IsFalse(_runner.Tasks.Any(x=>x == task1));
+            Assert.AreEqual(1, runner.Tasks.Count());
+            Assert.AreEqual(task2, runner.Tasks.First());
+            Assert.IsFalse(runner.Tasks.Any(x=>x == task1));
         }
 
         #endregion
@@ -69,10 +72,11 @@ namespace Glass.Mapper.Tests.Pipelines
         public void Run_CreatesAPipelineArgs_ReturnsAnEmptyClass()
         {
             //Assign
-            var args = new StubAbstractPipelineArgs();
+            var args = new StubAbstractPipelineArgs(null);
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
             
             //Act
-            var result = _runner.Run(args);
+            var result = runner.Run(args);
 
             //Assert
             Assert.IsNotNull(result);
@@ -85,16 +89,18 @@ namespace Glass.Mapper.Tests.Pipelines
             //Assign
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
-            var args = new StubAbstractPipelineArgs();
+            var args = new StubAbstractPipelineArgs(null);
 
-            _runner.Add(task1);
-            _runner.Add(task2);
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+
+            runner.Add(task1);
+            runner.Add(task2);
 
             Assert.IsFalse(task1.HasExecuted);
             Assert.IsFalse(task2.HasExecuted);
 
             //Act
-            _runner.Run(args);
+            runner.Run(args);
 
             //Assert
             Assert.IsTrue(task1.HasExecuted);
@@ -107,13 +113,15 @@ namespace Glass.Mapper.Tests.Pipelines
             //Assign
             var task1 = new StubPipelineTask();
             var task2 = new StubPipelineTask();
-            var args = new StubAbstractPipelineArgs();
+            var args = new StubAbstractPipelineArgs(null);
 
-            _runner.Add(task1);
-            _runner.Add(task2);
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+
+            runner.Add(task1);
+            runner.Add(task2);
 
             //Act
-            var result = _runner.Run(args);
+            var result = runner.Run(args);
 
             //Assert
             Assert.AreEqual(2, result.CalledTasks.Count);
@@ -130,13 +138,15 @@ namespace Glass.Mapper.Tests.Pipelines
             
             var task2 = new StubPipelineTask();
 
-            var args = new StubAbstractPipelineArgs();
+            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
 
-            _runner.Add(task1);
-            _runner.Add(task2);
+            var args = new StubAbstractPipelineArgs(null);
+
+            runner.Add(task1);
+            runner.Add(task2);
 
             //Act
-            var result = _runner.Run(args);
+            var result = runner.Run(args);
 
             //Assert
             Assert.AreEqual(1, result.CalledTasks.Count);
@@ -149,7 +159,7 @@ namespace Glass.Mapper.Tests.Pipelines
 
         public class StubAbstractPipelineArgs : AbstractPipelineArgs{
 
-            public StubAbstractPipelineArgs()
+            public StubAbstractPipelineArgs(Context context):base(context)
             {
                 CalledTasks = new List<StubPipelineTask>();
             }
@@ -159,6 +169,9 @@ namespace Glass.Mapper.Tests.Pipelines
 
         public class StubAbstractPipelineRunner : AbstractPipelineRunner<StubAbstractPipelineArgs, IPipelineTask<StubAbstractPipelineArgs>>
         {
+            public StubAbstractPipelineRunner(IList<IPipelineTask<StubAbstractPipelineArgs>> tasks  ):base(tasks)
+            {
+            }
         }
 
         public class StubPipelineTask : IPipelineTask<StubAbstractPipelineArgs>

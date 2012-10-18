@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AbstractDataMapper.cs" />
     <Compile Include="AbstractDataMappingContext.cs" />
+    <Compile Include="AbstractService.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
@@ -64,12 +65,16 @@
     <Compile Include="Configuration\ITypeSetting.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="AbstractItemContext.cs" />
+    <Compile Include="IDataContext.cs" />
     <Compile Include="MapperException.cs" />
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverRunner.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\IConfigurationResolverTask.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\StandardResolver\ConfigurationStandardResolverTask.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\IObjectContructionTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionRunner.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
@@ -80,16 +85,13 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />
     <Compile Include="Pipelines\TypeResolver\ITypeResolverTask.cs" />
-    <Compile Include="Pipelines\TypeResolver\Tasks\StandardResolver\StandardResolver.cs" />
+    <Compile Include="Pipelines\TypeResolver\Tasks\StandardResolver\TypeStandardResolverTask.cs" />
     <Compile Include="Pipelines\TypeResolver\TypeResolverArgs.cs" />
     <Compile Include="Pipelines\TypeResolver\TypeResolverRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pipelines\ContentResolver\" />
-    <Folder Include="Pipelines\MappingPipeline\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

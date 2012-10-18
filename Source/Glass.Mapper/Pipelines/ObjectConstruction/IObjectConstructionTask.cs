@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
-    public interface IObjectContructionTask : IPipelineTask<ObjectConstructionArgs>
+    public interface IObjectConstructionTask : IPipelineTask<ObjectConstructionArgs>
     {
     }
 }

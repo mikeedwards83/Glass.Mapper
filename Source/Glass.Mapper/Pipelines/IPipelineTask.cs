@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines
 {
-    public interface IPipelineTask<T>  where T: AbstractPipelineArgs, new ()
+    public interface IPipelineTask<T>  where T: AbstractPipelineArgs
     {
         void Execute(T args);
     }

@@ -27,17 +27,24 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         public void Execute_TypeIsInterface_NoObjectCreated()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof (IStubInterface);
+            Type type = typeof (IStubInterface);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(type);
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
 
             //Act
             _task.Execute(args);
 
             //Assert
             Assert.IsFalse(args.IsAborted);
-            Assert.IsNull(args.Object);
+            Assert.IsNull(args.Result);
 
         }
 
@@ -45,44 +52,55 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         public void Execute_LazyType_LazyTypeCreated()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof(StubClass);
-           
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
-            args.IsLazy = true;
+            Type type = typeof (StubClass);
+
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(typeof (StubClass));
+            dataContext.IsLazy = true;
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.Type = type;
+            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
 
             //Act
             _task.Execute(args);
 
             //Assert
             Assert.IsTrue(args.IsAborted);
-            Assert.IsNotNull(args.Object);
-            Assert.IsTrue(args.Object is StubClass);
-            Assert.IsFalse(args.Object.GetType() == typeof(StubClass));
+            Assert.IsNotNull(args.Result);
+            Assert.IsTrue(args.Result is StubClass);
+            Assert.IsFalse(args.Result.GetType() == typeof(StubClass));
         }
 
         [Test]
         public void Execute_ConcreteType_TypeCreated()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof(StubClass);
+            Type type = typeof (StubClass);
 
-            context.Configuration = Substitute.For<AbstractTypeConfiguration>();
-            context.Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(typeof (StubClass));
-                
+            Context context = Context.Load();
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
-            args.IsLazy = false;
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(typeof (StubClass));
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
 
             //Act
             _task.Execute(args);
 
             //Assert
             Assert.IsTrue(args.IsAborted);
-            Assert.IsNotNull(args.Object);
-            Assert.IsTrue(args.Object is StubClass);
-            Assert.IsTrue(args.Object.GetType() == typeof(StubClass));
+            Assert.IsNotNull(args.Result);
+            Assert.IsTrue(args.Result is StubClass);
+            Assert.IsTrue(args.Result.GetType() == typeof(StubClass));
         }
 
         #endregion

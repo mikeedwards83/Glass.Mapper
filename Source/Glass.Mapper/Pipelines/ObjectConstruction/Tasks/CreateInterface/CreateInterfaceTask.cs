@@ -9,7 +9,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
     /// <summary>
     /// Creates classes based on interfaces
     /// </summary>
-    public class CreateInterfaceTask : IObjectContructionTask
+    public class CreateInterfaceTask : IObjectConstructionTask
     {
 
         private static volatile  ProxyGenerator _generator;
@@ -26,9 +26,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.ItemContext.Type.IsInterface)
+            if (args.Configuration.Type.IsInterface)
             {
-                args.Object = _generator.CreateInterfaceProxyWithoutTarget(args.ItemContext.Type, new InterfacePropertyInterceptor(args));
+                args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new InterfacePropertyInterceptor(args));
                 args.AbortPipeline();
             }
         }

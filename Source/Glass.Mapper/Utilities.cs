@@ -121,5 +121,17 @@ namespace Glass.Mapper
 
             return propertyList;
         }
+
+        
+        public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
+        {
+            Type genericType = type.MakeGenericType(arguments);
+            object obj;
+            if (parameters != null && parameters.Count() > 0)
+                obj = Activator.CreateInstance(genericType, parameters);
+            else
+                obj = Activator.CreateInstance(genericType);
+            return obj;
+        }
     }
 }

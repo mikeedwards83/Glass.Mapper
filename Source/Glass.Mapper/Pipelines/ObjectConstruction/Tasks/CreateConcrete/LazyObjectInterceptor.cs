@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Castle.DynamicProxy;
 
@@ -28,17 +29,19 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //create class
             if (_actual == null)
             {
-                //i am not sure about this at the moment
-                CreateConcreteTask task = new CreateConcreteTask();
+                
+                //TODO: ME - this isn't correct. We have to send it through the pipeline again somehow
+                var serviceType = typeof(AbstractService<>).MakeGenericType(_args.DataContext.GetType());
 
-                _args.IsLazy = false;
 
-                task.Execute(_args);
-                _actual = _args.Object;
+                MethodInfo method = serviceType.GetMethod("InstantiateObject", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
+
+                _args.DataContext.IsLazy = false;
+              
+                _actual =  method.Invoke(null, new object[] {_args.Context, _args.DataContext});
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);
-
         }
 
         #endregion

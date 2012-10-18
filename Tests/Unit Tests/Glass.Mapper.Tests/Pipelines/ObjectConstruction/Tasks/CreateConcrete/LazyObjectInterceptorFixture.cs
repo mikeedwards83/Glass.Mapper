@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NSubstitute;
@@ -20,25 +21,40 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         public void Intercept_CreatesObjectLazily_CallsInvokeMethod()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof (StubClass);
+            Type type = typeof (StubClass);
 
-            context.Configuration = Substitute.For<AbstractTypeConfiguration>();
-            context.Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(typeof(StubClass));
+            Context context = Context.Load();
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
-            args.IsLazy = true;
+            
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(type);
+            dataContext.IsLazy = true;
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+            configuration.Type = type;
+
+            var configurationResolver = Substitute.For<IConfigurationResolverTask>();
+            configurationResolver
+                .When(x=>x.Execute(Arg.Any<ConfigurationResolverArgs>()))
+                .Do(info=>
+                        {
+                            var paras = info.Args();
+                            var resolverArgs = paras[0] as ConfigurationResolverArgs;
+                            resolverArgs.Result = configuration;
+                        });
+
+            context.ConfigurationResolverTasks.Add(configurationResolver);
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
          
             LazyObjectInterceptor interceptor = new LazyObjectInterceptor(args);
             IInvocation invocation = Substitute.For<IInvocation>();
             invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
 
-
-
-
-
             //Act
-           interceptor.Intercept(invocation);
+            interceptor.Intercept(invocation);
 
             //Assert
             Assert.IsTrue(invocation.ReturnValue is bool);

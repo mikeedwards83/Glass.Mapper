@@ -10,17 +10,11 @@ namespace Glass.Mapper
     /// <summary>
     /// The base class for the context loading an item from the CMS
     /// </summary>
-    public abstract class AbstractItemContext
+    public interface IDataContext
     {
-        public AbstractItemContext()
-        {
-        }
-
-
-        public Type Type { get; set; }
-
-        public AbstractTypeConfiguration Configuration { get; set; }
-        public IEnumerable<AbstractDataMapper> DataMappers { get; set; }
-
+        bool InferType { get; }
+        bool IsLazy { get; set; }
+        Type RequestedType { get; }
+        object[] ConstructorParameters { get; }
     }
 }

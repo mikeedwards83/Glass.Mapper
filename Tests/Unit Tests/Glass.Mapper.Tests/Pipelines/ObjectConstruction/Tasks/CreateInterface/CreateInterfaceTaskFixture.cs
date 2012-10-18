@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;
@@ -26,16 +27,23 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         public void Execute_ConcreteClass_ObjectNotCreated()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof (StubClass);
+            Type type = typeof(StubClass);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(type);
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsNull(args.Object);
+            Assert.IsNull(args.Result);
             Assert.IsFalse(args.IsAborted);
 
         }
@@ -44,19 +52,26 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         public void Execute_ProxyInterface_ProxyGetsCreated()
         {
             //Assign
-            AbstractItemContext context = Substitute.For<AbstractItemContext>();
-            context.Type = typeof(IStubInterface);
+            Type type = typeof(IStubInterface);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context);
+            Context context = Context.Load();
+
+            IDataContext dataContext = Substitute.For<IDataContext>();
+            dataContext.RequestedType.Returns(typeof (IStubInterface));
+
+            var configuration = Substitute.For<AbstractTypeConfiguration>();
+            configuration.Type = type;
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsNotNull(args.Object);
+            Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.IsAborted);
-            Assert.IsTrue(args.Object is IStubInterface);
-            Assert.IsFalse(args.Object.GetType() == typeof(IStubInterface));
+            Assert.IsTrue(args.Result is IStubInterface);
+            Assert.IsFalse(args.Result.GetType() == typeof(IStubInterface));
         }
 
 

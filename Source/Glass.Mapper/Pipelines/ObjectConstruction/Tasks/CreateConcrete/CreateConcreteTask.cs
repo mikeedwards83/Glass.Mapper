@@ -7,7 +7,7 @@ using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
-    public class CreateConcreteTask : IObjectContructionTask
+    public class CreateConcreteTask : IObjectConstructionTask
     {
         private const string ConstructorErrorMessage = "No constructor for class {0} with parameters {1}";
 
@@ -23,39 +23,41 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         public void Execute(ObjectConstructionArgs args)
         {
-            var type = args.ItemContext.Type;
+            var type = args.Configuration.Type;
 
             if(type.IsInterface)
             {
                 return;
             }
 
-            if(args.IsLazy)
+            if(args.DataContext.IsLazy)
             {
                 //here we create a lazy loaded version of the class
-                args.Object = CreateLazyObject(args);
+                args.Result = CreateLazyObject(args);
                 args.AbortPipeline();
 
             }
             else
             {
                 //here we create a concrete version of the class
-                args.Object = CreateObject(args);
+                args.Result = CreateObject(args);
                 args.AbortPipeline();
             }
         }
 
         protected virtual object CreateLazyObject(ObjectConstructionArgs args)
         {
-            return  _generator.CreateClassProxy(args.ItemContext.Type, new LazyObjectInterceptor(args));
+            return  _generator.CreateClassProxy(args.Configuration.Type, new LazyObjectInterceptor(args));
         }
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
-            var type = args.ItemContext.Type;
+            var configuration = args.Configuration;
+            var type = configuration.Type;
+            var constructorParameters = args.DataContext.ConstructorParameters;
 
             var parameters = 
-                args.ConstructorParameters == null || !args.ConstructorParameters.Any() ? Type.EmptyTypes : args.ConstructorParameters.Select(x => x.GetType()).ToArray();
+                constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
 
             ConstructorInfo constructor = type.GetConstructor(parameters);
 
@@ -65,7 +67,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                                                       .Select(x => x.GetType().FullName)
                                                       .Aggregate((x, y) => x + "," + y)));
 
-            Delegate conMethod = args.ItemContext.Configuration.ConstructorMethods[constructor];
+            Delegate conMethod = args.Configuration.ConstructorMethods[constructor];
             
             var obj = conMethod.DynamicInvoke(parameters);
 
@@ -73,7 +75,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             AbstractDataMappingContext dataContext = new AbstractDataMappingContext();
             dataContext.Object = obj;
             //TODO: setup the context
-            args.ItemContext.DataMappers.ForEach(x => x.MapFromCms(dataContext));
+            // args.Configuration.Properties.ForEach(x=>x.)
+            // args.Configuration..DataMappers.ForEach(x => x.MapFromCms(dataContext));
 
             return dataContext.Object;
         }

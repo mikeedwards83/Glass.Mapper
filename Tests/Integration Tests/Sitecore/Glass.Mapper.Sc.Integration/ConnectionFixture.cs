@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Glass.Mapper.Sc.Integration
 {
+    
     [TestFixture]
     public class ConnectionFixture
     {
@@ -19,6 +20,11 @@ namespace Glass.Mapper.Sc.Integration
             //Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("sitecore", result.Key);
+
         }
+
+
     }
+
+
 }

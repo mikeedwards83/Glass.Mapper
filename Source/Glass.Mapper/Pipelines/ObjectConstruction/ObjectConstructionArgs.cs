@@ -1,50 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
     public class ObjectConstructionArgs : AbstractPipelineArgs
     {
-        
-
         /// <summary>
         /// Context of the item being created
         /// </summary>
-        public AbstractItemContext ItemContext { get; private set; }
+        public IDataContext DataContext { get; private set; }
 
         /// <summary>
-        /// The final instance of the object to create
+        /// The configuration to use to load the object
         /// </summary>
-        public object Instance { get; set; }
+        public AbstractTypeConfiguration Configuration { get; private set; }
 
-        /// <summary>
-        /// Indicates if the object should be lazy loaded
-        /// </summary>
-        public bool IsLazy { get;  set; }
+        public object Result { get; set; }
 
-        /// <summary>
-        /// The final object to return to the caller
-        /// </summary>
-        public object Object { get; set; }
-
-        /// <summary>
-        /// List of parameters to pass to the constructor
-        /// </summary>
-        public IEnumerable<object> ConstructorParameters { get; set; }
-
-
-        public ObjectConstructionArgs()
+        public ObjectConstructionArgs(Context context, IDataContext dataContext, AbstractTypeConfiguration configuration)
+            : base(context)
         {
-
+            DataContext = dataContext;
+            Configuration = configuration;
         }
 
-        public ObjectConstructionArgs(AbstractItemContext itemContext)
-        {
-            ItemContext = itemContext;
-        }
+       
 
+     
+
+      
 
     }
 }

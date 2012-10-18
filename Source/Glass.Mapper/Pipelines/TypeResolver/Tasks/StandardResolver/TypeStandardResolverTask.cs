@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver
 {
-    public class StandardResolverTask:ITypeResolverTask
+    public class TypeStandardResolverTask:ITypeResolverTask
     {
         public void Execute(TypeResolverArgs args)
         {
-            if(!args.InferType)
+            if(!args.DataContext.InferType)
             {
-                args.FinalType = args.RequestedType;
+                args.Result = args.DataContext.RequestedType;
                 args.AbortPipeline();
             }
 

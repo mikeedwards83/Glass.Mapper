@@ -6,7 +6,8 @@ using System.Reflection;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
-    public class AttributeConfigurationLoader<T, K> : IConfigurationLoader 
+
+   public class AttributeConfigurationLoader<T, K> : IConfigurationLoader 
         where T : AbstractTypeConfiguration, new() 
         where K: AbstractPropertyConfiguration, new ()
     {
@@ -30,6 +31,7 @@ namespace Glass.Mapper.Configuration.Attributes
                 else
                 {
                     //try to find a dll or exe
+                    //TODO: can we move this to config
                     return Assembly.LoadFrom(assemblyName + ".dll") ?? Assembly.LoadFrom(assemblyName + ".exe");
                 }
             }catch(FileNotFoundException ex)

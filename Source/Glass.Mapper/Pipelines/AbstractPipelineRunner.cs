@@ -11,7 +11,7 @@ namespace Glass.Mapper.Pipelines
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="K"></typeparam>
     public abstract class AbstractPipelineRunner<T, K> 
-        where T:AbstractPipelineArgs, new () 
+        where T:AbstractPipelineArgs
         where K:IPipelineTask<T>
     {
         IList<K> _tasks;
@@ -19,9 +19,9 @@ namespace Glass.Mapper.Pipelines
         public IEnumerable<K> Tasks { get { return _tasks; } }
 
 
-        public AbstractPipelineRunner()
+        public AbstractPipelineRunner(IList<K> tasks)
         {
-            _tasks = new List<K>();
+            _tasks = tasks;
         }
 
         /// <summary>
@@ -49,13 +49,16 @@ namespace Glass.Mapper.Pipelines
         /// <returns></returns>
         public virtual T Run(T args)
         {
-            foreach (var task in _tasks)
+            if (_tasks != null)
             {
-                task.Execute(args);
-                if (args.IsAborted)
-                    break;
+                foreach (var task in _tasks)
+                {
+                    task.Execute(args);
+                    if (args.IsAborted)
+                        break;
+                }
             }
-
+            
             return args;
         }
 
