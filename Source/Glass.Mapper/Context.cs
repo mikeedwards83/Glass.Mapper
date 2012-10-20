@@ -8,6 +8,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
 {
@@ -83,19 +84,24 @@ namespace Glass.Mapper
         public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
 
         /// <summary>
-        /// A list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
+        /// The list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
         /// </summary>
         public IList<IObjectConstructionTask> ObjectConstructionTasks { get; private set; }
         
         /// <summary>
-        /// A list of tasks to be performed by the Type Resolver Pipeline. Called in the order specified.
+        /// The list of tasks to be performed by the Type Resolver Pipeline. Called in the order specified.
         /// </summary>
         public IList<ITypeResolverTask> TypeResolverTasks { get; private set; }
 
         /// <summary>
-        /// A list of tasks to be performed by the Configuration Resolver Pipeline. Called in the order specified.
+        /// The list of tasks to be performed by the Configuration Resolver Pipeline. Called in the order specified.
         /// </summary>
         public IList<IConfigurationResolverTask> ConfigurationResolverTasks { get; private set; }
+
+        /// <summary>
+        /// The list of DataMappers used when loading configurations
+        /// </summary>
+        public IList<AbstractDataMapper> DataMappers { get; set; } 
 
         /// <summary>
         /// Gets a type configuration based on type
@@ -125,10 +131,39 @@ namespace Glass.Mapper
 
         private void LoadContext(IEnumerable<IConfigurationLoader> loaders)
         {
-            loaders
-                .Select(loader => loader.Load())
-                .ForEach(configs => configs.ForEach(config => TypeConfigurations.Add(config.Type, config)));
+            if (loaders.Any())
+            {
+                var typeConfigurations = loaders
+                    .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
+
+                DataMapperResolverRunner runner = new DataMapperResolverRunner(this.DataMappers);
+                foreach (var typeConfig in typeConfigurations)
+                {
+                    ProcessProperties(runner, typeConfig.Properties);
+                    TypeConfigurations.Add(typeConfig.Type, typeConfig);
+                }
+            }
+
         }
+        private void ProcessProperties(DataMapperResolverRunner runner, IEnumerable<AbstractPropertyConfiguration> properties )
+        {
+            foreach(var property in properties)
+            {
+                DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);
+                args.PropertyConfiguration = property;
+
+                runner.Run(args);
+                if(args.Result == null)
+                {
+                    throw new NullReferenceException(
+                        "Could not find data mapper for property {0} on type {1}"
+                        .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName));
+                }
+                property.Mapper = args.Result;
+            }
+        }
+
+       
 
 
 

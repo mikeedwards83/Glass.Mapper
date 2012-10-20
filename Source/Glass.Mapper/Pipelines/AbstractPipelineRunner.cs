@@ -14,34 +14,15 @@ namespace Glass.Mapper.Pipelines
         where T:AbstractPipelineArgs
         where K:IPipelineTask<T>
     {
-        IList<K> _tasks;
+        IEnumerable<K> _tasks;
 
         public IEnumerable<K> Tasks { get { return _tasks; } }
 
 
-        public AbstractPipelineRunner(IList<K> tasks)
+        public AbstractPipelineRunner(IEnumerable<K> tasks)
         {
             _tasks = tasks;
         }
-
-        /// <summary>
-        /// Adds a task to the list of tasks to be executed by the runner
-        /// </summary>
-        /// <param name="task"></param>
-        public void Add(K task)
-        {
-            _tasks.Add(task);
-        }
-
-        /// <summary>
-        /// Removes a task from the list of tasks to be executed by the runner
-        /// </summary>
-        /// <param name="task"></param>
-        public void Remove(K task)
-        {
-            _tasks.Remove(task);
-        }
-
 
         /// <summary>
         /// Runs a pipeline and returns the resultant arguments

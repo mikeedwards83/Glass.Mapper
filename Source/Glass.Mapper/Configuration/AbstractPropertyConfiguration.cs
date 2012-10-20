@@ -13,5 +13,7 @@ namespace Glass.Mapper.Configuration
     public abstract class AbstractPropertyConfiguration
     {
         public PropertyInfo PropertyInfo { get;  set; }
+
+        public AbstractDataMapper Mapper { get; internal set; }
     }
 }

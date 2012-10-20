@@ -7,7 +7,7 @@ namespace Glass.Mapper.Pipelines.TypeResolver
 {
     public class TypeResolverRunner :AbstractPipelineRunner<TypeResolverArgs, ITypeResolverTask>
     {
-        public TypeResolverRunner(IList<ITypeResolverTask> tasks):base(tasks)
+        public TypeResolverRunner(IEnumerable<ITypeResolverTask> tasks):base(tasks)
         {
         }
 

@@ -7,7 +7,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
     public class ObjectConstructionRunner : AbstractPipelineRunner<ObjectConstructionArgs, IObjectConstructionTask>
     {
-        public ObjectConstructionRunner(IList<IObjectConstructionTask> tasks ):base(tasks)
+        public ObjectConstructionRunner(IEnumerable<IObjectConstructionTask> tasks ):base(tasks)
         {
         }
 

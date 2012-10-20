@@ -7,7 +7,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
 {
     public class ConfigurationResolverRunner : AbstractPipelineRunner<ConfigurationResolverArgs, IConfigurationResolverTask>
     {
-        public ConfigurationResolverRunner(IList<IConfigurationResolverTask> tasks ):base( tasks)
+        public ConfigurationResolverRunner(IEnumerable<IConfigurationResolverTask> tasks ):base( tasks)
         {
 
         }

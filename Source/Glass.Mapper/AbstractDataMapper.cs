@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
 {
     /// <summary>
     /// A data mapper converts data from the CMS stored value to the .Net data type
     /// </summary>
-    public abstract class AbstractDataMapper
+    public abstract class AbstractDataMapper : IDataMapperResolverTask
     {
         /// <summary>
         /// The property this Data Mapper will populate
@@ -58,5 +59,25 @@ namespace Glass.Mapper
         /// <param name="configuration"></param>
         /// <returns></returns>
         public abstract bool CanHandle(AbstractPropertyConfiguration configuration);
+
+        /// <summary>
+        /// Called by the DataMapperResolver pipeline to determine if this data mapper should handle the property
+        /// </summary>
+        /// <param name="args"></param>
+        public virtual void Execute(DataMapperResolverArgs args)
+        {
+            if (args.IsAborted || args.Result != null)
+                return;
+
+            bool canHandle = CanHandle(args.PropertyConfiguration);
+            
+            if(canHandle)
+            {
+                args.Result = this;
+                args.AbortPipeline();
+            }
+        }
+
+        
     }
 }
