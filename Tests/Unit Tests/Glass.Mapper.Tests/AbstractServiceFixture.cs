@@ -20,7 +20,7 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_CallsEachPipelineInTurn_ReturnsConcreteObject()
         {
             //Assign
-            Context context = Context.Load();
+            Context context = Context.Create();
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof (StubClass);
@@ -79,7 +79,7 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_TypeResolverDoesntReturnResult_ExceptionThrown()
         {
             //Assign
-            Context context = Context.Load();
+            Context context = Context.Create();
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);
@@ -111,7 +111,7 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_ConfigurationResolverDoesntReturnResult_ExceptionThrown()
         {
             //Assign
-            Context context = Context.Load();
+            Context context = Context.Create();
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);
@@ -155,7 +155,7 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_ObjectCreationReturnsNull_NullReturned()
         {
             //Assign
-            Context context = Context.Load();
+            Context context = Context.Create();
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);

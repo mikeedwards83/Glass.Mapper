@@ -38,12 +38,11 @@ namespace Glass.Mapper
 
 
         /// <summary>
-        /// Loads a Context and creates it as the default Context. This is assigned to the Default static property.
+        /// Creates a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>
-        /// <param name="loaders">The list of configuration loaders to load into the context.</param>
-        public static Context Load(params IConfigurationLoader [] loaders)
+        public static Context Create()
         {
-            return Context.Load(DefaultName, true, loaders);
+            return Context.Create(DefaultName, true);
         }
 
         /// <summary>
@@ -51,12 +50,10 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
         /// <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
-        /// <param name="loaders">The list of configuration loaders to load into the context.</param>
         /// <returns></returns>
-        public static Context Load(string contextName, bool isDefault = false, params IConfigurationLoader[] loaders)
+        public static Context Create(string contextName, bool isDefault = false)
         {
             var context = new Context();
-            context.LoadContext(loaders);
 
             Contexts[contextName] = context;
             
@@ -103,6 +100,15 @@ namespace Glass.Mapper
         /// </summary>
         public IList<AbstractDataMapper> DataMappers { get; set; } 
 
+        private Context()
+        {
+            ObjectConstructionTasks = new List<IObjectConstructionTask>();
+            TypeResolverTasks = new List<ITypeResolverTask>();
+            ConfigurationResolverTasks = new List<IConfigurationResolverTask>();
+            TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
+            DataMappers = new List<AbstractDataMapper>();
+        }
+
         /// <summary>
         /// Gets a type configuration based on type
         /// </summary>
@@ -118,18 +124,9 @@ namespace Glass.Mapper
                     return null;
             }
         }
-
-
-
-        private Context()
-        {
-            ObjectConstructionTasks = new List<IObjectConstructionTask>();
-            TypeResolverTasks = new List<ITypeResolverTask>();
-            ConfigurationResolverTasks = new List<IConfigurationResolverTask>();
-            TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
-        }
-
-        private void LoadContext(IEnumerable<IConfigurationLoader> loaders)
+        
+        /// <param name="loaders">The list of configuration loaders to load into the context.</param>
+        public void Load(params IConfigurationLoader[] loaders)
         {
             if (loaders.Any())
             {

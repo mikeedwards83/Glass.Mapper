@@ -27,7 +27,8 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             var loader = Substitute.For<IConfigurationLoader>();
             loader.Load().Returns(new [] {configuration});
             
-            var context = Context.Load(loader);
+            var context = Context.Create();
+            context.Load(loader);
 
             var args = new ConfigurationResolverArgs(context, null, type);
 
@@ -48,7 +49,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
 
         public class StubClass
         {
-
+            
         }
 
         #endregion

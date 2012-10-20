@@ -25,7 +25,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //Assign
             Type type = typeof (StubClass);
 
-            Context context = Context.Load();
+            Context context = Context.Create();
             context.ObjectConstructionTasks.Add(new CreateConcreteTask());
             context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
             context.TypeResolverTasks.Add(new TypeStandardResolverTask());

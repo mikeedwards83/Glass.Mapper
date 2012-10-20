@@ -21,7 +21,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         }
 
-        #region Method - Load
+        #region Method - Create
 
         [Test]
         public void Load_LoadsTypesUsingAssemblyNameWithDllAtEnd_TypeReturnedWithTwoProperties()
