@@ -20,8 +20,8 @@ namespace Glass.Mapper.Tests
             [Values("a", "a", "a b")] string expected)
         {
             //Act
-            string result = ExtensionMethods.Formatted(input, param1, param2);
-
+            string result = input.Formatted(param1, param2);
+            
             //Assert
             Assert.AreEqual(expected, result);
         }
@@ -37,7 +37,7 @@ namespace Glass.Mapper.Tests
             [Values(true, true, false)] bool expected)
         {
             //Act
-            var result = ExtensionMethods.IsNullOrEmpty(value);
+            var result = value.IsNullOrEmpty();
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -54,7 +54,7 @@ namespace Glass.Mapper.Tests
             [Values(false, false, true)] bool expected)
         {
             //Act
-            var result = ExtensionMethods.IsNotNullOrEmpty(value);
+            var result = value.IsNotNullOrEmpty();
 
             //Assert
             Assert.AreEqual(expected, result);
