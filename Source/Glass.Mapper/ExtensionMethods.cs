@@ -53,8 +53,8 @@ namespace Glass.Mapper
             foreach (var item in list)
             {
                 action(item);
-                yield return item;
             }
+            return list;
         }
 
         #endregion

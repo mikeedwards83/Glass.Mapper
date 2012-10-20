@@ -72,7 +72,7 @@
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverRunner.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\IConfigurationResolverTask.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\StandardResolver\ConfigurationStandardResolverTask.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTask.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />

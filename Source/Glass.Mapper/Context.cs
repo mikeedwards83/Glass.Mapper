@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
@@ -14,6 +16,7 @@ namespace Glass.Mapper
     /// </summary>
     public class Context
     {
+        public const string DefaultName = "Default";
 
         #region STATICS
 
@@ -22,17 +25,33 @@ namespace Glass.Mapper
             Contexts = new Dictionary<string, Context>();
         }
 
+        /// <summary>
+        /// The default Context. Used by services if no Context is specified.
+        /// </summary>
         public static Context Default { get; private set; }
+
+        /// <summary>
+        /// Contains the list of Contexts currently loaded. 
+        /// </summary>
         public static IDictionary<string, Context> Contexts { get; private set; }
 
 
         /// <summary>
-        /// Loads a context and creates it as the default Context
+        /// Loads a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>
+        /// <param name="loaders">The list of configuration loaders to load into the context.</param>
         public static Context Load(params IConfigurationLoader [] loaders)
         {
-            return Context.Load("default", true, loaders);
+            return Context.Load(DefaultName, true, loaders);
         }
+
+        /// <summary>
+        /// Creates a new context and adds it to the Contexts dictionary.
+        /// </summary>
+        /// <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
+        /// <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
+        /// <param name="loaders">The list of configuration loaders to load into the context.</param>
+        /// <returns></returns>
         public static Context Load(string contextName, bool isDefault = false, params IConfigurationLoader[] loaders)
         {
             var context = new Context();
@@ -46,26 +65,69 @@ namespace Glass.Mapper
             return context;
         }
 
+        /// <summary>
+        /// Clears all static and default contexts
+        /// </summary>
+        public static void Clear()
+        {
+            Default = null;
+            Contexts = new Dictionary<string, Context>();
+
+        }
+
         #endregion
 
-        public IEnumerable<AbstractTypeConfiguration> TypeConfigurations { get; private set; }
+        /// <summary>
+        /// List of the type configurations loaded by this context
+        /// </summary>
+        public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
+
+        /// <summary>
+        /// A list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
+        /// </summary>
         public IList<IObjectConstructionTask> ObjectConstructionTasks { get; private set; }
+        
+        /// <summary>
+        /// A list of tasks to be performed by the Type Resolver Pipeline. Called in the order specified.
+        /// </summary>
         public IList<ITypeResolverTask> TypeResolverTasks { get; private set; }
+
+        /// <summary>
+        /// A list of tasks to be performed by the Configuration Resolver Pipeline. Called in the order specified.
+        /// </summary>
         public IList<IConfigurationResolverTask> ConfigurationResolverTasks { get; private set; }
 
-       
+        /// <summary>
+        /// Gets a type configuration based on type
+        /// </summary>
+        /// <param name="type">The configuration </param>
+        /// <returns></returns>
+        public AbstractTypeConfiguration this[Type type]
+        {
+            get
+            {
+                if (TypeConfigurations.ContainsKey(type))
+                    return TypeConfigurations[type];
+                else
+                    return null;
+            }
+        }
+
+
+
         private Context()
         {
             ObjectConstructionTasks = new List<IObjectConstructionTask>();
             TypeResolverTasks = new List<ITypeResolverTask>();
             ConfigurationResolverTasks = new List<IConfigurationResolverTask>();
+            TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
         }
 
-        private void LoadContext(IConfigurationLoader [] loaders)
+        private void LoadContext(IEnumerable<IConfigurationLoader> loaders)
         {
-            var typeConfigs = new List<AbstractTypeConfiguration>();
-            loaders.ForEach(x => typeConfigs.AddRange(x.Load()));
-            TypeConfigurations = typeConfigs;
+            loaders
+                .Select(loader => loader.Load())
+                .ForEach(configs => configs.ForEach(config => TypeConfigurations.Add(config.Type, config)));
         }
 
 
