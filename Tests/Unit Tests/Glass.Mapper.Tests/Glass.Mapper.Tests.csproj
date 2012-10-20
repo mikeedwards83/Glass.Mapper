@@ -64,6 +64,7 @@
     <Compile Include="Configuration\Attributes\ParentAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\QueryAttributeFixture.cs" />
     <Compile Include="AbstractDataMapperFixture.cs" />
+    <Compile Include="ExtensionMethodFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTaskFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
