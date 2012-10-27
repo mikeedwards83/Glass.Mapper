@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />

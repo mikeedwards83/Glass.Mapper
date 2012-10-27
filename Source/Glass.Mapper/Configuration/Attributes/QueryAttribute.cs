@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
@@ -26,15 +27,21 @@ namespace Glass.Mapper.Configuration.Attributes
         /// </summary>
         public bool InferType { get; set; }
 
-        /// <summary>
-        /// Use the Sitecore.Data.Query.QueryContext when querying for data
-        /// </summary>
-        public bool UseQueryContext { get; set; }
-
         public QueryAttribute(string query)
         {
             IsLazy = true;
             Query = query;
         }
+
+        public void Configure(PropertyInfo propertyInfo, QueryConfiguration config)
+        {
+            config.Query = this.Query;
+            config.IsLazy = this.IsLazy;
+            config.IsRelative = this.IsRelative;
+            config.InferType = this.InferType;
+
+            base.Configure(propertyInfo, config);
+        }
+
     }
 }

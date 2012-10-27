@@ -70,6 +70,7 @@
     <Compile Include="Configuration\LinkedConfiguration.cs" />
     <Compile Include="Configuration\NodeConfiguration.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />
+    <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IDataContext.cs" />
