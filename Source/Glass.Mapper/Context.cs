@@ -133,7 +133,7 @@ namespace Glass.Mapper
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
-                DataMapperResolverRunner runner = new DataMapperResolverRunner(this.DataMappers);
+                DataMapperResolver runner = new DataMapperResolver(this.DataMappers);
                 foreach (var typeConfig in typeConfigurations)
                 {
                     ProcessProperties(runner, typeConfig.Properties);
@@ -142,7 +142,7 @@ namespace Glass.Mapper
             }
 
         }
-        private void ProcessProperties(DataMapperResolverRunner runner, IEnumerable<AbstractPropertyConfiguration> properties )
+        private void ProcessProperties(DataMapperResolver runner, IEnumerable<AbstractPropertyConfiguration> properties )
         {
             foreach(var property in properties)
             {

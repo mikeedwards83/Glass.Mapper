@@ -32,7 +32,7 @@ namespace Glass.Mapper
         public static object InstantiateObject(Context context, T dataContext)
         {
             //Run the get type pipeline to get the type to load
-            var typeRunner = new TypeResolverRunner(context.TypeResolverTasks);
+            var typeRunner = new TypeResolver(context.TypeResolverTasks);
             var typeArgs = new TypeResolverArgs(context, dataContext);
             typeRunner.Run(typeArgs);
 
@@ -41,7 +41,7 @@ namespace Glass.Mapper
                 throw new NullReferenceException("Type Resolver pipeline did not return type.");
 
             //run the pipeline to get the configuration to load
-            var configurationRunner = new ConfigurationResolverRunner(context.ConfigurationResolverTasks);
+            var configurationRunner = new ConfigurationResolver(context.ConfigurationResolverTasks);
             var configurationArgs = new ConfigurationResolverArgs(context, dataContext, typeArgs.Result);
             configurationRunner.Run(configurationArgs);
 
@@ -49,7 +49,7 @@ namespace Glass.Mapper
                 throw new NullReferenceException("Configuration Resolver pipeline did not return type.");
 
             //Run the object construction
-            var objectRunner = new ObjectConstructionRunner(context.ObjectConstructionTasks);
+            var objectRunner = new ObjectConstruction(context.ObjectConstructionTasks);
             var objectArgs = new ObjectConstructionArgs(context, dataContext, configurationArgs.Result);
             objectRunner.Run(objectArgs);
 

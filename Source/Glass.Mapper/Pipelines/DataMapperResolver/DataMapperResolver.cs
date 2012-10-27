@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.DataMapperResolver
 {
-    public class DataMapperResolverRunner : AbstractPipelineRunner<DataMapperResolverArgs, IDataMapperResolverTask>
+    public class DataMapperResolver : AbstractPipelineRunner<DataMapperResolverArgs, IDataMapperResolverTask>
     {
-        public DataMapperResolverRunner(IEnumerable<IDataMapperResolverTask> tasks)
+        public DataMapperResolver(IEnumerable<IDataMapperResolverTask> tasks)
             : base(tasks)
         {
         }
