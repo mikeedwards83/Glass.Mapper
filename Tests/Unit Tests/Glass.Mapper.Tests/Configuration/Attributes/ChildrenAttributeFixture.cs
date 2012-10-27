@@ -38,38 +38,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         #region Method - Configure
 
         [Test]
-        public void Configure_ConfigurationCorrectType_NoExceptionThrown()
-        {
-            //Assign
-            var attr =  Substitute.For<ChildrenAttribute>();
-            var config = new ChildrenConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
-
-            //Act
-            attr.Configure(propertyInfo, config);
-
-            //Assert
-            Assert.AreEqual(propertyInfo, config.PropertyInfo);
-
-        }
-
-        [Test]
-        [ExpectedException(typeof(ConfigurationException))]
-        public void Configure_ConfigurationIncorrectType_ExceptionThrown()
-        {
-            //Assign
-            var attr = Substitute.For<ChildrenAttribute>();
-            var config = Substitute.For<AbstractPropertyConfiguration>();
-            var propertyInfo = Substitute.For<PropertyInfo>();
-
-            //Act
-            attr.Configure(propertyInfo, config);
-
-            //Assert
-
-        }
-
-        [Test]
         public void Configure_InferTypeSet_InferTypeSetOnConfig()
         {
             //Assign

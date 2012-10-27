@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
@@ -27,6 +28,15 @@ namespace Glass.Mapper.Configuration.Attributes
         {
             get;
             set;
+        }
+
+        public void Configure(PropertyInfo propertyInfo, ParentConfiguration config)
+        {
+
+            config.IsLazy = this.IsLazy;
+            config.InferType = this.InferType;
+
+            base.Configure(propertyInfo, config);
         }
     }
 }

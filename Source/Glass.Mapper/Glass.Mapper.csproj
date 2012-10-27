@@ -64,6 +64,7 @@
     <Compile Include="Configuration\IConfigurationLoader.cs" />
     <Compile Include="Configuration\IPropertySetting.cs" />
     <Compile Include="Configuration\ITypeSetting.cs" />
+    <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IDataContext.cs" />

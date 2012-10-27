@@ -38,15 +38,10 @@ namespace Glass.Mapper.Configuration.Attributes
             set; 
         }
 
-        public void Configure(System.Reflection.PropertyInfo propertyInfo, AbstractPropertyConfiguration config )
+        public void Configure(System.Reflection.PropertyInfo propertyInfo, ChildrenConfiguration config)
         {
-            if(config is ChildrenConfiguration)
-            {
-                var childConfig = config as ChildrenConfiguration;
-                childConfig.InferType = this.InferType;
-                childConfig.IsLazy = this.IsLazy;
-            }
-            else throw new ConfigurationException("config is not of type {0}".Formatted(typeof(ChildrenConfiguration).FullName));
+            config.InferType = this.InferType;
+            config.IsLazy = this.IsLazy;
 
             base.Configure(propertyInfo, config);
         }
