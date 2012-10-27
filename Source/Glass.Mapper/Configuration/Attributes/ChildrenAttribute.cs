@@ -10,6 +10,8 @@ namespace Glass.Mapper.Configuration.Attributes
     /// </summary>
     public abstract class ChildrenAttribute : AbstractPropertyAttribute
     {
+        //ME - does this need to be an abstract class?
+
         /// <summary>
         /// Used to retrieve the children of an item as a specific type.
         /// </summary>

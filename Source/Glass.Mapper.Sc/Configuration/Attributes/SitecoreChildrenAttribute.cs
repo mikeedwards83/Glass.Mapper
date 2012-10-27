@@ -13,7 +13,9 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     {
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
-            throw new NotImplementedException();
+            var config = new SitecoreChildrenConfiguration();
+            base.Configure(propertyInfo, config);
+            return config;
         }
     }
 }

@@ -71,16 +71,16 @@
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverRunner.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolver.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\IConfigurationResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTask.cs" />
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverArgs.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverRunner.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\DataMapperResolver.cs" />
     <Compile Include="Pipelines\DataMapperResolver\IDataMapperResolverTask.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionRunner.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\ObjectConstruction.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectProxyHook.cs" />
@@ -91,7 +91,7 @@
     <Compile Include="Pipelines\TypeResolver\ITypeResolverTask.cs" />
     <Compile Include="Pipelines\TypeResolver\Tasks\StandardResolver\TypeStandardResolverTask.cs" />
     <Compile Include="Pipelines\TypeResolver\TypeResolverArgs.cs" />
-    <Compile Include="Pipelines\TypeResolver\TypeResolverRunner.cs" />
+    <Compile Include="Pipelines\TypeResolver\TypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
