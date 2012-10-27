@@ -35,5 +35,10 @@ namespace Glass.Mapper.Configuration.Attributes
             get; 
             set; 
         }
+
+        public override void Configure(System.Reflection.PropertyInfo propertyInfo, AbstractPropertyConfiguration config)
+        {
+            base.Configure(propertyInfo, config);
+        }
     }
 }

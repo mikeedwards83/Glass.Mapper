@@ -8,5 +8,10 @@ namespace Glass.Mapper.Sc.Configuration
 {
     public class SitecoreTypeConfiguration : AbstractTypeConfiguration
     {
+        public Guid TemplateId { get; set; }
+
+        public Guid BranchId { get; set; }
+
+
     }
 }
