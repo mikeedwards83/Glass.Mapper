@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
@@ -23,5 +24,12 @@ namespace Glass.Mapper.Configuration.Attributes
         /// When true the field will not be save back to Sitecore 
         /// </summary>
         public bool ReadOnly { get; set; }
+
+        public void Configure(PropertyInfo propertyInfo, FieldConfiguration config)
+        {
+            config.FieldName = this.FieldName;
+            config.ReadOnly = this.ReadOnly;
+            base.Configure(propertyInfo, config);
+        }
     }
 }

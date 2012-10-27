@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using Glass.Mapper.Configuration;
+using NSubstitute;
 using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
 
@@ -24,5 +27,76 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             var properties = typeof(FieldAttribute).GetProperties();
             Assert.IsTrue(properties.Any(x => x.Name == propertyName));
         }
+
+        #region Method - Configure
+
+        [Test]
+        public void Configure_DefaultValues_ConfigSetWithDefaults()
+        {
+            //Act
+            var attr = new StubFieldAttribute();
+            var config = new FieldConfiguration();
+            var propertyInfo = Substitute.For<PropertyInfo>();
+
+            //Act
+            attr.Configure(propertyInfo, config);
+
+            //Assert
+            Assert.AreEqual(propertyInfo, config.PropertyInfo);
+            Assert.IsNullOrEmpty(config.FieldName);
+            Assert.IsFalse(config.ReadOnly);
+        }
+
+        [Test]
+        public void Configure_FieldNameSet_FieldNameSetOnConfig()
+        {
+            //Act
+            var attr = new StubFieldAttribute();
+            var config = new FieldConfiguration();
+            var propertyInfo = Substitute.For<PropertyInfo>();
+
+            attr.FieldName = "test field name";
+
+            //Act
+            attr.Configure(propertyInfo, config);
+
+            //Assert
+            Assert.AreEqual(propertyInfo, config.PropertyInfo);
+            Assert.AreEqual(attr.FieldName, config.FieldName);
+            Assert.IsFalse(config.ReadOnly);
+        }
+
+        [Test]
+        public void Configure_ReadOnlySet_ReadOnlySetOnConfig()
+        {
+            //Act
+            var attr = new StubFieldAttribute();
+            var config = new FieldConfiguration();
+            var propertyInfo = Substitute.For<PropertyInfo>();
+
+            attr.ReadOnly = true;
+
+            //Act
+            attr.Configure(propertyInfo, config);
+
+            //Assert
+            Assert.AreEqual(propertyInfo, config.PropertyInfo);
+            Assert.IsNullOrEmpty(config.FieldName);
+            Assert.True(config.ReadOnly);
+        }
+
+        #endregion
+
+        #region Stubs
+
+        public class StubFieldAttribute : FieldAttribute
+        {
+            public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }
