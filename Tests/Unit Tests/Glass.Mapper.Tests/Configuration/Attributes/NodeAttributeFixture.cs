@@ -34,6 +34,10 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         private class TestNodeAttribute : NodeAttribute
         {
+            public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

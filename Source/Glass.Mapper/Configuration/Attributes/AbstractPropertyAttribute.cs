@@ -12,7 +12,9 @@ namespace Glass.Mapper.Configuration.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class AbstractPropertyAttribute : Attribute, IPropertySetting
     {
-        public virtual void Configure(PropertyInfo propertyInfo, AbstractPropertyConfiguration config)
+        public abstract AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo);
+
+        public void Configure(PropertyInfo propertyInfo, AbstractPropertyConfiguration config)
         {
             config.PropertyInfo = propertyInfo;
         }

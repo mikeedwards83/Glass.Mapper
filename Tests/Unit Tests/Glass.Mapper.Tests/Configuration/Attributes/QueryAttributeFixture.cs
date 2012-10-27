@@ -63,6 +63,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         {
             public TestQueryAttribute() : base("This is a query") { }
             public TestQueryAttribute(string query) : base(query) { }
+
+            public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

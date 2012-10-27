@@ -8,5 +8,9 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreNodeAttribute : NodeAttribute
     {
+        public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

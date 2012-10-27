@@ -38,6 +38,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         }
 
         private class TestParentAttribute : ParentAttribute
-        { }
+        {
+            public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

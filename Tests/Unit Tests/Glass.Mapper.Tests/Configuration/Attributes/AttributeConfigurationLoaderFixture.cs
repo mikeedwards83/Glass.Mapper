@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Configuration.Attributes;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Glass.Mapper.Tests.Configuration.Attributes
@@ -307,6 +308,12 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public class StubAbstractPropertyAttribute : AbstractPropertyAttribute
         {
 
+            public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
+            {
+                var config = new StubPropertyConfiguration();
+                base.Configure(propertyInfo, config);
+                return config;
+            }
         }
 
         [StubAbstractType]

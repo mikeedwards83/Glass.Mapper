@@ -13,5 +13,10 @@ namespace Glass.Mapper.Configuration.Attributes
         }
 
         public Type IdType { get; set; }
+
+        public override AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

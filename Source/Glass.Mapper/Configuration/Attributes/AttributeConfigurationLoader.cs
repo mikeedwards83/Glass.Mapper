@@ -138,8 +138,8 @@ namespace Glass.Mapper.Configuration.Attributes
                 
                 if (attr != null)
                 {
-                    var config = new K();
-                    attr.Configure(property, config);
+                   
+                    var config = attr.Configure(property);
                     return config;
                 }
 

@@ -12,5 +12,10 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// Indicate weather All, References or Referred should be loaded
         /// </summary>
         public SitecoreLinkedOptions Option { get; set; }
+
+        public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

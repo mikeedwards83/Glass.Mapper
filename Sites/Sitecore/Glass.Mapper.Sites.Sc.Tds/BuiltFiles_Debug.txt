@@ -55,6 +55,8 @@
 .\Debug\bin\Sitecore.NVelocity.dll
 .\Debug\bin\Sitecore.Oracle.dll
 .\Debug\bin\Sitecore.Publishing.WebDeploy.dll
+.\Debug\bin\Sitecore.Rocks.Server.dll
+.\Debug\bin\Sitecore.Rocks.Server.HedgehogDevelopment.Diagrammer.dll
 .\Debug\bin\Sitecore.SegmentBuilder.dll
 .\Debug\bin\Sitecore.Update.dll
 .\Debug\bin\Sitecore.Zip.dll

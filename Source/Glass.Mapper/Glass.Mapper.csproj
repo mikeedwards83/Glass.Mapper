@@ -59,6 +59,7 @@
     <Compile Include="Configuration\Attributes\ParentAttribute.cs" />
     <Compile Include="Configuration\Attributes\FieldAttribute.cs" />
     <Compile Include="Configuration\Attributes\QueryAttribute.cs" />
+    <Compile Include="Configuration\ChildrenConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationException.cs" />
     <Compile Include="Configuration\IConfigurationLoader.cs" />
     <Compile Include="Configuration\IPropertySetting.cs" />
