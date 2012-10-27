@@ -5,18 +5,23 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
-    public class IdAttribute : AbstractPropertyAttribute
+    public abstract class IdAttribute : AbstractPropertyAttribute
     {
-        public IdAttribute(Type idType)
+        public IdAttribute(Type type)
         {
-            IdType = idType;
+            this.Type = type;
         }
 
-        public Type IdType { get; set; }
+        public Type Type { get; set; }
 
-        public override AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        public  void Configure(System.Reflection.PropertyInfo propertyInfo, IdConfiguration config)
         {
-            throw new NotImplementedException();
+            if(propertyInfo.PropertyType != Type)
+                throw new ConfigurationException("Property type {0} does not match required type {1} on {2}"
+                    .Formatted(propertyInfo.PropertyType.FullName, Type.FullName, propertyInfo.DeclaringType.FullName));
+
+            config.Type = this.Type;
+            base.Configure(propertyInfo, config);
         }
     }
 }

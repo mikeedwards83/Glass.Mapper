@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         public void SitecoreIdAttribute_Is_ID_Type()
         {
             var sitecoreIdAttribute = new SitecoreIdAttribute();
-            Assert.AreEqual(sitecoreIdAttribute.IdType, typeof(ID));
+            Assert.AreEqual(sitecoreIdAttribute.Type, typeof(ID));
         }
     }
 }
