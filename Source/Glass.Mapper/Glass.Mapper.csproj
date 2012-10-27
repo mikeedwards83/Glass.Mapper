@@ -64,6 +64,7 @@
     <Compile Include="Configuration\FieldConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationLoader.cs" />
     <Compile Include="Configuration\IdConfiguration.cs" />
+    <Compile Include="Configuration\InfoConfiguration.cs" />
     <Compile Include="Configuration\IPropertySetting.cs" />
     <Compile Include="Configuration\ITypeSetting.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />

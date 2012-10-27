@@ -17,5 +17,10 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// UrlOptions, use in conjunction with SitecoreInfoType.Url
         /// </summary>
         public SitecoreInfoUrlOptions UrlOptions { get; set; }
+
+        public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

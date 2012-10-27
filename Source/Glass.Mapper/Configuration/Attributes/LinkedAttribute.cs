@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
@@ -23,5 +24,13 @@ namespace Glass.Mapper.Configuration.Attributes
         /// Indicates the type should be inferred from the item template
         /// </summary>
         public bool InferType { get; set; }
+
+        public void Configure(PropertyInfo info, LinkedConfiguration config)
+        {
+            config.IsLazy = this.IsLazy;
+            config.InferType = this.InferType;
+
+            base.Configure(info, config);
+        }
     }
 }
