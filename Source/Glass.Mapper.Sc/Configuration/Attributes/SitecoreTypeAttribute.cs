@@ -28,8 +28,10 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                     "Type configuration is not of type {0}".Formatted(typeof (SitecoreTypeConfiguration).FullName));
 
 
-            scConfig.BranchId =  new Guid(this.BranchId);
-            scConfig.TemplateId = new Guid(this.TemplateId);
+            if(BranchId.IsNotNullOrEmpty())
+                scConfig.BranchId =  new Guid(this.BranchId);
+            if (TemplateId.IsNotNullOrEmpty())
+                scConfig.TemplateId = new Guid(this.TemplateId);
 
 
             base.Configure(type, config);
