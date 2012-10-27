@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
     public abstract class NodeAttribute : AbstractPropertyAttribute
     {
+        public Type Type { get; set; }
 
-        public NodeAttribute()
+        public NodeAttribute(Type type)
         {
+            Type = type;
             IsLazy = true;
         }
 
@@ -31,5 +34,15 @@ namespace Glass.Mapper.Configuration.Attributes
         /// The Id of the item. 
         /// </summary>
         public string Id { get; set; }
+
+        public void Configure(PropertyInfo propertyInfo, NodeConfiguration config)
+        {
+            config.Id = this.Id;
+            config.IsLazy = this.IsLazy;
+            config.Path = this.Path;
+            config.Type = this.Type;
+            
+            base.Configure(propertyInfo, config);
+        }
     }
 }
