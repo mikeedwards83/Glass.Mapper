@@ -17,6 +17,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// Indicates that the results should be loaded lazily
         /// </summary>
         public bool IsLazy { get; set; }
+
         /// <summary>
         /// Indicates that the field is relative to the current item.
         /// </summary>

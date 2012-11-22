@@ -53,6 +53,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreQueryAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttributeFixture.cs" />
