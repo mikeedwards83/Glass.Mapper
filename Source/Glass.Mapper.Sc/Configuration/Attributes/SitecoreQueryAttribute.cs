@@ -21,7 +21,14 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
-            throw new NotImplementedException();
+            var config = new SitecoreQueryConfiguration();
+            Configure(propertyInfo, config);
+            return config;
+        }
+        public void Configure(PropertyInfo propertyInfo, SitecoreQueryConfiguration config)
+        {
+            config.UseQueryContext = this.UseQueryContext;
+            base.Configure(propertyInfo, (QueryConfiguration) config);
         }
     }
 }

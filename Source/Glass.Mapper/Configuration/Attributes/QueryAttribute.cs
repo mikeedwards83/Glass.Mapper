@@ -33,7 +33,7 @@ namespace Glass.Mapper.Configuration.Attributes
             Query = query;
         }
 
-        public void Configure(PropertyInfo propertyInfo, QueryConfiguration config)
+        public  void Configure(PropertyInfo propertyInfo, QueryConfiguration config)
         {
             config.Query = this.Query;
             config.IsLazy = this.IsLazy;

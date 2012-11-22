@@ -6,7 +6,7 @@ using System.Text;
 namespace Glass.Mapper.Configuration.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public abstract class AbstractTypeAttribute : Attribute , ITypeSetting
+    public abstract class AbstractTypeAttribute : Attribute 
     {
         public AbstractTypeAttribute()
         { }
