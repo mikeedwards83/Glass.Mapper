@@ -14,7 +14,7 @@ namespace Glass.Mapper.Pipelines
 
         public bool IsAborted { get; private set; }
 
-        public AbstractPipelineArgs(Context context)
+        protected AbstractPipelineArgs(Context context)
         {
             Context = context;
         }
