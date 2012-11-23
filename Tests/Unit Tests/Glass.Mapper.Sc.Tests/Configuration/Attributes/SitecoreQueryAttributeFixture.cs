@@ -32,6 +32,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         }
 
         [Test]
+        [Sequential]
         public void Configure_ConfigureQueryContext_QueryContextSetOnConfigObject(
             [Values(true, false)] bool queryContextValue,
             [Values(true, false)] bool expectedValue)
