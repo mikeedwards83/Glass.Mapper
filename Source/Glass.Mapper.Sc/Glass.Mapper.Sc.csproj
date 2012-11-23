@@ -57,6 +57,7 @@
     <Compile Include="Configuration\SitecoreFieldConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldSettings.cs" />
     <Compile Include="Configuration\SitecoreFieldType.cs" />
+    <Compile Include="Configuration\SitecoreIdConfiguration.cs" />
     <Compile Include="Configuration\SitecoreInfoType.cs" />
     <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreLinkedOptions.cs" />

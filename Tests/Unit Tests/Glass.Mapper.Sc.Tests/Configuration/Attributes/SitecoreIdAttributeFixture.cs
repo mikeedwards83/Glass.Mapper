@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Configuration.Attributes;
@@ -24,5 +25,33 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             var sitecoreIdAttribute = new SitecoreIdAttribute();
             Assert.AreEqual(sitecoreIdAttribute.Type, typeof(ID));
         }
+
+        #region Method - Configure
+
+        [Test]
+        public void Configure_ConfigureCalled_SitecoreQueryConfigurationReturned()
+        {
+            //Assign
+            SitecoreIdAttribute attr = new SitecoreIdAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreIdConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+        }
+
+        #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public string DummyProperty { get; set; }
+        }
+
+        #endregion
     }
 }
