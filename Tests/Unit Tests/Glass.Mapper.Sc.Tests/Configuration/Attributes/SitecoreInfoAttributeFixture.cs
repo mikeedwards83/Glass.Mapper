@@ -38,5 +38,68 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             Assert.AreEqual(new SitecoreInfoAttribute().UrlOptions, SitecoreInfoUrlOptions.Default);
         }
+
+
+        #region Method - Configure
+
+        [Test]
+        public void Configure_ConfigureCalled_SitecoreInfoConfigurationReturned()
+        {
+            //Assign
+            SitecoreInfoAttribute attr = new SitecoreInfoAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreInfoConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(SitecoreInfoType.NotSet, result.Type);
+            Assert.AreEqual(SitecoreInfoUrlOptions.Default, result.UrlOptions);
+        }
+
+        [Test]
+        public void Configure_TypeSet_TypeSetOnConfiguration()
+        {
+            //Assign
+            SitecoreInfoAttribute attr = new SitecoreInfoAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+            attr.Type = SitecoreInfoType.Language;
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreInfoConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(SitecoreInfoType.Language, attr.Type);
+        }
+
+        [Test]
+        public void Configure_UrlOptionsSet_UrlOptionsSetOnConfiguration()
+        {
+            //Assign
+            SitecoreInfoAttribute attr = new SitecoreInfoAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+            attr.UrlOptions = SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded;
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreInfoConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded, attr.UrlOptions);
+        }
+
+        #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public string DummyProperty { get; set; }
+        }
+
+        #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         #region Method - Configure
 
         [Test]
-        public void Configure_ConfigureCalled_SitecoreQueryConfigurationReturned()
+        public void Configure_ConfigureCalled_SitecoreIdConfigurationReturned()
         {
             //Assign
             SitecoreIdAttribute attr = new SitecoreIdAttribute();

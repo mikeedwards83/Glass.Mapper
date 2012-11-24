@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Glass.Mapper.Configuration.Attributes;
 
@@ -20,7 +21,17 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
-            throw new NotImplementedException();
+            var config = new SitecoreInfoConfiguration();
+            base.Configure(propertyInfo, config);
+            return config;
+        }
+
+        public void Configure(PropertyInfo propertyInfo, SitecoreInfoConfiguration config)
+        {
+            config.Type = this.Type;
+            config.UrlOptions = this.UrlOptions;
+
+            base.Configure(propertyInfo, config);
         }
     }
 }
