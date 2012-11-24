@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -32,5 +33,36 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             Assert.IsTrue(new SitecoreNodeAttribute().IsLazy);
         }
+
+
+        #region Method - Configure
+
+        [Test]
+        public void Configure_ConfigureCalled_SitecoreNodeConfigurationReturned()
+        {
+            //Assign
+            var attr = new SitecoreNodeAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreNodeConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+            
+        }
+
+
+        #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public string DummyProperty { get; set; }
+        }
+
+        #endregion
     }
 }
