@@ -72,7 +72,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(SitecoreInfoType.Language, attr.Type);
+            Assert.AreEqual(SitecoreInfoType.Language, result.Type);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded, attr.UrlOptions);
+            Assert.AreEqual(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded, result.UrlOptions);
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
             var config = new SitecoreInfoConfiguration();
-            base.Configure(propertyInfo, config);
+            Configure(propertyInfo, config);
             return config;
         }
 
