@@ -8,5 +8,9 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreAttributeConfigurationLoader : AttributeConfigurationLoader<SitecoreTypeConfiguration, SitecorePropertyConfiguration>
     {
+        public SitecoreAttributeConfigurationLoader(params string[] assemblies): base(assemblies)
+        {
+
+        }
     }
 }
