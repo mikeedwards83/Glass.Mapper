@@ -17,6 +17,13 @@ namespace Glass.Mapper.Tests
             Context.Clear();
         }
 
+        [SetUp]
+        public void Setup()
+        {
+            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+        }
+
         #region Create
 
         [Test]
@@ -144,6 +151,7 @@ namespace Glass.Mapper.Tests
             var config1 = Substitute.For<AbstractTypeConfiguration>();
             config1.Type = typeof(StubClass1);
             loader1.Load().Returns(new[] { config1 });
+
 
 
             //Act
