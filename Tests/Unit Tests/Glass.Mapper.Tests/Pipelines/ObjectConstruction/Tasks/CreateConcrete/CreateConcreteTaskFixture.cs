@@ -27,9 +27,11 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         public void Execute_TypeIsInterface_NoObjectCreated()
         {
             //Assign
-            Type type = typeof (IStubInterface);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Type type = typeof(IStubInterface);
+
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(type);
@@ -53,8 +55,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         {
             //Assign
             Type type = typeof (StubClass);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(typeof (StubClass));
@@ -81,8 +84,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         {
             //Assign
             Type type = typeof (StubClass);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(typeof (StubClass));
@@ -108,8 +112,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         {
             //Assign
             Type type = typeof (StubClass);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(typeof (StubClass));

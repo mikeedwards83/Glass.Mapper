@@ -11,6 +11,8 @@ namespace Glass.Mapper.Tests
     [TestFixture]
     public class ContextFixture
     {
+        private IGlassConfiguration _glassConfig;
+
         [TearDown]
         public void TearDown()
         {
@@ -20,7 +22,7 @@ namespace Glass.Mapper.Tests
         [SetUp]
         public void Setup()
         {
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
+            _glassConfig = Substitute.For<IGlassConfiguration>();
             Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
         }
 
@@ -35,7 +37,7 @@ namespace Glass.Mapper.Tests
             Context.Clear();
 
             //Act
-            Context.Create(contextName, isDefault);
+            Context.Create(_glassConfig, contextName, isDefault);
 
             //Assert
             Assert.IsTrue(Context.Contexts.ContainsKey(contextName));
@@ -51,7 +53,7 @@ namespace Glass.Mapper.Tests
             bool isDefault = true;
 
             //Act
-            Context.Create(contextName, isDefault);
+            Context.Create(_glassConfig, contextName, isDefault);
 
             //Assert
             Assert.IsTrue(Context.Contexts.ContainsKey(contextName));
@@ -66,7 +68,7 @@ namespace Glass.Mapper.Tests
             //Assign
 
             //Act
-            Context.Create();
+            Context.Create(_glassConfig);
             
             //Assert
             Assert.IsNotNull(Context.Default);
@@ -92,7 +94,7 @@ namespace Glass.Mapper.Tests
             loader2.Load().Returns(new[] { config2 });
 
             //Act
-            var context = Context.Create();
+            var context = Context.Create(_glassConfig);
             context.Load(loader1, loader2);
 
             //Assert
@@ -122,7 +124,7 @@ namespace Glass.Mapper.Tests
             config2.Type = typeof(StubClass2);
             loader2.Load().Returns(new[] { config2 });
 
-            var context = Context.Create();
+            var context = Context.Create(_glassConfig);
             context.DataMappers.Add(dataMapper);
 
             //Act
@@ -155,7 +157,7 @@ namespace Glass.Mapper.Tests
 
 
             //Act
-            var context = Context.Create();
+            var context = Context.Create(_glassConfig);
             context.Load(loader1);
 
             //Assert
@@ -170,7 +172,7 @@ namespace Glass.Mapper.Tests
             var loader1 = Substitute.For<IConfigurationLoader>();
 
             //Act
-            var context = Context.Create();
+            var context = Context.Create(_glassConfig);
             context.Load(loader1);
 
             //Assert

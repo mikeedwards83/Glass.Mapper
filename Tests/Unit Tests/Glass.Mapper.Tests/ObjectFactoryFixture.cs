@@ -20,10 +20,10 @@ namespace Glass.Mapper.Tests
         public void Constructor_CalledWithParameters_NewInstanceCreated()
         {
             //Assign
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
+            var glassConfig = Substitute.For<IGlassConfiguration>();
             Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
 
-            var context = Context.Create();
+            var context = Context.Create(glassConfig);
             
             var objConstructTasks = new IObjectConstructionTask[] {};
             var typeResolverTasks = new ITypeResolverTask[] {};
@@ -53,10 +53,10 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_CallsEachPipelineInTurn_ReturnsConcreteObject()
         {
             //Assign
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
+            var glassConfig = Substitute.For<IGlassConfiguration>();
             Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
 
-            Context context = Context.Create();
+            var context = Context.Create(glassConfig);
             
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
@@ -117,8 +117,11 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_TypeResolverDoesntReturnResult_ExceptionThrown()
         {
             //Assign
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>(); Context context = Context.Create();
+            var glassConfig = Substitute.For<IGlassConfiguration>();
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+
+            var context = Context.Create(glassConfig);
+
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);
@@ -157,9 +160,11 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_ConfigurationResolverDoesntReturnResult_ExceptionThrown()
         {
             //Assign
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>(); 
-            Context context = Context.Create();
+            var glassConfig = Substitute.For<IGlassConfiguration>();
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+
+            var context = Context.Create(glassConfig);
+
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);
@@ -211,9 +216,11 @@ namespace Glass.Mapper.Tests
         public void InstantiateObject_ObjectCreationReturnsNull_NullReturned()
         {
             //Assign
-            Context.GlassConfig = Substitute.For<IGlassConfiguration>();
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>(); 
-            Context context = Context.Create();
+            var glassConfig = Substitute.For<IGlassConfiguration>();
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+
+            var context = Context.Create(glassConfig);
+
             IDataContext dataContext = Substitute.For<IDataContext>();
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             var type = typeof(StubClass);
@@ -276,20 +283,7 @@ namespace Glass.Mapper.Tests
         {
         }
 
-        //public class StubConfig : GlassCastleConfigBase
-        //{
-        //    public override IEnumerable<Castle.MicroKernel.Registration.ComponentRegistration<IObjectConstructionTask>> ObjectContructionTasks(string contextName)
-        //    {
-        //    }
-
-        //    public override IEnumerable<Castle.MicroKernel.Registration.ComponentRegistration<ITypeResolverTask>> TypeResolverTasks(string contextName)
-        //    {
-        //    }
-
-        //    public override IEnumerable<Castle.MicroKernel.Registration.ComponentRegistration<ITypeResolverTask>> ConfigurationResolverTasks(string contextName)
-        //    {
-        //    }
-        //}
+        
 
 
         #endregion

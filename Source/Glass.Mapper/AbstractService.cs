@@ -32,7 +32,7 @@ namespace Glass.Mapper
             if (_context == null) throw new NullReferenceException("Context is null");
 
             var args = new Dictionary<string, object>() {{"context", _context}};
-            _factory = context.DependencyResolver.Resolve<ObjectFactory>();
+            _factory = context.DependencyResolver.Resolve<ObjectFactory>(args);
         }
 
         

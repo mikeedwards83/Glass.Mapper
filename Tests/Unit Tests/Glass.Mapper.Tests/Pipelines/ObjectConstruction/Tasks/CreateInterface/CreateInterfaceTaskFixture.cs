@@ -28,8 +28,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(StubClass);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(type);
@@ -53,8 +54,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(IStubInterface);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(typeof (IStubInterface));
@@ -79,8 +81,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(IStubInterface);
+            var glassConfig = Substitute.For<IGlassConfiguration>();
 
-            Context context = Context.Create();
+            Context context = Context.Create(glassConfig);
 
             IDataContext dataContext = Substitute.For<IDataContext>();
             dataContext.RequestedType.Returns(typeof(IStubInterface));

@@ -6,29 +6,29 @@ using Sitecore.Data;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService
+    public class SitecoreService : AbstractService<SitecoreDataContext>
     {
         private Database _database;
-        private Context _context;
 
-        public SitecoreService(Database database)
+        public SitecoreService(Database database, string contextName = "Default")
+            :base(contextName)
         {
             _database = database;
         }
 
-        public SitecoreService()
+        public SitecoreService():base()
         {
-            _context = Context.Default;
         }
 
-        //public T GetItem<T>(Guid Id)
-        //{
-        //    //var config = _context[typeof (T)];
+        public T GetItem<T>(Guid Id)
+        {
+            SitecoreDataContext context = new SitecoreDataContext();
+            context.RequestedType = typeof (T);
+            context.ConstructorParameters = null;
 
-        //    //var constructor = config.ConstructorMethods.First(x => x.Key.GetParameters().Count() == 0);
+            var obj =  _factory.InstantiateObject(context);
 
-        //    return (T)null;
-
-        //}
+            return (T) obj;
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace Glass.Mapper
 
         public static IDependencyResolverFactory ResolverFactory { get; set; }
 
-        public static IGlassConfiguration GlassConfig { get; set; }
+       
 
         static Context()
         {
@@ -47,9 +47,9 @@ namespace Glass.Mapper
         /// <summary>
         /// Creates a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>
-        public static Context Create()
+        public static Context Create(IGlassConfiguration glassConfig)
         {
-            return Context.Create(DefaultContextName, true);
+            return Context.Create(glassConfig, DefaultContextName, true);
         }
 
         /// <summary>
@@ -58,15 +58,15 @@ namespace Glass.Mapper
         /// <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
         /// <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
         /// <returns></returns>
-        public static Context Create(string contextName, bool isDefault = false)
+        public static Context Create(IGlassConfiguration glassConfig, string contextName, bool isDefault = false)
         {
 
-            if(GlassConfig == null)
+            if (glassConfig == null)
                 throw new NullReferenceException("No GlassConfig set. Set the static property Context.GlassConfig");
 
             var context = new Context();
             context.DependencyResolver = ResolverFactory.GetResolver();
-            context.DependencyResolver.Load(contextName, GlassConfig);
+            context.DependencyResolver.Load(contextName, glassConfig);
             
             Contexts[contextName] = context;
 

@@ -67,6 +67,7 @@
     <Compile Include="Configuration\SitecoreParentConfiguration.cs" />
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
+    <Compile Include="ISitecoreDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
   </ItemGroup>

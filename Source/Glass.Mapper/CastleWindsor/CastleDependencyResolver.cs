@@ -1,4 +1,5 @@
-﻿using Castle.Windsor;
+﻿using System.Collections;
+using Castle.Windsor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Glass.Mapper.CastleWindsor
             if (args == null)
                 return _container.Resolve<T>();
             else
-                return _container.Resolve<T>(args);
+                return _container.Resolve<T>((IDictionary)args);
         }
 
         public void Load(string contextName, IGlassConfiguration config)
@@ -28,9 +29,6 @@ namespace Glass.Mapper.CastleWindsor
             _container = new WindsorContainer();
             castleConfig.Setup(_container, contextName);
 
-            _container.Register(castleConfig.TypeResolverTasks(contextName).ToArray());
-            _container.Register(castleConfig.ConfigurationResolverTasks(contextName).ToArray());
-            _container.Register(castleConfig.ObjectContructionTasks(contextName).ToArray());
         }
     }
 }
