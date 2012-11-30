@@ -22,46 +22,49 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         [Test]
         public void Intercept_CreatesObjectLazily_CallsInvokeMethod()
         {
+            Assert.Fail("Need to rewrite");
             //Assign
-            Type type = typeof (StubClass);
+            //Type type = typeof (StubClass);
 
-            Context context = Context.Create();
-            context.ObjectConstructionTasks.Add(new CreateConcreteTask());
-            context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
-            context.TypeResolverTasks.Add(new TypeStandardResolverTask());
+            //Context context = Context.Create();
 
-            IDataContext dataContext = Substitute.For<IDataContext>();
-            dataContext.RequestedType.Returns(type);
-            dataContext.IsLazy = true;
 
-            var configuration = Substitute.For<AbstractTypeConfiguration>();
-            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
-            configuration.Type = type;
+            //context.ObjectConstructionTasks.Add(new CreateConcreteTask());
+            //context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
+            //context.TypeResolverTasks.Add(new TypeStandardResolverTask());
 
-            var configurationResolver = Substitute.For<IConfigurationResolverTask>();
-            configurationResolver
-                .When(x=>x.Execute(Arg.Any<ConfigurationResolverArgs>()))
-                .Do(info=>
-                        {
-                            var paras = info.Args();
-                            var resolverArgs = paras[0] as ConfigurationResolverArgs;
-                            resolverArgs.Result = configuration;
-                        });
+            //IDataContext dataContext = Substitute.For<IDataContext>();
+            //dataContext.RequestedType.Returns(type);
+            //dataContext.IsLazy = true;
 
-            context.ConfigurationResolverTasks.Add(configurationResolver);
+            //var configuration = Substitute.For<AbstractTypeConfiguration>();
+            //configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
+            //configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
+            //var configurationResolver = Substitute.For<IConfigurationResolverTask>();
+            //configurationResolver
+            //    .When(x=>x.Execute(Arg.Any<ConfigurationResolverArgs>()))
+            //    .Do(info=>
+            //            {
+            //                var paras = info.Args();
+            //                var resolverArgs = paras[0] as ConfigurationResolverArgs;
+            //                resolverArgs.Result = configuration;
+            //            });
+
+            //context.ConfigurationResolverTasks.Add(configurationResolver);
+
+            //ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
          
-            LazyObjectInterceptor interceptor = new LazyObjectInterceptor(args);
-            IInvocation invocation = Substitute.For<IInvocation>();
-            invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
+            //LazyObjectInterceptor interceptor = new LazyObjectInterceptor(args);
+            //IInvocation invocation = Substitute.For<IInvocation>();
+            //invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
 
-            //Act
-            interceptor.Intercept(invocation);
+            ////Act
+            //interceptor.Intercept(invocation);
 
-            //Assert
-            Assert.IsTrue(invocation.ReturnValue is bool);
-            Assert.IsTrue((bool)invocation.ReturnValue);
+            ////Assert
+            //Assert.IsTrue(invocation.ReturnValue is bool);
+            //Assert.IsTrue((bool)invocation.ReturnValue);
 
         }
 

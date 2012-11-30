@@ -11,11 +11,14 @@ namespace Glass.Mapper
 {
     public abstract class  AbstractService <T> where T : IDataContext
     {
+
+        public ObjectFactory _factory;
         private Context _context;
 
         public AbstractService()
             :this(Context.Default)
         {
+
         }
 
         public AbstractService(string contextName)
@@ -27,33 +30,11 @@ namespace Glass.Mapper
         {
             _context = context;
             if (_context == null) throw new NullReferenceException("Context is null");
+
+            var args = new Dictionary<string, object>() {{"context", _context}};
+            _factory = context.DependencyResolver.Resolve<ObjectFactory>();
         }
 
-        public static object InstantiateObject(Context context, T dataContext)
-        {
-            //Run the get type pipeline to get the type to load
-            var typeRunner = new TypeResolver(context.TypeResolverTasks);
-            var typeArgs = new TypeResolverArgs(context, dataContext);
-            typeRunner.Run(typeArgs);
-
-            //TODO: ME - make these exceptions more specific
-            if(typeArgs.Result == null)
-                throw new NullReferenceException("Type Resolver pipeline did not return type.");
-
-            //run the pipeline to get the configuration to load
-            var configurationRunner = new ConfigurationResolver(context.ConfigurationResolverTasks);
-            var configurationArgs = new ConfigurationResolverArgs(context, dataContext, typeArgs.Result);
-            configurationRunner.Run(configurationArgs);
-
-            if (configurationArgs.Result == null)
-                throw new NullReferenceException("Configuration Resolver pipeline did not return type.");
-
-            //Run the object construction
-            var objectRunner = new ObjectConstruction(context.ObjectConstructionTasks);
-            var objectArgs = new ObjectConstructionArgs(context, dataContext, configurationArgs.Result);
-            objectRunner.Run(objectArgs);
-
-            return objectArgs.Result;
-        }
+        
     }
 }

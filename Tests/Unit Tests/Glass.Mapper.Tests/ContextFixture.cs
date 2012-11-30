@@ -63,7 +63,7 @@ namespace Glass.Mapper.Tests
             
             //Assert
             Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultName], Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
         }
         
         #endregion
@@ -90,7 +90,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultName], Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
             Assert.AreEqual(config1, Context.Default.TypeConfigurations[config1.Type]);
             Assert.AreEqual(config2, Context.Default.TypeConfigurations[config2.Type]);
         }
@@ -123,7 +123,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultName], Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
             Assert.AreEqual(config1, Context.Default.TypeConfigurations[config1.Type]);
             Assert.AreEqual(config2, Context.Default.TypeConfigurations[config2.Type]);
 
@@ -152,7 +152,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultName], Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
             Assert.AreEqual(config1, Context.Default[config1.Type]);
         }
 
@@ -167,7 +167,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultName], Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
             Assert.IsNull( Context.Default[typeof(StubClass1)]);
         }
 
