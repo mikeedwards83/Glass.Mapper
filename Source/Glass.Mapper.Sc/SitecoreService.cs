@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
@@ -20,15 +21,25 @@ namespace Glass.Mapper.Sc
         {
         }
 
-        public T GetItem<T>(Guid Id)
+        public T GetItem<T>(Guid id) where T:class 
         {
+            var item = _database.GetItem(new ID(id));
+            return CreateClass(typeof (T), item) as T;
+
+        }
+
+        private object CreateClass(Type type, Item item)
+        {
+            if (item == null) return null;
+
             SitecoreDataContext context = new SitecoreDataContext();
-            context.RequestedType = typeof (T);
+
+            context.RequestedType = type;
             context.ConstructorParameters = null;
+            context.Item = item;
+            var obj = _factory.InstantiateObject(context);
 
-            var obj =  _factory.InstantiateObject(context);
-
-            return (T) obj;
+            return obj;
         }
     }
 }

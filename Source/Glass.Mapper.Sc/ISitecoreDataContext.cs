@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sitecore.Data.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,8 @@ namespace Glass.Mapper.Sc
         public Type RequestedType { get; set; }
 
         public object[] ConstructorParameters { get; set; }
+
+        public Item Item { get; set; }
     }
+    
 }
