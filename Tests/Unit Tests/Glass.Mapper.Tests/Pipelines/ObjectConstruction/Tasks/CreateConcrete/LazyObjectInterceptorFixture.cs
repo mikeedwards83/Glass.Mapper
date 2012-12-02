@@ -33,9 +33,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
             //context.TypeResolverTasks.Add(new TypeStandardResolverTask());
 
-            //IDataContext dataContext = Substitute.For<IDataContext>();
-            //dataContext.RequestedType.Returns(type);
-            //dataContext.IsLazy = true;
+            //ITypeContext typeContext = Substitute.For<ITypeContext>();
+            //typeContext.RequestedType.Returns(type);
+            //typeContext.IsLazy = true;
 
             //var configuration = Substitute.For<AbstractTypeConfiguration>();
             //configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
@@ -53,7 +53,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             //context.ConfigurationResolverTasks.Add(configurationResolver);
 
-            //ObjectConstructionArgs args = new ObjectConstructionArgs(context, dataContext, configuration);
+            //ObjectConstructionArgs args = new ObjectConstructionArgs(context, typeContext, configuration);
          
             //LazyObjectInterceptor interceptor = new LazyObjectInterceptor(args);
             //IInvocation invocation = Substitute.For<IInvocation>();

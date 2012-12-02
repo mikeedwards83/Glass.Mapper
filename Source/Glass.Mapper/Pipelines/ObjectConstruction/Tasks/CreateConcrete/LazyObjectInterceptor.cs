@@ -31,14 +31,14 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             {
                 
                 //TODO: ME - this isn't correct. We have to send it through the pipeline again somehow
-                var serviceType = typeof(AbstractService<>).MakeGenericType(_args.DataContext.GetType());
+                var serviceType = _args.Service.GetType();
 
 
-                MethodInfo method = serviceType.GetMethod("InstantiateObject", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
+                MethodInfo method =  serviceType.GetMethod("InstantiateObject", BindingFlags.Public | BindingFlags.FlattenHierarchy);
 
-                _args.DataContext.IsLazy = false;
+                _args.TypeContext.IsLazy = false;
               
-                _actual =  method.Invoke(null, new object[] {_args.Context, _args.DataContext});
+                _actual =  method.Invoke(_args.Service, new object[] { _args.TypeContext});
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);

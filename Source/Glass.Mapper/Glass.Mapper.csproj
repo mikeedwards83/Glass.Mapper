@@ -77,12 +77,11 @@
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="CastleWindsor\GlassCastleConfigBase.cs" />
-    <Compile Include="IDataContext.cs" />
+    <Compile Include="ITypeContext.cs" />
     <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
     <Compile Include="MapperException.cs" />
-    <Compile Include="ObjectFactory.cs" />
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverArgs.cs" />
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolver.cs" />
     <Compile Include="Pipelines\DataMapperResolver\IDataMapperResolverTask.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperStandardResolverTask.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />

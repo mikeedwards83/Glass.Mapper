@@ -79,6 +79,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
       <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
       <Name>Glass.Mapper</Name>

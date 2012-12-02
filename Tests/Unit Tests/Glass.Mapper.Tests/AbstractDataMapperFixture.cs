@@ -26,11 +26,11 @@ namespace Glass.Mapper.Tests
         public void MapCmsToProperty_ValueFromCms_WritesToProperty()
         {
             //Assign
-            AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>();
             var obj = new StubClass();
-            context.Object = obj;
+
+            AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>(obj);
             _dataMapper.Property = typeof (StubClass).GetProperties().First(x => x.Name == "AProperty");
-            _dataMapper.MapFromCms(Arg.Any<AbstractDataMappingContext>()).Returns("Hello world");
+            _dataMapper.MapToProperty(Arg.Any<AbstractDataMappingContext>()).Returns("Hello world");
 
             //Act
             _dataMapper.MapCmsToProperty(context);

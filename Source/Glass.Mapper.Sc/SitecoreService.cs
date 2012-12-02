@@ -7,7 +7,7 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService : AbstractService<SitecoreDataContext>
+    public class SitecoreService : AbstractService<SitecoreTypeContext, SitecoreDataMappingContext>
     {
         private Database _database;
 
@@ -32,14 +32,20 @@ namespace Glass.Mapper.Sc
         {
             if (item == null) return null;
 
-            SitecoreDataContext context = new SitecoreDataContext();
+            SitecoreTypeContext context = new SitecoreTypeContext();
 
             context.RequestedType = type;
             context.ConstructorParameters = null;
             context.Item = item;
-            var obj = _factory.InstantiateObject(context);
+            var obj = InstantiateObject(context);
 
             return obj;
+        }
+
+        public override AbstractDataMappingContext CreateDataMappingContext(ITypeContext typeContext, Object obj)
+        {
+            var scTypeContext = typeContext as SitecoreTypeContext;
+            return new SitecoreDataMappingContext(obj, scTypeContext.Item);
         }
     }
 }

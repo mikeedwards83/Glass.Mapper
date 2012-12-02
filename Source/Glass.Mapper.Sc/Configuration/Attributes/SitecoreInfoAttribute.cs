@@ -9,6 +9,15 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreInfoAttribute : InfoAttribute
     {
+        public SitecoreInfoAttribute()
+        {
+            
+        }
+        public SitecoreInfoAttribute(SitecoreInfoType infoType)
+        {
+            Type = infoType;
+        }
+
         /// <summary>
         /// The type of information that should populate the property
         /// </summary>

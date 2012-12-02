@@ -30,5 +30,11 @@ namespace Glass.Mapper.CastleWindsor
             castleConfig.Setup(_container, contextName);
 
         }
+
+
+        public IEnumerable<T> ResolveAll<T>()
+        {
+            return _container.ResolveAll<T>();
+        }
     }
 }

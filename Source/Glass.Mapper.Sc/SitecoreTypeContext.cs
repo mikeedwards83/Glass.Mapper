@@ -6,8 +6,10 @@ using System.Text;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreDataContext : IDataContext
+    public class SitecoreTypeContext : ITypeContext
     {
+        public Item Item { get; set; }
+
         public bool InferType { get; set; }
 
         public bool IsLazy { get; set; }
@@ -15,8 +17,6 @@ namespace Glass.Mapper.Sc
         public Type RequestedType { get; set; }
 
         public object[] ConstructorParameters { get; set; }
-
-        public Item Item { get; set; }
     }
     
 }

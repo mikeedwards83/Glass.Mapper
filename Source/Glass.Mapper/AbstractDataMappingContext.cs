@@ -10,8 +10,24 @@ namespace Glass.Mapper
     /// </summary>
     public class AbstractDataMappingContext
     {
+        public AbstractDataMappingContext(object obj)
+        {
+            this.Object = obj;
+        }
 
+        /// <summary>
+        /// Value stored by the CMS
+        /// </summary>
+        public string CmsValue { get; set; }
 
-        public object Object { get; set; }
+        /// <summary>
+        /// Value stored by the Property
+        /// </summary>
+        public object PropertyValue { get; set; }
+
+        /// <summary>
+        /// The object containing the property being mapped
+        /// </summary>
+        public object Object { get; private set; }
     }
 }

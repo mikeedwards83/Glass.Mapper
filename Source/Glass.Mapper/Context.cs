@@ -94,11 +94,6 @@ namespace Glass.Mapper
         public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
 
         /// <summary>
-        /// The list of DataMappers used when loading configurations
-        /// </summary>
-        public IList<AbstractDataMapper> DataMappers { get; set; }
-
-        /// <summary>
         /// The dependency resolver used by services using the context
         /// </summary>
         public IDependencyResolver DependencyResolver { get; set; }
@@ -106,7 +101,6 @@ namespace Glass.Mapper
         private Context()
         {
             TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
-            DataMappers = new List<AbstractDataMapper>();
         }
 
         /// <summary>
@@ -133,23 +127,25 @@ namespace Glass.Mapper
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
-                DataMapperResolver runner = new DataMapperResolver(this.DataMappers);
                 foreach (var typeConfig in typeConfigurations)
                 {
-                    ProcessProperties(runner, typeConfig.Properties);
+                    ProcessProperties(typeConfig.Properties);
                     TypeConfigurations.Add(typeConfig.Type, typeConfig);
                 }
             }
 
         }
 
-        private void ProcessProperties(DataMapperResolver runner, IEnumerable<AbstractPropertyConfiguration> properties )
+        private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
+            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.ResolveAll<IDataMapperResolverTask>());
+
             foreach(var property in properties)
             {
+
                 DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);
                 args.PropertyConfiguration = property;
-
+                args.DataMappers = DependencyResolver.ResolveAll<AbstractDataMapper>();
                 runner.Run(args);
                 if(args.Result == null)
                 {
@@ -158,6 +154,7 @@ namespace Glass.Mapper
                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName));
                 }
                 property.Mapper = args.Result;
+                property.Mapper.Setup(property);
             }
         }
     }

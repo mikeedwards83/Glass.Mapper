@@ -10,7 +10,7 @@ namespace Glass.Mapper
     /// <summary>
     /// The base class for the context loading an item from the CMS
     /// </summary>
-    public interface IDataContext
+    public interface ITypeContext
     {
         bool InferType { get; }
         bool IsLazy { get; set; }

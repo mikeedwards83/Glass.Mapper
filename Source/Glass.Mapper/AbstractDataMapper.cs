@@ -7,11 +7,20 @@ using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
 {
+
+    /***** 
+    /// 
+    /// I have assumed that all CMSs at the moment will using Strings for data storage
+    /// 
+    *****/ 
+    
     /// <summary>
     /// A data mapper converts data from the CMS stored value to the .Net data type
     /// </summary>
-    public abstract class AbstractDataMapper : IDataMapperResolverTask
+    public abstract class AbstractDataMapper
     {
+        public bool ReadOnly { get;  set; }
+
         /// <summary>
         /// The property this Data Mapper will populate
         /// </summary>
@@ -23,8 +32,7 @@ namespace Glass.Mapper
         /// <param name="mappingContext"></param>
         public void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-
-            var result  = MapFromCms(mappingContext);
+            var result  = MapToProperty(mappingContext);
 
             //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
             if (result != null)
@@ -32,25 +40,42 @@ namespace Glass.Mapper
         }
 
         /// <summary>
+        /// Takes a Property value and writes it to a CMS value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        public void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        {
+            if (ReadOnly) return;
+
+            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
+            mappingContext.PropertyValue = Property.GetValue(mappingContext.Object, null);
+            MapToCms(mappingContext);
+        }
+
+
+        /// <summary>
         /// Maps data from the .Net property value to the CMS value
         /// </summary>
         /// <param name="mappingContext"></param>
         /// <returns>The value to write </returns>
-        public abstract object MapToCms(AbstractDataMappingContext mappingContext);
+        public abstract void MapToCms(AbstractDataMappingContext mappingContext);
 
         /// <summary>
         /// Maps data from the CMS value to the .Net property value
         /// </summary>
         /// <param name="mappingContext"></param>
         /// <returns></returns>
-        public abstract object MapFromCms(AbstractDataMappingContext mappingContext);
+        public abstract object MapToProperty(AbstractDataMappingContext mappingContext);
 
 
         /// <summary>
         /// Sets up the data mapper for a particular property
         /// </summary>
         /// <param name="configuration"></param>
-        public abstract void Setup(AbstractPropertyConfiguration configuration);
+        public virtual void Setup(AbstractPropertyConfiguration configuration)
+        {
+            this.Property = configuration.PropertyInfo;
+        }
 
 
         /// <summary>
@@ -59,24 +84,6 @@ namespace Glass.Mapper
         /// <param name="configuration"></param>
         /// <returns></returns>
         public abstract bool CanHandle(AbstractPropertyConfiguration configuration);
-
-        /// <summary>
-        /// Called by the DataMapperResolver pipeline to determine if this data mapper should handle the property
-        /// </summary>
-        /// <param name="args"></param>
-        public virtual void Execute(DataMapperResolverArgs args)
-        {
-            if (args.IsAborted || args.Result != null)
-                return;
-
-            bool canHandle = CanHandle(args.PropertyConfiguration);
-            
-            if(canHandle)
-            {
-                args.Result = this;
-                args.AbortPipeline();
-            }
-        }
 
         
     }
