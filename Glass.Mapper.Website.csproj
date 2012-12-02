@@ -61,13 +61,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Base.html" />
+    <Content Include="getting-started\index.html" />
     <Content Include="site.css" />
+    <Content Include="site.js" />
     <Content Include="tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="_config.yml" />
     <Content Include="_layouts\MainLayout.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="_posts\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
