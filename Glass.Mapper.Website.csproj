@@ -63,10 +63,9 @@
     <Content Include="index.html" />
     <Content Include="_config.yml" />
     <Content Include="_layouts\MainLayout.html" />
+    <Content Include="_posts\Page1.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_posts\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
