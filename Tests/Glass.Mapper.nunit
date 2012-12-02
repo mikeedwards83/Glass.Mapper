@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="Unit Tests\Glass.Mapper.Sc.Tests\bin\Debug\Glass.Mapper.Sc.Tests.dll" />
+    <assembly path="Unit Tests\Glass.Mapper.Tests\bin\Debug\Glass.Mapper.Tests.dll" />
+    <assembly path="Integration Tests\Sitecore\Glass.Mapper.Sc.Integration\bin\Debug\Glass.Mapper.Sc.Integration.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto" />
+</NUnitProject>

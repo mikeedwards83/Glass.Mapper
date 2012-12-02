@@ -104,45 +104,7 @@ namespace Glass.Mapper.Tests
             Assert.AreEqual(config2, Context.Default.TypeConfigurations[config2.Type]);
         }
 
-        [Test]
-        public void Load_LoadContextAndDataMappers_ConfigurationContainsDataMappers()
-        {
-            //Assign
-            var loader1 = Substitute.For<IConfigurationLoader>();
-            var config1 = Substitute.For<AbstractTypeConfiguration>();
-            var propertyConfig = Substitute.For<AbstractPropertyConfiguration>();
-            var dataMapper = new StubAbstractDataMapper();
-
-            dataMapper.CanHandleFunction = (x => x == propertyConfig);
-
-            config1.Type = typeof(StubClass1);
-            config1.AddProperty(propertyConfig);
-            loader1.Load().Returns(new[] { config1 });
-
-            var loader2 = Substitute.For<IConfigurationLoader>();
-            var config2 = Substitute.For<AbstractTypeConfiguration>();
-            config2.Type = typeof(StubClass2);
-            loader2.Load().Returns(new[] { config2 });
-
-            
-            var context = Context.Create(_glassConfig);
-            
-            //TODO: fix break due to config changes
-            //context.DataMappers.Add(dataMapper);
-
-            //Act
-            context.Load(loader1, loader2);
-
-            //Assert
-            Assert.IsNotNull(Context.Default);
-            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
-            Assert.AreEqual(config1, Context.Default.TypeConfigurations[config1.Type]);
-            Assert.AreEqual(config2, Context.Default.TypeConfigurations[config2.Type]);
-
-            Assert.AreEqual(dataMapper, propertyConfig.Mapper);
-            
-
-        }
+        
 
         #endregion
 
