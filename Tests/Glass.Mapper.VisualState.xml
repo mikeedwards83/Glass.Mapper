@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
   <TopNode>[0-1000]F:\Glass\Glass.Mapper\Tests\Glass.Mapper.nunit</TopNode>
-  <SelectedNode>[0-1258]F:\Glass\Glass.Mapper\Tests\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration\bin\Debug\Glass.Mapper.Sc.Integration.dll</SelectedNode>
+  <SelectedNode>[0-1254]Glass.Mapper.Sc.Integration.ConnectionFixture.ConnectionTest_ReadsSitecoreItem</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]F:\Glass\Glass.Mapper\Tests\Glass.Mapper.nunit" Expanded="true" />
-    <Node UniqueName="[0-1089]F:\Glass\Glass.Mapper\Tests\Unit Tests\Glass.Mapper.Sc.Tests\bin\Debug\Glass.Mapper.Sc.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1090]Glass" Expanded="true" />
     <Node UniqueName="[0-1091]Glass.Mapper" Expanded="true" />
     <Node UniqueName="[0-1092]Glass.Mapper.Sc" Expanded="true" />
     <Node UniqueName="[0-1093]Glass.Mapper.Sc.Tests" Expanded="true" />

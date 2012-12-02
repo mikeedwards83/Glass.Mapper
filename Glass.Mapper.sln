@@ -5,6 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{169BE7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2CDDAA46-B9F4-4965-AA06-57F2457BF785}"
 	ProjectSection(SolutionItems) = preProject
+		Tests\Glass.Mapper.Config = Tests\Glass.Mapper.Config
 		Tests\Glass.Mapper.nunit = Tests\Glass.Mapper.nunit
 	EndProjectSection
 EndProject
