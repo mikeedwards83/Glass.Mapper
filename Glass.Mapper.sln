@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2CDDAA46-B9F4-4965-AA06-57F2457BF785}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Glass.Mapper.nunit = Tests\Glass.Mapper.nunit
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{43520702-B92E-4A67-8CE5-1B3246DC9D75}"
 EndProject
