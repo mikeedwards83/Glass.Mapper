@@ -61,12 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Base.html" />
+    <Content Include="site.css" />
     <Content Include="tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="_config.yml" />
     <Content Include="_layouts\MainLayout.html" />
-    <Content Include="_posts\2012-12-02-Page1.html" />
-    <Content Include="_posts\Page1.html" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
