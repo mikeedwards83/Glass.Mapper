@@ -60,12 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="tutorial\index4.html" />
-    <Content Include="tutorial\index2.html" />
+    <Content Include="Base.html" />
     <Content Include="tutorial\index.html" />
     <Content Include="index.html" />
-    <Content Include="tutorial\index3.html" />
-    <Content Include="tutorial\index5.html" />
     <Content Include="_config.yml" />
     <Content Include="_layouts\MainLayout.html" />
     <Content Include="_posts\2012-12-02-Page1.html" />
