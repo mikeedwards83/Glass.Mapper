@@ -71,7 +71,7 @@
     <Content Include="docs\tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="_config.yml" />
-    <Content Include="_layouts\Documentation.html" />
+    <Content Include="_layouts\DocsLayout.html" />
     <Content Include="_layouts\MainLayout.html" />
   </ItemGroup>
   <ItemGroup>
