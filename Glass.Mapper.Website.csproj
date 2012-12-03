@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\index.html" />
     <Content Include="docs\api\Glass.Mapper.Context.html" />
     <Content Include="Base.html" />
