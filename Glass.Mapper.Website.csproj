@@ -60,16 +60,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="api\Glass-Mapper\index.html" />
-    <Content Include="api\index.html" />
-    <Content Include="api\Glass-Mapper\Context.html" />
+    <Content Include="Docs\api\Glass-Mapper\index.html" />
+    <Content Include="Docs\api\index.html" />
+    <Content Include="Docs\api\Glass-Mapper\Context.html" />
     <Content Include="Base.html" />
+    <Content Include="Docs\Index.html" />
     <Content Include="getting-started\index.html" />
     <Content Include="site.css" />
     <Content Include="site.js" />
-    <Content Include="tutorial\index.html" />
+    <Content Include="Docs\tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="_config.yml" />
+    <Content Include="_layouts\Documentation.html" />
     <Content Include="_layouts\MainLayout.html" />
   </ItemGroup>
   <ItemGroup>
