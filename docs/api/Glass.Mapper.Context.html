@@ -72,6 +72,20 @@ title: Glass.Mapper.Context
                     </p>
                 </td>
             </tr>
+            <tr>
+                <td>TypeConfigurations</td>
+                <td>
+                    Collection of type configurations loaded by the Context, these are the types you want Glass.Mapper to try 
+                    and load.
+                </td>
+            </tr>
+            <tr>
+                <td>DependencyResolver</td>
+                <td>
+                    The dependency resolver used by this Context, the dependency resolver is created by the resolver 
+                    factory specified by the ResolverFactory.
+                </td>
+            </tr>
         </tbody>
     </table>
     <hr />
@@ -85,9 +99,9 @@ title: Glass.Mapper.Context
         </thead>
         <tbody>
             <tr>
-                <td>Create(<br />
-                    <a href="Glass.Mapper.IGlassConfiguration.html">IGlassConfiguration</a> glassConfig,<br />
-                    string contextName,<br />
+                <td>Create(
+                    <a href="Glass.Mapper.IGlassConfiguration.html">IGlassConfiguration</a> glassConfig,
+                    string contextName,
                     string isDefault = false)
                 </td> 
                 <td>
@@ -104,6 +118,13 @@ title: Glass.Mapper.Context
                     Removes all Contexts in the Contexts properties and sets the Default Context to null.
                 </td>
             </tr>
+            <tr>
+                <td>Load(params IConfigurationLoader[] loaders)</td>
+                <td>
+                    Loads the type configurations specified by the passed in loaders.  
+                </td>
+            </tr>
+
         </tbody>
     </table>
     <hr />
