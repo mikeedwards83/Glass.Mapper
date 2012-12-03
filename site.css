@@ -1,3 +1,6 @@
 ﻿body {
     margin: 60px 10%;
 }
+.fixed {
+    position: fixed;   
+}
