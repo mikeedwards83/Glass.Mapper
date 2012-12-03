@@ -41,8 +41,36 @@ title: Glass.Mapper.Context
         </thead>
         <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                <td>ResolverFactory</td>
+                <td>
+                    <p>Static</p>
+                    <p>
+                        The factory class that is used to create the dependency resolver. By default the Context class will use
+                        the <a href="Glass.Mapper.CastleWindsor.CastleDependencyResolverFactory.html">CastleDependencyResolverFactory</a>
+                        class as the default factory. 
+                    </p>
+                    <p>
+                        If you wish to use a different IOC container set your custom factory here.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>Default</td>
+                <td>
+                    <p>Static</p>
+                    <p>
+                        The default Context used by service created by Glass.Mapper.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>Contexts</td>
+                <td>
+                    <p>Static</p>
+                    <p>
+                        Collection of all Contexts that have been created by Glass.Mapper.
+                    </p>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -57,8 +85,24 @@ title: Glass.Mapper.Context
         </thead>
         <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                <td>Create(
+                    <a href="Glass.Mapper.IGlassConfiguration.html">IGlassConfiguration</a> glassConfig,
+                    string contextName,
+                    string isDefault = false)
+                </td>
+                <td>
+                    <p>Static</p>
+                    <p>
+                        Creates a new Context and adds it to the Contexts list. If the Context is default it will 
+                        also be assigned to the Default property.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>Clear()</td>
+                <td>
+                    Removes all Contexts in the Contexts properties and sets the Default Context to null.
+                </td>
             </tr>
         </tbody>
     </table>
