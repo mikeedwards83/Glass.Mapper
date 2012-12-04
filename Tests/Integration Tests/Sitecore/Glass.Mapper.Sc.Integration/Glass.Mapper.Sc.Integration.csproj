@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionFixture.cs" />
+    <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreServiceFixture.cs" />
@@ -115,6 +116,7 @@
     <None Include="App_Config\Include\ScalabilitySettings.config.example">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="App_Config\Include\Site.config" />
     <None Include="App_Config\Include\Sitecore.Mvc.config.disabled">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

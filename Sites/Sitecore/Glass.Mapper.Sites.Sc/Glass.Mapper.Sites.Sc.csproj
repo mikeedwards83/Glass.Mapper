@@ -20,6 +20,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +145,7 @@
     <Folder Include="Properties\" />
     <Folder Include="sitecore modules\Shell\" />
     <Folder Include="sitecore modules\Web\" />
+    <Folder Include="Upload\" />
     <Folder Include="xsl\WebEdit\System\" />
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +219,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51373</DevelopmentServerPort>
+          <DevelopmentServerPort>58442</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

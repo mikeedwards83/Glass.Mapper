@@ -23,7 +23,15 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
-            return context.Item.Name;
+            switch (_config.Type)
+            {
+                case SitecoreInfoType.Name:
+
+                    return context.Item.Name;
+                    
+                default:
+                    throw new MapperException("SitecoreInfoType {0} not supported".Formatted(_config.Type));
+            }
         }
 
         public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
