@@ -18,7 +18,36 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            throw new NotImplementedException();
+            var context = mappingContext as SitecoreDataMappingContext;
+            var item = context.Item;
+            var value = context.PropertyValue;
+            switch (_config.Type)
+            {
+                case SitecoreInfoType.DisplayName:
+                    if (value is string || value == null)
+                        item[Global.Fields.DisplayName] = (value ?? string.Empty).ToString();
+                    else
+                        throw new NotSupportedException("Can't set DisplayName. Value is not of type System.String");
+                    break;
+                case SitecoreInfoType.Name:
+                    if (value is string || value == null)
+                    {
+                        //if the name is null or empty nothing should happen
+                        if ((value ?? string.Empty).ToString().IsNullOrEmpty()) 
+                            throw new MapperException("You can not set an empty or null Item name");
+
+                        if (item.Name != value.ToString())
+                        {
+                            item.Name = value.ToString();
+                        }
+
+                    }
+                    else
+                        throw new NotSupportedException("Can't set Name. Value is not of type System.String");
+                    break;
+                default:
+                    throw new NotSupportedException("You can not save SitecoreInfo {0}".Formatted(_config.Type));
+            }
         }
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)

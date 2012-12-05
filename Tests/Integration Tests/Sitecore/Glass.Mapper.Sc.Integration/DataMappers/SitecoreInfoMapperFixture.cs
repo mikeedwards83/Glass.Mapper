@@ -74,12 +74,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof(MapperException))]
+        [ExpectedException(typeof (MapperException))]
         public void MapToProperty_SitecoreInfoTypeNotSet_ThrowsException()
         {
             //Assign
             SitecoreInfoType type = SitecoreInfoType.NotSet;
-            
+
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
@@ -123,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
             Assert.AreEqual(expected, value);
         }
-        
+
         [Test]
         public void MapToProperty_SitecoreInfoTypeTemplateId_ReturnsTemplateIdAsGuid()
         {
@@ -173,6 +173,81 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
             Assert.AreEqual(expected, value);
         }
+
+        #endregion
+
+        #region Method - MapToCms
+
+        [Test]
+        public void MapToCms_SavingDisplayName_UpdatesTheDisplayNameField()
+        {
+            //Assign
+            var type = SitecoreInfoType.DisplayName;
+            var expected = "new display name";
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(config);
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+
+
+            var dataContext = new SitecoreDataMappingContext(null, item);
+            dataContext.PropertyValue = expected;
+
+            string actual = string.Empty;
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                mapper.MapToCms(dataContext);
+                actual = item[Global.Fields.DisplayName];
+                item.Editing.CancelEdit();
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void MapToCms_SavingName_UpdatesTheItemName()
+        {
+            //Assign
+            var type = SitecoreInfoType.Name;
+            var expected = "new  name";
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(config);
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+
+
+            var dataContext = new SitecoreDataMappingContext(null, item);
+            dataContext.PropertyValue = expected;
+
+            string actual = string.Empty;
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                mapper.MapToCms(dataContext);
+                actual = item.Name;
+                item.Editing.CancelEdit();
+            }
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
 
         #region Stubs

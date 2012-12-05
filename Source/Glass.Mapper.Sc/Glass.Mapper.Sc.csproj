@@ -68,6 +68,7 @@
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
