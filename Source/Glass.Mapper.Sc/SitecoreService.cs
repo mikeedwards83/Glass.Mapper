@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService : AbstractService<SitecoreTypeContext, SitecoreDataMappingContext>
+    public class SitecoreService : AbstractService<SitecoreTypeContext, SitecoreDataMappingContext>, ISitecoreService
     {
         private Database _database;
 
@@ -28,12 +29,30 @@ namespace Glass.Mapper.Sc
 
         }
 
+        public void Save<T>(T obj)
+        {
+            //TODO: should this be a separate context
+          //  SitecoreTypeContext context = new SitecoreTypeContext();
+
+            //TODO: ME - this may not work with a proxy
+            var config = GlassContext[obj.GetType()] as SitecoreTypeConfiguration;
+            var item = config.ResolveItem(obj, _database);
+            if(item == null)
+                throw new MapperException("Could not save class, item not found");
+
+            
+
+           
+
+
+        }
+
         private object CreateClass(Type type, Item item)
         {
             if (item == null) return null;
 
             SitecoreTypeContext context = new SitecoreTypeContext();
-
+            context.SitecoreService = this;
             context.RequestedType = type;
             context.ConstructorParameters = null;
             context.Item = item;
@@ -47,5 +66,7 @@ namespace Glass.Mapper.Sc
             var scTypeContext = typeContext as SitecoreTypeContext;
             return new SitecoreDataMappingContext(obj, scTypeContext.Item);
         }
+
+        
     }
 }

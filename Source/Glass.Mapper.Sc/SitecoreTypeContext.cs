@@ -8,6 +8,8 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreTypeContext : ITypeContext
     {
+        public ISitecoreService SitecoreService { get; set; }
+     
         public Item Item { get; set; }
 
         public bool InferType { get; set; }

@@ -53,6 +53,7 @@ namespace Glass.Mapper
         }
 
 
+
         /// <summary>
         /// Maps data from the .Net property value to the CMS value
         /// </summary>

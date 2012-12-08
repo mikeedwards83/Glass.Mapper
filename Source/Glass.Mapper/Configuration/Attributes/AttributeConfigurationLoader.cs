@@ -85,6 +85,8 @@ namespace Glass.Mapper.Configuration.Attributes
                                 if(property != null)
                                     config.AddProperty(property);
                             }
+
+                            ConfigCreated(config);
                         }
                     }
                 }
@@ -98,7 +100,16 @@ namespace Glass.Mapper.Configuration.Attributes
             return configs;
         }
 
-        protected IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
+       /// <summary>
+       /// This method is called after a configuration has been loaded. Use this method for any specific
+       /// post configuration processing
+       /// </summary>
+       /// <param name="config"></param>
+       protected virtual void ConfigCreated(AbstractTypeConfiguration config)
+       {
+       }
+
+       protected IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
         {
             //we have to get the property definition from the declaring type so that 
             //we can set private setters.

@@ -45,6 +45,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 //here we create a concrete version of the class
                 args.Result = CreateObject(args);
                 args.AbortPipeline();
+
+                
             }
         }
 
