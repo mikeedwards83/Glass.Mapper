@@ -31,6 +31,8 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var glassConfig = Substitute.For<IGlassConfiguration>();
             var service = Substitute.For<IAbstractService>();
 
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+            Context.ResolverFactory.GetResolver().Returns(Substitute.For<IDependencyResolver>());
             Context context = Context.Create(glassConfig);
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
@@ -58,6 +60,8 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var glassConfig = Substitute.For<IGlassConfiguration>();
             var service = Substitute.For<IAbstractService>();
 
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+            Context.ResolverFactory.GetResolver().Returns(Substitute.For<IDependencyResolver>());
             Context context = Context.Create(glassConfig);
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();

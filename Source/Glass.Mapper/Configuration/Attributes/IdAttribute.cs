@@ -19,7 +19,7 @@ namespace Glass.Mapper.Configuration.Attributes
         {
             if(!AcceptedTypes.Any(x=>propertyInfo.PropertyType == x))
                 throw new ConfigurationException("Property type {0} not supported as an ID on {1}"
-                    .Formatted(propertyInfo.PropertyType.FullName, propertyInfo.PropertyType.DeclaringType.FullName));
+                    .Formatted(propertyInfo.PropertyType.FullName, propertyInfo.DeclaringType.FullName));
 
             config.Type = propertyInfo.PropertyType;
             base.Configure(propertyInfo, config);

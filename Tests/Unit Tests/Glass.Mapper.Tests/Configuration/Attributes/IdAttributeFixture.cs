@@ -19,12 +19,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             Assert.IsTrue(typeof(AbstractPropertyAttribute).IsAssignableFrom(typeof(IdAttribute)));
         }
 
-        public void Can_Set_IDType()
-        {
-           var idAttribute = new StubIdAttribute(typeof(int));
-           Assert.AreEqual(idAttribute.Type, typeof(int));
-        }
-
         #region Configure
 
         [Test]
