@@ -8,7 +8,7 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService : AbstractService<SitecoreTypeCreationContext, SitecoreDataMappingContext>, ISitecoreService
+    public class SitecoreService : AbstractService<SitecoreDataMappingContext>, ISitecoreService
     {
         private Database _database;
 

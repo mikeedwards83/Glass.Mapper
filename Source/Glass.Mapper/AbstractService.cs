@@ -9,8 +9,7 @@ using Glass.Mapper.Pipelines.ConfigurationResolver;
 
 namespace Glass.Mapper
 {
-    public abstract class AbstractService<T, TK> : IAbstractService
-        where T : AbstractTypeCreationContext
+    public abstract class AbstractService<TK> : IAbstractService
         where TK : AbstractDataMappingContext
     {
         protected Context GlassContext { get; set; }
@@ -44,9 +43,8 @@ namespace Glass.Mapper
         public AbstractService(Context glassContext)
         {
             GlassContext = glassContext;
-            if (GlassContext == null) throw new NullReferenceException("Context is null");
-
-            var args = new Dictionary<string, object>() {{"context", GlassContext}};
+            if (GlassContext == null) 
+                throw new NullReferenceException("Context is null");
 
             ObjectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
             TypeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
