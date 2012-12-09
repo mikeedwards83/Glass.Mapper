@@ -5,6 +5,7 @@ using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -52,7 +53,60 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Method - Save
+
+        [Test]
+        public void Save_ItemDisplayNameChanged_SavesDisplayName()
+        {
+            //Assign
+            var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
+            string expected = "new name";
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var currentItem = db.GetItem(itemPath);
+            var service = new SitecoreService(db);
+            var cls = new StubSaving();
+            cls.Id = currentItem.ID.Guid;
+
+            //setup item
+            using (new SecurityDisabler())
+            {
+                currentItem.Editing.BeginEdit();
+                currentItem[Global.Fields.DisplayName] = "old name";
+                currentItem.Editing.EndEdit();
+            }
+
+
+            using (new SecurityDisabler())
+            {
+                //Act
+                cls.Name = expected;
+                service.Save(cls);
+
+                //Assert
+                var newItem = db.GetItem(itemPath);
+
+                Assert.AreEqual(expected, newItem[Global.Fields.DisplayName]);
+            }
+
+        }
+
+        #endregion
+
+
+
         #region Stubs
+
+        [SitecoreType]
+        public class StubSaving
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreInfo(Type = SitecoreInfoType.DisplayName)]
+            public virtual string Name { get; set; }
+        }
 
         [SitecoreType]
         public class StubClass{

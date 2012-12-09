@@ -98,6 +98,7 @@ namespace Glass.Mapper.Sc.DataMappers
         public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
         {
             _config = configuration as SitecoreInfoConfiguration;
+            this.ReadOnly = _config.Type != SitecoreInfoType.DisplayName && _config.Type != SitecoreInfoType.Name;
             base.Setup(configuration);
         }
 

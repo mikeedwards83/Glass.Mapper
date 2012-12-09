@@ -72,7 +72,8 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         public class StubIdAttribute : IdAttribute
         {
-            public StubIdAttribute(Type type):base(type)
+            public StubIdAttribute(Type type)
+                : base(new []{ type })
             {
 
             }

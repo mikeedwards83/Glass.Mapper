@@ -33,13 +33,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             Context context = Context.Create(glassConfig);
 
-            ITypeContext typeContext = Substitute.For<ITypeContext>();
-            typeContext.RequestedType.Returns(type);
+            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext.RequestedType.Returns(type);
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, typeContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
 
             //Act
             _task.Execute(args);
@@ -60,13 +60,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             Context context = Context.Create(glassConfig);
 
-            ITypeContext typeContext = Substitute.For<ITypeContext>();
-            typeContext.RequestedType.Returns(typeof (IStubInterface));
+            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext.RequestedType.Returns(typeof (IStubInterface));
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, typeContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
 
             //Act
             _task.Execute(args);
@@ -88,13 +88,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             Context context = Context.Create(glassConfig);
 
-            ITypeContext typeContext = Substitute.For<ITypeContext>();
-            typeContext.RequestedType.Returns(typeof(IStubInterface));
+            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext.RequestedType.Returns(typeof(IStubInterface));
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, typeContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
             args.Result = string.Empty;
 
             //Act

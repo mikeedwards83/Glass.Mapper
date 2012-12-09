@@ -72,9 +72,10 @@
     <Compile Include="Global.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
-    <Compile Include="SitecoreTypeContext.cs" />
+    <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
+    <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>

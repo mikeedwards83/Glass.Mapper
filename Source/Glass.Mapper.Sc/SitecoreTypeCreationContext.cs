@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreTypeContext : ITypeContext
+    public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
         public ISitecoreService SitecoreService { get; set; }
      

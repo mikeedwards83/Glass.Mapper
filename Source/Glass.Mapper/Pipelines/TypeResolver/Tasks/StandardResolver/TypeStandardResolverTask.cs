@@ -9,9 +9,9 @@ namespace Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver
     {
         public void Execute(TypeResolverArgs args)
         {
-            if(!args.TypeContext.InferType)
+            if(!args.AbstractTypeCreationContext.InferType)
             {
-                args.Result = args.TypeContext.RequestedType;
+                args.Result = args.AbstractTypeCreationContext.RequestedType;
                 args.AbortPipeline();
             }
 

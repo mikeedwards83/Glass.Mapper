@@ -8,7 +8,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// <summary>
         /// Context of the item being created
         /// </summary>
-        public ITypeContext TypeContext { get; private set; }
+        public AbstractTypeCreationContext AbstractTypeCreationContext { get; private set; }
 
         /// <summary>
         /// The configuration to use to load the object
@@ -21,12 +21,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
 
         public ObjectConstructionArgs(
             Context context, 
-            ITypeContext typeContext, 
+            AbstractTypeCreationContext abstractTypeCreationContext, 
             AbstractTypeConfiguration configuration,
             IAbstractService service)
             : base(context)
         {
-            TypeContext = typeContext;
+            AbstractTypeCreationContext = abstractTypeCreationContext;
             Configuration = configuration;
             Service = service;
         }

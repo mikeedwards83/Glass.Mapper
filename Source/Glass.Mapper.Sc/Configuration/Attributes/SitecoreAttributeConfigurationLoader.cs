@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             //a class
             scConfig.IdConfig = config.Properties.FirstOrDefault(x => x is SitecoreIdConfiguration) as SitecoreIdConfiguration;
 
-            var scInfos = config.Properties.Where(x => x is SitecoreIdConfiguration).Cast<SitecoreInfoConfiguration>();
+            var scInfos = config.Properties.Where(x => x is SitecoreInfoConfiguration).Cast<SitecoreInfoConfiguration>();
             scConfig.LanguageConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Language);
             scConfig.VersionConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Version);
 

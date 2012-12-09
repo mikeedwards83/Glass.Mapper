@@ -8,7 +8,7 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService : AbstractService<SitecoreTypeContext, SitecoreDataMappingContext>, ISitecoreService
+    public class SitecoreService : AbstractService<SitecoreTypeCreationContext, SitecoreDataMappingContext>, ISitecoreService
     {
         private Database _database;
 
@@ -40,31 +40,42 @@ namespace Glass.Mapper.Sc
             if(item == null)
                 throw new MapperException("Could not save class, item not found");
 
-            
+            SitecoreTypeSavingContext savingContext = new SitecoreTypeSavingContext();
+            savingContext.Config = config;
+            savingContext.Item = item;
+            savingContext.Object = obj;
 
-           
+            item.Editing.BeginEdit();
 
+            SaveObject(savingContext);
 
+            item.Editing.EndEdit();
         }
 
         private object CreateClass(Type type, Item item)
         {
             if (item == null) return null;
 
-            SitecoreTypeContext context = new SitecoreTypeContext();
-            context.SitecoreService = this;
-            context.RequestedType = type;
-            context.ConstructorParameters = null;
-            context.Item = item;
-            var obj = InstantiateObject(context);
+            SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
+            creationContext.SitecoreService = this;
+            creationContext.RequestedType = type;
+            creationContext.ConstructorParameters = null;
+            creationContext.Item = item;
+            var obj = InstantiateObject(creationContext);
 
             return obj;
         }
 
-        public override AbstractDataMappingContext CreateDataMappingContext(ITypeContext typeContext, Object obj)
+        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
-            var scTypeContext = typeContext as SitecoreTypeContext;
+            var scTypeContext = abstractTypeCreationContext as SitecoreTypeCreationContext;
             return new SitecoreDataMappingContext(obj, scTypeContext.Item);
+        }
+
+        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
+        {
+            var scContext = creationContext as SitecoreTypeSavingContext;
+            return new SitecoreDataMappingContext(scContext.Object, scContext.Item);
         }
 
         
