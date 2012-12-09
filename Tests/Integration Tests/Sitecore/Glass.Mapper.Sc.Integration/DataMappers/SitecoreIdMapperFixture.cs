@@ -20,6 +20,29 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             _db = Sitecore.Configuration.Factory.GetDatabase("master");
         }
 
+
+        #region Property - ReadOnly
+
+        [Test]
+        public void ReadOnly_ReturnsTrue()
+        {
+            //Assign
+            var mapper = new SitecoreIdMapper();
+            bool expected = true;
+
+            //Act
+            bool value = mapper.ReadOnly;
+
+
+            //Assert
+            Assert.AreEqual(expected,value);
+
+        }
+
+
+
+        #endregion
+
         #region Method - MapToProperty
 
         [Test]
@@ -53,7 +76,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreIdMapper();
             var config = new SitecoreIdConfiguration();
-            var property = typeof(Stub).GetProperty("IDId");
+            var property = typeof(Stub).GetProperty("IDId"); 
 
             config.PropertyInfo = property;
 
@@ -97,6 +120,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
             //Exception, not asserts
         }
+
+
         #endregion
 
         #region Stubs

@@ -11,6 +11,11 @@ namespace Glass.Mapper.Sc.DataMappers
     {
         private SitecoreIdConfiguration _config;
 
+        public SitecoreIdMapper()
+        {
+            this.ReadOnly = true;
+        }
+
         public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
         {
             _config = configuration as SitecoreIdConfiguration;
