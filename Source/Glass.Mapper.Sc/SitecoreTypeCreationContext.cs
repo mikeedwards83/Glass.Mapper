@@ -11,14 +11,6 @@ namespace Glass.Mapper.Sc
         public ISitecoreService SitecoreService { get; set; }
      
         public Item Item { get; set; }
-
-        public bool InferType { get; set; }
-
-        public bool IsLazy { get; set; }
-
-        public Type RequestedType { get; set; }
-
-        public object[] ConstructorParameters { get; set; }
     }
     
 }

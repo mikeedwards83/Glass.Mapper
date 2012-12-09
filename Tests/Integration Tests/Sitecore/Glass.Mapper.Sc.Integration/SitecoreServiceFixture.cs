@@ -111,6 +111,8 @@ namespace Glass.Mapper.Sc.Integration
         [SitecoreType]
         public class StubClass{
         }
+
+
         [SitecoreType]
         public class StubClassWithProperty
         {
