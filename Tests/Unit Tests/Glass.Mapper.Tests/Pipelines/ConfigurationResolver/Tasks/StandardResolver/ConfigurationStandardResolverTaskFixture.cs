@@ -29,8 +29,11 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             
             var loader = Substitute.For<IConfigurationLoader>();
             loader.Load().Returns(new [] {configuration});
-            
+
+            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+            Context.ResolverFactory.GetResolver().Returns(Substitute.For<IDependencyResolver>());
             var context = Context.Create(glassConfig);
+            
             context.Load(loader);
 
             var args = new ConfigurationResolverArgs(context, null, type);

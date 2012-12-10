@@ -10,11 +10,11 @@ namespace Glass.Mapper
     /// <summary>
     /// The base class for the context loading an item from the CMS
     /// </summary>
-    public interface ITypeContext
+    public abstract class AbstractTypeCreationContext
     {
-        bool InferType { get; }
-        bool IsLazy { get; set; }
-        Type RequestedType { get; }
-        object[] ConstructorParameters { get; }
+        public bool InferType { get; set; }
+        public bool IsLazy { get; set; }
+        public Type RequestedType { get; set; }
+        public object[] ConstructorParameters { get; set; }
     }
 }

@@ -10,10 +10,10 @@ using Glass.Mapper.Pipelines.ConfigurationResolver;
 namespace Glass.Mapper
 {
     public abstract class AbstractService<T, TK> : IAbstractService
-        where T : ITypeContext
+        where T : AbstractTypeCreationContext
         where TK : AbstractDataMappingContext
     {
-        private Context _context;
+        protected Context GlassContext { get; set; }
 
         /// <summary>
         /// The list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
@@ -41,23 +41,23 @@ namespace Glass.Mapper
         {
         }
 
-        public AbstractService(Context context)
+        public AbstractService(Context glassContext)
         {
-            _context = context;
-            if (_context == null) throw new NullReferenceException("Context is null");
+            GlassContext = glassContext;
+            if (GlassContext == null) throw new NullReferenceException("Context is null");
 
-            var args = new Dictionary<string, object>() {{"context", _context}};
+            var args = new Dictionary<string, object>() {{"context", GlassContext}};
 
-            ObjectConstructionTasks = context.DependencyResolver.ResolveAll<IObjectConstructionTask>();
-            TypeResolverTasks = context.DependencyResolver.ResolveAll<ITypeResolverTask>();
-            ConfigurationResolverTasks = context.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
+            ObjectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
+            TypeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
+            ConfigurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
         }
 
-        public object InstantiateObject(ITypeContext typeContext)
+        public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //Run the get type pipeline to get the type to load
             var typeRunner = new TypeResolver(TypeResolverTasks);
-            var typeArgs = new TypeResolverArgs(_context, typeContext);
+            var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
             typeRunner.Run(typeArgs);
 
             //TODO: ME - make these exceptions more specific
@@ -66,7 +66,7 @@ namespace Glass.Mapper
 
             //run the pipeline to get the configuration to load
             var configurationRunner = new ConfigurationResolver(ConfigurationResolverTasks);
-            var configurationArgs = new ConfigurationResolverArgs(_context, typeContext, typeArgs.Result);
+            var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, typeArgs.Result);
             configurationRunner.Run(configurationArgs);
 
             if (configurationArgs.Result == null)
@@ -76,7 +76,7 @@ namespace Glass.Mapper
 
             //Run the object construction
             var objectRunner = new ObjectConstruction(ObjectConstructionTasks);
-            var objectArgs = new ObjectConstructionArgs(_context, typeContext, config, this);
+            var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, config, this);
             objectRunner.Run(objectArgs);
 
            
@@ -84,15 +84,36 @@ namespace Glass.Mapper
             return objectArgs.Result;
         }
 
-        public abstract AbstractDataMappingContext CreateDataMappingContext(ITypeContext context, object obj);
+        public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
+        {
+            //TODO: ME - make this a pipeline
+             //create properties 
+            AbstractDataMappingContext dataMappingContext =  CreateDataMappingContext(abstractTypeSavingContext);
+            abstractTypeSavingContext.Config.Properties.ForEach(x => x.Mapper.MapPropertyToCms(dataMappingContext));
+
+        }
+
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data to a class
+        /// </summary>
+        /// <param name="creationContext"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
 
 
-
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data from a class
+        /// </summary>
+        /// <param name="creationContext"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 
     public interface IAbstractService
     {
-        object InstantiateObject(ITypeContext typeContext);
-        AbstractDataMappingContext CreateDataMappingContext(ITypeContext context, object obj);
+        object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
+        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
     }
 }

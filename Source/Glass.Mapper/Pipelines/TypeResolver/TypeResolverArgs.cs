@@ -5,12 +5,12 @@ namespace Glass.Mapper.Pipelines.TypeResolver
 {
     public class TypeResolverArgs : AbstractPipelineArgs
     {
-        public ITypeContext TypeContext { get; private set; }
+        public AbstractTypeCreationContext AbstractTypeCreationContext { get; private set; }
         public Type Result { get; set; }
 
-        public TypeResolverArgs(Context context, ITypeContext typeContext):base(context)
+        public TypeResolverArgs(Context context, AbstractTypeCreationContext abstractTypeCreationContext):base(context)
         {
-            TypeContext = typeContext;
+            AbstractTypeCreationContext = abstractTypeCreationContext;
         }
 
     }

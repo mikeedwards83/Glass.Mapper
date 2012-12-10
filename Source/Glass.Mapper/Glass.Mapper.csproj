@@ -49,6 +49,7 @@
     <Compile Include="AbstractDataMapper.cs" />
     <Compile Include="AbstractDataMappingContext.cs" />
     <Compile Include="AbstractService.cs" />
+    <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="CastleWindsor\CastleDependencyResolver.cs" />
     <Compile Include="CastleWindsor\CastleDependencyResolverFactory.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="CastleWindsor\GlassCastleConfigBase.cs" />
-    <Compile Include="ITypeContext.cs" />
+    <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />

@@ -23,7 +23,8 @@ namespace Glass.Mapper.Sc.Integration
         {
             return new[]
                        {
-                           Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient()
+                           Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient(),
+                           Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleTransient()
                        };
 
         }

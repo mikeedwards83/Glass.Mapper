@@ -7,21 +7,23 @@ namespace Glass.Mapper.Configuration.Attributes
 {
     public abstract class IdAttribute : AbstractPropertyAttribute
     {
-        public IdAttribute(Type type)
+        public IdAttribute(IEnumerable<Type> acceptedTypes)
         {
-            this.Type = type;
+            this.AcceptedTypes= acceptedTypes;
         }
 
-        public Type Type { get; set; }
+        protected IEnumerable<Type> AcceptedTypes { get; private set; }
 
-        public  void Configure(System.Reflection.PropertyInfo propertyInfo, IdConfiguration config)
+
+        public virtual void Configure(System.Reflection.PropertyInfo propertyInfo, IdConfiguration config)
         {
-            if(propertyInfo.PropertyType != Type)
-                throw new ConfigurationException("Property type {0} does not match required type {1} on {2}"
-                    .Formatted(propertyInfo.PropertyType.FullName, Type.FullName, propertyInfo.DeclaringType.FullName));
+            if(!AcceptedTypes.Any(x=>propertyInfo.PropertyType == x))
+                throw new ConfigurationException("Property type {0} not supported as an ID on {1}"
+                    .Formatted(propertyInfo.PropertyType.FullName, propertyInfo.DeclaringType.FullName));
 
-            config.Type = this.Type;
+            config.Type = propertyInfo.PropertyType;
             base.Configure(propertyInfo, config);
+        
         }
     }
 }

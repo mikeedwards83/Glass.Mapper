@@ -19,12 +19,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             Assert.IsTrue(typeof(IdAttribute).IsAssignableFrom(typeof(SitecoreIdAttribute)));
         }
 
-        [Test]
-        public void SitecoreIdAttribute_Is_ID_Type()
-        {
-            var sitecoreIdAttribute = new SitecoreIdAttribute();
-            Assert.AreEqual(sitecoreIdAttribute.Type, typeof(ID));
-        }
+       
 
         #region Method - Configure
 

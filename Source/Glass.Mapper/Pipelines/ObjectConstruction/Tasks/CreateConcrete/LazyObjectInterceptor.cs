@@ -36,9 +36,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
                 MethodInfo method =  serviceType.GetMethod("InstantiateObject", BindingFlags.Public | BindingFlags.FlattenHierarchy);
 
-                _args.TypeContext.IsLazy = false;
+                _args.AbstractTypeCreationContext.IsLazy = false;
               
-                _actual =  method.Invoke(_args.Service, new object[] { _args.TypeContext});
+                _actual =  method.Invoke(_args.Service, new object[] { _args.AbstractTypeCreationContext});
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);
