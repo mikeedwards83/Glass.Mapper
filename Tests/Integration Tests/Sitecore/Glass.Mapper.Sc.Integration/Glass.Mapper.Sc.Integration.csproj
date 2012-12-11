@@ -69,6 +69,7 @@
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreServiceFixture.cs" />

@@ -64,7 +64,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -88,7 +88,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -115,7 +115,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -139,7 +139,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var expected = item.TemplateID.Guid;
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -165,7 +165,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var expected = item.TemplateID;
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -195,7 +195,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
 
 
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
             dataContext.PropertyValue = expected;
 
             string actual = string.Empty;
@@ -230,7 +230,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
 
 
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
             dataContext.PropertyValue = expected;
 
             string actual = string.Empty;
