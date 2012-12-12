@@ -69,6 +69,7 @@
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
+    <Compile Include="DataMappers\SitecoreParentMapper.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />

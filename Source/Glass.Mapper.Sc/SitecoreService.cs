@@ -8,7 +8,7 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class SitecoreService : AbstractService<SitecoreTypeCreationContext, SitecoreDataMappingContext>, ISitecoreService
+    public class SitecoreService : AbstractService<SitecoreDataMappingContext>, ISitecoreService
     {
         private Database _database;
 
@@ -52,7 +52,7 @@ namespace Glass.Mapper.Sc
             item.Editing.EndEdit();
         }
 
-        private object CreateClass(Type type, Item item)
+        public object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false)
         {
             if (item == null) return null;
 
@@ -61,6 +61,8 @@ namespace Glass.Mapper.Sc
             creationContext.RequestedType = type;
             creationContext.ConstructorParameters = null;
             creationContext.Item = item;
+            creationContext.InferType = inferType;
+            creationContext.IsLazy = isLazy;
             var obj = InstantiateObject(creationContext);
 
             return obj;
@@ -69,13 +71,13 @@ namespace Glass.Mapper.Sc
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var scTypeContext = abstractTypeCreationContext as SitecoreTypeCreationContext;
-            return new SitecoreDataMappingContext(obj, scTypeContext.Item);
+            return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
         }
 
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
         {
             var scContext = creationContext as SitecoreTypeSavingContext;
-            return new SitecoreDataMappingContext(scContext.Object, scContext.Item);
+            return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }
 
         

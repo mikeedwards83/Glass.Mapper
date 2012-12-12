@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             
             mapper.Setup(config);
 
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
             var expected = item.ID.Guid;
 
             //Act
@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
             var expected = item.ID;
 
             //Act
@@ -111,7 +111,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item);
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
             var expected = item.ID;
 
             //Act
