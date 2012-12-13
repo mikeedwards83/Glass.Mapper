@@ -18,9 +18,13 @@ namespace Glass.Mapper.Sc
             _database = database;
         }
 
-        public SitecoreService():base()
+        public SitecoreService(string databaseName, string contextName = "Default")
+            : base(contextName)
         {
+            _database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
         }
+
+
 
         public T GetItem<T>(Guid id) where T:class 
         {

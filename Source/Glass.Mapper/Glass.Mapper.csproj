@@ -104,6 +104,11 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceProxyHook.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />
+    <Compile Include="Pipelines\ObjectSaving\IObjectSavingTask.cs" />
+    <Compile Include="Pipelines\ObjectSaving\ObjectSaving.cs" />
+    <Compile Include="Pipelines\ObjectSaving\ObjectSavingArgs.cs" />
+    <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTask.cs" />
+    <Compile Include="Pipelines\PipelineException.cs" />
     <Compile Include="Pipelines\TypeResolver\ITypeResolverTask.cs" />
     <Compile Include="Pipelines\TypeResolver\Tasks\StandardResolver\TypeStandardResolverTask.cs" />
     <Compile Include="Pipelines\TypeResolver\TypeResolverArgs.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 
@@ -29,6 +30,13 @@ namespace Glass.Mapper
         /// </summary>
         private IEnumerable<IConfigurationResolverTask> ConfigurationResolverTasks { get; set; }
 
+        /// <summary>
+        /// The list of tasks to be performed by the Object Saving Pipeline. Called in the order specified.
+        /// </summary>
+        private IEnumerable<IObjectSavingTask> ObjectSavingTasks { get; set; }
+
+
+
         public AbstractService()
             : this(Context.Default)
         {
@@ -49,6 +57,7 @@ namespace Glass.Mapper
             ObjectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
             TypeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
             ConfigurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
+            ObjectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
         }
 
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
@@ -84,11 +93,10 @@ namespace Glass.Mapper
 
         public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
-            //TODO: ME - make this a pipeline
-             //create properties 
-            AbstractDataMappingContext dataMappingContext =  CreateDataMappingContext(abstractTypeSavingContext);
-            abstractTypeSavingContext.Config.Properties.ForEach(x => x.Mapper.MapPropertyToCms(dataMappingContext));
-
+            //Run the object construction
+            var savingRunner = new ObjectSaving(ObjectSavingTasks);
+            var savingArgs = new ObjectSavingArgs(GlassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext, this);
+            savingRunner.Run(savingArgs);
         }
 
         /// <summary>
@@ -112,6 +120,20 @@ namespace Glass.Mapper
     public interface IAbstractService
     {
         object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
+          /// <summary>
+        /// Used to create the context used by DataMappers to map data to a class
+        /// </summary>
+        /// <param name="creationContext">The Type Creation Context used to create the instance</param>
+        /// <param name="obj">The newly instantiated object without any data mapped</param>
+        /// <returns></returns>
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
+
+
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data from a class
+        /// </summary>
+        /// <param name="creationContext">The Saving Context</param>
+        /// <returns></returns>
+        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 }
