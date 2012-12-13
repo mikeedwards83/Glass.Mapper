@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
@@ -13,8 +8,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     {
         private readonly ObjectConstructionArgs _args;
 
-
-        private object _actual = null;
+        private object _actual;
 
         public LazyObjectInterceptor(ObjectConstructionArgs args)
         {
