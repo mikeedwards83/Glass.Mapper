@@ -29,16 +29,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //create class
             if (_actual == null)
             {
-                
-                //TODO: ME - this isn't correct. We have to send it through the pipeline again somehow
-                var serviceType = _args.Service.GetType();
-
-
-                MethodInfo method =  serviceType.GetMethod("InstantiateObject", BindingFlags.Public | BindingFlags.FlattenHierarchy);
-
                 _args.AbstractTypeCreationContext.IsLazy = false;
-              
-                _actual =  method.Invoke(_args.Service, new object[] { _args.AbstractTypeCreationContext});
+                _actual = _args.Service.InstantiateObject(_args.AbstractTypeCreationContext);
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);

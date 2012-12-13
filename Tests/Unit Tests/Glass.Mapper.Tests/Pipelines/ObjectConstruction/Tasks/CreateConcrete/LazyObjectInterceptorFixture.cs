@@ -22,49 +22,30 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         [Test]
         public void Intercept_CreatesObjectLazily_CallsInvokeMethod()
         {
-            Assert.Fail("Need to rewrite");
             //Assign
-            //Type type = typeof (StubClass);
+            var typeContext = Substitute.For<AbstractTypeCreationContext>();
+            var config = Substitute.For<AbstractTypeConfiguration>();
+            var service = Substitute.For<IAbstractService>();
 
-            //Context context = Context.Create();
+            var args = new ObjectConstructionArgs(
+                null,
+                typeContext, 
+                config,
+                service
+                );
 
+            var invocation = Substitute.For<IInvocation>();
+            invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
+            service.InstantiateObject(typeContext).Returns(new StubClass());
 
-            //context.ObjectConstructionTasks.Add(new CreateConcreteTask());
-            //context.ObjectConstructionTasks.Add(new CreateInterfaceTask());
-            //context.TypeResolverTasks.Add(new TypeStandardResolverTask());
+            var interceptor = new LazyObjectInterceptor(args);
 
-            //ITypeContext typeContext = Substitute.For<ITypeContext>();
-            //typeContext.RequestedType.Returns(type);
-            //typeContext.IsLazy = true;
+            //Act
+            interceptor.Intercept(invocation);
 
-            //var configuration = Substitute.For<AbstractTypeConfiguration>();
-            //configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
-            //configuration.Type = type;
+            //Assert
+            Assert.IsTrue((bool)invocation.ReturnValue);
 
-            //var configurationResolver = Substitute.For<IConfigurationResolverTask>();
-            //configurationResolver
-            //    .When(x=>x.Execute(Arg.Any<ConfigurationResolverArgs>()))
-            //    .Do(info=>
-            //            {
-            //                var paras = info.Args();
-            //                var resolverArgs = paras[0] as ConfigurationResolverArgs;
-            //                resolverArgs.Result = configuration;
-            //            });
-
-            //context.ConfigurationResolverTasks.Add(configurationResolver);
-
-            //ObjectConstructionArgs args = new ObjectConstructionArgs(context, typeContext, configuration);
-         
-            //LazyObjectInterceptor interceptor = new LazyObjectInterceptor(args);
-            //IInvocation invocation = Substitute.For<IInvocation>();
-            //invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
-
-            ////Act
-            //interceptor.Intercept(invocation);
-
-            ////Assert
-            //Assert.IsTrue(invocation.ReturnValue is bool);
-            //Assert.IsTrue((bool)invocation.ReturnValue);
 
         }
 
