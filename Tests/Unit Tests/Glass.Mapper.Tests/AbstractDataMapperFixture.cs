@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using NSubstitute;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Tests
 {
     [TestFixture]
     public class AbstractDataMapperFixture
     {
-        private AbstractDataMapper _dataMapper;
 
         [SetUp]
         public void Setup()
         {
-            _dataMapper = Substitute.For<AbstractDataMapper>();
 
 
         }
@@ -27,17 +26,19 @@ namespace Glass.Mapper.Tests
         {
             //Assign
             var obj = new StubClass();
+            var config = Substitute.For<AbstractPropertyConfiguration>();
+            var  dataMapper = new StubMapper();
 
             AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>(obj);
-            _dataMapper.Property = typeof (StubClass).GetProperties().First(x => x.Name == "AProperty");
-            _dataMapper.MapToProperty(Arg.Any<AbstractDataMappingContext>()).Returns("Hello world");
+           dataMapper.Setup(config);
+            config.PropertyInfo = typeof(StubClass).GetProperties().First(x => x.Name == "AProperty");
 
             //Act
-            _dataMapper.MapCmsToProperty(context);
+            dataMapper.MapCmsToProperty(context);
 
             //Assert
             Assert.AreEqual("Hello world", obj.AProperty);
-
+            Assert.AreEqual(context, dataMapper.MappingContext);
 
         }
 
@@ -50,6 +51,27 @@ namespace Glass.Mapper.Tests
             public string AProperty { get; set; }
         }
 
+        public class StubMapper : AbstractDataMapper
+        {
+
+            public AbstractDataMappingContext MappingContext { get; set; }
+            public override void MapToCms(AbstractDataMappingContext mappingContext)
+            {
+                throw new NotImplementedException();
+
+            }
+
+            public override object MapToProperty(AbstractDataMappingContext mappingContext)
+            {
+                this.MappingContext = mappingContext;
+                return "Hello world";
+            }
+
+            public override bool CanHandle(AbstractPropertyConfiguration configuration)
+            {
+                throw new NotImplementedException();
+            }
+        }
         #endregion
 
     }

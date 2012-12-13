@@ -24,7 +24,7 @@ namespace Glass.Mapper
         /// <summary>
         /// The property this Data Mapper will populate
         /// </summary>
-        public System.Reflection.PropertyInfo Property { get; set; }
+        public AbstractPropertyConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Takes CMS data and writes it to the property
@@ -36,7 +36,7 @@ namespace Glass.Mapper
 
             //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
             if (result != null)
-                Property.SetValue(mappingContext.Object, result, null);
+               Configuration.PropertyInfo.SetValue(mappingContext.Object, result, null);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Glass.Mapper
             if (ReadOnly) return;
 
             //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
-            mappingContext.PropertyValue = Property.GetValue(mappingContext.Object, null);
+            mappingContext.PropertyValue = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
             MapToCms(mappingContext);
         }
 
@@ -75,7 +75,7 @@ namespace Glass.Mapper
         /// <param name="configuration"></param>
         public virtual void Setup(AbstractPropertyConfiguration configuration)
         {
-            this.Property = configuration.PropertyInfo;
+            Configuration = configuration;
         }
 
 

@@ -68,6 +68,7 @@
     <Compile Include="Configuration\SitecoreParentConfiguration.cs" />
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
+    <Compile Include="DataMappers\SitecoreChildrenMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />

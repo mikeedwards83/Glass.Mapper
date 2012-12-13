@@ -14,7 +14,7 @@ namespace Glass.Mapper.Configuration
     {
         public PropertyInfo PropertyInfo { get;  set; }
 
-        public AbstractDataMapper Mapper { get; internal set; }
+        public AbstractDataMapper Mapper  { get; internal set; } 
 
         public override string ToString()
         {

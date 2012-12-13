@@ -14,14 +14,15 @@ namespace Glass.Mapper.Sc.DataMappers
             ReadOnly = true;
         }
 
-        private SitecoreInfoConfiguration _config;
 
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
             var item = context.Item;
             var value = context.PropertyValue;
-            switch (_config.Type)
+            var scConfig = Configuration as SitecoreInfoConfiguration;
+
+            switch (scConfig.Type)
             {
                 case SitecoreInfoType.DisplayName:
                     if (value is string || value == null)
@@ -46,7 +47,7 @@ namespace Glass.Mapper.Sc.DataMappers
                         throw new NotSupportedException("Can't set Name. Value is not of type System.String");
                     break;
                 default:
-                    throw new NotSupportedException("You can not save SitecoreInfo {0}".Formatted(_config.Type));
+                    throw new NotSupportedException("You can not save SitecoreInfo {0}".Formatted(scConfig.Type));
             }
         }
 
@@ -54,6 +55,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             var context = mappingContext as SitecoreDataMappingContext;
             var item = context.Item;
+            var scConfig = Configuration as SitecoreInfoConfiguration;
 
             //TODO: move this to the config?
             var urlOptions = Utilities.CreateUrlOptions(_config.UrlOptions);
@@ -97,8 +99,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
         {
-            _config = configuration as SitecoreInfoConfiguration;
-            this.ReadOnly = _config.Type != SitecoreInfoType.DisplayName && _config.Type != SitecoreInfoType.Name;
+            var scConfig = configuration as SitecoreInfoConfiguration;
+            this.ReadOnly = scConfig.Type != SitecoreInfoType.DisplayName && scConfig.Type != SitecoreInfoType.Name;
             base.Setup(configuration);
         }
 

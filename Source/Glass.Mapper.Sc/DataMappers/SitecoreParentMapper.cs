@@ -8,7 +8,6 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreParentMapper :AbstractDataMapper
     {
-        public SitecoreParentConfiguration Config { get; private set; }
 
         public SitecoreParentMapper()
         {
@@ -23,21 +22,18 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var scContext = mappingContext as SitecoreDataMappingContext;
+            var scConfig = Configuration as SitecoreParentConfiguration;
+
             return scContext.Service.CreateClass(
-                Config.PropertyInfo.PropertyType,
+                scConfig.PropertyInfo.PropertyType,
                 scContext.Item.Parent,
-                Config.IsLazy,
-                Config.InferType);
+                scConfig.IsLazy,
+                scConfig.InferType);
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration)
         {
             return configuration is SitecoreParentConfiguration;
-        }
-        public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
-        {
-            Config = configuration as SitecoreParentConfiguration;
-            base.Setup(configuration);
         }
     }
 }
