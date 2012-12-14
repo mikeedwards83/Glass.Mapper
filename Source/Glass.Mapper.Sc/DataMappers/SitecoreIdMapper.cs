@@ -9,17 +9,10 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreIdMapper : AbstractDataMapper
     {
-        private SitecoreIdConfiguration _config;
 
         public SitecoreIdMapper()
         {
             this.ReadOnly = true;
-        }
-
-        public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
-        {
-            _config = configuration as SitecoreIdConfiguration;
-            base.Setup(configuration);
         }
 
         public override void MapToCms(AbstractDataMappingContext mappingContext)
@@ -32,15 +25,17 @@ namespace Glass.Mapper.Sc.DataMappers
             SitecoreDataMappingContext context = mappingContext as SitecoreDataMappingContext;
             var item = context.Item;
 
-            if (_config.PropertyInfo.PropertyType == typeof(Guid))
+            var scConfig = Configuration as SitecoreIdConfiguration;
+
+            if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
                 return item.ID.Guid;
-            else if (_config.PropertyInfo.PropertyType == typeof (ID))
+            else if (scConfig.PropertyInfo.PropertyType == typeof(ID))
                 return item.ID;
             else
             {
                 throw new NotSupportedException("The type {0} on {0}.{1} is not supported by SitecoreIdMapper".Formatted
-                                                    (_config.PropertyInfo.ReflectedType.FullName,
-                                                        _config.PropertyInfo.Name));
+                                                    (scConfig.PropertyInfo.ReflectedType.FullName,
+                                                        scConfig.PropertyInfo.Name));
             }
 
         }

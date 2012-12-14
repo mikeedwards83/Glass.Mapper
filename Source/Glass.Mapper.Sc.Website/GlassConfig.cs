@@ -10,6 +10,8 @@ using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
+using Glass.Mapper.Pipelines.ObjectSaving;
+using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using Glass.Mapper.Sc.DataMappers;
@@ -88,6 +90,20 @@ namespace Glass.Mapper.Sc.Website
             return new[]
                     {
                         Component.For<IDataMapperResolverTask>().ImplementedBy<DataMapperStandardResolverTask>().LifestyleTransient(),
+                    };
+        }
+
+        public override IEnumerable<ComponentRegistration<IObjectSavingTask>> ObjectSavingTasks(string contextName)
+        {
+            //****** Object Saving Tasks ******//
+            // These tasks are rsun when an a class needs to be saved by Glass.Mapper.
+            // Tasks are called in the order they are specified below.
+            // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
+
+            return
+                new[]
+                    {
+                        Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleTransient(),
                     };
         }
     }
