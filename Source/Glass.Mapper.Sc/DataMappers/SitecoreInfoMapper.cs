@@ -58,9 +58,9 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreInfoConfiguration;
 
             //TODO: move this to the config?
-            var urlOptions = Utilities.CreateUrlOptions(_config.UrlOptions);
+            var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
 
-            switch (_config.Type)
+            switch (scConfig.Type)
             {
                
                   case SitecoreInfoType.ContentPath:
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
-                    if (_config.PropertyInfo != null && _config.PropertyInfo.PropertyType == typeof (Sitecore.Data.ID))
+                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Sitecore.Data.ID))
                         return item.TemplateID;
                     else
                         return item.TemplateID.Guid;
@@ -93,7 +93,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Language:
                     return item.Language;  
                 default:
-                    throw new MapperException("SitecoreInfoType {0} not supported".Formatted(_config.Type));
+                    throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
             }
         }
 
