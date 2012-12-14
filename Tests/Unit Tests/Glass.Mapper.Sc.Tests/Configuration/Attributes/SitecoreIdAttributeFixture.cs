@@ -11,7 +11,7 @@ using Sitecore.Data;
 namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 {
     [TestFixture]
-    public abstract class SitecoreIdAttributeFixture
+    public class SitecoreIdAttributeFixture
     {
         [Test]
         public void Does_SitecoreIdAttribute_Extend_IdAttribute()
@@ -19,16 +19,31 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             Assert.IsTrue(typeof(IdAttribute).IsAssignableFrom(typeof(SitecoreIdAttribute)));
         }
 
-       
+
 
         #region Method - Configure
 
         [Test]
-        public void Configure_ConfigureCalled_SitecoreIdConfigurationReturned()
+        public void Configure_ConfigureCalled_WithID_SitecoreIdConfigurationReturned()
         {
             //Assign
             SitecoreIdAttribute attr = new SitecoreIdAttribute();
-            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
+            var propertyInfo = typeof(StubClass).GetProperty("DummyPropertyID");
+
+
+            //Act
+            var result = attr.Configure(propertyInfo) as SitecoreIdConfiguration;
+
+            //Assert
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void Configure_ConfigureCalled_WithGuid_SitecoreIdConfigurationReturned()
+        {
+            //Assign
+            SitecoreIdAttribute attr = new SitecoreIdAttribute();
+            var propertyInfo = typeof(StubClass).GetProperty("DummyPropertyGuid");
 
 
             //Act
@@ -44,7 +59,8 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
         public class StubClass
         {
-            public string DummyProperty { get; set; }
+            public ID DummyPropertyID { get; set; }
+            public Guid DummyPropertyGuid { get; set; }
         }
 
         #endregion

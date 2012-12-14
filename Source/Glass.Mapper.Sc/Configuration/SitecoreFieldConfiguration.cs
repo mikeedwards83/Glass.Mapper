@@ -10,6 +10,11 @@ namespace Glass.Mapper.Sc.Configuration
     public class SitecoreFieldConfiguration : FieldConfiguration
     {
         /// <summary>
+        /// The name of the field  to use if it is different to the property name
+        /// </summary>
+        public string FieldName { get; set; }
+
+        /// <summary>
         /// The ID of the field when used in a code first scenario 
         /// </summary>
         public ID FieldId { get; set; }

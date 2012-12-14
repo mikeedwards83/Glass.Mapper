@@ -10,24 +10,14 @@ namespace Glass.Mapper.Configuration.Attributes
     {
         public FieldAttribute()
         { }
-
-        public FieldAttribute(string fieldName)
-        {
-            FieldName = fieldName;
-        }
+        
         /// <summary>
-        /// The name of the field  to use if it is different to the property name
-        /// </summary>
-        public string FieldName { get; set; }
-
-        /// <summary>
-        /// When true the field will not be save back to Sitecore 
+        /// When true the field will not be save back 
         /// </summary>
         public bool ReadOnly { get; set; }
 
         public void Configure(PropertyInfo propertyInfo, FieldConfiguration config)
         {
-            config.FieldName = this.FieldName;
             config.ReadOnly = this.ReadOnly;
             base.Configure(propertyInfo, config);
         }

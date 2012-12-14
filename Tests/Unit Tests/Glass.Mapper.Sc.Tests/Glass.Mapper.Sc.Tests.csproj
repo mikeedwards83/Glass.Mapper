@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreQueryAttributeFixture.cs" />

@@ -23,10 +23,10 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         [TestCase("FieldName")]
         [TestCase("Setting")]
         [TestCase("ReadOnly")]
-        public void Does_SitecoreFieldAttribute_Have_Properties(string propertyName)
+        public void Does_SitecoreFieldAttribute_Have_Properties(string fieldName)
         {
             var properties = typeof(SitecoreFieldAttribute).GetProperties();
-            Assert.IsTrue(properties.Any(x => x.Name == propertyName));
+            Assert.IsTrue(properties.Any(x => x.Name == fieldName));
         }
 
         [Test]

@@ -20,7 +20,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         }
 
         [Test]
-        [TestCase("FieldName")]
         [TestCase("ReadOnly")]
         public void Does_FieldAttribute_Have_Properties(string propertyName)
         {
@@ -43,7 +42,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.IsNullOrEmpty(config.FieldName);
+          //  Assert.IsNullOrEmpty(config.Name);
             Assert.IsFalse(config.ReadOnly);
         }
 
@@ -55,14 +54,14 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             var config = new FieldConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
 
-            attr.FieldName = "test field name";
+         //   attr.Name = "test field name";
 
             //Act
             attr.Configure(propertyInfo, config);
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(attr.FieldName, config.FieldName);
+       //     Assert.AreEqual(attr.Name, config.Name);
             Assert.IsFalse(config.ReadOnly);
         }
 
@@ -81,7 +80,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.IsNullOrEmpty(config.FieldName);
+            //Assert.IsNullOrEmpty(config.Name);
             Assert.True(config.ReadOnly);
         }
 

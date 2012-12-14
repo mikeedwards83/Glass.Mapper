@@ -173,11 +173,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoFieldAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoader.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoTypeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoParentAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoPropertyAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoIdAttribute.cs" />
-    <Compile Include="Configuration\UmbracoFieldConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoFieldSettings.cs" />
-    <Compile Include="Configuration\UmbracoFieldType.cs" />
+    <Compile Include="Configuration\UmbracoTypeConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoParentConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoChildrenConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoPropertyConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoPropertySettings.cs" />
+    <Compile Include="Configuration\UmbracoDataType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

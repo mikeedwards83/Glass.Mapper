@@ -57,6 +57,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Website", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sites.Umb", "Sites\Umbraco\Glass.Mapper.Sites.Umb\Glass.Mapper.Sites.Umb.csproj", "{1CE133F3-FEAC-425C-A82A-87D57429BBEC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0BA8AB6D-CC44-442B-A62A-F5F511623190}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

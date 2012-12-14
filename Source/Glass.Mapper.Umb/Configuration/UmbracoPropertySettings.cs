@@ -3,10 +3,10 @@
 namespace Glass.Mapper.Umb.Configuration
 {
     [Flags]
-    public enum UmbracoFieldSettings
+    public enum UmbracoPropertySettings
     {
         /// <summary>
-        /// The field carries out its default behaviour
+        /// The property carries out its default behaviour
         /// </summary>
         Default = 0x0,
         /// <summary>

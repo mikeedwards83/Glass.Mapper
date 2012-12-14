@@ -1,0 +1,29 @@
+﻿namespace Glass.Mapper.Umb.Configuration
+{
+    public enum UmbracoDataType
+    {
+        NotSet,
+        TextString,
+        RichtextEditor,
+        SimpleEditor,
+        Numeric,
+        TrueFalse,
+        ApprovedColor,
+        CheckboxList,
+        ContentPicker,
+        DateTimePicker,
+        DatePicker,
+        DropdownMultiple,
+        Dropdown,
+        FolderBrowser,
+        Label,
+        MediaPicker,
+        MemberPicker,
+        Radiobox,
+        RelatedLinks,
+        Tags,
+        TextboxMultiple,
+        UltimatePicker,
+        Upload,
+    }
+}

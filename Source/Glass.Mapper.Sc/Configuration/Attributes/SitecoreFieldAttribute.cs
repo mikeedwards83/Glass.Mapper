@@ -12,8 +12,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     public class SitecoreFieldAttribute : FieldAttribute
     {
         public SitecoreFieldAttribute(string fieldName)
-            : base(fieldName)
         {
+            FieldName = fieldName;
         }
 
         public SitecoreFieldAttribute(string fieldId, SitecoreFieldType fieldType, string sectionName = "Data", bool codeFirst = true)
@@ -23,6 +23,11 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             CodeFirst = codeFirst;
             FieldType = fieldType;
         }
+
+        /// <summary>
+        /// The name of the field  to use if it is different to the property name
+        /// </summary>
+        public string FieldName { get; set; }
 
         /// <summary>
         /// The ID of the field when used in a code first scenario 
@@ -89,6 +94,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         }
         public void Configure(PropertyInfo propertyInfo, SitecoreFieldConfiguration config)
         {
+            config.FieldName = this.FieldName;
             config.Setting = this.Setting;
             config.CodeFirst = this.CodeFirst;
             

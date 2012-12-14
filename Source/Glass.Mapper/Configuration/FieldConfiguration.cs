@@ -7,8 +7,6 @@ namespace Glass.Mapper.Configuration
 {
     public class FieldConfiguration : AbstractPropertyConfiguration
     {
-        public string FieldName { get; set; }
-
         public bool ReadOnly { get; set; }
     }
 }

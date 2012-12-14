@@ -1,4 +1,5 @@
-﻿using Glass.Mapper.Umb.Configuration;
+﻿using FluentAssertions;
+using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
@@ -6,12 +7,12 @@ using Glass.Mapper.Configuration.Attributes;
 namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
 {
     [TestFixture]
-    public abstract class UmbracoIdAttributeFixture
+    public class UmbracoIdAttributeFixture
     {
         [Test]
-        public void Does_SitecoreIdAttribute_Extend_IdAttribute()
+        public void Does_UmbracoIdAttribute_Extend_IdAttribute()
         {
-            Assert.IsTrue(typeof(IdAttribute).IsAssignableFrom(typeof(UmbracoIdAttribute)));
+            typeof(IdAttribute).IsAssignableFrom(typeof(UmbracoIdAttribute)).Should().BeTrue();
         }
 
        
@@ -19,7 +20,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         #region Method - Configure
 
         [Test]
-        public void Configure_ConfigureCalled_SitecoreIdConfigurationReturned()
+        public void Configure_ConfigureCalled_UmbracoIdConfigurationReturned()
         {
             //Assign
             UmbracoIdAttribute attr = new UmbracoIdAttribute();
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             var result = attr.Configure(propertyInfo) as UmbracoIdConfiguration;
 
             //Assert
-            Assert.IsNotNull(result);
+            result.Should().NotBeNull();
         }
 
         #endregion
@@ -39,7 +40,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
 
         public class StubClass
         {
-            public string DummyProperty { get; set; }
+            public int DummyProperty { get; set; }
         }
 
         #endregion
