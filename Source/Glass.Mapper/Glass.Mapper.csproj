@@ -82,6 +82,7 @@
     <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="LazyEnumerable.cs" />
     <Compile Include="MapperException.cs" />
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />

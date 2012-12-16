@@ -1,26 +1,33 @@
 ----item----
 version: 1
-id: {F2432CC7-BDC7-4291-817B-A2B9E9BCE41B}
+id: {55D8F810-1495-4EAA-83A3-0ECE41ABA630}
 database: master
-path: /sitecore/content/Tests/DataMappers/New Folder
-parent: {949328F9-AB43-4AA8-9B09-B3FF0C0F1C7B}
-name: New Folder
+path: /sitecore/content/Tests/DataMappers/SitecoreChildrenMapper/Parent/Child2
+parent: {61503285-DA62-4CCF-AD15-3E3D8DE56F3F}
+name: Child2
 master: {00000000-0000-0000-0000-000000000000}
-template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
-templatekey: Folder
+template: {C586447C-8D3D-46D1-B987-09883DCDCFE7}
+templatekey: DataMappersEmptyItem
 
 ----version----
 language: en
 version: 1
-revision: 20a43849-e6ea-4768-be70-490bfd5b3fe3
+revision: ec28f4fa-1db6-4de1-be49-78aedf93b8ca
 
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20121216T162343
+20121216T162516
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-20a43849-e6ea-4768-be70-490bfd5b3fe3
+ec28f4fa-1db6-4de1-be49-78aedf93b8ca
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121216T162343:634912718230685850
+20121216T162516:634912719162859167
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -59,6 +59,8 @@ namespace Glass.Mapper
 
         #endregion
 
+      
+
         #region Misc
 
         public static IEnumerable<T> MakeEnumerable<T>(this T obj)

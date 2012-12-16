@@ -6,7 +6,7 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public interface ISitecoreService
+    public interface ISitecoreService: IAbstractService
     {
         object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false);
 
