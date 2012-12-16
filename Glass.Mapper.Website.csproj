@@ -61,6 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="docs\api\Base.html" />
+    <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
+    <Content Include="docs\api\Glass.Mapper.Sc.Configuration.SitecoreInfoType.html" />
+    <Content Include="docs\api\Glass.Mapper.Sc.html" />
+    <Content Include="docs\api\Glass.Mapper.html" />
     <Content Include="docs\api\index.html" />
     <Content Include="docs\api\Glass.Mapper.Context.html" />
     <Content Include="Base.html" />
@@ -71,6 +75,7 @@
     <Content Include="docs\tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="_config.yml" />
+    <Content Include="_includes\docs-contribute.html" />
     <Content Include="_includes\docs-right-menu.html" />
     <Content Include="_includes\foot.html" />
     <Content Include="_includes\head.html" />
