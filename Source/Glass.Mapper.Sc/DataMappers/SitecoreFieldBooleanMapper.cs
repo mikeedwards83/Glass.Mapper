@@ -9,14 +9,20 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreFieldBooleanMapper : AbstractSitecoreFieldMapper
     {
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public SitecoreFieldBooleanMapper() : base(typeof (bool))
         {
-            throw new NotImplementedException();
+
         }
 
-        public override void SetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            return field.Value == "1";
+        }
+
+        public override void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            bool actual = (bool) value;
+            field.Value = actual ? "1" : "0";
         }
     }
 }

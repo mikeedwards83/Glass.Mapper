@@ -2,9 +2,9 @@
 version: 1
 id: {1D11D831-41C7-4F67-AA39-0D1150E7E4E9}
 database: master
-path: /sitecore/content/Tests/DataMappers/New Folder
+path: /sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper
 parent: {949328F9-AB43-4AA8-9B09-B3FF0C0F1C7B}
-name: New Folder
+name: SitecoreFieldBooleanMapper
 master: {00000000-0000-0000-0000-000000000000}
 template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
 templatekey: Folder
@@ -12,7 +12,7 @@ templatekey: Folder
 ----version----
 language: en
 version: 1
-revision: ef5cffe2-0503-4722-b702-28fce070465b
+revision: a8744855-d59d-4433-bb11-2d839c642dad
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,14 +34,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-ef5cffe2-0503-4722-b702-28fce070465b
+a8744855-d59d-4433-bb11-2d839c642dad
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121216T214200:634912909202374734
+20121216T214447:634912910873150296
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

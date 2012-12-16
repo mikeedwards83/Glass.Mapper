@@ -186,16 +186,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue = "test value set";
             var fieldId = new ID("{6B43481F-F129-4F53-BEEE-EA84F9B1A6D4}");
             var database = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToProperty");
+            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
 
             var config = new SitecoreFieldConfiguration();
             config.FieldId = fieldId;
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
             mapper.Setup(config);
             mapper.Value = fieldValue;
 
-            var context = new SitecoreDataMappingContext(null, item, null);
+            var context = new SitecoreDataMappingContext(new Stub(), item, null);
 
             using (new SecurityDisabler())
             {
@@ -224,16 +225,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue = "test value set";
             var fieldName = "Field";
             var database = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToProperty");
+            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
 
             var config = new SitecoreFieldConfiguration();
             config.FieldName = fieldName;
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
             mapper.Setup(config);
             mapper.Value = fieldValue;
 
-            var context = new SitecoreDataMappingContext(null, item, null);
+            var context = new SitecoreDataMappingContext(new Stub(), item, null);
 
             using (new SecurityDisabler())
             {
@@ -272,7 +274,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 return Value;
             }
 
-            public override void SetFieldValue(Sitecore.Data.Fields.Field field, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            public override void SetFieldValue(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
             {
                 field.Value = Value;
             }
