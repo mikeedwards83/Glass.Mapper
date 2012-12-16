@@ -14,28 +14,6 @@ namespace Glass.Mapper
 {
     public abstract class GlassCastleConfigBase : IGlassConfiguration
     {
-        public virtual void Setup(WindsorContainer container, string contextName)
-        {
-            var typeTasks = TypeResolverTasks(contextName);
-            var configTasks = ConfigurationResolverTasks(contextName);
-            var objectTasks = ObjectContructionTasks(contextName);
-            var dataMapperTasks = DataMapperResolverTasks(contextName);
-            var dataMappers = DataMappers(contextName);
-            var savingTasks = ObjectSavingTasks(contextName);
-
-            container.Register(typeTasks.ToArray());
-            container.Register(configTasks.ToArray());
-            container.Register(objectTasks.ToArray());
-            container.Register(dataMapperTasks.ToArray());
-            container.Register(dataMappers.ToArray());
-            container.Register(savingTasks.ToArray());
-        }
-
-        public abstract IEnumerable<ComponentRegistration<AbstractDataMapper>> DataMappers(string contextName);
-        public abstract IEnumerable<ComponentRegistration<IDataMapperResolverTask>> DataMapperResolverTasks(string contextName);
-        public abstract IEnumerable<ComponentRegistration<IObjectConstructionTask>> ObjectContructionTasks(string contextName);
-        public abstract IEnumerable<ComponentRegistration<ITypeResolverTask>> TypeResolverTasks(string contextName);
-        public abstract IEnumerable<ComponentRegistration<IConfigurationResolverTask>> ConfigurationResolverTasks(string contextName);
-        public abstract IEnumerable<ComponentRegistration<IObjectSavingTask>> ObjectSavingTasks(string contextName);
+        public abstract void Configure(WindsorContainer container, string contextName);
     }
 }

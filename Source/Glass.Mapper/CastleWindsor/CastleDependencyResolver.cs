@@ -27,7 +27,7 @@ namespace Glass.Mapper.CastleWindsor
                 throw new MapperException("IGlassConfiguration is not of type GlassCastleConfigBase");
 
             _container = new WindsorContainer();
-            castleConfig.Setup(_container, contextName);
+            castleConfig.Configure(_container, contextName);
 
         }
 
