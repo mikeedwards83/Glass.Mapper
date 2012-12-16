@@ -74,7 +74,5 @@ namespace Glass.Mapper.Sc.Integration
                 Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleTransient()
             );
         }
-
-
     }
 }

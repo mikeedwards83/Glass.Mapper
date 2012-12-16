@@ -61,6 +61,16 @@
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\AbstractSitecoreFieldMapper.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\AbstractSitecoreFieldMapper\MapToProperty.item">
+      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreChildrenMapper.item">
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>

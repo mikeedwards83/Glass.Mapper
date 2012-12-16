@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionFixture.cs" />
+    <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />

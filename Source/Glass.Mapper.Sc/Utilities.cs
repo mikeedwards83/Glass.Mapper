@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.Fields;
+using Sitecore.Data.Items;
 using Sitecore.Links;
 
 namespace Glass.Mapper.Sc
@@ -69,6 +72,22 @@ namespace Glass.Mapper.Sc
             if (types.Count() > 1) throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
             if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
             return types[0];
+        }
+
+
+        public static Field GetField(Item item, ID fieldId, string fieldName = "")
+        {
+            Field field = null;
+            if (ID.IsNullOrEmpty(fieldId))
+            {
+                field = item.Fields[fieldName];
+            }
+            else if (item.Fields.Contains(fieldId) || item.Template.GetField(fieldId) != null)
+            {
+                field = item.Fields[fieldId];
+            }
+
+            return field;
         }
     }
 }
