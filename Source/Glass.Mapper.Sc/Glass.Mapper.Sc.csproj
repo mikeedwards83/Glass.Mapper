@@ -72,6 +72,7 @@
     <Compile Include="DataMappers\SitecoreChildrenMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldBooleanMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDateTimeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDecimalMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
