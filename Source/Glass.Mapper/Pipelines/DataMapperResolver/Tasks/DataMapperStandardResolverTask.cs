@@ -11,7 +11,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
         {
             if (args.Result == null)
             {
-                var mapper = args.DataMappers.FirstOrDefault(x => x.CanHandle(args.PropertyConfiguration));
+                var mapper = args.DataMappers.FirstOrDefault(x => x.CanHandle(args.PropertyConfiguration, args.Context));
                 
                 if(mapper == null) 
                     throw new MapperException("Could not find data mapper to handler property {0}".Formatted(args.PropertyConfiguration));

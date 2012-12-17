@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 scConfig.InferType);
         }
 
-        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreParentConfiguration;
         }

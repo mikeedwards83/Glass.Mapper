@@ -46,7 +46,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsTrue(result);
@@ -64,7 +64,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsTrue(result);
@@ -82,7 +82,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsFalse(result);
@@ -99,7 +99,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsFalse(result);

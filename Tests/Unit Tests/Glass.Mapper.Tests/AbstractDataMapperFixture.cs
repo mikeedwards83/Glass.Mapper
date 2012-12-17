@@ -67,7 +67,7 @@ namespace Glass.Mapper.Tests
                 return "Hello world";
             }
 
-            public override bool CanHandle(AbstractPropertyConfiguration configuration)
+            public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
             {
                 throw new NotImplementedException();
             }

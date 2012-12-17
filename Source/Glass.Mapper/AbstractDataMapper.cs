@@ -84,7 +84,7 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public abstract bool CanHandle(AbstractPropertyConfiguration configuration);
+        public abstract bool CanHandle(AbstractPropertyConfiguration configuration, Context context);
 
         
     }

@@ -40,9 +40,9 @@ namespace Glass.Mapper.Sc.DataMappers
 
         }
 
-        
 
-        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+
+        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreIdConfiguration;
         }

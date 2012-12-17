@@ -40,7 +40,7 @@ namespace Glass.Mapper.Sc.DataMappers
         public abstract object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
         public abstract void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
 
-        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreFieldConfiguration &&
                    TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);

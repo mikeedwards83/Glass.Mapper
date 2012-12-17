@@ -163,7 +163,7 @@ namespace Glass.Mapper.Tests
         public class StubAbstractDataMapper : AbstractDataMapper
         {
             public Func<AbstractPropertyConfiguration, bool> CanHandleFunction { get; set; }
-            public override bool CanHandle(AbstractPropertyConfiguration configuration)
+            public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
             {
                 return CanHandleFunction(configuration);
             }
