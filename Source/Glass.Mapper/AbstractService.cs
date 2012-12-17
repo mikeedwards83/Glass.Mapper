@@ -13,7 +13,7 @@ namespace Glass.Mapper
     public abstract class AbstractService<TK> : IAbstractService
         where TK : AbstractDataMappingContext
     {
-        protected Context GlassContext { get; set; }
+        public  Context GlassContext { get; private set; }
 
         /// <summary>
         /// The list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
@@ -119,6 +119,8 @@ namespace Glass.Mapper
 
     public interface IAbstractService
     {
+        Context GlassContext { get;  }
+
         object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
           /// <summary>
         /// Used to create the context used by DataMappers to map data to a class

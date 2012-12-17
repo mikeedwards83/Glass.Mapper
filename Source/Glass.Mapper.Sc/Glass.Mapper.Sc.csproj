@@ -74,9 +74,10 @@
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
-    <Compile Include="DataMappers\SitecoreTypeFieldHandler.cs" />
+    <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ISitecoreService.cs" />
+    <Compile Include="ItemEditing.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />

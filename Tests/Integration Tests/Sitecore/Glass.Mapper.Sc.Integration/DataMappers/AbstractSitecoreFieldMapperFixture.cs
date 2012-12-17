@@ -11,7 +11,7 @@ using Sitecore.SecurityModel;
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
     [TestFixture]
-    public class AbstractSitecoreFieldMapperFixture
+    public class AbstractSitecoreFieldMapperFixture : AbstractMapperFixture
     {
         #region Constructors
 

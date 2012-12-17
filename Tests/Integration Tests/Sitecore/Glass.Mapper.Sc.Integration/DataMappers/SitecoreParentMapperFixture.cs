@@ -119,7 +119,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreParentMapper();
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsTrue(result);
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreParentMapper();
 
             //Act
-            var result = mapper.CanHandle(config);
+            var result = mapper.CanHandle(config, null);
 
             //Assert
             Assert.IsFalse(result);

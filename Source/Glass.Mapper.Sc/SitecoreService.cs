@@ -10,25 +10,36 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreService : AbstractService<SitecoreDataMappingContext>, ISitecoreService
     {
-        private Database _database;
+        public  Database Database { get; private set; }
 
         public SitecoreService(Database database, string contextName = "Default")
             :base(contextName)
         {
-            _database = database;
+            Database = database;
         }
 
         public SitecoreService(string databaseName, string contextName = "Default")
             : base(contextName)
         {
-            _database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
         }
 
+        public SitecoreService(string databaseName, Context context)
+            : base(context ?? Context.Default )
+        {
+            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+        }
+
+        public SitecoreService(Database database, Context context)
+            : base(context ?? Context.Default)
+        {
+            Database = database;
+        }
 
 
         public T GetItem<T>(Guid id) where T:class 
         {
-            var item = _database.GetItem(new ID(id));
+            var item = Database.GetItem(new ID(id));
             return CreateClass(typeof (T), item) as T;
 
         }
@@ -40,7 +51,7 @@ namespace Glass.Mapper.Sc
 
             //TODO: ME - this may not work with a proxy
             var config = GlassContext[obj.GetType()] as SitecoreTypeConfiguration;
-            var item = config.ResolveItem(obj, _database);
+            var item = config.ResolveItem(obj, Database);
             if(item == null)
                 throw new MapperException("Could not save class, item not found");
 
