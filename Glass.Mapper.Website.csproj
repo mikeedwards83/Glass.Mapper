@@ -74,6 +74,7 @@
     <Content Include="site.js" />
     <Content Include="docs\tutorial\index.html" />
     <Content Include="index.html" />
+    <Content Include="team\index.html" />
     <Content Include="_config.yml" />
     <Content Include="_includes\docs-contribute.html" />
     <Content Include="_includes\docs-right-menu.html" />
