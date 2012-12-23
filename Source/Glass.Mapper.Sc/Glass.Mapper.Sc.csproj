@@ -75,10 +75,12 @@
     <Compile Include="DataMappers\SitecoreFieldDecimalMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDoubleMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldFileMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
+    <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\TriState.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ISitecoreService.cs" />
