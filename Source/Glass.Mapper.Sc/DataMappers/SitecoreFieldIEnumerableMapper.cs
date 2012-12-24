@@ -11,27 +11,28 @@ namespace Glass.Mapper.Sc.DataMappers
     
     public class SitecoreFieldIEnumerableMapper : AbstractSitecoreFieldMapper
     {
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        AbstractSitecoreFieldMapper _mapper;
+
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            //Type type = Property.PropertyType;
-            ////Get generic type
-            //Type pType = Utility.GetGenericArgument(type);
+            Type type = config.PropertyInfo.PropertyType;
+            //Get generic type
+            Type pType = Utilities.GetGenericArgument(type);
 
-            //if (EnumSubHandler == null) EnumSubHandler = GetSubHandler(pType, service);
+            //The enumerator only works with piped lists
+            IEnumerable<string> parts = fieldValue.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
-            ////The enumerator only works with piped lists
-            //IEnumerable<string> parts = fieldValue.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-
-            ////replace any pipe encoding with an actual pipe
-            //parts = parts.Select(x => x.Replace(Settings.PipeEncoding, "|")).ToArray();
+            //replace any pipe encoding with an actual pipe
+            parts = parts.Select(x => x.Replace(Global.PipeEncoding, "|")).ToArray();
 
 
-
-            //IEnumerable<object> items = parts.Select(x => EnumSubHandler.GetFieldValue(x, item, service)).ToArray();
+            //fake field
+            
+            //IEnumerable<object> items = parts.Select(x => _mapper.GetFieldValue(x, item, service)).ToArray();
             //var list = Utility.CreateGenericType(typeof(List<>), new Type[] { pType });
             //Utility.CallAddMethod(items.Where(x => x != null), list);
 
-            //return list;
+    //        return list;
             return null;
         }
 
@@ -57,11 +58,27 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override void Setup(DataMapperResolverArgs args)
         {
+            base.Setup(args);
+
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
             var property = args.PropertyConfiguration.PropertyInfo;
-            var type = property.PropertyType.GetGenericArguments()[0];
-            
-           // service.
-           base.Setup(args);
+            var type = Utilities.GetGenericArgument(property.PropertyType);
+
+            var configCopy = scConfig.Copy();
+            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name);
+
+            _mapper =
+                args.DataMappers.FirstOrDefault(
+                    x => x.CanHandle(configCopy, args.Context) && x is AbstractSitecoreFieldMapper) 
+                    as AbstractSitecoreFieldMapper;
+
+            if (_mapper == null)
+                throw new MapperException(
+                    "No mapper to handle type {0} on property {1} class {2}".Formatted(type.FullName, property.Name,
+                                                                                       property.ReflectedType.FullName));
+
+
         }
     }
 }

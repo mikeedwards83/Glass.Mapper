@@ -270,7 +270,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             {
             }
 
-            public override object GetFieldValue(Sitecore.Data.Fields.Field field, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
             {
                 return Value;
             }

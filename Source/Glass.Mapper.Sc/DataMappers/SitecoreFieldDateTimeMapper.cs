@@ -13,9 +13,9 @@ namespace Glass.Mapper.Sc.DataMappers
 
         }
 
-        public override object GetFieldValue(Sitecore.Data.Fields.Field field, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            return global::Sitecore.DateUtil.IsoDateToDateTime(field.Value);
+            return global::Sitecore.DateUtil.IsoDateToDateTime(fieldValue);
         }
 
         public override void SetFieldValue(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)

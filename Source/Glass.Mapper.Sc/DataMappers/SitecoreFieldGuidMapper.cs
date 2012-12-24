@@ -16,13 +16,13 @@ namespace Glass.Mapper.Sc.DataMappers
 
         }
 
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config,
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
                                              SitecoreDataMappingContext context)
         {
-            if (field.Value.IsNullOrEmpty()) return Guid.Empty;
+            if (fieldValue.IsNullOrEmpty()) return Guid.Empty;
 
 
-            return Guid.Parse(field.Value);
+            return Guid.Parse(fieldValue);
         }
 
         public override void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)

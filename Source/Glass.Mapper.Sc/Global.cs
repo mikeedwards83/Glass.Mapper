@@ -7,6 +7,8 @@ namespace Glass.Mapper.Sc
 {
     public static class Global
     {
+        public static string PipeEncoding { get { return "%pipe%"; } }
+
         public static class Fields 
         {
             public const string DisplayName =  "__Display name"; 

@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreFieldFileMapper : AbstractSitecoreFieldMapper
     {
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             FileField fileField = new FileField(field);
             File file = new File();
@@ -23,6 +23,10 @@ namespace Glass.Mapper.Sc.DataMappers
             file.Id = fileField.MediaID.Guid;
 
             return file;
+        }
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            throw new  NotImplementedException();
         }
 
         public override void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)

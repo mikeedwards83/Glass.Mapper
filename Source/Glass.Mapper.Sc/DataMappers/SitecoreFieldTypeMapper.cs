@@ -13,10 +13,9 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreFieldTypeMapper : AbstractSitecoreFieldMapper
     {
 
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
-            var fieldValue = field.Value;
             var item = context.Item;
 
             if (fieldValue.IsNullOrEmpty()) return null;

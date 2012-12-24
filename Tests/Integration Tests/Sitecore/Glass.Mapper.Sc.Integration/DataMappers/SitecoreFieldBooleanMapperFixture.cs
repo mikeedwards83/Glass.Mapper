@@ -12,13 +12,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     public class SitecoreFieldBooleanMapperFixture : AbstractMapperFixture
     {
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldValueZero_ReturnsFalse()
+        public void GetField_FieldValueZero_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "0";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -42,10 +42,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueStringEmpty_ReturnsFalse()
+        public void GetField_FieldValueStringEmpty_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = string.Empty;
             var mapper = new SitecoreFieldBooleanMapper();
@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -69,10 +69,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueOne_ReturnsTrue()
+        public void GetField_FieldValueOne_ReturnsTrue()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "1";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -96,10 +96,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueRandom_ReturnsFalse()
+        public void GetField_FieldValueRandom_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "afaegaeg";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -114,7 +114,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -129,7 +129,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetFieldValue_ValueFalse_FieldSetToZero()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var expected = "0";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -160,7 +160,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetFieldValue_ValueTrue_FieldSetToOne()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var expected = "1";
             var mapper = new SitecoreFieldBooleanMapper();

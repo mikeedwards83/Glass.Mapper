@@ -12,7 +12,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     public class SitecoreFieldFileMapperFixture : AbstractMapperFixture
     {
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
         public void GetViewValue_FieldPointsAtFile_ReturnFileObject()
@@ -21,7 +21,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue =
                 "<file mediaid=\"{C10794CE-624F-4F72-A2B9-14336F3FB582}\" src=\"~/media/C10794CE624F4F72A2B914336F3FB582.ashx\" />";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/GetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
             
@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null) as File;
+            var result = mapper.GetField(field, null, null) as File;
 
             //Assert
             Assert.AreEqual(new Guid("{C10794CE-624F-4F72-A2B9-14336F3FB582}"), result.Id);
@@ -43,7 +43,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var fieldValue = string.Empty;
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/GetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
 
@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null) as File;
+            var result = mapper.GetField(field, null, null) as File;
 
             //Assert
             Assert.AreEqual(Guid.Empty, result.Id);

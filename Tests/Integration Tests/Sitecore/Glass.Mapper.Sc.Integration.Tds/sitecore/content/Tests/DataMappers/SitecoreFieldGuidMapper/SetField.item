@@ -2,9 +2,9 @@
 version: 1
 id: {DC3E5E31-0061-4BE2-BC18-32D60A1D4D28}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetFieldValue
+path: /sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetField
 parent: {60CA624C-2410-4CFF-8B11-641A1481888E}
-name: SetFieldValue
+name: SetField
 master: {00000000-0000-0000-0000-000000000000}
 template: {3A1B89BA-3885-4BD6-8326-67605764676C}
 templatekey: DataMappersSingleField
@@ -12,15 +12,15 @@ templatekey: DataMappersSingleField
 ----version----
 language: en
 version: 1
-revision: 099e1b1a-05cf-4955-b85c-1098ed572dd1
+revision: ace8eb44-413c-4c37-8a0b-a8837856dda4
 
 ----field----
 field: {6B43481F-F129-4F53-BEEE-EA84F9B1A6D4}
 name: Field
 key: field
-content-length: 8
+content-length: 0
 
-3.141592
+
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -48,18 +48,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-099e1b1a-05cf-4955-b85c-1098ed572dd1
+ace8eb44-413c-4c37-8a0b-a8837856dda4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121224T074058:634919316580295180
+20121224T163848:634919639283145148
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 17
+content-length: 14
 
-default\Anonymous
+sitecore\admin

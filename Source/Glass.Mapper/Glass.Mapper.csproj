@@ -79,6 +79,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="CastleWindsor\GlassCastleConfigBase.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
+    <Compile Include="FakePropertyInfo.cs" />
     <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />

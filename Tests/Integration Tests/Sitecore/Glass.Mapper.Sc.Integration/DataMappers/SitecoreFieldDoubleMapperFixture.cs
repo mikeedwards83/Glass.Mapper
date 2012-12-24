@@ -10,15 +10,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public  class SitecoreFieldDoubleMapperFixture : AbstractMapperFixture
     {
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldContainsValidDouble_ReturnsDouble()
+        public void GetField_FieldContainsValidDouble_ReturnsDouble()
         {
             //Assign
             string fieldValue = "3.141592";
             double expected = 3.141592D;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDoubleMapper();
@@ -29,18 +29,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (Double)mapper.GetFieldValue(field, null, null);
+            var result = (Double)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
-        public void GetFieldValue_FieldContainsEmptyString_ReturnsDoubleZero()
+        public void GetField_FieldContainsEmptyString_ReturnsDoubleZero()
         {
             //Assign
             string fieldValue = string.Empty;
             Double expected = 0;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDoubleMapper();
@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (double)mapper.GetFieldValue(field, null, null);
+            var result = (double)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -59,12 +59,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetFieldValue_FieldContainsInvalidValidDouble_ReturnsDouble()
+        public void GetField_FieldContainsInvalidValidDouble_ReturnsDouble()
         {
             //Assign
             string fieldValue = "hello world";
             double expected = 3.141592D;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDoubleMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDoubleMapper();
@@ -75,7 +75,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (double)mapper.GetFieldValue(field, null, null);
+            var result = (double)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
 
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
         public void SetFieldValue_ObjectisValidDouble_SetsFieldValue()

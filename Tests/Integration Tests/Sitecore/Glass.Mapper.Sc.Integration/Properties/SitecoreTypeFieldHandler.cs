@@ -10,7 +10,7 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreTypeFieldHandler : AbstractSitecoreFieldMapper
     {
 
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
         }

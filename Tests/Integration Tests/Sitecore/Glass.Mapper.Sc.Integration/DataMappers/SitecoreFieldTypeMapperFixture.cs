@@ -52,14 +52,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
 
         [Test]
-        public void GetFieldValue_FieldContainsId_ReturnsConcreteType()
+        public void GetField_FieldContainsId_ReturnsConcreteType()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
             var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -79,7 +79,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, config, scContext) as Stub;
+            var result = mapper.GetField(field, config, scContext) as Stub;
 
             //Assert
             Assert.AreEqual(targetId, result.Id);
@@ -87,10 +87,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldEmpty_ReturnsNull()
+        public void GetField_FieldEmpty_ReturnsNull()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
             var targetId = string.Empty;
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -110,7 +110,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, config, scContext) as Stub;
+            var result = mapper.GetField(field, config, scContext) as Stub;
 
             //Assert
             Assert.IsNull(result);
@@ -118,10 +118,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldRandomText_ReturnsNull()
+        public void GetField_FieldRandomText_ReturnsNull()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
             var targetId = "some random text";
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -141,7 +141,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, config, scContext) as Stub;
+            var result = mapper.GetField(field, config, scContext) as Stub;
 
             //Assert
             Assert.IsNull(result);

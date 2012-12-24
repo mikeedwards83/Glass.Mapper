@@ -10,15 +10,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public  class SitecoreFieldDecimalMapperFixture : AbstractMapperFixture
     {
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldContainsValidDecimal_ReturnsDecimal()
+        public void GetField_FieldContainsValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "3.141592";
             decimal expected = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -29,18 +29,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
-        public void GetFieldValue_FieldContainsEmptyString_ReturnsDecimalZero()
+        public void GetField_FieldContainsEmptyString_ReturnsDecimalZero()
         {
             //Assign
             string fieldValue = string.Empty;
             decimal expected = 0;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -59,12 +59,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetFieldValue_FieldContainsInvalidValidDecimal_ReturnsDecimal()
+        public void GetField_FieldContainsInvalidValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "hello world";
             decimal expected = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -75,7 +75,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
 
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
         public void SetFieldValue_ObjectisValidDecimal_SetsFieldValue()
