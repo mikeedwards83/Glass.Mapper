@@ -62,5 +62,30 @@ namespace Glass.Mapper.Sc.Configuration
         public bool IsUnversioned { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// Makes a copy of the SitecoreFieldConfiguration
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreFieldConfiguration Copy()
+        {
+            return new SitecoreFieldConfiguration()
+                       {
+                           CodeFirst = this.CodeFirst,
+                           FieldId = this.FieldId,
+                           FieldName = this.FieldName,
+                           FieldSource = this.FieldSource,
+                           FieldTitle = this.FieldTitle,
+                           FieldType = this.FieldType,
+                           IsShared = this.IsShared,
+                           IsUnversioned = this.IsUnversioned,
+                           PropertyInfo = this.PropertyInfo,
+                           ReadOnly = this.ReadOnly,
+                           SectionName = this.SectionName,
+                           Setting = this.Setting
+                       };
+        }
+
     }
 }
+
