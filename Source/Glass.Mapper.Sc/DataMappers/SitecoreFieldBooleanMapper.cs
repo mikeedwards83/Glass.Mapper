@@ -19,10 +19,10 @@ namespace Glass.Mapper.Sc.DataMappers
             return fieldValue == "1";
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue( object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             bool actual = (bool) value;
-            field.Value = actual ? "1" : "0";
+            return actual ? "1" : "0";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Glass.Mapper.Sc.DataMappers
     
     public class SitecoreFieldIEnumerableMapper : AbstractSitecoreFieldMapper
     {
-        AbstractSitecoreFieldMapper _mapper;
+        public AbstractSitecoreFieldMapper Mapper { get; private set; }
 
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
@@ -24,27 +25,50 @@ namespace Glass.Mapper.Sc.DataMappers
 
             //replace any pipe encoding with an actual pipe
             parts = parts.Select(x => x.Replace(Global.PipeEncoding, "|")).ToArray();
-
-
-            //fake field
             
-            //IEnumerable<object> items = parts.Select(x => _mapper.GetFieldValue(x, item, service)).ToArray();
-            //var list = Utility.CreateGenericType(typeof(List<>), new Type[] { pType });
-            //Utility.CallAddMethod(items.Where(x => x != null), list);
+            IEnumerable<object> items = parts.Select(x => Mapper.GetFieldValue(x, config, context)).ToArray();
+            var list = Utilities.CreateGenericType(typeof (List<>), new Type[] {pType}) as IList;
+            
+            foreach (var item in items)
+            {
+                if(item != null)
+                    list.Add(item);
+            }
 
-    //        return list;
-            return null;
+            return list;
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+
+            IEnumerable list = value as IEnumerable;
+
+            if (list == null)
+            {
+                return string.Empty;
+            }
+
+            List<string> sList = new List<string>();
+
+
+            foreach (object obj in list)
+            {
+                string result = Mapper.SetFieldValue(obj, config, context);
+                if (!result.IsNullOrEmpty())
+                    sList.Add(result);
+            }
+            if (sList.Any())
+                return sList.Aggregate((x, y) => x + "|" + y);
+            else
+                return string.Empty;
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             var scConfig = configuration as SitecoreFieldConfiguration;
 
+            if (scConfig == null)
+                return false;
 
             Type type = scConfig.PropertyInfo.PropertyType;
 
@@ -68,12 +92,12 @@ namespace Glass.Mapper.Sc.DataMappers
             var configCopy = scConfig.Copy();
             configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name);
 
-            _mapper =
+            Mapper =
                 args.DataMappers.FirstOrDefault(
                     x => x.CanHandle(configCopy, args.Context) && x is AbstractSitecoreFieldMapper) 
                     as AbstractSitecoreFieldMapper;
 
-            if (_mapper == null)
+            if (Mapper == null)
                 throw new MapperException(
                     "No mapper to handle type {0} on property {1} class {2}".Formatted(type.FullName, property.Name,
                                                                                        property.ReflectedType.FullName));

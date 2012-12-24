@@ -18,12 +18,12 @@ namespace Glass.Mapper.Sc.DataMappers
             return global::Sitecore.DateUtil.IsoDateToDateTime(fieldValue);
         }
 
-        public override void SetField(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is DateTime)
             {
                 DateTime date = (DateTime)value;
-                field.Value = global::Sitecore.DateUtil.ToIsoDate(date);
+                return global::Sitecore.DateUtil.ToIsoDate(date);
             }
             else
                 throw new NotSupportedException("The value is not of type System.DateTime");

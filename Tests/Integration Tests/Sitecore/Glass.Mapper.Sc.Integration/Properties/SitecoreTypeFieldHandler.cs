@@ -24,5 +24,10 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             return context[configuration.PropertyInfo.PropertyType] != null;
         }
+
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -30,9 +30,9 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue( object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            field.Value= Enum.GetName(config.PropertyInfo.PropertyType, value);
+            return Enum.GetName(config.PropertyInfo.PropertyType, value);
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)

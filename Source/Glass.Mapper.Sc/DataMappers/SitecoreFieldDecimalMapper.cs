@@ -26,11 +26,11 @@ namespace Glass.Mapper.Sc.DataMappers
             else throw new MapperException("Could not convert value to decimal");
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is decimal)
             {
-                field.Value = value.ToString();
+                return value.ToString();
             }
             else
                 throw new NotSupportedException("The value is not of type System.Decimal");

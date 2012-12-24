@@ -279,6 +279,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             {
                 field.Value = Value;
             }
+
+            public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class Stub

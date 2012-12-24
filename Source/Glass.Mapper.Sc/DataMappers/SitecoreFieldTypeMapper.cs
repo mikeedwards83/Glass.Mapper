@@ -36,11 +36,11 @@ namespace Glass.Mapper.Sc.DataMappers
             return context.Service.CreateClass(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string  SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
             if (value == null)
-                field.Value = string.Empty;
+                return string.Empty;
             else
             {
                 var typeConfig = context.Service.GlassContext[value.GetType()] as SitecoreTypeConfiguration;
@@ -49,7 +49,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 if(item == null)
                     throw new NullReferenceException("Could not find item to save value {0}".Formatted(Configuration));
 
-                field.Value = item.ID.ToString();
+               return item.ID.ToString();
             }
         }
 

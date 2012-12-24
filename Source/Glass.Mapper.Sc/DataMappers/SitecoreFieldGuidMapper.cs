@@ -25,11 +25,11 @@ namespace Glass.Mapper.Sc.DataMappers
             return Guid.Parse(fieldValue);
         }
 
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is Guid)
             {
-                field.Value = ((Guid)value).ToString("B").ToUpper();
+                return ((Guid)value).ToString("B").ToUpper();
             }
             else throw new MapperException("The value is not of type System.Guid");
         }

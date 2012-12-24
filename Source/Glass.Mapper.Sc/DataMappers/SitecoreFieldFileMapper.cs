@@ -24,10 +24,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             return file;
         }
-        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
-        {
-            throw new  NotImplementedException();
-        }
+    
 
         public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
@@ -64,5 +61,13 @@ namespace Glass.Mapper.Sc.DataMappers
                 }
             }
         }
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            throw new NotImplementedException();
+        }
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
