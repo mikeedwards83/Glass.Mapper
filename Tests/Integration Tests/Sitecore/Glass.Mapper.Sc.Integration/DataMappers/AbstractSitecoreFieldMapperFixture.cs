@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
@@ -122,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.FieldName = fieldName;
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(null, item, null);
@@ -155,7 +156,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.FieldId = fieldId;
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(null, item, null);
@@ -193,7 +194,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(new Stub(), item, null);
@@ -232,7 +233,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(new Stub(), item, null);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using Glass.Mapper.Configuration;
 using NSubstitute;
@@ -180,7 +181,7 @@ namespace Glass.Mapper.Tests
                 throw new NotImplementedException();
             }
 
-            public override void Setup(AbstractPropertyConfiguration configuration)
+            public override void Setup(DataMapperResolverArgs args)
             {
                 throw new NotImplementedException();
             }

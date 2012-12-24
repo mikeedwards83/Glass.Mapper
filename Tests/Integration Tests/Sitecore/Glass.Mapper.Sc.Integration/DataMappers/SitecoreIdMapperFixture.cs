@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using Glass.Mapper.Sc.DataMappers;
@@ -58,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             config.PropertyInfo = property;
             
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var dataContext = new SitecoreDataMappingContext(null, item, null);
             var expected = item.ID.Guid;
@@ -80,7 +81,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             config.PropertyInfo = property;
 
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
 
@@ -106,7 +107,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             config.PropertyInfo = property;
 
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
 

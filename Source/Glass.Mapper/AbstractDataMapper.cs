@@ -73,9 +73,9 @@ namespace Glass.Mapper
         /// Sets up the data mapper for a particular property
         /// </summary>
         /// <param name="configuration"></param>
-        public virtual void Setup(AbstractPropertyConfiguration configuration)
+        public virtual void Setup(DataMapperResolverArgs args)
         {
-            Configuration = configuration;
+            Configuration = args.PropertyConfiguration;
         }
 
 

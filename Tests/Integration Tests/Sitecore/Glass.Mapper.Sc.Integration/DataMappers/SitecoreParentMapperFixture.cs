@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
@@ -45,7 +46,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
             
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);
@@ -71,7 +72,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.IsLazy = true;
 
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);
@@ -96,7 +97,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.InferType = true;
 
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);

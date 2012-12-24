@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using Glass.Mapper.Sc.DataMappers;
@@ -59,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
@@ -83,7 +84,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
@@ -107,7 +108,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
@@ -133,7 +134,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
             var expected = item.TemplateID.Guid;
@@ -159,7 +160,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Type = type;
             config.PropertyInfo = typeof (Stub).GetProperty("TemplateId");
 
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
             var expected = item.TemplateID;
@@ -188,7 +189,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
@@ -223,7 +224,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 

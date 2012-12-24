@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Links;
 
@@ -97,11 +98,11 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
-        public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+        public override void Setup(DataMapperResolverArgs args)
         {
-            var scConfig = configuration as SitecoreInfoConfiguration;
+            var scConfig = args.PropertyConfiguration as SitecoreInfoConfiguration;
             this.ReadOnly = scConfig.Type != SitecoreInfoType.DisplayName && scConfig.Type != SitecoreInfoType.Name;
-            base.Setup(configuration);
+            base.Setup(args);
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
@@ -58,13 +59,13 @@ namespace Glass.Mapper.Sc.DataMappers
             return context[configuration.PropertyInfo.PropertyType] != null;
         }
 
-        public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+        public override void Setup(DataMapperResolverArgs args)
         {
-            var scConfig = configuration as SitecoreFieldConfiguration;
+            var scConfig = args.PropertyConfiguration as SitecoreFieldConfiguration;
 
             IsLazy = (scConfig.Setting & SitecoreFieldSettings.DontLoadLazily) != SitecoreFieldSettings.DontLoadLazily;
             InferType = (scConfig.Setting & SitecoreFieldSettings.InferType) == SitecoreFieldSettings.InferType;
-            base.Setup(configuration);
+            base.Setup(args);
         }
 
         protected bool InferType { get; set; }

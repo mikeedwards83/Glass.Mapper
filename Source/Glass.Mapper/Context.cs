@@ -154,7 +154,6 @@ namespace Glass.Mapper
                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName));
                 }
                 property.Mapper = args.Result;
-                property.Mapper.Setup(property);
             }
         }
     }

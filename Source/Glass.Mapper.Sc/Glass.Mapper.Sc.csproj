@@ -78,6 +78,7 @@
     <Compile Include="DataMappers\SitecoreFieldDoubleMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldFileMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIEnumerableMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />

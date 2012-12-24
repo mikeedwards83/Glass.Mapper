@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using NSubstitute;
 using Glass.Mapper.Configuration;
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Tests
             var  dataMapper = new StubMapper();
 
             AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>(obj);
-           dataMapper.Setup(config);
+           dataMapper.Setup(new DataMapperResolverArgs(null, config));
             config.PropertyInfo = typeof(StubClass).GetProperties().First(x => x.Name == "AProperty");
 
             //Act

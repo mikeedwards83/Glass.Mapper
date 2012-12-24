@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using NSubstitute;
@@ -56,7 +57,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
             property1.Mapper = mapper1;
             config1.PropertyInfo = typeof(Stub).GetProperty("Property");
-            mapper1.Setup(config1);
+            mapper1.Setup(new DataMapperResolverArgs(null,config1));
            
             var property2 = Substitute.For<AbstractPropertyConfiguration>();
             var config2 = Substitute.For<AbstractPropertyConfiguration>();
@@ -64,7 +65,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
             property2.Mapper = mapper2;
             config2.PropertyInfo = typeof(Stub).GetProperty("Property");
-            mapper2.Setup(config2);
+            mapper2.Setup(new DataMapperResolverArgs(null,config2));
           
             savingContext.Config = Substitute.For<AbstractTypeConfiguration>();
             savingContext.Config.AddProperty(property1);

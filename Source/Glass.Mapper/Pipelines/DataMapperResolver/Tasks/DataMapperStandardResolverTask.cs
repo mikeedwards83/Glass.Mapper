@@ -15,7 +15,8 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
                 
                 if(mapper == null) 
                     throw new MapperException("Could not find data mapper to handler property {0}".Formatted(args.PropertyConfiguration));
-
+                
+                mapper.Setup(args);
                 args.Result = mapper;
             }
         }
