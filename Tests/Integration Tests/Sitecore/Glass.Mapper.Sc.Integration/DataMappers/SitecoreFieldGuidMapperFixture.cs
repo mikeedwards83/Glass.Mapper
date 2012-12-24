@@ -60,14 +60,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        #region Method - SetFieldValue
+        #region Method - SetField
 
         [Test]
-        public void SetFieldValue_Guidpassed_ValueSetOnField()
+        public void SetField_Guidpassed_ValueSetOnField()
         {
             //Assign
             var expected = "{FC1D0AFD-71CC-47E2-84B3-7F1A2973248B}";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetField");
             var field = item.Fields[FieldName];
             var value = new Guid(expected);
 
@@ -81,18 +81,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
             }
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
 
         [Test]
-        public void SetFieldValue_EmptyGuidPassed_ValueSetOnField()
+        public void SetField_EmptyGuidPassed_ValueSetOnField()
         {
             //Assign
             var expected = "{00000000-0000-0000-0000-000000000000}";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetField");
             var field = item.Fields[FieldName];
             var value = new Guid(expected);
 
@@ -106,7 +106,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
             }
             //Assert
             Assert.AreEqual(expected, field.Value);
@@ -114,10 +114,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void SetFieldValue_IntegerPassed_ValueSetOnField()
+        public void SetField_IntegerPassed_ValueSetOnField()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldGuidMapper/SetField");
             var field = item.Fields[FieldName];
             var value = 1;
 
@@ -131,7 +131,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
             }
             //Assert
         }

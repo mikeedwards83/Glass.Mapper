@@ -151,12 +151,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
 
 
-        #region Method - SetFieldValue
+        #region Method - SetField
 
         [Test]
-        public void SetFieldValue_ClassContainsId_IdSetInField()
+        public void SetField_ClassContainsId_IdSetInField()
         {
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
             var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -181,7 +181,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, propertyValue, config, scContext);
+                mapper.SetField(field, propertyValue, config, scContext);
             }
             //Assert
             Assert.AreEqual(targetId, Guid.Parse(item[FieldName]));   
@@ -190,10 +190,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SetFieldValue_ClassContainsNoIdProperty_ThrowsException()
+        public void SetField_ClassContainsNoIdProperty_ThrowsException()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
             var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -217,7 +217,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, propertyValue, config, scContext);
+                mapper.SetField(field, propertyValue, config, scContext);
             }
 
             //Assert
@@ -227,10 +227,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
-        public void SetFieldValue_ClassContainsIdButItemMissing_ThrowsException()
+        public void SetField_ClassContainsIdButItemMissing_ThrowsException()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
             var targetId = Guid.Parse("{11111111-A3F0-410E-8A6D-07FF3A1E78C3}");
             var mapper = new SitecoreFieldTypeMapper();
             var field = item.Fields[FieldName];
@@ -255,7 +255,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, propertyValue, config, scContext);
+                mapper.SetField(field, propertyValue, config, scContext);
             }
 
         }

@@ -123,10 +123,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
         #endregion
 
-        #region Method - SetFieldValue
+        #region Method - SetField
 
         [Test]
-        public void SetFieldValue_ValueFalse_FieldSetToZero()
+        public void SetField_ValueFalse_FieldSetToZero()
         {
             //Assign
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
@@ -147,7 +147,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             using (new SecurityDisabler())
             {
                 item.Editing.BeginEdit();
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
                 item.Editing.EndEdit();
             }
 
@@ -157,7 +157,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void SetFieldValue_ValueTrue_FieldSetToOne()
+        public void SetField_ValueTrue_FieldSetToOne()
         {
             //Assign
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             using (new SecurityDisabler())
             {
                 item.Editing.BeginEdit();
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
                 item.Editing.EndEdit();
             }
 

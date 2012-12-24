@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
-            SetFieldValue(field, value, scConfig, scContext);
+            SetField(field, value, scConfig, scContext);
         }
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
@@ -45,7 +45,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
 
         public abstract object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
-        public abstract void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
+        public abstract void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {

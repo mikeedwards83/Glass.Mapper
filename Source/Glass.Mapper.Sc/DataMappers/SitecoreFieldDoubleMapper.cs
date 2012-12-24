@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.DataMappers
             else throw new MapperException("Could not convert value to double");
         }
 
-        public override void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is double)
             {

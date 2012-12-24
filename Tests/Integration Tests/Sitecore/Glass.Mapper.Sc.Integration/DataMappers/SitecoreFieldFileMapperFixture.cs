@@ -62,15 +62,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        #region Method - SetFieldValue
+        #region Method - SetField
 
         [Test]
-        public void SetFieldValue_FileObjectPass_FieldPopulated()
+        public void SetField_FileObjectPass_FieldPopulated()
         {
             //Assign
               var expected =
                 "<file mediaid=\"{C10794CE-624F-4F72-A2B9-14336F3FB582}\" src=\"~/media/C10794CE624F4F72A2B914336F3FB582.ashx\" />";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
             var file = new File()
@@ -88,7 +88,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
            //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, file, null, null);
+                mapper.SetField(field, file, null, null);
             }
             //Assert
 
@@ -96,11 +96,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void SetFieldValue_FileNull_FileIsEmpty()
+        public void SetField_FileNull_FileIsEmpty()
         {
             //Assign
             var expected = string.Empty;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
             var file = (File)null;
@@ -115,7 +115,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, file, null, null);
+                mapper.SetField(field, file, null, null);
             }
             //Assert
 
@@ -123,14 +123,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void SetFieldValue_FileEmptyGuid_FieldLinkRemoved()
+        public void SetField_FileEmptyGuid_FieldLinkRemoved()
         {
             //Assign
             var fieldValue =
                "<file mediaid=\"{C10794CE-624F-4F72-A2B9-14336F3FB582}\" src=\"~/media/C10794CE624F4F72A2B914336F3FB582.ashx\" />";
 
             var expected = string.Empty;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
             var file = new File()
@@ -148,7 +148,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, file, null, null);
+                mapper.SetField(field, file, null, null);
             }
             //Assert
 
@@ -157,12 +157,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void SetFieldValue_FileContainsMissinfMedia_ExpectionThrown()
+        public void SetField_FileContainsMissinfMedia_ExpectionThrown()
         {
             //Assign
 
             var expected = string.Empty;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFileMapper/SetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldFileMapper();
             var file = new File()
@@ -180,7 +180,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, file, null, null);
+                mapper.SetField(field, file, null, null);
             }
             //Assert
 

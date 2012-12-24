@@ -87,12 +87,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #region Method - GetField
 
         [Test]
-        public void SetFieldValue_ObjectisValidDecimal_SetsFieldValue()
+        public void SetField_ObjectisValidDecimal_SetsFieldValue()
         {
             //Assign
             string expected = "3.141592";
             decimal objectValue = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -105,7 +105,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -115,11 +115,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SetFieldValue_ObjectIsInt_ThrowsException()
+        public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
             int objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -132,7 +132,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 

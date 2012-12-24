@@ -275,7 +275,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 return Value;
             }
 
-            public override void SetFieldValue(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            public override void SetField(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
             {
                 field.Value = Value;
             }

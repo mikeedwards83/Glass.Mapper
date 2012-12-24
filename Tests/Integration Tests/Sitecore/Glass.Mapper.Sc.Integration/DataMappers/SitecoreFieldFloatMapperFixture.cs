@@ -88,12 +88,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #region Method - GetField
 
         [Test]
-        public void SetFieldValue_ObjectisValidFloat_SetsFieldValue()
+        public void SetField_ObjectisValidFloat_SetsFieldValue()
         {
             //Assign
             string expected = "3.141592";
             float objectValue = 3.141592f;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -106,7 +106,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -116,11 +116,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SetFieldValue_ObjectIsInt_ThrowsException()
+        public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
             int objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
