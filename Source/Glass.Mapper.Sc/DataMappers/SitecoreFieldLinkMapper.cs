@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Fields;
+using Sitecore.Data.Fields;
+using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -20,50 +23,49 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            var itemField = base.GetField(item);
 
-            if (itemField == null || itemField.Value.Trim().IsNullOrEmpty()) return null;
+            if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
 
 
 
             Link link = new Link();
-            LinkField field = new LinkField(itemField);
+            LinkField linkField = new LinkField(field);
 
-            switch (field.LinkType)
+            switch (linkField.LinkType)
             {
                 case "anchor":
-                    link.Url = field.Anchor;
+                    link.Url = linkField.Anchor;
                     link.Type = LinkType.Anchor;
                     break;
                 case "external":
-                    link.Url = field.Url;
+                    link.Url = linkField.Url;
                     link.Type = LinkType.External;
                     break;
                 case "mailto":
-                    link.Url = field.Url;
+                    link.Url = linkField.Url;
                     link.Type = LinkType.MailTo;
                     break;
                 case "javascript":
-                    link.Url = field.Url;
+                    link.Url = linkField.Url;
                     link.Type = LinkType.JavaScript;
                     break;
                 case "media":
-                    if (field.TargetItem == null)
+                    if (linkField.TargetItem == null)
                         link.Url = string.Empty;
                     else
                     {
                         global::Sitecore.Data.Items.MediaItem media =
-                            new global::Sitecore.Data.Items.MediaItem(field.TargetItem);
+                            new global::Sitecore.Data.Items.MediaItem(linkField.TargetItem);
                         link.Url = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
-                        link.Type = LinkType.Media;
-                        link.TargetId = field.TargetID.Guid;
                     }
+                    link.Type = LinkType.Media;
+                    link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
-                    if (field.TargetItem == null) link.Url = string.Empty;
-                    else link.Url = LinkManager.GetItemUrl(field.TargetItem);
+                    if (linkField.TargetItem == null) link.Url = string.Empty;
+                    else link.Url = LinkManager.GetItemUrl(linkField.TargetItem);
                     link.Type = LinkType.Internal;
-                    link.TargetId = field.TargetID.Guid;
+                    link.TargetId = linkField.TargetID.Guid;
 
                     break;
                 default:
@@ -73,12 +75,12 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
 
-            link.Anchor = field.Anchor;
-            link.Class = field.Class;
-            link.Text = field.Text;
-            link.Title = field.Title;
-            link.Target = field.Target;
-            link.Query = field.QueryString;
+            link.Anchor = linkField.Anchor;
+            link.Class = linkField.Class;
+            link.Text = linkField.Text;
+            link.Title = linkField.Title;
+            link.Target = linkField.Target;
+            link.Query = linkField.QueryString;
 
             return link;
         }

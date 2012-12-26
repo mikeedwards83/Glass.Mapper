@@ -171,6 +171,36 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
+        public void GetField_FieldContainsInternalMissingItem_ReturnsNotSetLink()
+        {
+            //Assign
+            var mapper = new SitecoreFieldLinkMapper();
+            var fieldValue =
+                "<link text=\"Test description\" linktype=\"internal\" url=\"/Tests/DataMappers/SitecoreFieldLinkMapper/Target.aspx\" anchor=\"testAnchor\" querystring=\"q=s\" title=\"test alternative\" class=\"testClass\" target=\"testTarget\" id=\"{11111111-3B6F-4F5F-A5C2-FD2B9D5A47A0}\" />";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLinkMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, null, null) as Link;
+
+            //Assert
+            Assert.AreEqual("testAnchor", result.Anchor);
+            Assert.AreEqual("testClass", result.Class);
+            Assert.AreEqual("q=s", result.Query);
+            Assert.AreEqual("testTarget", result.Target);
+            Assert.AreEqual(new Guid("{11111111-3B6F-4F5F-A5C2-FD2B9D5A47A0}"), result.TargetId);
+            Assert.AreEqual("Test description", result.Text);
+            Assert.AreEqual("test alternative", result.Title);
+            Assert.AreEqual(LinkType.Internal, result.Type);
+            Assert.AreEqual("", result.Url);
+        }
+        [Test]
         public void GetField_FieldContainsMediaLink_ReturnsMediaLink()
         {
             //Assign
@@ -198,7 +228,38 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual("Test description", result.Text);
             Assert.AreEqual("test alternative", result.Title);
             Assert.AreEqual(LinkType.Media, result.Type);
-            Assert.AreEqual("/~/media/8E1C32F3CF154067A3F485148606F9CD.asmx", result.Url);
+            Assert.AreEqual("/~/media/8E1C32F3CF154067A3F485148606F9CD.ashx", result.Url);
+        }
+
+        [Test]
+        public void GetField_FieldContainsMediaLinkMissingItem_ReturnsNotSetLink()
+        {
+            //Assign
+            var mapper = new SitecoreFieldLinkMapper();
+            var fieldValue =
+                "<link text=\"Test description\" linktype=\"media\" url=\"/Files/20121222_001405\" title=\"test alternative\" class=\"testClass\" target=\"_blank\" id=\"{11111111-CF15-4067-A3F4-85148606F9CD}\" />";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLinkMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, null, null) as Link;
+
+            //Assert
+            Assert.AreEqual("", result.Anchor);
+            Assert.AreEqual("testClass", result.Class);
+            Assert.AreEqual("", result.Query);
+            Assert.AreEqual("_blank", result.Target);
+            Assert.AreEqual(new Guid("{11111111-CF15-4067-A3F4-85148606F9CD}"), result.TargetId);
+            Assert.AreEqual("Test description", result.Text);
+            Assert.AreEqual("test alternative", result.Title);
+            Assert.AreEqual(LinkType.Media, result.Type);
+            Assert.AreEqual("", result.Url);
         }
 
         #endregion
