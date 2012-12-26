@@ -11,7 +11,7 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreFieldIntegerMapper : AbstractSitecoreFieldMapper
     {
         public SitecoreFieldIntegerMapper()
-            : base(typeof(double))
+            : base(typeof(int))
         {
 
         }

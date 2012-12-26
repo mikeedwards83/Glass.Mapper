@@ -14,6 +14,10 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreFieldImageMapper : AbstractSitecoreFieldMapper
     {
+        public SitecoreFieldImageMapper() : base(typeof (Image))
+        {
+        }
+
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 

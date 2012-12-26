@@ -14,6 +14,10 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreFieldFileMapper : AbstractSitecoreFieldMapper
     {
+        public SitecoreFieldFileMapper() : base(typeof (File))
+        {
+        }
+
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             FileField fileField = new FileField(field);
