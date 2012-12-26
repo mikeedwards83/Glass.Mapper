@@ -69,6 +69,7 @@
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapperFixture.cs" />

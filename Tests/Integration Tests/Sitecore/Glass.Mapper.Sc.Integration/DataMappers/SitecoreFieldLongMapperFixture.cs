@@ -8,20 +8,20 @@ using NUnit.Framework;
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
     [TestFixture]
-    public  class SitecoreFieldIntegerMapperFixture : AbstractMapperFixture
+    public  class SitecoreFieldLongMapperFixture : AbstractMapperFixture
     {
         #region Method - GetField
 
         [Test]
-        public void GetField_FieldContainsValidInteger_ReturnsInteger()
+        public void GetField_FieldContainsValidLong_ReturnsLong()
         {
             //Assign
             string fieldValue = "3";
-            int expected = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldIntegerMapper/GetField");
+            long expected = 3;
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLongMapper/GetField");
             var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
             using (new ItemEditing(item, true))
             {
@@ -29,22 +29,22 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
         [Test]
-        public void GetField_FieldContainsEmptyString_ReturnsIntegerZero()
+        public void GetField_FieldContainsEmptyString_ReturnsLongZero()
         {
             //Assign
             string fieldValue = string.Empty;
-            int expected = 0;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldIntegerMapper/GetField");
+            long expected = 0;
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLongMapper/GetField");
             var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
             using (new ItemEditing(item, true))
             {
@@ -52,7 +52,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -60,15 +60,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetField_FieldContainsInvalidValidInteger_ReturnsInteger()
+        public void GetField_FieldContainsInvalidValidLong_ReturnsLong()
         {
             //Assign
             string fieldValue = "hello world";
-            int expected = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldIntegerMapper/GetField");
+            long expected = 3;
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLongMapper/GetField");
             var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
             using (new ItemEditing(item, true))
             {
@@ -76,7 +76,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -88,15 +88,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #region Method - SetField
 
         [Test]
-        public void SetField_ObjectisValidInteger_SetsFieldValue()
+        public void SetField_ObjectisValidLong_SetsFieldValue()
         {
             //Assign
             string expected = "3";
-            int objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldIntegerMapper/SetField");
+            long objectValue = 3;
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLongMapper/SetField");
             var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
             using (new ItemEditing(item, true))
             {
@@ -120,10 +120,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             double objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldIntegerMapper/SetField");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLongMapper/SetField");
             var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
             using (new ItemEditing(item, true))
             {
