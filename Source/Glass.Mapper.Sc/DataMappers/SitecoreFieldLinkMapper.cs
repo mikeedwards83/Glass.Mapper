@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
+using Sitecore.Data;
 using Sitecore.Data.Fields;
+using Sitecore.Data.Items;
 using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreFieldLinkMapper : AbstractSitecoreFieldMapper
     {
+        public SitecoreFieldLinkMapper() : base(typeof (Link))
+        {
+        }
+
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
@@ -83,6 +89,114 @@ namespace Glass.Mapper.Sc.DataMappers
             link.Query = linkField.QueryString;
 
             return link;
+        }
+
+        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            Link link = value as Link;
+            
+
+            if (field == null) return;
+
+            var item = field.Item;
+
+            LinkField linkField = new LinkField(field);
+            if (link == null || link.Type == LinkType.NotSet)
+            {
+                linkField.Clear();
+                return;
+            }
+
+
+            switch (link.Type)
+            {
+                case LinkType.Internal:
+                    linkField.LinkType = "internal";
+                    if (linkField.TargetID.Guid != link.TargetId)
+                    {
+                        if (link.TargetId == Guid.Empty)
+                        {
+                            ItemLink iLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, linkField.TargetItem.Database.Name, linkField.TargetID, linkField.TargetItem.Paths.FullPath);
+                            linkField.RemoveLink(iLink);
+                        }
+                        else
+                        {
+                            ID newId = new ID(link.TargetId);
+                            Item target = item.Database.GetItem(newId);
+                            if (target != null)
+                            {
+                                linkField.TargetID = newId;
+                                ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                                linkField.UpdateLink(nLink);
+                                linkField.Url = LinkManager.GetItemUrl(target);
+                            }
+                            else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
+                        }
+
+                    }
+                    break;
+                case LinkType.Media:
+                    linkField.LinkType = "media";
+                    if (linkField.TargetID.Guid != link.TargetId)
+                    {
+                        if (link.TargetId == Guid.Empty)
+                        {
+                            ItemLink iLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, linkField.TargetItem.Database.Name, linkField.TargetID, linkField.TargetItem.Paths.FullPath);
+                            linkField.RemoveLink(iLink);
+                        }
+                        else
+                        {
+                            ID newId = new ID(link.TargetId);
+                            Item target = item.Database.GetItem(newId);
+
+                            if (target != null)
+                            {
+                                global::Sitecore.Data.Items.MediaItem media = new global::Sitecore.Data.Items.MediaItem(target);
+
+                                linkField.TargetID = newId;
+                                ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                                linkField.UpdateLink(nLink);
+                                linkField.Url = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                            }
+                            else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
+                        }
+
+                    }
+                    break;
+                case LinkType.External:
+                    linkField.LinkType = "external";
+                    linkField.Url = link.Url;
+                    break;
+                case LinkType.Anchor:
+                    linkField.LinkType = "anchor";
+                    linkField.Url = link.Anchor;
+                    break;
+                case LinkType.MailTo:
+                    linkField.LinkType = "mailto";
+                    linkField.Url = link.Url;
+                    break;
+                case LinkType.JavaScript:
+                    linkField.LinkType = "javascript";
+                    linkField.Url = link.Url;
+                    break;
+
+
+            }
+
+
+
+            if (!link.Anchor.IsNullOrEmpty())
+                linkField.Anchor = link.Anchor;
+            if (!link.Class.IsNullOrEmpty())
+                linkField.Class = link.Class;
+            if (!link.Text.IsNullOrEmpty())
+                linkField.Text = link.Text;
+            if (!link.Title.IsNullOrEmpty())
+                linkField.Title = link.Title;
+            if (!link.Query.IsNullOrEmpty())
+                linkField.QueryString = link.Query;
+            if (!link.Target.IsNullOrEmpty())
+                linkField.Target = link.Target;
         }
     }
 }
