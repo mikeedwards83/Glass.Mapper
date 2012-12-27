@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
@@ -88,6 +89,19 @@ namespace Glass.Mapper.Sc
             }
 
             return field;
+        }
+
+        public static string ConstructQueryString(NameValueCollection parameters)
+        {
+            var sb = new StringBuilder();
+
+            foreach (String name in parameters)
+                sb.Append(String.Concat(name, "=", System.Web.HttpUtility.UrlEncode(parameters[name]), "&"));
+
+            if (sb.Length > 0)
+                return sb.ToString(0, sb.Length - 1);
+
+            return String.Empty;
         }
     }
 }

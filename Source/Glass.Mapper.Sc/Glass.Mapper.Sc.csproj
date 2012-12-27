@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,6 +84,7 @@
     <Compile Include="DataMappers\SitecoreFieldFileMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldIEnumerableMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLinkMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
