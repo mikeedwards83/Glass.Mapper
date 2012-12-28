@@ -107,7 +107,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var fieldValue = "";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldRulesMapper/GetField");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldRulesMapper/GetField2");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldRulesMapper();

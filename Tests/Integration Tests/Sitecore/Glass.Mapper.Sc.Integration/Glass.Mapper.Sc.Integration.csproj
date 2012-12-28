@@ -86,6 +86,7 @@
     <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldNullableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
