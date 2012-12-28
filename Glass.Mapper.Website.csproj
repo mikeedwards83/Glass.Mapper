@@ -68,6 +68,7 @@
     <Content Include="docs\api\index.html" />
     <Content Include="docs\api\Glass.Mapper.Context.html" />
     <Content Include="Base.html" />
+    <Content Include="docs\contribute.html" />
     <Content Include="docs\index.html" />
     <Content Include="getting-started\index.html" />
     <Content Include="site.css" />
