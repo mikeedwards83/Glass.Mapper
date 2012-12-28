@@ -88,6 +88,7 @@
     <Compile Include="DataMappers\SitecoreFieldNullableMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldRulesMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldStreamMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStringMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
