@@ -61,8 +61,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 field.Value = fieldValue;
             }
 
+
+
             //Act
             var result = mapper.GetField(field, config, null) as string;
+
+            Sitecore.Context.Site = null;
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -87,8 +91,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 field.Value = fieldValue;
             }
 
+
+
             //Act
             var result = mapper.GetField(field, config, null) as string;
+
+            Sitecore.Context.Site = null;
 
             //Assert
             Assert.AreEqual(fieldValue, result);
@@ -123,6 +131,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             {
                 mapper.SetField(field, expected, config, null);
             }
+
+            Sitecore.Context.Site = null;
+
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
@@ -151,6 +162,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             {
                 mapper.SetField(field, expected, config, null);
             }
+
+            Sitecore.Context.Site = null;
+
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
