@@ -95,6 +95,10 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public void Configure(PropertyInfo propertyInfo, SitecoreFieldConfiguration config)
         {
             config.FieldName = this.FieldName;
+
+            if (config.FieldName.IsNullOrEmpty())
+                config.FieldName = propertyInfo.Name;
+
             config.Setting = this.Setting;
             config.CodeFirst = this.CodeFirst;
             

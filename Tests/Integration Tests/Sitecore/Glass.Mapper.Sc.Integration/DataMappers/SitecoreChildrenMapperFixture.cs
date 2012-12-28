@@ -133,5 +133,24 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
 
         #endregion
+
+        #region CanHandle
+
+        [Test]
+        public void CanHandle_ConfigIsChildren_ReturnsTrue()
+        {
+            //Assign
+            var mapper = new SitecoreChildrenMapper();
+            var config = new SitecoreChildrenConfiguration();
+
+            //Act
+            var result = mapper.CanHandle(config, null);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+
+        #endregion
     }
 }
