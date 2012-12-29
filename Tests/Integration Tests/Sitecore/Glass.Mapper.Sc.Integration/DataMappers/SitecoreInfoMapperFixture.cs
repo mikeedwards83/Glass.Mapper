@@ -62,6 +62,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Type = type;
             mapper.Setup(new DataMapperResolverArgs(null,config));
 
+            Sitecore.Context.Site = null;
+
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
 
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
