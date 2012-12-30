@@ -13,6 +13,6 @@ namespace Glass.Mapper.Configuration
 
         public string Path { get; set; }
 
-        public Type Type { get; set; }
+        public bool InferType { get; set; }
     }
 }

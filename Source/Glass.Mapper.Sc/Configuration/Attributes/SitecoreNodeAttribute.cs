@@ -9,7 +9,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreNodeAttribute : NodeAttribute
     {
-        public SitecoreNodeAttribute():base(typeof(Guid))
+        public SitecoreNodeAttribute():base()
         {
         }
 

@@ -70,6 +70,7 @@
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapper.cs" />

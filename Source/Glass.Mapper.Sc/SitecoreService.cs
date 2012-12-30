@@ -57,7 +57,10 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeSavingContext savingContext = new SitecoreTypeSavingContext();
             savingContext.Config = config;
-            savingContext.Item = item;
+
+            //ME-an item with no versions should be null
+
+            savingContext.Item = item == null || item.Versions.Count == 0 ? null : item;
             savingContext.Object = obj;
 
             item.Editing.BeginEdit();

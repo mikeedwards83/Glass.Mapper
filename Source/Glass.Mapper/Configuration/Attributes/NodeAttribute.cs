@@ -8,11 +8,8 @@ namespace Glass.Mapper.Configuration.Attributes
 {
     public abstract class NodeAttribute : AbstractPropertyAttribute
     {
-        public Type Type { get; set; }
-
-        public NodeAttribute(Type type)
+        public NodeAttribute()
         {
-            Type = type;
             IsLazy = true;
         }
 
@@ -40,7 +37,6 @@ namespace Glass.Mapper.Configuration.Attributes
             config.Id = this.Id;
             config.IsLazy = this.IsLazy;
             config.Path = this.Path;
-            config.Type = this.Type;
             
             base.Configure(propertyInfo, config);
         }
