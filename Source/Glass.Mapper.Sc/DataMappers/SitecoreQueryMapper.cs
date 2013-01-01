@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.DataMappers
                         getItems = new Func<IEnumerable<Item>>(() =>
                         {
 
-                            return GetLanguageItems(scContext.Item.Axes.SelectItems(query), scContext.Item.Language);
+                            return Utilities.GetLanguageItems(scContext.Item.Axes.SelectItems(query), scContext.Item.Language);
                         });
                     }
                     else
@@ -78,10 +78,10 @@ namespace Glass.Mapper.Sc.DataMappers
                                 if (contextArray == null)
                                     contextArray = new QueryContext[] { context };
 
-                                return GetLanguageItems(contextArray.Select(x => scContext.Item.Database.GetItem(x.ID)), scContext.Item.Language);
+                                return Utilities.GetLanguageItems(contextArray.Select(x => scContext.Item.Database.GetItem(x.ID)), scContext.Item.Language);
                             }
                             else
-                                return GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language);
+                                return Utilities.GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language);
                         });
                     }
                     var array = getItems.Invoke().ToArray();
@@ -96,32 +96,18 @@ namespace Glass.Mapper.Sc.DataMappers
                 Item result = null;
                 if (scConfig.IsRelative)
                 {
-                    result = GetLanguageItem(scContext.Item.Axes.SelectSingleItem(query), scContext.Item.Language);
+                    result = Utilities.GetLanguageItem(scContext.Item.Axes.SelectSingleItem(query), scContext.Item.Language);
                 }
                 else
                 {
-                    result = GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language);
+                    result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language);
                 }
                 return scContext.Service.CreateClass(scConfig.PropertyInfo.PropertyType, result,scConfig.IsLazy, scConfig.InferType);
             }
         }
-        private IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
-        {
-            if (foundItems == null) return Enumerable.Empty<Item>();
+       
 
-            return foundItems.Select(x => GetLanguageItem(x, language)).Where(x => x != null);
-        }
 
-        private Item GetLanguageItem(Item foundItem, Language language)
-        {
-            if (foundItem == null) return null;
-
-            var item = foundItem.Database.GetItem(foundItem.ID, language);
-            if (item.Versions.Count > 0)
-                return item;
-            else
-                return null;
-        }
 
         public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
         {

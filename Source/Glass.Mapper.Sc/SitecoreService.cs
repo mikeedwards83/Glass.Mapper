@@ -61,7 +61,7 @@ namespace Glass.Mapper.Sc
 
             //ME-an item with no versions should be null
 
-            savingContext.Item = item == null || item.Versions.Count == 0 ? null : item;
+            savingContext.Item = item;
             savingContext.Object = obj;
 
             item.Editing.BeginEdit();
@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc
 
         public object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false)
         {
-            if (item == null) return null;
+            if (item == null || item.Versions.Count == 0) return null;
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;

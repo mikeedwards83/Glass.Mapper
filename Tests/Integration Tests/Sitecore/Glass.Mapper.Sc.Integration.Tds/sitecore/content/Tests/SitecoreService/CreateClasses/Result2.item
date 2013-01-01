@@ -1,18 +1,18 @@
 ----item----
 version: 1
-id: {216C0015-8626-4951-9730-85BCA34EC2A3}
+id: {A6BA2C97-3CD1-4E64-8F36-F00493B2BC44}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Target
-parent: {5ACF8AD0-15B0-4650-A185-C867E1E50A31}
-name: Target
+path: /sitecore/content/Tests/SitecoreService/CreateClasses/Result2
+parent: {68AF5325-5568-48B3-AF01-91F601FD27E9}
+name: Result2
 master: {00000000-0000-0000-0000-000000000000}
-template: {3A1B89BA-3885-4BD6-8326-67605764676C}
-templatekey: DataMappersSingleField
+template: {ABE81623-6250-46F3-914C-6926697B9A86}
+templatekey: EmptyItem
 
 ----version----
 language: en
 version: 1
-revision: becae479-f0ca-490a-b4a3-e93bc6b177c0
+revision: 5b52be25-16df-4e62-8d0e-68241d67b910
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -27,7 +27,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20121231T101735
+20130101T132253
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -41,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-becae479-f0ca-490a-b4a3-e93bc6b177c0
+5b52be25-16df-4e62-8d0e-68241d67b910
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130101T141023:634926462235847860
+20130101T132253:634926433735387727
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
