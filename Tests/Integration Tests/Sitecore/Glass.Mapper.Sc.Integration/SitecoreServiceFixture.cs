@@ -170,6 +170,25 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void CreateClass_NoConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+
+            //Act
+            var result = service.CreateClass<StubClass>(item, false, false);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ID.Guid, result.Id);
+        }
+
+        [Test]
         public void CreateClass_OneConstructorArgs_ReturnsItem()
         {
             //Assign
@@ -184,6 +203,28 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1 );
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ID.Guid, result.Id);
+            Assert.AreEqual(param1, result.Param1);
+        }
+
+        [Test]
+        public void CreateClass_OneConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+
+            var param1 = 456;
+
+            //Act
+            var result =service.CreateClass<StubClass, int>(item, false, false, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -207,6 +248,30 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1, param2);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ID.Guid, result.Id);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+        }
+
+        [Test]
+        public void CreateClass_TwoConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+
+            var param1 = 456;
+            var param2 = "hello world";
+
+            //Act
+            var result =service.CreateClass<StubClass, int, string>(item, false, false, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -243,6 +308,33 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void CreateClass_ThreeConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+
+            var param1 = 456;
+            var param2 = "hello world";
+            DateTime param3 = DateTime.Now;
+
+
+            //Act
+            var result = service.CreateClass<StubClass, int, string, DateTime>(item, false, false, param1, param2, param3);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ID.Guid, result.Id);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+        }
+
+        [Test]
         public void CreateClass_FourConstructorArgs_ReturnsItem()
         {
             //Assign
@@ -260,6 +352,34 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1, param2, param3, param4);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ID.Guid, result.Id);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+            Assert.AreEqual(param4, result.Param4);
+        }
+
+        [Test]
+        public void CreateClass_FourConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+
+            var param1 = 456;
+            var param2 = "hello world";
+            DateTime param3 = DateTime.Now;
+            var param4 = true;
+
+            //Act
+            var result = service.CreateClass<StubClass, int, string, DateTime, bool>(item, false, false, param1, param2, param3, param4);
 
             //Assert
             Assert.IsNotNull(result);

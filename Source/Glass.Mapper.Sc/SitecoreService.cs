@@ -124,6 +124,92 @@ namespace Glass.Mapper.Sc
             return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }
 
+
+        /// <summary>
+        /// Creates a class from the specified item
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateClass<T>(Item item, bool isLazy, bool inferType) where T : class
+        {
+            return (T)CreateClass(typeof(T), item, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with a single constructor parameter
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <returns>The item as the specified type</returns>
+        public T CreateClass<T, K>(Item item, bool isLazy, bool inferType, K param1)
+        {
+            return (T)CreateClass(typeof(T), item, isLazy, inferType, param1);
+
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with a two constructor parameter
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateClass<T, K, L>(Item item, bool isLazy, bool inferType, K param1, L param2)
+        {
+            return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2);
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with a two constructor parameter
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateClass<T, K, L, M>(Item item, bool isLazy, bool inferType, K param1, L param2, M param3)
+        {
+            return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2, param3);
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with a two constructor parameter
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateClass<T, K, L, M, N>(Item item, bool isLazy, bool inferType, K param1, L param2, M param3, N param4)
+        {
+            return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2, param3, param4);
+        }
         
     }
 }
