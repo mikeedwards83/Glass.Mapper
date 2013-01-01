@@ -93,6 +93,48 @@ namespace Glass.Mapper.Sc.Integration
 
         }
 
+        [Test]
+        public void Save_ItemDisplayNameChangedUsingProxy_SavesDisplayName()
+        {
+            //Assign
+            var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
+            string expected = "new name";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var currentItem = db.GetItem(itemPath);
+            var service = new SitecoreService(db, context);
+
+
+            //setup item
+            using (new SecurityDisabler())
+            {
+                currentItem.Editing.BeginEdit();
+                currentItem[Global.Fields.DisplayName] = "old name";
+                currentItem.Editing.EndEdit();
+            }
+
+            var cls = service.GetItem<StubSaving>(itemPath, true);
+
+
+
+            using (new SecurityDisabler())
+            {
+                //Act
+                cls.Name = expected;
+                service.Save(cls);
+
+                //Assert
+                var newItem = db.GetItem(itemPath);
+
+                Assert.AreEqual(expected, newItem[Global.Fields.DisplayName]);
+
+                Assert.IsTrue(cls is StubSaving);
+                Assert.AreNotEqual(typeof(StubSaving), cls.GetType());
+            }
+
+        }
         #endregion
 
         #region Method - CreateClasses

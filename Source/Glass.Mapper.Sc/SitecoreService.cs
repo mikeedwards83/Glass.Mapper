@@ -38,11 +38,17 @@ namespace Glass.Mapper.Sc
         }
 
 
-        public T GetItem<T>(Guid id) where T:class 
+        public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T:class 
         {
             var item = Database.GetItem(new ID(id));
-            return CreateClass(typeof (T), item) as T;
+            return CreateClass(typeof (T), item, isLazy, inferType) as T;
 
+        }
+
+        public T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class
+        {
+            var item = Database.GetItem(path);
+            return CreateClass(typeof(T), item, isLazy, inferType) as T;
         }
 
         public void Save<T>(T obj)
@@ -51,7 +57,11 @@ namespace Glass.Mapper.Sc
           //  SitecoreTypeContext context = new SitecoreTypeContext();
 
             //TODO: ME - this may not work with a proxy
-            var config = GlassContext[obj.GetType()] as SitecoreTypeConfiguration;
+            var config = GlassContext.GetTypeConfiguration(obj) as SitecoreTypeConfiguration;
+            
+            if(config == null) 
+                throw new NullReferenceException("Can not save class, could not find configuration for {0}".Formatted(typeof(T).FullName));
+            
             var item = config.ResolveItem(obj, Database);
             if(item == null)
                 throw new MapperException("Could not save class, item not found");
@@ -70,6 +80,8 @@ namespace Glass.Mapper.Sc
 
             item.Editing.EndEdit();
         }
+
+
         /// <summary>
         /// 
         /// </summary>

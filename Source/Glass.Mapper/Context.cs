@@ -156,5 +156,17 @@ namespace Glass.Mapper
                 property.Mapper = args.Result;
             }
         }
+
+        public AbstractTypeConfiguration GetTypeConfiguration(object obj)
+        {
+            var type = obj.GetType();
+            var config = TypeConfigurations.ContainsKey(type) ? TypeConfigurations[type] : null;
+            
+            //check base type encase of proxy
+            if (config == null)
+                config =  TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
+
+            return config;
+        }
     }
 }
