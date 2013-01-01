@@ -172,7 +172,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\UmbracoTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoParentAttribute.cs" />
@@ -186,10 +185,20 @@
     <Compile Include="Configuration\UmbracoPropertySettings.cs" />
     <Compile Include="Configuration\UmbracoDataType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
+    <Compile Include="DataTypes\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataTypes\UmbracoChildrenMapper.cs" />
+    <Compile Include="DataTypes\UmbracoParentMapper.cs" />
+    <Compile Include="DataTypes\UmbracoIdMapper.cs" />
+    <Compile Include="IUmbracoService.cs" />
+    <Compile Include="LazyNodeEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UmbracoTypeSavingContext.cs" />
+    <Compile Include="UmbracoTypeCreationContext.cs" />
+    <Compile Include="UmbracoService.cs" />
+    <Compile Include="UmbracoDataMappingContext.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataTypes\" />
     <Folder Include="Pipelines\ClassConstruction\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\ObjectConstruction\" />
