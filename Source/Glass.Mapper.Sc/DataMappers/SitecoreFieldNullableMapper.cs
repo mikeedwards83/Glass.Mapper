@@ -54,4 +54,22 @@ namespace Glass.Mapper.Sc.DataMappers
             base.Setup(args);
         }
     }
+
+    public class SitecoreFieldNullableDateTimeMapper :
+          SitecoreFieldNullableMapper<DateTime, SitecoreFieldDateTimeMapper> { }
+
+    public class SitecoreFieldNullableDecimalMapper :
+        SitecoreFieldNullableMapper<Decimal, SitecoreFieldDecimalMapper> { }
+
+    public class SitecoreFieldNullableDoubleMapper :
+        SitecoreFieldNullableMapper<Double, SitecoreFieldDoubleMapper> { }
+
+    public class SitecoreFieldNullableFloatMapper :
+        SitecoreFieldNullableMapper<float, SitecoreFieldFloatMapper> { }
+
+    public class SitecoreFieldNullableGuidMapper :
+        SitecoreFieldNullableMapper<Guid, SitecoreFieldGuidMapper> { }
+
+    public class SitecoreFieldNullableIntMapper :
+        SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper> { }
 }
