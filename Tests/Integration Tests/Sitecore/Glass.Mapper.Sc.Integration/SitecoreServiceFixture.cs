@@ -135,6 +135,52 @@ namespace Glass.Mapper.Sc.Integration
             }
 
         }
+
+        [Test]
+        public void Save_ItemDisplayNameChangedUsingProxyUsingInterface_SavesDisplayName()
+        {
+            //Assign
+            var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
+            string expected = "new name";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var currentItem = db.GetItem(itemPath);
+            var service = new SitecoreService(db, context);
+
+
+            //setup item
+            using (new SecurityDisabler())
+            {
+                currentItem.Editing.BeginEdit();
+                currentItem[Global.Fields.DisplayName] = "old name";
+                currentItem.Editing.EndEdit();
+            }
+
+            var cls = service.GetItem<IStubSaving>(itemPath);
+
+
+
+            using (new SecurityDisabler())
+            {
+                //Act
+                cls.Name = expected;
+                service.Save(cls);
+
+                //Assert
+                var newItem = db.GetItem(itemPath);
+
+                Assert.AreEqual(expected, newItem[Global.Fields.DisplayName]);
+
+                Assert.IsTrue(cls is IStubSaving);
+                Assert.AreNotEqual(typeof(IStubSaving), cls.GetType());
+            }
+
+        }
+
+     
+
         #endregion
 
         #region Method - CreateClasses
@@ -445,6 +491,16 @@ namespace Glass.Mapper.Sc.Integration
 
             [SitecoreInfo(Type = SitecoreInfoType.DisplayName)]
             public virtual string Name { get; set; }
+        }
+
+        [SitecoreType]
+        public interface IStubSaving
+        {
+            [SitecoreId]
+            Guid Id { get; set; }
+
+            [SitecoreInfo(Type = SitecoreInfoType.DisplayName)]
+            string Name { get; set; }
         }
 
         [SitecoreType]
