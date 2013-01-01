@@ -486,6 +486,61 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryMapper.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryMapper\Results.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryMapper\Results\Result1.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryMapper\Results\Result2.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryMapper\Source.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters\ItemDateNowParameter.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters\ItemEscapedPathParameter.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters\ItemIdParameter.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreQueryParameters\ItemPathParameter.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\SitecoreService.item">
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>

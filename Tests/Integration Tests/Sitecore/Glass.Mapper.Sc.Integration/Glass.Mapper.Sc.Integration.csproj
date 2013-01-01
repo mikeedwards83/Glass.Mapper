@@ -94,6 +94,12 @@
     <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameterFixture.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

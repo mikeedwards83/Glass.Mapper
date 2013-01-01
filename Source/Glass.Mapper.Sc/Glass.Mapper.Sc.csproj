@@ -95,6 +95,13 @@
     <Compile Include="DataMappers\SitecoreLinkedMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ISitecoreQueryParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
     <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\Image.cs" />
     <Compile Include="Fields\Link.cs" />
