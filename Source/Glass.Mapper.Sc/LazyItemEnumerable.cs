@@ -16,14 +16,13 @@ namespace Glass.Mapper.Sc
 
         public LazyItemEnumerable(
             Func<IEnumerable<Item>> getItems,
-            Type type,
             bool isLazy,
             bool inferType,
             ISitecoreService service
             )
         {
             _getItems = getItems;
-            _type = type;
+            _type = typeof(T);
             _isLazy = isLazy;
             _inferType = inferType;
             _service = service;

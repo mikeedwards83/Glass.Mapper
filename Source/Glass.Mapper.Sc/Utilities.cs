@@ -103,5 +103,10 @@ namespace Glass.Mapper.Sc
 
             return String.Empty;
         }
+
+        public static Type GetGenericOuter(Type type)
+        {
+            return type.GetGenericTypeDefinition();
+        }
     }
 }

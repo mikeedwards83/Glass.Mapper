@@ -92,6 +92,7 @@
     <Compile Include="DataMappers\SitecoreFieldStringMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
+    <Compile Include="DataMappers\SitecoreLinkedMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
     <Compile Include="Fields\File.cs" />
