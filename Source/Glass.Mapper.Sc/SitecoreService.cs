@@ -70,15 +70,27 @@ namespace Glass.Mapper.Sc
 
             item.Editing.EndEdit();
         }
-
-        public object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="item"></param>
+        /// <param name="isLazy"></param>
+        /// <param name="inferType"></param>
+        /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
+        /// <returns></returns>
+        public object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters)
         {
             if (item == null || item.Versions.Count == 0) return null;
+
+
+            if (constructorParameters != null && constructorParameters.Count() > 4)
+                throw new NotSupportedException("Maximum number of constructor parameters is 4");
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
             creationContext.RequestedType = type;
-            creationContext.ConstructorParameters = null;
+            creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;
             creationContext.IsLazy = isLazy;
@@ -87,11 +99,19 @@ namespace Glass.Mapper.Sc
             return obj;
         }
 
+        /// <summary>
+        /// Create a collection of classes from the specified type
+        /// </summary>
+        /// <param name="isLazy">If true creates a proxy for each class</param>
+        /// <param name="type">The type to return</param>
+        /// <param name="getItems">A function that returns the list of items to load</param>
+        /// <param name="inferType">Infer the type to be loaded from the item template</param>
+        /// <returns>An enumerable of the items as the specified type</returns>
         public IEnumerable CreateClasses(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems)
         {
             return Utilities.CreateGenericType(typeof(LazyItemEnumerable<>), new Type[] { type }, getItems, isLazy, inferType, this) as IEnumerable;
         }
-
+        
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var scTypeContext = abstractTypeCreationContext as SitecoreTypeCreationContext;

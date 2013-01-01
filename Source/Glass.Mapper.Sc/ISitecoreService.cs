@@ -11,7 +11,7 @@ namespace Glass.Mapper.Sc
     public interface ISitecoreService: IAbstractService
     {
         Database Database { get; }
-        object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false);
+        object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters);
        
         /// <summary>
         /// Create a collection of classes from the specified type

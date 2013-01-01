@@ -73,8 +73,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                                                       .Aggregate((x, y) => x + "," + y)));
 
             Delegate conMethod = args.Configuration.ConstructorMethods[constructor];
-            
-            var obj = conMethod.DynamicInvoke(parameters);
+
+            var obj = conMethod.DynamicInvoke(constructorParameters);
 
             //create properties 
             AbstractDataMappingContext dataMappingContext =  args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, obj);
