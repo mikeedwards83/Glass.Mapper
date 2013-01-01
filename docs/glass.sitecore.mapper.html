@@ -1,0 +1,44 @@
+---
+layout: MainLayout
+title: How to contribute
+---
+
+<div class="page-header">
+    <h1>I used Glass.Sitecore.Mapper <small>- What has changed?</small></h1>
+</div>
+
+<p>
+    For those who have used Glass.Sitecore.Mapper the biggest question is going to be what has changed, this page attempts
+    to detail all the new features:
+</p>
+
+<dl>
+    <dt>
+        Abstractions
+    </dt>
+    <dd>
+        To make Glass.Mapper a platform that could be used across multiple CMS's we have had to abstract a lot of the 
+        logic. This means that when you create for example a data mapper you will want to cast the configuration or context
+        to the CMS specific version.
+    </dd>
+    <dt>
+        Multiple Assemblies
+    </dt>
+    <dd>
+        There are now multiple assemblies for Glass.Mapper. The Glass.Mapper assembly contains the generic mapping code
+        and the Glass.Mapper.Sc contains the Sitecore specific implementations. You will need to include both in your project.
+    </dd>
+    <dt>
+        SitecoreClass -> SitecoreType
+    </dt>
+    <dd>
+        The type SitecoreClass as now been renamed SitecoreType, we made this change because you can map more
+        than just classes with Glass.Mapper.
+    </dd>
+    <dt>
+        More Unit Tests
+    </dt>
+    <dd>
+        We have added more unit tests and organised them in a more controlled and logic manner.
+    </dd>
+</dl>

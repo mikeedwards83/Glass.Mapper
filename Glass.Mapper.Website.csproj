@@ -60,6 +60,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\glass.sitecore.mapper.html" />
+    <Content Include="docs\solutions.html" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
