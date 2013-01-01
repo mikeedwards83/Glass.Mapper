@@ -16,6 +16,7 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using Glass.Mapper.Sc.DataMappers;
+using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -23,6 +24,9 @@ namespace Glass.Mapper.Sc.Integration
     {
         public override void Configure(WindsorContainer container, string contextName)
         {
+
+            //****** Data Mappers  ******//
+            // Used to convert data to and from Sitecore
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleTransient(),
@@ -54,7 +58,20 @@ namespace Glass.Mapper.Sc.Integration
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
+                    .DynamicParameters((k, d) =>
+                                           {
+                                               d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
+                                           })
+                    .LifestyleTransient(),
+
+            //****** SitecoreQueryMapper parameters ******//
+            // Used by the SitecoreQueryMapper to replace placeholders in queries
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleTransient(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestyleTransient(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestyleTransient(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestyleTransient(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestyleTransient(),
 
         
             //****** Data Mapper Resolver Tasks ******//
