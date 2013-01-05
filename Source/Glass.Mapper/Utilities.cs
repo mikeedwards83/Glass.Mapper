@@ -10,6 +10,7 @@ namespace Glass.Mapper
     public static  class Utilities
     {
 
+
         /// <summary>
         /// Returns a delegate method that will load a class based on its constuctor
         /// </summary>

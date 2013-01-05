@@ -7,6 +7,7 @@ using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
 using Sitecore.Links;
 
 namespace Glass.Mapper.Sc
@@ -102,6 +103,28 @@ namespace Glass.Mapper.Sc
                 return sb.ToString(0, sb.Length - 1);
 
             return String.Empty;
+        }
+
+        public static Type GetGenericOuter(Type type)
+        {
+            return type.GetGenericTypeDefinition();
+        }
+
+        public static Item GetLanguageItem(Item foundItem, Language language)
+        {
+            if (foundItem == null) return null;
+
+            var item = foundItem.Database.GetItem(foundItem.ID, language);
+            if (item.Versions.Count > 0)
+                return item;
+            else
+                return null;
+        }
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
+        {
+            if (foundItems == null) return Enumerable.Empty<Item>();
+
+            return foundItems.Select(x => Utilities.GetLanguageItem(x, language)).Where(x => x != null);
         }
     }
 }

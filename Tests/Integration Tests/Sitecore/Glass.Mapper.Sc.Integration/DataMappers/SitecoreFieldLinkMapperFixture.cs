@@ -147,6 +147,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue =
                 "<link text=\"Test description\" linktype=\"internal\" url=\"/Tests/DataMappers/SitecoreFieldLinkMapper/Target.aspx\" anchor=\"testAnchor\" querystring=\"q=s\" title=\"test alternative\" class=\"testClass\" target=\"testTarget\" id=\"{1AE37F34-3B6F-4F5F-A5C2-FD2B9D5A47A0}\" />";
 
+            Sitecore.Context.Site = null;
+
+
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLinkMapper/GetField");
             var field = item.Fields[FieldName];
 

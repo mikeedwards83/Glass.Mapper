@@ -1,6 +1,6 @@
 ----item----
 version: 1
-id: {BBDEFFA7-3786-4912-9841-5BE590D6BFF7}
+id: {7D7BB7F6-938D-4716-A6CA-1BA5E6A5868F}
 database: master
 path: /sitecore/content/Tests/DataMappers/New Folder
 parent: {949328F9-AB43-4AA8-9B09-B3FF0C0F1C7B}
@@ -12,7 +12,7 @@ templatekey: Folder
 ----version----
 language: en
 version: 1
-revision: 2488ea55-d46f-4532-8a4d-58f1d75617a7
+revision: f25cda0d-3e61-4be8-9101-5ced63d7aefa
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -20,7 +20,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20121223T182658
+20130101T121838
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -34,14 +34,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-2488ea55-d46f-4532-8a4d-58f1d75617a7
+f25cda0d-3e61-4be8-9101-5ced63d7aefa
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121223T182658:634918840187006727
+20130101T121838:634926395187392908
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

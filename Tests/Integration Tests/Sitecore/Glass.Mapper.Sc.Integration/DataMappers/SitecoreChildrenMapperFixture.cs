@@ -17,7 +17,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public class SitecoreChildrenMapperFixture
     {
-        #region MapToProperty
+        #region Method - MapToProperty
 
         [Test]
         public void MapToProperty_ItemHasThreeChildren_ThreeObjectAreCreated()
@@ -100,7 +100,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        #region ReadOnly
+        #region Property - ReadOnly
 
         [Test]
         public void ReadOnly_ReturnsTrue()
@@ -116,24 +116,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         #endregion
-
-        #region Stubs
-
-        [SitecoreType]
-        public class StubChild
-        {
-            [SitecoreId]
-            public virtual ID Id { get; set; }
-        }
-
-        public class Stub
-        {
-            public IEnumerable<StubChild> Children { get; set; } 
-        }
-
-
-        #endregion
-
+  
         #region CanHandle
 
         [Test]
@@ -152,5 +135,23 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
 
         #endregion
+        #region Stubs
+
+        [SitecoreType]
+        public class StubChild
+        {
+            [SitecoreId]
+            public virtual ID Id { get; set; }
+        }
+
+        public class Stub
+        {
+            public IEnumerable<StubChild> Children { get; set; } 
+        }
+
+
+        #endregion
+
+     
     }
 }

@@ -32,7 +32,6 @@ namespace Glass.Mapper.Sc.DataMappers
                 typeof (LazyItemEnumerable<>),
                 new[] {genericType},
                 getItems,
-                scConfig.PropertyInfo.PropertyType,
                 scConfig.IsLazy,
                 scConfig.InferType,
                 scContext.Service

@@ -32,7 +32,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         [Test]
         public void Does_Constructor_Set_IsLazy_True()
         {
-            Assert.IsTrue(new StubNodeAttribute(null).IsLazy);
+            Assert.IsTrue(new StubNodeAttribute().IsLazy);
         }
 
 
@@ -42,8 +42,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_DefaultValues_ConfigContainsDefaults()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
 
@@ -52,7 +51,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.IsNullOrEmpty(config.Path);
             Assert.IsNullOrEmpty(config.Id);
         }
@@ -61,8 +59,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_PathHasValue_ConfigHasPathValue()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
             var path = "some path";
@@ -74,7 +71,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.AreEqual(path, config.Path);
             Assert.IsNullOrEmpty(config.Id);
         }
@@ -83,8 +79,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_IdHasValue_ConfigHasIdValue()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
             var id = "some id";
@@ -96,7 +91,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.AreEqual(id, config.Id);
             Assert.IsNullOrEmpty(config.Path);
         }
@@ -110,7 +104,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         private class StubNodeAttribute : NodeAttribute
         {
-            public StubNodeAttribute(Type type):base(type)
+            public StubNodeAttribute()
             {
             }
 

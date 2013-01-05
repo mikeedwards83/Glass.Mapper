@@ -12,8 +12,15 @@ templatekey: DataMappersSingleField
 ----version----
 language: en
 version: 1
-revision: 10ad90c1-04e0-47a9-b6ea-b04898894dfb
+revision: 82fdbb79-74ec-4f4b-91db-32645319ab47
 
+----field----
+field: {6B43481F-F129-4F53-BEEE-EA84F9B1A6D4}
+name: Field
+key: field
+content-length: 14
+
+test value set
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -41,18 +48,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-10ad90c1-04e0-47a9-b6ea-b04898894dfb
+82fdbb79-74ec-4f4b-91db-32645319ab47
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121216T214506:634912911063321174
+20121230T212310:634924993906093380
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 14
+content-length: 17
 
-sitecore\admin
+default\Anonymous

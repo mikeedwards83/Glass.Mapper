@@ -19,6 +19,8 @@ namespace Glass.Mapper.Sc.Integration
         {
 
             //Assign
+            long count = 1000;
+
             var expected = "hello world";
             var id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
@@ -38,39 +40,43 @@ namespace Glass.Mapper.Sc.Integration
 
             //get Sitecore raw
             var rawTotal = (long)0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var watch = new Stopwatch();
+                var watch1 = new Stopwatch();
 
-                watch.Start();
+            for (int i = 0; i < count; i++)
+            {
+
+                watch1.Start();
                 var rawItem = db.GetItem(new ID(id));
                 var value = item["Field"];
-                watch.Stop();
+                watch1.Stop();
                 Assert.AreEqual(expected, value);
-                rawTotal += watch.ElapsedTicks;
+                rawTotal += watch1.ElapsedTicks;
             }
 
-            var rawAverage = rawTotal/1000;
+            long rawAverage = rawTotal / count;
 
             Console.WriteLine("Performance Test - 1000 - Raw - {0}", rawAverage);
+            Console.WriteLine("Raw ElapsedTicks to sec:  {0}", rawAverage / (double)Stopwatch.Frequency);
 
             var glassTotal = (long)0;
-            for (int i = 0; i < 1000; i++)
+                var watch2 = new Stopwatch();
+                for (int i = 0; i < count; i++)
             {
-                var watch = new Stopwatch();
 
-                watch.Start();
+                watch2.Start();
                 var glassItem = service.GetItem<StubClass>(id);
                 var value = glassItem.Field;
-                watch.Stop();
+                watch2.Stop();
                 Assert.AreEqual(expected, value);
-                glassTotal += watch.ElapsedTicks;
+                glassTotal += watch2.ElapsedTicks;
             }
 
-            var glassAverage = glassTotal / 1000;
+
+                long glassAverage = glassTotal / count;
 
             Console.WriteLine("Performance Test - 1000 - Glass - {0}", glassAverage);
-
+            Console.WriteLine("Glass ElapsedTicks to sec:  {0}", glassAverage / (double)Stopwatch.Frequency);
+            Console.WriteLine("Raw/Glass {0}", (double) glassAverage/(double)rawAverage);
 
 
             //Assert
