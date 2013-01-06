@@ -1,17 +1,20 @@
 ﻿using System;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
+using umbraco.BusinessLogic;
+using umbraco.cms.businesslogic.web;
 
 namespace Glass.Mapper.Umb.Integration
 {
     [TestFixture]
-    public class UmbracoServiceFixture
+    public class UmbracoServiceFixture : FixtureBase
     {
         #region Method - GetItem
 
         [Test]
         public void GetItem_UsingItemId_ReturnsItem()
         {
+            var dt = DocumentType.MakeNew(new User(0), "asd");
              //Assign
             var context = Context.Create(new GlassConfig());
             context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration") );
