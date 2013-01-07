@@ -1,8 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Umb.Configuration;
-using umbraco.NodeFactory;
 
-namespace Glass.Mapper.Umb.DataTypes
+namespace Glass.Mapper.Umb.DataMappers
 {
     public class UmbracoParentMapper :AbstractDataMapper
     {

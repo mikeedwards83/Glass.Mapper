@@ -11,7 +11,7 @@ using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
-using Glass.Mapper.Umb.DataTypes;
+using Glass.Mapper.Umb.DataMappers;
 
 namespace Glass.Mapper.Umb.Integration
 {

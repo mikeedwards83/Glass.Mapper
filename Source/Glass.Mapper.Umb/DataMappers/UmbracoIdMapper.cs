@@ -1,7 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Umb.Configuration;
 
-namespace Glass.Mapper.Umb.DataTypes
+namespace Glass.Mapper.Umb.DataMappers
 {
     public class UmbracoIdMapper : AbstractDataMapper
     {

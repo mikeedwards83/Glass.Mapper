@@ -1,14 +1,27 @@
 ﻿using System;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
+using Umbraco.Tests.TestHelpers;
+using Umbraco.Web;
 using umbraco.BusinessLogic;
 using umbraco.cms.businesslogic.web;
 
 namespace Glass.Mapper.Umb.Integration
 {
     [TestFixture]
-    public class UmbracoServiceFixture : FixtureBase
+    public class UmbracoServiceFixture : BaseWebTest
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            //set the current umbraco context and a published content store
+          //  PublishedContentStoreResolver.Current = new PublishedContentStoreResolver(
+          //     new DefaultPublishedContentStore());
+
+           // var routingContext = GetRoutingContext("/test", 1234);
+            UmbracoContext.Current = GetUmbracoContext("/test", 1234);
+        }
         #region Method - GetItem
 
         [Test]

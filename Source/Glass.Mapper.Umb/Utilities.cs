@@ -6,11 +6,6 @@ namespace Glass.Mapper.Umb
 {
     public static class Utilities
     {
-        public static IProperty GetProperty(INode node, string alias)
-        {
-            return node.GetProperty(alias);
-        }
-
         /// <summary>
         /// </summary>
         /// <param name="type">The generic type to create e.g. List&lt;&gt;</param>

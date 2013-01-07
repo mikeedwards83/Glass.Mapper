@@ -1,5 +1,5 @@
 IconCache/
-Depends/*
+Depends/Sitecore/*
 Tutorials/Depends/*
 
 #ignore thumbnails created by windows

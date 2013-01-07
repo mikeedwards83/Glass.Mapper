@@ -185,10 +185,10 @@
     <Compile Include="Configuration\UmbracoPropertySettings.cs" />
     <Compile Include="Configuration\UmbracoDataType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
-    <Compile Include="DataTypes\AbstractUmbracoPropertyMapper.cs" />
-    <Compile Include="DataTypes\UmbracoChildrenMapper.cs" />
-    <Compile Include="DataTypes\UmbracoParentMapper.cs" />
-    <Compile Include="DataTypes\UmbracoIdMapper.cs" />
+    <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoChildrenMapper.cs" />
+    <Compile Include="DataMappers\UmbracoParentMapper.cs" />
+    <Compile Include="DataMappers\UmbracoIdMapper.cs" />
     <Compile Include="IUmbracoService.cs" />
     <Compile Include="LazyNodeEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

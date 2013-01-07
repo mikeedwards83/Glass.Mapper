@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Security;
-using System.Text;
 using System.Web;
 using System.Web.Routing;
-using NSubstitute;
+using Rhino.Mocks;
 
 namespace Glass.Mapper.Umb.Integration
 {
@@ -53,51 +51,51 @@ namespace Glass.Mapper.Umb.Integration
         {
             //Request context
 
-            RequestContext = Substitute.For<RequestContext>();
+            RequestContext = MockRepository.GenerateMock<RequestContext>();
 
             //Request
 
-            var request = Substitute.For<HttpRequestBase>();
-            request.AppRelativeCurrentExecutionFilePath.Returns("~" + fullUrl.AbsolutePath);
-            request.PathInfo.Returns(string.Empty);
-            request.RawUrl.Returns(VirtualPathUtility.ToAbsolute("~" + fullUrl.AbsolutePath, "/"));
-            request.RequestContext.Returns(RequestContext);
-            request.Url.Returns(fullUrl);
-            request.ApplicationPath.Returns("/");
-            request.Cookies.Returns(new HttpCookieCollection());
-            request.ServerVariables.Returns(new NameValueCollection());
+            var request = MockRepository.GenerateMock<HttpRequestBase>();
+            request.Stub(x => x.AppRelativeCurrentExecutionFilePath).Return("~" + fullUrl.AbsolutePath);
+            request.Stub(x => x.PathInfo).Return(string.Empty);
+            request.Stub(x => x.RawUrl).Return(VirtualPathUtility.ToAbsolute("~" + fullUrl.AbsolutePath, "/"));
+            request.Stub(x => x.RequestContext).Return(RequestContext);
+            request.Stub(x => x.Url).Return(fullUrl);
+            request.Stub(x => x.ApplicationPath).Return("/");
+            request.Stub(x => x.Cookies).Return(new HttpCookieCollection());
+            request.Stub(x => x.ServerVariables).Return(new NameValueCollection());
             var queryStrings = HttpUtility.ParseQueryString(fullUrl.Query);
-            request.QueryString.Returns(queryStrings);
-            request.Form.Returns(new NameValueCollection());
+            request.Stub(x => x.QueryString).Return(queryStrings);
+            request.Stub(x => x.Form).Return(new NameValueCollection());
 
             //Cache
-            var cache = Substitute.For<HttpCachePolicyBase>();
+            var cache = MockRepository.GenerateMock<HttpCachePolicyBase>();
 
             //Response 
             //var response = new FakeHttpResponse();
-            var response = Substitute.For<HttpResponseBase>();
-            response.ApplyAppPathModifier(null).ReturnsForAnyArgs(info => info.Arg<string>());
-            response.Cache.Returns(cache);
+            var response = MockRepository.GenerateMock<HttpResponseBase>();
+            response.Stub(x => x.ApplyAppPathModifier(null)).IgnoreArguments().Do(new Func<string, string>(appPath => appPath));
+            response.Stub(x => x.Cache).Return(cache);
 
             //Server
 
-            var server = Substitute.For<HttpServerUtilityBase>();
-            server.MapPath(Arg.Any<string>()).Returns(Environment.CurrentDirectory);
+            var server = MockRepository.GenerateStub<HttpServerUtilityBase>();
+            server.Stub(x => x.MapPath(Arg<string>.Is.Anything)).Return(Environment.CurrentDirectory);
 
             //HTTP Context
 
-            HttpContext = Substitute.For<HttpContextBase>();
-            HttpContext.Cache.Returns(HttpRuntime.Cache);
-            HttpContext.Items.Returns(new Dictionary<object, object>());
-            HttpContext.Request.Returns(request);
-            HttpContext.Server.Returns(server);
-            HttpContext.Response.Returns(response);
+            HttpContext = MockRepository.GenerateMock<HttpContextBase>();
+            HttpContext.Stub(x => x.Cache).Return(HttpRuntime.Cache);
+            HttpContext.Stub(x => x.Items).Return(new Dictionary<object, object>());
+            HttpContext.Stub(x => x.Request).Return(request);
+            HttpContext.Stub(x => x.Server).Return(server);
+            HttpContext.Stub(x => x.Response).Return(response);
 
-            RequestContext.HttpContext.Returns(HttpContext);
+            RequestContext.Stub(x => x.HttpContext).Return(HttpContext);
 
             if (routeData != null)
             {
-                RequestContext.RouteData.Returns(routeData);
+                RequestContext.Stub(x => x.RouteData).Return(routeData);
             }
         }
 

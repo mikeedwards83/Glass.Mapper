@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Glass.Mapper.Umb.Configuration;
-using umbraco.NodeFactory;
 using umbraco.interfaces;
 
-namespace Glass.Mapper.Umb.DataTypes
+namespace Glass.Mapper.Umb.DataMappers
 {
     public class UmbracoChildrenMapper : AbstractDataMapper
     {

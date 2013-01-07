@@ -94,9 +94,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.4.11.1\lib\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="NSubstitute">
-      <HintPath>..\..\..\..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -108,6 +105,9 @@
     </Reference>
     <Reference Include="Our.Umbraco.uGoLive.Checks">
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.4.11.1\lib\Our.Umbraco.uGoLive.Checks.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\..\..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="SQLCE4Umbraco">
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.4.11.1\lib\SQLCE4Umbraco.dll</HintPath>
@@ -180,6 +180,9 @@
     <Reference Include="umbraco.providers">
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.4.11.1\lib\umbraco.providers.dll</HintPath>
     </Reference>
+    <Reference Include="Umbraco.Tests">
+      <HintPath>..\..\..\..\Depends\Umbraco\Umbraco.Tests.dll</HintPath>
+    </Reference>
     <Reference Include="Umbraco.Web.UI">
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.4.11.1\lib\Umbraco.Web.UI.dll</HintPath>
     </Reference>
@@ -199,6 +202,7 @@
   <ItemGroup>
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="FakeHttpContextFactory.cs" />
+    <Compile Include="FakeRoutesCache.cs" />
     <Compile Include="FixtureBase.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -260,6 +264,8 @@
     <Content Include="bin\x86\sqlceme40.dll" />
     <Content Include="bin\x86\sqlceqp40.dll" />
     <Content Include="bin\x86\sqlcese40.dll" />
+    <Content Include="Masterpages\dummy.txt" />
+    <Content Include="Views\dummy.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
