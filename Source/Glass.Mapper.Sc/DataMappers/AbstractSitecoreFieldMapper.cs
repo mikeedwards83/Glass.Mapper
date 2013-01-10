@@ -18,8 +18,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            var scConfig = Configuration as SitecoreFieldConfiguration;
-            var scContext = mappingContext as SitecoreDataMappingContext;
+            var scConfig = (SitecoreFieldConfiguration) Configuration; 
+            var scContext = (SitecoreDataMappingContext) mappingContext  ;
 
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
@@ -29,8 +29,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-            var scConfig = Configuration as SitecoreFieldConfiguration;
-            var scContext = mappingContext as SitecoreDataMappingContext;
+            var scConfig = (SitecoreFieldConfiguration)Configuration;
+            var scContext = (SitecoreDataMappingContext)mappingContext;
 
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
             return GetField(field, scConfig, scContext);

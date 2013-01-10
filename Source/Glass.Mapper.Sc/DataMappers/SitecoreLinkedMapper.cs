@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var item = scContext.Item;
 
             //ME - i am not sure this is correct but there is an odd behaviour of references
-                // lanugauges come back as invariant, going with default language in this scenario
+                // languges come back as invariant, going with default language in this scenario
             var references = new Func<IEnumerable<Item>>(() =>{
                         var itemLinks = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferences(item);
                         var items = itemLinks.Select(x => x.GetTargetItem());

@@ -79,7 +79,7 @@ namespace Glass.Mapper.Tests
 
         }
 
-        public class StubAbstractService : AbstractService<StubAbstractDataMappingContext>
+        public class StubAbstractService : AbstractService
         {
             public StubAbstractService(Context context) : base(context)
             {

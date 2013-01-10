@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -32,7 +33,21 @@ namespace Glass.Mapper.Configuration.Attributes
                 {
                     //try to find a dll or exe
                     //TODO: can we move this to config
-                    return Assembly.LoadFrom(assemblyName + ".dll") ?? Assembly.LoadFrom(assemblyName + ".exe");
+                    var path = "./";
+
+                    try
+                    {
+                        if (HttpContext.Current != null)
+                        {
+                            path=   HttpContext.Current.Server.MapPath("/bin");
+                            path += "/";
+                        }
+                    }
+                    catch
+                    {
+                    }
+
+                    return Assembly.LoadFrom(path+assemblyName + ".dll") ?? Assembly.LoadFrom(path+assemblyName + ".exe");
                 }
             }catch(FileNotFoundException ex)
             {

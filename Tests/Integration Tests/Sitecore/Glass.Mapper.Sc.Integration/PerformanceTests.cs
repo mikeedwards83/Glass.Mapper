@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
@@ -19,16 +20,20 @@ namespace Glass.Mapper.Sc.Integration
         {
 
             //Assign
-            long count = 1000;
+            long count = 1;
 
             var expected = "hello world";
             var id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
             var context = Context.Create(new GlassConfig());
+
+            
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
+
+            service.Profiler = new SimpleProfiler();
 
             var item = db.GetItem(new ID(id));
             using (new ItemEditing(item, true))
@@ -92,7 +97,7 @@ namespace Glass.Mapper.Sc.Integration
         [SitecoreType]
         public class StubClass
         {
-            [SitecoreField]
+          //  [SitecoreField]
             public virtual string Field { get; set; }
 
             [SitecoreId]

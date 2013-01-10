@@ -7,12 +7,16 @@ using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper
 {
-    public abstract class AbstractService<TK> : IAbstractService
-        where TK : AbstractDataMappingContext
+    public abstract class AbstractService : IAbstractService
     {
+
+
+        public IPerformanceProfiler Profiler { get; set; }
+
         public  Context GlassContext { get; private set; }
 
         /// <summary>
@@ -50,6 +54,9 @@ namespace Glass.Mapper
 
         public AbstractService(Context glassContext)
         {
+
+            Profiler = new NullProfiler();
+
             GlassContext = glassContext;
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
@@ -63,9 +70,15 @@ namespace Glass.Mapper
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //Run the get type pipeline to get the type to load
+            Profiler.Start("Type resolver");
+
             var typeRunner = new TypeResolver(TypeResolverTasks);
+            typeRunner.Profiler = Profiler;
             var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
             typeRunner.Run(typeArgs);
+
+            Profiler.End("Type resolver");
+            Profiler.Start("Config resolver");
 
             //TODO: ME - make these exceptions more specific
             if (typeArgs.Result == null)
@@ -73,8 +86,12 @@ namespace Glass.Mapper
 
             //run the pipeline to get the configuration to load
             var configurationRunner = new ConfigurationResolver(ConfigurationResolverTasks);
+            configurationRunner.Profiler = Profiler;
             var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, typeArgs.Result);
             configurationRunner.Run(configurationArgs);
+
+            Profiler.End("Config resolver");
+            Profiler.Start("Object resolver");
 
             if (configurationArgs.Result == null)
                 throw new NullReferenceException("Configuration Resolver pipeline did not return type.");
@@ -83,8 +100,11 @@ namespace Glass.Mapper
 
             //Run the object construction
             var objectRunner = new ObjectConstruction(ObjectConstructionTasks);
+            objectRunner.Profiler = Profiler;
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, config, this);
             objectRunner.Run(objectArgs);
+
+            Profiler.End("Object resolver");
 
            
 
