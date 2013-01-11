@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Integration
         {
 
             //Assign
-            int[] counts = new int[]  {1, 100, 1000, 10000, 50000, 100000, 150000,200000};
+            int[] counts = new int[] {1, 100, 1000, 10000, 50000, 100000, 150000,200000};
             foreach (var count in counts)
             {
                 GetItemsTest(count);
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Integration
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
-        //    service.Profiler = new SimpleProfiler();
+     //       service.Profiler = new SimpleProfiler();
 
             var item = db.GetItem(new ID(id));
             using (new ItemEditing(item, true))
@@ -60,9 +60,9 @@ namespace Glass.Mapper.Sc.Integration
 
                 watch1.Start();
                 var rawItem = db.GetItem(new ID(id));
-             //   var value = item["Field"];
+                var value = item["Field"];
                 watch1.Stop();
-            //    Assert.AreEqual(expected, value);
+              Assert.AreEqual(expected, value);
                 rawTotal += watch1.ElapsedTicks;
             }
 
@@ -78,9 +78,9 @@ namespace Glass.Mapper.Sc.Integration
 
                 watch2.Start();
                 var glassItem = service.GetItem<StubClass>(id);
-            //    var value = glassItem.Field;
+               var value = glassItem.Field;
                 watch2.Stop();
-             //   Assert.AreEqual(expected, value);
+                Assert.AreEqual(expected, value);
                 glassTotal += watch2.ElapsedTicks;
             }
 
@@ -105,11 +105,11 @@ namespace Glass.Mapper.Sc.Integration
         [SitecoreType]
         public class StubClass
         {
-            //[SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
-            //public virtual string Field { get; set; }
+            [SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field { get; set; }
 
-            //[SitecoreId]
-            //public virtual Guid Id { get; set; }
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
         }
 
         #endregion

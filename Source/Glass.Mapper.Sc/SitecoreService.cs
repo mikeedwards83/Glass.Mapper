@@ -295,7 +295,7 @@ namespace Glass.Mapper.Sc
             if (item == null || item.Versions.Count == 0) return null;
 
 
-            if (constructorParameters != null && constructorParameters.Count() > 4)
+            if (constructorParameters != null && constructorParameters.Length > 4)
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
