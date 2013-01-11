@@ -58,9 +58,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
-            var profiler = new SimpleProfiler();
 
-            profiler.Start("1");
 
             var configuration = args.Configuration;
             var type = configuration.Type;
@@ -77,30 +75,18 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                     ConstructorErrorMessage.Formatted(type.FullName,parameters
                                                       .Select(x => x.GetType().FullName)
                                                       .Aggregate((x, y) => x + "," + y)));
-            profiler.End("1");
-            profiler.Start("2");
 
-            Delegate conMethod = args.Configuration.ConstructorMethods[constructor];
-            profiler.End("2");
-            profiler.Start("3");
+            Delegate conMethod = args.Configuration.ConstructorMethods[parameters];
 
             var obj = conMethod.DynamicInvoke(constructorParameters);
-            profiler.End("3");
-            profiler.Start("4");
          
             //create properties 
             AbstractDataMappingContext dataMappingContext =  args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, obj);
-            profiler.End("4");
-            profiler.Start("5");
 
             foreach (var prop in args.Configuration.Properties)
             {
-                profiler.Start(prop.ToString());
                 prop.Mapper.MapCmsToProperty(dataMappingContext);
-                profiler.End(prop.ToString());
-
             }
-            profiler.End("5");
 
             //args.Configuration.Properties.ForEach(x => x.Mapper.MapCmsToProperty(dataMappingContext));
 

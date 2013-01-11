@@ -18,7 +18,10 @@ namespace Glass.Mapper.Sc.DataMappers
             if (field == null)
                 return string.Empty;
 
-            if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
+            if (config.Setting != SitecoreFieldSettings.RichTextRaw)
+                return field.Value;
+
+            if (field.Type.StartsWith("Rich Text"))
             {
                 FieldRenderer renderer = new FieldRenderer();
                 renderer.Item = field.Item;

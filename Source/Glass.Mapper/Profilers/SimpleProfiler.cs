@@ -27,6 +27,7 @@ namespace Glass.Mapper.Profilers
 
             var watch = _watches[key];
             watch.Stop();
+            _watches.Remove(key);
             Console.WriteLine("Watch {0}: Elapsed Ticks {1}".Formatted(key, watch.ElapsedTicks));
         }
     }

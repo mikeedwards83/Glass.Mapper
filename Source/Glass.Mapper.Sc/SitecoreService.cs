@@ -325,7 +325,7 @@ namespace Glass.Mapper.Sc
         
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
-            var scTypeContext = abstractTypeCreationContext as SitecoreTypeCreationContext;
+            var scTypeContext =  abstractTypeCreationContext as SitecoreTypeCreationContext;
             return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
         }
 
