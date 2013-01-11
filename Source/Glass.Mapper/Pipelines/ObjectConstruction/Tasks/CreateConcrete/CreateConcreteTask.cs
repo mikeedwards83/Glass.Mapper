@@ -58,23 +58,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
-
-
-            var configuration = args.Configuration;
-            var type = configuration.Type;
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
             var parameters = 
                 constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
-
-          
-            ConstructorInfo constructor = type.GetConstructor(parameters);
-
-            if (constructor == null)
-                throw new ObjectConstructionException(
-                    ConstructorErrorMessage.Formatted(type.FullName,parameters
-                                                      .Select(x => x.GetType().FullName)
-                                                      .Aggregate((x, y) => x + "," + y)));
 
             Delegate conMethod = args.Configuration.ConstructorMethods[parameters];
 
@@ -88,10 +75,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 prop.Mapper.MapCmsToProperty(dataMappingContext);
             }
 
-            //args.Configuration.Properties.ForEach(x => x.Mapper.MapCmsToProperty(dataMappingContext));
-
             return obj;
-
         }
     }
 }
