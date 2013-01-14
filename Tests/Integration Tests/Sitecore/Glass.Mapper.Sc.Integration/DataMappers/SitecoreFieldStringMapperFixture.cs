@@ -27,6 +27,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldStringMapper();
+            var config = new SitecoreFieldConfiguration();
 
             using (new ItemEditing(item, true))
             {
@@ -34,7 +35,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetField(field, null, null) as string;
+            var result = mapper.GetField(field, config, null) as string;
 
             //Assert
             Assert.AreEqual(fieldValue, result);

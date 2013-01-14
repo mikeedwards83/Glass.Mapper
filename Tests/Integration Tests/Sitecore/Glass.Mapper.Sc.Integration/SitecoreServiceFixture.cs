@@ -290,7 +290,7 @@ namespace Glass.Mapper.Sc.Integration
             var param1 = 456;
 
             //Act
-            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1 );
+            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -312,7 +312,7 @@ namespace Glass.Mapper.Sc.Integration
             var param1 = 456;
 
             //Act
-            var result =service.CreateClass<StubClass, int>(item, false, false, param1);
+            var result =service.CreateClass<StubClass, int>(item, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -359,7 +359,7 @@ namespace Glass.Mapper.Sc.Integration
             var param2 = "hello world";
 
             //Act
-            var result =service.CreateClass<StubClass, int, string>(item, false, false, param1, param2);
+            var result =service.CreateClass<StubClass, int, string>(item, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -412,7 +412,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             //Act
-            var result = service.CreateClass<StubClass, int, string, DateTime>(item, false, false, param1, param2, param3);
+            var result = service.CreateClass<StubClass, int, string, DateTime>(item, param1, param2, param3, false, false);
 
             //Assert
             Assert.IsNotNull(result);
@@ -467,7 +467,7 @@ namespace Glass.Mapper.Sc.Integration
             var param4 = true;
 
             //Act
-            var result = service.CreateClass<StubClass, int, string, DateTime, bool>(item, false, false, param1, param2, param3, param4);
+            var result = service.CreateClass<StubClass, int, string, DateTime, bool>(item, param1, param2, param3, param4, false, false);
 
             //Assert
             Assert.IsNotNull(result);

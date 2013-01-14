@@ -27,7 +27,7 @@ namespace Glass.Mapper.Configuration
         /// <summary>
         /// A list of the constructors on a type
         /// </summary>
-        public IDictionary<Type[], Delegate> ConstructorMethods { get; set; }
+        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
 
 
         public AbstractTypeConfiguration()

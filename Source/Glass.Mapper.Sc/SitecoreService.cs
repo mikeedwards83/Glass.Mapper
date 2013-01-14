@@ -290,7 +290,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType"></param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns></returns>
-        public object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters)
+        public object CreateClass(Type type, Item item, bool isLazy , bool inferType, params object[] constructorParameters)
         {
             if (item == null || item.Versions.Count == 0) return null;
 
