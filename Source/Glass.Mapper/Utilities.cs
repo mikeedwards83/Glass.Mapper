@@ -15,17 +15,20 @@ namespace Glass.Mapper
         /// Returns a delegate method that will load a class based on its constuctor
         /// </summary>
         /// <returns></returns>
-        public static IDictionary<ConstructorInfo, Delegate> CreateConstructorDelegates(Type type)
+        public static IDictionary<Type[], Delegate> CreateConstructorDelegates(Type type)
         {
             var constructors = type.GetConstructors();
 
-            var dic = new Dictionary<ConstructorInfo, Delegate>();
+            var dic = new Dictionary<Type[], Delegate>();
 
             foreach (var constructor in constructors)
             {
                 var parameters = constructor.GetParameters();
+                var types = parameters.Select(x => x.ParameterType).ToArray();
 
-                var dynMethod = new DynamicMethod("DM$OBJ_FACTORY_" + type.Name, type, parameters.Select(x => x.ParameterType).ToArray(), type);
+                
+
+                var dynMethod = new DynamicMethod("DM$OBJ_FACTORY_" + type.Name, type, types, type);
 
                 ILGenerator ilGen = dynMethod.GetILGenerator();
                 for (int i = 0; i < parameters.Count(); i++)
@@ -61,8 +64,10 @@ namespace Glass.Mapper
 
                 var delegateType = genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
 
+                if (!types.Any())
+                    types = Type.EmptyTypes;
 
-                dic[constructor] = dynMethod.CreateDelegate(delegateType);
+                dic[types] = dynMethod.CreateDelegate(delegateType);
             }
 
             return dic;

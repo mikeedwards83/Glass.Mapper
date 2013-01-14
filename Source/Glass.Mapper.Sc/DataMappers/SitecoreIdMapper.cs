@@ -22,10 +22,11 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-            SitecoreDataMappingContext context = mappingContext as SitecoreDataMappingContext;
+
+            SitecoreDataMappingContext context = (SitecoreDataMappingContext)mappingContext;
             var item = context.Item;
 
-            var scConfig = Configuration as SitecoreIdConfiguration;
+            var scConfig = Configuration;
 
             if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
                 return item.ID.Guid;

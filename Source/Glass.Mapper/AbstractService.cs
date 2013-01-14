@@ -7,36 +7,40 @@ using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper
 {
-    public abstract class AbstractService<TK> : IAbstractService
-        where TK : AbstractDataMappingContext
+    public abstract class AbstractService : IAbstractService
     {
+
+        private IPerformanceProfiler _profiler;
+
+        public IPerformanceProfiler Profiler
+        {
+            get { return _profiler; }
+            set
+            {
+                _typeResolver.Profiler = value;
+                _configurationResolver.Profiler = value;
+                _objectConstruction.Profiler = value;
+                _objectSaving.Profiler = value;
+                _profiler = value;
+            }
+        }
+
         public  Context GlassContext { get; private set; }
 
-        /// <summary>
-        /// The list of tasks to be performed by the Object Construction Pipeline. Called in the order specified.
-        /// </summary>
-        private IEnumerable<IObjectConstructionTask> ObjectConstructionTasks { get; set; }
+       
 
-        /// <summary>
-        /// The list of tasks to be performed by the Type Resolver Pipeline. Called in the order specified.
-        /// </summary>
-        private IEnumerable<ITypeResolverTask> TypeResolverTasks { get; set; }
+        private TypeResolver _typeResolver;
 
-        /// <summary>
-        /// The list of tasks to be performed by the Configuration Resolver Pipeline. Called in the order specified.
-        /// </summary>
-        private IEnumerable<IConfigurationResolverTask> ConfigurationResolverTasks { get; set; }
+        private ConfigurationResolver _configurationResolver;
 
-        /// <summary>
-        /// The list of tasks to be performed by the Object Saving Pipeline. Called in the order specified.
-        /// </summary>
-        private IEnumerable<IObjectSavingTask> ObjectSavingTasks { get; set; }
+        private ObjectConstruction _objectConstruction;
 
-
-
+        private ObjectSaving _objectSaving;
+        
         public AbstractService()
             : this(Context.Default)
         {
@@ -50,43 +54,50 @@ namespace Glass.Mapper
 
         public AbstractService(Context glassContext)
         {
+
+
             GlassContext = glassContext;
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
 
-            ObjectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
-            TypeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
-            ConfigurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
-            ObjectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
+            var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
+            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
+
+            var typeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
+            _typeResolver = new TypeResolver(typeResolverTasks);
+
+            var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
+            _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
+
+            var objectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
+            _objectSaving = new ObjectSaving(objectSavingTasks);
+
+            Profiler = new NullProfiler();
+
         }
 
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //Run the get type pipeline to get the type to load
-            var typeRunner = new TypeResolver(TypeResolverTasks);
             var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
-            typeRunner.Run(typeArgs);
+            _typeResolver.Run(typeArgs);
 
             //TODO: ME - make these exceptions more specific
             if (typeArgs.Result == null)
                 throw new NullReferenceException("Type Resolver pipeline did not return type.");
 
             //run the pipeline to get the configuration to load
-            var configurationRunner = new ConfigurationResolver(ConfigurationResolverTasks);
             var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, typeArgs.Result);
-            configurationRunner.Run(configurationArgs);
-
+            _configurationResolver.Run(configurationArgs);
+            
             if (configurationArgs.Result == null)
                 throw new NullReferenceException("Configuration Resolver pipeline did not return type.");
 
             var config = configurationArgs.Result;
 
             //Run the object construction
-            var objectRunner = new ObjectConstruction(ObjectConstructionTasks);
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, config, this);
-            objectRunner.Run(objectArgs);
-
-           
+            _objectConstruction.Run(objectArgs);
 
             return objectArgs.Result;
         }
@@ -94,9 +105,8 @@ namespace Glass.Mapper
         public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             //Run the object construction
-            var savingRunner = new ObjectSaving(ObjectSavingTasks);
             var savingArgs = new ObjectSavingArgs(GlassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext, this);
-            savingRunner.Run(savingArgs);
+            _objectSaving.Run(savingArgs);
         }
 
         /// <summary>

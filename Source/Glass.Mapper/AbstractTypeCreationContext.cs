@@ -12,6 +12,8 @@ namespace Glass.Mapper
     /// </summary>
     public abstract class AbstractTypeCreationContext
     {
+      
+
         public bool InferType { get; set; }
         public bool IsLazy { get; set; }
         public Type RequestedType { get; set; }

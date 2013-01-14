@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Castle.DynamicProxy;
+using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
@@ -57,28 +58,23 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
-            var configuration = args.Configuration;
-            var type = configuration.Type;
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
             var parameters = 
                 constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
 
-            ConstructorInfo constructor = type.GetConstructor(parameters);
-
-            if (constructor == null)
-                throw new ObjectConstructionException(
-                    ConstructorErrorMessage.Formatted(type.FullName,parameters
-                                                      .Select(x => x.GetType().FullName)
-                                                      .Aggregate((x, y) => x + "," + y)));
-
-            Delegate conMethod = args.Configuration.ConstructorMethods[constructor];
+            Delegate conMethod = args.Configuration.ConstructorMethods[parameters];
 
             var obj = conMethod.DynamicInvoke(constructorParameters);
-
+         
             //create properties 
             AbstractDataMappingContext dataMappingContext =  args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, obj);
-            args.Configuration.Properties.ForEach(x => x.Mapper.MapCmsToProperty(dataMappingContext));
+
+            foreach (var prop in args.Configuration.Properties)
+            {
+                prop.Mapper.MapCmsToProperty(dataMappingContext);
+            }
+
             return obj;
         }
     }
