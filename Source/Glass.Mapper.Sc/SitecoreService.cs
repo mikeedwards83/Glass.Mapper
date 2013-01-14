@@ -58,7 +58,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K>(Guid id, Language language, K param1, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language);
-            return CreateClass<T, K>(item, isLazy, inferType, param1);
+            return CreateClass<T, K>(item, param1, isLazy, inferType);
 
         }
 
@@ -76,7 +76,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L>(Guid id, Language language, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language);
-            return CreateClass<T, K, L>(item, isLazy, inferType, param1, param2);
+            return CreateClass<T, K, L>(item, param1, param2, isLazy, inferType);
 
         }
 
@@ -96,7 +96,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L, M>(Guid id, Language language, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language);
-            return CreateClass<T, K, L, M>(item, isLazy, inferType, param1, param2, param3);
+            return CreateClass<T, K, L, M>(item, param1, param2, param3, isLazy, inferType);
 
         }
 
@@ -118,7 +118,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L, M, N>(Guid id, Language language, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language);
-            return CreateClass<T, K, L, M, N>(item, isLazy, inferType, param1, param2, param3, param4);
+            return CreateClass<T, K, L, M, N>(item, param1, param2, param3, param4, isLazy, inferType);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K>(Guid id, Language language, global::Sitecore.Data.Version version, K param1, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language, version);
-            return CreateClass<T, K>(item, isLazy, inferType, param1);
+            return CreateClass<T, K>(item, param1, isLazy, inferType);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L>(Guid id, Language language, global::Sitecore.Data.Version version, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language, version);
-            return CreateClass<T, K, L>(item, isLazy, inferType, param1, param2);
+            return CreateClass<T, K, L>(item, param1, param2, isLazy, inferType);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L, M>(Guid id, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language, version);
-            return CreateClass<T, K, L, M>(item, isLazy, inferType, param1, param2, param3);
+            return CreateClass<T, K, L, M>(item, param1, param2, param3, isLazy, inferType);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T, K, L, M, N>(Guid id, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(new ID(id), language, version);
-            return CreateClass<T, K, L, M, N>(item, isLazy, inferType, param1, param2, param3, param4);
+            return CreateClass<T, K, L, M, N>(item, param1, param2, param3, param4, isLazy, inferType);
         }
 
         public T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class
@@ -344,7 +344,7 @@ namespace Glass.Mapper.Sc
         /// <param name="item">The item to load data from</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        public T CreateClass<T>(Item item, bool isLazy, bool inferType) where T : class
+        public T CreateClass<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
         {
             return (T)CreateClass(typeof(T), item, isLazy, inferType);
         }
@@ -359,7 +359,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>       
         /// <returns>The item as the specified type</returns>
-        public T CreateClass<T, K>(Item item, bool isLazy, bool inferType, K param1)
+        public T CreateClass<T, K>(Item item, K param1, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateClass(typeof(T), item, isLazy, inferType, param1);
 
@@ -377,7 +377,7 @@ namespace Glass.Mapper.Sc
         /// <param name="param1">The value of the first parameter of the constructor</param>       
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <returns>The item as the specified type</returns>
-        public T CreateClass<T, K, L>(Item item, bool isLazy, bool inferType, K param1, L param2)
+        public T CreateClass<T, K, L>(Item item, K param1, L param2, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2);
         }
@@ -396,7 +396,7 @@ namespace Glass.Mapper.Sc
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <returns>The item as the specified type</returns>
-        public T CreateClass<T, K, L, M>(Item item, bool isLazy, bool inferType, K param1, L param2, M param3)
+        public T CreateClass<T, K, L, M>(Item item, K param1, L param2, M param3, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2, param3);
         }
@@ -417,7 +417,7 @@ namespace Glass.Mapper.Sc
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <param name="param4">The value of the fourth parameter of the constructor</param>
         /// <returns>The item as the specified type</returns>
-        public T CreateClass<T, K, L, M, N>(Item item, bool isLazy, bool inferType, K param1, L param2, M param3, N param4)
+        public T CreateClass<T, K, L, M, N>(Item item,  K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateClass(typeof(T), item, isLazy, inferType, param1, param2, param3, param4);
         }

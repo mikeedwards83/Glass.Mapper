@@ -117,9 +117,11 @@
     <Compile Include="Fields\TriState.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
