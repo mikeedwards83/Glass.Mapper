@@ -23,7 +23,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(0, result.First().Key.Length);
+            Assert.AreEqual(0, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(1, result.First().Key.Length);
+            Assert.AreEqual(1, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(1, result.First().Key.Length);
+            Assert.AreEqual(1, result.First().Key.GetParameters().Length);
             Assert.AreEqual(param1, obj.Param1);
             
         }
@@ -69,7 +69,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(2, result.First().Key.Length);
+            Assert.AreEqual(2, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(2, result.First().Key.Length);
+            Assert.AreEqual(2, result.First().Key.GetParameters().Length);
             Assert.AreEqual(param1, obj.Param1);
             Assert.AreEqual(param2, obj.Param2);
         }
@@ -101,7 +101,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(3, result.First().Key.Length);
+            Assert.AreEqual(3, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(4, result.First().Key.Length);
+            Assert.AreEqual(4, result.First().Key.GetParameters().Length);
         }
 
         [Test]

@@ -63,7 +63,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var parameters = 
                 constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
 
-            var constructorInfo = args.AbstractTypeCreationContext.RequestedType.GetConstructor(parameters);
+            var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
 
             Delegate conMethod = args.Configuration.ConstructorMethods[constructorInfo];
 
