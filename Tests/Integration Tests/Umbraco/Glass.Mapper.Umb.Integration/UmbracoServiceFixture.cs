@@ -20,7 +20,7 @@ namespace Glass.Mapper.Umb.Integration
           //     new DefaultPublishedContentStore());
 
            // var routingContext = GetRoutingContext("/test", 1234);
-            UmbracoContext.Current = GetUmbracoContext("/test", 1234);
+            //UmbracoContext.Current = GetUmbracoContext("/test", 1234);
         }
         #region Method - GetItem
 
