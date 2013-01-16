@@ -6,6 +6,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data.Managers;
+using Sitecore.Globalization;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration
@@ -50,6 +51,390 @@ namespace Glass.Mapper.Sc.Integration
             //Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("EmptyItem", result.Name);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+
+            //Act
+            var result = service.GetItem<StubClass>(id, language);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage1Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            
+            //Act
+            var result = service.GetItem<StubClass, int>(id, language, param1);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage2Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+
+            //Act
+            var result = service.GetItem<StubClass, int, string>(id, language, param1, param2);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage3Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime>(id, language, param1, param2, param3);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage4Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+            bool param4 = true;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime, bool>(id, language, param1, param2, param3, param4);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+            Assert.AreEqual(param4, result.Param4);
+        }
+
+        [Test]
+        public void GetItem_UsingItemPathLanguage_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
+            var language = LanguageManager.GetLanguage("af-ZA");
+
+            //Act
+            var result = service.GetItem<StubClass>(path, language);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(path, result.Path);
+            Assert.AreEqual(language, result.Language);
+        }
+
+        [Test]
+        public void GetItem_UsingItemPathLanguage1Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+
+            //Act
+            var result = service.GetItem<StubClass, int>(path, language, param1);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(path, result.Path);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+        }
+
+        [Test]
+        public void GetItem_UsingItemPathLanguage2Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+
+            //Act
+            var result = service.GetItem<StubClass, int, string>(path, language, param1, param2);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(path, result.Path);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+        }
+
+        [Test]
+        public void GetItem_UsingItemPathLanguage3Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime>(path, language, param1, param2, param3);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(path, result.Path);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+        }
+
+        [Test]
+        public void GetItem_UsingItemPathLanguage4Parameter_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+            bool param4 = true;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime, bool>(path, language, param1, param2, param3, param4);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(path, result.Path);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+            Assert.AreEqual(param4, result.Param4);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguageVersion_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            Sitecore.Data.Version version = new  Sitecore.Data.Version(1);
+            //Act
+            var result = service.GetItem<StubClass>(id, language, version);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(version.Number, result.Version);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage1ParameterVersion_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            var language = LanguageManager.GetLanguage("af-ZA");
+            int param1 = 1;
+
+            //Act
+            var result = service.GetItem<StubClass, int>(id, language, version, param1);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(version.Number, result.Version);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage2ParameterVersion_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            int param1 = 1;
+            string param2 = "2param";
+
+            //Act
+            var result = service.GetItem<StubClass, int, string>(id, language, version, param1, param2);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(version.Number, result.Version);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage3ParameterVersion_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime>(id, language, version, param1, param2, param3);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+            Assert.AreEqual(version.Number, result.Version);
+        }
+
+        [Test]
+        public void GetItem_UsingItemIdLanguage4ParameterVersion_ReturnsItemName()
+        {
+            //Assign
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            int param1 = 1;
+            string param2 = "2param";
+            DateTime param3 = DateTime.Now;
+            bool param4 = true;
+
+            //Act
+            var result = service.GetItem<StubClass, int, string, DateTime, bool>(id, language, version, param1, param2, param3, param4);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.Id);
+            Assert.AreEqual(language, result.Language);
+            Assert.AreEqual(param1, result.Param1);
+            Assert.AreEqual(param2, result.Param2);
+            Assert.AreEqual(param3, result.Param3);
+            Assert.AreEqual(param4, result.Param4);
+            Assert.AreEqual(version.Number, result.Version);
         }
 
         #endregion
@@ -538,6 +923,14 @@ namespace Glass.Mapper.Sc.Integration
             [SitecoreId]
             public virtual Guid Id { get; set; }
 
+            [SitecoreInfo(SitecoreInfoType.Language)]
+            public virtual Language Language { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.FullPath)]
+            public virtual string Path { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Version)]
+            public virtual int Version { get; set; }
         }
 
 

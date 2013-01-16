@@ -172,6 +172,7 @@ namespace Glass.Mapper.Sc.Integration
                     doc.FirstChild
                     )
                 );
+            //Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("GetHomeItem");
 
             var scContext = new SitecoreContext();
 
