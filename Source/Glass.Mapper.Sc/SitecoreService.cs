@@ -224,6 +224,95 @@ namespace Glass.Mapper.Sc
             return CreateType<T, K, L, M, N>(item, param1, param2, param3, param4, isLazy, inferType);
         }
 
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="version">The version of the item to return</param>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        public T GetItem<T>(string path, Language language, global::Sitecore.Data.Version version, bool isLazy = false, bool inferType = false) where T : class
+        {
+            Item item = Database.GetItem(path, language, version);
+            return CreateType<T>(item, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="version">The version of the item to return</param>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <returns>The Sitecore item as the specified type</returns>
+        public T GetItem<T, K>(string path, Language language, global::Sitecore.Data.Version version, K param1, bool isLazy = false, bool inferType = false) where T : class
+        {
+            Item item = Database.GetItem(path, language, version);
+            return CreateType<T, K>(item, param1, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="version">The version of the item to return</param>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        public T GetItem<T, K, L>(string path, Language language, global::Sitecore.Data.Version version, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
+        {
+            Item item = Database.GetItem(path, language, version);
+            return CreateType<T, K, L>(item, param1, param2, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="version">The version of the item to return</param>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        public T GetItem<T, K, L, M>(string path, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class
+        {
+            Item item = Database.GetItem(path, language, version);
+            return CreateType<T, K, L, M>(item, param1, param2, param3, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="version">The version of the item to return</param>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        public T GetItem<T, K, L, M, N>(string path, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class
+        {
+            Item item = Database.GetItem(path, language, version);
+            return CreateType<T, K, L, M, N>(item, param1, param2, param3, param4, isLazy, inferType);
+        }
 
 
         /// <summary>
