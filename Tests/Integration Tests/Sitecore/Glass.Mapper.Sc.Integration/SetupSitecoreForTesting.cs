@@ -1,5 +1,4 @@
-﻿#if NCRUNCH
-#else
+﻿
 
 using NUnit.Framework;
 using System;
@@ -22,6 +21,18 @@ namespace Glass.Mapper.Sc.Integration
         [SetUp]
         public void DeployTestItems()
         {
+
+            try
+            {
+                Sitecore.Context.IsUnitTesting = true;
+            }
+            catch
+            {
+            }
+
+#if NCRUNCH
+#else
+
             System.Threading.Thread.CurrentThread.ExecutionContext.GetObjectData();
             //We need to locate the TDS project that contains our test configuration. We are assuming its folder is a sibling of the project folder and we are in the /bin/[config] folder
             string currentPath = Environment.CurrentDirectory;
@@ -61,7 +72,8 @@ namespace Glass.Mapper.Sc.Integration
                     }
                 }
             }
+
+#endif
         }
     }
 }
-#endif

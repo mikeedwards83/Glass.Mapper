@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc
             return base.GetItem<T>(global::Sitecore.Context.Site.StartPath, isLazy, inferType);
         }
 
-        public IEnumerable<T> QueryRelative<T>(string query, bool isLazy, bool inferType) where T : class
+        public IEnumerable<T> QueryRelative<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = global::Sitecore.Context.Item;
             var results = item.Axes.SelectItems(query);
@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc
 
         }
 
-        public T QuerySingleRelative<T>(string query, bool isLazy, bool inferType) where T : class
+        public T QuerySingleRelative<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = global::Sitecore.Context.Item;
             var result = item.Axes.SelectSingleItem(query);
