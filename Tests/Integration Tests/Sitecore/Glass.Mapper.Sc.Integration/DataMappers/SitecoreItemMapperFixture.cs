@@ -115,7 +115,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof (StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -152,7 +152,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -188,7 +188,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -224,7 +224,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
             config.Id = "{EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -261,7 +261,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
             config.Id = "{EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -297,7 +297,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
             config.Id = "{03CDE6B5-B2A2-40D6-A944-53D66DDD2CA4}";
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
@@ -334,7 +334,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
             config.IsLazy = true;
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 true,
@@ -371,7 +371,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
             config.InferType = true;
 
-            service.CreateClass(
+            service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,

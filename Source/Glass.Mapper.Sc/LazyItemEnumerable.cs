@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc
         {
             foreach (Item child in _getItems())
             {
-                var obj = _service.CreateClass(
+                var obj = _service.CreateType(
                     _type,
                     child,
                     _isLazy,

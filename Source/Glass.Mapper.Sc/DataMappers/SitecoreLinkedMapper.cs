@@ -61,7 +61,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 }
             });
 
-            return scContext.Service.CreateClasses(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
+            return scContext.Service.CreateTypes(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
         }
 
         public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)

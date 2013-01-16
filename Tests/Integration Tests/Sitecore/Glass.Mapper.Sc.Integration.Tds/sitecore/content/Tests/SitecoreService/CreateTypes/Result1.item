@@ -2,7 +2,7 @@
 version: 1
 id: {BABE0ADF-229F-4A84-A569-F31208ECC9F0}
 database: master
-path: /sitecore/content/Tests/SitecoreService/CreateClasses/Result1
+path: /sitecore/content/Tests/SitecoreService/CreateTypes/Result1
 parent: {68AF5325-5568-48B3-AF01-91F601FD27E9}
 name: Result1
 master: {00000000-0000-0000-0000-000000000000}

@@ -11,7 +11,7 @@ namespace Glass.Mapper.Sc
     public interface ISitecoreService: IAbstractService
     {
         Database Database { get; }
-        object CreateClass(Type type, Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters);
+        object CreateType(Type type, Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters);
        
         /// <summary>
         /// Create a collection of classes from the specified type
@@ -21,6 +21,6 @@ namespace Glass.Mapper.Sc
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <param name="inferType">Infer the type to be loaded from the item template</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        IEnumerable CreateClasses(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems);
+        IEnumerable CreateTypes(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems);
     }
 }

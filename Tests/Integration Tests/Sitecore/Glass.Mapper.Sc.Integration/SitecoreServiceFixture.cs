@@ -183,10 +183,10 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-        #region Method - CreateClasses
+        #region Method - CreateTypes
 
         [Test]
-        public void CreateClasses_TwoItems_ReturnsTwoClasses()
+        public void CreateTypes_TwoItems_ReturnsTwoClasses()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -195,12 +195,12 @@ namespace Glass.Mapper.Sc.Integration
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db, context);
 
-            var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClasses/Result1");
-            var result2 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClasses/Result2");
+            var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result1");
+            var result2 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result2");
 
             //Act
             var results =
-                service.CreateClasses(false, false, typeof (StubClass), () => new[] {result1, result2}) as
+                service.CreateTypes(false, false, typeof (StubClass), () => new[] {result1, result2}) as
                 IEnumerable<StubClass>;
 
             //Assert
@@ -210,7 +210,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClasses_TwoItemsOnly1WithLanguage_ReturnsOneClasses()
+        public void CreateTypes_TwoItemsOnly1WithLanguage_ReturnsOneClasses()
         {
             //Assign
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -221,12 +221,12 @@ namespace Glass.Mapper.Sc.Integration
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db, context);
 
-            var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClasses/Result1", language);
-            var result2 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClasses/Result2", language);
+            var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result1", language);
+            var result2 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result2", language);
 
             //Act
             var results =
-                service.CreateClasses(false, false, typeof(StubClass), () => new[] { result1, result2 }) as
+                service.CreateTypes(false, false, typeof(StubClass), () => new[] { result1, result2 }) as
                 IEnumerable<StubClass>;
 
             //Assert
@@ -236,10 +236,10 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-        #region Method - CreateClass
+        #region Method - CreateType
 
         [Test]
-        public void CreateClass_NoConstructorArgs_ReturnsItem()
+        public void CreateType_NoConstructorArgs_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -247,10 +247,10 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             //Act
-            var result = (StubClass) service.CreateClass(typeof (StubClass), item, false, false);
+            var result = (StubClass) service.CreateType(typeof (StubClass), item, false, false);
 
             //Assert
             Assert.IsNotNull(result);
@@ -258,7 +258,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_NoConstructorArgsTyped_ReturnsItem()
+        public void CreateType_NoConstructorArgsTyped_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -266,10 +266,10 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             //Act
-            var result = service.CreateClass<StubClass>(item, false, false);
+            var result = service.CreateType<StubClass>(item, false, false);
 
             //Assert
             Assert.IsNotNull(result);
@@ -277,7 +277,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_OneConstructorArgs_ReturnsItem()
+        public void CreateType_OneConstructorArgs_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -285,12 +285,12 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
 
             //Act
-            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -299,7 +299,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_OneConstructorArgsTyped_ReturnsItem()
+        public void CreateType_OneConstructorArgsTyped_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -307,12 +307,12 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
 
             //Act
-            var result =service.CreateClass<StubClass, int>(item, param1);
+            var result =service.CreateType<StubClass, int>(item, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -321,7 +321,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_TwoConstructorArgs_ReturnsItem()
+        public void CreateType_TwoConstructorArgs_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -329,13 +329,13 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
 
             //Act
-            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1, param2);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -345,7 +345,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_TwoConstructorArgsTyped_ReturnsItem()
+        public void CreateType_TwoConstructorArgsTyped_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -353,13 +353,13 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
 
             //Act
-            var result =service.CreateClass<StubClass, int, string>(item, param1, param2);
+            var result =service.CreateType<StubClass, int, string>(item, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -369,7 +369,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_ThreeConstructorArgs_ReturnsItem()
+        public void CreateType_ThreeConstructorArgs_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -377,7 +377,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
@@ -385,7 +385,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             //Act
-            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1, param2, param3);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3);
 
             //Assert
             Assert.IsNotNull(result);
@@ -396,7 +396,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_ThreeConstructorArgsTyped_ReturnsItem()
+        public void CreateType_ThreeConstructorArgsTyped_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -404,7 +404,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
@@ -412,7 +412,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             //Act
-            var result = service.CreateClass<StubClass, int, string, DateTime>(item, param1, param2, param3, false, false);
+            var result = service.CreateType<StubClass, int, string, DateTime>(item, param1, param2, param3, false, false);
 
             //Assert
             Assert.IsNotNull(result);
@@ -423,7 +423,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_FourConstructorArgs_ReturnsItem()
+        public void CreateType_FourConstructorArgs_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -431,7 +431,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
@@ -439,7 +439,7 @@ namespace Glass.Mapper.Sc.Integration
             var param4 = true;
 
             //Act
-            var result = (StubClass)service.CreateClass(typeof(StubClass), item, false, false, param1, param2, param3, param4);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3, param4);
 
             //Assert
             Assert.IsNotNull(result);
@@ -451,7 +451,7 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        public void CreateClass_FourConstructorArgsTyped_ReturnsItem()
+        public void CreateType_FourConstructorArgsTyped_ReturnsItem()
         {
             //Assign
             var context = Context.Create(new GlassConfig());
@@ -459,7 +459,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateClass/Target");
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             var param1 = 456;
             var param2 = "hello world";
@@ -467,7 +467,7 @@ namespace Glass.Mapper.Sc.Integration
             var param4 = true;
 
             //Act
-            var result = service.CreateClass<StubClass, int, string, DateTime, bool>(item, param1, param2, param3, param4, false, false);
+            var result = service.CreateType<StubClass, int, string, DateTime, bool>(item, param1, param2, param3, param4, false, false);
 
             //Assert
             Assert.IsNotNull(result);

@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             if (target == null) return null;
-            return context.Service.CreateClass(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
+            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
         }
 
         public override string  SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)

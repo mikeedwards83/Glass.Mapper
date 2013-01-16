@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext = mappingContext as SitecoreDataMappingContext;
             var scConfig = Configuration as SitecoreParentConfiguration;
 
-            return scContext.Service.CreateClass(
+            return scContext.Service.CreateType(
                 scConfig.PropertyInfo.PropertyType,
                 scContext.Item.Parent,
                 scConfig.IsLazy,

@@ -33,7 +33,6 @@ namespace Glass.Mapper.Sc.Integration
 #if NCRUNCH
 #else
 
-            System.Threading.Thread.CurrentThread.ExecutionContext.GetObjectData();
             //We need to locate the TDS project that contains our test configuration. We are assuming its folder is a sibling of the project folder and we are in the /bin/[config] folder
             string currentPath = Environment.CurrentDirectory;
             string tdsProjectPath = Path.GetFullPath(Path.Combine(currentPath, "..\\..\\..\\Glass.Mapper.Sc.Integration.Tds"));

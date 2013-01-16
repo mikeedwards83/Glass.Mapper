@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     var array = getItems.Invoke().ToArray();
 
 
-                    return scContext.Service.CreateClasses(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
+                    return scContext.Service.CreateTypes(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
                 }
                 else throw new NotSupportedException("Generic type not supported {0}. Must be IEnumerable<>.".Formatted(outerType.FullName));
             }
@@ -102,7 +102,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 {
                     result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language);
                 }
-                return scContext.Service.CreateClass(scConfig.PropertyInfo.PropertyType, result,scConfig.IsLazy, scConfig.InferType);
+                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType);
             }
         }
        

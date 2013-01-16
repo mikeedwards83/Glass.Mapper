@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var predicate = Arg.Is<Item>(x => item.Children.Any(y => x.ID == y.ID));
 
             //ME - Although this looks correct I am not sure it is
-            service.CreateClass(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
+            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
                                                                                   {
                                                                                       Id =  info.Arg<Item>().ID
                                                                                   });
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var predicate = Arg.Is<Item>(x => item.Children.Any(y => x.ID == y.ID));
 
             //ME - Although this looks correct I am not sure it is
-            service.CreateClass(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
+            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
             {
                 Id = info.Arg<Item>().ID
             });
