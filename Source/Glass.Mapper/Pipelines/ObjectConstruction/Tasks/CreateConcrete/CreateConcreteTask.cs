@@ -58,24 +58,21 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
+
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
-            var parameters = 
-                constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
+            var parameters =
+                constructorParameters == null || !constructorParameters.Any()
+                    ? Type.EmptyTypes
+                    : constructorParameters.Select(x => x.GetType()).ToArray();
 
             var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
 
             Delegate conMethod = args.Configuration.ConstructorMethods[constructorInfo];
 
             var obj = conMethod.DynamicInvoke(constructorParameters);
-         
-            //create properties 
-            AbstractDataMappingContext dataMappingContext =  args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, obj);
 
-            foreach (var prop in args.Configuration.Properties)
-            {
-                prop.Mapper.MapCmsToProperty(dataMappingContext);
-            }
+            args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
 
             return obj;
         }

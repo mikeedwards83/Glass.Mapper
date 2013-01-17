@@ -638,6 +638,97 @@ namespace Glass.Mapper.Sc
         {
             return (T)CreateType(typeof(T), item, isLazy, inferType, param1, param2, param3, param4);
         }
+
+        /// <summary>
+        /// Creates a new Sitecore item. 
+        /// </summary>
+        /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the SitecoreClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="K">The type of the parent item</typeparam>
+        /// <param name="parent">The parent of the new item to create. Must have the SitecoreIdAttribute or fluent equivalent</param>
+        /// <param name="newItem">New item to create, must have the attribute SitecoreInfoAttribute of type SitecoreInfoType.Name or the fluent equivalent</param>
+        /// <returns></returns>
+        public T Create<T, K>(K parent, T newItem)
+            where T : class
+            where K : class
+        {
+
+            var newType = (SitecoreTypeConfiguration)null;
+            try
+            {
+              newType = GlassContext.GetTypeConfiguration(newItem) as SitecoreTypeConfiguration;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to find configuration for new item type {0}".Formatted(typeof(T).FullName), ex);
+            }
+
+
+            var parentType = (SitecoreTypeConfiguration)null;
+            try
+            {
+                parentType = GlassContext.GetTypeConfiguration(parent) as SitecoreTypeConfiguration;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(K).FullName), ex);
+            }
+
+
+
+
+            Item pItem = parentType.ResolveItem(parent, Database);
+
+            if (pItem == null)
+                throw new MapperException("Could not find parent item");
+
+
+            var nameProperty = newType.Properties.Where(x => x is SitecoreInfoConfiguration)
+                .Cast<SitecoreInfoConfiguration>().FirstOrDefault(x => x.Type == SitecoreInfoType.Name);
+
+            if(nameProperty == null)
+                throw new MapperException("The type {0} does not have a property with attribute SitecoreInfo(SitecoreInfoType.Name)".Formatted(newType.Type.FullName));
+
+            string tempName = Guid.NewGuid().ToString();
+
+
+            Guid templateId = newType.TemplateId;
+            Guid branchId = newType.BranchId;
+
+            Item item = null;
+
+            if (templateId != Guid.Empty)
+            {
+                item = pItem.Add(tempName, new TemplateID(new ID(templateId)));
+            }
+            else if (branchId != Guid.Empty)
+            {
+                item = pItem.Add(tempName, new BranchId(new ID(branchId)));
+            }
+            else
+            {
+                throw new MapperException("Type {0} does not have a Template ID or Branch ID".Formatted(typeof(T).FullName));
+            }
+
+            if (item == null) throw new MapperException("Failed to create item");
+
+            //write new data to the item
+
+            item.Editing.BeginEdit();
+            WriteToItem<T>(newItem, item);
+            item.Editing.EndEdit();
+
+            //then read it back
+
+            SitecoreTypeCreationContext typeContext=  new SitecoreTypeCreationContext();
+            typeContext.Item = item;
+            typeContext.SitecoreService = this;
+
+            newType.MapPropertiesToObject(newItem, this, typeContext);
+
+            return newItem;
+            //   return CreateClass<T>(false, false, item);
+
+        }
         
     }
 }

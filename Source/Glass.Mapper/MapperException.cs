@@ -10,5 +10,9 @@ namespace Glass.Mapper
         public MapperException(string message):base(message)
         {
         }
+        public MapperException(string message, Exception ex)
+            : base(message, ex)
+        {
+        }
     }
 }

@@ -8,7 +8,9 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
-     
+
+       
+
         public Item Item { get; set; }
 
         public SitecoreService SitecoreService { get; set; }

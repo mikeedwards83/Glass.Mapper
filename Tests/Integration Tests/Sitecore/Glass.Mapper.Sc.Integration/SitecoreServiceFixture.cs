@@ -1036,6 +1036,41 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+          #region Method - Create
+
+        [Test]
+        public void Create_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            var parent = service.GetItem<StubClass>(parentPath);
+            var child = new StubClass();
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            newItem.Delete();
+
+            Assert.AreEqual(child.Name,newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        #endregion
+
         #region Stubs
 
         [SitecoreType]
@@ -1058,7 +1093,7 @@ namespace Glass.Mapper.Sc.Integration
             string Name { get; set; }
         }
 
-        [SitecoreType]
+        [SitecoreType(TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}")]
         public class StubClass{
             public DateTime Param3 { get; set; }
             public bool Param4 { get; set; }
@@ -1101,6 +1136,9 @@ namespace Glass.Mapper.Sc.Integration
 
             [SitecoreInfo(SitecoreInfoType.Version)]
             public virtual int Version { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Name)]
+            public virtual string Name { get; set; }
         }
 
 
@@ -1115,6 +1153,6 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-       
+      
     }
 }

@@ -40,7 +40,7 @@ namespace Glass.Mapper.Sc.Configuration
             }
             else
             {
-                throw new NotSupportedException("Can not get ID for item");
+                throw new NotSupportedException("Cannot get ID for item");
             }
 
             if (LanguageConfig != null)
