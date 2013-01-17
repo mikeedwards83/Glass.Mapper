@@ -38,6 +38,29 @@ namespace Glass.Mapper.Sc
             Database = database;
         }
 
+        /// <summary>
+        /// Adds a version of the item
+        /// </summary>
+        /// <typeparam name="T">The type being added. The type must have a property with the SitecoreIdAttribute.</typeparam>
+        /// <param name="target">The class to add a version to</param>
+        /// <returns></returns>
+        public T AddVersion<T>(T target) where T : class
+        {
+            //TODO: ME - this may not work with a proxy
+            var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+
+            if (config == null)
+                throw new NullReferenceException("Can not add version, could not find configuration for {0}".Formatted(typeof(T).FullName));
+
+            var item = config.ResolveItem(target, Database);
+            if (item == null)
+                throw new MapperException("Could not add version, item not found");
+
+            Item newVersion = item.Versions.AddVersion();
+
+            return CreateType<T>(newVersion);
+
+        }
 
         public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T:class 
         {

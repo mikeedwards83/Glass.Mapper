@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
+using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Sitecore.SecurityModel;
@@ -14,6 +17,37 @@ namespace Glass.Mapper.Sc.Integration
     [TestFixture]
     public class SitecoreServiceFixture
     {
+
+        #region Method - AddVersion
+
+        [Test]
+        public void AddVersion_NewVersionCreated()
+        {
+            //Assign
+            string path = "/sitecore/content/Tests/SitecoreService/AddVersion/Target";
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var oldVersion = service.GetItem<StubClass>(path);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var newVersion = service.AddVersion(oldVersion);
+
+                //clean up
+                var item = db.GetItem(path, newVersion.Language, new Sitecore.Data.Version(newVersion.Version));
+                item.Versions.RemoveVersion();
+                //Assert
+                Assert.AreEqual(oldVersion.Version + 1, newVersion.Version);
+            }
+        }
+
+        #endregion
+
         #region Method - GetItem
 
         [Test]
@@ -1002,7 +1036,6 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-
         #region Stubs
 
         [SitecoreType]
@@ -1078,6 +1111,10 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
+       
+
         #endregion
+
+       
     }
 }
