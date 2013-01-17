@@ -729,6 +729,23 @@ namespace Glass.Mapper.Sc
             //   return CreateClass<T>(false, false, item);
 
         }
-        
+
+        /// <summary>
+        /// Delete an item from Sitecore
+        /// </summary>
+        /// <typeparam name="T">The type being deleted. The type must have a property with the SitecoreIdAttribute.</typeparam>
+        /// <param name="item">The class to delete</param>
+        public void Delete<T>(T item) where T : class
+        {
+
+            var type = GlassContext.GetTypeConfiguration(item) as SitecoreTypeConfiguration;
+
+            Item scItem = type.ResolveItem(item, Database);
+
+            if (scItem == null)
+                throw new MapperException("Item not found");
+
+            scItem.Delete();
+        }
     }
 }

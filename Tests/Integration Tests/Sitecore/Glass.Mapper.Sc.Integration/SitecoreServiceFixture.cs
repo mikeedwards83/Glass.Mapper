@@ -1071,6 +1071,43 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Method - Delete
+
+        [Test]
+        public void Delete_RemovesItemFromDatabse()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Delete";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Delete/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            var parent = db.GetItem(parentPath);
+            var child = parent.Add("Target", new TemplateID(new ID(StubClass.TemplateId)));
+            
+            Assert.IsNotNull(child);
+
+            var childClass = service.GetItem<StubClass>(childPath);
+            Assert.IsNotNull(childClass);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+              service.Delete(childClass);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            Assert.IsNull(newItem);
+           
+        }
+
+        #endregion
+
         #region Stubs
 
         [SitecoreType]
@@ -1093,8 +1130,12 @@ namespace Glass.Mapper.Sc.Integration
             string Name { get; set; }
         }
 
-        [SitecoreType(TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}")]
-        public class StubClass{
+        [SitecoreType(TemplateId = StubClass.TemplateId)]
+        public class StubClass
+        {
+
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+
             public DateTime Param3 { get; set; }
             public bool Param4 { get; set; }
             public string Param2 { get; set; }
