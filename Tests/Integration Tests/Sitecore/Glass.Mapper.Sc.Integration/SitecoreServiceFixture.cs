@@ -1108,6 +1108,51 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Method - Move
+
+        [Test]
+        public void Move_MovesItemFromParent1ToParent2()
+        {
+            //Assign
+            string parent1Path = "/sitecore/content/Tests/SitecoreService/Move/Parent1";
+            string parent2Path = "/sitecore/content/Tests/SitecoreService/Move/Parent2";
+            string targetPath = "/sitecore/content/Tests/SitecoreService/Move/Parent1/Target";
+            string targetNewPath = "/sitecore/content/Tests/SitecoreService/Move/Parent2/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            var parent1 = db.GetItem(parent1Path);
+            var parent2 = db.GetItem(parent1Path);
+            var target = db.GetItem(targetPath);
+
+            Assert.AreEqual(parent1.ID, target.Parent.ID);
+
+            var parent2Class = service.GetItem<StubClass>(parent2Path);
+            var targetClass = service.GetItem<StubClass>(targetPath);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Move(targetClass, parent2Class);
+            }
+
+            //Assert
+            var targetNew = db.GetItem(targetNewPath);
+
+            Assert.IsNotNull(targetNew);
+            using (new SecurityDisabler())
+            {
+                targetNew.MoveTo(parent1);
+            }
+
+
+        }
+
+        #endregion
+
         #region Stubs
 
         [SitecoreType]

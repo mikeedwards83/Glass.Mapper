@@ -747,5 +747,17 @@ namespace Glass.Mapper.Sc
 
             scItem.Delete();
         }
-    }
+
+
+        public void Move<T, K>(T item, K newParent)
+        {
+            var itemType = GlassContext.GetTypeConfiguration(item) as SitecoreTypeConfiguration;
+            var parentType = GlassContext.GetTypeConfiguration(newParent)  as SitecoreTypeConfiguration;
+
+            Item scItem = itemType.ResolveItem(item, Database);
+            Item scNewParent = parentType.ResolveItem(newParent, Database);
+
+            scItem.MoveTo(scNewParent);
+        }
+    } 
 }
