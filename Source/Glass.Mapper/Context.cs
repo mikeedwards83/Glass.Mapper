@@ -127,10 +127,17 @@ namespace Glass.Mapper
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
+                
+                //first we have to add each type config to the collection
+                foreach (var typeConfig in typeConfigurations)
+                {
+                    TypeConfigurations.Add(typeConfig.Type, typeConfig);
+                }
+                //then process the properties.
+                //this stops the problem of types not existing for certain data handlers
                 foreach (var typeConfig in typeConfigurations)
                 {
                     ProcessProperties(typeConfig.Properties);
-                    TypeConfigurations.Add(typeConfig.Type, typeConfig);
                 }
             }
 

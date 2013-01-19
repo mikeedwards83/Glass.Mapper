@@ -55,7 +55,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration,  Context context)
         {
-            return context[configuration.PropertyInfo.PropertyType] != null;
+            return context[configuration.PropertyInfo.PropertyType] != null &&
+                   configuration is SitecoreFieldConfiguration;
         }
 
         public override void Setup(DataMapperResolverArgs args)

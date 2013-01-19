@@ -244,14 +244,10 @@ namespace Glass.Mapper.Sc
             get
             {
                 return
-                            global::Sitecore.Context.PageMode.IsPageEditorEditing || ForcePageEditor;
+                            global::Sitecore.Context.PageMode.IsPageEditorEditing;
             }
         }
 
-        /// <summary>
-        /// Force the page editor to render, used in test assemblies
-        /// </summary>
-        public static bool ForcePageEditor { get; set; }
 
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
         {
