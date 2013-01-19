@@ -14,6 +14,24 @@ namespace Glass.Mapper.Sc
 {
     public static class Utilities
     {
+        /// <summary>
+        /// Converts a NameValueCollection in to HTML attributes
+        /// </summary>
+        /// <param name="attributes">A list of attributes to convert</param>
+        public static string ConvertAttributes(NameValueCollection attributes)
+        {
+
+            if (attributes == null || attributes.Count == 0) return "";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in attributes.AllKeys)
+            {
+                sb.AppendFormat("{0}='{1}' ".Formatted(key, attributes[key] ?? ""));
+            }
+
+            return sb.ToString();
+        }
+
         public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
         {
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
