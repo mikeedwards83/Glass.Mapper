@@ -586,6 +586,7 @@ namespace Glass.Mapper.Sc.Integration
             Assert.IsFalse(result.Contains("scWebEditInput"));
             Console.WriteLine("result " + result);
         }
+    
         #endregion
 
 
@@ -609,6 +610,104 @@ namespace Glass.Mapper.Sc.Integration
             [SitecoreQuery("./../*", IsRelative = true)]
             public virtual IEnumerable<StubLambdaClass> EnumerableSubStub { get; set; }
         }
+
+        [Test]
+        public void Editable_InEditModeWithStandardOutput_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<StubClass>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            var result = html.Editable(model, x => x.StringField, x=>x.StringField);
+
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+        [Test]
+        public void Editable_NotInEditModeWithStandardOutput_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(new GlassConfig());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<StubClass>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Normal);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            var result = html.Editable(model, x => x.StringField, x => x.StringField);
+
+            //Assert
+            Assert.AreEqual(fieldValue, result);
+            //this is the webedit class
+            Assert.IsFalse(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+
+        #endregion
+        #region Stubs
 
         [SitecoreType]
         public interface IStubLambdaClass : IStubClass

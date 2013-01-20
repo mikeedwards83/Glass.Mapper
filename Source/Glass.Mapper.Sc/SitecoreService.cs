@@ -10,6 +10,8 @@ using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc
 {
+    
+
     public class SitecoreService : AbstractService, ISitecoreService
     {
         public  Database Database { get; private set; }
