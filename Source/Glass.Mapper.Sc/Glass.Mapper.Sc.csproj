@@ -110,6 +110,10 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
+    <Compile Include="Dynamic\Dy.cs" />
+    <Compile Include="Dynamic\DynamicCollection.cs" />
+    <Compile Include="Dynamic\DynamicField.cs" />
+    <Compile Include="Dynamic\DynamicItem.cs" />
     <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\Image.cs" />
     <Compile Include="Fields\Link.cs" />
@@ -121,6 +125,7 @@
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
+    <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />

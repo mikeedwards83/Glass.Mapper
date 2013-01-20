@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -760,6 +761,23 @@ namespace Glass.Mapper.Sc
             Item scNewParent = parentType.ResolveItem(newParent, Database);
 
             scItem.MoveTo(scNewParent);
+        }
+
+
+        public dynamic GetDynamicItem(Guid id)
+        {
+           return GetDynamicItem(this.Database.GetItem(new ID(id)));
+        }
+
+        public dynamic GetDynamicItem(string path)
+        {
+           return GetDynamicItem(this.Database.GetItem(path));
+        }
+
+        public dynamic GetDynamicItem(Item item)
+        {
+            if (item == null) return null;
+            return new DynamicItem(item);
         }
     } 
 }

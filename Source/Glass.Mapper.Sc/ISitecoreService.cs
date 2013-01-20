@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -435,5 +437,25 @@ namespace Glass.Mapper.Sc
         void Move<T, K>(T item, K newParent);
         object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
         void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext);
+
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="id">The ID of the item to return</param>
+        /// <returns></returns>
+        dynamic GetDynamicItem(Guid id);
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="path">The path of the item to return</param>
+        /// <returns></returns>
+        dynamic GetDynamicItem(string path);
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="item">The item to convert</param>
+        /// <returns></returns>
+        dynamic GetDynamicItem(Item item);
+
     }
 }
