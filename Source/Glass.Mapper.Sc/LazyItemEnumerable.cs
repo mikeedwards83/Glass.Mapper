@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,14 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
-    public class LazyItemEnumerable<T> : LazyEnumerable<T> where T:class
+    public class LazyItemEnumerable<T> : IEnumerable<T> where T:class 
     {
         private readonly Func<IEnumerable<Item>> _getItems;
         private readonly Type _type;
         private readonly bool _isLazy;
         private readonly bool _inferType;
         private readonly ISitecoreService _service;
+        private Lazy<IList<T>> _lazyItemList;
 
         public LazyItemEnumerable(
             Func<IEnumerable<Item>> getItems,
@@ -26,8 +28,8 @@ namespace Glass.Mapper.Sc
             _isLazy = isLazy;
             _inferType = inferType;
             _service = service;
-
-            GetItems = ProcessItems;
+            
+            _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems().ToList());
         }
 
         public IEnumerable<T> ProcessItems()
@@ -46,6 +48,15 @@ namespace Glass.Mapper.Sc
             }
         }
 
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _lazyItemList.Value.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
     
 }
