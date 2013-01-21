@@ -63,6 +63,18 @@
     <Compile Include="Configuration\Attributes\SitecoreLinkedAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreNodeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreParentAttribute.cs" />
+    <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\ISitecoreClass.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreChildren.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreClass.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreField.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreId.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreInfo.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreNode.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreLinked.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreParent.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreQuery.cs" />
     <Compile Include="Configuration\SitecoreChildrenConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldSettings.cs" />
@@ -141,7 +153,6 @@
     <Compile Include="Web\Ui\GlassEditFrame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\FieldTypes\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\ObjectConstruction\" />

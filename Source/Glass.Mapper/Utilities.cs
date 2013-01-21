@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Text;
 using System.Reflection;
 
 namespace Glass.Mapper
 {
-    public static  class Utilities
+    public   class Utilities 
     {
 
 
@@ -138,6 +139,43 @@ namespace Glass.Mapper
             else
                 obj = Activator.CreateInstance(genericType);
             return obj;
+        }
+
+        /// <summary>
+        /// Returns a PropertyInfo based on a link expression, it will pull the first property name from the linq express.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetPropertyInfo(Type type, Expression expression)
+        {
+            string name = "";
+
+            if (expression.NodeType == ExpressionType.Convert)
+            {
+                Expression operand = (expression as UnaryExpression).Operand;
+                name = operand.CastTo<MemberExpression>().Member.Name;
+
+            }
+            else if (expression.NodeType == ExpressionType.Call)
+            {
+                name = expression.CastTo<MethodCallExpression>().Method.Name;
+            }
+            else if (expression.NodeType == ExpressionType.MemberAccess)
+            {
+                name = expression.CastTo<MemberExpression>().Member.Name;
+            }
+
+            PropertyInfo info = type.GetProperty(name);
+
+            //if we don't find the property straight away then it is probably an interface
+            //and we need to check all inherited interfaces.
+            if (info == null)
+            {
+                info = GetAllProperties(type).FirstOrDefault(x => x.Name == name);
+            }
+
+            return info;
         }
     }
 }

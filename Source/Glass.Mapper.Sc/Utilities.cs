@@ -12,7 +12,7 @@ using Sitecore.Links;
 
 namespace Glass.Mapper.Sc
 {
-    public static class Utilities
+    public class Utilities : Glass.Mapper.Utilities
     {
         /// <summary>
         /// Converts a NameValueCollection in to HTML attributes

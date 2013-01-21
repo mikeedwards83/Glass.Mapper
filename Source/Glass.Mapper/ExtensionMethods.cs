@@ -56,18 +56,24 @@ namespace Glass.Mapper
             }
             return list;
         }
-
+    public static IEnumerable<T> MakeEnumerable<T>(this T obj)
+        {
+            return new T[] {obj};
+        }
 
         #endregion
+
 
       
 
         #region Misc
 
-        public static IEnumerable<T> MakeEnumerable<T>(this T obj)
+        public static T CastTo<T>(this object target)
         {
-            return new T[] {obj};
+            return (T)target;
         }
+
+      
 
         #endregion
     }
