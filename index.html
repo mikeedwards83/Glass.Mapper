@@ -56,17 +56,17 @@ title: Welcome
 
 <div class="row-fluid">
     <div class="span12">
-        <h2>Blogs</h2>
+        <h2>The Blog</h2>
         <ul class="thumbnails">
             {% for post in site.posts %}
-                {% if forloop.index < 4 %}
-                    <li class="span4">
+                {% if forloop.index < 5%}
+                    <li class="span3">
                         <div href="#" class="thumbnail">
                             <img src="{{post.image}}" alt="{{post.title}}">
                             <div class="caption">
                                 <h3>{{post.title}}</h3>
-                                <p>
-                                   <small>Date: {{ post.date | date_to_string }} </small>
+                                <p class="pull-right">
+                                    <strong><small>Date: {{ post.date | date_to_string }} </small></strong>
                                 </p>
                                 <p>
                                     {{post.abstract}}
