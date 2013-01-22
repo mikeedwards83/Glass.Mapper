@@ -28,7 +28,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// <summary>
     /// Indicates that the .Net class can be loaded by Glass.Sitecore.Mapper
     /// </summary>
-    public class SitecoreType<T> : ISitecoreClass, ISitecoreClassFields<T>, ISitecoreClassInfos<T>, ISitecoreClassQueries<T>, ISitecoreClassNodes<T>, ISitecoreLinkedItems<T>
+    public class SitecoreType<T> : ISitecoreClass, ISitecoreClass<T>
     {
 
         List<AbstractPropertyConfiguration> _properties;
@@ -42,7 +42,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             _properties = new List<AbstractPropertyConfiguration>();
             _configuration = new SitecoreTypeConfiguration();
             _configuration.Type = typeof(T);
-           
+            _configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(_configuration.Type);
 
             
         }
@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
-        public SitecoreType<T> Infos(Action<ISitecoreClassInfos<T>> infos)
+        public SitecoreType<T> Nodes(Action<ISitecoreClassInfos<T>> infos)
         {
             infos.Invoke(this);
             return this;
@@ -214,8 +214,18 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             links.Invoke(this);
             return this;
         }
-        
 
+        /// <summary>
+        /// Map an item's linked items to a class properties
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        public SitecoreType<T> Configure(Action<ISitecoreClass<T>> config)
+        {
+            config.Invoke(this);
+            return this;
+        }
+        
 
 
     
@@ -235,6 +245,20 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     }
     #region Interfaces
 
+    public interface ISitecoreClass<T> : 
+        ISitecoreClassFields<T>,
+        ISitecoreClassInfos<T>,
+        ISitecoreClassQueries<T>,
+        ISitecoreClassNodes<T>,
+        ISitecoreLinkedItems<T>,
+        ISitecoreClassId<T>
+    {
+    }
+
+    public interface ISitecoreClassId<T>
+    {
+        SitecoreId<T> Id(Expression<Func<T, object>> ex);
+    }
     public interface ISitecoreClassFields<T>
     {
         SitecoreField<T> Field(Expression<Func<T, object>> ex);

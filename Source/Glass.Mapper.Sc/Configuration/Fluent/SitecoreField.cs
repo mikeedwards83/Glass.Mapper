@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Linq.Expressions;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -32,16 +33,36 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreField(Expression<Func<T, object>> ex)
             : base(ex)
         {
+            Configuration.FieldName = Configuration.PropertyInfo.Name;
         }
 
         /// <summary>
-        /// Indicate that the field can not be written to Sitecore
+        /// Indicate that the field can be used with Code First
         /// </summary>
-        public SitecoreField<T> ReadOnly()
+        public SitecoreField<T> IsCodeFirst()
         {
-            Configuration.ReadOnly = true;
+            Configuration.CodeFirst = true;
             return this;
         }
+
+        /// <summary>
+        /// The ID of the field to load or create in code first
+        /// </summary>
+        public SitecoreField<T> FieldId(Guid id)
+        {
+            return FieldId(new ID(id));
+        }
+
+        /// <summary>
+        /// The ID of the field to load or create in code first
+        /// </summary>
+        public SitecoreField<T> FieldId(ID id)
+        {
+            Configuration.FieldId = id;
+            return this;
+        }
+
+        
         /// <summary>
         /// The name of the field  to use if it is different to the property name
         /// </summary>
@@ -50,6 +71,54 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             Configuration.FieldName = name;
             return this;
         }
+
+        /// <summary>
+        /// The source for a code first field
+        /// </summary>
+        public SitecoreField<T> FieldSource(string fieldSource)
+        {
+            Configuration.FieldSource = fieldSource;
+            return this;
+        }
+
+        /// <summary>
+        /// The title for a code first field
+        /// </summary>
+        public SitecoreField<T> FieldTitle(string fieldTitle)
+        {
+            Configuration.FieldTitle = fieldTitle;
+            return this;
+        }
+
+        /// <summary>
+        /// The Sitecore field type for a code first field
+        /// </summary>
+        public SitecoreField<T> FieldType(SitecoreFieldType fieldType)
+        {
+            Configuration.FieldType = fieldType;
+            return this;
+        }
+
+        /// <summary>
+        /// The field should be shared between languages
+        /// </summary>
+        public SitecoreField<T> IsShared()
+        {
+            Configuration.IsShared = true;
+            return this;
+        }
+
+        /// <summary>
+        /// The field should be shared between versions
+        /// </summary>
+        public SitecoreField<T> IsUnversioned()
+        {
+            Configuration.IsUnversioned= true;
+            return this;
+        }
+
+       
+
         /// <summary>
         /// Options to override the behaviour of certain fields.
         /// </summary>
@@ -59,6 +128,23 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// The name of the section the field should appear in
+        /// </summary>
+        public SitecoreField<T> SectionName(string sectionName)
+        {
+            Configuration.SectionName = sectionName;
+            return this;
+        }
+       
+        /// <summary>
+        /// Indicate that the field can not be written to Sitecore
+        /// </summary>
+        public SitecoreField<T> ReadOnly()
+        {
+            Configuration.ReadOnly = true;
+            return this;
+        }
 
 
     }

@@ -67,7 +67,7 @@
     <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
     <Compile Include="Configuration\Fluent\ISitecoreClass.cs" />
     <Compile Include="Configuration\Fluent\SitecoreChildren.cs" />
-    <Compile Include="Configuration\Fluent\SitecoreClass.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreType.cs" />
     <Compile Include="Configuration\Fluent\SitecoreField.cs" />
     <Compile Include="Configuration\Fluent\SitecoreId.cs" />
     <Compile Include="Configuration\Fluent\SitecoreInfo.cs" />
@@ -126,6 +126,7 @@
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />
     <Compile Include="Dynamic\DynamicItem.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\Image.cs" />
     <Compile Include="Fields\Link.cs" />

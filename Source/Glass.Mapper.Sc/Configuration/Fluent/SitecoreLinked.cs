@@ -47,6 +47,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         public SitecoreLinked<T> InferType()
         {
+            
             Configuration.InferType = false;
             return this;
         }

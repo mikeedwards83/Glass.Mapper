@@ -30,6 +30,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
 
         public SitecoreId(Expression<Func<T, object>> ex):base(ex)
         {
+            
         }
     }
 }
