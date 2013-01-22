@@ -74,6 +74,10 @@
     <Content Include="docs\contribute.html" />
     <Content Include="docs\index.html" />
     <Content Include="getting-started\index.html" />
+    <Content Include="images\p1.png" />
+    <Content Include="images\p2.png" />
+    <Content Include="images\p3.png" />
+    <Content Include="images\p4.png" />
     <Content Include="site.css" />
     <Content Include="site.js" />
     <Content Include="docs\tutorial\index.html" />
