@@ -54,31 +54,32 @@ title: Welcome
     </div>
 </div>
 
-<div id="featuredBlogPosts">
-    <h2>Blogs</h2>
-    <ul class="thumbnails">
-        
-        
-{% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }} + {{forloop.index}}</a></li>
+<div class="row-fluid">
+    <div class="span9">
+        <h2>Blogs</h2>
+        <ul class="thumbnails">
+            {% for post in site.posts %}
+                {% if forloop.index < 4 %}
+                    <li class="span3">
+                        <div href="#" class="thumbnail">
+                            <img src="{{post.image}}" alt="">
+                            <div class="caption">
+                                <h3>{{post.title}}</h3>
+                                <p>
+                                    {{post.abstract}}
+                                </p>
+                                <p>
+                                    <a href="{{post.url}}" class="btn btn-primary">Read More</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
 
-        <li class="span4">
-            <div href="#" class="thumbnail">
-                <img data-src="{{post.image}}" alt="">
-                <div class="caption">
-                    <h3>{{post.title}}</h3>
-                    <p>
-                        {{post.abstract}}
-                    </p>
-                    <p>
-                        <a href="{{post.url}}" class="btn btn-primary">Read More</a>
-                    </p>
-                </div>
-            </div>
-        </li>
-       {% endfor %}
-
-    </ul>
+        </ul>
+    </div>
 </div>
+
 
 
