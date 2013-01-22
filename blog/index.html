@@ -9,7 +9,9 @@ title: Blog
     Copy and paste this page, for some reason this is the only file that Jekyll will build. I am assuming that there is some encoding problem caused by VS
 </p>
 
- {% for post in site.posts %}
+
+
+{% for post in site.posts %}
       <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }} + {{forloop.index}}</a></li>
 
 {% endfor %}
