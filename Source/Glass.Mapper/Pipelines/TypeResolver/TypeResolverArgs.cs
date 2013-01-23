@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Michael Edwards
+   Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
    limitations under the License.
  
 */ 
-//CRE
+//-CRE-
+
 using System;
 using Glass.Mapper.Configuration;
 
@@ -32,3 +33,5 @@ namespace Glass.Mapper.Pipelines.TypeResolver
 
     }
 }
+
+

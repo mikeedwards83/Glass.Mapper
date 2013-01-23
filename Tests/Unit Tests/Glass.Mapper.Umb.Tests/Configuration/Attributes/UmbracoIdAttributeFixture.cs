@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Michael Edwards
+   Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
    limitations under the License.
  
 */ 
-//CRE
+//-CRE-
+
 using FluentAssertions;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
@@ -63,4 +64,6 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         #endregion
     }
 }
+
+
 

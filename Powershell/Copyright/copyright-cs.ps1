@@ -1,7 +1,7 @@
-param($target = "../../", $text = "text-cs.txt", $ending = "CRE")
+param($target = "../../", $ending = "CRE", $extension =".cs")
 
 $header = "/*
-   Copyright 2011 Michael Edwards
+   Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the ""License"");
    you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ $header = "/*
    limitations under the License.
  
 */ 
-//CRE"
+//-CRE-"
 
 function Write-Header ($file)
 {
@@ -46,7 +46,7 @@ function Write-Header ($file)
 
 }
 
-Get-ChildItem $target -Recurse | ? { $_.Extension -like ".cs" } | % `
+Get-ChildItem $target -Recurse | ? { $_.Extension -like $extension } | % `
 {
     Write-Header $_.PSPath.Split(":", 3)[2]
 }
