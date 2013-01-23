@@ -92,6 +92,9 @@
     <Content Include="_layouts\DocsLayout.html" />
     <Content Include="_layouts\MainLayout.html" />
     <Content Include="_posts\2013-01-22-Test.html" />
+    <Content Include="_posts\2013-01-21-Test.html" />
+    <Content Include="_posts\2013-01-15-Test.html" />
+    <Content Include="_posts\2013-01-20-Test.html" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

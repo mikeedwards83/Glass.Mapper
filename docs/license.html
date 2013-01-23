@@ -1,0 +1,48 @@
+---
+layout: DocsLayout
+title: Copyright Scripts
+---
+
+
+<div class="page-header">
+    <h1>License <small></small></h1>
+</div>
+
+<p>
+    Glass.Mapper is licensed using the Apache 2 license, please read the license file found in the root of the
+    <a href="https://github.com/mikeedwards83/Glass.Mapper">Github repo</a>.
+</p>
+
+<h2>Copyright Scripts</h2>
+<p>
+    This sections details the different copyright scripts in the solution. Each script allows you to apply
+    the Apache 2 license to the top of the files in the solution. The scripts should be run from the PowerShell 
+    console from the directory containing the scripts. When running the scripts it is best to close Visual Studio,
+    sometimes running the scripts with Visual Studio open will corrupt the file due to competing file locks.
+</p>
+
+<p>
+    You can read more about the Apache 2 boiler plate on the <a href="http://www.apache.org/licenses/LICENSE-2.0.html#apply">Apache 2 License Page</a>
+</p>
+<h3>Files</h3>
+<p>
+    Files can be found in the directory /Powershell/Copyright. They are also included as part of the solution.
+</p>
+<dl>
+    <dt>copyright-cs.ps1</dt>
+    <dd>Applies the copyright notice to "CS" files.</dd>
+</dl>
+<h3>Script Files</h3>
+<p>
+    This section details the important parts of the script files.
+</p>
+<p>
+    The boiler plate text must appear at the top of the file.
+</p>
+<p>
+    The text to insert into the file is stored in the <strong>$header</strong> variable. You will notice that all
+    the licenses end with the characters <string>-CRE-</string>, these letters mark the end of the copyright notice
+    and are used by the script to work out which content to replace.
+</p>
+<p>The <strong>$extension</strong> variable indicates which file extension the script will process.</p>
+
