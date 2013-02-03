@@ -36,6 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Sitecore.Data.Items;
@@ -80,7 +81,12 @@ namespace Glass.Mapper.Sc.Dynamic
 
             if (Enum.TryParse<SitecoreInfoType>(name, out infoType))
             {
-                result = new SitecoreInfoMapper().MapToProperty(new SitecoreDataMappingContext(null, _item, null));
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = infoType;
+
+                mapper.Setup(new DataMapperResolverArgs(null, config ));
+                result = mapper.MapToProperty(new SitecoreDataMappingContext(null, _item, null));
                 return true;
             }
 
