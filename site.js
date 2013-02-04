@@ -3,7 +3,7 @@
         $("pre.github").each(function () {
 
             var $pre = $(this);
-            var sha = $pre.Attr("sha");
+            var sha = $pre.attr("sha");
             var commit = new GitHubCommit({
                 username: "mikeedwards83",
                 reponame: "Glass.Mapper",
