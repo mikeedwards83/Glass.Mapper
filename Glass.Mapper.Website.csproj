@@ -57,10 +57,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="docs\concepts\Example.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
+    <Content Include="docs\concepts\fluent.html" />
+    <Content Include="docs\concepts\index.html" />
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
     <Content Include="googlegroup.html" />
