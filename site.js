@@ -12,7 +12,7 @@
 
             commit.fetch(function(content) {
                 $pre.html(content);
-                hljs.highlightBlock($pre);
+                prettyPrint();
             });
         });
 
