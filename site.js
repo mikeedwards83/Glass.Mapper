@@ -1,6 +1,6 @@
 ﻿(function($) {
     $(function () {
-        $("pre.github").forEach(function () {
+        $("pre.github").each(function () {
 
             var $pre = $(this);
             var sha = $pre.Attr("sha");
