@@ -3,6 +3,8 @@
         $("pre.github").each(function () {
 
             var $pre = $(this);
+            $pre.addClass("prettyprint");
+            
             var sha = $pre.attr("sha");
             var commit = new GitHubCommit({
                 username: "mikeedwards83",
