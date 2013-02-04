@@ -58,7 +58,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void FirstOrDefault()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -66,14 +66,14 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.FirstOrDefault();
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child1", child.Path);
+            Assert.AreEqual(TargetPath+"/Child1", child.Path);
         }
 
         [Test]
         public void FirstOrDefault_WithPredicate()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
             string name = "Child2";
             dynamic d = new DynamicItem(item);
 
@@ -83,7 +83,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.First(func);
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+            Assert.AreEqual(TargetPath+"/Child2", child.Path);
         }
 
       
@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Last()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -100,14 +100,14 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.Last();
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child3", child.Path);
+            Assert.AreEqual(TargetPath+"/Child3", child.Path);
         }
 
         [Test]
         public void Last_WithPredicate()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -115,7 +115,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.Last(Dy.Fc(x=>x.Name == "Child2"));
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+            Assert.AreEqual(TargetPath+"/Child2", child.Path);
         }
 
 
@@ -123,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void LastOrDefault()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -131,14 +131,14 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.LastOrDefault();
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child3", child.Path);
+            Assert.AreEqual(TargetPath+"/Child3", child.Path);
         }
 
         [Test]
         public void LastOrDefault_WithPredicate()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -146,7 +146,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.LastOrDefault(Dy.Fc(x => x.Name == "Child2"));
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+            Assert.AreEqual(TargetPath+"/Child2", child.Path);
         }
 
 
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void ElementAt()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -162,7 +162,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.ElementAt(1);
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+            Assert.AreEqual(TargetPath+"/Child2", child.Path);
         }
 
 
@@ -170,7 +170,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Where()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -178,14 +178,14 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.Where(Dy.Fc(x => x.Name == "Child2")).First();
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+            Assert.AreEqual(TargetPath+"/Child2", child.Path);
         }
 
         [Test]
         public void Any()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -203,7 +203,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void All()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
             
@@ -221,12 +221,12 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Select_ToKnown()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
             //Act
-            var children = d.Children.Select(Dy.Fc<Known>(x => new Known { Name = x.Name })) as IEnumerable<Known>;
+            var children = d.Children.Select(Dy.FcT<Known>(x => new Known { Name = x.Name })) as IEnumerable<Known>;
             var child = children.First();
             //Assert
             
@@ -237,12 +237,12 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Select_ToDynamic()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
             //Act
-            var children = d.Children.Select(Dy.Fc(x => new { Name = x.Name })) as IEnumerable<dynamic>;
+            var children = d.Children.Select(Dy.FcT(x => new { Name = x.Name })) as IEnumerable<dynamic>;
             var child = children.First();
             //Assert
 
@@ -253,15 +253,15 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Where_Select_First_DyamicsTypes()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
             //Act
-            var child = d.Children.Where(Dy.Fc(x=> x.Name == "Child2")).Select(Dy.Fc(x => new { NewPath = x.Path, NewName = x.Name })).First();
+            var child = d.Children.Where(Dy.Fc(x=> x.Name == "Child2")).Select(Dy.FcT(x => new { NewPath = x.Path, NewName = x.Name })).First();
 
             //Assert
-            Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.NewPath);
+            Assert.AreEqual(TargetPath+"/Child2", child.NewPath);
             Assert.AreEqual("Child2", child.NewName);
 
         }
@@ -271,7 +271,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void Count()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -286,7 +286,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
         public void ForEach()
         {
             //Assign
-            Item item = _db.GetItem("/sitecore/content/DynamicItem/Test");
+            Item item = _db.GetItem(TargetPath);
 
             dynamic d = new DynamicItem(item);
 
@@ -301,13 +301,13 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
                 switch (total)
                 {
                     case 1:
-                        Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child1", child.Path);
+                        Assert.AreEqual(TargetPath+"/Child1", child.Path);
                         break;
                     case 2:
-                        Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child2", child.Path);
+                        Assert.AreEqual(TargetPath + "/Child2", child.Path);
                         break;
                     case 3:
-                        Assert.AreEqual("/sitecore/content/DynamicItem/Test/Child3", child.Path);
+                        Assert.AreEqual(TargetPath + "/Child3", child.Path);
                         break;
                 }
             }

@@ -46,7 +46,7 @@ namespace Glass.Mapper.Sc.Dynamic
             return expression;
         }
 
-        public static Func<dynamic, T> Fc<T>(Func<dynamic, T> expression)
+        public static Func<dynamic, T> FcT<T>(Func<dynamic, T> expression)
         {
             return expression;
         }
