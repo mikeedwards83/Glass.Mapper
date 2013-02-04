@@ -57,7 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="docs\concepts\Example.cs" />
+    <Compile Include="docs\concepts\example-fluent-1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

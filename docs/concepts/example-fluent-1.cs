@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿            var loader = new SitecoreFluentConfigurationLoader();
 
-namespace Glass.Mapper.Website.docs.concepts
-{
-    public class Example
-    {
-    }
-}
+            var myClass = loader.Add<MyClass>();
+            myClass.Configure(x =>
+                                     {
+                                         x.Id(y => y.Id);
+                                         x.Field(y => y.Field);
+                                         x.Info(y => y.Name).InfoType(SitecoreInfoType.Name);
+                                     });
