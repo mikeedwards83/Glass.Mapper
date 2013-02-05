@@ -157,11 +157,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [Test]
         public void MapToProperty_GetAllReferrers_ReferrersListReturned()
         {
-            //Act
+            //Assign
             var language = LanguageManager.GetLanguage("af-ZA");
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Target");
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Source",
                                         language  );
+
+            using (new ItemEditing(source, true))
+            {
+                source[FieldName] = "<a href=\"~/link.aspx?_id=216C0015-8626-4951-9730-85BCA34EC2A3&amp;_z=z\">Source</a>";
+            }
+
             var config = new SitecoreLinkedConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
             config.Option = SitecoreLinkedOptions.Referrers;
@@ -220,16 +226,25 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [Test]
         public void MapToProperty_GetAll_ReferrersListReturned()
         {
-            //Act
+            //Assign
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Target");
             var language = LanguageManager.GetLanguage("af-ZA");
 
-            //ME - when getting templates you have to disable the role manager
+            var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Source",
+                                             language);
+
+            using (new ItemEditing(source, true))
+            {
+                source[FieldName] = "<a href=\"~/link.aspx?_id=216C0015-8626-4951-9730-85BCA34EC2A3&amp;_z=z\">Source</a>";
+            }
+        
+
+        //ME - when getting templates you have to disable the role manager
             using (new SecurityDisabler())
             {
+
                 var template = Database.GetItem("/sitecore/templates/Tests/DataMappers/DataMappersSingleField");
-                var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Source",
-                                              language);
+               
 
                 var config = new SitecoreLinkedConfiguration();
                 config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
