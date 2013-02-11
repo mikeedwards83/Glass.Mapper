@@ -40,6 +40,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Glass.Mapper.Configuration;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -48,40 +49,70 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// </summary>
     public class SitecoreType<T> : ISitecoreClass, ISitecoreClass<T>
     {
+        private List<AbstractPropertyConfiguration> _properties;
+        private SitecoreTypeConfiguration _configuration;
 
-        List<AbstractPropertyConfiguration> _properties;
-        SitecoreTypeConfiguration _configuration;
 
 
-       
 
         public SitecoreType()
         {
             _properties = new List<AbstractPropertyConfiguration>();
             _configuration = new SitecoreTypeConfiguration();
-            _configuration.Type = typeof(T);
+            _configuration.Type = typeof (T);
             _configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(_configuration.Type);
 
-            
+
         }
+
         /// <summary>
         /// Indicates the template to use when trying to create an item
         /// </summary>
-        public SitecoreType<T> TemplateId(Guid id)
+        public SitecoreType<T> TemplateId(string id)
+        {
+            return TemplateId(new ID(id));
+        }
+
+        /// <summary>
+        /// Indicates the template to use when trying to create an item
+        /// </summary>
+        public SitecoreType<T> TemplateId(ID id)
         {
             _configuration.TemplateId = id;
             return this;
         }
+
         /// <summary>
         /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
         /// </summary>
-        public SitecoreType<T> BranchId(Guid id)
+        public SitecoreType<T> BranchId(string id)
+        {
+            return BranchId(new ID(id));
+        }
+
+        /// <summary>
+        /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
+        /// </summary>
+        public SitecoreType<T> BranchId(ID id)
         {
             _configuration.BranchId = id;
             return this;
         }
 
-        /// <summary>
+
+        public SitecoreType<T> CodeFirst()
+        {
+            _configuration.CodeFirst = true;
+            return this;
+        }
+
+        public SitecoreType<T> TemplateName(string name)
+        {
+            _configuration.TemplateName = name;
+            return this;
+        }
+
+    /// <summary>
         /// Map item's  children  to a class property
         /// </summary>
         /// <param name="ex"></param>

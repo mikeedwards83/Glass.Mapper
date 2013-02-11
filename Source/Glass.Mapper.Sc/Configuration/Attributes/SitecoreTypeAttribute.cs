@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration.Attributes;
 using Glass.Mapper.Configuration;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
 {
@@ -36,6 +37,15 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// </summary>
         public string BranchId { get; set; }
 
+        /// <summary>
+        /// Indicates that the class is used in a code first scenario.
+        /// </summary>
+        public bool CodeFirst { get; set; }
+
+        /// <summary>
+        /// Overrides the default template name when using code first
+        /// </summary>
+        public string TemplateName { get; set; }
 
         public override void Configure(Type type, Mapper.Configuration.AbstractTypeConfiguration config)
         {
@@ -46,11 +56,18 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                     "Type configuration is not of type {0}".Formatted(typeof (SitecoreTypeConfiguration).FullName));
 
 
-            if(BranchId.IsNotNullOrEmpty())
-                scConfig.BranchId =  new Guid(this.BranchId);
-            if (TemplateId.IsNotNullOrEmpty())
-                scConfig.TemplateId = new Guid(this.TemplateId);
+            if (BranchId.IsNotNullOrEmpty())
+                scConfig.BranchId = new ID(this.BranchId);
+            else
+                scConfig.BranchId = ID.Null;
 
+            if (TemplateId.IsNotNullOrEmpty())
+                scConfig.TemplateId = new ID(this.TemplateId);
+            else
+                scConfig.TemplateId = ID.Null;
+
+            scConfig.CodeFirst = scConfig.CodeFirst;
+            scConfig.TemplateName = scConfig.TemplateName;
 
             base.Configure(type, config);
         }

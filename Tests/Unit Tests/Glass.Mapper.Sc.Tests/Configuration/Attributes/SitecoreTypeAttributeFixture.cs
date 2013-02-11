@@ -26,6 +26,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 {
@@ -65,8 +66,8 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(type, config.Type);
-            Assert.AreEqual(templateIdExpected, config.TemplateId);
-            Assert.AreEqual(branchIdExptected, config.BranchId);
+            Assert.AreEqual(new ID(templateIdExpected), config.TemplateId);
+            Assert.AreEqual(new ID(branchIdExptected), config.BranchId);
         }
 
         [Test]
@@ -105,8 +106,8 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(type, config.Type);
-              Assert.AreEqual(templateIdExpected, config.TemplateId);
-            Assert.AreEqual(branchIdExptected, config.BranchId);
+              Assert.AreEqual(new ID( templateIdExpected), config.TemplateId);
+            Assert.AreEqual(new ID(branchIdExptected), config.BranchId);
         }
 
         [Test]
@@ -127,8 +128,8 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(type, config.Type);
-            Assert.AreEqual(templateIdExpected, config.TemplateId);
-            Assert.AreEqual(branchIdExptected, config.BranchId);
+            Assert.AreEqual(new ID(templateIdExpected), config.TemplateId);
+            Assert.AreEqual(new ID(branchIdExptected), config.BranchId);
         }
 
         [Test]

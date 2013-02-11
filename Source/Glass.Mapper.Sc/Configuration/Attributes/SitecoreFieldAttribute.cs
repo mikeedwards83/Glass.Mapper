@@ -94,6 +94,31 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// </summary>
         public bool IsUnversioned { get; set; }
 
+        /// <summary>
+        /// Overrides the field sort order if using Code First
+        /// </summary>
+        public int FieldSortOrder { get; set; }
+
+        /// <summary>
+        /// Overrides the section sort order if using Code First
+        /// </summary>
+        public int SectionSortOrder { get; set; }
+
+        /// <summary>
+        /// Overrides the field validation regular expression if using Code First
+        /// </summary>
+        public string ValidationRegularExpression { get; set; }
+
+        /// <summary>
+        /// Overrides the field validation error text if using Code First
+        /// </summary>
+        public string ValidationErrorText { get; set; }
+
+        /// <summary>
+        /// Sets the field as required if using Code First
+        /// </summary>
+        public bool IsRequired { get; set; }
+
         #endregion
 
 
@@ -130,6 +155,18 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.IsUnversioned = this.IsUnversioned;
             config.SectionName = this.SectionName;
             config.Setting = this.Setting;
+            config.FieldSortOrder = this.FieldSortOrder;
+            config.SectionSortOrder = this.SectionSortOrder;
+            config.ValidationErrorText = this.ValidationErrorText;
+            config.ValidationRegularExpression = this.ValidationRegularExpression;
+            config.IsRequired = this.IsRequired;
+
+
+            //code first configuration
+            var fieldFieldValues = propertyInfo.GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>();
+            var ffvConfigs = fieldFieldValues.Select(x => x.Configure(propertyInfo, config));
+            config.FieldValueConfigs = ffvConfigs.ToList();
+            
             base.Configure(propertyInfo, config);
         }
     }

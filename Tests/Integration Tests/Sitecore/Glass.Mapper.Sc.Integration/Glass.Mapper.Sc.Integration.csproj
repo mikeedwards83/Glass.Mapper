@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />

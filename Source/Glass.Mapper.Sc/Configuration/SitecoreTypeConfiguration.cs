@@ -29,13 +29,22 @@ namespace Glass.Mapper.Sc.Configuration
 {
     public class SitecoreTypeConfiguration : AbstractTypeConfiguration
     {
-        public Guid TemplateId { get; set; }
+        public ID TemplateId { get; set; }
 
-        public Guid BranchId { get; set; }
+        public ID BranchId { get; set; }
 
         public SitecoreIdConfiguration IdConfig { get; set; }
         public SitecoreInfoConfiguration LanguageConfig { get; set; }
         public SitecoreInfoConfiguration VersionConfig { get; set; }
+        /// <summary>
+        /// Indicates that the class is used in a code first scenario.
+        /// </summary>
+        public bool CodeFirst { get; set; }
+
+        /// <summary>
+        /// Overrides the default template name when using code first
+        /// </summary>
+        public string TemplateName { get; set; }
 
         public Item ResolveItem(object target, Database database)
         {

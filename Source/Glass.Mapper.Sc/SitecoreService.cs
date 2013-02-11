@@ -712,18 +712,18 @@ namespace Glass.Mapper.Sc
             string tempName = Guid.NewGuid().ToString();
 
 
-            Guid templateId = newType.TemplateId;
-            Guid branchId = newType.BranchId;
+            ID templateId = newType.TemplateId;
+            ID branchId = newType.BranchId;
 
             Item item = null;
 
-            if (templateId != Guid.Empty)
+            if (!ID.IsNullOrEmpty(templateId ))
             {
-                item = pItem.Add(tempName, new TemplateID(new ID(templateId)));
+                item = pItem.Add(tempName, new TemplateID(templateId));
             }
-            else if (branchId != Guid.Empty)
+            else if (!ID.IsNullOrEmpty(branchId))
             {
-                item = pItem.Add(tempName, new BranchId(new ID(branchId)));
+                item = pItem.Add(tempName, new BranchId(branchId));
             }
             else
             {
