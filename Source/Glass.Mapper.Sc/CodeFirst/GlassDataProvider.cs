@@ -53,36 +53,11 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         #endregion
 
-        #region Fields
-
-        // /sitecore/templates/System/Templates/Template field/Data/Title
-        private static readonly ID TitleFieldId = new ID("{19A69332-A23E-4E70-8D16-B2640CB24CC8}");
-        // /sitecore/templates/System/Templates/Template field/Data/Type
-        private static readonly ID TypeFieldId = new ID("{AB162CC0-DC80-4ABF-8871-998EE5D7BA32}");
-        // /sitecore/templates/System/Templates/Template/Data/__Base template
-        private static readonly ID BaseTemplatesFieldId = new ID("{12C33F3F-86C5-43A5-AEB4-5598CEC45116}");
-        // /sitecore/templates/System/Templates/Template field/Data/Source
-        private static readonly ID SourceFieldId = new ID("{1EB8AE32-E190-44A6-968D-ED904C794EBF}");
-        // /sitecore/templates/System/Templates/Sections/Appearance/Appearance/__Read Only
-        private static readonly ID ReadOnlyFieldId = new ID("{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}");
-        // /sitecore/templates/System/Templates/Sections/Appearance/Appearance/__Sortorder
-        private static readonly ID SortOrderFieldId = new ID("{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}");
-
-        // /sitecore/templates/System/Templates/Template field/Validation Rules/Quick Action Bar
-        private static readonly ID QuickActionBarFieldId = new ID("{337E20E1-999A-4EEA-85AD-B58A03AE75CC}");
-        // /sitecore/templates/System/Templates/Template field/Validation Rules/Validate Button
-        private static readonly ID ValidateButtonFieldId = new ID("{21828437-EA4B-40A1-8C61-4CE60EA41DB6}");
-        // /sitecore/templates/System/Templates/Template field/Validation Rules/Validator Bar
-        private static readonly ID ValidatorBarFieldId = new ID("{9C903E29-650D-4AF2-B9BD-526D5C14A1A5}");
-        // /sitecore/templates/System/Templates/Template field/Validation Rules/Workflow
-        private static readonly ID WorkflowFieldId = new ID("{53C432C4-7122-4E2D-8296-DB4184FD1735}");
+    
 
         #endregion
 
-
-        #endregion
-
-        public static readonly string IsRequiredId = "{59D4EE10-627C-4FD3-A964-61A88B092CBC}";
+        
 
         public static readonly ID GlassFolderId = new ID("{19BC20D3-CCAB-4048-9CA9-4AA631AB109F}");
 
@@ -125,7 +100,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var section = SectionTable.FirstOrDefault(x => x.SectionId == itemId);
             if (section != null)
             {
-                return new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
+                return  new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
             }
             var field = FieldTable.FirstOrDefault(x => x.FieldId == itemId);
             if (field != null)
@@ -171,20 +146,20 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         private void GetStandardFields(FieldList fields, int index)
         {
-            fields.Add(ReadOnlyFieldId, "1");
-            fields.Add(SortOrderFieldId, index.ToString());
+            fields.Add(FieldIDs.ReadOnly, "1");
+            fields.Add(FieldIDs.Sortorder, index.ToString());
         }
 
         private void GetFieldFields(FieldInfo info, FieldList fields)
         {
 
             if (!string.IsNullOrEmpty(info.Title))
-                fields.Add(TitleFieldId, info.Title);
+                fields.Add(TemplateFieldIDs.Title, info.Title);
 
-            fields.Add(TypeFieldId, FieldInfo.GetFieldType(info.Type));
+            fields.Add(TemplateFieldIDs.Type, FieldInfo.GetFieldType(info.Type));
 
             if (!string.IsNullOrEmpty(info.Source))
-                fields.Add(SourceFieldId, info.Source);
+                fields.Add(TemplateFieldIDs.Source, info.Source);
 
             fields.Add(TemplateFieldIDs.Shared, info.IsShared ? "1" : "0");
             fields.Add(TemplateFieldIDs.Unversioned, info.IsUnversioned ? "1" : "0");
@@ -197,10 +172,10 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             if (info.IsRequired)
             {
-                fields.Add(QuickActionBarFieldId, IsRequiredId);
-                fields.Add(ValidateButtonFieldId, IsRequiredId);
-                fields.Add(ValidatorBarFieldId, IsRequiredId);
-                fields.Add(WorkflowFieldId, IsRequiredId);
+                fields.Add(Global.IDs.TemplateFieldIds.QuickActionBarFieldId, Global.IDs.TemplateFieldIds.IsRequiredId);
+                fields.Add(Global.IDs.TemplateFieldIds.ValidateButtonFieldId, Global.IDs.TemplateFieldIds.IsRequiredId);
+                fields.Add(Global.IDs.TemplateFieldIds.ValidatorBarFieldId, Global.IDs.TemplateFieldIds.IsRequiredId);
+                fields.Add(Global.IDs.TemplateFieldIds.WorkflowFieldId, Global.IDs.TemplateFieldIds.IsRequiredId);
             }
         }
 
@@ -547,7 +522,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var templateItem = Factory.GetDatabase("master").GetItem(template.ID);
 
 
-            var baseTemplatesField = templateItem[BaseTemplatesFieldId];
+            var baseTemplatesField = templateItem[FieldIDs.BaseTemplate];
             StringBuilder sb = new StringBuilder(baseTemplatesField);
 
             global::Sitecore.Diagnostics.Log.Info("Type {0}".Formatted(config.Type.FullName), this);
@@ -585,7 +560,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             if (baseTemplatesField != sb.ToString())
             {
                 templateItem.Editing.BeginEdit();
-                templateItem[BaseTemplatesFieldId] = sb.ToString();
+                templateItem[FieldIDs.BaseTemplate] = sb.ToString();
                 templateItem.Editing.EndEdit();
             }
 
