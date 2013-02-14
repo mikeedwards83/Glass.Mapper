@@ -52,3 +52,5 @@ Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/Data/license.xml
 Glass.Mapper.ncrunchsolution.user
 *ncrunch*
 Sites/Sitecore/Glass.Mapper.Sites.Sc/data/*
+Depends/66/*
+*Sitecore.Kernel.dll

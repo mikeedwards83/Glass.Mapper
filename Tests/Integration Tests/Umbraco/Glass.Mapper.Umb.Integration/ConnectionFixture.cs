@@ -60,7 +60,7 @@ namespace Glass.Mapper.Umb.Integration
             //UmbracoSettings.ResetSetters();
         }*/
 
-        [Test]
+        [Test] 
         public void ConnectionTest_ReadsDictionaryItem()
         {
             var value1 = Dictionary.DictionaryItem.hasKey("KEY");

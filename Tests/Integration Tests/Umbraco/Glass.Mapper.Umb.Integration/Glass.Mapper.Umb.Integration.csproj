@@ -201,6 +201,7 @@
     <Compile Include="Helpers\BaseDatabaseFactoryTest.cs" />
     <Compile Include="Helpers\FakeHttpContextFactory.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="MEConnectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UmbracoServiceFixture.cs" />
   </ItemGroup>
@@ -218,6 +219,28 @@
     <Content Include="App.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="config\404handlers.config" />
+    <Content Include="config\applications.config" />
+    <Content Include="config\BaseRestExtensions.config" />
+    <Content Include="config\ClientDependency.config" />
+    <Content Include="config\Dashboard.config" />
+    <Content Include="config\EmbeddedMedia.config" />
+    <Content Include="config\ExamineIndex.config" />
+    <Content Include="config\ExamineSettings.config" />
+    <Content Include="config\feedProxy.config" />
+    <Content Include="config\FileSystemProviders.config" />
+    <Content Include="config\log4net.config" />
+    <Content Include="config\metablogConfig.config" />
+    <Content Include="config\restExtensions.config" />
+    <Content Include="config\scripting.config" />
+    <Content Include="config\Skinning.config" />
+    <Content Include="config\splashes\booting.aspx" />
+    <Content Include="config\splashes\noNodes.aspx" />
+    <Content Include="config\tinyMceConfig.config" />
+    <Content Include="config\trees.config" />
+    <Content Include="config\umbracoSettings.config" />
+    <Content Include="config\UrlRewriting.config" />
+    <Content Include="config\xsltExtensions.config" />
     <None Include="packages.config" />
     <None Include="unit-test-log4net.config" />
   </ItemGroup>
