@@ -258,63 +258,7 @@
       <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\Debug\businesslogic.dll" />
-    <Content Include="bin\Debug\Castle.Core.dll" />
-    <Content Include="bin\Debug\Castle.Core.xml" />
-    <Content Include="bin\Debug\Castle.Windsor.dll" />
-    <Content Include="bin\Debug\Castle.Windsor.xml" />
-    <Content Include="bin\Debug\ClientDependency.Core.dll" />
-    <Content Include="bin\Debug\cms.dll" />
-    <Content Include="bin\Debug\controls.dll" />
-    <Content Include="bin\Debug\CookComputing.XmlRpcV2.dll" />
-    <Content Include="bin\Debug\Examine.dll" />
-    <Content Include="bin\Debug\Glass.Mapper.dll" />
-    <Content Include="bin\Debug\Glass.Mapper.pdb" />
-    <Content Include="bin\Debug\Glass.Mapper.Umb.dll" />
-    <Content Include="bin\Debug\Glass.Mapper.Umb.pdb" />
-    <Content Include="bin\Debug\HtmlAgilityPack.dll" />
-    <Content Include="bin\Debug\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="bin\Debug\interfaces.dll" />
-    <Content Include="bin\Debug\log4net.dll" />
-    <Content Include="bin\Debug\Lucene.Net.dll" />
-    <Content Include="bin\Debug\Microsoft.ApplicationBlocks.Data.dll" />
-    <Content Include="bin\Debug\Microsoft.Web.Helpers.dll" />
-    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />
-    <Content Include="bin\Debug\MySql.Data.dll" />
-    <Content Include="bin\Debug\Our.Umbraco.uGoLive.47x.dll" />
-    <Content Include="bin\Debug\Our.Umbraco.uGoLive.Checks.dll" />
-    <Content Include="bin\Debug\Our.Umbraco.uGoLive.dll" />
-    <Content Include="bin\Debug\SQLCE4Umbraco.dll" />
-    <Content Include="bin\Debug\System.Data.SqlServerCe.dll" />
-    <Content Include="bin\Debug\System.Data.SqlServerCe.Entity.dll" />
-    <Content Include="bin\Debug\System.Web.Helpers.dll" />
-    <Content Include="bin\Debug\System.Web.Helpers.xml" />
-    <Content Include="bin\Debug\System.Web.Mvc.dll" />
-    <Content Include="bin\Debug\System.Web.Mvc.xml" />
-    <Content Include="bin\Debug\System.Web.Providers.dll" />
-    <Content Include="bin\Debug\System.Web.Razor.dll" />
-    <Content Include="bin\Debug\System.Web.Razor.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Deployment.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.xml" />
-    <Content Include="bin\Debug\TidyNet.dll" />
-    <Content Include="bin\Debug\Umbraco.Core.dll" />
-    <Content Include="bin\Debug\umbraco.DataLayer.dll" />
-    <Content Include="bin\Debug\umbraco.dll" />
-    <Content Include="bin\Debug\umbraco.editorControls.dll" />
-    <Content Include="bin\Debug\umbraco.MacroEngines.dll" />
-    <Content Include="bin\Debug\umbraco.macroRenderings.dll" />
-    <Content Include="bin\Debug\umbraco.providers.dll" />
-    <Content Include="bin\Debug\Umbraco.Web.UI.dll" />
-    <Content Include="bin\Debug\umbraco.webservices.dll" />
-    <Content Include="bin\Debug\umbraco.XmlSerializers.dll" />
-    <Content Include="bin\Debug\UmbracoExamine.dll" />
-    <Content Include="bin\Debug\UrlRewritingNet.UrlRewriter.dll" />
-  </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
