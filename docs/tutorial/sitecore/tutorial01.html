@@ -17,8 +17,14 @@ title: Tutorial 1 - Sitecore
     two options for configuring your class class, either fluent or attributed, you can read more about these in the 
     <a href="/Glass.Mapper/docs/concepts/index.html">Concepts</a> section. For this demo we will be using fleunt configuration.
 </p>
+
 <p>
-    Our basic class will have a simple text field, the ID of the item we are using and the URL of the item:
+    We start by having the following very simple item in Sitecore:
+</p>
+<img src="/Glass.Mapper/docs/tutorial/sitecore/tutorial01.item.png"/>
+<p>
+    Our model will have a single property for the title field and then two more properties for
+    the ID and the URL of the item:
 </p>
 <pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Model/DemoClass.cs" ref="develop">
 
@@ -28,5 +34,12 @@ title: Tutorial 1 - Sitecore
     To mark this class up we create a fluent configuration class:
 </p>
 <pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Config/FluentConfig.cs" ref="develop">
+
+</pre>
+
+<p>
+    We next have to tell Glass.Mapper to load this configuration, we do this in the Application_Start method fo the Global.ascx:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial01.global.cs" ref="gh-pages">
 
 </pre>
