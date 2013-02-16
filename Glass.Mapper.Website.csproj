@@ -82,8 +82,9 @@
     <Content Include="images\p2.png" />
     <Content Include="images\p3.png" />
     <Content Include="images\p4.png" />
+    <Content Include="js\git.js" />
     <Content Include="site.css" />
-    <Content Include="site.js" />
+    <Content Include="js\site.js" />
     <Content Include="docs\tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="team\index.html" />
