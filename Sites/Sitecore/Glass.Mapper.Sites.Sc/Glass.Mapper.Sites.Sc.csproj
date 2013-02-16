@@ -216,6 +216,8 @@
       <DependentUpon>TestSub.ascx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Tutorial1\Config\FluentConfig.cs" />
+    <Compile Include="Tutorial1\Model\DemoClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
