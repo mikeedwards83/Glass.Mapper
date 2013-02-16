@@ -8,4 +8,3 @@
                                          x.Info(y => y.Name).InfoType(SitecoreInfoType.Name);
                                      });
 
-Test change
