@@ -208,6 +208,9 @@
     <Content Include="xsl\system\WebEdit\Hidden Rendering.xslt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="layouts\TestSub.ascx.cs">
       <DependentUpon>TestSub.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

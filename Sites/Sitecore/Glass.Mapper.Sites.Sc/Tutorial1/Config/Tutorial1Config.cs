@@ -4,9 +4,9 @@ using Glass.Mapper.Sites.Sc.Tutorial1.Model;
 
 namespace Glass.Mapper.Sites.Sc.Tutorial1.Config
 {
-    public class FluentConfig
+    public class Tutorial1Config
     {
-        public void Config()
+        public static SitecoreFluentConfigurationLoader Config()
         {
             var loader = new SitecoreFluentConfigurationLoader();
             
@@ -15,6 +15,8 @@ namespace Glass.Mapper.Sites.Sc.Tutorial1.Config
             demoClass.Id(x => x.Id);
             demoClass.Field(x => x.Title);
             demoClass.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
+
+            return loader;
         }
     }
 }
