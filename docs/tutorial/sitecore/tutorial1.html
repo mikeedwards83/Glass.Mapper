@@ -1,0 +1,32 @@
+﻿---
+layout: MainLayout
+title: Tutorial
+categories: Api
+---
+
+<div class="page-header">
+    <h1>Tutorial 1 - Setup <small> </small></h1>
+</div>
+
+<p>
+    This tutorial will take you through how to setup Glass.Mapper to work with Sitecore.
+</p>
+
+<p>
+    The first task when using Glass is to configure your model classes so they can be used by Glass.Mapper. You have
+    two options for configuring your class class, either fluent or attributed, you can read more about these in the 
+    <a href="/Glass.Mapper/docs/concepts/index.html">Concepts</a> section. For this demo we will be using fleunt configuration.
+</p>
+<p>
+    Our basic class will have a simple text field, the ID of the item we are using and the URL of the item:
+</p>
+<pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Model/DemoClass.cs" ref="develop">
+
+</pre>
+
+<p>
+    To mark this class up we create a fluent configuration class:
+</p>
+<pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Config/FluentConfig.cs" ref="develop">
+
+</pre>
