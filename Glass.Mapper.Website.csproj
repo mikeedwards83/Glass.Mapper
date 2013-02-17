@@ -70,9 +70,12 @@
     <Content Include="docs\concepts\index.html" />
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
+    <Content Include="docs\tutorial\index.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial02.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01.item.png" />
     <Content Include="docs\tutorial\sitecore\tutorial01.webpage.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial02.webpage.png" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
@@ -92,7 +95,6 @@
     <Content Include="js\git.js" />
     <Content Include="site.css" />
     <Content Include="js\site.js" />
-    <Content Include="docs\tutorial\index.html" />
     <Content Include="index.html" />
     <Content Include="team\index.html" />
     <Content Include="_config.yml" />
