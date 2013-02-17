@@ -39,6 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Sitecore\mvctaskforce\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -58,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\concepts\example-fluent-1.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial01.global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +70,9 @@
     <Content Include="docs\concepts\index.html" />
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial01.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial01.item.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial01.webpage.png" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />

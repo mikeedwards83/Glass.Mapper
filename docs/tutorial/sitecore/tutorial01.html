@@ -19,11 +19,11 @@ title: Tutorial 1 - Sitecore
 </p>
 
 <p>
-    We start by having the following very simple item in Sitecore:
+    Start by having the following very simple item in Sitecore:
 </p>
 <img src="/Glass.Mapper/docs/tutorial/sitecore/tutorial01.item.png"/>
 <p>
-    Our model will have a single property for the title field and then two more properties for
+    The model will have a single property for the title field and then two more properties for
     the ID and the URL of the item:
 </p>
 <pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Model/DemoClass.cs" ref="develop">
@@ -31,15 +31,40 @@ title: Tutorial 1 - Sitecore
 </pre>
 
 <p>
-    To mark this class up we create a fluent configuration class:
+    To mark this class up create a fluent configuration class:
 </p>
 <pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Config/Tutorial1Config.cs" ref="develop">
 
 </pre>
 
 <p>
-    We next have to tell Glass.Mapper to load this configuration, we do this in the Application_Start method fo the Global.ascx:
+    Next have to tell Glass.Mapper to load this configuration, do this in the Application_Start method fo the Global.ascx:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial01.global.cs" ref="gh-pages">
 
 </pre>
+
+<p>
+    Now that the model is mapped and ready to use with Glass.Mapper we need to create a sublayout. A sublayout has been 
+    created in Sitecore and assigned to the Tutorial1 item. Using the SitecoreContext class we can request the current item
+    as the type of DemoClass in the code behind file:
+</p>
+<pre class="github cs" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Layouts/Tutorial1Sublayout.ascx.cs" ref="develop">
+
+</pre>
+<p>
+    In the ascx page place the following:
+</p>
+<pre class="github html" file="Sites/Sitecore/Glass.Mapper.Sites.Sc/Tutorial1/Layouts/Tutorial1Sublayout.ascx" ref="develop">
+
+</pre>
+
+<p>
+    Compile the application and navigate to the Sitecore item, you should see the page render similar to below:
+</p>
+<img src="tutorial01.webpage.png"/>
+
+<p>
+    This tutorial has show you how to mark up a class for use with Glass.Mapper, how to retrieve the current item and
+    render it to screen.
+</p>
