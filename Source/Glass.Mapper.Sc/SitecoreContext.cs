@@ -31,6 +31,17 @@ namespace Glass.Mapper.Sc
         {
 
         }
+        public SitecoreContext(string contextName)
+            : base(global::Sitecore.Context.Database, contextName)
+        {
+            
+        }
+        public SitecoreContext(Context context)
+            : base(global::Sitecore.Context.Database, context)
+        {
+
+        }
+
         #region ISitecoreContext Members
 
 

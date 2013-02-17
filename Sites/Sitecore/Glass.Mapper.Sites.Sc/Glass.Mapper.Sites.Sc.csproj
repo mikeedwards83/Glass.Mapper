@@ -219,7 +219,7 @@
       <DependentUpon>TestSub.ascx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelBase.cs" />
-    <Compile Include="Tutorial1\Config\FluentConfig.cs" />
+    <Compile Include="Tutorial1\Config\Tutorial1Config.cs" />
     <Compile Include="Tutorial1\Model\DemoClass.cs" />
   </ItemGroup>
   <ItemGroup>
