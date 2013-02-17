@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Glass.Mapper.Sc;
+using Glass.Mapper.Sites.Sc.Tutorial2.Model;
 
 namespace Glass.Mapper.Sites.Sc.Tutorial2.Layouts
 {
@@ -11,7 +8,9 @@ namespace Glass.Mapper.Sites.Sc.Tutorial2.Layouts
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var context = new SitecoreContext();
+            this.Model = context.GetCurrentItem<DemoClass>();
         }
+        public DemoClass Model { get; set; }
     }
 }

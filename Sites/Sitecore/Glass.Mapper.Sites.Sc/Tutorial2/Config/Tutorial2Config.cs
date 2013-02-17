@@ -7,7 +7,7 @@ namespace Glass.Mapper.Sites.Sc.Tutorial2.Config
 {
     public class Tutorial2Config
     {
-        public static SitecoreFluentConfigurationLoader Configure()
+        public static SitecoreFluentConfigurationLoader Config()
         {
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -19,6 +19,7 @@ namespace Glass.Mapper.Sites.Sc.Tutorial2.Config
             demo.Field(x => x.Title).FieldId(new ID("{BD43F50B-2FBB-4E04-9F79-1B666DF4D6BD}"));
             // This field is mapped using the Field name passed. 
             demo.Field(x => x.MainContent).FieldName("Main Content");
+            demo.Field(x => x.Created).FieldName("__Created");
 
             demo.Info(x => x.Name).InfoType(SitecoreInfoType.Name);
             demo.Info(x => x.TemplateName).InfoType(SitecoreInfoType.TemplateName);

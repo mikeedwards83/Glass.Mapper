@@ -1,6 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Sc.Integration;
 using Glass.Mapper.Sites.Sc.Tutorial1.Config;
+using Glass.Mapper.Sites.Sc.Tutorial2.Config;
 
 namespace Glass.Mapper.Sites.Sc
 {
@@ -10,6 +11,7 @@ namespace Glass.Mapper.Sites.Sc
         {
             var context = Glass.Mapper.Context.Create(new GlassConfig());
             context.Load(Tutorial1Config.Config());
+            context.Load(Tutorial2Config.Config());
         }
     }
 }
