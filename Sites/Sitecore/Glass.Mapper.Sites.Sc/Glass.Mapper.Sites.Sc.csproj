@@ -188,6 +188,7 @@
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
     <Content Include="layouts\TestSub.ascx" />
+    <Content Include="Tutorial1\Layout\Tutorial1Sublayout.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
     <None Include="Web.config.MVC" />
@@ -217,6 +218,13 @@
     </Compile>
     <Compile Include="layouts\TestSub.ascx.designer.cs">
       <DependentUpon>TestSub.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorial1\Layout\Tutorial1Sublayout.ascx.cs">
+      <DependentUpon>Tutorial1Sublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorial1\Layout\Tutorial1Sublayout.ascx.designer.cs">
+      <DependentUpon>Tutorial1Sublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Tutorial1\Config\Tutorial1Config.cs" />
