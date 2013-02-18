@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace Glass.Mapper.Website.docs.tutorial.sitecore.tutorial03
+namespace Glass.Mapper.Sites.Sc.Models.Misc
 {
-    public class tutorial03
+    public class MenuItem
     {
+        public virtual string Title { get; set; }
+
+        public virtual string Url { get; set; }
+
+        public virtual IEnumerable<MenuItem> Children { get; set; }
     }
 }
