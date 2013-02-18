@@ -189,6 +189,7 @@
     <Content Include="Design.config" />
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\MainLayout.aspx" />
+    <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
     <None Include="Web.config.MVC" />
@@ -219,8 +220,17 @@
     <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.designer.cs">
       <DependentUpon>HomePageSublayout.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.cs">
+      <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.designer.cs">
+      <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Config\Landing.cs" />
+    <Compile Include="Models\Config\Misc.cs" />
     <Compile Include="Models\Landing\HomePage.cs" />
+    <Compile Include="Models\Misc\MenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
