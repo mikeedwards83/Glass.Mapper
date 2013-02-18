@@ -187,10 +187,9 @@
     <Content Include="App_Config\XamlSharp.config" />
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
-    <Content Include="layouts\TestSub.ascx" />
-    <Content Include="Tutorial1\Layouts\Tutorial1Sublayout.ascx" />
+    <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
+    <Content Include="layouts\Site\MainLayout.aspx" />
     <Content Include="sitecore_files\Web.config" />
-    <Content Include="Tutorial2\Layouts\Tutorial2Sublayout.ascx" />
     <Content Include="Web.config" />
     <None Include="Web.config.MVC" />
     <None Include="Web.config.Oracle" />
@@ -213,32 +212,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="layouts\TestSub.ascx.cs">
-      <DependentUpon>TestSub.ascx</DependentUpon>
+    <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.cs">
+      <DependentUpon>HomePageSublayout.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="layouts\TestSub.ascx.designer.cs">
-      <DependentUpon>TestSub.ascx</DependentUpon>
+    <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.designer.cs">
+      <DependentUpon>HomePageSublayout.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorial1\Layouts\Tutorial1Sublayout.ascx.cs">
-      <DependentUpon>Tutorial1Sublayout.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tutorial1\Layouts\Tutorial1Sublayout.ascx.designer.cs">
-      <DependentUpon>Tutorial1Sublayout.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelBase.cs" />
-    <Compile Include="Tutorial1\Config\Tutorial1Config.cs" />
-    <Compile Include="Tutorial1\Model\DemoClass.cs" />
-    <Compile Include="Tutorial2\Config\Tutorial2Config.cs" />
-    <Compile Include="Tutorial2\Layouts\Tutorial2Sublayout.ascx.cs">
-      <DependentUpon>Tutorial2Sublayout.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tutorial2\Layouts\Tutorial2Sublayout.ascx.designer.cs">
-      <DependentUpon>Tutorial2Sublayout.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Tutorial2\Model\DemoClass.cs" />
+    <Compile Include="Models\Config\Landing.cs" />
+    <Compile Include="Models\Landing\HomePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">

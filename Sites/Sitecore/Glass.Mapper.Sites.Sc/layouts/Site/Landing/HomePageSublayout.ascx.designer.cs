@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Glass.Mapper.Sites.Sc.layouts.Tutorial1
+namespace Glass.Mapper.Sites.Sc.layouts.Site.Landing
 {
 
 
-    public partial class Tutorial1Sublayout
+    public partial class HomePageSublayout
     {
     }
 }
