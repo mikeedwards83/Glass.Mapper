@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Glass.Mapper.Sc.Configuration.Fluent;
+﻿using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sites.Sc.Models.Landing;
 
 namespace Glass.Mapper.Sites.Sc.Models.Config
