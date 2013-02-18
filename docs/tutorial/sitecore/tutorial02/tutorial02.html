@@ -1,0 +1,64 @@
+---
+layout: DocsLayout
+title: Tutorial 2 - Creating a simple Home page
+---
+
+
+<div class="page-header">
+    <h1>Tutorial 2 - Creating a simple Home page <small> </small></h1>
+</div>
+<p>
+    In this tutorial we will create a simple home page with a title and rich text content.
+</p>
+<p>
+    The home page item is very simple at the moment and only contains two fields:
+</p>
+<img src="tutorial01.fields.png"/>
+<p>
+    First we need to create the model that will represent our home page item:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.cs" ref="develop"></pre>
+<p>
+    This class is very simple class but notice that the properties use the keyword virtual. We will explain why this is needed
+    later but it shouldn't affect your code.
+</p>
+<p>
+    For this demo we are going to use the fluent configuration however if you prefer you can use attribute configuration. 
+    The code below shows how you can configure the two fields, by defaut Glass.Mapper will use the name of the property as
+    the field name, however if for some reason the property name is different to the field name you can specify the field name 
+    to use.
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.config.cs" ref="develop"></pre>
+<p>
+    Now we have configuration need to tell Glass.Mapper to load it, we do this in the Application_Start method of the Global.asax
+    page.
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.global.cs" ref="develop"></pre>
+<p>
+    The first line creates a new Glass.Mapper context and we pass it a configuration file. Don't worry about the config file for 
+    now, the default one will work for us at the moment. The next line makes Glass.Mapper load our homepage.
+
+</p>
+<p>
+    Now that we have everything configured for Glass.Mapper we can turn our attention to the home page sublayout. In the code 
+    behind we place the following code:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.ascx.cs" ref="develop"></pre>
+<p>
+    Here you can see that we have created an instance of SitecoreContext, this gives you access to the current Sitecore context 
+    via Glass.Mapper. The second line then loads the current context item into the HomePage class.
+</p>
+<p>
+    Finally we have the HTML output:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.ascx" ref="develop"></pre>
+<p>
+    Hit F5 and load the homepage and you should see the two fields rendered to screen:
+</p>
+<img src="tutorial02.webpage.png"/>
+<p>
+    That ends the first tutorial, you have seen how to configure a simple class with fields and render them to screen.
+</p>
+<p>
+    <a href="../tutorial03/tutorial03.html">Tutorial 3 - Item information and making links</a>
+</p>

@@ -61,7 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\concepts\example-fluent-1.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial01.global.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.config.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,11 +73,10 @@
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
     <Content Include="docs\tutorial\index.html" />
-    <Content Include="docs\tutorial\sitecore\tutorial02.html" />
-    <Content Include="docs\tutorial\sitecore\tutorial01.html" />
-    <Content Include="docs\tutorial\sitecore\tutorial01.item.png" />
-    <Content Include="docs\tutorial\sitecore\tutorial01.webpage.png" />
-    <Content Include="docs\tutorial\sitecore\tutorial02.webpage.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial.homepage.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.fields.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.html" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
