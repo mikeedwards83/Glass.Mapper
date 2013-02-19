@@ -10,7 +10,7 @@
             var path = $pre.attr("file");
             var ref = $pre.attr("ref");
 
-            if (sha === undefined && path === undefined) {
+            if (sha !== undefined || path !== undefined) {
 
                 var commit = new GitHubCommit({
                     username: "mikeedwards83",

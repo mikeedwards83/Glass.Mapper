@@ -68,6 +68,10 @@
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.config.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.global.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.menuitem.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepage.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepageconfig.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticleconfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +90,11 @@
     <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.html" />
     <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.topnav.ascx" />
     <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.webpage.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.homefield.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepage.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsitems.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.webpage.PNG" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
