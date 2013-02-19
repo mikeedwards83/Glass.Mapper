@@ -44,7 +44,9 @@ namespace Glass.Mapper.Sc.DataMappers
             //replace any pipe encoding with an actual pipe
             parts = parts.Select(x => x.Replace(Global.PipeEncoding, "|")).ToArray();
             
-            IEnumerable<object> items = parts.Select(x => Mapper.GetFieldValue(x, config, context)).ToArray();
+            
+            
+            IEnumerable<object> items = parts.Select(x => Mapper.GetFieldValue(x, Mapper.Configuration as SitecoreFieldConfiguration, context)).ToArray();
             var list = Utilities.CreateGenericType(typeof (List<>), new Type[] {pType}) as IList;
             
             foreach (var item in items)
@@ -114,6 +116,8 @@ namespace Glass.Mapper.Sc.DataMappers
                 args.DataMappers.FirstOrDefault(
                     x => x.CanHandle(configCopy, args.Context) && x is AbstractSitecoreFieldMapper) 
                     as AbstractSitecoreFieldMapper;
+
+            Mapper.Setup(new DataMapperResolverArgs(args.Context, configCopy));
 
             if (Mapper == null)
                 throw new MapperException(
