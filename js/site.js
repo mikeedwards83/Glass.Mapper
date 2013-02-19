@@ -8,22 +8,26 @@
 
             var sha = $pre.attr("sha");
             var path = $pre.attr("file");
-            console.log(path);
             var ref = $pre.attr("ref");
-            var commit = new GitHubCommit({
-                username: "mikeedwards83",
-                reponame: "Glass.Mapper",
-                fileSHA: sha,
-                filePath: path,
-                ref: ref
 
+            if (sha === undefined && path === undefined) {
 
-            });
+                var commit = new GitHubCommit({
+                    username: "mikeedwards83",
+                    reponame: "Glass.Mapper",
+                    fileSHA: sha,
+                    filePath: path,
+                    ref: ref
+                });
 
-            commit.fetch(function (content) {
-                $pre.html(content);
-                prettyPrint();
-            });
+                commit.fetch(function(content) {
+                    $pre.html(content);
+                    prettyPrint();
+                });
+            }
+
+            prettyPrint();
+
         });
 
     });
