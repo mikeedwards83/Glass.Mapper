@@ -61,9 +61,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\concepts\example-fluent-1.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.config.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.global.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.ascx.cs">
+      <DependentUpon>tutorial02.homepage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.config.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.global.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.menuitem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,10 +77,15 @@
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
     <Content Include="docs\tutorial\index.html" />
-    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial.homepage.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.ascx" />
     <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.fields.png" />
     <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial02\tutorial02.webpage.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.contenttree.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.topnav.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial03\tutorial03.webpage.png" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
@@ -110,7 +119,12 @@
     <Content Include="_posts\2013-01-15-Test.html" />
     <Content Include="_posts\2013-01-20-Test.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.topnav.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>tutorial03.topnav.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

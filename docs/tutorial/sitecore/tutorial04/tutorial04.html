@@ -1,0 +1,66 @@
+---
+layout: DocsLayout
+title: Tutorial 4 - Complex field types
+---
+
+
+<div class="page-header">
+    <h1>Tutorial 4 - Complex field types <small> </small></h1>
+</div>
+<p>
+    In this tutorial we will look at the more complex field types, we will look at how we can use a Tree List and 
+    and Image field. 
+</p>
+<p>
+    We are going to update our home page to contain a list of featured news articles. Beneath the news item I have create a 
+    few news articles:
+</p>
+<img src="tutorial04.newsitems.PNG"/>
+<p>
+    A news article has the following fields:
+</p>
+<ul>
+    <li>Abstract - Single Line Text</li>
+    <li>Page Title - Single Line Text</li>
+    <li>FeaturedImage - Image</li>
+    <li>Date - Date</li>
+    <li>Main Body - Rich Text</li>
+</ul>
+<p>
+    The model for out News Article looks like this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.newsarticle.cs" ref="gh-pages"></pre>
+<p>
+    Notice that for the FeaturedImage field we use the a special Glass.Mapper type <strong>Glass.Mapper.Sc.Fields.Image</strong>. There 
+    are variety of different field types for handling the more complex field types in the <strong>Glass.Mapper.Sc.Fields</strong> namespace.
+</p>
+<p>The configuration for the news article is straight forward:</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.newsarticleconfig.cs" ref="gh-pages"></pre>
+<p>
+    We now need to update the home page to have the additonal featured news field:
+</p>
+<img src="tutorial04.homefield.PNG"/>
+<p>
+    Now we need to update our home page model to contain a property that can contain a list of news articles:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepage.cs" ref="gh-pages"></pre>
+<p>
+    Finally we have to update our config to map the new field:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepageconfig.cs" ref="gh-pages"></pre>
+<p>
+    Notice that to map a tree list we just made a property that contains the type we want to load the target items as
+    and simply update the configuration.
+</p>
+<p>All that remains to be done is updating the ASCX page to render out the selected news articles:</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepage.ascx" ref="gh-pages"></pre>
+<p>
+    If we compile and run the website we should see that our featured articles and images render nicely below the hero unit:
+</p>
+<img src="tutorial04.webpage.PNG"/>
+<p>
+    That completes this tutorial, you have seen how you can use an image field and also load items linked via fields.
+</p>
+<p>
+    <a href="../tutorial05/tutorial05.html">Tutorial 5</a>
+</p>
