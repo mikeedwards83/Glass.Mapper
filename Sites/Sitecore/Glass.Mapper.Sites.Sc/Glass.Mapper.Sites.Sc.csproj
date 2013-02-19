@@ -227,8 +227,10 @@
     <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.designer.cs">
       <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Config\Content.cs" />
     <Compile Include="Models\Config\Landing.cs" />
     <Compile Include="Models\Config\Misc.cs" />
+    <Compile Include="Models\Content\NewsArticle.cs" />
     <Compile Include="Models\Landing\HomePage.cs" />
     <Compile Include="Models\Misc\MenuItem.cs" />
   </ItemGroup>

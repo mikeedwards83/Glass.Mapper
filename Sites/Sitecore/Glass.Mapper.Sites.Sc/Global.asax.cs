@@ -10,8 +10,8 @@ namespace Glass.Mapper.Sites.Sc
             var context = Glass.Mapper.Context.Create(new GlassConfig());
             context.Load(
                 Models.Config.Landing.Load(),
-                Models.Config.Misc.Load()
-
+                Models.Config.Misc.Load(),
+                Models.Config.Content.Load()
                 );
         }
     }
