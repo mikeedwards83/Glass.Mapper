@@ -117,12 +117,13 @@ namespace Glass.Mapper.Sc.DataMappers
                     x => x.CanHandle(configCopy, args.Context) && x is AbstractSitecoreFieldMapper) 
                     as AbstractSitecoreFieldMapper;
 
-            Mapper.Setup(new DataMapperResolverArgs(args.Context, configCopy));
 
             if (Mapper == null)
                 throw new MapperException(
                     "No mapper to handle type {0} on property {1} class {2}".Formatted(type.FullName, property.Name,
                                                                                        property.ReflectedType.FullName));
+
+            Mapper.Setup(new DataMapperResolverArgs(args.Context, configCopy));
 
 
         }
