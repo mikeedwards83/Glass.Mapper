@@ -7,7 +7,7 @@ using umbraco.interfaces;
 
 namespace Glass.Mapper.Umb
 {
-    public class UmbracoService : AbstractService<UmbracoDataMappingContext>, IUmbracoService
+    public class UmbracoService : AbstractService, IUmbracoService
     {
         public T GetItem<T>(int id) where T:class 
         {
