@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +28,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public  class SitecoreFieldDecimalMapperFixture : AbstractMapperFixture
     {
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldContainsValidDecimal_ReturnsDecimal()
+        public void GetField_FieldContainsValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "3.141592";
             decimal expected = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -29,18 +47,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
-        public void GetFieldValue_FieldContainsEmptyString_ReturnsDecimalZero()
+        public void GetField_FieldContainsEmptyString_ReturnsDecimalZero()
         {
             //Assign
             string fieldValue = string.Empty;
             decimal expected = 0;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -51,7 +69,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -59,12 +77,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetFieldValue_FieldContainsInvalidValidDecimal_ReturnsDecimal()
+        public void GetField_FieldContainsInvalidValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "hello world";
             decimal expected = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -75,7 +93,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (decimal)mapper.GetFieldValue(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -84,15 +102,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
 
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void SetFieldValue_ObjectisValidDecimal_SetsFieldValue()
+        public void SetField_ObjectisValidDecimal_SetsFieldValue()
         {
             //Assign
             string expected = "3.141592";
             decimal objectValue = 3.141592M;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -105,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -115,11 +133,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SetFieldValue_ObjectIsInt_ThrowsException()
+        public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
             int objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDecimalMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldDecimalMapper();
@@ -132,7 +150,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -142,3 +160,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
     }
 }
+
+
+

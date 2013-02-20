@@ -1,7 +1,26 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
@@ -122,7 +141,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.FieldName = fieldName;
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(null, item, null);
@@ -155,7 +174,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.FieldId = fieldId;
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(null, item, null);
@@ -193,7 +212,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(new Stub(), item, null);
@@ -232,7 +251,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new StubMapper(null);
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = fieldValue;
 
             var context = new SitecoreDataMappingContext(new Stub(), item, null);
@@ -269,14 +288,19 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             {
             }
 
-            public override object GetFieldValue(Sitecore.Data.Fields.Field field, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
             {
                 return Value;
             }
 
-            public override void SetFieldValue(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            public override void SetField(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
             {
                 field.Value = Value;
+            }
+
+            public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -289,3 +313,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
     }
 }
+
+
+

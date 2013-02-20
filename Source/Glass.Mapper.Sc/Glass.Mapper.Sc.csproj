@@ -31,12 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,8 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeFirst\FieldInfo.cs" />
+    <Compile Include="CodeFirst\GlassDataProvider.cs" />
+    <Compile Include="CodeFirst\SectionInfo.cs" />
     <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreFieldFieldValueAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
@@ -54,6 +67,19 @@
     <Compile Include="Configuration\Attributes\SitecoreLinkedAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreNodeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreParentAttribute.cs" />
+    <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
+    <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\ISitecoreClass.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreChildren.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreType.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreField.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreId.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreInfo.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreNode.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreLinked.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreParent.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreQuery.cs" />
     <Compile Include="Configuration\SitecoreChildrenConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldSettings.cs" />
@@ -69,6 +95,10 @@
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreItemMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIntegerMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldImageMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldGuidMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenMapper.cs" />
@@ -78,25 +108,57 @@
     <Compile Include="DataMappers\SitecoreFieldDoubleMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldFileMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIEnumerableMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLinkMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNullableMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldRulesMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStreamMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStringMapper.cs" />
     <Compile Include="DataMappers\SitecoreIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
+    <Compile Include="DataMappers\SitecoreLinkedMapper.cs" />
     <Compile Include="DataMappers\SitecoreParentMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ISitecoreQueryParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
+    <Compile Include="Dynamic\Dy.cs" />
+    <Compile Include="Dynamic\DynamicCollection.cs" />
+    <Compile Include="Dynamic\DynamicField.cs" />
+    <Compile Include="Dynamic\DynamicItem.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
+    <Compile Include="Fields\Image.cs" />
+    <Compile Include="Fields\Link.cs" />
+    <Compile Include="Fields\LinkType.cs" />
     <Compile Include="Fields\TriState.cs" />
+    <Compile Include="GlassConfig.cs" />
+    <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
+    <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="RenderField\AbstractParameters.cs" />
+    <Compile Include="RenderField\DateParameters.cs" />
+    <Compile Include="RenderField\ImageParameters.cs" />
+    <Compile Include="RenderField\LinkParameters.cs" />
+    <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Ui\GlassEditFrame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\FieldTypes\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\ObjectConstruction\" />
@@ -111,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\SitecorePropertyConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

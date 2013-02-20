@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +31,23 @@ namespace Glass.Mapper.Sc.DataMappers
 
         }
 
-        public override object GetFieldValue(Sitecore.Data.Fields.Field field, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            return global::Sitecore.DateUtil.IsoDateToDateTime(field.Value);
+            return global::Sitecore.DateUtil.IsoDateToDateTime(fieldValue);
         }
 
-        public override void SetFieldValue(Sitecore.Data.Fields.Field field, object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is DateTime)
             {
                 DateTime date = (DateTime)value;
-                field.Value = global::Sitecore.DateUtil.ToIsoDate(date);
+                return global::Sitecore.DateUtil.ToIsoDate(date);
             }
             else
                 throw new NotSupportedException("The value is not of type System.DateTime");
         }
     }
 }
+
+
+

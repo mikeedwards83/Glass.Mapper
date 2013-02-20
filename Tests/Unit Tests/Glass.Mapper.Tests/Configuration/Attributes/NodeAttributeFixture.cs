@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -32,7 +50,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         [Test]
         public void Does_Constructor_Set_IsLazy_True()
         {
-            Assert.IsTrue(new StubNodeAttribute(null).IsLazy);
+            Assert.IsTrue(new StubNodeAttribute().IsLazy);
         }
 
 
@@ -42,8 +60,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_DefaultValues_ConfigContainsDefaults()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
 
@@ -52,7 +69,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.IsNullOrEmpty(config.Path);
             Assert.IsNullOrEmpty(config.Id);
         }
@@ -61,8 +77,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_PathHasValue_ConfigHasPathValue()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
             var path = "some path";
@@ -74,7 +89,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.AreEqual(path, config.Path);
             Assert.IsNullOrEmpty(config.Id);
         }
@@ -83,8 +97,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         public void Configure_IdHasValue_ConfigHasIdValue()
         {
             //Assign
-            var type = typeof(int);
-            var attr = new StubNodeAttribute(type);
+            var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
             var propertyInfo = Substitute.For<PropertyInfo>();
             var id = "some id";
@@ -96,7 +109,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.AreEqual(type, config.Type);
             Assert.AreEqual(id, config.Id);
             Assert.IsNullOrEmpty(config.Path);
         }
@@ -110,7 +122,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         private class StubNodeAttribute : NodeAttribute
         {
-            public StubNodeAttribute(Type type):base(type)
+            public StubNodeAttribute()
             {
             }
 
@@ -123,3 +135,6 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         #endregion 
     }
 }
+
+
+

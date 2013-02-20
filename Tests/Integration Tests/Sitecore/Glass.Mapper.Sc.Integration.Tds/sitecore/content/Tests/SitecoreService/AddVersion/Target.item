@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {A58AF137-49AD-4AC8-963C-554A82FC3AAD}
+database: master
+path: /sitecore/content/Tests/SitecoreService/AddVersion/Target
+parent: {ADBE78FE-8320-4462-A1F8-A9976772E3B2}
+name: Target
+master: {00000000-0000-0000-0000-000000000000}
+template: {ABE81623-6250-46F3-914C-6926697B9A86}
+templatekey: EmptyItem
+
+----version----
+language: en
+version: 1
+revision: a4563b8f-d1e6-4444-ada3-f30e7793bcb4
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130117T184103
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+a4563b8f-d1e6-4444-ada3-f30e7793bcb4
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130117T184103:634940448638980529
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

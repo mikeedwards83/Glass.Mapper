@@ -187,6 +187,9 @@
     <Content Include="App_Config\XamlSharp.config" />
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
+    <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
+    <Content Include="layouts\Site\MainLayout.aspx" />
+    <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
     <None Include="Web.config.MVC" />
@@ -205,6 +208,41 @@
     <Content Include="webedit.css" />
     <Content Include="xsl\sample rendering.xslt" />
     <Content Include="xsl\system\WebEdit\Hidden Rendering.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.cs">
+      <DependentUpon>HomePageSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.designer.cs">
+      <DependentUpon>HomePageSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.cs">
+      <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.designer.cs">
+      <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Config\Content.cs" />
+    <Compile Include="Models\Config\Landing.cs" />
+    <Compile Include="Models\Config\Misc.cs" />
+    <Compile Include="Models\Content\NewsArticle.cs" />
+    <Compile Include="Models\Landing\HomePage.cs" />
+    <Compile Include="Models\Misc\MenuItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

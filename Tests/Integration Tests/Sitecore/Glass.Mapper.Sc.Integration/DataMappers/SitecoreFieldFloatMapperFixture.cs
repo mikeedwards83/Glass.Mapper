@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +28,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public  class SitecoreFieldFloatMapperFixture : AbstractMapperFixture
     {
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldContainsValidFloat_ReturnsFloat()
+        public void GetField_FieldContainsValidFloat_ReturnsFloat()
         {
             //Assign
             string fieldValue = "3.141592";
             float expected = 3.141592F;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -29,19 +47,19 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (float)mapper.GetFieldValue(field, null, null);
+            var result = (float)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
         [Test]
-        public void GetFieldValue_FieldContainsEmptyString_ReturnsFloatZero()
+        public void GetField_FieldContainsEmptyString_ReturnsFloatZero()
         {
             //Assign
             string fieldValue = string.Empty;
             float expected = 0f;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -52,7 +70,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (float)mapper.GetFieldValue(field, null, null);
+            var result = (float)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -60,12 +78,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetFieldValue_FieldContainsInvalidValidFloat_ReturnsFloat()
+        public void GetField_FieldContainsInvalidValidFloat_ReturnsFloat()
         {
             //Assign
             string fieldValue = "hello world";
             float expected = 3.141592f;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/GetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -76,7 +94,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = (float)mapper.GetFieldValue(field, null, null);
+            var result = (float)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -85,15 +103,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
 
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void SetFieldValue_ObjectisValidFloat_SetsFieldValue()
+        public void SetField_ObjectisValidFloat_SetsFieldValue()
         {
             //Assign
             string expected = "3.141592";
             float objectValue = 3.141592f;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -106,7 +124,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -116,11 +134,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SetFieldValue_ObjectIsInt_ThrowsException()
+        public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
             int objectValue = 3;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldFloatMapper/SetField");
             var field = item.Fields[FieldName];
 
             var mapper = new SitecoreFieldFloatMapper();
@@ -133,7 +151,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Act
             using (new ItemEditing(item, true))
             {
-                mapper.SetFieldValue(field, objectValue, null, null);
+                mapper.SetField(field, objectValue, null, null);
             }
 
 
@@ -143,3 +161,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
     }
 }
+
+
+

@@ -1,7 +1,26 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
@@ -12,10 +31,9 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreFieldTypeMapper : AbstractSitecoreFieldMapper
     {
 
-        public override object GetFieldValue(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
-            var fieldValue = field.Value;
             var item = context.Item;
 
             if (fieldValue.IsNullOrEmpty()) return null;
@@ -33,14 +51,14 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             if (target == null) return null;
-            return context.Service.CreateClass(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
+            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
         }
 
-        public override void SetFieldValue(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string  SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
             if (value == null)
-                field.Value = string.Empty;
+                return string.Empty;
             else
             {
                 var typeConfig = context.Service.GlassContext[value.GetType()] as SitecoreTypeConfiguration;
@@ -49,22 +67,23 @@ namespace Glass.Mapper.Sc.DataMappers
                 if(item == null)
                     throw new NullReferenceException("Could not find item to save value {0}".Formatted(Configuration));
 
-                field.Value = item.ID.ToString();
+               return item.ID.ToString();
             }
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration,  Context context)
         {
-            return context[configuration.PropertyInfo.PropertyType] != null;
+            return context[configuration.PropertyInfo.PropertyType] != null &&
+                   configuration is SitecoreFieldConfiguration;
         }
 
-        public override void Setup(Mapper.Configuration.AbstractPropertyConfiguration configuration)
+        public override void Setup(DataMapperResolverArgs args)
         {
-            var scConfig = configuration as SitecoreFieldConfiguration;
+            var scConfig = args.PropertyConfiguration as SitecoreFieldConfiguration;
 
             IsLazy = (scConfig.Setting & SitecoreFieldSettings.DontLoadLazily) != SitecoreFieldSettings.DontLoadLazily;
             InferType = (scConfig.Setting & SitecoreFieldSettings.InferType) == SitecoreFieldSettings.InferType;
-            base.Setup(configuration);
+            base.Setup(args);
         }
 
         protected bool InferType { get; set; }
@@ -72,3 +91,6 @@ namespace Glass.Mapper.Sc.DataMappers
         protected bool IsLazy { get; set; }
     }
 }
+
+
+

@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +41,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(0, result.First().Key.GetParameters().Count());
+            Assert.AreEqual(0, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -37,7 +55,25 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(1, result.First().Key.GetParameters().Count());
+            Assert.AreEqual(1, result.First().Key.GetParameters().Length);
+        }
+
+        [Test]
+        public void CreateConstructorDelegates_OneParametersInvoked_CreatesSingleConstructor()
+        {
+            //Assign
+            Type type = typeof(StubOneParameter);
+            var param1 = "hello world";
+            //Act
+            var result = Utilities.CreateConstructorDelegates(type);
+
+            var obj = result.First().Value.DynamicInvoke(param1) as StubOneParameter;
+
+            //Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, result.First().Key.GetParameters().Length);
+            Assert.AreEqual(param1, obj.Param1);
+            
         }
 
         [Test]
@@ -51,7 +87,25 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(2, result.First().Key.GetParameters().Count());
+            Assert.AreEqual(2, result.First().Key.GetParameters().Length);
+        }
+
+        [Test]
+        public void CreateConstructorDelegates_TwoParametersInvoke_CreatesSingleConstructor()
+        {
+            //Assign
+            Type type = typeof(StubTwoParameters);
+            var param1 = "hello world";
+            var param2 = 456;
+            //Act
+            var result = Utilities.CreateConstructorDelegates(type);
+            var obj = result.First().Value.DynamicInvoke(param1, param2) as StubTwoParameters;
+
+            //Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(2, result.First().Key.GetParameters().Length);
+            Assert.AreEqual(param1, obj.Param1);
+            Assert.AreEqual(param2, obj.Param2);
         }
 
         [Test]
@@ -65,7 +119,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(3, result.First().Key.GetParameters().Count());
+            Assert.AreEqual(3, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -79,7 +133,7 @@ namespace Glass.Mapper.Tests
 
             //Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(4, result.First().Key.GetParameters().Count());
+            Assert.AreEqual(4, result.First().Key.GetParameters().Length);
         }
 
         [Test]
@@ -95,57 +149,6 @@ namespace Glass.Mapper.Tests
             //Assert
         }
 
-        #region Stubs
-
-        public class StubNoParameters
-        {
-            public StubNoParameters()
-            {
-                
-            }
-        }
-
-        public class StubOneParameter
-        {
-            public StubOneParameter(string param1)
-            {
-
-            }
-        }
-
-        public class StubTwoParameters
-        {
-            public StubTwoParameters(string param1, string param2)
-            {
-
-            }
-        }
-
-        public class StubThreeParameters
-        {
-            public StubThreeParameters(string param1, string param2, string param3)
-            {
-
-            }
-        }
-
-        public class StubFourParameters
-        {
-            public StubFourParameters(string param1, string param2, string param3, string param4)
-            {
-
-            }
-        }
-
-        public class StubFiveParameters
-        {
-            public StubFiveParameters(string param1, string param2, string param3, string param4, string param5)
-            {
-
-            }
-        }
-
-        #endregion
 
         #endregion
 
@@ -215,6 +218,61 @@ namespace Glass.Mapper.Tests
 
         #region Stubs
 
+
+        public class StubNoParameters
+        {
+            public StubNoParameters()
+            {
+
+            }
+        }
+
+        public class StubOneParameter
+        {
+            public string Param1 { get; set; }
+
+            public StubOneParameter(string param1)
+            {
+                Param1 = param1;
+            }
+        }
+
+        public class StubTwoParameters
+        {
+            public string Param1 { get; set; }
+            public int Param2 { get; set; }
+
+            public StubTwoParameters(string param1, int param2)
+            {
+                Param1 = param1;
+                Param2 = param2;
+            }
+        }
+
+        public class StubThreeParameters
+        {
+            public StubThreeParameters(string param1, string param2, string param3)
+            {
+
+            }
+        }
+
+        public class StubFourParameters
+        {
+            public StubFourParameters(string param1, string param2, string param3, string param4)
+            {
+
+            }
+        }
+
+        public class StubFiveParameters
+        {
+            public StubFiveParameters(string param1, string param2, string param3, string param4, string param5)
+            {
+
+            }
+        }
+
         public class StubClass
         {
             public string Property { get; set; }
@@ -237,3 +295,6 @@ namespace Glass.Mapper.Tests
 
     }
 }
+
+
+

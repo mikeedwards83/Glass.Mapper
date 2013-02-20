@@ -1,0 +1,100 @@
+----item----
+version: 1
+id: {5C34C6B0-4E8C-47CE-8CF6-9F523237E2DC}
+database: master
+path: /sitecore/system/Languages/af-ZA
+parent: {64C4F646-A3FA-4205-B98E-4DE2C609B60F}
+name: af-ZA
+master: {00000000-0000-0000-0000-000000000000}
+template: {F68F13A6-3395-426A-B9A1-FA2DC60D94EB}
+templatekey: Language
+
+----field----
+field: {49E5E8F3-ED4A-4A06-ABE1-B9408951DEE9}
+name: Charset
+key: charset
+content-length: 10
+
+iso-8859-1
+----field----
+field: {990596CE-0024-43F3-BF4C-A991BFA69B45}
+name: Code page
+key: code page
+content-length: 5
+
+65001
+----field----
+field: {8728D8FF-66D9-40C2-8B34-C4FC1466942E}
+name: Encoding
+key: encoding
+content-length: 5
+
+utf-8
+----field----
+field: {C437E416-8948-427D-A982-8ED37AE3F553}
+name: Iso
+key: iso
+content-length: 2
+
+af
+----field----
+field: {0620F810-9294-4F14-AF9F-F5772EFCA0B2}
+name: Regional Iso Code
+key: regional iso code
+content-length: 5
+
+af-ZA
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 33
+
+flags/16x16/flag_South_Africa.PNG
+----version----
+language: en
+version: 1
+revision: b49d4054-549b-4bd2-9b9c-991ca85baf9f
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20121230T200910
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b49d4054-549b-4bd2-9b9c-991ca85baf9f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20121230T200910:634924949507733940
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

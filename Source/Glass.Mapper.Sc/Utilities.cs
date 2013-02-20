@@ -1,17 +1,55 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
 using Sitecore.Links;
 
 namespace Glass.Mapper.Sc
 {
-    public static class Utilities
+    public class Utilities : Glass.Mapper.Utilities
     {
+        /// <summary>
+        /// Converts a NameValueCollection in to HTML attributes
+        /// </summary>
+        /// <param name="attributes">A list of attributes to convert</param>
+        public static string ConvertAttributes(NameValueCollection attributes)
+        {
+
+            if (attributes == null || attributes.Count == 0) return "";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in attributes.AllKeys)
+            {
+                sb.AppendFormat("{0}='{1}' ".Formatted(key, attributes[key] ?? ""));
+            }
+
+            return sb.ToString();
+        }
+
         public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
         {
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
@@ -82,12 +120,50 @@ namespace Glass.Mapper.Sc
             {
                 field = item.Fields[fieldName];
             }
-            else if (item.Fields.Contains(fieldId) || item.Template.GetField(fieldId) != null)
+            else// if (item.Fields.Contains(fieldId) || item.Template.GetField(fieldId) != null)
             {
                 field = item.Fields[fieldId];
             }
 
             return field;
         }
+
+        public static string ConstructQueryString(NameValueCollection parameters)
+        {
+            var sb = new StringBuilder();
+
+            foreach (String name in parameters)
+                sb.Append(String.Concat(name, "=", System.Web.HttpUtility.UrlEncode(parameters[name]), "&"));
+
+            if (sb.Length > 0)
+                return sb.ToString(0, sb.Length - 1);
+
+            return String.Empty;
+        }
+
+        public static Type GetGenericOuter(Type type)
+        {
+            return type.GetGenericTypeDefinition();
+        }
+
+        public static Item GetLanguageItem(Item foundItem, Language language)
+        {
+            if (foundItem == null) return null;
+
+            var item = foundItem.Database.GetItem(foundItem.ID, language);
+            if (item.Versions.Count > 0)
+                return item;
+            else
+                return null;
+        }
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
+        {
+            if (foundItems == null) return Enumerable.Empty<Item>();
+
+            return foundItems.Select(x => Utilities.GetLanguageItem(x, language)).Where(x => x != null);
+        }
     }
 }
+
+
+

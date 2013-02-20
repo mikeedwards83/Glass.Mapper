@@ -1,7 +1,26 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
@@ -45,7 +64,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
             
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);
@@ -53,7 +72,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateClass(config.PropertyInfo.PropertyType, Arg.Is<Item>(x=>x.ID == item.Parent.ID), false, false);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, false);
 
         }
 
@@ -71,7 +90,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.IsLazy = true;
 
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);
@@ -79,7 +98,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateClass(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false);
         }
 
         [Test]
@@ -96,7 +115,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.InferType = true;
 
             var mapper = new SitecoreParentMapper();
-            mapper.Setup(config);
+            mapper.Setup(new DataMapperResolverArgs(null,config));
 
             //Act
             var result = mapper.MapToProperty(scContext);
@@ -104,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateClass(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true);
         }
 
         #endregion
@@ -166,3 +185,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
     }
 }
+
+
+

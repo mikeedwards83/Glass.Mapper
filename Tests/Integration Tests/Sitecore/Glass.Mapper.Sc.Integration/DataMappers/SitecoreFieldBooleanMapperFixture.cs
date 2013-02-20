@@ -1,4 +1,22 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +30,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     public class SitecoreFieldBooleanMapperFixture : AbstractMapperFixture
     {
 
-        #region Method - GetFieldValue
+        #region Method - GetField
 
         [Test]
-        public void GetFieldValue_FieldValueZero_ReturnsFalse()
+        public void GetField_FieldValueZero_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "0";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -33,7 +51,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -42,10 +60,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueStringEmpty_ReturnsFalse()
+        public void GetField_FieldValueStringEmpty_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = string.Empty;
             var mapper = new SitecoreFieldBooleanMapper();
@@ -60,7 +78,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -69,10 +87,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueOne_ReturnsTrue()
+        public void GetField_FieldValueOne_ReturnsTrue()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "1";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -87,7 +105,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -96,10 +114,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void GetFieldValue_FieldValueRandom_ReturnsFalse()
+        public void GetField_FieldValueRandom_ReturnsFalse()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var value = "afaegaeg";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -114,7 +132,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetFieldValue(field, null, null);
+            var result = mapper.GetField(field, null, null);
 
 
             //Assert
@@ -123,13 +141,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
         #endregion
 
-        #region Method - SetFieldValue
+        #region Method - SetField
 
         [Test]
-        public void SetFieldValue_ValueFalse_FieldSetToZero()
+        public void SetField_ValueFalse_FieldSetToZero()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var expected = "0";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -147,7 +165,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             using (new SecurityDisabler())
             {
                 item.Editing.BeginEdit();
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
                 item.Editing.EndEdit();
             }
 
@@ -157,10 +175,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void SetFieldValue_ValueTrue_FieldSetToOne()
+        public void SetField_ValueTrue_FieldSetToOne()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetFieldValue");
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldBooleanMapper/GetField");
             var fieldName = "Field";
             var expected = "1";
             var mapper = new SitecoreFieldBooleanMapper();
@@ -178,7 +196,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             using (new SecurityDisabler())
             {
                 item.Editing.BeginEdit();
-                mapper.SetFieldValue(field, value, null, null);
+                mapper.SetField(field, value, null, null);
                 item.Editing.EndEdit();
             }
 
@@ -190,3 +208,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
     }
 }
+
+
+

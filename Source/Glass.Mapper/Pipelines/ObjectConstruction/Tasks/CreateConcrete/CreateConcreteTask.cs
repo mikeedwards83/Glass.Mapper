@@ -1,9 +1,28 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using Castle.DynamicProxy;
+using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
@@ -57,29 +76,26 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
-            var configuration = args.Configuration;
-            var type = configuration.Type;
+
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
-            var parameters = 
-                constructorParameters == null || !constructorParameters.Any() ? Type.EmptyTypes : constructorParameters.Select(x => x.GetType()).ToArray();
+            var parameters =
+                constructorParameters == null || !constructorParameters.Any()
+                    ? Type.EmptyTypes
+                    : constructorParameters.Select(x => x.GetType()).ToArray();
 
-            ConstructorInfo constructor = type.GetConstructor(parameters);
+            var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
 
-            if (constructor == null)
-                throw new ObjectConstructionException(
-                    ConstructorErrorMessage.Formatted(type.FullName,parameters
-                                                      .Select(x => x.GetType().FullName)
-                                                      .Aggregate((x, y) => x + "," + y)));
+            Delegate conMethod = args.Configuration.ConstructorMethods[constructorInfo];
 
-            Delegate conMethod = args.Configuration.ConstructorMethods[constructor];
-            
-            var obj = conMethod.DynamicInvoke(parameters);
+            var obj = conMethod.DynamicInvoke(constructorParameters);
 
-            //create properties 
-            AbstractDataMappingContext dataMappingContext =  args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, obj);
-            args.Configuration.Properties.ForEach(x => x.Mapper.MapCmsToProperty(dataMappingContext));
+            args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+
             return obj;
         }
     }
 }
+
+
+

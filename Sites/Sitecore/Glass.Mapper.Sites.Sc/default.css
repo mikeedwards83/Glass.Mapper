@@ -39,3 +39,6 @@ body {
   padding:16px 16px 48px 16px;
 }
 
+dt {
+    font-weight: bold;
+}

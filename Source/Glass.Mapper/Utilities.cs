@@ -1,14 +1,34 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Text;
 using System.Reflection;
 
 namespace Glass.Mapper
 {
-    public static  class Utilities
+    public   class Utilities 
     {
+
 
         /// <summary>
         /// Returns a delegate method that will load a class based on its constuctor
@@ -23,8 +43,11 @@ namespace Glass.Mapper
             foreach (var constructor in constructors)
             {
                 var parameters = constructor.GetParameters();
+                var types = parameters.Select(x => x.ParameterType).ToArray();
 
-                var dynMethod = new DynamicMethod("DM$OBJ_FACTORY_" + type.Name, type, parameters.Select(x => x.ParameterType).ToArray(), type);
+                
+
+                var dynMethod = new DynamicMethod("DM$OBJ_FACTORY_" + type.Name, type, types, type);
 
                 ILGenerator ilGen = dynMethod.GetILGenerator();
                 for (int i = 0; i < parameters.Count(); i++)
@@ -60,6 +83,8 @@ namespace Glass.Mapper
 
                 var delegateType = genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
 
+                if (!types.Any())
+                    types = Type.EmptyTypes;
 
                 dic[constructor] = dynMethod.CreateDelegate(delegateType);
             }
@@ -146,5 +171,45 @@ namespace Glass.Mapper
             if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
             return types[0];
         }
+
+        /// <summary>
+        /// Returns a PropertyInfo based on a link expression, it will pull the first property name from the linq express.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetPropertyInfo(Type type, Expression expression)
+        {
+            string name = "";
+
+            if (expression.NodeType == ExpressionType.Convert)
+            {
+                Expression operand = (expression as UnaryExpression).Operand;
+                name = operand.CastTo<MemberExpression>().Member.Name;
+
+            }
+            else if (expression.NodeType == ExpressionType.Call)
+            {
+                name = expression.CastTo<MethodCallExpression>().Method.Name;
+            }
+            else if (expression.NodeType == ExpressionType.MemberAccess)
+            {
+                name = expression.CastTo<MemberExpression>().Member.Name;
+            }
+
+            PropertyInfo info = type.GetProperty(name);
+
+            //if we don't find the property straight away then it is probably an interface
+            //and we need to check all inherited interfaces.
+            if (info == null)
+            {
+                info = GetAllProperties(type).FirstOrDefault(x => x.Name == name);
+            }
+
+            return info;
+        }
     }
 }
+
+
+
