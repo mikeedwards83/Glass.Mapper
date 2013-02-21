@@ -33,8 +33,6 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
-using Glass.Mapper.Pipelines.TypeResolver;
-using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
@@ -152,25 +150,6 @@ namespace Glass.Mapper.Sc.Integration
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
                          .LifestyleTransient()
-                );
-        }
-    }
-
-    /// <summary>
-    /// Type Resolver Tasks - These tasks are run when Glass.Mapper tries to resolve the type a user has requested
-    /// </summary>
-    public class TypeResolverTaskInstaller : IWindsorInstaller
-    {
-        public void Install(IWindsorContainer container, IConfigurationStore store)
-        {
-            // These tasks are run when Glass.Mapper tries to resolve the type a user has requested, e.g. 
-            // if your code contained
-            //       service.GetItem<MyClass>(id) 
-            // the standard resolver will return MyClass as the type. You may want to specify your own tasks to custom type
-            // inferring.
-            // Tasks are called in the order they are specified below.
-            container.Register(
-                Component.For<ITypeResolverTask>().ImplementedBy<TypeStandardResolverTask>().LifestyleTransient()
                 );
         }
     }

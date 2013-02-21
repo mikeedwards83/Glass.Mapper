@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
-using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Profilers;
 
@@ -39,7 +38,6 @@ namespace Glass.Mapper
             get { return _profiler; }
             set
             {
-                _typeResolver.Profiler = value;
                 _configurationResolver.Profiler = value;
                 _objectConstruction.Profiler = value;
                 _objectSaving.Profiler = value;
@@ -48,10 +46,6 @@ namespace Glass.Mapper
         }
 
         public  Context GlassContext { get; private set; }
-
-       
-
-        private TypeResolver _typeResolver;
 
         private ConfigurationResolver _configurationResolver;
 
@@ -81,9 +75,6 @@ namespace Glass.Mapper
             var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
             _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
 
-            var typeResolverTasks = glassContext.DependencyResolver.ResolveAll<ITypeResolverTask>();
-            _typeResolver = new TypeResolver(typeResolverTasks);
-
             var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
 
@@ -97,19 +88,19 @@ namespace Glass.Mapper
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //Run the get type pipeline to get the type to load
-            var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
-            _typeResolver.Run(typeArgs);
+           // var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
+          //  _typeResolver.Run(typeArgs);
 
             //TODO: ME - make these exceptions more specific
-            if (typeArgs.Result == null)
-                throw new NullReferenceException("Type Resolver pipeline did not return type.");
+         //   if (typeArgs.Result == null)
+         //       throw new NullReferenceException("Type Resolver pipeline did not return type.");
 
             //run the pipeline to get the configuration to load
-            var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, typeArgs.Result);
+            var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext);
             _configurationResolver.Run(configurationArgs);
             
             if (configurationArgs.Result == null)
-                throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(typeArgs.Result.FullName));
+                throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName));
 
             var config = configurationArgs.Result;
 

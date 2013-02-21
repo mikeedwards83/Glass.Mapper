@@ -112,10 +112,6 @@
     <Compile Include="Pipelines\ObjectSaving\ObjectSavingArgs.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTask.cs" />
     <Compile Include="Pipelines\PipelineException.cs" />
-    <Compile Include="Pipelines\TypeResolver\ITypeResolverTask.cs" />
-    <Compile Include="Pipelines\TypeResolver\Tasks\StandardResolver\TypeStandardResolverTask.cs" />
-    <Compile Include="Pipelines\TypeResolver\TypeResolverArgs.cs" />
-    <Compile Include="Pipelines\TypeResolver\TypeResolver.cs" />
     <Compile Include="Profilers\NullProfiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Profilers\SimpleProfiler.cs" />

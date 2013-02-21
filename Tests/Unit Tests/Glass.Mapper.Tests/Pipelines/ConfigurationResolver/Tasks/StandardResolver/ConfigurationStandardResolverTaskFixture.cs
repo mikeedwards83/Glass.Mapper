@@ -54,7 +54,10 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             
             context.Load(loader);
 
-            var args = new ConfigurationResolverArgs(context, null, type);
+            var args = new ConfigurationResolverArgs(context, new StubAbstractTypeCreationContext()
+                                                                  {
+                                                                      RequestedType = type
+                                                                  } );
 
             var task = new ConfigurationStandardResolverTask();
 
@@ -76,6 +79,10 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             
         }
 
+        public class StubAbstractTypeCreationContext:AbstractTypeCreationContext
+        {
+            
+        }
         #endregion
     }
 }
