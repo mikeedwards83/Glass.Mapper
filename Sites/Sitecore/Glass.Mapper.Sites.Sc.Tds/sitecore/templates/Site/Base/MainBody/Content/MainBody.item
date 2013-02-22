@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {50DB846E-706A-4385-BF28-C8C37A68FF4F}
+id: {0C160F7D-9370-47B8-A6C2-68DF7904102F}
 database: master
-path: /sitecore/templates/Site/Tutorial1/Demo/Content/Title
-parent: {A9EFF312-983F-4E46-A153-51553098500F}
-name: Title
+path: /sitecore/templates/Site/Base/MainBody/Content/MainBody
+parent: {4C1D4FE5-1418-4B7B-A6FE-3C406554C50D}
+name: MainBody
 master: {00000000-0000-0000-0000-000000000000}
 template: {455A3E98-A627-4B40-8035-E683A0331AC7}
 templatekey: Template field
@@ -13,9 +13,9 @@ templatekey: Template field
 field: {AB162CC0-DC80-4ABF-8871-998EE5D7BA32}
 name: Type
 key: type
-content-length: 16
+content-length: 9
 
-Single-Line Text
+Rich Text
 ----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
@@ -26,8 +26,15 @@ content-length: 3
 ----version----
 language: en
 version: 1
-revision: 34ac2431-1272-417f-86a5-51dbc549ce39
+revision: 0a15c28a-958b-4f4d-a431-685b62f69234
 
+----field----
+field: {19A69332-A23E-4E70-8D16-B2640CB24CC8}
+name: Title
+key: title
+content-length: 9
+
+Main Body
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -41,7 +48,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20130216T170124
+20130218T072153
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -55,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-34ac2431-1272-417f-86a5-51dbc549ce39
+0a15c28a-958b-4f4d-a431-685b62f69234
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130216T170124:634966308844329296
+20130218T072550:634967691500657413
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

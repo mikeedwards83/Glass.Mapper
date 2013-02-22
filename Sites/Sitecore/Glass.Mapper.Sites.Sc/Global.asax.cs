@@ -1,5 +1,5 @@
 ﻿using System;
-using Glass.Mapper.Sc.Integration;
+using Glass.Mapper.Sc;
 
 namespace Glass.Mapper.Sites.Sc
 {

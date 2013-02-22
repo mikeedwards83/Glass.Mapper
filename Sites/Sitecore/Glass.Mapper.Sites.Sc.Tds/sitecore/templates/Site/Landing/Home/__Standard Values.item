@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {70A64064-BD17-4CA7-BD89-2389D6DF32E0}
+id: {DB8A4815-E0BD-4D8F-8FA9-7472E0E2F8AC}
 database: master
-path: /sitecore/content/Site/Home
-parent: {3D636978-FDE3-41AB-B182-56C7CFEC2A74}
-name: Home
+path: /sitecore/templates/Site/Landing/Home/__Standard Values
+parent: {BD5650BD-3CF6-4283-B53B-114F1354E616}
+name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {BD5650BD-3CF6-4283-B53B-114F1354E616}
 templatekey: Home
@@ -13,35 +13,14 @@ templatekey: Home
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 37
+content-length: 251
 
-<r xmlns:p="p" xmlns:s="s" p:p="1" />
+<r xmlns:xsd="http://www.w3.org/2001/XMLSchema" ><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{98E57BD1-B794-4196-9220-CE5F8CEF4FEF}"><r id="{12D5E210-D855-4BA5-B86E-3C7DBFECEC2A}" ph="main" uid="{ED9AC6A9-BC0A-40DA-953A-35EE0B6DEF01}" /></d></r>
 ----version----
 language: en
 version: 1
-revision: 80be52a8-e275-4c7d-8f22-40f6c9501f72
+revision: 0285caa0-a0cc-46e0-86d6-de2240464e00
 
-----field----
-field: {0C160F7D-9370-47B8-A6C2-68DF7904102F}
-name: MainBody
-key: mainbody
-content-length: 58
-
-<p>Welcome to the Glass.Mapper demo site for Sitecore!</p>
-----field----
-field: {50734813-C69E-4910-B1CB-791402FF746F}
-name: News
-key: news
-content-length: 77
-
-{D61E2F65-B9AE-4827-A1CE-B53042251ADD}|{7A9DF5B1-7AF9-4BE4-AF37-C1834D5A343E}
-----field----
-field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
-name: Page Title
-key: page title
-content-length: 15
-
-Glass Demo Site
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -55,7 +34,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20130218T072000
+20130218T073300
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -69,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-80be52a8-e275-4c7d-8f22-40f6c9501f72
+0285caa0-a0cc-46e0-86d6-de2240464e00
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130219T191422:634968980628884961
+20130218T190819:634968112997235860
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

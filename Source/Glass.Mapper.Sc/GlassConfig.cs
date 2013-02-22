@@ -36,7 +36,7 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
-namespace Glass.Mapper.Sc.Integration
+namespace Glass.Mapper.Sc
 {
     public class GlassConfig : GlassCastleConfigBase
     {
@@ -47,7 +47,6 @@ namespace Glass.Mapper.Sc.Integration
                 new DataMapperInstaller(),
                 new QueryParameterInstaller(),
                 new DataMapperTasksInstaller(),
-                new TypeResolverTaskInstaller(),
                 new ConfigurationResolverTaskInstaller(),
                 new ObjectionConstructionTaskInstaller(), 
                 new ObjectSavingTaskInstaller()
