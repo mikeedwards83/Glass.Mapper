@@ -6,9 +6,15 @@ namespace Glass.Mapper.Sc.Web.Ui
 {
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
-        public GlassUserControl(ISitecoreContext context) :base(context){}
-        public GlassUserControl() : base(){}
- 
+       
+        /// <summary>
+        /// Model to render on the sublayout
+        /// </summary>
+        public T Model { get; set; }
+
+        public GlassUserControl(ISitecoreContext context) : base(context) { }
+        public GlassUserControl() : base() { }
+
         protected override void OnLoad(EventArgs e)
         {
             Model = SitecoreContext.CreateType<T>(LayoutItem, false, false);
@@ -16,13 +22,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// Model to render on the sublayout
-        /// </summary>
-        public T Model { get; set; }
-
-        /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
@@ -44,7 +44,6 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
@@ -55,7 +54,6 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
@@ -66,7 +64,6 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
@@ -75,8 +72,5 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             return base.Editable(this.Model, field, standardOutput, parameters);
         }
-
-
-
     }
 }

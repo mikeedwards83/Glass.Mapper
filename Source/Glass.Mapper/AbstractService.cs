@@ -87,14 +87,6 @@ namespace Glass.Mapper
 
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
-            //Run the get type pipeline to get the type to load
-           // var typeArgs = new TypeResolverArgs(GlassContext, abstractTypeCreationContext);
-          //  _typeResolver.Run(typeArgs);
-
-            //TODO: ME - make these exceptions more specific
-         //   if (typeArgs.Result == null)
-         //       throw new NullReferenceException("Type Resolver pipeline did not return type.");
-
             //run the pipeline to get the configuration to load
             var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext);
             _configurationResolver.Run(configurationArgs);

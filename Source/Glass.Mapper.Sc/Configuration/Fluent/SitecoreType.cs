@@ -16,30 +16,8 @@
 */ 
 //-CRE-
 
-/*
-   Copyright 2011 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Glass.Mapper.Configuration;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
@@ -49,15 +27,10 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// </summary>
     public class SitecoreType<T> : ISitecoreClass, ISitecoreClass<T>
     {
-        private List<AbstractPropertyConfiguration> _properties;
         private SitecoreTypeConfiguration _configuration;
-
-
-
 
         public SitecoreType()
         {
-            _properties = new List<AbstractPropertyConfiguration>();
             _configuration = new SitecoreTypeConfiguration();
             _configuration.Type = typeof (T);
             _configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(_configuration.Type);
@@ -112,7 +85,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
-    /// <summary>
+        /// <summary>
         /// Map item's  children  to a class property
         /// </summary>
         /// <param name="ex"></param>
@@ -124,21 +97,22 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return builder;
         }
 
-        
+
 
         /// <summary>
         /// Map an item field to a class property
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
-        public SitecoreField<T> Field(Expression<Func<T, object>> ex){
+        public SitecoreField<T> Field(Expression<Func<T, object>> ex)
+        {
             SitecoreField<T> builder = new SitecoreField<T>(ex);
             _configuration.AddProperty(builder.Configuration);
-            
+
             return builder;
         }
 
-      
+
         /// <summary>
         /// Map the item ID to a class property
         /// </summary>
@@ -187,7 +161,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return builder;
         }
 
-       ///  <summary>
+        ///  <summary>
         /// Map a Sitecore item to a class property
         /// </summary>
         /// <param name="ex"></param>
@@ -214,7 +188,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Map item fields to a class properties
         /// </summary>
-        /// <param name="ex"></param>
         /// <returns></returns>
         public SitecoreType<T> Fields(Action<ISitecoreClassFields<T>> fields)
         {
@@ -225,7 +198,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Map multiple item information to a class properties
         /// </summary>
-        /// <param name="ex"></param>
         /// <returns></returns>
         public SitecoreType<T> Nodes(Action<ISitecoreClassInfos<T>> infos)
         {
@@ -236,23 +208,24 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Map Sitecore queries to class properties
         /// </summary>
-        /// <param name="ex"></param>
         /// <returns></returns>
         public SitecoreType<T> Queries(Action<ISitecoreClassQueries<T>> queries)
         {
             queries.Invoke(this);
             return this;
         }
+
         /// <summary>
         /// Map Sitecore items to a class properties
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="items"></param>
         /// <returns></returns>
         public SitecoreType<T> Items(Action<ISitecoreClassNodes<T>> items)
         {
             items.Invoke(this);
             return this;
         }
+
         /// <summary>
         /// Map an item's linked items to a class properties
         /// </summary>
@@ -274,14 +247,22 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             config.Invoke(this);
             return this;
         }
-        
+
+        /// <summary>
+        /// Imports the properties form another type
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public SitecoreType<T> Import<K>(SitecoreType<K> typeConfig)
+        {
+            typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
+            return this;
+        }
 
 
-    
-        
-       
 
-        #region ISitecoreClass Members
+    #region ISitecoreClass Members
 
         public SitecoreTypeConfiguration Config
         {

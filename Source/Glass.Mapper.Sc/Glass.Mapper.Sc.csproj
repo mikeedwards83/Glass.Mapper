@@ -156,13 +156,26 @@
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Ui\AbstractGlassPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Web\Ui\AbstractGlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Web\Ui\GlassDynamicPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\GlassDynamicUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Web\Ui\GlassEditFrame.cs" />
+    <Compile Include="Web\Ui\GlassPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Web\Ui\GlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Web\Ui\UiUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />
