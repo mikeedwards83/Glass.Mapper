@@ -1,5 +1,4 @@
-﻿using Glass.Mapper.Sc.Configuration;
-using Glass.Mapper.Sc.Configuration.Fluent;
+﻿using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sites.Sc.Models.Content;
 
 namespace Glass.Mapper.Sites.Sc.Models.Config
