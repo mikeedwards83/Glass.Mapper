@@ -240,6 +240,7 @@
     <Compile Include="Models\Config\Misc.cs" />
     <Compile Include="Models\Content\NewsArticle.cs" />
     <Compile Include="Models\Landing\HomePage.cs" />
+    <Compile Include="Models\Misc\ContentBase.cs" />
     <Compile Include="Models\Misc\MenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
