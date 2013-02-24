@@ -58,6 +58,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             var documentTypeIdExpected = "test";
 
             //Act
+            attr.ContentTypeAlias = "test";
             attr.Configure(type, config);
 
             //Assert

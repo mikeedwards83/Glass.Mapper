@@ -47,9 +47,9 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
                 throw new ConfigurationException(
                     "Type configuration is not of type {0}".Formatted(typeof(UmbracoTypeConfiguration).FullName));
 
-            umbConfig.ContentTypeAlias = umbConfig.ContentTypeAlias;
-            umbConfig.CodeFirst = umbConfig.CodeFirst;
-            umbConfig.ContentTypeName = umbConfig.ContentTypeName;
+            umbConfig.ContentTypeAlias = ContentTypeAlias;
+            umbConfig.CodeFirst = CodeFirst;
+            umbConfig.ContentTypeName = ContentTypeName;
 
             base.Configure(type, config);
         }
