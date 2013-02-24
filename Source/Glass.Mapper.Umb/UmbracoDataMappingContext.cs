@@ -1,18 +1,22 @@
-﻿using umbraco.interfaces;
+﻿using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb
 {
     public class UmbracoDataMappingContext : AbstractDataMappingContext
     {
-        public UmbracoDataMappingContext(object obj, INode node, IUmbracoService service)
+        public UmbracoDataMappingContext(object obj, IContent content, IUmbracoService service, IContentService contentService)
             : base(obj)
         {
-            Node = node;
+            Content = content;
             Service = service;
+            ContentService = contentService;
         }
 
-        public INode Node { get; private set; }
+        public IContent Content { get; set; }
 
         public IUmbracoService Service { get; set; }
+
+        public IContentService ContentService { get; set; }
     }
 }

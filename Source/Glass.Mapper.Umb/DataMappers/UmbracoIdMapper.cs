@@ -18,7 +18,7 @@ namespace Glass.Mapper.Umb.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             UmbracoDataMappingContext context = mappingContext as UmbracoDataMappingContext;
-            var node = context.Node;
+            var node = context.Content;
 
             var umbConfig = Configuration as UmbracoIdConfiguration;
 

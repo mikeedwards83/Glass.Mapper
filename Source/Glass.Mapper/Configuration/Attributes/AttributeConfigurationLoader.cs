@@ -163,7 +163,7 @@ namespace Glass.Mapper.Configuration.Attributes
             {
                 var attr = GetPropertyAttribute(property);
 
-                //if we can't get a Sitecore attribute from current property we search down the 
+                //if we can't get a umbraco attribute from current property we search down the 
                 // inheritence chain to find the first declared attribute.
                 if (attr == null)
                 {

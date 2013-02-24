@@ -25,9 +25,19 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
     public class UmbracoTypeAttribute : AbstractTypeAttribute
     {
         /// <summary>
-        /// Indicates the document type to use when trying to create an item
+        /// Indicates the content type to use when trying to create an item
         /// </summary>
-        public int DocumentTypeId { get; set; }
+        public string ContentTypeAlias { get; set; }
+
+        /// <summary>
+        /// Indicates that the class is used in a code first scenario.
+        /// </summary>
+        public bool CodeFirst { get; set; }
+
+        /// <summary>
+        /// Overrides the default content type name when using code first
+        /// </summary>
+        public string ContentTypeName { get; set; }
 
         public override void Configure(Type type, AbstractTypeConfiguration config)
         {
@@ -37,7 +47,9 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
                 throw new ConfigurationException(
                     "Type configuration is not of type {0}".Formatted(typeof(UmbracoTypeConfiguration).FullName));
 
-            umbConfig.DocumentTypeId = this.DocumentTypeId;
+            umbConfig.ContentTypeAlias = umbConfig.ContentTypeAlias;
+            umbConfig.CodeFirst = umbConfig.CodeFirst;
+            umbConfig.ContentTypeName = umbConfig.ContentTypeName;
 
             base.Configure(type, config);
         }

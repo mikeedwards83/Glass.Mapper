@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
-using umbraco.interfaces;
+using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -20,7 +20,7 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbConfig = Configuration as UmbracoPropertyConfiguration;
             var umbContext = mappingContext as UmbracoDataMappingContext;
 
-            var property = umbContext.Node.GetProperty(umbConfig.PropertyAlias);
+            var property = umbContext.Content.Properties[umbConfig.PropertyAlias];
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
             SetPropertyValue(property, value, umbConfig, umbContext);
@@ -31,13 +31,13 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbConfig = Configuration as UmbracoPropertyConfiguration;
             var umbContext = mappingContext as UmbracoDataMappingContext;
 
-            var property = umbContext.Node.GetProperty(umbConfig.PropertyAlias);
+            var property = umbContext.Content.Properties[umbConfig.PropertyAlias];
 
             return GetPropertyValue(property, umbConfig, umbContext);
         }
 
-        public abstract object GetPropertyValue(IProperty property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
-        public abstract void SetPropertyValue(IProperty property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+        public abstract object GetPropertyValue(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+        public abstract void SetPropertyValue(Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {

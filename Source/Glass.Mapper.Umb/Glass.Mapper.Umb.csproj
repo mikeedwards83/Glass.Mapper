@@ -35,6 +35,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\UmbracoCms.Core.6.0.0\lib\businesslogic.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="ClientDependency.Core, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\UmbracoCms.Core.6.0.0\lib\ClientDependency.Core.dll</HintPath>
@@ -92,7 +100,7 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes">
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -110,9 +118,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\UmbracoCms.Core.6.0.0\lib\Our.Umbraco.uGoLive.Checks.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=3.9.35.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Text.3.9.35\lib\net35\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.37\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="SQLCE4Umbraco, Version=1.0.4779.24223, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -130,6 +137,7 @@
       <HintPath>..\..\packages\UmbracoCms.Core.6.0.0\lib\System.Data.SqlServerCe.Entity.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -137,9 +145,6 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Providers">
-      <HintPath>..\..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -216,24 +221,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoader.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoInfoAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoLinkedAttribute.cs" />
+    <Compile Include="Configuration\Attributes\UmbracoPropertyValueAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoParentAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoPropertyAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoIdAttribute.cs" />
+    <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
+    <Compile Include="Configuration\Fluent\IUmbracoClass.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoChildren.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoProperty.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoFluentConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoId.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoInfo.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoLinked.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoParent.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoType.cs" />
+    <Compile Include="Configuration\UmbracoInfoConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoInfoType.cs" />
+    <Compile Include="Configuration\UmbracoLinkedConfiguration.cs" />
+    <Compile Include="Configuration\UmbracoLinkedOptions.cs" />
+    <Compile Include="Configuration\UmbracoPropertyValueConfiguration.cs" />
     <Compile Include="Configuration\UmbracoTypeConfiguration.cs" />
     <Compile Include="Configuration\UmbracoParentConfiguration.cs" />
     <Compile Include="Configuration\UmbracoChildrenConfiguration.cs" />
     <Compile Include="Configuration\UmbracoPropertyConfiguration.cs" />
     <Compile Include="Configuration\UmbracoPropertySettings.cs" />
-    <Compile Include="Configuration\UmbracoDataType.cs" />
+    <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
     <Compile Include="DataMappers\UmbracoChildrenMapper.cs" />
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="GlassApplicationEventHandler.cs" />
+    <Compile Include="GlassConfig.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="IUmbracoService.cs" />
-    <Compile Include="LazyNodeEnumerable.cs" />
+    <Compile Include="LazyContentEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UmbracoTypeSavingContext.cs" />
     <Compile Include="UmbracoTypeCreationContext.cs" />
@@ -242,7 +269,6 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\" />
     <Folder Include="Pipelines\ClassConstruction\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\ObjectConstruction\" />
@@ -258,7 +284,6 @@
       <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

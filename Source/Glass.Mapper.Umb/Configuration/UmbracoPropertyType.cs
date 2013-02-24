@@ -18,7 +18,7 @@
 
 namespace Glass.Mapper.Umb.Configuration
 {
-    public enum UmbracoDataType
+    public enum UmbracoPropertyType
     {
         NotSet,
         TextString,

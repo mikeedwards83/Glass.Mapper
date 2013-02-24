@@ -38,7 +38,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         }
 
         [Test]
-        [TestCase("DocumentTypeId")]
+        [TestCase("ContentTypeAlias")]
         public void Does_UmbracoTypeAttribute_Have_Properties(string propertyName)
         {
             var properties = typeof(UmbracoTypeAttribute).GetProperties();
@@ -55,14 +55,14 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             var config = new UmbracoTypeConfiguration();
             var type = typeof (StubClass);
 
-            var documentTypeIdExpected = 0;
+            var documentTypeIdExpected = "test";
 
             //Act
             attr.Configure(type, config);
 
             //Assert
             config.Type.ShouldBeEquivalentTo(type);
-            config.DocumentTypeId.ShouldBeEquivalentTo(documentTypeIdExpected);
+            config.ContentTypeAlias.ShouldBeEquivalentTo(documentTypeIdExpected);
         }
 
         [Test]
@@ -88,16 +88,16 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             var config = new UmbracoTypeConfiguration();
             var type = typeof(StubClass);
 
-            var documentTypeIdExpected = 22;
+            var contentTypeAliasExpected = "test";
 
-            attr.DocumentTypeId = documentTypeIdExpected;
+            attr.ContentTypeAlias = contentTypeAliasExpected;
 
             //Act
             attr.Configure(type, config);
 
             //Assert
             config.Type.ShouldBeEquivalentTo(type);
-            config.DocumentTypeId.ShouldBeEquivalentTo(documentTypeIdExpected);
+            config.ContentTypeAlias.ShouldBeEquivalentTo(contentTypeAliasExpected);
         }
         
         #endregion

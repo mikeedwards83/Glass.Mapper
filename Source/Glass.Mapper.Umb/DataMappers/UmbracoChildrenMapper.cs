@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Glass.Mapper.Umb.Configuration;
-using umbraco.interfaces;
+using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -24,10 +24,10 @@ namespace Glass.Mapper.Umb.DataMappers
 
             Type genericType = Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
             
-            Func<IEnumerable<INode>> getItems = () => umbContext.Node.ChildrenAsList;
+            Func<IEnumerable<IContent>> getItems = () => umbContext.ContentService.GetChildren(umbContext.Content.Id);
 
             return Utilities.CreateGenericType(
-                typeof(LazyNodeEnumerable<>),
+                typeof(LazyContentEnumerable<>),
                 new[] {genericType},
                 getItems,
                 umbConfig.PropertyInfo.PropertyType,

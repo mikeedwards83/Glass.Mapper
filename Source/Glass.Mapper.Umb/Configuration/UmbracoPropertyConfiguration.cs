@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration
@@ -26,11 +27,6 @@ namespace Glass.Mapper.Umb.Configuration
         /// The alias for the property  to use if it is different to the property name
         /// </summary>
         public string PropertyAlias { get; set; }
-
-        /// <summary>
-        /// The ID of the property when used in a code first scenario 
-        /// </summary>
-        public int PropertyId { get; set; }
 
         /// <summary>
         /// Options to override the behaviour of certain properties.
@@ -47,12 +43,12 @@ namespace Glass.Mapper.Umb.Configuration
         /// <summary>
         /// The type of property to create when using Code First
         /// </summary>
-        public UmbracoDataType DataType { get; set; }
+        public UmbracoPropertyType PropertyType { get; set; }
 
         /// <summary>
         /// The name of the tab this property will appear in when using code first.
         /// </summary>
-        public string DocumentTab { get; set; }
+        public string ContentTab { get; set; }
 
         /// <summary>
         /// The name of the property
@@ -74,7 +70,31 @@ namespace Glass.Mapper.Umb.Configuration
         /// </summary>
         public string PropertyValidation { get; set; }
 
+        public IEnumerable<UmbracoPropertyValueConfiguration> PropertyValueConfigs { get; set; }
+
         #endregion
+
+        /// <summary>
+        /// Makes a copy of the UmbracoPropertyConfiguration
+        /// </summary>
+        /// <returns></returns>
+        public UmbracoPropertyConfiguration Copy()
+        {
+            return new UmbracoPropertyConfiguration()
+            {
+                CodeFirst = this.CodeFirst,
+                PropertyAlias = this.PropertyAlias,
+                PropertyDescription = this.PropertyDescription,
+                ContentTab = this.ContentTab,
+                PropertyIsMandatory = this.PropertyIsMandatory,
+                PropertyName = this.PropertyName,
+                PropertyValidation = this.PropertyValidation,
+                PropertyInfo = this.PropertyInfo,
+                ReadOnly = this.ReadOnly,
+                PropertyType = this.PropertyType,
+                Setting = this.Setting
+            };
+        }
     }
 }
 

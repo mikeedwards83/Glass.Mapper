@@ -37,9 +37,8 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             //find the property configs that will be used to link a umbraco item to a class
             umbConfig.IdConfig = config.Properties.FirstOrDefault(x => x is UmbracoIdConfiguration) as UmbracoIdConfiguration;
 
-            //var scInfos = config.Properties.Where(x => x is SitecoreInfoConfiguration).Cast<SitecoreInfoConfiguration>();
-            //umbConfig.LanguageConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Language);
-            //umbConfig.VersionConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Version);
+            var umbInfos = config.Properties.Where(x => x is UmbracoInfoConfiguration).Cast<UmbracoInfoConfiguration>();
+            umbConfig.VersionConfig = umbInfos.FirstOrDefault(x => x.Type == UmbracoInfoType.Version);
 
             base.ConfigCreated(config);
         }
