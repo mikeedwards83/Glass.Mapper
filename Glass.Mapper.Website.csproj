@@ -102,6 +102,7 @@
     <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.webpage.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.html" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.normal.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial06\tutorial06.html" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
