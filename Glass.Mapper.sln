@@ -73,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 	ProjectSection(SolutionItems) = preProject
 		Powershell\BuildScripts\build.proj = Powershell\BuildScripts\build.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
+		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
+		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
 	EndProjectSection
 EndProject
 Global

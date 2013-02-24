@@ -1,7 +1,10 @@
 [CmdletBinding()]
 Param(
    [Parameter(Mandatory=$True,Position=1)]
-   [string]$releaseNumber   
+   [string]$releaseNumber,  
+   [Parameter(Position=2)]
+   [string]$nugetKey,
+   [switch]$clean
 )
 
 $config = @{
@@ -9,13 +12,12 @@ $config = @{
        
 }
 
-
-
-
 $rootPath = ".\..\..";
 $releasePath = $rootPath+"\Releases\"+$releaseNumber
+$nugetsPath = $rootPath + "\Nugets\"+$releaseNumber
 $env:windir
 $logfile = $releasePath+"\Build.log"
+$nugetExe = $releasePath+"\Nuget.exe"
 
 
 Function LogWrite
@@ -30,16 +32,37 @@ Function LogWrite
    Add-content $logfile -value $logstring
 }
 
+Function YesNoPrompt{
+    Param([string] $caption,
+          [string] $message)
+
+
+    $yes = new-Object System.Management.Automation.Host.ChoiceDescription "&Yes","help";
+    $no = new-Object System.Management.Automation.Host.ChoiceDescription "&No","help";
+    $choices = [System.Management.Automation.Host.ChoiceDescription[]]($no,$yes);
+    $answer = $host.ui.PromptForChoice($caption,$message,$choices,0)
+
+    return $answer
+}
+
 
 #Copy everything to the release folder
 
-if(Test-Path $releasePath){
+if($clean)
+{
+    LogWrite "Removing directories"
+    Remove-Item $releasePath -Force -Recurse
+    Remove-Item $nugetsPath -Force -Recurse
+}
+
+if((Test-Path $releasePath) -or (Test-Path $nugetsPath)){
     LogWrite "Release already exists - aborting";
     return
 }
 
 #create release folder
 New-Item $releasePath -type directory
+New-Item $nugetsPath -type directory
 
 #copy all source
 LogWrite "******* Copying Files ******"
@@ -50,6 +73,8 @@ Copy-Item $rootPath"\Source" $releasePath"\Source" -recurse
 Copy-Item $rootPath"\Tests" $releasePath"\Tests" -recurse
 Copy-Item $rootPath"\*.sln" $releasePath
 Copy-Item "build.proj" $releasePath
+Copy-Item "*.nuspec" $releasePath
+Copy-Item "Nuget.exe" $releasePath
 
 
 #update the version numbers
@@ -77,8 +102,55 @@ foreach($assInfo  in $assInfos){
 $msbuild = $env:windir+"\Microsoft.NET\Framework\v4.0.30319\msbuild "
 $build = $msbuild + $releasePath+"\build.proj"
 
-
 Invoke-Expression $build
+
+
+#create nuget packages
+
+LogWrite "****** Creating Nuget Packages ******"
+
+$nugets = Get-ChildItem -Path $releasePath -Filter *.nuspec | ForEach-Object -Process {$_.FullName}
+
+foreach($nuget  in $nugets){
+    LogWrite $nuget
+    [xml] $nugetContent = Get-Content $nuget
+    $nugetContent.package.metadata.version = $releaseNumber
+    $nugetContent.Save($nuget)
+	
+    $nugetCmd = $nugetExe + " pack "+$nuget +" -Verbosity detailed -Version "+ $releaseNumber + " -OutputDirectory "+$nugetsPath
+    
+    LogWrite $nugetCmd
+    Invoke-Expression $nugetCmd
+}
+
+LogWrite "****** Pushing Nuget Packages ******"
+
+if($nugetKey){
+    $nugetPackages = Get-ChildItem -Path $nugetsPath -Filter *.nupkg
+
+    $nugetApiSet = $nugetExe+ " setApiKey " + $nugetKey
+    Invoke-Expression $nugetApiSet
+    
+    foreach($nugetPackage  in $nugetPackages){
+        $message = "Do you want to push "+$nugetPackage.FullName
+        $result = YesNoPrompt "Push package" $message
+        LogWrite $nugetPackage
+        switch($result){
+            0{ 
+                LogWrite("File skipped")
+             }
+            1{
+                $nugetPush = $nugetExe + " push "+$nugetPackage.FullName
+                LogWrite $nugetPush
+                Invoke-Expression $nugetPush
+                LogWrite("File pushed")
+            }
+        }
+    }
+}
+else{
+    LogWrite "No nuget key, push skipped";
+}
 
 
 
