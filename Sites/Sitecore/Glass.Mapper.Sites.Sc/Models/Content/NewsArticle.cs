@@ -5,6 +5,8 @@ namespace Glass.Mapper.Sites.Sc.Models.Content
 {
     public class NewsArticle
     {
+        public virtual Guid Id { get; set; }
+
         public virtual string Title { get; set; }
 
         public virtual string Abstract { get; set; }

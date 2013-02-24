@@ -15,13 +15,15 @@
     <sc:VisitorIdentification runat="server" />
 </head>
 <body>
-    <sc:Sublayout runat="server" Path="/layouts/Site/Misc/TopNavigationSublayout.ascx"/>
-    <div class="container">
-        <div class="row">
-            <div class="span12">
-                <sc:Placeholder runat="server" Key="main" />
+    <form runat="server">
+        <sc:Sublayout runat="server" Path="/layouts/Site/Misc/TopNavigationSublayout.ascx" />
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <sc:Placeholder runat="server" Key="main" />
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>

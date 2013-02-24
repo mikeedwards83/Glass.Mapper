@@ -187,6 +187,7 @@
     <Content Include="App_Config\XamlSharp.config" />
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
+    <Content Include="layouts\Site\Content\NewsArticleSublayout.ascx" />
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\MainLayout.aspx" />
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
@@ -212,6 +213,13 @@
   <ItemGroup>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Content\NewsArticleSublayout.ascx.cs">
+      <DependentUpon>NewsArticleSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Content\NewsArticleSublayout.ascx.designer.cs">
+      <DependentUpon>NewsArticleSublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Landing\HomePageSublayout.ascx.cs">
       <DependentUpon>HomePageSublayout.ascx</DependentUpon>

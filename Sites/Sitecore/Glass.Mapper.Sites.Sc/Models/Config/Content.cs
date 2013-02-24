@@ -11,6 +11,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
             var loader = new SitecoreFluentConfigurationLoader();
 
             var newsArticle = loader.Add<NewsArticle>();
+            newsArticle.Id(x => x.Id);
             newsArticle.Field(x => x.Abstract);
             newsArticle.Field(x => x.Date);
             newsArticle.Field(x => x.FeaturedImage);
