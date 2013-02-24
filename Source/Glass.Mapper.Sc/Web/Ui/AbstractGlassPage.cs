@@ -1,33 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Web.UI;
 using Glass.Mapper.Sc.RenderField;
 using Sitecore.Data.Items;
-using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
-    public class AbstractGlassUserControl : UserControl
+    public class AbstractGlassPage : Page
     {
-
-        public AbstractGlassUserControl(ISitecoreContext context)
-        {
-            _glassHtml = new GlassHtml(context);
-            _sitecoreContext = context;
-
-        }
-
-        public AbstractGlassUserControl() : this(new SitecoreContext())
-        {
-
-        }
-
         ISitecoreContext _sitecoreContext;
         GlassHtml _glassHtml;
 
-        public bool IsInEditingMode
+         public AbstractGlassPage(ISitecoreContext context)
         {
-            get { return GlassHtml.IsInEditingMode; }
+            _glassHtml = new GlassHtml(context);
+            _sitecoreContext = context;
+        }
+
+         public AbstractGlassPage()
+             : this(new SitecoreContext())
+        {
+
         }
 
         /// <summary>
@@ -36,6 +32,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public ISitecoreContext SitecoreContext
         {
             get { return _sitecoreContext; }
+            
         }
 
         /// <summary>
@@ -47,30 +44,13 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// The custom data source for the sublayout
-        /// </summary>
-        public string DataSource
-        {
-            get
-            {
-                WebControl parent = Parent as WebControl;
-                if (parent == null)
-                    return string.Empty;
-                return parent.DataSource;
-            }
-        }
-        /// <summary>
         /// Returns either the item specified by the DataSource or the current context item
         /// </summary>
         public Item LayoutItem
         {
             get
             {
-                if (DataSource.IsNullOrEmpty())
-                    return global::Sitecore.Context.Item;
-                else
-                    return global::Sitecore.Context.Database.GetItem(DataSource);
-
+                return global::Sitecore.Context.Item;
             }
         }
 
@@ -82,7 +62,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public string Editable<T>(T model, Expression<Func<T, object>> field)
         {
-           return  UiUtilities.Editable(GlassHtml, model, field);
+            return UiUtilities.Editable(GlassHtml, model, field);
         }
 
         /// <summary>
@@ -126,5 +106,4 @@ namespace Glass.Mapper.Sc.Web.Ui
             return UiUtilities.Editable(GlassHtml, model, field, standardOutput, parameters);
         }
     }
-
 }
