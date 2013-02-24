@@ -25,10 +25,8 @@
                     prettyPrint();
                 });
             }
+        });//pre.github.each
 
-            prettyPrint();
-
-        });
-
+        prettyPrint();
     });
 })(jQuery);

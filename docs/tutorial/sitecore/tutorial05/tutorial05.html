@@ -1,0 +1,85 @@
+---
+layout: DocsLayout
+title: Tutorial 5 - Working with the Page Editor
+---
+
+
+<div class="page-header">
+    <h1>Tutorial 5 - Working with the Page Editor <small> </small></h1>
+</div>
+<p>
+    One of the best features of Sitecore is the Page Editor, in this tutorial we will look at how we can 
+    use the Page Editor with Glass.Mapper.
+</p>
+<p>
+    We are going to use the News Article in the previous tutorial to create a simple page that displays the news
+    artical and allow the content editor to edit all fields in the Page Editor.
+</p>
+<p>
+    To start we have to add an additional property to the NewsArtcile class to represent the Sitecore ID. 
+    The property that represents the Sitecore ID is required to allow Glass.Mapper to link your model to the actual Sitecore
+    item in Page Edit mode.
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.cs" ref="gh-pages"></pre>
+<p>
+    We need to update the configuration for the NewsArticle class to load the Sitecore ID:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial05/tutorial05.config.cs" ref="gh-pages"></pre>
+<p>
+    Our model can now work with the Page Editor, next we need to create a Sublayout in Sitecore called NewsArticleSublayout. In 
+    the previous examples we manually retrieved the item from Sitecore in the Page_Load method however we can make this simpler
+    by making the Sublayout inherit from the GlassUserControl. This control is generic and takes the type that you want to be 
+    loaded:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.ascx.cs" ref="gh-pages"></pre>
+<p>
+    The GlassUserControl already has a property called Model and also has some useful methods to make fields editable.
+</p>
+<p>
+    The code for the ASCX page is shown below:
+</p>
+<pre class="github html" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.ascx" ref="gh-pages"></pre>
+<p>
+    There are several different examples of using the Page Editor in this page. The simplist form is simply specify this field
+    you want to edit in the lambda expression:
+</p>
+<pre class="cs">
+    <%=Editable(x=> x.Title) %>
+    <%=Editable(x=> x.MainBody )%>
+</pre>
+<p>
+    The second more complicated method of make a field Editable takes two parameters, this has been used to make the Date field
+    editable. The first parameter instructs Glass.Mapper which field to make editable, the second parameter then specifies
+    what the output should be when the page is not in page editing mode. This allows you to control the output of the field
+    when in the two different modes.
+</p>
+<pre class="cs">
+    <%=Editable(x => x.Date, x => x.Date.ToString("dd MMM yyyy"))  %>
+</pre>
+<p>
+    Finally we can see the additional property IsInEditingMode, this can be used to control sections that should only be rendered
+    in Page Edit mode.
+</p>
+<p>
+    Compiling the page and navigating to the page in normal mode we get the standard news article page:
+</p>
+<img src="tutorial05.normal.png"/>
+<p>
+    In editing mode we can see that all the fields are editable and our additional fields also render:
+</p>
+<img src="tutorial05.editing.png"/>
+<p>
+    In this tutorial you have seen how simple it is to make a field editable using Glass.Mapper and the advantages of using the 
+    GlassUserControl control.
+</p>
+<p>
+    
+</p>
+
+<p>
+    <a href="../tutorial05/tutorial06.html">Tutorial 6</a>
+</p>
+
+
+
+

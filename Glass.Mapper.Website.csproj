@@ -72,6 +72,11 @@
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepageconfig.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticleconfig.cs" />
+    <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.editing.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.ascx" />
+    <Compile Include="docs\tutorial\sitecore\tutorial05\tutorial05.config.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.ascx.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +100,8 @@
     <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.html" />
     <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsitems.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial04\tutorial04.webpage.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.normal.png" />
     <Content Include="googlegroup.html" />
     <Content Include="docs\api\Base.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.SitecoreService.html" />
@@ -112,6 +119,9 @@
     <Content Include="images\p3.png" />
     <Content Include="images\p4.png" />
     <Content Include="js\git.js" />
+    <Content Include="js\site.min.js">
+      <DependentUpon>site.js</DependentUpon>
+    </Content>
     <Content Include="site.css" />
     <Content Include="js\site.js" />
     <Content Include="index.html" />
@@ -133,6 +143,11 @@
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>tutorial03.topnav.ascx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\site.min.js.map">
+      <DependentUpon>site.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
