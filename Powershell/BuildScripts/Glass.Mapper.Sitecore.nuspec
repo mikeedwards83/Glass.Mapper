@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper</id>
+    <id>Glass.Mapper.Sitecore</id>
     <version>0.0.0</version>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
@@ -12,13 +12,14 @@
     <description>This it a test build</description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
-    <tags>Glass Mapper</tags>
+    <tags>Glass Mapper Sitecore</tags>
     <language>en-GB</language>
     <dependencies>
-      <dependency id="Castle.Windsor" version="3.1.0" />
+		<dependency id="Glass.Mapper" version="0.0.0" />
+		<dependency id="Castle.Windsor" version="3.1.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
+    <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
   </files>
 </package>
