@@ -69,10 +69,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Copyright", "Copyright", "{
 		Powershell\Copyright\copyright-cs.ps1 = Powershell\Copyright\copyright-cs.ps1
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{47FF9E2D-AB07-494C-8B87-CBA26C7EC451}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{47FF9E2D-AB07-494C-8B87-CBA26C7EC451}"
 	ProjectSection(SolutionItems) = preProject
-		Powershell\Build\build.proj = Powershell\Build\build.proj
-		Powershell\Build\build.ps1 = Powershell\Build\build.ps1
+		Powershell\BuildScripts\build.proj = Powershell\BuildScripts\build.proj
+		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
 	EndProjectSection
 EndProject
 Global
