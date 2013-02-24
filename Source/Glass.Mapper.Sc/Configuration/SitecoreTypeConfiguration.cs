@@ -46,6 +46,24 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         public string TemplateName { get; set; }
 
+
+        public override void AddProperty(AbstractPropertyConfiguration property)
+        {
+            if (property is SitecoreIdConfiguration)
+                IdConfig = property as SitecoreIdConfiguration;
+
+            var infoProperty = property as SitecoreInfoConfiguration;
+
+            if (infoProperty != null && infoProperty.Type == SitecoreInfoType.Language)
+                LanguageConfig = infoProperty;
+            else if (infoProperty != null && infoProperty.Type == SitecoreInfoType.Version)
+                VersionConfig = infoProperty;
+
+
+
+            base.AddProperty(property);
+        }
+
         public Item ResolveItem(object target, Database database)
         {
             ID id;
@@ -54,7 +72,7 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (IdConfig == null)
                 throw new NotSupportedException(
-                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has the SitecoreIdAttribute");
+                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.");
 
             if (IdConfig.PropertyInfo.PropertyType == typeof (Guid))
             {

@@ -25,6 +25,7 @@ using Glass.Mapper.Pipelines;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Tests.Configuration.Attributes;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -38,7 +39,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
 
         [Test]
-        [ExpectedException(typeof(PipelineException))]
+        [ExpectedException(typeof (PipelineException))]
         public void Execute_ConfigurationNotSet_ThrowsException()
         {
             //Assign
@@ -74,18 +75,18 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
             var mapper1 = new StubMapper();
 
             property1.Mapper = mapper1;
-            config1.PropertyInfo = typeof(Stub).GetProperty("Property");
-            mapper1.Setup(new DataMapperResolverArgs(null,config1));
-           
+            config1.PropertyInfo = typeof (Stub).GetProperty("Property");
+            mapper1.Setup(new DataMapperResolverArgs(null, config1));
+
             var property2 = Substitute.For<AbstractPropertyConfiguration>();
             var config2 = Substitute.For<AbstractPropertyConfiguration>();
             var mapper2 = new StubMapper();
 
             property2.Mapper = mapper2;
-            config2.PropertyInfo = typeof(Stub).GetProperty("Property");
-            mapper2.Setup(new DataMapperResolverArgs(null,config2));
-          
-            savingContext.Config = Substitute.For<AbstractTypeConfiguration>();
+            config2.PropertyInfo = typeof (Stub).GetProperty("Property");
+            mapper2.Setup(new DataMapperResolverArgs(null, config2));
+
+            savingContext.Config = new AttributeConfigurationLoaderFixture.StubTypeConfiguration();
             savingContext.Config.AddProperty(property1);
             savingContext.Config.AddProperty(property2);
 
@@ -108,8 +109,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
         public class StubMapper : AbstractDataMapper
         {
-           
+
             public bool MapCalled { get; set; }
+
             public override void MapToCms(AbstractDataMappingContext mappingContext)
             {
                 MapCalled = true;
@@ -126,7 +128,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
             }
         }
 
-        #endregion
+        public class StubAbstractTypeConfiguration : AbstractTypeConfiguration
+        {
+        }
+    
+
+    #endregion
     }
 }
 
