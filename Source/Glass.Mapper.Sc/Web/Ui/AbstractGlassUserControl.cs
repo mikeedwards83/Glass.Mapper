@@ -9,23 +9,31 @@ namespace Glass.Mapper.Sc.Web.Ui
 {
     public class AbstractGlassUserControl : UserControl
     {
-        ISitecoreContext _sitecoreContext;
+
+        public AbstractGlassUserControl(ISitecoreContext context)
+        {
+            _glassHtml = new GlassHtml(context);
+        }
+
+        public AbstractGlassUserControl() : this(new SitecoreContext())
+        {
+
+        }
+
+ISitecoreContext _sitecoreContext;
         GlassHtml _glassHtml;
 
+        public bool IsInEditingMode
+        {
+            get { return GlassHtml.IsInEditingMode; }
+        }
 
         /// <summary>
         /// Represents the current Sitecore context
         /// </summary>
         public ISitecoreContext SitecoreContext
         {
-            get
-            {
-                return _sitecoreContext ?? (_sitecoreContext = new SitecoreContext());
-            }
-            set
-            {
-                _sitecoreContext = value;
-            }
+            get { return _sitecoreContext; }
         }
 
         /// <summary>
@@ -33,10 +41,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         protected virtual GlassHtml GlassHtml
         {
-            get
-            {
-                return _glassHtml ?? (_glassHtml = new GlassHtml(SitecoreContext));
-            }
+            get { return _glassHtml; }
         }
 
         /// <summary>

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Glass.Mapper.Sc.RenderField;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
+        public GlassUserControl(ISitecoreContext context) :base(context){}
+        public GlassUserControl() : base(){}
+ 
         protected override void OnLoad(EventArgs e)
         {
             Model = SitecoreContext.CreateType<T>(LayoutItem, false, false);
