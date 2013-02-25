@@ -9,8 +9,6 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
-using Glass.Mapper.Pipelines.TypeResolver;
-using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using Glass.Mapper.Umb.DataMappers;
 
 namespace Glass.Mapper.Umb.Integration
@@ -33,17 +31,6 @@ namespace Glass.Mapper.Umb.Integration
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
                 Component.For<IDataMapperResolverTask>().ImplementedBy<DataMapperStandardResolverTask>().LifestyleTransient(),
         
-            //****** Type Resolver Tasks ******//
-            // These tasks are run when Glass.Mapper tries to resolve the type a user has requested, e.g. 
-            // if your code contained
-            //       service.GetItem<MyClass>(id) 
-            // the standard resolver will return MyClass as the type. You may want to specify your own tasks to custom type
-            // inferring.
-            // Tasks are called in the order they are specified below.
-            // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
-
-                Component.For<ITypeResolverTask>().ImplementedBy<TypeStandardResolverTask>().LifestyleTransient(),
-         
             //****** Configuration Resolver Tasks ******//
             // These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed, e.g. 
             // if your code contained
