@@ -36,8 +36,22 @@ namespace Glass.Mapper.Umb.DataMappers
             return GetPropertyValue(property, umbConfig, umbContext);
         }
 
-        public abstract object GetPropertyValue(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
-        public abstract void SetPropertyValue(Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+        public virtual object GetPropertyValue(Property field, UmbracoPropertyConfiguration config,
+                                       UmbracoDataMappingContext context)
+        {
+            var fieldValue = field.Value;
+
+            return GetPropertyValue(fieldValue, config, context);
+        }
+
+        public virtual void SetPropertyValue(Property field, object value, UmbracoPropertyConfiguration config,
+                                      UmbracoDataMappingContext context)
+        {
+            field.Value = SetPropertyValue(value, config, context);
+        }
+
+        public abstract object GetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+        public abstract object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {

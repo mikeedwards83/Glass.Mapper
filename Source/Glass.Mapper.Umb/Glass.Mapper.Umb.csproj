@@ -252,6 +252,9 @@
     <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyTypeMapper.cs" />
+    <Compile Include="DataMappers\UmbracoInfoMapper.cs" />
+    <Compile Include="DataMappers\UmbracoLinkedMapper.cs" />
     <Compile Include="DataMappers\UmbracoChildrenMapper.cs" />
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
