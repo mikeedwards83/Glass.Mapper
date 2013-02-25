@@ -4,3 +4,8 @@
 .fixed {
     position: fixed;   
 }
+
+.icon-trello {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAfCAYAAABwH0oUAAAACXBIW…++97ux15pjYvkB4PFi/QUDePw5JpeBryyAHCb8kuSPAAMAXIqG/K/omzYAAAAASUVORK5CYII=);
+    text-indent: -10000px;
+}
