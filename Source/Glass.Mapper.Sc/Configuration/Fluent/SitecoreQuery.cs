@@ -50,6 +50,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
 
         public SitecoreQuery(Expression<Func<T, object>> ex):base(ex)
         {
+            Configuration.IsLazy = true;
         }
 
         /// <summary>
