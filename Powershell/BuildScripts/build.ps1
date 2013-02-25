@@ -4,7 +4,8 @@ Param(
    [string]$releaseNumber,  
    [Parameter(Position=2)]
    [string]$nugetKey,
-   [switch]$clean
+   [switch]$clean,
+   [switch]$tidy
 )
 
 $config = @{
@@ -152,5 +153,8 @@ else{
     LogWrite "No nuget key, push skipped";
 }
 
-
-
+if($tidy)
+{
+    LogWrite "Removing release directory"
+    Remove-Item $releasePath -Force -Recurse
+}
