@@ -1,5 +1,4 @@
-﻿using Glass.Mapper.Sc.Configuration;
-using Glass.Mapper.Sc.Configuration.Fluent;
+﻿using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sites.Sc.Models.Content;
 
 namespace Glass.Mapper.Sites.Sc.Models.Config
@@ -15,8 +14,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
             newsArticle.Field(x => x.Date);
             newsArticle.Field(x => x.FeaturedImage);
             newsArticle.Field(x => x.MainBody);
-            newsArticle.Field(x => x.Title).FieldName("Page Title");
-            newsArticle.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
+            newsArticle.Import(Misc.ContentBase);
 
             return loader;
         }

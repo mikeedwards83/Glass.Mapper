@@ -69,6 +69,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Copyright", "Copyright", "{
 		Powershell\Copyright\copyright-cs.ps1 = Powershell\Copyright\copyright-cs.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{47FF9E2D-AB07-494C-8B87-CBA26C7EC451}"
+	ProjectSection(SolutionItems) = preProject
+		Powershell\BuildScripts\build.proj = Powershell\BuildScripts\build.proj
+		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
+		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
+		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,5 +161,6 @@ Global
 		{F6C553A6-5021-4903-8EE2-9F3B0E23C5B9} = {710154AE-11A9-4150-B02F-C2F20BE71C8B}
 		{1CE133F3-FEAC-425C-A82A-87D57429BBEC} = {AD565F99-7F92-4452-9861-28B4465BBC62}
 		{BB82676E-FB23-497B-9B81-B04DEC16D530} = {733749DF-44C8-484B-B5FB-6EDF785BAB83}
+		{47FF9E2D-AB07-494C-8B87-CBA26C7EC451} = {733749DF-44C8-484B-B5FB-6EDF785BAB83}
 	EndGlobalSection
 EndGlobal

@@ -55,7 +55,7 @@ namespace Glass.Mapper.Configuration
 
        
 
-        public void AddProperty(AbstractPropertyConfiguration property)
+        public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
             _properties.Add(property);
         }

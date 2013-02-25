@@ -16,17 +16,10 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
-using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using NSubstitute;
 using NUnit.Framework;
 

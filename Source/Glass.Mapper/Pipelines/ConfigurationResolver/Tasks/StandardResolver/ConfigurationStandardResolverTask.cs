@@ -27,8 +27,11 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
     {
         public void Execute(ConfigurationResolverArgs args)
         {
-            //TODO: ME - this needs to be made more efficent, maybe with a dictionary
-            args.Result = args.Context[args.Type];
+            if (args.Result == null)
+            {
+                args.Result = args.Context[args.AbstractTypeCreationContext.RequestedType];
+            }
+
         }
     }
 }

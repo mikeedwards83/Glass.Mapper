@@ -10,7 +10,6 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
             var loader = new SitecoreFluentConfigurationLoader();
 
             var homePage = loader.Add<HomePage>();
-            homePage.Field(x => x.Title).FieldName("Page Title");
             homePage.Field(x => x.MainBody);
             homePage.Field(x => x.News);
 

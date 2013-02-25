@@ -24,7 +24,6 @@ using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using NUnit.Framework;
 using NSubstitute;
-using Glass.Mapper.Pipelines.TypeResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 
 namespace Glass.Mapper.Tests
@@ -60,16 +59,11 @@ namespace Glass.Mapper.Tests
             Context.ResolverFactory.GetResolver().Returns(resolver);
             var context = Context.Create(Substitute.For<IGlassConfiguration>());
 
-            var typeTask = Substitute.For<ITypeResolverTask>();
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();
 
-            resolver.ResolveAll<ITypeResolverTask>().Returns(new[] { typeTask });
             resolver.ResolveAll<IConfigurationResolverTask>().Returns(new[] { configTask });
             resolver.ResolveAll<IObjectConstructionTask>().Returns(new[] { objTask });
-
-            typeTask.When(x=>x.Execute(Arg.Any<TypeResolverArgs>()))
-                .Do(x=>x.Arg<TypeResolverArgs>().Result = typeof(StubClass));
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());

@@ -25,8 +25,6 @@ using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
-using Glass.Mapper.Pipelines.TypeResolver;
-using Glass.Mapper.Pipelines.TypeResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper

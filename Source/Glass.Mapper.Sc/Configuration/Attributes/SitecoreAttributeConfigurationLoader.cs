@@ -35,15 +35,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         protected override void ConfigCreated(Mapper.Configuration.AbstractTypeConfiguration config)
         {
             var scConfig = config as SitecoreTypeConfiguration;
-
-            //find the property configs that will be used to link a sitecore item to 
-            //a class
-            scConfig.IdConfig = config.Properties.FirstOrDefault(x => x is SitecoreIdConfiguration) as SitecoreIdConfiguration;
-
-            var scInfos = config.Properties.Where(x => x is SitecoreInfoConfiguration).Cast<SitecoreInfoConfiguration>();
-            scConfig.LanguageConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Language);
-            scConfig.VersionConfig = scInfos.FirstOrDefault(x => x.Type == SitecoreInfoType.Version);
-
             base.ConfigCreated(config);
         }
     }

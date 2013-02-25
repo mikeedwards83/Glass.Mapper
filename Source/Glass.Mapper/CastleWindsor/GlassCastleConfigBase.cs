@@ -25,7 +25,6 @@ using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
-using Glass.Mapper.Pipelines.TypeResolver;
 using Castle.Windsor;
 
 namespace Glass.Mapper
