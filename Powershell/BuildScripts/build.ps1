@@ -73,7 +73,7 @@ Copy-Item $rootPath"\Depends" $releasePath"\Depends" -recurse
 Copy-Item $rootPath"\Source" $releasePath"\Source" -recurse
 Copy-Item $rootPath"\Tests" $releasePath"\Tests" -recurse
 Copy-Item $rootPath"\*.sln" $releasePath
-Copy-Item "build.proj" $releasePath
+Copy-Item "*.proj" $releasePath
 Copy-Item "*.nuspec" $releasePath
 Copy-Item "Nuget.exe" $releasePath
 
@@ -101,9 +101,11 @@ foreach($assInfo  in $assInfos){
 
 #build the solution"
 $msbuild = $env:windir+"\Microsoft.NET\Framework\v4.0.30319\msbuild "
-$build = $msbuild + $releasePath+"\build.proj"
+$releaseBuild = $msbuild + $releasePath+"\build-release.proj"
+$debugBuild = $msbuild + $releasePath+"\build-debug.proj"
 
-Invoke-Expression $build
+Invoke-Expression $releaseBuild
+Invoke-Expression $debugBuild
 
 
 #create nuget packages
@@ -118,7 +120,7 @@ foreach($nuget  in $nugets){
     $nugetContent.package.metadata.version = $releaseNumber
     $nugetContent.Save($nuget)
 	
-    $nugetCmd = $nugetExe + " pack "+$nuget +" -Verbosity detailed -Version "+ $releaseNumber + " -OutputDirectory "+$nugetsPath
+    $nugetCmd = $nugetExe + " pack "+$nuget +" -Symbols -Verbosity detailed -Version "+ $releaseNumber + " -OutputDirectory "+$nugetsPath
     
     LogWrite $nugetCmd
     Invoke-Expression $nugetCmd
@@ -126,8 +128,9 @@ foreach($nuget  in $nugets){
 
 LogWrite "****** Pushing Nuget Packages ******"
 
+
 if($nugetKey){
-    $nugetPackages = Get-ChildItem -Path $nugetsPath -Filter *.nupkg
+    $nugetPackages = Get-ChildItem -Path $nugetsPath -Filter *.$releaseNumber.nupkg
 
     $nugetApiSet = $nugetExe+ " setApiKey " + $nugetKey
     Invoke-Expression $nugetApiSet
