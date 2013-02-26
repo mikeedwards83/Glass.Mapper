@@ -20,6 +20,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
+	  <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
+	  <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.xml" target="lib\net40\Glass.Mapper.Sc.xml" />
   </files>
 </package>

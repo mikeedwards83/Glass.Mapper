@@ -1,3 +1,39 @@
+<#
+           .SYNOPSIS 
+           Automatically builds script for Glass.Mapper.
+
+           .DESCRIPTION
+           Automatically builds Glass.Mapper creating debug and release builds. It when then push the Nuget
+           packages to Nuget.org and SymbolSource.org.
+    
+           .PARAMETER releaseNumber
+           The release number to create. Release numbers in each assembly will automatically be updated.
+
+           .PARAMETER nugetKey
+           Nuget API key, required if you want push a Nuget packages to the Nuget server. If missing Nuget packages
+           are built locally only
+
+           .PARAMETER clean
+           Removes any previous Nuget or Release folders with the same release number.
+
+           .PARAMETER tidy
+           Removes the specific Release folder after the build has completed.
+
+           .PARAMETER silent
+           Does not prompt you for permission to push packages to Nuget.
+
+           .INPUTS
+           None. You cannot pipe objects to build.ps1.
+
+           .OUTPUTS
+           None. build.ps1 does not generate any output.
+
+           .EXAMPLE
+           C:\PS> .\build.ps1 0.0.0.4 1dd320ca-t59s-789d-897c-190458dS4a5 -tidy
+
+           
+           #>
+
 [CmdletBinding()]
 Param(
    [Parameter(Mandatory=$True,Position=1)]
@@ -5,8 +41,12 @@ Param(
    [Parameter(Position=2)]
    [string]$nugetKey,
    [switch]$clean,
-   [switch]$tidy
+   [switch]$tidy,
+   [switch]$silent
 )
+
+
+
 
 $config = @{
  
@@ -21,30 +61,7 @@ $logfile = $releasePath+"\Build.log"
 $nugetExe = $releasePath+"\Nuget.exe"
 
 
-Function LogWrite
-{
-   Param ([string]$logstring)
-   Write-Host $logstring
-
-   $logExists = Test-Path $logfile
-   if($logExists -eq $false){
-        New-Item $logfile -type file
-   }
-   Add-content $logfile -value $logstring
-}
-
-Function YesNoPrompt{
-    Param([string] $caption,
-          [string] $message)
-
-
-    $yes = new-Object System.Management.Automation.Host.ChoiceDescription "&Yes","help";
-    $no = new-Object System.Management.Automation.Host.ChoiceDescription "&No","help";
-    $choices = [System.Management.Automation.Host.ChoiceDescription[]]($no,$yes);
-    $answer = $host.ui.PromptForChoice($caption,$message,$choices,0)
-
-    return $answer
-}
+. .\utilities.ps1
 
 
 #Copy everything to the release folder
@@ -57,7 +74,7 @@ if($clean)
 }
 
 if((Test-Path $releasePath) -or (Test-Path $nugetsPath)){
-    LogWrite "Release already exists - aborting";
+    Write-Host "Release already exists - aborting";
     return
 }
 
@@ -131,25 +148,25 @@ LogWrite "****** Pushing Nuget Packages ******"
 
 if($nugetKey){
     $nugetPackages = Get-ChildItem -Path $nugetsPath -Filter *.$releaseNumber.nupkg
-
-    $nugetApiSet = $nugetExe+ " setApiKey " + $nugetKey
-    Invoke-Expression $nugetApiSet
     
     foreach($nugetPackage  in $nugetPackages){
-        $message = "Do you want to push "+$nugetPackage.FullName
-        $result = YesNoPrompt "Push package" $message
-        LogWrite $nugetPackage
-        switch($result){
-            0{ 
-                LogWrite("File skipped")
-             }
-            1{
-                $nugetPush = $nugetExe + " push "+$nugetPackage.FullName
-                LogWrite $nugetPush
-                Invoke-Expression $nugetPush
-                LogWrite("File pushed")
-            }
-        }
+       
+	    if($silent){
+            NugetPush $nugetPackage.FullName $nugetKey
+		}
+		else{
+			$message = "Do you want to push "+$nugetPackage.FullName
+			$result = YesNoPrompt "Push package" $message
+      
+			switch($result){
+				0{ 
+					LogWrite("File skipped")
+				 }
+				1{
+					NugetPush $nugetPackage.FullName $nugetKey
+				}
+			}
+		}
     }
 }
 else{
