@@ -9,6 +9,8 @@ namespace Glass.Mapper.Umb
         object CreateType(Type type, IContent content, bool isLazy, bool inferType,
                           params object[] constructorParameters);
 
+        T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class;
+
         /// <summary>
         /// Creates a class from the specified content
         /// </summary>

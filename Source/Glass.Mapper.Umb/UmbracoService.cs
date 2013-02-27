@@ -44,6 +44,13 @@ namespace Glass.Mapper.Umb
             return obj;
         }
 
+        public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
+        {
+            var contentService = new ContentService();
+            var item = contentService.GetById(id);
+            return CreateType(typeof(T), item, isLazy, inferType) as T;
+        }
+
 
         /// <summary>
         /// Creates a class from the specified item

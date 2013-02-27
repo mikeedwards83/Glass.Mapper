@@ -68,55 +68,51 @@ namespace Glass.Mapper.Umb.DataMappers
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-            //var context = mappingContext as UmbracoDataMappingContext;
-            //var item = context.Item;
-            //var scConfig = Configuration as UmbracoInfoConfiguration;
+            var context = mappingContext as UmbracoDataMappingContext;
+            var item = context.Content;
+            var config = Configuration as UmbracoInfoConfiguration;
+            
+            switch (config.Type)
+            {
 
-            ////TODO: move this to the config?
-            //var urlOptions = Mapper.Utilities.CreateUrlOptions(scConfig.UrlOptions);
-
-            //switch (scConfig.Type)
-            //{
-               
-            //      case UmbracoInfoType.ContentPath:
-            //        return item.Paths.ContentPath;
-            //    case UmbracoInfoType.DisplayName:
-            //        return item.DisplayName;
-            //    case UmbracoInfoType.FullPath:
-            //        return item.Paths.FullPath;
-            //    case UmbracoInfoType.Name:
-            //        return item.Name;
-            //    case UmbracoInfoType.Key:
-            //        return item.Key;
-            //    case UmbracoInfoType.MediaUrl:
-            //        var media = new global::Umbraco.Data.Items.MediaItem(item);
-            //        return global::Umbraco.Resources.Media.MediaManager.GetMediaUrl(media);
-            //        break;
-            //    case UmbracoInfoType.Path:
-            //        return item.Paths.Path;
-            //    case UmbracoInfoType.TemplateId:
-            //        if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Umbraco.Data.ID))
-            //            return item.TemplateID;
-            //        else
-            //            return item.TemplateID.Guid;
-            //    case UmbracoInfoType.TemplateName:
-            //        return item.TemplateName;
-            //    case UmbracoInfoType.Url:
-            //        return LinkManager.GetItemUrl(item, urlOptions);
-            //    case UmbracoInfoType.Version:
-            //        return item.Version.Number;
-            //    case UmbracoInfoType.Language:
-            //        return item.Language;  
-            //    default:
-            //        throw new MapperException("UmbracoInfoType {0} not supported".Formatted(scConfig.Type));
-            //}
-            return null;
+                //case UmbracoInfoType.ContentPath:
+                //    return item.Paths.ContentPath;
+                //case UmbracoInfoType.DisplayName:
+                //    return item.DisplayName;
+                //case UmbracoInfoType.FullPath:
+                //    return item.Paths.FullPath;
+                case UmbracoInfoType.Name:
+                    return item.Name;
+                //case UmbracoInfoType.Key:
+                //    return item.Key;
+                //case UmbracoInfoType.MediaUrl:
+                //    var media = new global::Umbraco.Data.Items.MediaItem(item);
+                //    return global::Umbraco.Resources.Media.MediaManager.GetMediaUrl(media);
+                //    break;
+                //case UmbracoInfoType.Path:
+                //    return item.Paths.Path;
+                //case UmbracoInfoType.TemplateId:
+                //    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Umbraco.Data.ID))
+                //        return item.TemplateID;
+                //    else
+                //        return item.TemplateID.Guid;
+                //case UmbracoInfoType.TemplateName:
+                //    return item.TemplateName;
+                //case UmbracoInfoType.Url:
+                //    return LinkManager.GetItemUrl(item, urlOptions);
+                //case UmbracoInfoType.Version:
+                //    return item.Version.Number;
+                //case UmbracoInfoType.Language:
+                //    return item.Language;
+                default:
+                    throw new MapperException("UmbracoInfoType {0} not supported".Formatted(config.Type));
+            }
         }
 
         public override void Setup(DataMapperResolverArgs args)
         {
-            var scConfig = args.PropertyConfiguration as UmbracoInfoConfiguration;
-            this.ReadOnly = scConfig.Type != UmbracoInfoType.DisplayName && scConfig.Type != UmbracoInfoType.Name;
+            var config = args.PropertyConfiguration as UmbracoInfoConfiguration;
+            this.ReadOnly = config.Type != UmbracoInfoType.DisplayName && config.Type != UmbracoInfoType.Name;
             base.Setup(args);
         }
 
