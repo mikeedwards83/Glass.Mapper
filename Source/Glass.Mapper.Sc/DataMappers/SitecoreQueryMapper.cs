@@ -76,8 +76,16 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         getItems = new Func<IEnumerable<Item>>(() =>
                         {
-
-                            return Utilities.GetLanguageItems(scContext.Item.Axes.SelectItems(query), scContext.Item.Language);
+                            try
+                            {
+                                return Utilities.GetLanguageItems(scContext.Item.Axes.SelectItems(query),
+                                                                  scContext.Item.Language);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new MapperException("Failed to perform query {0}".Formatted(query), ex);
+                            }
+                        
                         });
                     }
                     else
@@ -103,12 +111,11 @@ namespace Glass.Mapper.Sc.DataMappers
                         });
                     }
 
-                    Utilities.CreateGenericType(typeof (LazyItemEnumerable<>), new []{genericType}, getItems, scConfig.IsLazy,
+                    var result =  Utilities.CreateGenericType(typeof (LazyItemEnumerable<>), new []{genericType}, getItems, scConfig.IsLazy,
                                                 scConfig.InferType, scContext.Service);
-                    var array = getItems.Invoke().ToArray();
+                    return result;
 
-
-                    return scContext.Service.CreateTypes(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
+                    //return scContext.Service.CreateTypes(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
                 }
                 else throw new NotSupportedException("Generic type not supported {0}. Must be IEnumerable<>.".Formatted(outerType.FullName));
             }
