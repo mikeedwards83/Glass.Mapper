@@ -102,6 +102,9 @@ namespace Glass.Mapper.Sc.DataMappers
                                 return Utilities.GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language);
                         });
                     }
+
+                    Utilities.CreateGenericType(typeof (LazyItemEnumerable<>), new []{genericType}, getItems, scConfig.IsLazy,
+                                                scConfig.InferType, scContext.Service);
                     var array = getItems.Invoke().ToArray();
 
 
