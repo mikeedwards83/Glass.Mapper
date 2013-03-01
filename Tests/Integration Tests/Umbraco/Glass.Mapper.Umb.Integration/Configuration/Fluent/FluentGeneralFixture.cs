@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Fluent;
 using NUnit.Framework;
@@ -35,67 +36,82 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
         {
             //Assign
             string fieldValue = "test field value";
-          //  int id = 2000;
             string name = "Target";
+            string contentTypeAlias = "TestType";
+            string contentTypeName = "Test Type";
 
             var unitOfWork = Global.CreateUnitOfWork();
-
             var repoFactory = new RepositoryFactory();
-
-            var service = new ContentService(unitOfWork, repoFactory);
-            ContentTypeService cTypeService = new ContentTypeService(unitOfWork, repoFactory,
+            var contentService = new ContentService(unitOfWork, repoFactory);
+            var contentTypeService = new ContentTypeService(unitOfWork, repoFactory,
                                                                      new ContentService(unitOfWork),
                                                                      new MediaService(unitOfWork, repoFactory));
+            var dataTypeService = new DataTypeService(unitOfWork, repoFactory);
 
             var context = Context.Create(new Umb.GlassConfig());
-
             var loader = new UmbracoFluentConfigurationLoader();
-
             var stubConfig = loader.Add<Stub>();
             stubConfig.Configure(x =>
-                                     {
-                                         //x.Id(y => y.Id);
-                                        // x.Property(y => y.Property);
-                                         x.Info(y => y.Name).InfoType(UmbracoInfoType.Name);
-                                     });
+            {
+                x.Id(y => y.Id);
+                x.Id(y => y.Key);
+                // x.Property(y => y.Property);
+                x.Info(y => y.Name).InfoType(UmbracoInfoType.Name);
+                x.Info(y => y.ContentTypeName).InfoType(UmbracoInfoType.ContentTypeName);
+                x.Info(y => y.ContentTypeAlias).InfoType(UmbracoInfoType.ContentTypeAlias);
+                x.Info(y => y.Path).InfoType(UmbracoInfoType.Path);
+                x.Info(y => y.Version).InfoType(UmbracoInfoType.Version);
+            });
 
             context.Load(loader);
 
-            ContentType cType = new ContentType(-1);
-            cType.Name = "TestType";
-            cType.Alias = "TestType";
-            cType.Thumbnail = string.Empty;
-            cTypeService.Save(cType);
+            var contentType = new ContentType(-1);
+            contentType.Name = contentTypeName;
+            contentType.Alias = contentTypeAlias;
+            var propertyGroup = new PropertyGroup();
+            propertyGroup.Name = "Content";
+            
+			var definitions = dataTypeService.GetDataTypeDefinitionByControlId(new Guid("ec15c1e5-9d90-422a-aa52-4f7622c63bea"));
+            var propertyType = new PropertyType(definitions.FirstOrDefault());
+            propertyType.Alias = "Property";
+           // contentType.AddPropertyType(propertyType);
+            contentType.Thumbnail = string.Empty;
+            contentTypeService.Save(contentType);
+            Assert.Greater(contentType.Id, 0);
 
-            Console.WriteLine("Ctype " + cType.Id);
-            Assert.Greater(cType.Id, 0);
+            var content = new Content(name, -1, contentType);
+          //  content.SetPropertyValue("Property", fieldValue);
+            contentService.Save(content);
 
-            Content content = new Content(name, -1, cType);
-            service.Save(content);
-
-          
-            var us = new UmbracoService();
+            var umbracoService = new UmbracoService();
 
             //Act
-            var result = us.GetItem<Stub>(content.Id);
+            var result = umbracoService.GetItem<Stub>(content.Id);
 
             //Assert
             Assert.IsNotNull(result);
-          //  Assert.AreEqual(fieldValue, result.Property);
-            //Assert.AreEqual(content.Id, result.Id);
+            //      Assert.AreEqual(fieldValue, result.Property);
+            Assert.AreEqual(content.Id, result.Id);
+            Assert.AreEqual(content.Key, result.Key);
             Assert.AreEqual(name, result.Name);
-
+            Assert.AreEqual(contentTypeName, result.ContentTypeName);
+            Assert.AreEqual(content.ParentId + "," + content.Id, result.Path);
+            Assert.AreEqual(contentTypeAlias, result.ContentTypeAlias);
+            Assert.AreEqual(content.Version, result.Version);
         }
-
 
         #region Stub
 
         public class Stub
         {
-           // public virtual int Id { get; set; }
-           // public virtual string Property { get; set; }
+            public virtual int Id { get; set; }
+            public virtual Guid Key { get; set; }
+            public virtual string Property { get; set; }
             public virtual string Name { get; set; }
-
+            public virtual string ContentTypeName { get; set; }
+            public virtual string ContentTypeAlias { get; set; }
+            public virtual string Path { get; set; }
+            public virtual Guid Version { get; set; }
         }
 
         #endregion

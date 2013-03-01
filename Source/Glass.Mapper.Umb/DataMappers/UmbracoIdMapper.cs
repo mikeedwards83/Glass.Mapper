@@ -22,8 +22,10 @@ namespace Glass.Mapper.Umb.DataMappers
 
             var umbConfig = Configuration as UmbracoIdConfiguration;
 
-            if (umbConfig.PropertyInfo.PropertyType == typeof (int))
+            if (umbConfig.PropertyInfo.PropertyType == typeof(int))
                 return node.Id;
+            if (umbConfig.PropertyInfo.PropertyType == typeof(Guid))
+                return node.Key;
             
             throw new NotSupportedException("The type {0} on {0}.{1} is not supported by UmbracoIdMapper".Formatted
                                                 (umbConfig.PropertyInfo.ReflectedType.FullName,

@@ -19,6 +19,7 @@
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
+using Umbraco.Web;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -74,36 +75,18 @@ namespace Glass.Mapper.Umb.DataMappers
             
             switch (config.Type)
             {
-
-                //case UmbracoInfoType.ContentPath:
-                //    return item.Paths.ContentPath;
-                //case UmbracoInfoType.DisplayName:
-                //    return item.DisplayName;
-                //case UmbracoInfoType.FullPath:
-                //    return item.Paths.FullPath;
                 case UmbracoInfoType.Name:
                     return item.Name;
-                //case UmbracoInfoType.Key:
-                //    return item.Key;
-                //case UmbracoInfoType.MediaUrl:
-                //    var media = new global::Umbraco.Data.Items.MediaItem(item);
-                //    return global::Umbraco.Resources.Media.MediaManager.GetMediaUrl(media);
-                //    break;
-                //case UmbracoInfoType.Path:
-                //    return item.Paths.Path;
-                //case UmbracoInfoType.TemplateId:
-                //    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Umbraco.Data.ID))
-                //        return item.TemplateID;
-                //    else
-                //        return item.TemplateID.Guid;
-                //case UmbracoInfoType.TemplateName:
-                //    return item.TemplateName;
-                //case UmbracoInfoType.Url:
-                //    return LinkManager.GetItemUrl(item, urlOptions);
-                //case UmbracoInfoType.Version:
-                //    return item.Version.Number;
-                //case UmbracoInfoType.Language:
-                //    return item.Language;
+                case UmbracoInfoType.Path:
+                    return item.Path;
+                case UmbracoInfoType.ContentTypeAlias:
+                    return item.ContentType.Alias;
+                case UmbracoInfoType.ContentTypeName:
+                    return item.ContentType.Name;
+                case UmbracoInfoType.Url:
+                    return "";
+                case UmbracoInfoType.Version:
+                    return item.Version;
                 default:
                     throw new MapperException("UmbracoInfoType {0} not supported".Formatted(config.Type));
             }
@@ -112,7 +95,7 @@ namespace Glass.Mapper.Umb.DataMappers
         public override void Setup(DataMapperResolverArgs args)
         {
             var config = args.PropertyConfiguration as UmbracoInfoConfiguration;
-            this.ReadOnly = config.Type != UmbracoInfoType.DisplayName && config.Type != UmbracoInfoType.Name;
+            this.ReadOnly = config.Type != UmbracoInfoType.Name;
             base.Setup(args);
         }
 

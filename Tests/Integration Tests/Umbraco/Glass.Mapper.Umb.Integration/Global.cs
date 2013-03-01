@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -40,12 +41,19 @@ namespace Glass.Mapper.Umb.Integration
             }
         }
 
-
         public static string ConnectionString
         {
             get { return ConfigureConnectionString(); }
         }
 
+        public static void CleanPreviousRun()
+        {
+            if (ApplicationContext.Current != null && ApplicationContext.Current.DatabaseContext != null)
+                ApplicationContext.Current.DatabaseContext.Database.Dispose();
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
+                @"\UmbracoPetaPocoTests.sdf";
+            File.Delete(path);
+        }
 
         /// <summary>
         /// Sets up the connection string from the web.config
@@ -56,13 +64,10 @@ namespace Glass.Mapper.Umb.Integration
             if (!_connStringSetup)
             {
 
-                var path =
-                    System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) +
-                    @"\MEUmbracoPetaPocoTests.sdf;";
-                Console.WriteLine(path);
+                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
+                    @"\UmbracoPetaPocoTests.sdf";
 
-
-                var connstring = "Data Source={0}Persist Security Info=False;".Formatted(path);
+                var connstring = "Data Source={0};Persist Security Info=False;".Formatted(path);
 
                 //to set the connection string from the web.config we have to override the readonly
                 var settings = ConfigurationManager.ConnectionStrings["umbracoDbDSN"];
@@ -74,37 +79,30 @@ namespace Glass.Mapper.Umb.Integration
             }
 
             return ConfigurationManager.ConnectionStrings["umbracoDbDSN"].ConnectionString;
-
         }
 
         public static void InitializeUmbraco()
         {
             //You can only boot the manager once per thread
             //if you run tests twice without this check you get an exception
-                _manager = new CoreBootManager(new UmbracoApplication());
-                _manager.Initialize();
+            var umbracoApplication = new UmbracoApplication();
+            _manager = new WebBootManager(umbracoApplication);
+            _manager.Initialize();
+            _manager.Startup(appContext => {});
+            _manager.Complete(appContext => {});
         }
     
-
-    /// <summary>
-        /// Setup blank Umbraco DB
-        /// </summary>
-        /// <param name="connString"></param>
-        /// <param name="provider"></param>
         public static void ConfigureDatabase()
         {
             new SqlCeEngine(ConnectionString).CreateDatabase();
 
             UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
-
-
-            PetaPocoExtensions.CreateDatabaseSchema((Database)umbracoDatabase);
+            umbracoDatabase.CreateDatabaseSchema();
         }
 
         public static PetaPocoUnitOfWorkProvider CreateUnitOfWork()
         {
-            return  new PetaPocoUnitOfWorkProvider(ConnectionString, ProviderName);
+            return new PetaPocoUnitOfWorkProvider(ConnectionString, ProviderName);
         }
-
     }
 }

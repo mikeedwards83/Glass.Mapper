@@ -27,7 +27,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
 {
     public class UmbracoIdAttribute : IdAttribute
     {
-        public UmbracoIdAttribute() : base(new[] { typeof(int) }) { }
+        public UmbracoIdAttribute() : base(new[] { typeof(int), typeof(Guid) }) { }
 
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {

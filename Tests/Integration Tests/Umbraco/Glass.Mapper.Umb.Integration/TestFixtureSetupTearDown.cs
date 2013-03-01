@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
 using NUnit.Framework;
-using Umbraco.Core;
-using Umbraco.Web;
 
 namespace Glass.Mapper.Umb.Integration
 {
     [SetUpFixture]
     public class TestFixtureSetupTearDown
     {
-        static bool _hasBooted = false;
+        static bool _hasBooted;
+
         [SetUp]
         public void FixtureSetup()
         {
             if (!_hasBooted)
             {
+                Global.CleanPreviousRun();
+
                 Global.ConfigureConnectionString();
 
                 Global.InitializeUmbraco();
@@ -26,11 +23,6 @@ namespace Glass.Mapper.Umb.Integration
                 Global.ConfigureDatabase();
                 _hasBooted = true;
             }
-
-
         }
-
-       
     }
 }
-

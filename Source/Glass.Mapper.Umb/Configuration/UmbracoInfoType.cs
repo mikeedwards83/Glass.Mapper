@@ -12,37 +12,17 @@ namespace Glass.Mapper.Umb.Configuration
         /// </summary>
         NotSet,
         /// <summary>
-        /// The item's content path. The property type must be System.String
-        /// </summary>
-        ContentPath,
-        /// <summary>
-        /// The item's display name. The property type must be System.String
-        /// </summary>
-        DisplayName,
-        /// <summary>
-        /// The item's full path. The property type must be System.String
-        /// </summary>
-        FullPath,
-        /// <summary>
-        /// The item's key . The property type must be System.String
-        /// </summary>
-        Key,
-        /// <summary>
-        /// The item's media URL. The property type must be System.String
-        /// </summary>
-        MediaUrl,
-        /// <summary>
         /// The item's path. The property type must be System.String
         /// </summary>
         Path,
         /// <summary>
-        /// The item's template Id. The property type must be System.Guid
+        /// The item's Content Type Alias. The property type must be System.Guid
         /// </summary>
-        TemplateId,
+        ContentTypeAlias,
         /// <summary>
-        /// The item's template name. The property type must be System.String
+        /// The item's Content Type name. The property type must be System.String
         /// </summary>
-        TemplateName,
+        ContentTypeName,
         /// <summary>
         /// The item's URL. The property type must be System.String
         /// </summary>

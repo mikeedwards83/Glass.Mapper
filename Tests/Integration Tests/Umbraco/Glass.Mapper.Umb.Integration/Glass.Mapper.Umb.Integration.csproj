@@ -233,13 +233,8 @@
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Helpers\BaseDatabaseFactoryTest.cs" />
-    <Compile Include="Helpers\FakeHttpContextFactory.cs" />
-    <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="MEConnectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFixtureSetupTearDown.cs" />
-    <Compile Include="UmbracoServiceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Umb\Glass.Mapper.Umb.csproj">
@@ -278,7 +273,6 @@
     <Content Include="config\UrlRewriting.config" />
     <Content Include="config\xsltExtensions.config" />
     <None Include="packages.config" />
-    <None Include="unit-test-log4net.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

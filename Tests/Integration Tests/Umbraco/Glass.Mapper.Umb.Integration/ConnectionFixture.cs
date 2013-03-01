@@ -1,10 +1,7 @@
 ﻿using System;
-using Glass.Mapper.Umb.Integration.Helpers;
 using NUnit.Framework;
-using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
-using Umbraco.Core.Persistence.UnitOfWork;
 using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb.Integration
@@ -15,7 +12,6 @@ namespace Glass.Mapper.Umb.Integration
         [Test]
         public void ConnectionTest()
         {
-
             var unitOfWork = Global.CreateUnitOfWork();
 
             var repoFactory = new RepositoryFactory();
@@ -24,10 +20,7 @@ namespace Glass.Mapper.Umb.Integration
             ContentTypeService cTypeService = new ContentTypeService(unitOfWork, repoFactory,
                                                                      new ContentService(unitOfWork),
                                                                      new MediaService(unitOfWork, repoFactory));
-
-
-            var contents = service.GetRootContent();
-
+            
             ContentType cType = new ContentType(-1);
             cType.Name = "TestType";
             cType.Alias = "TestType";
@@ -45,8 +38,6 @@ namespace Glass.Mapper.Umb.Integration
 
             var content2 = service.GetById(content.Id);
             Assert.AreEqual(content.Name, content2.Name);
-
-
         }
     }
 }
