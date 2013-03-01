@@ -30,7 +30,6 @@ namespace Glass.Mapper.Umb.DataMappers
                 typeof(LazyContentEnumerable<>),
                 new[] {genericType},
                 getItems,
-                umbConfig.PropertyInfo.PropertyType,
                 umbConfig.IsLazy,
                 umbConfig.InferType,
                 umbContext.Service

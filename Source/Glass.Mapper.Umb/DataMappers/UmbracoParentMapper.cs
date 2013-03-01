@@ -20,7 +20,11 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbContext = mappingContext as UmbracoDataMappingContext;
             var umbConfig = Configuration as UmbracoParentConfiguration;
 
-            return umbContext.Service.Create(umbContext.Content.ParentId, umbContext.Content);
+            return umbContext.Service.CreateType(
+                umbConfig.PropertyInfo.PropertyType,
+                umbContext.ContentService.GetById(umbContext.Content.ParentId),
+                umbConfig.IsLazy,
+                umbConfig.InferType);
         }
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
