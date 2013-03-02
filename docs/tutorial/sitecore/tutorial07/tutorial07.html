@@ -1,0 +1,55 @@
+---
+layout: DocsLayout
+title: Tutorial 7 - Using Queries
+---
+
+
+<div class="page-header">
+    <h1>Tutorial 7 - Using Queries<small> </small></h1>
+</div>
+<p>
+    This tutorial will show you how you can enhance you models using the queries.
+</p>
+<p>
+    We haven't yet got a page that lists all the news articles in our news section. We will create a news landing page
+    that lists all the news articles in our news section.
+</p>
+<p>
+    I have changed the news section to store stories in a year/month structure:
+</p>
+<img src="tutorial07.items.png" class="img-polaroid"/>
+<p>
+    We will use the query to select only the news articles and to ignore the folders. The model for the news landing page
+    looks like this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial07/tutorial07.newslanding.cs" ref="gh-pages"></pre>
+<p>
+    Within the configuration we can use the Query method to map the news articles onto this property:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial07/tutorial07.newslanding.config.cs" ref="gh-pages"></pre>
+<p>
+    The IsRelative at the end is important, it tells Glass.Mapper to execute the query relative to the item the class represents, i.e.
+    the news landing page rather than from the Sitecore root. Queries are executed lazily and therefore only populated when the property is called.
+</p>
+<p>
+    When using a query the target property can be an enumerable like our property or a single class. If a single class is 
+    used the first item returned by the query is mapped.
+</p>
+<p>
+    Now we just need to create our landing page markup, the code behind is below:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial07/tutorial07.newslanding.ascx.cs" ref="gh-pages"></pre>
+<p>
+    And the the ASCX:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial07/tutorial07.newslanding.ascx" ref="gh-pages"></pre>
+<p>
+    If we compile and navigate to the landing page we should see the following result:
+</p>
+<img src="tutorial07.webpage.png" class="img-polaroid"/>
+<p>
+    This tutorial has shown you how you can use queries on your models to load items from across you Sitecore solution.
+</p>
+
+
+

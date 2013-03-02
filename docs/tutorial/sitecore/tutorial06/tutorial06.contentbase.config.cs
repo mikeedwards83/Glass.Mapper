@@ -18,9 +18,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
 
                 return contentBase;
             }
-
         }
-        
     }
 }
 
