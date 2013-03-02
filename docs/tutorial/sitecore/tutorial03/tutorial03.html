@@ -15,7 +15,7 @@ title: Tutorial 3 - Item information and making links
     I have added a couple of extra items in to the Sitecore content tree, these are just placeholders for now but the contain
     the Page Title field:
 </p>
-<img src="tutorial03.contenttree.PNG"/>
+<img src="tutorial03.contenttree.PNG" class="img-polaroid"/>
 <p>
     We need to make a model that will represent the items that will appear in this menu. To do this we have the following model:
 </p>
@@ -27,7 +27,7 @@ title: Tutorial 3 - Item information and making links
 <p>Again we need to create the configuration for this:</p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial03/tutorial03.config.cs" ref="gh-pages"></pre>
 <p>
-    Notice that in this configuation we use the Info method to get the Url and Children method to instruct Glass.Mapper to 
+    Notice that in this configuration we use the Info method to get the Url and Children method to instruct Glass.Mapper to 
     load child items into the Children property. When referencing children you should ensure the property use the generic
     IEnumerable type.
 </p>
@@ -47,7 +47,7 @@ title: Tutorial 3 - Item information and making links
     With this all in place  added this rendering to your MainLayout and compile the whole solution. Then when you navigate
     to the homepage you should see your new top navigation and if you hover over each link the URL of the item:
 </p>
-<img src="tutorial03.webpage.png"/>
+<img src="tutorial03.webpage.png" class="img-polaroid"/>
 <p>
     In this tutorial we have seen how we can get the information about an item, how we can tell a model to load child items 
     and make simple links.

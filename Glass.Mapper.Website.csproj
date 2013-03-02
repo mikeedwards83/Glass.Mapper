@@ -74,6 +74,7 @@
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticleconfig.cs" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.html" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.items.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.webpage.png" />
     <Content Include="trello.html" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.editing.png" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.ascx" />
@@ -84,6 +85,10 @@
     <Compile Include="docs\tutorial\sitecore\tutorial06\tutorial06.contentbase.config.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial06\tutorial06.contentbase.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial06\tutorial06.newsarticle.cs" />
+    <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.ascx" />
+    <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.ascx.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.config.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
