@@ -28,7 +28,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
             var menuItem = loader.Add<MenuItem>();
             menuItem.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
             menuItem.Children(x => x.Children);
-
+            menuItem.Import(ContentBase);
             loader.Add(ContentBase);
 
             return loader;

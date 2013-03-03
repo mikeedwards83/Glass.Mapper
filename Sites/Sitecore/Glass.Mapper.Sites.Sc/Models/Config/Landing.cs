@@ -13,6 +13,10 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
             homePage.Field(x => x.MainBody);
             homePage.Field(x => x.News);
 
+
+            var newsLanding = loader.Add<NewsLanding>();
+            newsLanding.Query(x=> x.Articles).Query("./*/*/*[@@templatename='NewsArticle']").IsRelative();
+            newsLanding.Import(Misc.ContentBase);
             return loader;
         }
     }
