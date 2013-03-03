@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Sitecore.Web.UI.Pages;
 using System.Collections.Specialized;
@@ -30,6 +31,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
         protected DataContext FileDataContext;
         protected DataContext ItemDataContext;
         protected TreeviewEx ItemTreeView;
+        protected ISitecoreService Master;
 
         public AbtractFileCreateWizard()
         {
@@ -37,6 +39,16 @@ namespace Glass.Mapper.Sc.Razor.Shell
             DefaultFileLocation = "/layouts/razor";
             ItemRoot = "/sitecore/layout/Glass Razor";
             Database = "master";
+            try
+            {
+                Master = new SitecoreService(Database, GlassRazorModuleLoader.ContextName);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw new RazorException(
+                    "Exception creating Sitecore Service, have you called the method GlassRazorModuleLoader.Load()?");
+            }
+
         }
 
         protected override void OnLoad(EventArgs e)
@@ -149,11 +161,9 @@ namespace Glass.Mapper.Sc.Razor.Shell
         public void CreateItem(T item)
         {
            Item parent =  ItemTreeView.GetSelectionItem();
-           ISitecoreService service = new SitecoreService(Database);
+           GlassRazorFolder folder = Master.CreateType<GlassRazorFolder>(parent, false, false);
 
-            GlassRazorFolder folder = service.CreateType<GlassRazorFolder>(parent, false, false);
-
-            service.Create(folder, item);
+            Master.Create(folder, item);
         }
 
         

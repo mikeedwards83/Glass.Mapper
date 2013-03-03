@@ -15,20 +15,20 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     public class TemplateBase<T>:RazorEngine.Templating.TemplateBase<TemplateModel<T>>
     {
         HtmlHelper _helper;
+        private GlassHtmlFacade _glassHtml;
 
-        public TemplateBase(ISitecoreService service)
+        public TemplateBase()
         {
-            GlassHtml = new GlassHtmlFacade(service);
             
-        }
+            
+        }   
       
-        public new T Model
+        public new T Item
         {
             get
             {
                 return base.Model.Model;
             }
-          
         }
 
         public ViewDataDictionary ViewData
@@ -37,10 +37,14 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             {
                 return base.Model.Control.ViewData;
             }
+            
           
         }
 
-        public GlassHtmlFacade GlassHtml { get; private set; }
+        public GlassHtmlFacade GlassHtml
+        {
+            get { return _glassHtml ?? (_glassHtml = new GlassHtmlFacade(base.Model.Control.SitecoreService)); }
+        }
 
         public HtmlHelper Html
         {
@@ -122,7 +126,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
             try
             {
-                return GlassHtml.Editable(this.Model, field);
+                return GlassHtml.Editable(this.Item, field);
             }
             catch (Exception ex)
             {

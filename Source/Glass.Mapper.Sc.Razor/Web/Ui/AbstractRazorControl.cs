@@ -23,6 +23,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private static volatile Dictionary<string, string> _viewCache;
         private static volatile FileSystemWatcher _fileSystemWatcher;
 
+
+        private ISitecoreService _sitecoreService;
+
         /// <summary>
         /// A list of placeholders to render on the page.
         /// </summary>
@@ -62,6 +65,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get;
             private set;
+        }
+
+        public ISitecoreService SitecoreService
+        {
+            get
+            {
+                if(_sitecoreService == null)
+                    _sitecoreService = new SitecoreService(Sitecore.Context.Database, ContextName);
+                
+                return _sitecoreService;
+            }
         }
 
         Func<string, string> ViewLoader = viewPath =>
