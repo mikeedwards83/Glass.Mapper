@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {5EBD6BDE-F691-47A1-9212-4688F70701B5}
+id: {5386DC93-0A99-40F6-A228-403D0E305D25}
 database: master
-path: /sitecore/templates/Site/Content/NewsArticle
+path: /sitecore/templates/Site/Content/Event
 parent: {28E1C00B-4A62-46FB-83EC-E7EC407E6DB0}
-name: NewsArticle
+name: Event
 master: {00000000-0000-0000-0000-000000000000}
 template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
 templatekey: Template
@@ -15,25 +15,25 @@ name: __Base template
 key: __base template
 content-length: 116
 
-{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{623D64D3-2B57-4A5C-8275-F19C30717256}|{7545A20A-39B6-4177-A381-5DD2165D6712}
+{623D64D3-2B57-4A5C-8275-F19C30717256}|{7545A20A-39B6-4177-A381-5DD2165D6712}|{1930BBEB-7805-471A-A3BE-4858AC7CF696}
 ----field----
 field: {F7D48A55-2158-4F02-9356-756654404F73}
 name: __Standard values
 key: __standard values
 content-length: 38
 
-{02588335-94ED-4DB0-9DF0-C69B8C476A74}
+{E595F456-FF20-4D21-BF4B-8E67A374A5E9}
 ----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
 key: __icon
 content-length: 29
 
-Applications/32x32/scroll.png
+Business/32x32/calendar_1.png
 ----version----
 language: en
 version: 1
-revision: 74d6555b-4c73-4034-92f4-aab358075dec
+revision: 9df8b88c-e5d7-4e9b-894b-252a231d009e
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -41,7 +41,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20130219T070200
+20130303T100100
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -55,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-74d6555b-4c73-4034-92f4-aab358075dec
+9df8b88c-e5d7-4e9b-894b-252a231d009e
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130224T084128:634972920880319008
+20130303T115253:634979083736852469
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

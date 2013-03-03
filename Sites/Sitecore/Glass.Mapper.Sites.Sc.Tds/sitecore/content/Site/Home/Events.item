@@ -6,13 +6,20 @@ path: /sitecore/content/Site/Home/Events
 parent: {70A64064-BD17-4CA7-BD89-2389D6DF32E0}
 name: Events
 master: {00000000-0000-0000-0000-000000000000}
-template: {31CD9FAD-37AC-4970-B6F9-08AD7CD0DC04}
-templatekey: SimpleLanding
+template: {A46EDC72-EA79-48A7-B738-623C1119D373}
+templatekey: EventsLanding
 
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 37
+
+<r xmlns:p="p" xmlns:s="s" p:p="1" />
 ----version----
 language: en
 version: 1
-revision: 46f5c4fa-88a7-4ba5-a93b-a25cfefac967
+revision: fd08a1cc-aa6e-48c2-bff0-4a744204147d
 
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-46f5c4fa-88a7-4ba5-a93b-a25cfefac967
+fd08a1cc-aa6e-48c2-bff0-4a744204147d
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130219T190719:634968976390832558
+20130303T113956:634979075960957713
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

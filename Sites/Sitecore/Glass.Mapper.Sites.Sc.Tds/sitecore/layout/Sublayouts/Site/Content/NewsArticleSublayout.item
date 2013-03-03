@@ -1,40 +1,33 @@
 ----item----
 version: 1
-id: {B75B43E9-E044-48A4-9C83-DE965482FC00}
+id: {23D91A00-A78C-423C-9FA4-32FA6B8F874C}
 database: master
-path: /sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms
-parent: {4BF5B341-73D1-4180-9808-3355C0A281B8}
-name: MapToCms
+path: /sitecore/layout/Sublayouts/Site/Content/NewsArticleSublayout
+parent: {0FBBBFBD-2903-4D9B-BEE2-52694E1E3273}
+name: NewsArticleSublayout
 master: {00000000-0000-0000-0000-000000000000}
-template: {3A1B89BA-3885-4BD6-8326-67605764676C}
-templatekey: DataMappersSingleField
+template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
+templatekey: Sublayout
 
+----field----
+field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
+name: Path
+key: path
+content-length: 47
+
+/layouts/Site/Content/NewsArticleSublayout.ascx
 ----version----
 language: en
 version: 1
-revision: 01ca9da6-f112-4853-886a-3d49e292d1da
+revision: ff91ced3-4bd1-49f8-a317-db4536fb28dc
 
-----field----
-field: {6B43481F-F129-4F53-BEEE-EA84F9B1A6D4}
-name: Field
-key: field
-content-length: 14
-
-test value set
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20121216T214506
+20130222T072600
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,18 +41,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-01ca9da6-f112-4853-886a-3d49e292d1da
+ff91ced3-4bd1-49f8-a317-db4536fb28dc
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130303T095340:634979012204999459
+20130222T072729:634971148494060795
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 18
+content-length: 14
 
-extranet\Anonymous
+sitecore\admin

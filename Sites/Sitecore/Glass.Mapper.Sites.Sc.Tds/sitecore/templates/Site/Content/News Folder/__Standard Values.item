@@ -1,33 +1,33 @@
 ----item----
 version: 1
-id: {A58AF137-49AD-4AC8-963C-554A82FC3AAD}
+id: {B41C16F1-9A73-4B98-A7D5-3597528B5DA5}
 database: master
-path: /sitecore/content/Tests/SitecoreService/AddVersion/Target
-parent: {ADBE78FE-8320-4462-A1F8-A9976772E3B2}
-name: Target
+path: /sitecore/templates/Site/Content/News Folder/__Standard Values
+parent: {DB91E0C2-6CF6-4DD2-9766-B080B9D2C007}
+name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
-template: {ABE81623-6250-46F3-914C-6926697B9A86}
-templatekey: EmptyItem
+template: {DB91E0C2-6CF6-4DD2-9766-B080B9D2C007}
+templatekey: News Folder
 
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 77
+
+{DB91E0C2-6CF6-4DD2-9766-B080B9D2C007}|{5EBD6BDE-F691-47A1-9212-4688F70701B5}
 ----version----
 language: en
 version: 1
-revision: a4563b8f-d1e6-4444-ada3-f30e7793bcb4
+revision: 5b0be74a-75fd-4394-83db-1ab237a86a62
 
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20130117T184103
+20130225T214955
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -41,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a4563b8f-d1e6-4444-ada3-f30e7793bcb4
+5b0be74a-75fd-4394-83db-1ab237a86a62
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130117T184103:634940448638980529
+20130225T215123:634974258830613647
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

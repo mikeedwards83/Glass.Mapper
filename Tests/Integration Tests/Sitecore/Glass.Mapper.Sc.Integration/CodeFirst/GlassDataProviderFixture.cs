@@ -105,9 +105,6 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             //Act
             var folder = db.GetItem(path);
-
-
-            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
             
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass1");
