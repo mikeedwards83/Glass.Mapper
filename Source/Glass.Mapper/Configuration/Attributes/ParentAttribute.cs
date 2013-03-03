@@ -16,11 +16,7 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -30,6 +26,7 @@ namespace Glass.Mapper.Configuration.Attributes
         public ParentAttribute()
         {
             IsLazy = true;
+            InferType = false;
         }
         /// <summary>
         /// Indicates if the parent should be loaded lazily. Default value is true. If false parent will be loaded when the contain object is created.

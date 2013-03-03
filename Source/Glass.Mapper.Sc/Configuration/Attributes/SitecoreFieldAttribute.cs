@@ -29,9 +29,17 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreFieldAttribute : FieldAttribute
     {
-        public SitecoreFieldAttribute(string fieldName)
+        public SitecoreFieldAttribute()
+        {
+            Setting = SitecoreFieldSettings.Default; ;
+        }
+    
+
+        public SitecoreFieldAttribute(string fieldName) : this()
         {
             FieldName = fieldName;
+            FieldSortOrder = -1;
+            SectionSortOrder = -1;
         }
 
         public SitecoreFieldAttribute(string fieldId, SitecoreFieldType fieldType, string sectionName = "Data", bool codeFirst = true)
@@ -40,6 +48,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             SectionName = sectionName;
             CodeFirst = codeFirst;
             FieldType = fieldType;
+            FieldSortOrder = -1;
+            SectionSortOrder = -1;
         }
 
         /// <summary>
@@ -122,12 +132,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         #endregion
 
 
-        /// <summary>
-        /// Indicates that the property should pull data from a Sitecore field.
-        /// </summary>
-        public SitecoreFieldAttribute()
-        {
-        }
 
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
