@@ -43,6 +43,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\Attribute\SitecoreClassAttribute.cs" />
     <Compile Include="Configuration\Attribute\SitecoreItemAttribute.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,7 @@
       <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

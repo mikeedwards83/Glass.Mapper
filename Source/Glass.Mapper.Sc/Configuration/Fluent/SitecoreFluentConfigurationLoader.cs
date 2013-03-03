@@ -27,7 +27,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
 {
     public class SitecoreFluentConfigurationLoader : IConfigurationLoader
     {
-        List<ISitecoreClass> _types = new List<ISitecoreClass>();
+        List<ISitecoreType> _types = new List<ISitecoreType>();
 
         public void Add<T>(SitecoreType<T> config)
         {

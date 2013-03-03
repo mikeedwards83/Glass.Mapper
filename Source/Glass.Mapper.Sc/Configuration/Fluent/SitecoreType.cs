@@ -25,7 +25,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// <summary>
     /// Indicates that the .Net class can be loaded by Glass.Sitecore.Mapper
     /// </summary>
-    public class SitecoreType<T> : ISitecoreClass, ISitecoreClass<T>
+    public class SitecoreType<T> : ISitecoreType, ISitecoreType<T>
     {
         private SitecoreTypeConfiguration _configuration;
 
@@ -46,6 +46,14 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return TemplateId(new ID(id));
         }
 
+        // <summary>
+        /// Indicates the template to use when trying to create an item
+        /// </summary>
+        public SitecoreType<T> TemplateId(Guid id)
+        {
+            return TemplateId(new ID(id));
+        }
+
         /// <summary>
         /// Indicates the template to use when trying to create an item
         /// </summary>
@@ -62,6 +70,15 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             return BranchId(new ID(id));
         }
+
+        /// <summary>
+        /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
+        /// </summary>
+        public SitecoreType<T> BranchId(Guid id)
+        {
+            return BranchId(new ID(id));
+        }
+
 
         /// <summary>
         /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
@@ -195,11 +212,12 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+
         /// <summary>
         /// Map multiple item information to a class properties
         /// </summary>
         /// <returns></returns>
-        public SitecoreType<T> Nodes(Action<ISitecoreClassInfos<T>> infos)
+        public SitecoreType<T> Infos(Action<ISitecoreClassInfos<T>> infos)
         {
             infos.Invoke(this);
             return this;
@@ -220,7 +238,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public SitecoreType<T> Items(Action<ISitecoreClassNodes<T>> items)
+        public SitecoreType<T> Nodes(Action<ISitecoreClassNodes<T>> items)
         {
             items.Invoke(this);
             return this;
@@ -242,7 +260,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
-        public SitecoreType<T> Configure(Action<ISitecoreClass<T>> config)
+        public SitecoreType<T> Configure(Action<ISitecoreType<T>> config)
         {
             config.Invoke(this);
             return this;
@@ -275,7 +293,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     }
     #region Interfaces
 
-    public interface ISitecoreClass<T> : 
+    public interface ISitecoreType<T> : 
         ISitecoreClassFields<T>,
         ISitecoreClassInfos<T>,
         ISitecoreClassQueries<T>,
