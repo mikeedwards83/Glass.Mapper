@@ -75,12 +75,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
 		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgarde.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgarde.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
 		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
 		Powershell\BuildScripts\utilities.ps1 = Powershell\BuildScripts\utilities.ps1
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Upgrade.Tests", "Tests\Unit Tests\Glass.Mapper.Sc.Upgrade.Tests\Glass.Mapper.Sc.Upgrade.Tests.csproj", "{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,6 +144,10 @@ Global
 		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +163,7 @@ Global
 		{728CF1A7-0F06-4464-B434-33A982D97C82} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{38DB0F01-9232-45BE-BC14-8DEDB738D538} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{5BE06222-6401-40C5-B6D2-617D4C35D99F} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
+		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{21D9A6AB-A672-4F18-8B93-A3AE0B3791AE} = {184BB116-635E-470B-8343-7605D4BA684E}
 		{710154AE-11A9-4150-B02F-C2F20BE71C8B} = {184BB116-635E-470B-8343-7605D4BA684E}
 		{85C3DE6A-9C0A-47BF-AD70-826403897A28} = {9F18504D-9A3D-486C-A72B-4F380BE968EC}

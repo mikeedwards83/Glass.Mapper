@@ -39,7 +39,7 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
-    public interface ISitecoreClass
+    public interface ISitecoreType
     {
         SitecoreTypeConfiguration Config { get; }
     }
