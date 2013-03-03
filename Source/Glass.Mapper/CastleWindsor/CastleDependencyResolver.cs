@@ -27,14 +27,16 @@ namespace Glass.Mapper.CastleWindsor
 {
     public class CastleDependencyResolver : IDependencyResolver
     {
-        private WindsorContainer _container;
+        public WindsorContainer Container { get; private set; }
+
+
 
         public T Resolve<T>(IDictionary<string, object> args = null)
         {
             if (args == null)
-                return _container.Resolve<T>();
+                return Container.Resolve<T>();
             else
-                return _container.Resolve<T>((IDictionary)args);
+                return Container.Resolve<T>((IDictionary)args);
         }
 
         public void Load(string contextName, IGlassConfiguration config)
@@ -44,15 +46,15 @@ namespace Glass.Mapper.CastleWindsor
             if(castleConfig == null)
                 throw new MapperException("IGlassConfiguration is not of type GlassCastleConfigBase");
 
-            _container = new WindsorContainer();
-            castleConfig.Configure(_container, contextName);
+            Container = new WindsorContainer();
+            castleConfig.Configure(Container, contextName);
 
         }
 
 
         public IEnumerable<T> ResolveAll<T>()
         {
-            return _container.ResolveAll<T>();
+            return Container.ResolveAll<T>();
         }
     }
 }
