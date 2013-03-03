@@ -10,6 +10,13 @@ template: {13280A9A-9817-4A04-8294-AAA531C2ADA2}
 templatekey: Events Folder
 
 ----field----
+field: {6FD695E7-7F6D-4CA5-8B49-A829E5950AE9}
+name: __Subitems Sorting
+key: __subitems sorting
+content-length: 38
+
+{26A33E6F-7D5F-4541-A2EB-BD96BAE914BB}
+----field----
 field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
 name: __Masters
 key: __masters
@@ -19,7 +26,7 @@ content-length: 77
 ----version----
 language: en
 version: 1
-revision: 5252bb43-6daf-42dc-aab3-20aab80a5972
+revision: cb8bc220-9019-4926-90c7-7c089ee47287
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -27,7 +34,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20130303T100615
+20130303T100600
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -41,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-5252bb43-6daf-42dc-aab3-20aab80a5972
+cb8bc220-9019-4926-90c7-7c089ee47287
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130303T100635:634979019952092568
+20130303T131058:634979130585782075
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

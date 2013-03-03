@@ -6,7 +6,7 @@ using Sitecore.Globalization;
 namespace Glass.Mapper.Sites.Sc.Models.Content
 {
     [SitecoreType]
-    public class Event
+    public class Event 
     {
         [SitecoreId]
         public virtual Guid Id { get; set; }
@@ -35,5 +35,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Content
 
         [SitecoreInfo(SitecoreInfoType.Url)]
         public virtual string Url { get; set; }
+
+       
     }
 }

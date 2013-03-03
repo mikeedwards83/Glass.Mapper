@@ -214,6 +214,7 @@
     <Content Include="xsl\system\WebEdit\Hidden Rendering.xslt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
