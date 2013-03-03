@@ -1,0 +1,33 @@
+---
+layout: DocsLayout
+title: Tutorial 8 - Attribute configuration
+
+
+<div class="page-header">
+    <h1>Tutorial 8 - Attribute configuration<small> </small></h1>
+</div>
+<p>
+    In this tutorial we will look at how we can use attribute configuration. So far in the tutorials we have used fluent configuration
+    but this isn't for everyone.
+</p>
+<p>
+    For this demo we will be creating the events area of our website, this tutorial will talk through the event page itself, if you 
+    want to see how the landing page works you can grab it from the GitHub repo.
+</p>
+<p>
+    Our event model is shown below, every class that you want to use with attribute configuration must have the SitecoreTypeAttribute defined
+    on the class. There is then an attribute that pairs with the fleunt methods, everything you can do with fluent configuration you can do 
+    with attribute configuration, it is just a choice of style. 
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial08/tutorial08.event.cs" ref="gh-pages"></pre>
+<p>
+    Now we have our configured class we need to tell Glass.Mapper to load the configuration, this is done using the SitecoreAttributeConfigurationLoader 
+    and updating our Application_Start method in the Global class. The loader takes a list of assemblies to load types from, it will search 
+    through the assemblies you have listed and load any classes that have the SitecoreTypeAttribute:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial08/tutorial08.global.cs" ref="gh-pages"></pre>
+<p>
+    After configuring your classes there isn't and different in how you use Glass.Mapper, navigate to GitHub to get the code
+    for the event sublayout.
+</p>
+
