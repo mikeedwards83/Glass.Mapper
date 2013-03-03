@@ -16,7 +16,6 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper" version="0.0.0" />
-		<dependency id="Castle.Windsor" version="3.1.0" />
     </dependencies>
   </metadata>
   <files>
