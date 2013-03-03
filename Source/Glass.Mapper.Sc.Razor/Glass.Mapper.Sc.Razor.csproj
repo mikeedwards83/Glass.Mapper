@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{717C4ADB-B71A-4DFF-BEC5-AFD343776194}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Glass.Mapper.Sc.Razor</RootNamespace>
+    <AssemblyName>Glass.Mapper.Sc.Razor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RazorEngine">
+      <HintPath>..\..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\Glass.Mapper.Sc\bin\Debug\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\66\Sitecore.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContextRazorView.cs" />
+    <Compile Include="Dynamic\DynamicField.cs" />
+    <Compile Include="Dynamic\RazorDynamicItem.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="GlassHtmlFacade.cs" />
+    <Compile Include="GlassModuleLoader.cs" />
+    <Compile Include="IRazorControl.cs" />
+    <Compile Include="Model\GlassBehindRazor.cs" />
+    <Compile Include="Model\GlassDynamicRazor.cs" />
+    <Compile Include="Model\GlassRazorFolder.cs" />
+    <Compile Include="Model\GlassTypedRazor.cs" />
+    <Compile Include="Pipelines\GetRenderer\AbstractGetViewRendering.cs" />
+    <Compile Include="Pipelines\GetRenderer\GetBehindViewRendering.cs" />
+    <Compile Include="Pipelines\GetRenderer\GetDynamicViewRendering.cs" />
+    <Compile Include="Pipelines\GetRenderer\GetTypedViewRendering.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawString.cs" />
+    <Compile Include="RazorException.cs" />
+    <Compile Include="RenderingTypes\AbstractCachingRenderingType.cs" />
+    <Compile Include="RenderingTypes\BehindRazorRenderingType.cs" />
+    <Compile Include="RenderingTypes\DynamicRazorRenderingType.cs" />
+    <Compile Include="RenderingTypes\TypedRazorRenderingType.cs" />
+    <Compile Include="Shell\AbtractFileCreateWizard.cs" />
+    <Compile Include="Shell\Commands\CreateBehindRazor.cs" />
+    <Compile Include="Shell\Commands\CreateDynamicRazor.cs" />
+    <Compile Include="Shell\Commands\CreateTypedRazor.cs" />
+    <Compile Include="Shell\Wizards\BehindWizard.cs" />
+    <Compile Include="Shell\Wizards\DynamicWizard.cs" />
+    <Compile Include="Shell\Wizards\TypedWizard.cs" />
+    <Compile Include="Web\Mvc\AbstractViewRendering.cs" />
+    <Compile Include="Web\Mvc\BehindViewRenderer.cs" />
+    <Compile Include="Web\Mvc\DynamicViewRenderer.cs" />
+    <Compile Include="Web\Mvc\TypedViewRenderer.cs" />
+    <Compile Include="Web\Mvc\ViewDataContainer.cs" />
+    <Compile Include="Web\Ui\AbstractRazorControl.cs" />
+    <Compile Include="Web\Ui\DynamicControl.cs" />
+    <Compile Include="Web\Ui\DynamicTemplate.cs" />
+    <Compile Include="Web\Ui\TemplateBase.cs" />
+    <Compile Include="Web\Ui\TemplateModel.cs" />
+    <Compile Include="Web\Ui\TypedControl.cs" />
+    <Compile Include="Web\Ui\TypedTemplate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Items.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service References\" />
+    <Folder Include="Web\Ui\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
