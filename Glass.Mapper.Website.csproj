@@ -90,6 +90,7 @@
     <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.config.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="_posts\2013-03-02-Beta-Release.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
@@ -146,10 +147,6 @@
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\DocsLayout.html" />
     <Content Include="_layouts\MainLayout.html" />
-    <Content Include="_posts\2013-01-22-Test.html" />
-    <Content Include="_posts\2013-01-21-Test.html" />
-    <Content Include="_posts\2013-01-15-Test.html" />
-    <Content Include="_posts\2013-01-20-Test.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.topnav.ascx.cs">
