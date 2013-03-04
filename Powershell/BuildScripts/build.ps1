@@ -69,8 +69,14 @@ $nugetExe = $releasePath+"\Nuget.exe"
 if($clean)
 {
     LogWrite "Removing directories"
-    Remove-Item $releasePath -Force -Recurse
-    Remove-Item $nugetsPath -Force -Recurse
+   
+    if(Test-Path $releasePath){
+        Remove-Item $releasePath -Force -Recurse
+    }
+
+    if(Test-Path $nugetsPath){
+         Remove-Item $nugetsPath -Force -Recurse
+    }
 }
 
 if((Test-Path $releasePath) -or (Test-Path $nugetsPath)){
