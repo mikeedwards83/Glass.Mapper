@@ -6,8 +6,8 @@ path: /sitecore/content/Site/Home/News
 parent: {70A64064-BD17-4CA7-BD89-2389D6DF32E0}
 name: News
 master: {00000000-0000-0000-0000-000000000000}
-template: {31CD9FAD-37AC-4970-B6F9-08AD7CD0DC04}
-templatekey: SimpleLanding
+template: {24C53E69-DD16-40FA-A6A3-9B276635E20B}
+templatekey: NewsLanding
 
 ----field----
 field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
@@ -15,11 +15,18 @@ name: __Masters
 key: __masters
 content-length: 38
 
-{5EBD6BDE-F691-47A1-9212-4688F70701B5}
+{DB91E0C2-6CF6-4DD2-9766-B080B9D2C007}
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 37
+
+<r xmlns:p="p" xmlns:s="s" p:p="1" />
 ----version----
 language: en
 version: 1
-revision: 934640fc-8dd4-48c5-b953-b9793f94d16c
+revision: d999a3e7-b33d-4a2a-9d69-1b39c5687ecb
 
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
@@ -41,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-934640fc-8dd4-48c5-b953-b9793f94d16c
+d999a3e7-b33d-4a2a-9d69-1b39c5687ecb
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130219T190732:634968976524590208
+20130303T113929:634979075692372351
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

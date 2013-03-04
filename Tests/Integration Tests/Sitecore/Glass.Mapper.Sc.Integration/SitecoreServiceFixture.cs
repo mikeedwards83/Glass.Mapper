@@ -42,12 +42,21 @@ namespace Glass.Mapper.Sc.Integration
         public void AddVersion_NewVersionCreated()
         {
             //Assign
-            string path = "/sitecore/content/Tests/SitecoreService/AddVersion/Target";
+            string path = "/sitecore/content/Tests/SitecoreService/AddVersion/Target2";
             var context = Context.Create(new GlassConfig());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
+
+            //clean up everything 
+            using (new SecurityDisabler())
+            {
+                var item = db.GetItem(path);
+                item.Versions.RemoveAll(true);
+                var firstVersion = item.Versions.AddVersion();
+                Assert.AreEqual(1, firstVersion.Version.Number);
+            }
 
             var oldVersion = service.GetItem<StubClass>(path);
 

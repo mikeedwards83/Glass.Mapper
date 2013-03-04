@@ -17,6 +17,13 @@ content-length: 116
 
 {1930BBEB-7805-471A-A3BE-4858AC7CF696}|{623D64D3-2B57-4A5C-8275-F19C30717256}|{7545A20A-39B6-4177-A381-5DD2165D6712}
 ----field----
+field: {F7D48A55-2158-4F02-9356-756654404F73}
+name: __Standard values
+key: __standard values
+content-length: 38
+
+{02588335-94ED-4DB0-9DF0-C69B8C476A74}
+----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
 key: __icon
@@ -26,7 +33,7 @@ Applications/32x32/scroll.png
 ----version----
 language: en
 version: 1
-revision: 17a4cb08-d1d3-4475-85f7-b1d901c412b0
+revision: 74d6555b-4c73-4034-92f4-aab358075dec
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -48,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-17a4cb08-d1d3-4475-85f7-b1d901c412b0
+74d6555b-4c73-4034-92f4-aab358075dec
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130219T070942:634968545828390772
+20130224T084128:634972920880319008
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
