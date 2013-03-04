@@ -16,6 +16,7 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
             {
                 DynamicViewRenderer render = new DynamicViewRenderer();
                 render.Path = renderItem["Name"];
+                render.ContextName = renderItem["ContextName"];
                 render.DataSource = rendering.DataSource;
                 return render;
             }

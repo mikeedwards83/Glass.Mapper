@@ -16,17 +16,18 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
             
             
             string view = parameters["Name"];
-
+            string contextName = parameters["ContextName"];
             if(view.IsNullOrEmpty())
                 throw new NullReferenceException("Parameter 'Name' is null or empty");
 
 
-            return CreateControl(view);
+            return CreateControl(view, contextName);
         }
-        public static System.Web.UI.WebControls.WebControl CreateControl(string view)
+        public static System.Web.UI.WebControls.WebControl CreateControl(string view, string contextName)
         {
             IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(typeof(DynamicControl)) as IRazorControl;
             control.View = view;
+            control.ContextName = contextName;
             return control as System.Web.UI.WebControls.WebControl;
         }
     }

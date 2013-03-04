@@ -9,7 +9,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Mvc
 
         public override void Render(System.IO.TextWriter writer)
         {
-            DynamicControl control = DynamicRazorRenderingType.CreateControl(Path) as DynamicControl;
+            DynamicControl control = DynamicRazorRenderingType.CreateControl(Path, ContextName) as DynamicControl;
             if (control != null)
             {
                 HtmlTextWriter htmlWriter = new HtmlTextWriter(writer);

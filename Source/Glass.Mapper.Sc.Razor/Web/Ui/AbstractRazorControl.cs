@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Web;
+using RazorEngine.Templating;
 using Sitecore.Web.UI;
 using System.Web.UI;
 using Sitecore.Data.Items;
@@ -175,13 +176,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
             try
             {
-                TemplateModel<T> tModel = new TemplateModel<T>();
-                tModel.Control = this;
-                tModel.Model = Model;
+                var template = RazorEngine.Razor.CreateTemplate(viewContents, Model) as TemplateBase<T>;
 
-                string content = global::RazorEngine.Razor.Parse<TemplateModel<T>>(viewContents, tModel, View);
+                template.Configure(SitecoreService, ViewData, this);
 
-                output.Write(content);
+                output.Write( template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)
             {
