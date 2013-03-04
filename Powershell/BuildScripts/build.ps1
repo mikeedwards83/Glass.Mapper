@@ -139,9 +139,11 @@ $nugets = Get-ChildItem -Path $releasePath -Filter *.nuspec | ForEach-Object -Pr
 
 foreach($nuget  in $nugets){
     LogWrite $nuget
-    [xml] $nugetContent = Get-Content $nuget
-    $nugetContent.package.metadata.version = $releaseNumber
-    $nugetContent.Save($nuget)
+ 
+ #Removed, using $version$ in Nuget files
+ #   [xml] $nugetContent = Get-Content $nuget
+ #   $nugetContent.package.metadata.version = $releaseNumber
+ #   $nugetContent.Save($nuget)
 	
     $nugetCmd = $nugetExe + " pack "+$nuget +" -Symbols -Verbosity detailed -Version "+ $releaseNumber + " -OutputDirectory "+$nugetsPath
     

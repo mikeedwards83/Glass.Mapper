@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sitecore-Upgrade</id>
-    <version>0.0.0</version>
+    <id>Glass.Mapper.Sc.Upgrade</id>
+    <version>$version$</version>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
