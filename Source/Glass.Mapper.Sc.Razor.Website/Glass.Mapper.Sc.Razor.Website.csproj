@@ -42,7 +42,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Packages\Glass.Sitecore.Mapper.Razor.xml" />
+    <Content Include="Data\Packages\Glass.Mapper.Sc.Razor.Package.xml" />
     <Content Include="Sitecore Modules\Shell\Glass\Mapper\Razor\BehindRazor.xml" />
     <Content Include="Sitecore Modules\Shell\Glass\Mapper\Razor\DynamicRazor.xml" />
     <Content Include="Sitecore Modules\Shell\Glass\Mapper\Razor\TypedRazor.xml">
@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\Glass.Mapper.Sc.Razor.config" />
-    <None Include="Data\Packages\Glass.Sitecore.Mapper.Razor.zip" />
+    <None Include="Data\Packages\Glass.Mapper.Sc.Razor.Package.zip" />
     <None Include="Sitecore Modules\Shell\Glass\Mapper\Razor\Templates\BehindRazorTemplate.cshtml.cs.temp" />
     <None Include="Sitecore Modules\Shell\Glass\Mapper\Razor\Templates\BehindRazorTemplate.cshtml.temp" />
     <None Include="Sitecore Modules\Shell\Glass\Mapper\Razor\Templates\DynamicRazorTemplate.cshtml.temp" />
