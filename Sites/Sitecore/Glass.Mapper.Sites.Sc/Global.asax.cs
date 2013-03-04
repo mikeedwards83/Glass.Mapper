@@ -17,6 +17,8 @@ namespace Glass.Mapper.Sites.Sc
                 Models.Config.Content.Load(),
                 attributes
                 );
+            
+            Mapper.Sc.Razor.GlassRazorModuleLoader.Load();
         }
     }
 }

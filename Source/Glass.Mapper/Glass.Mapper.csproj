@@ -86,6 +86,7 @@
     <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="Profilers\ChainedProfiler.cs" />
     <Compile Include="Profilers\IPerformanceProfiler.cs" />
     <Compile Include="MapperException.cs" />
     <Compile Include="Pipelines\AbstractPipelineArgs.cs" />

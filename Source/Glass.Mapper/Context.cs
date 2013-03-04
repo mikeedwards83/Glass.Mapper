@@ -21,10 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Pipelines.ConfigurationResolver;
-using Glass.Mapper.Pipelines.ObjectConstruction;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
@@ -42,11 +38,6 @@ namespace Glass.Mapper
 
        
 
-        static Context()
-        {
-            ResolverFactory = new CastleDependencyResolverFactory();
-            Contexts = new Dictionary<string, Context>();
-        }
 
         /// <summary>
         /// The default Context. Used by services if no Context is specified.
@@ -58,8 +49,11 @@ namespace Glass.Mapper
         /// </summary>
         public static IDictionary<string, Context> Contexts { get; private set; }
 
-        
-
+        static Context()
+        {
+            ResolverFactory = new CastleDependencyResolverFactory();
+            Contexts = new Dictionary<string, Context>();
+        }
         /// <summary>
         /// Creates a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2012 Michael Edwards
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <GlassBehindRazor>
+    <WizardForm Background="#e9e9e9" CodeBeside="Glass.Mapper.Sc.Razor.Shell.Wizards.BehindWizard, Glass.Mapper.Sc.Razor" Submittable="false">
+      <WizardFormFirstPage ID="firstPage" Icon="Software/32x32/text_code.png">
+        <Border Class="scWizardWelcomeTitle">
+          <Literal ID="Welcome" Text="Welcome to the Glass Code Behind Razor View Wizard."/>
+        </Border>
+        <Literal Text="This wizard will take you through the process of creating a Razor CSHTML page that uses the Glass Code-Behind Sitecore integrtion."/>
+
+
+      </WizardFormFirstPage>
+      
+      <WizardFormPage ID="typeNamePage" Header="Type Name" Text="Enter the details about the assembly the code-behind will be compiled in." Icon="Software/32x32/text_code.png">
+        <WizardFormIndent>
+          <GridPanel Width="100%" CellPadding="2" Columns="2">
+            <Literal Text="Namespace:" Style="white-space:nowrap"/>
+            <Edit ID="Namespace" Value="MyApp.Website.Views" Width="100%" GridPanel.Width="100%"/>
+          </GridPanel>
+          <GridPanel Width="100%" CellPadding="2" Columns="2">
+            <Literal Text="Class Name:" Style="white-space:nowrap"/>
+            <Edit ID="FileName" Value="MyClass" Width="100%" GridPanel.Width="100%"/>
+          </GridPanel>
+          <GridPanel Width="100%" CellPadding="2" Columns="2">
+            <Literal Text="Assembly Name:" Style="white-space:nowrap"/>
+            <Edit ID="AssemblyName" Value="MyApp.Website" Width="100%" GridPanel.Width="100%"/>
+          </GridPanel>
+        </WizardFormIndent>
+      </WizardFormPage>
+
+      <WizardFormPage ID="fileLocationPage" Header="File Location" Text="Select the location for the new Razor CSHTML file." Icon="Software/32x32/text_code.png">
+        <DataContext ID="FileDataContext" DataViewName="FileSystem" Root="/" Folder="/" Filter="Contains('${Sitecore.Data.DataProviders.FileSystemDataProvider.FolderID.ToString()}', @@templateid)"/>
+        <WizardFormIndent>
+          <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+            <Scrollbox GridPanel.Height="100%" Class="scScrollbox scFixSize scFixSize8" Height="100%" Background="white" Border="1px inset" Padding="0px" ContextMenu="GetFileContextMenu">
+              <TreeviewEx ID="FileLocationTreeview" DataContext="FileDataContext" Root="false" />
+            </Scrollbox>
+          </GridPanel>
+        </WizardFormIndent>
+      </WizardFormPage>
+
+      <WizardFormPage ID="itemLocationPage" Header="File Location" Text="Select the location for the new Razor view item." Icon="Software/32x32/text_code.png">
+        <DataContext ID="ItemDataContext" DataViewName="Master" Root="{A97EE6DA-D936-4AA0-B44A-5E68C45BF6A0}" Filter="Contains('{A4F60160-BD14-4471-B362-CB56905E9564}', @@templateid)"/>
+        <WizardFormIndent>
+          <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+            <Scrollbox GridPanel.Height="100%" Class="scScrollbox scFixSize scFixSize8" Height="100%" Background="white" Border="1px inset" Padding="0px" ContextMenu="GetFileContextMenu">
+              <TreeviewEx ID="ItemTreeView" DataContext="ItemDataContext" />
+            </Scrollbox>
+          </GridPanel>
+        </WizardFormIndent>
+      </WizardFormPage>
+
+
+      <WizardFormLastPage ID="finalPage" Icon="Software/32x32/text_code.png">
+        <Literal Text="Your new Glass Code-Behind Sitecore Razor view has been added."/>
+      </WizardFormLastPage>
+    </WizardForm>
+  </GlassBehindRazor>
+</control>
