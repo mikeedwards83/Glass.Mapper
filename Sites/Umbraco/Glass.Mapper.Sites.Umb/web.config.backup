@@ -67,7 +67,11 @@
       </smtp>
     </mailSettings>
   </system.net>
-  <connectionStrings />
+  <connectionStrings>
+    <remove name="umbracoDbDSN" />
+    <add name="umbracoDbDSN" connectionString="" providerName="" />
+    <!-- Important: If you're upgrading Umbraco, do not clear the connection string / provider name during your web.config merge. -->
+  </connectionStrings>
   <system.web>
     <customErrors mode="RemoteOnly" />
     <trace enabled="false" requestLimit="10" pageOutput="false" traceMode="SortByTime" localOnly="true" />

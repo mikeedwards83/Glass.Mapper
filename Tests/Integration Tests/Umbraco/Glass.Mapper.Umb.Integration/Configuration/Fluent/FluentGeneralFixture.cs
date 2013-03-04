@@ -30,7 +30,6 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
     [TestFixture]
     public class FluentGeneralFixture
     {
-
         [Test]
         public void General_RetrieveItemAndFieldsFromSitecore_ReturnPopulatedClass()
         {

@@ -31,6 +31,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     [TestFixture]
     public class UmbracoIdMapperFixture
     {
+        private static bool _isSetup;
         private PetaPocoUnitOfWorkProvider _unitOfWork;
         private RepositoryFactory _repoFactory;
 
@@ -63,7 +64,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         public void MapToProperty_ItemIdAsInt_ReturnsIdAsInt()
         {
             var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}"));
+            var content = contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
 
             //Assign
             var mapper = new UmbracoIdMapper();
@@ -90,7 +91,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         public void MapToProperty_ItemIdAsGuid_ReturnsIdAsGuid()
         {
             var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}"));
+            var content = contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
 
             //Assign
             var mapper = new UmbracoIdMapper();
@@ -119,6 +120,9 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
         private void CreateStub()
         {
+            if (_isSetup)
+                return;
+
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
@@ -138,8 +142,10 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             Assert.Greater(contentType.Id, 0);
 
             var content = new Content(name, -1, contentType);
-            content.Key = new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}");
+            content.Key = new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}");
             contentService.Save(content);
+
+            _isSetup = true;
         }
 
         public class Stub

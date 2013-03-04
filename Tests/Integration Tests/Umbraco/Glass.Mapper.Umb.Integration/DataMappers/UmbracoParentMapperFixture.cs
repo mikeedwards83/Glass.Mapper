@@ -32,6 +32,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     [TestFixture]
     public class UmbracoParentMapperFixture
     {
+        private static bool _isSetup;
         private PetaPocoUnitOfWorkProvider _unitOfWork;
         private RepositoryFactory _repoFactory;
 
@@ -183,6 +184,9 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
         private void CreateStub()
         {
+            if (_isSetup)
+                return;
+
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
@@ -208,6 +212,8 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var content = new Content(name, parentContent.Id, contentType);
             content.Key = new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}");
             contentService.Save(content);
+
+            _isSetup = true;
         }
 
         public class Stub
