@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Web;
+using Glass.Mapper.Profilers;
+using Glass.Mapper.Sc.Profilers;
 using RazorEngine.Templating;
 using Sitecore.Web.UI;
 using System.Web.UI;
@@ -26,6 +28,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
 
         private ISitecoreService _sitecoreService;
+
+
+        public IPerformanceProfiler Profiler { get; set; }
 
         /// <summary>
         /// A list of placeholders to render on the page.
@@ -104,6 +109,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         public AbstractRazorControl()
         {
+            Profiler = new SitecoreProfiler();
+
             if (_viewCache == null)
             {
                 lock (_key)
@@ -176,11 +183,16 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
             try
             {
+                Profiler.Start("Razor engine {0}".Formatted(this.View));
+
                 var template = RazorEngine.Razor.CreateTemplate(viewContents, Model) as TemplateBase<T>;
 
                 template.Configure(SitecoreService, ViewData, this);
 
                 output.Write( template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
+
+                Profiler.Start("Razor engine {0}".Formatted(this.View));
+
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)
             {

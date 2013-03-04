@@ -147,6 +147,7 @@
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />
     <Compile Include="RenderField\ImageParameters.cs" />
