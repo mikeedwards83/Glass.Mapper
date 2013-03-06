@@ -46,15 +46,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(StubClass);
-            var glassConfig = Substitute.For<IGlassConfiguration>();
             var service = Substitute.For<IAbstractService>();
 
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
-            Context.ResolverFactory.GetResolver().Returns(Substitute.For<IDependencyResolver>());
-            Context context = Context.Create(glassConfig);
+            Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(type);
+            abstractTypeCreationContext.RequestedType = type;
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
@@ -78,12 +75,10 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var glassConfig = Substitute.For<IGlassConfiguration>();
             var service = Substitute.For<IAbstractService>();
 
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
-            Context.ResolverFactory.GetResolver().Returns(Substitute.For<IDependencyResolver>());
-            Context context = Context.Create(glassConfig);
+            Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(typeof (IStubInterface));
+            abstractTypeCreationContext.RequestedType = typeof (IStubInterface);
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
@@ -105,13 +100,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(IStubInterface);
-            var glassConfig = Substitute.For<IGlassConfiguration>();
+            var resolver = Substitute.For<IDependencyResolver>();
             var service = Substitute.For<IAbstractService>();
 
-            Context context = Context.Create(glassConfig);
+            Context context = Context.Create(resolver);
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(typeof(IStubInterface));
+            abstractTypeCreationContext.RequestedType= typeof(IStubInterface);
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;

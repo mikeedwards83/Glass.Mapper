@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -58,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -76,7 +77,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>));
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -94,7 +95,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped));
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -112,7 +113,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -130,7 +131,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -155,7 +156,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Query = "../Results/*";
             config.IsRelative = true;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -188,7 +189,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Query = "/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/*";
             config.IsRelative = false;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -221,7 +222,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Query = "../Results/Result1";
             config.IsRelative = true;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -251,7 +252,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.Query = "/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/Result1";
             config.IsRelative = false;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -282,7 +283,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.IsRelative = true;
             config.UseQueryContext = true;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -316,7 +317,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.IsRelative = false;
             config.UseQueryContext = true;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);
@@ -350,7 +351,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.IsRelative = false;
             config.UseQueryContext = true;
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreQueryMapper(null);

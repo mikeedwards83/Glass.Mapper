@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
@@ -34,11 +33,6 @@ namespace Glass.Mapper
 
         #region STATICS
 
-        public static IDependencyResolverFactory ResolverFactory { get; set; }
-
-       
-
-
         /// <summary>
         /// The default Context. Used by services if no Context is specified.
         /// </summary>
@@ -51,15 +45,14 @@ namespace Glass.Mapper
 
         static Context()
         {
-            ResolverFactory = new CastleDependencyResolverFactory();
             Contexts = new Dictionary<string, Context>();
         }
         /// <summary>
         /// Creates a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>
-        public static Context Create(IGlassConfiguration glassConfig)
+        public static Context Create(IDependencyResolver resolver)
         {
-            return Context.Create(glassConfig, DefaultContextName, true);
+            return Context.Create(resolver, DefaultContextName, true);
         }
 
         /// <summary>
@@ -68,16 +61,14 @@ namespace Glass.Mapper
         /// <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
         /// <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
         /// <returns></returns>
-        public static Context Create(IGlassConfiguration glassConfig, string contextName, bool isDefault = false)
+        public static Context Create(IDependencyResolver resolver, string contextName, bool isDefault = false)
         {
 
-            if (glassConfig == null)
-                throw new NullReferenceException("No GlassConfig set. Set the static property Context.GlassConfig");
+            if (resolver == null)
+                throw new NullReferenceException("No dependency resolver set.");
 
             var context = new Context();
-            context.DependencyResolver = ResolverFactory.GetResolver();
-            context.DependencyResolver.Load(contextName, glassConfig);
-            
+            context.DependencyResolver = resolver;
             Contexts[contextName] = context;
 
             if (isDefault)

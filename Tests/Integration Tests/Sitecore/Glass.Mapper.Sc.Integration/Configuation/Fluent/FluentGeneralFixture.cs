@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using NUnit.Framework;
@@ -40,7 +41,7 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
             string name = "Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 

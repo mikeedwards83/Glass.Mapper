@@ -7,12 +7,9 @@ namespace Glass.Mapper.Sc.Razor
         public const string ContextName = "GlassRazor";
 
 
-        public static Context Load(IGlassConfiguration config = null)
+        public static Context Load(IDependencyResolver resolver)
         {
-            if (config == null)
-                config = new GlassConfig();
-            
-            var context = Context.Contexts.ContainsKey(ContextName) ? Context.Contexts[ContextName] : Context.Create(config, ContextName);
+            var context = Context.Contexts.ContainsKey(ContextName) ? Context.Contexts[ContextName] : Context.Create(resolver, ContextName);
 
             var loader = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Razor");
             context.Load(loader);

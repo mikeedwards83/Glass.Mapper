@@ -17,18 +17,14 @@
 //-CRE-
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Web;
-using Castle.DynamicProxy;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
-using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI.WebControls;
 

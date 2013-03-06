@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -43,7 +44,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             string path = "/sitecore/content/Tests/SitecoreService/AddVersion/Target2";
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -81,7 +82,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemId_ReturnsItem()
         {
              //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration") );
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -99,7 +100,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemId_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -118,7 +119,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -139,7 +140,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage1Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -162,7 +163,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage2Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -187,7 +188,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage3Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -214,7 +215,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage4Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -243,7 +244,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -264,7 +265,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage1Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -287,7 +288,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage2Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -312,7 +313,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage3Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -339,7 +340,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage4Parameter_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -368,7 +369,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguageVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -390,7 +391,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage1ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -415,7 +416,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage2ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -442,7 +443,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage3ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -471,7 +472,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemIdLanguage4ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -502,7 +503,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguageVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -525,7 +526,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage1ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -550,7 +551,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage2ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -577,7 +578,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage3ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -606,7 +607,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetItem_UsingItemPathLanguage4ParameterVersion_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -646,7 +647,7 @@ namespace Glass.Mapper.Sc.Integration
             var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
             string expected = "new name";
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
             var service = new SitecoreService(db);
@@ -684,7 +685,7 @@ namespace Glass.Mapper.Sc.Integration
             string expected = "new name";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
             var service = new SitecoreService(db, context);
@@ -727,7 +728,7 @@ namespace Glass.Mapper.Sc.Integration
             string expected = "new name";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
             var service = new SitecoreService(db, context);
@@ -772,7 +773,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateTypes_TwoItems_ReturnsTwoClasses()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -798,7 +799,7 @@ namespace Glass.Mapper.Sc.Integration
             //Assign
             var language = LanguageManager.GetLanguage("af-ZA");
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -825,7 +826,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_NoConstructorArgs_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -844,7 +845,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_NoConstructorArgsTyped_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -863,7 +864,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_OneConstructorArgs_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -885,7 +886,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_OneConstructorArgsTyped_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -907,7 +908,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_TwoConstructorArgs_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -931,7 +932,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_TwoConstructorArgsTyped_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -955,7 +956,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_ThreeConstructorArgs_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -982,7 +983,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_ThreeConstructorArgsTyped_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -1009,7 +1010,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_FourConstructorArgs_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -1037,7 +1038,7 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateType_FourConstructorArgsTyped_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -1073,7 +1074,7 @@ namespace Glass.Mapper.Sc.Integration
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -1108,7 +1109,7 @@ namespace Glass.Mapper.Sc.Integration
             string childPath = "/sitecore/content/Tests/SitecoreService/Delete/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -1147,7 +1148,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetNewPath = "/sitecore/content/Tests/SitecoreService/Move/Parent2/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
