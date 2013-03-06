@@ -717,7 +717,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var fieldValue = "test content field";
 
-            model.StringField = fieldValue;
+            model.StringFieldId = fieldValue;
 
             using (new SecurityDisabler())
             {

@@ -114,7 +114,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             Assert.IsNotNull(section);
             var field = section.Children.FirstOrDefault(x => x.Name == "Field1");
             Assert.IsNotNull(field);
-
+             
         }
 
         [Test]

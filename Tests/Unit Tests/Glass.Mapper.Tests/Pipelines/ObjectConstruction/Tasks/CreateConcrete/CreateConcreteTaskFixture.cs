@@ -50,7 +50,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(type);
+            abstractTypeCreationContext.RequestedType= type;
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
@@ -77,7 +77,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(typeof (StubClass));
+            abstractTypeCreationContext.RequestedType = typeof (StubClass);
             abstractTypeCreationContext.IsLazy = true;
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
@@ -107,7 +107,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(typeof (StubClass));
+            abstractTypeCreationContext.RequestedType = typeof (StubClass);
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
@@ -136,7 +136,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType.Returns(typeof (StubClass));
+            abstractTypeCreationContext.RequestedType =typeof (StubClass);
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
