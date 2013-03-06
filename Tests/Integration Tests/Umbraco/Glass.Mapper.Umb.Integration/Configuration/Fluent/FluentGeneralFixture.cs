@@ -79,7 +79,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             propertyType.Alias = "TestProperty";
             propertyType.Name = "TestProperty";
             propertyType.Key = Guid.NewGuid();
-            contentType.AddPropertyType(propertyType);
+            //contentType.AddPropertyType(propertyType);
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
