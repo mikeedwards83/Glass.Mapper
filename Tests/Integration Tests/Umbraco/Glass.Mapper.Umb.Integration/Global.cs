@@ -94,10 +94,13 @@ namespace Glass.Mapper.Umb.Integration
     
         public static void ConfigureDatabase()
         {
-            new SqlCeEngine(ConnectionString).CreateDatabase();
-
-            UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
-            umbracoDatabase.CreateDatabaseSchema();
+            var installer = new SqlCEInstaller(new SqlCEHelper(ConnectionString));
+            if (installer.CanConnect)
+            {
+                //  installer.Install();
+                UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
+                umbracoDatabase.CreateDatabaseSchema();
+            }
         }
 
         public static PetaPocoUnitOfWorkProvider CreateUnitOfWork()

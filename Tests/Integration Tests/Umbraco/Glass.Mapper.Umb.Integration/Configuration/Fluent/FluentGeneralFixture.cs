@@ -21,9 +21,11 @@ using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Fluent;
 using NUnit.Framework;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
+using umbraco.interfaces;
 
 namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
 {
@@ -64,22 +66,26 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
 
             context.Load(loader);
 
-            var contentType = new ContentType(-1);
+            IContentType contentType = new ContentType(-1);
             contentType.Name = contentTypeName;
             contentType.Alias = contentTypeAlias;
-            var propertyGroup = new PropertyGroup();
-            propertyGroup.Name = "Content";
-            
+            contentType.Thumbnail = string.Empty;
+           // contentTypeService.Save(contentType);
+           // Assert.Greater(contentType.Id, 0);
+
+          //  contentType = contentTypeService.GetContentType(contentType.Id);
 			var definitions = dataTypeService.GetDataTypeDefinitionByControlId(new Guid("ec15c1e5-9d90-422a-aa52-4f7622c63bea"));
             var propertyType = new PropertyType(definitions.FirstOrDefault());
-            propertyType.Alias = "Property";
-           // contentType.AddPropertyType(propertyType);
-            contentType.Thumbnail = string.Empty;
+            propertyType.Alias = "TestProperty";
+            propertyType.Name = "TestProperty";
+            propertyType.Key = Guid.NewGuid();
+            contentType.AddPropertyType(propertyType);
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
+            contentType = contentTypeService.GetContentType(contentType.Id);
             var content = new Content(name, -1, contentType);
-          //  content.SetPropertyValue("Property", fieldValue);
+          //  content.SetPropertyValue("TestProperty", fieldValue);
             contentService.Save(content);
 
             var umbracoService = new UmbracoService();
