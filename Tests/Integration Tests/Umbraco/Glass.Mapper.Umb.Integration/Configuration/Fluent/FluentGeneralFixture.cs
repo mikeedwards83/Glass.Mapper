@@ -21,11 +21,9 @@ using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Fluent;
 using NUnit.Framework;
-using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
-using umbraco.interfaces;
 
 namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
 {
@@ -40,6 +38,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
+            string contentTypeProperty = "TestProperty";
 
             var unitOfWork = Global.CreateUnitOfWork();
             var repoFactory = new RepositoryFactory();
@@ -56,7 +55,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             {
                 x.Id(y => y.Id);
                 x.Id(y => y.Key);
-                // x.Property(y => y.Property);
+                x.Property(y => y.TestProperty);
                 x.Info(y => y.Name).InfoType(UmbracoInfoType.Name);
                 x.Info(y => y.ContentTypeName).InfoType(UmbracoInfoType.ContentTypeName);
                 x.Info(y => y.ContentTypeAlias).InfoType(UmbracoInfoType.ContentTypeAlias);
@@ -73,20 +72,16 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
-            contentType = contentTypeService.GetContentType(contentType.Id);
 			var definitions = dataTypeService.GetDataTypeDefinitionByControlId(new Guid("ec15c1e5-9d90-422a-aa52-4f7622c63bea"));
             dataTypeService.Save(definitions.FirstOrDefault());
             var propertyType = new PropertyType(definitions.FirstOrDefault());
-            propertyType.Alias = "TestProperty";
-            propertyType.Name = "TestProperty";
-            propertyType.Key = Guid.NewGuid();
+            propertyType.Alias = contentTypeProperty;
             contentType.AddPropertyType(propertyType);
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
-            contentType = contentTypeService.GetContentType(contentType.Id);
             var content = new Content(name, -1, contentType);
-            content.SetPropertyValue("TestProperty", fieldValue);
+            content.SetPropertyValue(contentTypeProperty, fieldValue);
             contentService.Save(content);
 
             var umbracoService = new UmbracoService();
@@ -96,7 +91,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
 
             //Assert
             Assert.IsNotNull(result);
-            //      Assert.AreEqual(fieldValue, result.Property);
+            Assert.AreEqual(fieldValue, result.TestProperty);
             Assert.AreEqual(content.Id, result.Id);
             Assert.AreEqual(content.Key, result.Key);
             Assert.AreEqual(name, result.Name);
@@ -112,7 +107,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
         {
             public virtual int Id { get; set; }
             public virtual Guid Key { get; set; }
-            public virtual string Property { get; set; }
+            public virtual string TestProperty { get; set; }
             public virtual string Name { get; set; }
             public virtual string ContentTypeName { get; set; }
             public virtual string ContentTypeAlias { get; set; }

@@ -30,7 +30,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         public UmbracoProperty(Expression<Func<T, object>> ex)
             : base(ex)
         {
-            Configuration.PropertyName = Configuration.PropertyInfo.Name;
+            Configuration.PropertyAlias = Configuration.PropertyInfo.Name;
         }
 
         /// <summary>

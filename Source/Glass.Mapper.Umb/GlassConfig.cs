@@ -93,7 +93,7 @@ namespace Glass.Mapper.Umb
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldNullableIntMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldRulesMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldStreamMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldStringMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyStringMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldTypeMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoIdMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoInfoMapper>().LifestyleTransient(),

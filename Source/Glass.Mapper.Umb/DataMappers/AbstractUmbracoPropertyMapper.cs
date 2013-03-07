@@ -17,41 +17,46 @@ namespace Glass.Mapper.Umb.DataMappers
 
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            var umbConfig = Configuration as UmbracoPropertyConfiguration;
-            var umbContext = mappingContext as UmbracoDataMappingContext;
+            var config = Configuration as UmbracoPropertyConfiguration;
+            var context =  mappingContext  as UmbracoDataMappingContext;
 
-            var property = umbContext.Content.Properties[umbConfig.PropertyAlias];
-            object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+            if (context.Content.Properties.Contains(config.PropertyAlias))
+            {
+                var property = context.Content.Properties[config.PropertyAlias];
+                object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
-            SetPropertyValue(property, value, umbConfig, umbContext);
+                SetProperty(property, value, config, context);
+            }
         }
 
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-            var umbConfig = Configuration as UmbracoPropertyConfiguration;
-            var umbContext = mappingContext as UmbracoDataMappingContext;
+            var config = Configuration as UmbracoPropertyConfiguration;
+            var context = mappingContext as UmbracoDataMappingContext;
 
-            var property = umbContext.Content.Properties[umbConfig.PropertyAlias];
+            if (context.Content.Properties.Contains(config.PropertyAlias))
+            {
+                var property = context.Content.Properties[config.PropertyAlias];
+                return GetProperty(property, config, context);
+            }
 
-            return GetPropertyValue(property, umbConfig, umbContext);
+            return null;
         }
 
-        public virtual object GetPropertyValue(Property field, UmbracoPropertyConfiguration config,
-                                       UmbracoDataMappingContext context)
+        public virtual object GetProperty(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            var fieldValue = field.Value;
+            var propertyValue = property.Value;
 
-            return GetPropertyValue(fieldValue, config, context);
+            return GetPropertyValue(propertyValue, config, context);
         }
 
-        public virtual void SetPropertyValue(Property field, object value, UmbracoPropertyConfiguration config,
-                                      UmbracoDataMappingContext context)
+        public virtual void SetProperty(Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            field.Value = SetPropertyValue(value, config, context);
+            property.Value = SetPropertyValue(value, config, context);
         }
 
-        public abstract object GetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
         public abstract object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+        public abstract object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
 
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {

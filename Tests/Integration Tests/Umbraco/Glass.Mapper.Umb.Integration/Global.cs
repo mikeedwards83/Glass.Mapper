@@ -10,7 +10,6 @@ using SqlCE4Umbraco;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.UnitOfWork;
-using Umbraco.Web;
 
 namespace Glass.Mapper.Umb.Integration
 {
@@ -85,11 +84,8 @@ namespace Glass.Mapper.Umb.Integration
         {
             //You can only boot the manager once per thread
             //if you run tests twice without this check you get an exception
-            var umbracoApplication = new UmbracoApplication();
-            _manager = new WebBootManager(umbracoApplication);
-            _manager.Initialize();
-            _manager.Startup(appContext => {});
-            _manager.Complete(appContext => {});
+            var _testApp = new TestApplicationBase();
+            _testApp.Start(_testApp, new EventArgs());
         }
     
         public static void ConfigureDatabase()
@@ -97,7 +93,6 @@ namespace Glass.Mapper.Umb.Integration
             var installer = new SqlCEInstaller(new SqlCEHelper(ConnectionString));
             if (installer.CanConnect)
             {
-                //  installer.Install();
                 UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
                 umbracoDatabase.CreateDatabaseSchema();
             }
