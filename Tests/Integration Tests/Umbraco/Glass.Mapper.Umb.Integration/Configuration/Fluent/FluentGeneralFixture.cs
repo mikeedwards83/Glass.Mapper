@@ -70,16 +70,16 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             contentType.Name = contentTypeName;
             contentType.Alias = contentTypeAlias;
             contentType.Thumbnail = string.Empty;
-           // contentTypeService.Save(contentType);
+            contentTypeService.Save(contentType);
            // Assert.Greater(contentType.Id, 0);
 
-          //  contentType = contentTypeService.GetContentType(contentType.Id);
+            contentType = contentTypeService.GetContentType(contentType.Id);
 			var definitions = dataTypeService.GetDataTypeDefinitionByControlId(new Guid("ec15c1e5-9d90-422a-aa52-4f7622c63bea"));
             var propertyType = new PropertyType(definitions.FirstOrDefault());
             propertyType.Alias = "TestProperty";
             propertyType.Name = "TestProperty";
             propertyType.Key = Guid.NewGuid();
-            //contentType.AddPropertyType(propertyType);
+            contentType.AddPropertyType(propertyType);
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
