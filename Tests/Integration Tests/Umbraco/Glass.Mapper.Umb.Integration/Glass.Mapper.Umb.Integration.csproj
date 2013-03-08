@@ -231,12 +231,15 @@
   <ItemGroup>
     <Compile Include="Configuration\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyStringMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoChildrenMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoParentMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoIdMapperFixture.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestApplicationBase.cs" />
+    <Compile Include="TestBootManager.cs" />
     <Compile Include="TestFixtureSetupTearDown.cs" />
   </ItemGroup>
   <ItemGroup>
