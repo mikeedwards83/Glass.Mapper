@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sc.Razor</id>
+    <id>Glass.Mapper.Sc.Upgrade</id>
     <version>$version$</version>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
@@ -15,11 +15,11 @@
     <tags>Glass Mapper Sitecore</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sitecore Razor" version="0.0.0" />
+		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
     </dependencies>
   </metadata>
   <files>
-	  <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.dll" />
-	  <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.xml" />
+	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.dll" target="lib\net40\Glass.Mapper.Sc.Upgrade.dll" />
+	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.xml" target="lib\net40\Glass.Mapper.Sc.Upgrade.xml" />
   </files>
 </package>

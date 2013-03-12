@@ -18,39 +18,33 @@
 
 using System.Collections;
 using Castle.Windsor;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Glass.Mapper.CastleWindsor
+namespace Glass.Mapper.Sc.CastleWindsor
 {
-    public class CastleDependencyResolver : IDependencyResolver
+    public class DependencyResolver : IDependencyResolver
     {
-        public WindsorContainer Container { get; private set; }
+        public static IDependencyResolver CreateStandardResolver()
+        {
+            IWindsorContainer container=  new WindsorContainer();
+            container.Install(new SitecoreInstaller());
+            return new DependencyResolver(container);
+        }
 
-
+        public DependencyResolver(IWindsorContainer container)
+        {
+            Container = container;
+        }
+        public IWindsorContainer Container { get; private set; }
 
         public T Resolve<T>(IDictionary<string, object> args = null)
         {
             if (args == null)
                 return Container.Resolve<T>();
-            else
-                return Container.Resolve<T>((IDictionary)args);
+
+
+            return Container.Resolve<T>((IDictionary) args);
         }
-
-        public void Load(string contextName, IGlassConfiguration config)
-        {
-
-            var castleConfig = config as GlassCastleConfigBase;
-            if(castleConfig == null)
-                throw new MapperException("IGlassConfiguration is not of type GlassCastleConfigBase");
-
-            Container = new WindsorContainer();
-            castleConfig.Configure(Container, contextName);
-
-        }
-
 
         public IEnumerable<T> ResolveAll<T>()
         {

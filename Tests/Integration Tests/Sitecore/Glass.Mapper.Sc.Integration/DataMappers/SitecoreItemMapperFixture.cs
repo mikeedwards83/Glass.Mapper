@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -59,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
             config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
@@ -77,7 +78,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
             config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped));
@@ -95,7 +96,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreFieldConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
             config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
@@ -117,7 +118,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("en");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -154,7 +155,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("af-ZA");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -190,7 +191,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("af-ZA");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -226,7 +227,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("en");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -263,7 +264,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("af-ZA");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -299,7 +300,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("af-ZA");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -335,7 +336,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("en");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -372,7 +373,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
             var language = LanguageManager.GetLanguage("en");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));

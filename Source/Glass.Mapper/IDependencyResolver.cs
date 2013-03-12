@@ -27,7 +27,6 @@ namespace Glass.Mapper
     {
         T Resolve<T>(IDictionary<string, object> args = null);
         IEnumerable<T> ResolveAll<T>();
-        void Load(string context, IGlassConfiguration config);
     }
 }
 

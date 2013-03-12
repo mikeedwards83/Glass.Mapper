@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}</ProjectGuid>
+    <ProjectGuid>{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Glass.Mapper.Sc.Upgrade.Tests</RootNamespace>
-    <AssemblyName>Glass.Mapper.Sc.Upgrade.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Glass.Mapper.Sc.CastleWindsor</RootNamespace>
+    <AssemblyName>Glass.Mapper.Sc.CastleWindsor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.CastleWindsor.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,11 +30,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Glass.Mapper.Sc.CastleWindsor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,29 +48,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Attributes\BasicTemplate.cs" />
-    <Compile Include="Configuration\Attributes\MiscFixture.cs" />
-    <Compile Include="Configuration\Fluent\BasicTemplate.cs" />
-    <Compile Include="Configuration\Fluent\MiscFixture.cs" />
+    <None Include="App_Start\GlassMapper.cs.pp" />
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Upgrade\Glass.Mapper.Sc.Upgrade.csproj">
-      <Project>{AFC35AE3-307B-43BC-A9B8-9BCFB4EA3CCF}</Project>
-      <Name>Glass.Mapper.Sc.Upgrade</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <Compile Include="SitecoreInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

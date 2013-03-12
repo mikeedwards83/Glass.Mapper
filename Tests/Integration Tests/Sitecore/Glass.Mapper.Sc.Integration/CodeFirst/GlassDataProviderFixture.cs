@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Glass.Mapper.CastleWindsor;
 using Glass.Mapper.Sc.CodeFirst;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -22,7 +23,8 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var path = "/sitecore/templates/glasstemplates";
 
             //Act
@@ -39,7 +41,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -75,7 +77,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -112,7 +114,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             Assert.IsNotNull(section);
             var field = section.Children.FirstOrDefault(x => x.Name == "Field1");
             Assert.IsNotNull(field);
-
+             
         }
 
         [Test]
@@ -121,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 

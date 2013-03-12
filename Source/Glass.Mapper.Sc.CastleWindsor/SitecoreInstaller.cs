@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Castle.Windsor.Installer;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -36,11 +31,15 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
-namespace Glass.Mapper.Sc
+namespace Glass.Mapper.Sc.CastleWindsor
 {
-    public class GlassConfig : GlassCastleConfigBase
+    public class SitecoreInstaller : IWindsorInstaller
     {
-        public override void Configure(WindsorContainer container, string contextName)
+
+       
+    
+
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
@@ -48,7 +47,7 @@ namespace Glass.Mapper.Sc
                 new QueryParameterInstaller(),
                 new DataMapperTasksInstaller(),
                 new ConfigurationResolverTaskInstaller(),
-                new ObjectionConstructionTaskInstaller(), 
+                new ObjectionConstructionTaskInstaller(),
                 new ObjectSavingTaskInstaller()
                 );
         }
@@ -63,7 +62,7 @@ namespace Glass.Mapper.Sc
         public void Install(IWindsorContainer container,
                             Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
         {
-
+           
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleTransient(),
@@ -109,9 +108,9 @@ namespace Glass.Mapper.Sc
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
-                                                {
-                                                    d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
-                                                })
+                         {
+                             d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
+                         })
                          .LifestyleTransient()
                 );
         }
@@ -154,13 +153,13 @@ namespace Glass.Mapper.Sc
     }
 
     /// <summary>
-    /// Configuration Resolver Tasks - These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed.
+    /// Configuration Resolver Tasks - These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passsed.
     /// </summary>
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            // These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed, e.g. 
+            // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
             // if your code contained
             //       service.GetItem<MyClass>(id) 
             // the standard resolver will return the MyClass configuration. 

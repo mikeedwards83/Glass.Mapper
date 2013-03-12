@@ -33,14 +33,6 @@
     <DocumentationFile>bin\Release\Glass.Mapper.Sc.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -139,7 +131,6 @@
     <Compile Include="Fields\Link.cs" />
     <Compile Include="Fields\LinkType.cs" />
     <Compile Include="Fields\TriState.cs" />
-    <Compile Include="GlassConfig.cs" />
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ISitecoreContext.cs" />
@@ -188,16 +179,13 @@
     <Folder Include="Proxies\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Configuration\SitecorePropertyConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
