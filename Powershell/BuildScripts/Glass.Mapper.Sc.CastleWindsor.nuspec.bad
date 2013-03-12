@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sc.Upgrade</id>
+    <id>Glass.Mapper.Sc.CastleWindsor</id>
     <version>$version$</version>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
@@ -15,11 +15,14 @@
     <tags>Glass Mapper Sitecore</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sitecore" version="0.0.0" />
+		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
+		<dependency id="WebActivator" version="1.0.0.0" />
     </dependencies>
   </metadata>
   <files>
-	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.dll" target="lib\net40\Glass.Mapper.Sc.Upgrade.dll" />
-	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.xml" target="lib\net40\Glass.Mapper.Sc.Upgrade.xml" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Release\Glass.Mapper.Sc.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Release\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.xml" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Start\**.pp" target="content\App_Start" /
+	  
   </files>
 </package>

@@ -1,6 +1,5 @@
 ﻿using System;
-using Castle.Windsor;
-using Glass.Mapper.CastleWindsor;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace Glass.Mapper.Sites.Sc

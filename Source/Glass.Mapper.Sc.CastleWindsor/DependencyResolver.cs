@@ -17,11 +17,10 @@
 //-CRE-
 
 using System.Collections;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System.Collections.Generic;
 
-namespace Glass.Mapper.CastleWindsor
+namespace Glass.Mapper.Sc.CastleWindsor
 {
     public class DependencyResolver : IDependencyResolver
     {

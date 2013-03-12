@@ -74,13 +74,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\build-debug.proj = Powershell\BuildScripts\build-debug.proj
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
-		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
 		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
 		Powershell\BuildScripts\utilities.ps1 = Powershell\BuildScripts\utilities.ps1
@@ -94,7 +91,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Razor.Websi
 EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Glass.Mapper.Sc.Razor.Tds", "Source\Glass.Mapper.Sc.Razor.Tds\Glass.Mapper.Sc.Razor.Tds.scproj", "{A1C14499-379C-4DBB-AD8F-9DE9D28381A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.CastleWindsor", "Source\Glass.Mapper.CastleWindsor\Glass.Mapper.CastleWindsor.csproj", "{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.CastleWindsor", "Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj", "{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

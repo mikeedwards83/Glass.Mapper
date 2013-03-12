@@ -31,7 +31,7 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
-namespace Glass.Mapper.CastleWindsor
+namespace Glass.Mapper.Sc.CastleWindsor
 {
     public class SitecoreInstaller : IWindsorInstaller
     {
