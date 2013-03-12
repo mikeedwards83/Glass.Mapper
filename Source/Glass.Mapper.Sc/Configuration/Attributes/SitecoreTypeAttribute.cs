@@ -28,6 +28,16 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreTypeAttribute : AbstractTypeAttribute
     {
+        public SitecoreTypeAttribute()
+        {
+        }
+
+        public SitecoreTypeAttribute(bool codeFirst, string templateId)
+        {
+            TemplateId = templateId;
+            CodeFirst = codeFirst;
+        }
+
         /// <summary>
         /// Indicates the template to use when trying to create an item
         /// </summary>

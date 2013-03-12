@@ -1,5 +1,4 @@
 IconCache/
-Depends/*
 Tutorials/Depends/*
 
 #ignore thumbnails created by windows
@@ -53,3 +52,6 @@ Glass.Mapper.ncrunchsolution.user
 *ncrunch*
 Sites/Sitecore/Glass.Mapper.Sites.Sc/data/*
 Releases/
+Depends/Sitecore/bin/*
+Depends/Sitecore/bin_Net4/*
+

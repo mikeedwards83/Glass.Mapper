@@ -27,6 +27,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 {
     public class SitecoreLinkedAttribute : LinkedAttribute
     {
+        public SitecoreLinkedAttribute()
+        {
+            Option = SitecoreLinkedOptions.All;
+        }
+    
+
         /// <summary>
         /// Indicate weather All, References or Referred should be loaded
         /// </summary>
