@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Glass.Mapper.CastleWindsor;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.CodeFirst;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;

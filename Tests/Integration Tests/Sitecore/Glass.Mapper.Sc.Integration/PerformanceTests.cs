@@ -17,12 +17,8 @@
 //-CRE-
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Glass.Mapper.CastleWindsor;
-using Glass.Mapper.Profilers;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;

@@ -16,12 +16,9 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
-using Glass.Mapper.CastleWindsor;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
