@@ -18,9 +18,7 @@ namespace Glass.Mapper.Umb.Integration
         private static bool _connStringSetup = false;
 
         public const string ProviderName = "System.Data.SqlServerCe.4.0";
-
-        private static CoreBootManager _manager = null;
-
+        
         /// <summary>
         /// Prints a list of tables in the umbraco DB
         /// </summary>

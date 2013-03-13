@@ -31,7 +31,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
     public class FluentGeneralFixture
     {
         [Test]
-        public void General_RetrieveItemAndFieldsFromSitecore_ReturnPopulatedClass()
+        public void General_RetrieveContentAndPropertiesFromUmbraco_ReturnPopulatedClass()
         {
             //Assign
             string fieldValue = "test field value";

@@ -32,15 +32,9 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     [TestFixture]
     public class UmbracoParentMapperFixture
     {
-        private static bool _isSetup;
         private PetaPocoUnitOfWorkProvider _unitOfWork;
         private RepositoryFactory _repoFactory;
-
-        public UmbracoParentMapperFixture()
-        {
-            CreateStub();
-        }
-
+        
         #region Property - ReadOnly
 
         [Test]
@@ -136,7 +130,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         #region Method - CanHandle
 
         [Test]
-        public void CanHandle_ConfigurationIsSitecoreParent_ReturnsTrue()
+        public void CanHandle_ConfigurationIsUmbracoParent_ReturnsTrue()
         {
             //Assign
             var config = new UmbracoParentConfiguration();
@@ -150,7 +144,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_ConfigurationIsSitecoreInfo_ReturnsFalse()
+        public void CanHandle_ConfigurationIsUmbracoInfo_ReturnsFalse()
         {
             //Assign
             var config = new UmbracoInfoConfiguration();
@@ -182,11 +176,9 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
         #region Stubs
 
-        private void CreateStub()
+        [TestFixtureSetUp]
+        public void CreateStub()
         {
-            if (_isSetup)
-                return;
-
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
@@ -212,8 +204,6 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var content = new Content(name, parentContent.Id, contentType);
             content.Key = new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}");
             contentService.Save(content);
-
-            _isSetup = true;
         }
 
         public class Stub

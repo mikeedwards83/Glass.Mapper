@@ -21,10 +21,10 @@ using Glass.Mapper.Umb.Configuration;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
-    public class UmbracoPropertyStringMapper : AbstractUmbracoPropertyMapper
+    public class UmbracoPropertyBooleanMapper : AbstractUmbracoPropertyMapper
     {
-        public UmbracoPropertyStringMapper()
-            : base(typeof(string))
+        public UmbracoPropertyBooleanMapper()
+            : base(typeof(bool))
         {
         }
 

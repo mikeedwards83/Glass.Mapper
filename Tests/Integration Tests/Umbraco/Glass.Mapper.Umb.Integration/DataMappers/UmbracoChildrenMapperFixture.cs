@@ -27,7 +27,6 @@ using NSubstitute;
 using NUnit.Framework;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
-using Umbraco.Core.Persistence.UnitOfWork;
 using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb.Integration.DataMappers
@@ -35,24 +34,16 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     [TestFixture]
     public class UmbracoChildrenMapperFixture
     {
-        private static bool _isSetup;
-        private PetaPocoUnitOfWorkProvider _unitOfWork;
-        private RepositoryFactory _repoFactory;
-
-        public UmbracoChildrenMapperFixture()
-        {
-            CreateStub();
-        }
+        private ContentService _contentService;
 
         #region Method - MapToProperty
 
         [Test]
-        public void MapToProperty_ItemHasChildren_ChildrenObjectsAreCreated()
+        public void MapToProperty_ContentHasChildren_ChildrenObjectsAreCreated()
         {
             //Assign
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{373D1D1C-BD0D-4A8C-9A67-1D513815FE10}"));
-            var children = contentService.GetChildren(content.Id);
+            var content = _contentService.GetById(new Guid("{373D1D1C-BD0D-4A8C-9A67-1D513815FE10}"));
+            var children = _contentService.GetChildren(content.Id);
             var service = Substitute.For<IUmbracoService>();
             var predicate = Arg.Is<IContent>(x => children.Any(y => x.Id == y.Id));
 
@@ -64,19 +55,18 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var mapper = new UmbracoChildrenMapper();
 
             //ME - Although this looks correct I am not sure it is
-            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
+            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild
                                                                                   {
                                                                                       Id =  info.Arg<IContent>().Id
                                                                                   });
 
-            var context = new UmbracoDataMappingContext(null, content, service, contentService);
+            var context = new UmbracoDataMappingContext(null, content, service, _contentService);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act
             var result = mapper.MapToProperty(context) as IEnumerable<StubChild>;
 
             //Assert
-
             Assert.AreEqual(1, children.Count());
             Assert.AreEqual(children.Count(), result.Count());
 
@@ -87,12 +77,11 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         }
 
         [Test]
-        public void MapToProperty_ItemHasNoChildren_NoObjectsCreated()
+        public void MapToProperty_ContentHasNoChildren_NoObjectsCreated()
         {
             //Assign
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{3F34475B-D744-40E9-BC30-5D33249FA9FE}"));
-            var children = contentService.GetChildren(content.Id);
+            var content = _contentService.GetById(new Guid("{3F34475B-D744-40E9-BC30-5D33249FA9FE}"));
+            var children = _contentService.GetChildren(content.Id);
             var service = Substitute.For<IUmbracoService>();
             var predicate = Arg.Is<IContent>(x => children.Any(y => x.Id == y.Id));
 
@@ -104,19 +93,18 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var mapper = new UmbracoChildrenMapper();
 
             //ME - Although this looks correct I am not sure it is
-            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild()
+            service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild
             {
                 Id = info.Arg<IContent>().Id
             });
 
-            var context = new UmbracoDataMappingContext(null, content, service, contentService);
+            var context = new UmbracoDataMappingContext(null, content, service, _contentService);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act
             var result = mapper.MapToProperty(context) as IEnumerable<StubChild>;
 
             //Assert
-
             Assert.AreEqual(0, result.Count());
         }
 
@@ -159,21 +147,19 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
         #region Stubs
 
-        private void CreateStub()
+        [TestFixtureSetUp]
+        public void CreateStub()
         {
-            if (_isSetup)
-                return;
-
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
 
-            _unitOfWork = Global.CreateUnitOfWork();
-            _repoFactory = new RepositoryFactory();
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var contentTypeService = new ContentTypeService(_unitOfWork, _repoFactory,
-                                                            new ContentService(_unitOfWork),
-                                                            new MediaService(_unitOfWork, _repoFactory));
+            var unitOfWork = Global.CreateUnitOfWork();
+            var repoFactory = new RepositoryFactory();
+            _contentService = new ContentService(unitOfWork, repoFactory);
+            var contentTypeService = new ContentTypeService(unitOfWork, repoFactory,
+                                                            new ContentService(unitOfWork),
+                                                            new MediaService(unitOfWork, repoFactory));
 
             var contentType = new ContentType(-1);
             contentType.Name = contentTypeName;
@@ -184,13 +170,11 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             var parentContent = new Content(name, -1, contentType);
             parentContent.Key = new Guid("{373D1D1C-BD0D-4A8C-9A67-1D513815FE10}");
-            contentService.Save(parentContent);
+            _contentService.Save(parentContent);
 
             var content = new Content(name, parentContent.Id, contentType);
             content.Key = new Guid("{3F34475B-D744-40E9-BC30-5D33249FA9FE}");
-            contentService.Save(content);
-
-            _isSetup = true;
+            _contentService.Save(content);
         }
 
         [UmbracoType]

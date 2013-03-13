@@ -251,6 +251,7 @@
     <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyBooleanMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyStringMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyTypeMapper.cs" />
     <Compile Include="DataMappers\UmbracoInfoMapper.cs" />

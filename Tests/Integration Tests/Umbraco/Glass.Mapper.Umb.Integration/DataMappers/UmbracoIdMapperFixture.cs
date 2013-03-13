@@ -23,7 +23,6 @@ using Glass.Mapper.Umb.DataMappers;
 using NUnit.Framework;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
-using Umbraco.Core.Persistence.UnitOfWork;
 using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb.Integration.DataMappers
@@ -31,15 +30,8 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     [TestFixture]
     public class UmbracoIdMapperFixture
     {
-        private static bool _isSetup;
-        private PetaPocoUnitOfWorkProvider _unitOfWork;
-        private RepositoryFactory _repoFactory;
-
-        public UmbracoIdMapperFixture()
-        {
-            CreateStub();
-        }
-
+        private ContentService _contentService;
+        
         #region Property - ReadOnly
 
         [Test]
@@ -61,23 +53,22 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         #region Method - MapToProperty
 
         [Test]
-        public void MapToProperty_ItemIdAsInt_ReturnsIdAsInt()
+        public void MapToProperty_ContentIdAsInt_ReturnsIdAsInt()
         {
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
+            var content = _contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
 
             //Assign
             var mapper = new UmbracoIdMapper();
             var config = new UmbracoIdConfiguration();
-            var property = typeof (Stub).GetProperty("Id");
+            var property = typeof(Stub).GetProperty("Id");
 
-            Assert.IsNotNull(content, "Item is null, check in Umbraco that item exists");
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
 
             config.PropertyInfo = property;
             
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var dataContext = new UmbracoDataMappingContext(null, content, null, contentService);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, _contentService);
             var expected = content.Id;
 
             //Act
@@ -88,23 +79,22 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         }
 
         [Test]
-        public void MapToProperty_ItemIdAsGuid_ReturnsIdAsGuid()
+        public void MapToProperty_ContentIdAsGuid_ReturnsIdAsGuid()
         {
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var content = contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
+            var content = _contentService.GetById(new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}"));
 
             //Assign
             var mapper = new UmbracoIdMapper();
             var config = new UmbracoIdConfiguration();
             var property = typeof(Stub).GetProperty("Key");
 
-            Assert.IsNotNull(content, "Item is null, check in Umbraco that item exists");
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
 
             config.PropertyInfo = property;
 
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var dataContext = new UmbracoDataMappingContext(null, content, null, contentService);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, _contentService);
             var expected = content.Key;
 
             //Act
@@ -118,21 +108,19 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
         #region Stub
 
-        private void CreateStub()
+        [TestFixtureSetUp]
+        public void CreateStub()
         {
-            if (_isSetup)
-                return;
-
             string name = "Target";
             string contentTypeAlias = "TestType";
             string contentTypeName = "Test Type";
 
-            _unitOfWork = Global.CreateUnitOfWork();
-            _repoFactory = new RepositoryFactory();
-            var contentService = new ContentService(_unitOfWork, _repoFactory);
-            var contentTypeService = new ContentTypeService(_unitOfWork, _repoFactory,
-                                                            new ContentService(_unitOfWork),
-                                                            new MediaService(_unitOfWork, _repoFactory));
+            var unitOfWork = Global.CreateUnitOfWork();
+            var repoFactory = new RepositoryFactory();
+            _contentService = new ContentService(unitOfWork, repoFactory);
+            var contentTypeService = new ContentTypeService(unitOfWork, repoFactory,
+                                                            new ContentService(unitOfWork),
+                                                            new MediaService(unitOfWork, repoFactory));
             
             var contentType = new ContentType(-1);
             contentType.Name = contentTypeName;
@@ -143,9 +131,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             var content = new Content(name, -1, contentType);
             content.Key = new Guid("{263768E1-E958-4B00-BB00-191CC33A3F48}");
-            contentService.Save(content);
-
-            _isSetup = true;
+            _contentService.Save(content);
         }
 
         public class Stub

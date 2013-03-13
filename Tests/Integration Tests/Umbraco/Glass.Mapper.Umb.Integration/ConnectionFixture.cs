@@ -17,7 +17,7 @@ namespace Glass.Mapper.Umb.Integration
             var repoFactory = new RepositoryFactory();
 
             var service = new ContentService(unitOfWork, repoFactory);
-            ContentTypeService cTypeService = new ContentTypeService(unitOfWork, repoFactory,
+            var cTypeService = new ContentTypeService(unitOfWork, repoFactory,
                                                                      new ContentService(unitOfWork),
                                                                      new MediaService(unitOfWork, repoFactory));
             
