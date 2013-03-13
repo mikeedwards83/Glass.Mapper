@@ -19,6 +19,33 @@ namespace Glass.Mapper.Umb
         IContentService ContentService { get; }
 
         /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Saves the specified target.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">The target.</param>
+        void Save<T>(T target);
+        
+        /// <summary>
         /// Creates the type.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -29,16 +56,6 @@ namespace Glass.Mapper.Umb
         /// <returns></returns>
         object CreateType(Type type, IContent content, bool isLazy, bool inferType,
                           params object[] constructorParameters);
-
-        /// <summary>
-        /// Gets the item.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id">The id.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns></returns>
-        T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Creates a class from the specified content

@@ -19,32 +19,101 @@
 namespace Glass.Mapper.Umb.Configuration
 {
     /// <summary>
-    /// UmbracoPropertyType
+    /// Enum UmbracoPropertyType
     /// </summary>
     public enum UmbracoPropertyType
     {
+        /// <summary>
+        /// The not set
+        /// </summary>
         NotSet,
+        /// <summary>
+        /// The text string
+        /// </summary>
         TextString,
+        /// <summary>
+        /// The richtext editor
+        /// </summary>
         RichtextEditor,
+        /// <summary>
+        /// The simple editor
+        /// </summary>
         SimpleEditor,
+        /// <summary>
+        /// The numeric
+        /// </summary>
         Numeric,
+        /// <summary>
+        /// The true false
+        /// </summary>
         TrueFalse,
+        /// <summary>
+        /// The approved color
+        /// </summary>
         ApprovedColor,
+        /// <summary>
+        /// The checkbox list
+        /// </summary>
         CheckboxList,
+        /// <summary>
+        /// The content picker
+        /// </summary>
         ContentPicker,
+        /// <summary>
+        /// The date time picker
+        /// </summary>
         DateTimePicker,
+        /// <summary>
+        /// The date picker
+        /// </summary>
         DatePicker,
+        /// <summary>
+        /// The dropdown multiple
+        /// </summary>
         DropdownMultiple,
+        /// <summary>
+        /// The dropdown
+        /// </summary>
         Dropdown,
+        /// <summary>
+        /// The folder browser
+        /// </summary>
         FolderBrowser,
+        /// <summary>
+        /// The label
+        /// </summary>
         Label,
+        /// <summary>
+        /// The media picker
+        /// </summary>
         MediaPicker,
+        /// <summary>
+        /// The member picker
+        /// </summary>
         MemberPicker,
+        /// <summary>
+        /// The radiobox
+        /// </summary>
         Radiobox,
+        /// <summary>
+        /// The related links
+        /// </summary>
         RelatedLinks,
+        /// <summary>
+        /// The tags
+        /// </summary>
         Tags,
+        /// <summary>
+        /// The textbox multiple
+        /// </summary>
         TextboxMultiple,
+        /// <summary>
+        /// The ultimate picker
+        /// </summary>
         UltimatePicker,
+        /// <summary>
+        /// The upload
+        /// </summary>
         Upload,
     }
 }

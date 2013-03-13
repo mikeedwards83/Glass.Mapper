@@ -6,12 +6,21 @@ using System.Text;
 namespace Glass.Mapper.Umb.Configuration
 {
     /// <summary>
-    /// UmbracoLinkedOptions
+    /// Enum UmbracoLinkedOptions
     /// </summary>
     public enum UmbracoLinkedOptions
     {
+        /// <summary>
+        /// All
+        /// </summary>
         All,
+        /// <summary>
+        /// The references
+        /// </summary>
         References,
+        /// <summary>
+        /// The referrers
+        /// </summary>
         Referrers
     }
 }

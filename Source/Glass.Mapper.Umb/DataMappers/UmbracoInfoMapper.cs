@@ -19,6 +19,7 @@
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
+using Umbraco.Core;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -84,23 +85,23 @@ namespace Glass.Mapper.Umb.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as UmbracoDataMappingContext;
-            var item = context.Content;
+            var content = context.Content;
             var config = Configuration as UmbracoInfoConfiguration;
             
             switch (config.Type)
             {
                 case UmbracoInfoType.Name:
-                    return item.Name;
+                    return content.Name;
                 case UmbracoInfoType.Path:
-                    return item.Path;
+                    return content.Path;
                 case UmbracoInfoType.ContentTypeAlias:
-                    return item.ContentType.Alias;
+                    return content.ContentType.Alias;
                 case UmbracoInfoType.ContentTypeName:
-                    return item.ContentType.Name;
+                    return content.ContentType.Name;
                 case UmbracoInfoType.Url:
-                    return "";
+                    return content.Name.FormatUrl().ToLower();
                 case UmbracoInfoType.Version:
-                    return item.Version;
+                    return content.Version;
                 default:
                     throw new MapperException("UmbracoInfoType {0} not supported".Formatted(config.Type));
             }

@@ -7,7 +7,7 @@ using Umbraco.Core.Services;
 namespace Glass.Mapper.Umb
 {
     /// <summary>
-    /// Umbraco Service
+    /// Class UmbracoService
     /// </summary>
     public class UmbracoService : AbstractService, IUmbracoService
     {
@@ -42,6 +42,59 @@ namespace Glass.Mapper.Umb
         }
 
         /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
+        {
+            var item = ContentService.GetById(id);
+            return CreateType(typeof(T), item, isLazy, inferType) as T;
+        }
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
+        {
+            var item = ContentService.GetById(id);
+            return CreateType(typeof(T), item, isLazy, inferType) as T;
+        }
+
+        /// <summary>
+        /// Saves the specified target.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">The target.</param>
+        /// <exception cref="System.NullReferenceException">Can not save class, could not find configuration for {0}.Formatted(typeof(T).FullName)</exception>
+        /// <exception cref="MapperException">Could not save class, conent not found</exception>
+        public void Save<T>(T target)
+        {
+            //TODO: should this be a separate context
+            //  UmbracoTypeContext context = new UmbracoTypeContext();
+
+            //TODO: ME - this may not work with a proxy
+            var config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+
+            if (config == null)
+                throw new NullReferenceException("Can not save class, could not find configuration for {0}".Formatted(typeof(T).FullName));
+
+            var item = config.ResolveItem(target, ContentService);
+            if (item == null)
+                throw new MapperException("Could not save class, conent not found");
+
+            WriteToItem(target, item, config);
+        }
+        
+        /// <summary>
         /// Creates the type.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -71,20 +124,6 @@ namespace Glass.Mapper.Umb
             var obj = InstantiateObject(creationContext);
 
             return obj;
-        }
-
-        /// <summary>
-        /// Gets the item.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id">The id.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns></returns>
-        public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
-        {
-            var item = ContentService.GetById(id);
-            return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
         /// <summary>
@@ -280,7 +319,16 @@ namespace Glass.Mapper.Umb
             //ME-an item with no versions should be null
 
             SaveObject(savingContext);
-            ContentService.Save(savingContext.Content);
+        }
+
+        /// <summary>
+        /// Saves the object.
+        /// </summary>
+        /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
+        public override void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
+        {
+            ContentService.Save(((UmbracoTypeSavingContext) abstractTypeSavingContext).Content);
+            base.SaveObject(abstractTypeSavingContext);
         }
 
         /// <summary>

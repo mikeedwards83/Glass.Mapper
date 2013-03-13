@@ -69,6 +69,23 @@ namespace Glass.Mapper.Umb.Configuration
         public string ContentTypeName { get; set; }
 
         /// <summary>
+        /// Adds the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        public override void AddProperty(AbstractPropertyConfiguration property)
+        {
+            if (property is UmbracoIdConfiguration)
+                IdConfig = property as UmbracoIdConfiguration;
+
+            var infoProperty = property as UmbracoInfoConfiguration;
+
+            if (infoProperty != null && infoProperty.Type == UmbracoInfoType.Version)
+                VersionConfig = infoProperty;
+
+            base.AddProperty(property);
+        }
+
+        /// <summary>
         /// Resolves the item.
         /// </summary>
         /// <param name="target">The target.</param>
@@ -81,7 +98,6 @@ namespace Glass.Mapper.Umb.Configuration
         /// </exception>
         public IContent ResolveItem(object target, IContentService contentService)
         {
-            int id;
             Guid versionNumber = default(Guid);
 
             if (IdConfig == null)
@@ -90,11 +106,14 @@ namespace Glass.Mapper.Umb.Configuration
 
             if (IdConfig.PropertyInfo.PropertyType == typeof(int))
             {
-                id = (int)IdConfig.PropertyInfo.GetValue(target, null);
+                var id = (int)IdConfig.PropertyInfo.GetValue(target, null);
+                return contentService.GetById(id);
             }
-            else
+            
+            if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
             {
-                throw new NotSupportedException("Can not get ID for item");
+                var id = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
+                return contentService.GetById(id);
             }
 
             if (VersionConfig != null)
@@ -106,8 +125,8 @@ namespace Glass.Mapper.Umb.Configuration
             {
                 return contentService.GetByVersion(versionNumber);
             }
-            
-            return contentService.GetById(id);
+
+            throw new NotSupportedException("Can not get ID for item");
         }
     }
 }

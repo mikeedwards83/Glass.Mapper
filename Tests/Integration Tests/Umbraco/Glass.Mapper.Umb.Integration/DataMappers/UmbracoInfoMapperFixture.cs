@@ -40,17 +40,13 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         [Sequential]
         public void MapToProperty_UmbracoInfoType_GetsExpectedValueFromUmbraco(
             [Values(
-               // UmbracoInfoType.Path,
                 UmbracoInfoType.Url,
-               // UmbracoInfoType.Version,
                 UmbracoInfoType.ContentTypeAlias,
                 UmbracoInfoType.ContentTypeName,
                 UmbracoInfoType.Name
                 )] UmbracoInfoType type,
             [Values(
-               // "-1,1051", //Path
-                "/target", //Url
-               // "6b2b9e20-2abc-4a3e-aa2a-c70a83de118d", //Version
+                "target", //Url
                 "TestType", //ContentTypeAlias
                 "Test Type", //ContentTypeName
                 "Target" //Name
@@ -102,29 +98,55 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             //No asserts expect exception
         }
 
-        //[Test]
-        //public void MapToProperty_UmbracoInfoTypeTemplateId_ReturnsTemplateIdAsGuid()
-        //{
-        //    //Assign
-        //    var type = UmbracoInfoType.TemplateId;
+        [Test]
+        public void MapToProperty_UmbracoInfoTypeVersion_ReturnsVersionIdAsGuid()
+        {
+            //Assign
+            var type = UmbracoInfoType.Version;
 
-        //    var mapper = new UmbracoInfoMapper();
-        //    var config = new UmbracoInfoConfiguration();
-        //    config.Type = type;
-        //    mapper.Setup(new DataMapperResolverArgs(null,config));
+            var mapper = new UmbracoInfoMapper();
+            var config = new UmbracoInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
 
-        //    var item = _db.GetItem("/Umbraco/Content/Tests/DataMappers/UmbracoInfoMapper/DataMappersEmptyItem");
-        //    var expected = item.TemplateID.Guid;
+            var contentService = new ContentService(_unitOfWork, _repoFactory);
+            var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
+            var expected = content.Version;
 
-        //    Assert.IsNotNull(item, "Item is null, check in Umbraco that item exists");
-        //    var dataContext = new UmbracoDataMappingContext(null, item, null);
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
 
-        //    //Act
-        //    var value = mapper.MapToProperty(dataContext);
+            //Act
+            var value = mapper.MapToProperty(dataContext);
 
-        //    //Assert
-        //    Assert.AreEqual(expected, value);
-        //}
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
+        public void MapToProperty_UmbracoInfoTypePath_ReturnsPathAsString()
+        {
+            //Assign
+            var type = UmbracoInfoType.Path;
+
+            var mapper = new UmbracoInfoMapper();
+            var config = new UmbracoInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var contentService = new ContentService(_unitOfWork, _repoFactory);
+            var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
+            var expected = content.Path;
+
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext);
+
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
 
         #endregion
 
@@ -144,6 +166,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             var contentService = new ContentService(_unitOfWork, _repoFactory);
             var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
+            var oldName = content.Name;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
 
@@ -160,6 +183,9 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             //Assert
             Assert.AreEqual(expected, actual);
+            
+            content.Name = oldName;
+            contentService.Save(content);
         }
 
         #endregion

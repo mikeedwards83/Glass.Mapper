@@ -237,9 +237,10 @@
     <Compile Include="DataMappers\UmbracoChildrenMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoParentMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoIdMapperFixture.cs" />
-    <Compile Include="GlassConfig.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="PerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UmbracoServiceFixture.cs" />
     <Compile Include="TestApplicationBase.cs" />
     <Compile Include="TestBootManager.cs" />
     <Compile Include="TestFixtureSetupTearDown.cs" />

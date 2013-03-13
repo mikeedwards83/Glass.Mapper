@@ -103,7 +103,7 @@ namespace Glass.Mapper
             return objectArgs.Result;
         }
 
-        public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
+        public virtual void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             //Run the object construction
             var savingArgs = new ObjectSavingArgs(GlassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext, this);

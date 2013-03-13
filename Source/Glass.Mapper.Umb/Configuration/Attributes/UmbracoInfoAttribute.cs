@@ -44,7 +44,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// <returns></returns>
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
-            var config = new UmbracoIdConfiguration();
+            var config = new UmbracoInfoConfiguration();
             Configure(propertyInfo, config);
             return config;
         }

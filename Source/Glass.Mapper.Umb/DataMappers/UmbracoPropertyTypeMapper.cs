@@ -79,10 +79,10 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <param name="args"></param>
         public override void Setup(DataMapperResolverArgs args)
         {
-            var scConfig = args.PropertyConfiguration as UmbracoPropertyConfiguration;
+            var config = args.PropertyConfiguration as UmbracoPropertyConfiguration;
 
-            IsLazy = (scConfig.Setting & UmbracoPropertySettings.DontLoadLazily) != UmbracoPropertySettings.DontLoadLazily;
-            InferType = (scConfig.Setting & UmbracoPropertySettings.InferType) == UmbracoPropertySettings.InferType;
+            IsLazy = (config.Setting & UmbracoPropertySettings.DontLoadLazily) != UmbracoPropertySettings.DontLoadLazily;
+            InferType = (config.Setting & UmbracoPropertySettings.InferType) == UmbracoPropertySettings.InferType;
             base.Setup(args);
         }
 
