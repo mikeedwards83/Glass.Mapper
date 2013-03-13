@@ -1,29 +1,56 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
-using umbraco;
-using umbraco.NodeFactory;
-using umbraco.interfaces;
 
 namespace Glass.Mapper.Umb
 {
+    /// <summary>
+    /// Umbraco Service
+    /// </summary>
     public class UmbracoService : AbstractService, IUmbracoService
     {
+        /// <summary>
+        /// Gets the content service.
+        /// </summary>
+        /// <value>
+        /// The content service.
+        /// </value>
+        public IContentService ContentService { get; private set; }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="UmbracoService"/> class.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="content"></param>
-        /// <param name="isLazy"></param>
-        /// <param name="inferType"></param>
+        /// <param name="contentService">The content service.</param>
+        /// <param name="contextName">Name of the context.</param>
+        public UmbracoService(IContentService contentService, string contextName = "Default")
+            :base(contextName)
+        {
+            ContentService = contentService;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoService"/> class.
+        /// </summary>
+        /// <param name="contentService">The content service.</param>
+        /// <param name="context">The context.</param>
+        public UmbracoService(IContentService contentService, Context context)
+            : base(context ?? Context.Default)
+        {
+            ContentService = contentService;
+        }
+
+        /// <summary>
+        /// Creates the type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">Maximum number of constructor parameters is 4</exception>
         public object CreateType(Type type, IContent content, bool isLazy, bool inferType, params object[] constructorParameters)
         {
             if (content == null) return null;
@@ -32,34 +59,44 @@ namespace Glass.Mapper.Umb
             if (constructorParameters != null && constructorParameters.Length > 4)
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
 
-            UmbracoTypeCreationContext creationContext = new UmbracoTypeCreationContext();
-            creationContext.UmbracoService = this;
-            creationContext.RequestedType = type;
-            creationContext.ConstructorParameters = constructorParameters;
-            creationContext.Content = content;
-            creationContext.InferType = inferType;
-            creationContext.IsLazy = isLazy;
+            var creationContext = new UmbracoTypeCreationContext
+                {
+                    UmbracoService = this,
+                    RequestedType = type,
+                    ConstructorParameters = constructorParameters,
+                    Content = content,
+                    InferType = inferType,
+                    IsLazy = isLazy
+                };
             var obj = InstantiateObject(creationContext);
 
             return obj;
         }
 
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The id.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
         public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
         {
-            var contentService = new ContentService();
-            var item = contentService.GetById(id);
+            var item = ContentService.GetById(id);
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
-
 
         /// <summary>
         /// Creates a class from the specified item
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="content">The content to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
+        /// <returns>
+        /// The item as the specified type
+        /// </returns>
         public T CreateType<T>(IContent content, bool isLazy = false, bool inferType = false) where T : class
         {
             return (T)CreateType(typeof(T), content, isLazy, inferType);
@@ -70,11 +107,13 @@ namespace Glass.Mapper.Umb
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="content">The content to load data from</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>       
-        /// <returns>The item as the specified type</returns>
+        /// <returns>
+        /// The item as the specified type
+        /// </returns>
         public T CreateType<T, K>(IContent content, K param1, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateType(typeof(T), content, isLazy, inferType, param1);
@@ -87,12 +126,14 @@ namespace Glass.Mapper.Umb
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="content">The content to load data from</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
-        /// <returns>The item as the specified type</returns>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>
+        /// The item as the specified type
+        /// </returns>
         public T CreateType<T, K, L>(IContent content, K param1, L param2, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateType(typeof(T), content, isLazy, inferType, param1, param2);
@@ -105,13 +146,15 @@ namespace Glass.Mapper.Umb
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="content">The content to load data from</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
-        /// <returns>The item as the specified type</returns>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>
+        /// The item as the specified type
+        /// </returns>
         public T CreateType<T, K, L, M>(IContent content, K param1, L param2, M param3, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateType(typeof(T), content, isLazy, inferType, param1, param2, param3);
@@ -125,29 +168,43 @@ namespace Glass.Mapper.Umb
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <typeparam name="M">The type of the third constructor parameter</typeparam>
         /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="content">The content to load data from</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>       
+        /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <param name="param4">The value of the fourth parameter of the constructor</param>
-        /// <returns>The item as the specified type</returns>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>
+        /// The item as the specified type
+        /// </returns>
         public T CreateType<T, K, L, M, N>(IContent content, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false)
         {
             return (T)CreateType(typeof(T), content, isLazy, inferType, param1, param2, param3, param4);
         }
 
         /// <summary>
-        /// Creates a new Umbraco class. 
+        /// Creates a new Umbraco class.
         /// </summary>
         /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the UmbracoClassAttribute or fluent equivalent</typeparam>
         /// <param name="parent">The parent of the new item to create. Must have the UmbracoIdAttribute or fluent equivalent</param>
         /// <param name="newItem">New item to create, must have the attribute UmbracoInfoAttribute of type UmbracoInfoType.Name or the fluent equivalent</param>
         /// <returns></returns>
+        /// <exception cref="MapperException">
+        /// Failed to find configuration for new item type {0}.Formatted(typeof(T).FullName)
+        /// or
+        /// Failed to find configuration for parent item type {0}.Formatted(typeof(int).FullName)
+        /// or
+        /// Could not find parent item
+        /// or
+        /// The type {0} does not have a property with attribute UmbracoInfo(UmbracoInfoType.Name).Formatted(newType.Type.FullName)
+        /// or
+        /// Failed to create item
+        /// </exception>
         public T Create<T>(int parent, T newItem) where T : class
         {
-            var newType = (UmbracoTypeConfiguration)null;
+            UmbracoTypeConfiguration newType;
+
             try
             {
                 newType = GlassContext.GetTypeConfiguration(newItem) as UmbracoTypeConfiguration;
@@ -156,9 +213,9 @@ namespace Glass.Mapper.Umb
             {
                 throw new MapperException("Failed to find configuration for new item type {0}".Formatted(typeof(T).FullName), ex);
             }
+            
+            UmbracoTypeConfiguration parentType;
 
-
-            var parentType = (UmbracoTypeConfiguration)null;
             try
             {
                 parentType = GlassContext.GetTypeConfiguration(parent) as UmbracoTypeConfiguration;
@@ -167,16 +224,12 @@ namespace Glass.Mapper.Umb
             {
                 throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(int).FullName), ex);
             }
-
-
-            var contentService = new ContentService();
-
-            var pItem = parentType.ResolveItem(parent, contentService);
+            
+            var pItem = parentType.ResolveItem(parent, ContentService);
 
             if (pItem == null)
                 throw new MapperException("Could not find parent item");
-
-
+            
             var nameProperty = newType.Properties.Where(x => x is UmbracoInfoConfiguration)
                 .Cast<UmbracoInfoConfiguration>().FirstOrDefault(x => x.Type == UmbracoInfoType.Name);
 
@@ -184,56 +237,73 @@ namespace Glass.Mapper.Umb
                 throw new MapperException("The type {0} does not have a property with attribute UmbracoInfo(UmbracoInfoType.Name)".Formatted(newType.Type.FullName));
             
             string tempName = Guid.NewGuid().ToString();
-            var content = contentService.CreateContent(tempName, pItem, newType.ContentTypeAlias);
+            var content = ContentService.CreateContent(tempName, pItem, newType.ContentTypeAlias);
 
             if (content == null) throw new MapperException("Failed to create item");
 
             //write new data to the item
 
-            WriteToItem<T>(newItem, content);
+            WriteToItem(newItem, content);
 
             //then read it back
 
-            UmbracoTypeCreationContext typeContext = new UmbracoTypeCreationContext();
-            typeContext.Content = content;
-            typeContext.UmbracoService = this;
+            var typeContext = new UmbracoTypeCreationContext
+                {
+                    Content = content, 
+                    UmbracoService = this
+                };
 
             newType.MapPropertiesToObject(newItem, this, typeContext);
 
             return newItem;
         }
 
+        /// <summary>
+        /// Writes to item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">The target.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="config">The config.</param>
         public void WriteToItem<T>(T target, IContent content, UmbracoTypeConfiguration config = null)
         {
             if (config == null)
                 config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
 
-            UmbracoTypeSavingContext savingContext = new UmbracoTypeSavingContext();
-            savingContext.Config = config;
+            var savingContext = new UmbracoTypeSavingContext
+                {
+                    Config = config, 
+                    Content = content, 
+                    Object = target
+                };
 
             //ME-an item with no versions should be null
 
-            savingContext.Content = content;
-            savingContext.Object = target;
-            
             SaveObject(savingContext);
-
-            var contentService = new ContentService();
-            contentService.Save(savingContext.Content);
+            ContentService.Save(savingContext.Content);
         }
 
+        /// <summary>
+        /// Creates the data mapping context.
+        /// </summary>
+        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
+        /// <param name="obj">The obj.</param>
+        /// <returns></returns>
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var umbTypeContext = abstractTypeCreationContext as UmbracoTypeCreationContext;
-            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this, new ContentService());
+            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this);
         }
 
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data from a class
+        /// </summary>
+        /// <param name="creationContext"></param>
+        /// <returns></returns>
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
         {
             var umbContext = creationContext as UmbracoTypeSavingContext;
-            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this, new ContentService());
+            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this);
         }
-
-        
     }
 }

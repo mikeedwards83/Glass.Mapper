@@ -18,8 +18,17 @@
 
 namespace Glass.Mapper.Umb.Configuration.Fluent
 {
+    /// <summary>
+    /// IUmbracoClass
+    /// </summary>
     public interface IUmbracoClass
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         UmbracoTypeConfiguration Config { get; }
     }
 }

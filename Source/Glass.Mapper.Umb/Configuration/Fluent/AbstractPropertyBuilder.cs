@@ -22,8 +22,18 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration.Fluent
 {
+    /// <summary>
+    /// AbstractPropertyBuilder
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TK">The type of the K.</typeparam>
     public abstract class AbstractPropertyBuilder<T, TK> where TK : AbstractPropertyConfiguration, new ()
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPropertyBuilder{T, TK}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <exception cref="MapperException">To many parameters in linq expression {0}.Formatted(ex.Body)</exception>
         protected AbstractPropertyBuilder(Expression<Func<T, object>> ex)
         {
             Configuration = new TK();
@@ -32,7 +42,20 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             Configuration.PropertyInfo = Mapper.Utilities.GetPropertyInfo(typeof(T), ex.Body);
         }
 
+        /// <summary>
+        /// Gets the configuration.
+        /// </summary>
+        /// <value>
+        /// The configuration.
+        /// </value>
         public TK Configuration { get; private set; }
+
+        /// <summary>
+        /// Gets the expression.
+        /// </summary>
+        /// <value>
+        /// The expression.
+        /// </value>
         public Expression<Func<T, object>> Expression { get; private set; }
     }
 }

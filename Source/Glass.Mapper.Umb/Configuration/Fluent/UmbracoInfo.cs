@@ -26,7 +26,10 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     /// </summary>
     public class UmbracoInfo<T> : AbstractPropertyBuilder<T, UmbracoInfoConfiguration>
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInfo{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public UmbracoInfo(Expression<Func<T, object>> ex)
             : base(ex)
         {
@@ -35,6 +38,8 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// The type of information that should populate the property
         /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public UmbracoInfo<T> InfoType(UmbracoInfoType type)
         {
             Configuration.Type = type;

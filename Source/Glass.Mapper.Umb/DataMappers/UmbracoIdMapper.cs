@@ -3,18 +3,37 @@ using Glass.Mapper.Umb.Configuration;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
+    /// <summary>
+    /// UmbracoIdMapper
+    /// </summary>
     public class UmbracoIdMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoIdMapper"/> class.
+        /// </summary>
         public UmbracoIdMapper()
         {
-            this.ReadOnly = true;
+            ReadOnly = true;
         }
 
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">The type {0} on {0}.{1} is not supported by UmbracoIdMapper.Formatted
+        ///                                                 (umbConfig.PropertyInfo.ReflectedType.FullName,
+        ///                                                  umbConfig.PropertyInfo.Name)</exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             UmbracoDataMappingContext context = mappingContext as UmbracoDataMappingContext;
@@ -32,6 +51,12 @@ namespace Glass.Mapper.Umb.DataMappers
                                                  umbConfig.PropertyInfo.Name));
         }
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is UmbracoIdConfiguration;

@@ -20,6 +20,9 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoChildrenConfiguration
+    /// </summary>
     public class UmbracoChildrenConfiguration : ChildrenConfiguration
     {
     }

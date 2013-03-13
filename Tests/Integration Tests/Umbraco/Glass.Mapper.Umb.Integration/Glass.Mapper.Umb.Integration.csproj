@@ -231,6 +231,7 @@
   <ItemGroup>
     <Compile Include="Configuration\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
+    <Compile Include="DataMappers\UmbracoInfoMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoPropertyBooleanMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoPropertyStringMapperFixture.cs" />
     <Compile Include="DataMappers\UmbracoChildrenMapperFixture.cs" />

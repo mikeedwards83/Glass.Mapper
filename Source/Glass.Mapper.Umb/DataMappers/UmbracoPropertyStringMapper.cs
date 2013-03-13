@@ -21,18 +21,38 @@ using Glass.Mapper.Umb.Configuration;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
+    /// <summary>
+    /// UmbracoPropertyStringMapper
+    /// </summary>
     public class UmbracoPropertyStringMapper : AbstractUmbracoPropertyMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoPropertyStringMapper"/> class.
+        /// </summary>
         public UmbracoPropertyStringMapper()
             : base(typeof(string))
         {
         }
 
+        /// <summary>
+        /// Sets the property value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public override object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             return value;
         }
 
+        /// <summary>
+        /// Gets the property value.
+        /// </summary>
+        /// <param name="propertyValue">The property value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             return propertyValue;

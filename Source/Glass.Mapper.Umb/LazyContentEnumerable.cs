@@ -24,6 +24,10 @@ using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb
 {
+    /// <summary>
+    /// LazyContentEnumerable
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class LazyContentEnumerable<T> : IEnumerable<T> where T:class 
     {
         private readonly Func<IEnumerable<IContent>> _getItems;
@@ -31,8 +35,15 @@ namespace Glass.Mapper.Umb
         private readonly bool _isLazy;
         private readonly bool _inferType;
         private readonly IUmbracoService _service;
-        private Lazy<IList<T>> _lazyItemList;
+        private readonly Lazy<IList<T>> _lazyItemList;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyContentEnumerable{T}"/> class.
+        /// </summary>
+        /// <param name="getItems">The get items.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <param name="service">The service.</param>
         public LazyContentEnumerable(
             Func<IEnumerable<IContent>> getItems,
             bool isLazy,
@@ -49,6 +60,10 @@ namespace Glass.Mapper.Umb
             _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems().ToList());
         }
 
+        /// <summary>
+        /// Processes the items.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<T> ProcessItems()
         {
             foreach (IContent child in _getItems())
@@ -65,17 +80,28 @@ namespace Glass.Mapper.Umb
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
             return _lazyItemList.Value.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
     }
-    
 }
 
 

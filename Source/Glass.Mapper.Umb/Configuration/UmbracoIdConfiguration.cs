@@ -24,6 +24,9 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoIdConfiguration
+    /// </summary>
     public class UmbracoIdConfiguration : IdConfiguration
     {
     }

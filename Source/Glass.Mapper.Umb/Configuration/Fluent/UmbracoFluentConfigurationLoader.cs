@@ -22,10 +22,18 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration.Fluent
 {
+    /// <summary>
+    /// UmbracoFluentConfigurationLoader
+    /// </summary>
     public class UmbracoFluentConfigurationLoader : IConfigurationLoader
     {
-        List<IUmbracoClass> _types = new List<IUmbracoClass>();
+        readonly List<IUmbracoClass> _types = new List<IUmbracoClass>();
 
+        /// <summary>
+        /// Adds this instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public UmbracoType<T> Add<T>()
         {
             var config = new UmbracoType<T>();
@@ -33,6 +41,10 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             return config;
         }
 
+        /// <summary>
+        /// Loads this instance.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<AbstractTypeConfiguration> Load()
         {
             return _types.Select(x => x.Config);

@@ -19,54 +19,68 @@
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
-using Umbraco.Web;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
+    /// <summary>
+    /// UmbracoInfoMapper
+    /// </summary>
     public class UmbracoInfoMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInfoMapper"/> class.
+        /// </summary>
         public UmbracoInfoMapper()
         {
             ReadOnly = true;
         }
 
-
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <exception cref="MapperException">You can not set an empty or null Item name</exception>
+        /// <exception cref="System.NotSupportedException">
+        /// Can't set Name. Value is not of type System.String
+        /// or
+        /// You can not save UmbracoInfo {0}.Formatted(config.Type)
+        /// </exception>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            //var context = mappingContext as UmbracoDataMappingContext;
-            //var item = context.Item;
-            //var value = context.PropertyValue;
-            //var scConfig = Configuration as UmbracoInfoConfiguration;
+            var context = mappingContext as UmbracoDataMappingContext;
+            var content = context.Content;
+            var value = context.PropertyValue;
+            var config = Configuration as UmbracoInfoConfiguration;
 
-            //switch (scConfig.Type)
-            //{
-            //    case UmbracoInfoType.DisplayName:
-            //        if (value is string || value == null)
-            //            item[Global.Fields.DisplayName] = (value ?? string.Empty).ToString();
-            //        else
-            //            throw new NotSupportedException("Can't set DisplayName. Value is not of type System.String");
-            //        break;
-            //    case UmbracoInfoType.Name:
-            //        if (value is string || value == null)
-            //        {
-            //            //if the name is null or empty nothing should happen
-            //            if ((value ?? string.Empty).ToString().IsNullOrEmpty()) 
-            //                throw new MapperException("You can not set an empty or null Item name");
+            switch (config.Type)
+            {
+                case UmbracoInfoType.Name:
+                    if (value is string || value == null)
+                    {
+                        //if the name is null or empty nothing should happen
+                        if ((value ?? string.Empty).ToString().IsNullOrEmpty())
+                            throw new MapperException("You can not set an empty or null Item name");
 
-            //            if (item.Name != value.ToString())
-            //            {
-            //                item.Name = value.ToString();
-            //            }
-
-            //        }
-            //        else
-            //            throw new NotSupportedException("Can't set Name. Value is not of type System.String");
-            //        break;
-            //    default:
-            //        throw new NotSupportedException("You can not save UmbracoInfo {0}".Formatted(scConfig.Type));
-            //}
+                        if (content.Name != value.ToString())
+                        {
+                            content.Name = value.ToString();
+                            context.Service.ContentService.Save(content);
+                        }
+                    }
+                    else
+                        throw new NotSupportedException("Can't set Name. Value is not of type System.String");
+                    break;
+                default:
+                    throw new NotSupportedException("You can not save UmbracoInfo {0}".Formatted(config.Type));
+            }
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <returns></returns>
+        /// <exception cref="MapperException">UmbracoInfoType {0} not supported.Formatted(config.Type)</exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as UmbracoDataMappingContext;
@@ -92,6 +106,10 @@ namespace Glass.Mapper.Umb.DataMappers
             }
         }
 
+        /// <summary>
+        /// Sets up the data mapper for a particular property
+        /// </summary>
+        /// <param name="args"></param>
         public override void Setup(DataMapperResolverArgs args)
         {
             var config = args.PropertyConfiguration as UmbracoInfoConfiguration;
@@ -99,6 +117,12 @@ namespace Glass.Mapper.Umb.DataMappers
             base.Setup(args);
         }
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is UmbracoInfoConfiguration;

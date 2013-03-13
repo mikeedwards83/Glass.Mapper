@@ -18,6 +18,9 @@
 
 namespace Glass.Mapper.Umb
 {
+    /// <summary>
+    /// ExtensionMethods
+    /// </summary>
     public static class ExtensionMethods
     {
      

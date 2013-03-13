@@ -29,36 +29,45 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     public class UmbracoType<T> : IUmbracoClass, IUmbracoClass<T>
     {
         private List<AbstractPropertyConfiguration> _properties;
-        private UmbracoTypeConfiguration _configuration;
-
-
-
-
+        private readonly UmbracoTypeConfiguration _configuration;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoType{T}"/> class.
+        /// </summary>
         public UmbracoType()
         {
             _properties = new List<AbstractPropertyConfiguration>();
             _configuration = new UmbracoTypeConfiguration();
             _configuration.Type = typeof (T);
             _configuration.ConstructorMethods = Mapper.Utilities.CreateConstructorDelegates(_configuration.Type);
-
-
         }
 
         /// <summary>
         /// Indicates the template to use when trying to create an item
         /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <returns></returns>
         public UmbracoType<T> ContentTypeAlias(string alias)
         {
             _configuration.ContentTypeAlias = alias;
             return this;
         }
 
+        /// <summary>
+        /// Codes the first.
+        /// </summary>
+        /// <returns></returns>
         public UmbracoType<T> CodeFirst()
         {
             _configuration.CodeFirst = true;
             return this;
         }
 
+        /// <summary>
+        /// Contents the name of the type.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public UmbracoType<T> ContentTypeName(string name)
         {
             _configuration.ContentTypeName = name;
@@ -68,38 +77,35 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map item's  children  to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoChildren<T> Children(Expression<Func<T, object>> ex)
         {
-            UmbracoChildren<T> builder = new UmbracoChildren<T>(ex);
+            var builder = new UmbracoChildren<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
-
         
-
         /// <summary>
         /// Map an item property to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoProperty<T> Property(Expression<Func<T, object>> ex){
-            UmbracoProperty<T> builder = new UmbracoProperty<T>(ex);
+            var builder = new UmbracoProperty<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             
             return builder;
         }
-
-      
+        
         /// <summary>
         /// Map the item ID to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoId<T> Id(Expression<Func<T, object>> ex)
         {
-            UmbracoId<T> builder = new UmbracoId<T>(ex);
+            var builder = new UmbracoId<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
@@ -107,11 +113,11 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map item information  to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoInfo<T> Info(Expression<Func<T, object>> ex)
         {
-            UmbracoInfo<T> builder = new UmbracoInfo<T>(ex);
+            var builder = new UmbracoInfo<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
@@ -119,24 +125,23 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map an item's parent  to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoParent<T> Parent(Expression<Func<T, object>> ex)
         {
-            UmbracoParent<T> builder = new UmbracoParent<T>(ex);
+            var builder = new UmbracoParent<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
-
-
+        
         /// <summary>
         /// Map an item's linked items to a class property
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">The ex.</param>
         /// <returns></returns>
         public UmbracoLinked<T> Linked(Expression<Func<T, object>> ex)
         {
-            UmbracoLinked<T> builder = new UmbracoLinked<T>(ex);
+            var builder = new UmbracoLinked<T>(ex);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
@@ -144,7 +149,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map item properties to a class properties
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="properties">The properties.</param>
         /// <returns></returns>
         public UmbracoType<T> Properties(Action<IUmbracoClassFields<T>> properties)
         {
@@ -155,7 +160,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map an item's linked items to a class properties
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="links">The links.</param>
         /// <returns></returns>
         public UmbracoType<T> Links(Action<IUmbracoLinkedItems<T>> links)
         {
@@ -166,7 +171,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map an item's linked items to a class properties
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="config">The config.</param>
         /// <returns></returns>
         public UmbracoType<T> Configure(Action<IUmbracoClass<T>> config)
         {
@@ -174,21 +179,28 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             return this;
         }
         
-       
-
         #region IUmbracoClass Members
 
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public UmbracoTypeConfiguration Config
         {
             get { return _configuration; }
         }
 
         #endregion
-
-        
     }
+
     #region Interfaces
 
+    /// <summary>
+    /// IUmbracoClass
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUmbracoClass<T> : 
         IUmbracoClassFields<T>,
         IUmbracoClassInfos<T>,
@@ -197,20 +209,59 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     {
     }
 
+    /// <summary>
+    /// IUmbracoClassId
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUmbracoClassId<T>
     {
+        /// <summary>
+        /// Ids the specified ex.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
         UmbracoId<T> Id(Expression<Func<T, object>> ex);
     }
+
+    /// <summary>
+    /// IUmbracoClassFields
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUmbracoClassFields<T>
     {
+        /// <summary>
+        /// Properties the specified ex.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
         UmbracoProperty<T> Property(Expression<Func<T, object>> ex);
     }
+
+    /// <summary>
+    /// IUmbracoClassInfos
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUmbracoClassInfos<T>
     {
+        /// <summary>
+        /// Infoes the specified ex.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
         UmbracoInfo<T> Info(Expression<Func<T, object>> ex);
     }
+
+    /// <summary>
+    /// IUmbracoLinkedItems
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUmbracoLinkedItems<T>
     {
+        /// <summary>
+        /// Linkeds the specified ex.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
         UmbracoLinked<T> Linked(Expression<Func<T, object>> ex);
     }
 

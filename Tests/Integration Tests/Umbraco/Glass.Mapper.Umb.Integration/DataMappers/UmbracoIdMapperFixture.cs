@@ -68,7 +68,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var dataContext = new UmbracoDataMappingContext(null, content, null, _contentService);
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
             var expected = content.Id;
 
             //Act
@@ -94,7 +94,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var dataContext = new UmbracoDataMappingContext(null, content, null, _contentService);
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
             var expected = content.Key;
 
             //Act

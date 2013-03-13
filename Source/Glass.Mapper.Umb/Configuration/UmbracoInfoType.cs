@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoInfoType
+    /// </summary>
     public enum UmbracoInfoType
     {
         /// <summary>

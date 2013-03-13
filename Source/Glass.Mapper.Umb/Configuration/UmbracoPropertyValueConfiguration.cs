@@ -13,11 +13,17 @@ namespace Glass.Mapper.Umb.Configuration
         /// <summary>
         /// The alias of the property to load
         /// </summary>
+        /// <value>
+        /// The property alias.
+        /// </value>
         public string PropertyAlias { get; set; }
 
         /// <summary>
         /// The value for the property if using Code First
         /// </summary>
+        /// <value>
+        /// The property value.
+        /// </value>
         public string PropertyValue { get; set; }
     }
 }

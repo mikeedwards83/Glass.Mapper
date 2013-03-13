@@ -26,6 +26,10 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     /// </summary>
     public class UmbracoParent<T> : AbstractPropertyBuilder<T, UmbracoParentConfiguration>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoParent{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public UmbracoParent(Expression<Func<T, object>> ex)
             : base(ex)
         {
@@ -34,6 +38,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Indicates if the parent shouldn't be loaded lazily.
         /// </summary>
+        /// <returns></returns>
         public UmbracoParent<T> IsNotLazy()
         {
             Configuration.IsLazy = false;
@@ -42,6 +47,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <returns></returns>
         public UmbracoParent<T> InferType()
         {
             Configuration.InferType = true;

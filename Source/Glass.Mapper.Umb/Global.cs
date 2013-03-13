@@ -18,11 +18,11 @@
 
 namespace Glass.Mapper.Umb
 {
+    /// <summary>
+    /// Global
+    /// </summary>
     public static class Global
     {
         
     }
 }
-
-
-

@@ -6,15 +6,32 @@ using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
+    /// <summary>
+    /// AbstractUmbracoPropertyMapper
+    /// </summary>
     public abstract class AbstractUmbracoPropertyMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Gets the types handled.
+        /// </summary>
+        /// <value>
+        /// The types handled.
+        /// </value>
         public IEnumerable<Type> TypesHandled { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractUmbracoPropertyMapper"/> class.
+        /// </summary>
+        /// <param name="typesHandled">The types handled.</param>
         public AbstractUmbracoPropertyMapper(params Type[] typesHandled)
         {
             TypesHandled = typesHandled;
         }
 
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext"></param>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var config = Configuration as UmbracoPropertyConfiguration;
@@ -29,6 +46,11 @@ namespace Glass.Mapper.Umb.DataMappers
             }
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <returns></returns>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var config = Configuration as UmbracoPropertyConfiguration;
@@ -43,6 +65,13 @@ namespace Glass.Mapper.Umb.DataMappers
             return null;
         }
 
+        /// <summary>
+        /// Gets the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public virtual object GetProperty(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             var propertyValue = property.Value;
@@ -50,14 +79,42 @@ namespace Glass.Mapper.Umb.DataMappers
             return GetPropertyValue(propertyValue, config, context);
         }
 
+        /// <summary>
+        /// Sets the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
         public virtual void SetProperty(Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             property.Value = SetPropertyValue(value, config, context);
         }
 
+        /// <summary>
+        /// Sets the property value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public abstract object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
+
+        /// <summary>
+        /// Gets the property value.
+        /// </summary>
+        /// <param name="propertyValue">The property value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public abstract object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context);
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is UmbracoPropertyConfiguration &&

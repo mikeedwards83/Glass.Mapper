@@ -15,7 +15,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// Indicates that the property should pull data from a umbraco property.
         /// </summary>
         /// <param name="propertyAlias">The alias of the property to load</param>
-        /// <param name="propertyValue">The default property value </param>
+        /// <param name="propertyValue">The default property value</param>
         public UmbracoPropertyValueAttribute(string propertyAlias, string propertyValue)
         {
             PropertyAlias = propertyAlias;
@@ -25,13 +25,25 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// <summary>
         /// The alias of the property to load
         /// </summary>
+        /// <value>
+        /// The property alias.
+        /// </value>
         public string PropertyAlias { get; set; }
 
         /// <summary>
-        /// The value for the property 
+        /// The value for the property
         /// </summary>
+        /// <value>
+        /// The property value.
+        /// </value>
         public string PropertyValue { get; set; }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="fieldConfiguration">The field configuration.</param>
+        /// <returns></returns>
         public UmbracoPropertyValueConfiguration Configure(PropertyInfo propertyInfo,
                                                               UmbracoPropertyConfiguration fieldConfiguration)
         {

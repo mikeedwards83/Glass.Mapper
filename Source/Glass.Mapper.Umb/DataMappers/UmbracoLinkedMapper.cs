@@ -20,23 +20,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Umb.Configuration;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
+    /// <summary>
+    /// UmbracoLinkedMapper
+    /// </summary>
     public class UmbracoLinkedMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoLinkedMapper"/> class.
+        /// </summary>
         public UmbracoLinkedMapper()
         {
             ReadOnly = true;
         }
-
-
+        
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext"></param>
+        /// <returns></returns>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             //var scConfig = Configuration as UmbracoLinkedConfiguration;
@@ -79,6 +93,12 @@ namespace Glass.Mapper.Umb.DataMappers
             return null;
         }
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
         {
             //if (!(configuration is UmbracoLinkedConfiguration))

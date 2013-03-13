@@ -26,16 +26,19 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     /// </summary>
     public class UmbracoLinked<T> : AbstractPropertyBuilder<T, UmbracoLinkedConfiguration>
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoLinked{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public UmbracoLinked(Expression<Func<T, object>> ex)
             : base(ex)
         {
         }
 
-     
         /// <summary>
         /// Indicates if linked items should not be  loaded lazily. Default value is true. If set linked items will be loaded when the contain object is created.
         /// </summary>
+        /// <returns></returns>
         public UmbracoLinked<T> IsNotLazy()
         {
             Configuration.IsLazy = false;
@@ -44,6 +47,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <returns></returns>
         public UmbracoLinked<T> InferType()
         {
             
@@ -53,6 +57,8 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Indicate weather All, References or Referred should be loaded
         /// </summary>
+        /// <param name="option">The option.</param>
+        /// <returns></returns>
         public UmbracoLinked<T> Option(UmbracoLinkedOptions option)
         {
             Configuration.Option = option;

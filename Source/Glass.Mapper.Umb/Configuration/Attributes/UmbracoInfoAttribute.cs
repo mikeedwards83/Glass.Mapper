@@ -7,12 +7,23 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoInfoAttribute
+    /// </summary>
     public class UmbracoInfoAttribute : InfoAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInfoAttribute"/> class.
+        /// </summary>
         public UmbracoInfoAttribute()
         {
             
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInfoAttribute"/> class.
+        /// </summary>
+        /// <param name="infoType">Type of the info.</param>
         public UmbracoInfoAttribute(UmbracoInfoType infoType)
         {
             Type = infoType;
@@ -21,8 +32,16 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// <summary>
         /// The type of information that should populate the property
         /// </summary>
+        /// <value>
+        /// The type.
+        /// </value>
         public UmbracoInfoType Type { get; set; }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns></returns>
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
             var config = new UmbracoIdConfiguration();
@@ -30,6 +49,11 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             return config;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, UmbracoInfoConfiguration config)
         {
             config.Type = this.Type;

@@ -27,6 +27,11 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
     /// </summary>
     public class UmbracoChildrenAttribute : ChildrenAttribute
     {
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns></returns>
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
             var config = new UmbracoChildrenConfiguration();

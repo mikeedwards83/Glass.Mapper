@@ -22,14 +22,25 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoAttributeConfigurationLoader
+    /// </summary>
     public class UmbracoAttributeConfigurationLoader : AttributeConfigurationLoader<UmbracoTypeConfiguration, UmbracoPropertyConfiguration>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoAttributeConfigurationLoader"/> class.
+        /// </summary>
+        /// <param name="assemblies">The assemblies.</param>
         public UmbracoAttributeConfigurationLoader(params string[] assemblies)
             : base(assemblies)
         {
 
         }
 
+        /// <summary>
+        /// Configs the created.
+        /// </summary>
+        /// <param name="config">The config.</param>
         protected override void ConfigCreated(AbstractTypeConfiguration config)
         {
             var umbConfig = config as UmbracoTypeConfiguration;

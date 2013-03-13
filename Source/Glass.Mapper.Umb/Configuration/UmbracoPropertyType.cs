@@ -18,6 +18,9 @@
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoPropertyType
+    /// </summary>
     public enum UmbracoPropertyType
     {
         NotSet,

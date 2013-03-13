@@ -84,7 +84,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             content.SetPropertyValue(contentTypeProperty, fieldValue);
             contentService.Save(content);
 
-            var umbracoService = new UmbracoService();
+            var umbracoService = new UmbracoService(contentService, context);
 
             //Act
             var result = umbracoService.GetItem<Stub>(content.Id);

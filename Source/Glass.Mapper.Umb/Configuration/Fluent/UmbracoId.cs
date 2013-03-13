@@ -26,7 +26,10 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     /// </summary>
     public  class UmbracoId<T> : AbstractPropertyBuilder<T, UmbracoIdConfiguration>
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoId{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public UmbracoId(Expression<Func<T, object>> ex):base(ex)
         {
             

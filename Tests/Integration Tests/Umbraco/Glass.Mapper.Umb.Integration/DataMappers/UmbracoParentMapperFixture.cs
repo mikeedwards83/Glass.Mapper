@@ -61,7 +61,8 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var contentService = new ContentService(_unitOfWork, _repoFactory);
             var content = contentService.GetById(new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}"));
             var service = Substitute.For<IUmbracoService>();
-            var scContext = new UmbracoDataMappingContext(null, content, service, contentService);
+            service.ContentService.Returns(contentService);
+            var scContext = new UmbracoDataMappingContext(null, content, service);
 
             var config = new UmbracoParentConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
@@ -84,7 +85,8 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var contentService = new ContentService(_unitOfWork, _repoFactory);
             var content = contentService.GetById(new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}"));
             var service = Substitute.For<IUmbracoService>();
-            var scContext = new UmbracoDataMappingContext(null, content, service, contentService);
+            service.ContentService.Returns(contentService);
+            var scContext = new UmbracoDataMappingContext(null, content, service);
 
             var config = new UmbracoParentConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
@@ -108,7 +110,8 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var contentService = new ContentService(_unitOfWork, _repoFactory);
             var content = contentService.GetById(new Guid("{C382AE57-D325-4357-A32A-0A959BBD4101}"));
             var service = Substitute.For<IUmbracoService>();
-            var scContext = new UmbracoDataMappingContext(null, content, service, contentService);
+            service.ContentService.Returns(contentService);
+            var scContext = new UmbracoDataMappingContext(null, content, service);
 
             var config = new UmbracoParentConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");

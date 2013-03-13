@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoLinkedOptions
+    /// </summary>
     public enum UmbracoLinkedOptions
     {
         All,

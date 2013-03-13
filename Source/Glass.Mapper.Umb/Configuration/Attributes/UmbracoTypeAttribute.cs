@@ -22,23 +22,41 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoTypeAttribute
+    /// </summary>
     public class UmbracoTypeAttribute : AbstractTypeAttribute
     {
         /// <summary>
         /// Indicates the content type to use when trying to create an item
         /// </summary>
+        /// <value>
+        /// The content type alias.
+        /// </value>
         public string ContentTypeAlias { get; set; }
 
         /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
+        /// <value>
+        ///   <c>true</c> if [code first]; otherwise, <c>false</c>.
+        /// </value>
         public bool CodeFirst { get; set; }
 
         /// <summary>
         /// Overrides the default content type name when using code first
         /// </summary>
+        /// <value>
+        /// The name of the content type.
+        /// </value>
         public string ContentTypeName { get; set; }
 
+        /// <summary>
+        /// Configures the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="config">The config.</param>
+        /// <exception cref="ConfigurationException">Type configuration is not of type {0}.Formatted(typeof(UmbracoTypeConfiguration).FullName)</exception>
         public override void Configure(Type type, AbstractTypeConfiguration config)
         {
             var umbConfig = config as UmbracoTypeConfiguration;

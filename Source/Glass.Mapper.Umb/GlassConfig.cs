@@ -32,8 +32,16 @@ using Glass.Mapper.Umb.DataMappers;
 
 namespace Glass.Mapper.Umb
 {
+    /// <summary>
+    /// GlassConfig
+    /// </summary>
     public class GlassConfig : GlassCastleConfigBase
     {
+        /// <summary>
+        /// Configures the specified container.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="contextName">Name of the context.</param>
         public override void Configure(WindsorContainer container, string contextName)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
@@ -53,10 +61,13 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
-        public void Install(IWindsorContainer container,
-                            Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyBooleanMapper>().LifestyleTransient(),
@@ -116,10 +127,14 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            /// Tasks are called in the order they are specified.
-
+            // Tasks are called in the order they are specified.
             container.Register(
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
@@ -133,6 +148,11 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed, e.g. 
@@ -153,6 +173,11 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
@@ -168,6 +193,11 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified below.

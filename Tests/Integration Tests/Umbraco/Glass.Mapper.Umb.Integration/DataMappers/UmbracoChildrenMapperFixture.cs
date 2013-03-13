@@ -55,12 +55,13 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var mapper = new UmbracoChildrenMapper();
 
             //ME - Although this looks correct I am not sure it is
+            service.ContentService.Returns(_contentService);
             service.CreateType(typeof(StubChild), predicate, false, false).ReturnsForAnyArgs(info => new StubChild
                                                                                   {
                                                                                       Id =  info.Arg<IContent>().Id
                                                                                   });
 
-            var context = new UmbracoDataMappingContext(null, content, service, _contentService);
+            var context = new UmbracoDataMappingContext(null, content, service);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act
@@ -98,7 +99,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
                 Id = info.Arg<IContent>().Id
             });
 
-            var context = new UmbracoDataMappingContext(null, content, service, _contentService);
+            var context = new UmbracoDataMappingContext(null, content, service);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act

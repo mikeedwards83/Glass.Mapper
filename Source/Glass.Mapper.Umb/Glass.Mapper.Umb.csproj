@@ -260,7 +260,6 @@
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="GlassApplicationEventHandler.cs" />
     <Compile Include="GlassConfig.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IUmbracoService.cs" />
