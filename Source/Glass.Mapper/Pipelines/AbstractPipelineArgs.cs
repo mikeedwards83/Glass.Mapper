@@ -28,15 +28,31 @@ namespace Glass.Mapper.Pipelines
     /// </summary>
     public abstract class AbstractPipelineArgs
     {
+        /// <summary>
+        /// Gets the context.
+        /// </summary>
+        /// <value>The context.</value>
         public Context Context { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is aborted.
+        /// </summary>
+        /// <value><c>true</c> if this instance is aborted; otherwise, <c>false</c>.</value>
         public bool IsAborted { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPipelineArgs"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         protected AbstractPipelineArgs(Context context)
         {
             Context = context;
         }
 
+        /// <summary>
+        /// Aborts the pipeline.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         public bool AbortPipeline ()
         {
             IsAborted = true;

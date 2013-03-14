@@ -30,24 +30,29 @@ namespace Glass.Mapper
     /// 
     /// I have assumed that all CMSs at the moment will using Strings for data storage
     /// 
-    *****/ 
-    
+    *****/
+
     /// <summary>
     /// A data mapper converts data from the CMS stored value to the .Net data type
     /// </summary>
     public abstract class AbstractDataMapper
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether [read only].
+        /// </summary>
+        /// <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
         public bool ReadOnly { get;  set; }
 
         /// <summary>
         /// The property this Data Mapper will populate
         /// </summary>
+        /// <value>The configuration.</value>
         public AbstractPropertyConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Takes CMS data and writes it to the property
         /// </summary>
-        /// <param name="mappingContext"></param>
+        /// <param name="mappingContext">The mapping context.</param>
         public void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
             var result  = MapToProperty(mappingContext);
@@ -60,7 +65,7 @@ namespace Glass.Mapper
         /// <summary>
         /// Takes a Property value and writes it to a CMS value
         /// </summary>
-        /// <param name="mappingContext"></param>
+        /// <param name="mappingContext">The mapping context.</param>
         public void MapPropertyToCms(AbstractDataMappingContext mappingContext)
         {
             if (ReadOnly) return;
@@ -75,22 +80,22 @@ namespace Glass.Mapper
         /// <summary>
         /// Maps data from the .Net property value to the CMS value
         /// </summary>
-        /// <param name="mappingContext"></param>
-        /// <returns>The value to write </returns>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>The value to write</returns>
         public abstract void MapToCms(AbstractDataMappingContext mappingContext);
 
         /// <summary>
         /// Maps data from the CMS value to the .Net property value
         /// </summary>
-        /// <param name="mappingContext"></param>
-        /// <returns></returns>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>System.Object.</returns>
         public abstract object MapToProperty(AbstractDataMappingContext mappingContext);
 
 
         /// <summary>
         /// Sets up the data mapper for a particular property
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="args">The args.</param>
         public virtual void Setup(DataMapperResolverArgs args)
         {
             Configuration = args.PropertyConfiguration;
@@ -100,8 +105,9 @@ namespace Glass.Mapper
         /// <summary>
         /// Indicates that the data mapper will mapper to and from the property
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public abstract bool CanHandle(AbstractPropertyConfiguration configuration, Context context);
 
         

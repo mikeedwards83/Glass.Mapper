@@ -30,10 +30,22 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public abstract class AbstractPropertyConfiguration
     {
+        /// <summary>
+        /// Gets or sets the property info.
+        /// </summary>
+        /// <value>The property info.</value>
         public PropertyInfo PropertyInfo { get;  set; }
 
-        public AbstractDataMapper Mapper  { get; internal set; } 
+        /// <summary>
+        /// Gets the mapper.
+        /// </summary>
+        /// <value>The mapper.</value>
+        public AbstractDataMapper Mapper  { get; internal set; }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
             if (PropertyInfo == null)

@@ -45,11 +45,8 @@
   <ItemGroup>
     <Compile Include="Configuration\Attributes\BasicTemplate.cs" />
     <Compile Include="Configuration\Attributes\MiscFixture.cs" />
-<<<<<<< HEAD
     <Compile Include="Configuration\Fluent\BasicTemplate.cs" />
     <Compile Include="Configuration\Fluent\MiscFixture.cs" />
-=======
->>>>>>> feature/UpgradeAssembly
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -23,8 +23,16 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines
 {
+    /// <summary>
+    /// Interface IPipelineTask
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IPipelineTask<T>  where T: AbstractPipelineArgs
     {
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         void Execute(T args);
     }
 }

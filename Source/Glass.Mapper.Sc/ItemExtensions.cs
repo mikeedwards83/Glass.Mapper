@@ -20,6 +20,9 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// Class ItemExtensions
+    /// </summary>
     public static class ItemExtensions
     {
         /// <summary>
@@ -27,6 +30,9 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <typeparam name="T">Type to return</typeparam>
         /// <param name="item">Item to read from</param>
+        /// <param name="service">The service.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>A strongly typed class representation of the item</returns>
         public static T GlassCast<T>(this Item item, ISitecoreService service, bool isLazy = false, bool inferType = false) where T : class
         {
@@ -39,6 +45,8 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <typeparam name="T">Type to return</typeparam>
         /// <param name="item">Item to read from</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>A strongly typed class representation of the item</returns>
         public static T GlassCast<T>(this Item item, bool isLazy = false, bool inferType = false) where T : class
         {

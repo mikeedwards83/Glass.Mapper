@@ -53,11 +53,10 @@ namespace Glass.Mapper.Tests
         public void InstantiageObject_AllRunnersSetup_ObjectReturned()
         {
             //Assign
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+
             var resolver = Substitute.For<IDependencyResolver>();
-            
-            Context.ResolverFactory.GetResolver().Returns(resolver);
-            var context = Context.Create(Substitute.For<IGlassConfiguration>());
+
+            var context = Context.Create(resolver);
 
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();

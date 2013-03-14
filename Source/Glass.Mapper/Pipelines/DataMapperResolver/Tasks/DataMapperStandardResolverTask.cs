@@ -23,8 +23,16 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
 {
+    /// <summary>
+    /// Class DataMapperStandardResolverTask
+    /// </summary>
     public class DataMapperStandardResolverTask : IDataMapperResolverTask
     {
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
+        /// <exception cref="Glass.Mapper.MapperException">Could not find data mapper to handler property {0}.Formatted(args.PropertyConfiguration)</exception>
         public void Execute(DataMapperResolverArgs args)
         {
             if (args.Result == null)

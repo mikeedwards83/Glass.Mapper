@@ -25,6 +25,9 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreIdConfiguration
+    /// </summary>
     public class SitecoreIdConfiguration : IdConfiguration
     {
         

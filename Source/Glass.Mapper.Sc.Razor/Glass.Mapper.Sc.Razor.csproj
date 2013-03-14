@@ -40,7 +40,7 @@
       <HintPath>..\Glass.Mapper.Sc\bin\Debug\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\Depends\66\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

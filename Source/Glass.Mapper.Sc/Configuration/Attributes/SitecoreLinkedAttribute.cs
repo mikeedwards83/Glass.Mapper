@@ -25,19 +25,31 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
 {
+    /// <summary>
+    /// Class SitecoreLinkedAttribute
+    /// </summary>
     public class SitecoreLinkedAttribute : LinkedAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreLinkedAttribute"/> class.
+        /// </summary>
         public SitecoreLinkedAttribute()
         {
             Option = SitecoreLinkedOptions.All;
         }
-    
+
 
         /// <summary>
         /// Indicate weather All, References or Referred should be loaded
         /// </summary>
+        /// <value>The option.</value>
         public SitecoreLinkedOptions Option { get; set; }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns>AbstractPropertyConfiguration.</returns>
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
             var config = new SitecoreLinkedConfiguration();
@@ -45,6 +57,11 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             return config;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, SitecoreLinkedConfiguration config)
         {
             config.Option = this.Option;

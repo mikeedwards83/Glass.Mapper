@@ -16,11 +16,9 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
@@ -39,7 +37,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var path = "/sitecore/content/Tests/SitecoreContext/GetCurrentItem/Target";
@@ -59,7 +57,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var path = "/sitecore/content/Tests/SitecoreContext/GetCurrentItem/Target";
@@ -80,7 +78,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             string param1 = "1para";
@@ -102,7 +100,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             string param1 = "1para";
@@ -125,7 +123,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             string param1 = "1para";
@@ -149,7 +147,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             string param1 = "1para";
@@ -179,7 +177,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var doc = new XmlDocument();
@@ -213,7 +211,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var path = "/sitecore/content/Tests/SitecoreContext/QueryRelative/Source";
@@ -244,7 +242,7 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var path = "/sitecore/content/Tests/SitecoreContext/QueryRelative/Source";

@@ -1,5 +1,5 @@
 ﻿using System;
-using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace Glass.Mapper.Sites.Sc
@@ -8,7 +8,12 @@ namespace Glass.Mapper.Sites.Sc
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            var context = Glass.Mapper.Context.Create(new GlassConfig());
+            //create the resolver
+            var resolver = DependencyResolver.CreateStandardResolver();
+
+            //create a context
+            var context = Glass.Mapper.Context.Create(resolver);
+
             var attributes = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sites.Sc");
 
             context.Load(
@@ -18,7 +23,7 @@ namespace Glass.Mapper.Sites.Sc
                 attributes
                 );
             
-            Mapper.Sc.Razor.GlassRazorModuleLoader.Load();
+            Mapper.Sc.Razor.GlassRazorModuleLoader.Load(resolver);
         }
     }
 }

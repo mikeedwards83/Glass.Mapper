@@ -41,8 +41,8 @@ namespace Glass.Mapper.Tests
         [SetUp]
         public void Setup()
         {
-            _glassConfig = Substitute.For<IGlassConfiguration>();
-            Context.ResolverFactory = Substitute.For<IDependencyResolverFactory>();
+            
+         
         }
 
         #region Create
@@ -56,7 +56,7 @@ namespace Glass.Mapper.Tests
             Context.Clear();
 
             //Act
-            Context.Create(_glassConfig, contextName, isDefault);
+            Context.Create(Substitute.For<IDependencyResolver>(), contextName, isDefault);
 
             //Assert
             Assert.IsTrue(Context.Contexts.ContainsKey(contextName));
@@ -72,7 +72,7 @@ namespace Glass.Mapper.Tests
             bool isDefault = true;
 
             //Act
-            Context.Create(_glassConfig, contextName, isDefault);
+            Context.Create(Substitute.For<IDependencyResolver>(), contextName, isDefault);
 
             //Assert
             Assert.IsTrue(Context.Contexts.ContainsKey(contextName));
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Tests
             //Assign
 
             //Act
-            Context.Create(_glassConfig);
+            Context.Create(Substitute.For<IDependencyResolver>());
             
             //Assert
             Assert.IsNotNull(Context.Default);
@@ -113,7 +113,7 @@ namespace Glass.Mapper.Tests
             loader2.Load().Returns(new[] { config2 });
 
             //Act
-            var context = Context.Create(_glassConfig);
+            var context = Context.Create(Substitute.For<IDependencyResolver>());
             context.Load(loader1, loader2);
 
             //Assert
@@ -141,7 +141,7 @@ namespace Glass.Mapper.Tests
 
 
             //Act
-            var context = Context.Create(_glassConfig);
+            var context = Context.Create(Substitute.For<IDependencyResolver>());
             context.Load(loader1);
 
             //Assert
@@ -156,7 +156,7 @@ namespace Glass.Mapper.Tests
             var loader1 = Substitute.For<IConfigurationLoader>();
 
             //Act
-            var context = Context.Create(_glassConfig);
+            var context = Context.Create(Substitute.For<IDependencyResolver>());
             context.Load(loader1);
 
             //Assert

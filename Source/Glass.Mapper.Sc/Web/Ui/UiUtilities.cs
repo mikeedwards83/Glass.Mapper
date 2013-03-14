@@ -4,16 +4,26 @@ using Glass.Mapper.Sc.RenderField;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
+    /// <summary>
+    /// Class UiUtilities
+    /// </summary>
     public static class UiUtilities
     {
 
 
         /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
+        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="glassHtml">The glass HTML.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="field">The field.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No model set
+        /// </exception>
         public static string Editable<T>(GlassHtml glassHtml, T model, Expression<Func<T, object>> field)
         {
 
@@ -36,9 +46,17 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="glassHtml">The glass HTML.</param>
+        /// <param name="model">The model.</param>
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No model set
+        /// </exception>
         public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, string parameters)
         {
             if (field == null) throw new NullReferenceException("No field set");
@@ -56,11 +74,19 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
+        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="glassHtml">The glass HTML.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No model set
+        /// </exception>
         public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, AbstractParameters parameters)
         {
 
@@ -81,11 +107,21 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
+        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="glassHtml">The glass HTML.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No standardoutput set
+        /// or
+        /// No model set
+        /// </exception>
         public static  string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
 
@@ -108,11 +144,22 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model => model.Title where Title is field name.
-        /// 
+        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="glassHtml">The glass HTML.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No standardoutput set
+        /// or
+        /// No model set
+        /// </exception>
         public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
 

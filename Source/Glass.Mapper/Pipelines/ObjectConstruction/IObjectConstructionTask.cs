@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
+    /// <summary>
+    /// Interface IObjectConstructionTask
+    /// </summary>
     public interface IObjectConstructionTask : IPipelineTask<ObjectConstructionArgs>
     {
     }

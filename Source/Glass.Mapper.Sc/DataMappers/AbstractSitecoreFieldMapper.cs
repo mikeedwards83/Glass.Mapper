@@ -25,15 +25,31 @@ using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class AbstractSitecoreFieldMapper
+    /// </summary>
     public abstract class AbstractSitecoreFieldMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Gets the types handled.
+        /// </summary>
+        /// <value>The types handled.</value>
         public IEnumerable<Type> TypesHandled { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
+        /// </summary>
+        /// <param name="typesHandled">The types handled.</param>
         public AbstractSitecoreFieldMapper(params Type [] typesHandled)
         {
             TypesHandled = typesHandled;
         }
 
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>The value to write</returns>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var scConfig = Configuration as SitecoreFieldConfiguration;
@@ -45,6 +61,11 @@ namespace Glass.Mapper.Sc.DataMappers
             SetField(field, value, scConfig, scContext);
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>System.Object.</returns>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var scConfig = Configuration as SitecoreFieldConfiguration;
@@ -54,6 +75,13 @@ namespace Glass.Mapper.Sc.DataMappers
             return GetField(field, scConfig, scContext);
         }
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public virtual object GetField(Field field, SitecoreFieldConfiguration config,
                                        SitecoreDataMappingContext context)
         {
@@ -61,15 +89,42 @@ namespace Glass.Mapper.Sc.DataMappers
 
             return GetFieldValue(fieldValue, config, context);
         }
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
         public virtual void SetField(Field field, object value, SitecoreFieldConfiguration config,
                                       SitecoreDataMappingContext context)
         {
             field.Value = SetFieldValue(value, config, context);
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
         public abstract string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public abstract object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreFieldConfiguration &&

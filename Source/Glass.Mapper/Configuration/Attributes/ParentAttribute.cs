@@ -20,9 +20,15 @@ using System.Reflection;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
+    /// <summary>
+    /// Class ParentAttribute
+    /// </summary>
     public abstract class ParentAttribute : AbstractPropertyAttribute
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParentAttribute"/> class.
+        /// </summary>
         public ParentAttribute()
         {
             IsLazy = true;
@@ -31,6 +37,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates if the parent should be loaded lazily. Default value is true. If false parent will be loaded when the contain object is created.
         /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy
         {
             get;
@@ -39,12 +46,18 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, ParentConfiguration config)
         {
 

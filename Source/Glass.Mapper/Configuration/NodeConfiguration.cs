@@ -23,14 +23,33 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Class NodeConfiguration
+    /// </summary>
     public class NodeConfiguration : AbstractPropertyConfiguration
     {
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        /// <value>The id.</value>
         public string Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lazy.
+        /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy { get; set; }
 
+        /// <summary>
+        /// Gets or sets the path.
+        /// </summary>
+        /// <value>The path.</value>
         public string Path { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [infer type].
+        /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType { get; set; }
     }
 }

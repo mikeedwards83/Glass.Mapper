@@ -24,17 +24,29 @@ using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 {
+    /// <summary>
+    /// Class InterfacePropertyInterceptor
+    /// </summary>
     public class InterfacePropertyInterceptor : IInterceptor
     {
         private readonly ObjectConstructionArgs _args;
         Dictionary<string, object> _values;
         bool _isLoaded = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterfacePropertyInterceptor"/> class.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public InterfacePropertyInterceptor(ObjectConstructionArgs args)
         {
             _args = args;
         }
 
+        /// <summary>
+        /// Intercepts the specified invocation.
+        /// </summary>
+        /// <param name="invocation">The invocation.</param>
+        /// <exception cref="Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
         public void Intercept(IInvocation invocation)
         {
             //do initial gets

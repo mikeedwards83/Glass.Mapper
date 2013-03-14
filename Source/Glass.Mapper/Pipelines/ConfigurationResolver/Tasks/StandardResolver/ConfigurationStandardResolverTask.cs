@@ -23,8 +23,15 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
 {
+    /// <summary>
+    /// Class ConfigurationStandardResolverTask
+    /// </summary>
     public class ConfigurationStandardResolverTask : IConfigurationResolverTask
     {
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
             if (args.Result == null)

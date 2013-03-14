@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// Class ExtensionMethods
+    /// </summary>
     public static class ExtensionMethods
     {
      

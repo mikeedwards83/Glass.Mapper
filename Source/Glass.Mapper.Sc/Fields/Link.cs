@@ -23,16 +23,55 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.Fields
 {
+    /// <summary>
+    /// Class Link
+    /// </summary>
     public class Link
     {
+        /// <summary>
+        /// Gets or sets the anchor.
+        /// </summary>
+        /// <value>The anchor.</value>
         public string Anchor { get; set; }
+        /// <summary>
+        /// Gets or sets the class.
+        /// </summary>
+        /// <value>The class.</value>
         public string Class { get; set; }
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
         public string Text { get; set; }
+        /// <summary>
+        /// Gets or sets the query.
+        /// </summary>
+        /// <value>The query.</value>
         public string Query { get; set; }
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>The title.</value>
         public string Title { get; set; }
+        /// <summary>
+        /// Gets or sets the URL.
+        /// </summary>
+        /// <value>The URL.</value>
         public string Url { get; set; }
+        /// <summary>
+        /// Gets or sets the target.
+        /// </summary>
+        /// <value>The target.</value>
         public string Target { get; set; }
+        /// <summary>
+        /// Gets or sets the target id.
+        /// </summary>
+        /// <value>The target id.</value>
         public Guid TargetId { get; set; }
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        /// <value>The type.</value>
         public LinkType Type { get; set; }
     }
 }

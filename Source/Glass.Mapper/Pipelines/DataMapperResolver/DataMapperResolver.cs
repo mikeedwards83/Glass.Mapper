@@ -23,8 +23,15 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.DataMapperResolver
 {
+    /// <summary>
+    /// Class DataMapperResolver
+    /// </summary>
     public class DataMapperResolver : AbstractPipelineRunner<DataMapperResolverArgs, IDataMapperResolverTask>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperResolver"/> class.
+        /// </summary>
+        /// <param name="tasks">The tasks.</param>
         public DataMapperResolver(IEnumerable<IDataMapperResolverTask> tasks)
             : base(tasks)
         {

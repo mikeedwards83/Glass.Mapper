@@ -31,9 +31,25 @@ namespace Glass.Mapper
     public abstract class AbstractTypeCreationContext
     {
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [infer type].
+        /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lazy.
+        /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the requested.
+        /// </summary>
+        /// <value>The type of the requested.</value>
         public Type RequestedType { get; set; }
+        /// <summary>
+        /// Gets or sets the constructor parameters.
+        /// </summary>
+        /// <value>The constructor parameters.</value>
         public object[] ConstructorParameters { get; set; }
     }
 }

@@ -28,9 +28,19 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreFieldTypeMapper
+    /// </summary>
     public class SitecoreFieldTypeMapper : AbstractSitecoreFieldMapper
     {
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
@@ -54,6 +64,14 @@ namespace Glass.Mapper.Sc.DataMappers
             return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">Could not find item to save value {0}.Formatted(Configuration)</exception>
         public override string  SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
@@ -71,12 +89,22 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
+        /// <summary>
+        /// Determines whether this instance can handle the specified configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration,  Context context)
         {
             return context[configuration.PropertyInfo.PropertyType] != null &&
                    configuration is SitecoreFieldConfiguration;
         }
 
+        /// <summary>
+        /// Sets up the data mapper for a particular property
+        /// </summary>
+        /// <param name="args">The args.</param>
         public override void Setup(DataMapperResolverArgs args)
         {
             var scConfig = args.PropertyConfiguration as SitecoreFieldConfiguration;
@@ -86,8 +114,16 @@ namespace Glass.Mapper.Sc.DataMappers
             base.Setup(args);
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [infer type].
+        /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         protected bool InferType { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lazy.
+        /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         protected bool IsLazy { get; set; }
     }
 }

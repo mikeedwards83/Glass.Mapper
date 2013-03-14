@@ -26,12 +26,23 @@ using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
 {
+    /// <summary>
+    /// Class SitecoreTypeAttribute
+    /// </summary>
     public class SitecoreTypeAttribute : AbstractTypeAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreTypeAttribute"/> class.
+        /// </summary>
         public SitecoreTypeAttribute()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreTypeAttribute"/> class.
+        /// </summary>
+        /// <param name="codeFirst">if set to <c>true</c> [code first].</param>
+        /// <param name="templateId">The template id.</param>
         public SitecoreTypeAttribute(bool codeFirst, string templateId)
         {
             TemplateId = templateId;
@@ -41,22 +52,32 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <summary>
         /// Indicates the template to use when trying to create an item
         /// </summary>
+        /// <value>The template id.</value>
         public string TemplateId { get; set; }
         /// <summary>
         /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
         /// </summary>
+        /// <value>The branch id.</value>
         public string BranchId { get; set; }
 
         /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
+        /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
         public bool CodeFirst { get; set; }
 
         /// <summary>
         /// Overrides the default template name when using code first
         /// </summary>
+        /// <value>The name of the template.</value>
         public string TemplateName { get; set; }
 
+        /// <summary>
+        /// Configures the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="config">The config.</param>
+        /// <exception cref="Glass.Mapper.Configuration.ConfigurationException">Type configuration is not of type {0}.Formatted(typeof (SitecoreTypeConfiguration).FullName)</exception>
         public override void Configure(Type type, Mapper.Configuration.AbstractTypeConfiguration config)
         {
             var scConfig = config as SitecoreTypeConfiguration;

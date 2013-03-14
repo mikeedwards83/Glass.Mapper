@@ -26,6 +26,11 @@ using System.Web;
 namespace Glass.Mapper.Configuration.Attributes
 {
 
+    /// <summary>
+    /// Class AttributeConfigurationLoader
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="K"></typeparam>
    public class AttributeConfigurationLoader<T, K> : IConfigurationLoader 
         where T : AbstractTypeConfiguration, new() 
         where K: AbstractPropertyConfiguration, new ()
@@ -33,11 +38,21 @@ namespace Glass.Mapper.Configuration.Attributes
         private readonly string[] _assemblies;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeConfigurationLoader{T, K}"/> class.
+        /// </summary>
+        /// <param name="assemblies">The assemblies.</param>
         public AttributeConfigurationLoader(params string [] assemblies)
         {
             _assemblies = assemblies;
         }
 
+        /// <summary>
+        /// Finds the assembly.
+        /// </summary>
+        /// <param name="assemblyName">Name of the assembly.</param>
+        /// <returns>Assembly.</returns>
+        /// <exception cref="Glass.Mapper.Configuration.ConfigurationException">Could not find assembly called {0}.Formatted(assemblyName)</exception>
         public static Assembly FindAssembly(string assemblyName)
         {
             try
@@ -73,6 +88,10 @@ namespace Glass.Mapper.Configuration.Attributes
             }
         }
 
+        /// <summary>
+        /// Loads this instance.
+        /// </summary>
+        /// <returns>IEnumerable{AbstractTypeConfiguration}.</returns>
         public IEnumerable<AbstractTypeConfiguration> Load()
         {
             //this should mean that things evaluate lazily
@@ -87,10 +106,11 @@ namespace Glass.Mapper.Configuration.Attributes
         }
 
         /// <summary>
-        /// Processes a specific assembly 
+        /// Processes a specific assembly
         /// </summary>
-        /// <param name="assembly"></param>
-        /// <returns></returns>
+        /// <param name="assembly">The assembly.</param>
+        /// <returns>IEnumerable{`0}.</returns>
+        /// <exception cref="Glass.Mapper.Configuration.ConfigurationException">Failed to load types {0}.Formatted(ex.LoaderExceptions.First().Message)</exception>
         protected IEnumerable<T> LoadFromAssembly(Assembly assembly)
         {
             var configs = new List<T>();
@@ -133,15 +153,20 @@ namespace Glass.Mapper.Configuration.Attributes
             return configs;
         }
 
-       /// <summary>
-       /// This method is called after a configuration has been loaded. Use this method for any specific
-       /// post configuration processing
-       /// </summary>
-       /// <param name="config"></param>
+        /// <summary>
+        /// This method is called after a configuration has been loaded. Use this method for any specific
+        /// post configuration processing
+        /// </summary>
+        /// <param name="config">The config.</param>
        protected virtual void ConfigCreated(AbstractTypeConfiguration config)
        {
        }
 
+       /// <summary>
+       /// Loads the type of the properties from.
+       /// </summary>
+       /// <param name="type">The type.</param>
+       /// <returns>IEnumerable{AbstractPropertyConfiguration}.</returns>
        protected IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
         {
             //we have to get the property definition from the declaring type so that 
@@ -156,7 +181,12 @@ namespace Glass.Mapper.Configuration.Attributes
             }
            
         }
-   
+
+       /// <summary>
+       /// Processes the property.
+       /// </summary>
+       /// <param name="property">The property.</param>
+       /// <returns>AbstractPropertyConfiguration.</returns>
         protected AbstractPropertyConfiguration ProcessProperty(PropertyInfo property)
         {
             if (property != null)
@@ -192,6 +222,11 @@ namespace Glass.Mapper.Configuration.Attributes
 
         }
 
+        /// <summary>
+        /// Gets the property attribute.
+        /// </summary>
+        /// <param name="info">The info.</param>
+        /// <returns>AbstractPropertyAttribute.</returns>
         public static AbstractPropertyAttribute GetPropertyAttribute(PropertyInfo info)
         {
             var attrs = info.GetCustomAttributes(true);

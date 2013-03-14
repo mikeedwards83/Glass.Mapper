@@ -5,15 +5,44 @@ using Sitecore.IO;
 
 namespace Glass.Mapper.Sc.Razor.Shell.Wizards
 {
+    /// <summary>
+    /// Class BehindWizard
+    /// </summary>
     public class BehindWizard : AbtractFileCreateWizard<GlassBehindRazor>
     {
+        /// <summary>
+        /// Gets or sets the namespace.
+        /// </summary>
+        /// <value>The namespace.</value>
         protected Edit Namespace { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the assembly.
+        /// </summary>
+        /// <value>The name of the assembly.</value>
         protected Edit AssemblyName { get; set; }
 
+        /// <summary>
+        /// The template cs HTML
+        /// </summary>
         protected const string TemplateCsHtml = "/sitecore modules/shell/glass/mapper/razor/templates/BehindRazorTemplate.cshtml.temp";
+        /// <summary>
+        /// The template cs HTML cs
+        /// </summary>
         protected const string TemplateCsHtmlCs = "/sitecore modules/shell/glass/mapper/razor/templates/BehindRazorTemplate.cshtml.cs.temp";
 
 
+        /// <summary>
+        /// Called when the active page is changing.
+        /// </summary>
+        /// <param name="page">The page that is being left.</param>
+        /// <param name="newpage">The new page that is being entered.</param>
+        /// <returns>True, if the change is allowed, otherwise false.</returns>
+        /// <contract>
+        ///   <requires name="page" condition="not null" />
+        ///   <requires name="newpage" condition="not null" />
+        ///   </contract>
+        /// <remarks>Set the newpage parameter to another page ID to control the
+        /// path through the wizard pages.</remarks>
         protected override bool ActivePageChanging(string page, ref string newpage)
         {
             this.BackButton.Enabled = true;
@@ -41,6 +70,15 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
             return base.ActivePageChanging(page, ref newpage);
         }
 
+        /// <summary>
+        /// Called when the active page has been changed.
+        /// </summary>
+        /// <param name="page">The page that has been entered.</param>
+        /// <param name="oldPage">The page that was left.</param>
+        /// <contract>
+        ///   <requires name="page" condition="not null" />
+        ///   <requires name="oldPage" condition="not null" />
+        ///   </contract>
         protected override void ActivePageChanged(string page, string oldPage)
         {
             if (page == "finalPage")

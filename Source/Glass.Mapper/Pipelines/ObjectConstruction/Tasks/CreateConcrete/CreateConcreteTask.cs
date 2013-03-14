@@ -26,6 +26,9 @@ using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
+    /// <summary>
+    /// Class CreateConcreteTask
+    /// </summary>
     public class CreateConcreteTask : IObjectConstructionTask
     {
         private const string ConstructorErrorMessage = "No constructor for class {0} with parameters {1}";
@@ -33,6 +36,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         private static volatile  ProxyGenerator _generator;
         private static volatile  ProxyGenerationOptions _options;
 
+        /// <summary>
+        /// Initializes static members of the <see cref="CreateConcreteTask"/> class.
+        /// </summary>
         static CreateConcreteTask()
         {
             _generator = new ProxyGenerator();
@@ -40,6 +46,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _options = new ProxyGenerationOptions(hook);
         }
 
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null)
@@ -69,11 +79,21 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             }
         }
 
+        /// <summary>
+        /// Creates the lazy object.
+        /// </summary>
+        /// <param name="args">The args.</param>
+        /// <returns>System.Object.</returns>
         protected virtual object CreateLazyObject(ObjectConstructionArgs args)
         {
             return  _generator.CreateClassProxy(args.Configuration.Type, new LazyObjectInterceptor(args));
         }
 
+        /// <summary>
+        /// Creates the object.
+        /// </summary>
+        /// <param name="args">The args.</param>
+        /// <returns>System.Object.</returns>
         protected virtual object CreateObject(ObjectConstructionArgs args)
         {
 

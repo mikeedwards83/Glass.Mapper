@@ -28,8 +28,15 @@ namespace Glass.Mapper.Sc.RenderField
     /// </summary>
     public class DateParameters : AbstractParameters
     {
+        /// <summary>
+        /// The FORMAT
+        /// </summary>
         public const string FORMAT = "format";
 
+        /// <summary>
+        /// Gets or sets the format.
+        /// </summary>
+        /// <value>The format.</value>
         public string Format
         {
             get { return Parameters[FORMAT]; }

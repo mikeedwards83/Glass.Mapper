@@ -27,26 +27,55 @@ using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreTypeConfiguration
+    /// </summary>
     public class SitecoreTypeConfiguration : AbstractTypeConfiguration
     {
+        /// <summary>
+        /// Gets or sets the template id.
+        /// </summary>
+        /// <value>The template id.</value>
         public ID TemplateId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the branch id.
+        /// </summary>
+        /// <value>The branch id.</value>
         public ID BranchId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the id config.
+        /// </summary>
+        /// <value>The id config.</value>
         public SitecoreIdConfiguration IdConfig { get; set; }
+        /// <summary>
+        /// Gets or sets the language config.
+        /// </summary>
+        /// <value>The language config.</value>
         public SitecoreInfoConfiguration LanguageConfig { get; set; }
+        /// <summary>
+        /// Gets or sets the version config.
+        /// </summary>
+        /// <value>The version config.</value>
         public SitecoreInfoConfiguration VersionConfig { get; set; }
         /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
+        /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
         public bool CodeFirst { get; set; }
 
         /// <summary>
         /// Overrides the default template name when using code first
         /// </summary>
+        /// <value>The name of the template.</value>
         public string TemplateName { get; set; }
 
 
+        /// <summary>
+        /// Adds the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
         public override void AddProperty(AbstractPropertyConfiguration property)
         {
             if (property is SitecoreIdConfiguration)
@@ -64,6 +93,17 @@ namespace Glass.Mapper.Sc.Configuration
             base.AddProperty(property);
         }
 
+        /// <summary>
+        /// Resolves the item.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="database">The database.</param>
+        /// <returns>Item.</returns>
+        /// <exception cref="System.NotSupportedException">
+        /// You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.
+        /// or
+        /// Cannot get ID for item
+        /// </exception>
         public Item ResolveItem(object target, Database database)
         {
             ID id;

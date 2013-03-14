@@ -26,10 +26,18 @@ using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
+    /// <summary>
+    /// Class GlassEditFrame
+    /// </summary>
     public class GlassEditFrame : IDisposable
     {
         EditFrame _frame;
         HtmlTextWriter _writer;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassEditFrame"/> class.
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="context">The context.</param>
         public GlassEditFrame(string buttons, HttpContext context)
         {
             _frame = new EditFrame();
@@ -37,6 +45,9 @@ namespace Glass.Mapper.Sc.Web.Ui
             _writer = new HtmlTextWriter(context.Response.Output);
 
         }
+        /// <summary>
+        /// Renders the first part.
+        /// </summary>
         public void RenderFirstPart()
         {
             _frame.RenderFirstPart(_writer);
@@ -44,6 +55,9 @@ namespace Glass.Mapper.Sc.Web.Ui
 
 
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _frame.RenderLastPart(_writer);

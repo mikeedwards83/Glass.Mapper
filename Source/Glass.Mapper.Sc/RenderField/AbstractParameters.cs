@@ -32,6 +32,10 @@ namespace Glass.Mapper.Sc.RenderField
     {
         private readonly NameValueCollection _parameters = new NameValueCollection();
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         protected NameValueCollection Parameters
         {
             get
@@ -40,6 +44,10 @@ namespace Glass.Mapper.Sc.RenderField
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
             var url = new UrlString();

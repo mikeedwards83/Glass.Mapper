@@ -14,6 +14,10 @@ using System.Web.Mvc;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
+    /// <summary>
+    /// Class AbstractRazorControl
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
     {
 
@@ -26,15 +30,19 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private static volatile Dictionary<string, string> _viewCache;
         private static volatile FileSystemWatcher _fileSystemWatcher;
 
-
         private ISitecoreService _sitecoreService;
 
 
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>The profiler.</value>
         public IPerformanceProfiler Profiler { get; set; }
 
         /// <summary>
         /// A list of placeholders to render on the page.
         /// </summary>
+        /// <value>The placeholders.</value>
         public IEnumerable<string> Placeholders
         {
             get;
@@ -44,11 +52,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// View data
         /// </summary>
+        /// <value>The view data.</value>
         public ViewDataDictionary ViewData { get; private set; }
 
         /// <summary>
         /// The path to the Razor view
         /// </summary>
+        /// <value>The view.</value>
         public string View
         {
             get;
@@ -58,6 +68,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// The name of the Glass Context to use
         /// </summary>
+        /// <value>The name of the context.</value>
         public string ContextName
         {
             get;
@@ -67,12 +78,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// The model to pass to the Razor view.
         /// </summary>
+        /// <value>The model.</value>
         public T Model
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Gets the sitecore service.
+        /// </summary>
+        /// <value>The sitecore service.</value>
         public ISitecoreService SitecoreService
         {
             get
@@ -84,6 +100,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             }
         }
 
+        /// <summary>
+        /// The view loader
+        /// </summary>
         Func<string, string> ViewLoader = viewPath =>
         {
             try
@@ -99,6 +118,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         };
 
 
+        /// <summary>
+        /// Gets the full path.
+        /// </summary>
+        /// <param name="viewPath">The view path.</param>
+        /// <returns>System.String.</returns>
         public static string GetFullPath(string viewPath)
         {
              viewPath = viewPath.Replace("/",@"\");
@@ -107,6 +131,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return path;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractRazorControl{T}"/> class.
+        /// </summary>
         public AbstractRazorControl()
         {
             Profiler = new SitecoreProfiler();
@@ -145,6 +172,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             ViewData = new ViewDataDictionary();
         }
 
+        /// <summary>
+        /// Called when [changed].
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="e">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
         private void OnChanged(object source, FileSystemEventArgs e)
         {
             string path = e.FullPath.ToLower();
@@ -152,29 +184,40 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                 UpdateCache(path, ViewLoader);
         }
 
-       
+
 
         /// <summary>
         /// Put your logic to create your model here
         /// </summary>
-        /// <returns></returns>
+        /// <returns>`0.</returns>
         public abstract T GetModel();
 
         /// <summary>
         /// Returns either the data source item or if no data source is specified the context item
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Item.</returns>
         protected Item GetDataSourceOrContextItem()
         {
             return this.DataSource.IsNullOrEmpty() ? global::Sitecore.Context.Item :
                 global::Sitecore.Context.Database.GetItem(this.DataSource);
         }
-        
+
+        /// <summary>
+        /// Get caching identifier. Must be implemented by controls that supports caching.
+        /// </summary>
+        /// <returns>System.String.</returns>
+        /// <remarks>If an empty string is returned, the control will not be cached.</remarks>
         protected override string GetCachingID()
         {
             return this.View;
         }
 
+        /// <summary>
+        /// Sends server control content to a provided <see cref="T:System.Web.UI.HtmlTextWriter"></see> object, which writes the content to be rendered on the client.
+        /// </summary>
+        /// <param name="output">The <see cref="T:System.Web.UI.HtmlTextWriter"></see> object that receives the server control content.</param>
+        /// <exception cref="Glass.Mapper.Sc.Razor.RazorException"></exception>
+        /// <remarks>When developing custom server controls, you can override this method to generate content for an ASP.NET page.</remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
             Model = GetModel();
@@ -209,7 +252,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                  
             }
         }
-        
+
+        /// <summary>
+        /// Gets the razor view.
+        /// </summary>
+        /// <param name="viewPath">The view path.</param>
+        /// <returns>System.String.</returns>
         public virtual string GetRazorView(string viewPath)
         {
             string finalview = null;
@@ -227,6 +275,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return finalview;
         }
 
+        /// <summary>
+        /// Updates the cache.
+        /// </summary>
+        /// <param name="viewPath">The view path.</param>
+        /// <param name="viewLoader">The view loader.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">Could not find file {0}..Formatted(viewPath)</exception>
         private static string UpdateCache(string viewPath, Func<string, string> viewLoader)
         {
             viewPath = viewPath.ToLower();
@@ -242,6 +297,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return finalview;
         }
 
+        /// <summary>
+        /// Expands this instance.
+        /// </summary>
         public void Expand()
         {
             if (Placeholders != null)

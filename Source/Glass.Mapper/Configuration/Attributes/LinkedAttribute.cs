@@ -24,8 +24,14 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
+    /// <summary>
+    /// Class LinkedAttribute
+    /// </summary>
     public abstract class LinkedAttribute : AbstractPropertyAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinkedAttribute"/> class.
+        /// </summary>
         public LinkedAttribute()
         {
             IsLazy = true;
@@ -33,6 +39,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates if linked items should be loaded lazily. Default value is true. If false linked items will be loaded when the contain object is created.
         /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy
         {
             get;
@@ -41,8 +48,14 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType { get; set; }
 
+        /// <summary>
+        /// Configures the specified info.
+        /// </summary>
+        /// <param name="info">The info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo info, LinkedConfiguration config)
         {
             config.IsLazy = this.IsLazy;

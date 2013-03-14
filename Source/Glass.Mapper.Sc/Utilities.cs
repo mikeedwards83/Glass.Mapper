@@ -30,12 +30,16 @@ using Sitecore.Links;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// Class Utilities
+    /// </summary>
     public class Utilities : Glass.Mapper.Utilities
     {
         /// <summary>
         /// Converts a NameValueCollection in to HTML attributes
         /// </summary>
         /// <param name="attributes">A list of attributes to convert</param>
+        /// <returns>System.String.</returns>
         public static string ConvertAttributes(NameValueCollection attributes)
         {
 
@@ -50,6 +54,11 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Creates the URL options.
+        /// </summary>
+        /// <param name="urlOptions">The URL options.</param>
+        /// <returns>UrlOptions.</returns>
         public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
         {
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
@@ -88,11 +97,12 @@ namespace Glass.Mapper.Sc
         }
 
         /// <summary>
+        /// Creates the type of the generic.
         /// </summary>
         /// <param name="type">The generic type to create e.g. List&lt;&gt;</param>
         /// <param name="arguments">The list of subtypes for the generic type, e.g string in List&lt;string&gt;</param>
-        /// <param name="parameters"> List of parameters to pass to the constructor.</param>
-        /// <returns></returns>
+        /// <param name="parameters">List of parameters to pass to the constructor.</param>
+        /// <returns>System.Object.</returns>
         public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
         {
             Type genericType = type.MakeGenericType(arguments);
@@ -104,6 +114,16 @@ namespace Glass.Mapper.Sc
             return obj;
         }
 
+        /// <summary>
+        /// Gets the generic argument.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Type.</returns>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// Type {0} has more than one generic argument.Formatted(type.FullName)
+        /// or
+        /// The type {0} does not contain any generic arguments.Formatted(type.FullName)
+        /// </exception>
         public static Type GetGenericArgument(Type type)
         {
             Type[] types = type.GetGenericArguments();
@@ -113,6 +133,13 @@ namespace Glass.Mapper.Sc
         }
 
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="fieldId">The field id.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns>Field.</returns>
         public static Field GetField(Item item, ID fieldId, string fieldName = "")
         {
             Field field = null;
@@ -128,6 +155,11 @@ namespace Glass.Mapper.Sc
             return field;
         }
 
+        /// <summary>
+        /// Constructs the query string.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
         public static string ConstructQueryString(NameValueCollection parameters)
         {
             var sb = new StringBuilder();
@@ -141,11 +173,22 @@ namespace Glass.Mapper.Sc
             return String.Empty;
         }
 
+        /// <summary>
+        /// Gets the generic outer.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Type.</returns>
         public static Type GetGenericOuter(Type type)
         {
             return type.GetGenericTypeDefinition();
         }
 
+        /// <summary>
+        /// Gets the language item.
+        /// </summary>
+        /// <param name="foundItem">The found item.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>Item.</returns>
         public static Item GetLanguageItem(Item foundItem, Language language)
         {
             if (foundItem == null) return null;
@@ -156,6 +199,12 @@ namespace Glass.Mapper.Sc
             else
                 return null;
         }
+        /// <summary>
+        /// Gets the language items.
+        /// </summary>
+        /// <param name="foundItems">The found items.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>IEnumerable{Item}.</returns>
         public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();

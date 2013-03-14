@@ -24,11 +24,15 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreLinkedConfiguration
+    /// </summary>
     public class SitecoreLinkedConfiguration : LinkedConfiguration
     {
         /// <summary>
         /// Indicate weather All, References or Referred should be loaded
         /// </summary>
+        /// <value>The option.</value>
         public SitecoreLinkedOptions Option { get; set; }
     }
 }

@@ -43,10 +43,15 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// <summary>
     /// Indicates that the property should contain the children of the current item
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SitecoreChildren<T> : AbstractPropertyBuilder<T, SitecoreChildrenConfiguration>
     {
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreChildren{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public SitecoreChildren(Expression<Func<T, object>> ex)
             : base(ex)
         {
@@ -62,6 +67,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <returns>SitecoreChildren{`0}.</returns>
         public SitecoreChildren<T> InferType()
         {
             Configuration.InferType = true;

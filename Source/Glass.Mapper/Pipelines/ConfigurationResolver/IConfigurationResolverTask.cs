@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver
 {
+    /// <summary>
+    /// Interface IConfigurationResolverTask
+    /// </summary>
     public interface IConfigurationResolverTask : IPipelineTask<ConfigurationResolverArgs>
     {
     }

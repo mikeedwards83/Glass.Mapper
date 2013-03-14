@@ -25,18 +25,38 @@ using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreFieldBooleanMapper
+    /// </summary>
     public class SitecoreFieldBooleanMapper : AbstractSitecoreFieldMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreFieldBooleanMapper"/> class.
+        /// </summary>
         public SitecoreFieldBooleanMapper() : base(typeof (bool))
         {
 
         }
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             return fieldValue == "1";
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
         public override string SetFieldValue( object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             bool actual = (bool) value;

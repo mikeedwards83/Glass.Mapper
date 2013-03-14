@@ -26,13 +26,27 @@ using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreFieldDoubleMapper
+    /// </summary>
     public class SitecoreFieldDoubleMapper : AbstractSitecoreFieldMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreFieldDoubleMapper"/> class.
+        /// </summary>
         public SitecoreFieldDoubleMapper() : base(typeof (double))
         {
 
         }
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="Glass.Mapper.MapperException">Could not convert value to double</exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
                                              SitecoreDataMappingContext context)
         {
@@ -42,6 +56,14 @@ namespace Glass.Mapper.Sc.DataMappers
             else throw new MapperException("Could not convert value to double");
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NotSupportedException">The value is not of type System.Double</exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is double)

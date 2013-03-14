@@ -17,11 +17,8 @@
 //-CRE-
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Glass.Mapper.Profilers;
+using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -62,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration
             _expected = "hello world";
             _id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
-            _context = Context.Create(new GlassConfig());
+            _context = Context.Create(DependencyResolver.CreateStandardResolver());
 
 
             _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -147,7 +144,7 @@ namespace Glass.Mapper.Sc.Integration
         //   var expected = "hello world";
         //       var id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
-        //       var context = Context.Create(new GlassConfig());
+        //       var context = Context.Create(new SitecoreConfig());
 
 
         //       context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));

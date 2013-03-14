@@ -36,9 +36,6 @@
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -53,8 +50,6 @@
     <Compile Include="AbstractDataMappingContext.cs" />
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
-    <Compile Include="CastleWindsor\CastleDependencyResolver.cs" />
-    <Compile Include="CastleWindsor\CastleDependencyResolverFactory.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
@@ -80,10 +75,8 @@
     <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="CastleWindsor\GlassCastleConfigBase.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
-    <Compile Include="IDependencyResolverFactory.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
     <Compile Include="Profilers\ChainedProfiler.cs" />

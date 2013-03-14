@@ -25,6 +25,9 @@ using Glass.Mapper.Configuration;
 namespace Glass.Mapper.Sc.Configuration
 {
     //this might need to change to an interface
+    /// <summary>
+    /// Class SitecorePropertyConfiguration
+    /// </summary>
 	public class SitecorePropertyConfiguration : AbstractPropertyConfiguration
 	{
 	}

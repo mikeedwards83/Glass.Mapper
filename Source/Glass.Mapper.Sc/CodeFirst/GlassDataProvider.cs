@@ -33,6 +33,9 @@ using Glass.Mapper.Sc.Configuration;
 
 namespace Glass.Mapper.Sc.CodeFirst
 {
+    /// <summary>
+    /// Class GlassDataProvider
+    /// </summary>
     public class GlassDataProvider : DataProvider
     {
         #region  IDs
@@ -43,12 +46,22 @@ namespace Glass.Mapper.Sc.CodeFirst
 
 
         #region Templates
+
         /// <summary>
         /// /sitecore/templates/System/Templates/Template section
         /// </summary>
         private static readonly ID SectionTemplateId = new ID("{E269FBB5-3750-427A-9149-7AA950B49301}");
+        /// <summary>
+        /// The field template id
+        /// </summary>
         private static readonly ID FieldTemplateId = new ID("{455A3E98-A627-4B40-8035-E683A0331AC7}");
+        /// <summary>
+        /// The template template id
+        /// </summary>
         private static readonly ID TemplateTemplateId = new ID("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
+        /// <summary>
+        /// The folder template id
+        /// </summary>
         private static readonly ID FolderTemplateId = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");
 
         #endregion
@@ -57,24 +70,49 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         #endregion
 
-        
 
+
+        /// <summary>
+        /// The glass folder id
+        /// </summary>
         public static readonly ID GlassFolderId = new ID("{19BC20D3-CCAB-4048-9CA9-4AA631AB109F}");
 
+        /// <summary>
+        /// Gets the name of the database.
+        /// </summary>
+        /// <value>The name of the database.</value>
         public string DatabaseName { get; private set; }
 
-        public Database Database { get { return Factory.GetDatabase(DatabaseName); } }
+        /// <summary>
+        /// Gets the database.
+        /// </summary>
+        /// <value>The database.</value>
+        public new Database Database { get { return Factory.GetDatabase(DatabaseName); } }
 
 
+        /// <summary>
+        /// Gets or sets the section table.
+        /// </summary>
+        /// <value>The section table.</value>
         private List<SectionInfo> SectionTable { get; set; }
 
+        /// <summary>
+        /// Gets or sets the field table.
+        /// </summary>
+        /// <value>The field table.</value>
         private List<FieldInfo> FieldTable { get; set; }
 
         private Context _glsContext;
         private string _contextName;
 
+        /// <summary>
+        /// The _type configurations
+        /// </summary>
         public Dictionary<Type, SitecoreTypeConfiguration> _typeConfigurations;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
+        /// </summary>
         public GlassDataProvider()
         {
             SectionTable = new List<SectionInfo>();
@@ -82,6 +120,11 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
+        /// </summary>
+        /// <param name="databaseName">Name of the database.</param>
+        /// <param name="context">The context.</param>
         public GlassDataProvider(string databaseName, string context)
             : this()
         {
@@ -93,6 +136,12 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         }
 
+        /// <summary>
+        /// Gets the definition of an item.
+        /// </summary>
+        /// <param name="itemId">The item ID.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>Sitecore.Data.ItemDefinition.</returns>
         public override global::Sitecore.Data.ItemDefinition GetItemDefinition(global::Sitecore.Data.ID itemId, CallContext context)
         {
             Setup(context);
@@ -112,6 +161,12 @@ namespace Glass.Mapper.Sc.CodeFirst
             return base.GetItemDefinition(itemId, context);
         }
 
+        /// <summary>
+        /// Gets a list of all the language that have been defined
+        /// in the database.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>LanguageCollection.</returns>
         public override LanguageCollection GetLanguages(CallContext context)
         {
             return new LanguageCollection();
@@ -119,6 +174,13 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         #region GetItemFields
 
+        /// <summary>
+        /// Gets the fields of a specific item version.
+        /// </summary>
+        /// <param name="itemDefinition">The item.</param>
+        /// <param name="versionUri">The version URI.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>Sitecore.Data.FieldList.</returns>
         public override global::Sitecore.Data.FieldList GetItemFields(global::Sitecore.Data.ItemDefinition itemDefinition, global::Sitecore.Data.VersionUri versionUri, CallContext context)
         {
             Setup(context);
@@ -144,12 +206,22 @@ namespace Glass.Mapper.Sc.CodeFirst
             return base.GetItemFields(itemDefinition, versionUri, context);
         }
 
+        /// <summary>
+        /// Gets the standard fields.
+        /// </summary>
+        /// <param name="fields">The fields.</param>
+        /// <param name="index">The index.</param>
         private void GetStandardFields(FieldList fields, int index)
         {
             fields.Add(FieldIDs.ReadOnly, "1");
             fields.Add(FieldIDs.Sortorder, index.ToString());
         }
 
+        /// <summary>
+        /// Gets the field fields.
+        /// </summary>
+        /// <param name="info">The info.</param>
+        /// <param name="fields">The fields.</param>
         private void GetFieldFields(FieldInfo info, FieldList fields)
         {
 
@@ -183,6 +255,12 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         #region GetChildIDs
 
+        /// <summary>
+        /// Gets the child ids of an item.
+        /// </summary>
+        /// <param name="itemDefinition">The item definition.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>Sitecore.Collections.IDList.</returns>
         public override global::Sitecore.Collections.IDList GetChildIDs(global::Sitecore.Data.ItemDefinition itemDefinition, CallContext context)
         {
             Setup(context);
@@ -206,6 +284,13 @@ namespace Glass.Mapper.Sc.CodeFirst
             return base.GetChildIDs(itemDefinition, context);
         }
 
+        /// <summary>
+        /// Gets the child I ds template.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <param name="itemDefinition">The item definition.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>IDList.</returns>
         private IDList GetChildIDsTemplate(SitecoreTypeConfiguration template, ItemDefinition itemDefinition, CallContext context)
         {
             IDList fields = new IDList();
@@ -251,6 +336,12 @@ namespace Glass.Mapper.Sc.CodeFirst
             return fields;
         }
 
+        /// <summary>
+        /// Gets the child I ds section.
+        /// </summary>
+        /// <param name="section">The section.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>IDList.</returns>
         private IDList GetChildIDsSection(SectionInfo section, CallContext context)
         {
             var cls = _typeConfigurations.First(x => x.Value.TemplateId == section.TemplateId).Value;
@@ -311,6 +402,12 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         #endregion
 
+        /// <summary>
+        /// Gets the parent ID of an item.
+        /// </summary>
+        /// <param name="itemDefinition">The item definition.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>Sitecore.Data.ID.</returns>
         public override global::Sitecore.Data.ID GetParentID(global::Sitecore.Data.ItemDefinition itemDefinition, CallContext context)
         {
             Setup(context);
@@ -330,31 +427,71 @@ namespace Glass.Mapper.Sc.CodeFirst
             return base.GetParentID(itemDefinition, context);
         }
 
+        /// <summary>
+        /// Gets the root ID.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>Sitecore.Data.ID.</returns>
         public override global::Sitecore.Data.ID GetRootID(CallContext context)
         {
             return base.GetRootID(context);
         }
 
 
+        /// <summary>
+        /// Creates a item.
+        /// </summary>
+        /// <param name="itemID">The item ID.</param>
+        /// <param name="itemName">Name of the item.</param>
+        /// <param name="templateID">The template ID.</param>
+        /// <param name="parent">The parent.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         public override bool CreateItem(ID itemID, string itemName, ID templateID, ItemDefinition parent, CallContext context)
         {
             return false;
         }
 
+        /// <summary>
+        /// Saves an item.
+        /// </summary>
+        /// <param name="itemDefinition">The item definition.</param>
+        /// <param name="changes">The changes.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         public override bool SaveItem(ItemDefinition itemDefinition, global::Sitecore.Data.Items.ItemChanges changes, CallContext context)
         {
             return false;
         }
 
+        /// <summary>
+        /// Deletes an item.
+        /// </summary>
+        /// <param name="itemDefinition">The item definition.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         public override bool DeleteItem(ItemDefinition itemDefinition, CallContext context)
         {
             return false;
         }
 
+        /// <summary>
+        /// The _setup lock
+        /// </summary>
         public readonly object _setupLock = new object();
+        /// <summary>
+        /// The _setup complete
+        /// </summary>
         public bool _setupComplete = false;
+        /// <summary>
+        /// The _setup processing
+        /// </summary>
         public bool _setupProcessing = false;
 
+        /// <summary>
+        /// Setups the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public void Setup(CallContext context)
         {
             if (_setupComplete || _setupProcessing) return;
@@ -465,9 +602,9 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// Check a folder and all sub folders in Sitecore for templates
         /// </summary>
-        /// <param name="folder"></param>
-        /// <param name="provider"></param>
-        /// <param name="context"></param>
+        /// <param name="folder">The folder.</param>
+        /// <param name="provider">The provider.</param>
+        /// <param name="context">The context.</param>
         /// <returns>True of the folder is deleted itself.</returns>
         private bool RemoveDeletedClasses(ItemDefinition folder, DataProvider provider, CallContext context)
         {
@@ -513,6 +650,13 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         }
 
+        /// <summary>
+        /// Bases the template checks.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <param name="provider">The provider.</param>
+        /// <param name="context">The context.</param>
+        /// <param name="config">The config.</param>
         private void BaseTemplateChecks(ItemDefinition template, DataProvider provider, CallContext context, SitecoreTypeConfiguration config)
         {
             //check base templates
