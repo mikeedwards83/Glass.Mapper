@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>umbraco.webservices</name>
+    </assembly>
+    <members>
+        <member name="T:umbraco.webservices.BaseWebService">
+            <summary>
+            The base-class all webservices should inherit from
+            </summary>
+            <remarks>
+            This class contains all basic methods for authenticating requests. Do not implement these functions yourself.
+            </remarks>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.GetUser(System.String,System.String)">
+            <summary>
+            Gets the umbraco-user from username and password
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.Authenticate(System.String,System.String)">
+            <summary>
+            Standart user-validation. All services must perform this
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.UserHasAccess(System.String)">
+            <summary>
+            Checks if a user has access to a specific webservice
+            </summary>
+        </member>
+        <member name="T:umbraco.webservices.BaseWebService.Services">
+            <summary>
+            Enum of services available
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.FileIO.ValidFileName(System.String)">
+            <summary>
+            Validates a filename. Must be used when user inputs a filename
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.FileIO.FolderAccess(System.String)">
+            <summary>
+            Checks if user has access to a specific folder
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.FileIO.GetFilePath(System.String,System.String)">
+            <summary>
+            Gets the webservers path for a file
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.BaseWebService.FileIO.GetFolderPath(System.String)">
+            <summary>
+            Gets the webservers path for a folder 
+            </summary>
+        </member>
+        <member name="P:umbraco.webservices.BaseWebService.FileIO.AppRoot">
+            <summary>
+            Gets the webservers path for the application
+            </summary>
+        </member>
+        <member name="T:umbraco.webservices.files.fileService">
+            <summary>
+            Summary description for FileService
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.files.fileService.GetFileSize(System.String,System.String,System.String,System.String)">
+            <summary>
+            To download a file, we need to know how big its going to be
+            </summary>
+        </member>
+        <member name="M:umbraco.webservices.files.fileService.GetFilesList(System.String,System.String,System.String)">
+            <summary>
+            Get all files in a specific folder
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.webservices.members.memberService.readByLogin(System.String,System.String,System.String,System.String)">
+            <summary>
+            Reads the user with the specified memberId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.webservices.members.memberService.readById(System.Int32,System.String,System.String)">
+            <summary>
+            Reads the user with the specified memberId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.webservices.members.memberService.readList(System.String,System.String)">
+            <summary>
+            Reads the full list of members
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.webservices.members.memberService.delete(System.Int32,System.String,System.String)">
+            <summary>
+            Deletes the document with the specified ID
+            </summary>
+            <param name="id"></param>
+            <param name="cred"></param>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.webservices.members.memberService.CreateMemberCarrier(umbraco.cms.businesslogic.member.Member)">
+            <summary>
+            Creates container-object for member
+            </summary>
+            <param name="member"></param>
+            <returns></returns>
+        </member>
+        <member name="T:umbraco.webservices.stylesheets.stylesheetService">
+            <summary>
+            Summary description for StylesheetService
+            </summary>
+        </member>
+        <member name="T:umbraco.webservices.templates.templateService">
+            <summary>
+            Summary description for TemplateService
+            </summary>
+        </member>
+        <member name="T:umbraco.webservices.documents.documentService">
+            <summary>
+            Service managing documents in umbraco
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -20,6 +20,9 @@ using System;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoPropertySettings
+    /// </summary>
     [Flags]
     public enum UmbracoPropertySettings
     {

@@ -22,8 +22,16 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoParentAttribute
+    /// </summary>
     public class UmbracoParentAttribute : ParentAttribute
     {
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns></returns>
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
             var config = new UmbracoParentConfiguration();
@@ -31,6 +39,11 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             return config;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, UmbracoParentConfiguration config)
         {
             base.Configure(propertyInfo, config);

@@ -25,10 +25,21 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoIdAttribute
+    /// </summary>
     public class UmbracoIdAttribute : IdAttribute
     {
-        public UmbracoIdAttribute() : base(new[] { typeof(int) }) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoIdAttribute"/> class.
+        /// </summary>
+        public UmbracoIdAttribute() : base(new[] { typeof(int), typeof(Guid) }) { }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns></returns>
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
             var config = new UmbracoIdConfiguration();
@@ -36,6 +47,11 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             return config;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, UmbracoIdConfiguration config)
         {
             base.Configure(propertyInfo, config);

@@ -18,67 +18,115 @@
 
 using System;
 using Glass.Mapper.Configuration;
-using umbraco.cms.businesslogic.web;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb.Configuration
 {
+    /// <summary>
+    /// UmbracoTypeConfiguration
+    /// </summary>
     public class UmbracoTypeConfiguration : AbstractTypeConfiguration
     {
-        public int DocumentTypeId { get; set; }
+        /// <summary>
+        /// Gets or sets the content type alias.
+        /// </summary>
+        /// <value>
+        /// The content type alias.
+        /// </value>
+        public string ContentTypeAlias { get; set; }
 
+        /// <summary>
+        /// Gets or sets the id config.
+        /// </summary>
+        /// <value>
+        /// The id config.
+        /// </value>
         public UmbracoIdConfiguration IdConfig { get; set; }
-      //  public UmbracoInfoConfiguration LanguageConfig { get; set; }
-      //  public UmbracoInfoConfiguration VersionConfig { get; set; }
 
-        public Document ResolveItem(object target)//, Database database)
+        /// <summary>
+        /// Gets or sets the version config.
+        /// </summary>
+        /// <value>
+        /// The version config.
+        /// </value>
+        public UmbracoInfoConfiguration VersionConfig { get; set; }
+
+        /// <summary>
+        /// Indicates that the class is used in a code first scenario.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [code first]; otherwise, <c>false</c>.
+        /// </value>
+        public bool CodeFirst { get; set; }
+
+        /// <summary>
+        /// Overrides the default content type name when using code first
+        /// </summary>
+        /// <value>
+        /// The name of the content type.
+        /// </value>
+        public string ContentTypeName { get; set; }
+
+        /// <summary>
+        /// Adds the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        public override void AddProperty(AbstractPropertyConfiguration property)
         {
-            return null;
-            //ID id;
-            //Language language = null;
-            //int versionNumber = -1;
+            if (property is UmbracoIdConfiguration)
+                IdConfig = property as UmbracoIdConfiguration;
 
-            //if (IdConfig == null)
-            //    throw new NotSupportedException(
-            //        "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has the UmbracoIdAttribute");
+            var infoProperty = property as UmbracoInfoConfiguration;
 
-            //if (IdConfig.PropertyInfo.PropertyType == typeof (Guid))
-            //{
-            //    var guidId = (Guid) IdConfig.PropertyInfo.GetValue(target, null);
-            //    id = new ID(guidId);
-            //}
-            //else if (IdConfig.PropertyInfo.PropertyType == typeof (ID))
-            //{
-            //    id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
-            //}
-            //else
-            //{
-            //    throw new NotSupportedException("Can not get ID for item");
-            //}
+            if (infoProperty != null && infoProperty.Type == UmbracoInfoType.Version)
+                VersionConfig = infoProperty;
 
-            //if (LanguageConfig != null)
-            //{
-            //    language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
-            //    if (language == null)
-            //        language = Language.Current;
-            //}
+            base.AddProperty(property);
+        }
 
-            //if (VersionConfig != null)
-            //{
-            //    versionNumber = (int) VersionConfig.PropertyInfo.GetValue(target, null);
-            //}
+        /// <summary>
+        /// Resolves the item.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="contentService">The content service.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">
+        /// You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has the UmbracoIdAttribute
+        /// or
+        /// Can not get ID for item
+        /// </exception>
+        public IContent ResolveItem(object target, IContentService contentService)
+        {
+            Guid versionNumber = default(Guid);
 
-            //if (language != null && versionNumber > 0)
-            //{
-            //    return database.GetItem(id, language, new global::Umbraco.Data.Version(versionNumber));
-            //}
-            //else if (language != null)
-            //{
-            //    return database.GetItem(id, language);
-            //}
-            //else
-            //{
-            //    return database.GetItem(id);
-            //}
+            if (IdConfig == null)
+                throw new NotSupportedException(
+                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has the UmbracoIdAttribute");
+
+            if (IdConfig.PropertyInfo.PropertyType == typeof(int))
+            {
+                var id = (int)IdConfig.PropertyInfo.GetValue(target, null);
+                return contentService.GetById(id);
+            }
+            
+            if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
+            {
+                var id = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
+                return contentService.GetById(id);
+            }
+
+            if (VersionConfig != null)
+            {
+                versionNumber = (Guid)VersionConfig.PropertyInfo.GetValue(target, null);
+            }
+
+            if (versionNumber != default(Guid))
+            {
+                return contentService.GetByVersion(versionNumber);
+            }
+
+            throw new NotSupportedException("Can not get ID for item");
         }
     }
 }

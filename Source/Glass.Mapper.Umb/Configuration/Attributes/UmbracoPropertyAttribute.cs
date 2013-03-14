@@ -26,71 +26,107 @@ using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Umb.Configuration.Attributes
 {
+    /// <summary>
+    /// UmbracoPropertyAttribute
+    /// </summary>
     public class UmbracoPropertyAttribute : FieldAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoPropertyAttribute"/> class.
+        /// </summary>
+        /// <param name="propertyAlias">The property alias.</param>
         public UmbracoPropertyAttribute(string propertyAlias)
         {
             PropertyAlias = propertyAlias;
         }
 
-        public UmbracoPropertyAttribute(int propertyId, UmbracoDataType propertyType, string documentTab = "General Properties", bool codeFirst = true)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoPropertyAttribute"/> class.
+        /// </summary>
+        /// <param name="propertyAlias">The property alias.</param>
+        /// <param name="propertyType">Type of the property.</param>
+        /// <param name="documentTab">The document tab.</param>
+        /// <param name="codeFirst">if set to <c>true</c> [code first].</param>
+        public UmbracoPropertyAttribute(string propertyAlias, UmbracoPropertyType propertyType, string documentTab = "General Properties", bool codeFirst = true)
         {
-            PropertyId = propertyId;
-            DocumentTab = documentTab;
+            PropertyAlias = propertyAlias;
+            ContentTab = documentTab;
             CodeFirst = codeFirst;
-            DataType = propertyType;
+            PropertyType = propertyType;
         }
-        
+
         /// <summary>
         /// The alias for the property  to use if it is different to the property name
         /// </summary>
+        /// <value>
+        /// The property alias.
+        /// </value>
         public string PropertyAlias { get; set; }
-
-        /// <summary>
-        /// The ID of the property when used in a code first scenario 
-        /// </summary>
-        public int PropertyId { get; set; } 
 
         /// <summary>
         /// Options to override the behaviour of certain properties.
         /// </summary>
+        /// <value>
+        /// The setting.
+        /// </value>
         public UmbracoPropertySettings Setting { get; set; }
 
         #region Code First Properties
 
         /// <summary>
+        /// Indicates the property should be used as part of a code first template
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [code first]; otherwise, <c>false</c>.
+        /// </value>
+        public bool CodeFirst { get; set; }
+
+        /// <summary>
         /// The name of the property
         /// </summary>
+        /// <value>
+        /// The name of the property.
+        /// </value>
         public string PropertyName { get; set; }
 
         /// <summary>
-        /// Indicates the property should be used as part of a code first template
-        /// </summary>
-        public bool CodeFirst { get; set; }
-        
-        /// <summary>
         /// The type of property to create when using Code First
         /// </summary>
-        public UmbracoDataType DataType { get; set; }
+        /// <value>
+        /// The type of the property.
+        /// </value>
+        public UmbracoPropertyType PropertyType { get; set; }
 
         /// <summary>
         /// The name of the tab this property will appear in when using code first.
         /// </summary>
-        public string DocumentTab { get; set; }
+        /// <value>
+        /// The content tab.
+        /// </value>
+        public string ContentTab { get; set; }
 
         /// <summary>
         /// The description for the property
         /// </summary>
+        /// <value>
+        /// The property description.
+        /// </value>
         public string PropertyDescription { get; set; }
 
         /// <summary>
         /// Indicates that the property is mandatory
         /// </summary>
+        /// <value>
+        ///   <c>true</c> if [property is mandatory]; otherwise, <c>false</c>.
+        /// </value>
         public bool PropertyIsMandatory { get; set; }
 
         /// <summary>
         /// The validation for the property
         /// </summary>
+        /// <value>
+        /// The property validation.
+        /// </value>
         public string PropertyValidation { get; set; }
 
         #endregion
@@ -102,6 +138,11 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         {
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns></returns>
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
             var config = new UmbracoPropertyConfiguration();
@@ -109,19 +150,23 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             return config;
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, UmbracoPropertyConfiguration config)
         {
             config.PropertyAlias = this.PropertyAlias;
             config.Setting = this.Setting;
             config.CodeFirst = this.CodeFirst;
             
-            config.PropertyId = this.PropertyId;
             config.PropertyName = this.PropertyName;
             config.PropertyDescription = this.PropertyDescription;
             config.PropertyIsMandatory = this.PropertyIsMandatory;
             config.PropertyValidation = this.PropertyValidation;
-            config.DocumentTab = this.DocumentTab;
-            config.DataType = this.DataType;
+            config.ContentTab = this.ContentTab;
+            config.PropertyType = this.PropertyType;
             config.Setting = this.Setting;
             base.Configure(propertyInfo, config);
         }

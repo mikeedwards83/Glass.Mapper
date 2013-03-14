@@ -72,8 +72,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container,
-                            Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
            
             container.Register(
@@ -139,8 +138,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container,
-                            Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
                 Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleTransient(),
@@ -165,8 +163,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            /// Tasks are called in the order they are specified.
-
+            // Tasks are called in the order they are specified.
             container.Register(
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
