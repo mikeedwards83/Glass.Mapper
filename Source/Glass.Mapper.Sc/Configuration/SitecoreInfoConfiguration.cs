@@ -24,16 +24,21 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreInfoConfiguration
+    /// </summary>
     public class SitecoreInfoConfiguration : InfoConfiguration
     {
         /// <summary>
         /// The type of information that should populate the property
         /// </summary>
+        /// <value>The type.</value>
         public SitecoreInfoType Type { get; set; }
 
         /// <summary>
         /// UrlOptions, use in conjunction with SitecoreInfoType.Url
         /// </summary>
+        /// <value>The URL options.</value>
         public SitecoreInfoUrlOptions UrlOptions { get; set; }
     }
 }

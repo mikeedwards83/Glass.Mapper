@@ -33,12 +33,20 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
+    /// <summary>
+    /// Class SitecoreInstaller
+    /// </summary>
     public class SitecoreInstaller : IWindsorInstaller
     {
 
-       
-    
 
+
+
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
@@ -59,6 +67,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container,
                             Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
         {
@@ -121,6 +134,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class QueryParameterInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container,
                             Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
         {
@@ -136,10 +154,15 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
     /// <summary>
     /// Data Mapper Resolver Tasks -
-    /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g. 
+    /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g.
     /// </summary>
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             /// Tasks are called in the order they are specified.
@@ -157,6 +180,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
@@ -177,6 +205,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
@@ -192,6 +225,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified below.

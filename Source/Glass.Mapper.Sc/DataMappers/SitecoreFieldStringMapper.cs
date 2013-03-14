@@ -25,12 +25,25 @@ using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreFieldStringMapper
+    /// </summary>
     public class SitecoreFieldStringMapper : AbstractSitecoreFieldMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreFieldStringMapper"/> class.
+        /// </summary>
         public SitecoreFieldStringMapper() : base(typeof (string))
         {
         }
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (field == null)
@@ -51,6 +64,15 @@ namespace Glass.Mapper.Sc.DataMappers
         }
 
 
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="System.NotSupportedException">It is not possible to save data from a rich text field when the data isn't raw.
+        ///                     + Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}.Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName)</exception>
         public override void SetField(Sitecore.Data.Fields.Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (field == null)
@@ -69,11 +91,27 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();

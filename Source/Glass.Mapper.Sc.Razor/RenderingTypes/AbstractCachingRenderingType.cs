@@ -4,14 +4,23 @@ using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Razor.RenderingTypes
 {
+    /// <summary>
+    /// Class AbstractCachingRenderingType
+    /// </summary>
     public abstract class AbstractCachingRenderingType : RenderingType
     {
-
         private static readonly object _key = new object();
         private static readonly object _typeKey = new object();
 
+        /// <summary>
+        /// Gets the loaded types.
+        /// </summary>
+        /// <value>The loaded types.</value>
         protected  static  Dictionary<string, Type> LoadedTypes { get; private set; }
 
+        /// <summary>
+        /// Initializes static members of the <see cref="AbstractCachingRenderingType"/> class.
+        /// </summary>
         static AbstractCachingRenderingType()
         {
             if (LoadedTypes == null)
@@ -26,6 +35,13 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
             }
         }
 
+        /// <summary>
+        /// Gets the type of the control.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <param name="typeLoader">The type loader.</param>
+        /// <returns>Type.</returns>
+        /// <exception cref="System.NullReferenceException">Could not find type {0} for Razor view..Formatted(typeName)</exception>
         public static Type GetControlType(string typeName, Func<string, Type> typeLoader)
         {
             Type finalType = null;

@@ -29,10 +29,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
     /// </summary>
     public class CreateInterfaceTask : IObjectConstructionTask
     {
-
         private static volatile  ProxyGenerator _generator;
         private static volatile  ProxyGenerationOptions _options;
 
+        /// <summary>
+        /// Initializes static members of the <see cref="CreateInterfaceTask"/> class.
+        /// </summary>
         static CreateInterfaceTask()
         {
             _generator = new ProxyGenerator();
@@ -42,6 +44,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
 
 
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null)

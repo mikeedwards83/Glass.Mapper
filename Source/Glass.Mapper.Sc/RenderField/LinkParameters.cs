@@ -28,29 +28,57 @@ namespace Glass.Mapper.Sc.RenderField
     /// </summary>
     public class LinkParameters : AbstractParameters
     {
+        /// <summary>
+        /// The TARGET
+        /// </summary>
         public const string TARGET = "target";
+        /// <summary>
+        /// The TITLE
+        /// </summary>
         public const string TITLE = "title";
+        /// <summary>
+        /// The CLASS
+        /// </summary>
         public const string CLASS = "class";
+        /// <summary>
+        /// The TEXT
+        /// </summary>
         public const string TEXT = "text";
 
+        /// <summary>
+        /// Gets or sets the target.
+        /// </summary>
+        /// <value>The target.</value>
         public string Target
         {
             get { return Parameters[TARGET]; }
             set { Parameters[TARGET] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>The title.</value>
         public string Title
         {
             get { return Parameters[TITLE]; }
             set { Parameters[TITLE] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the class.
+        /// </summary>
+        /// <value>The class.</value>
         public string Class
         {
             get { return Parameters[CLASS]; }
             set { Parameters[CLASS] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
         public string Text
         {
             get { return Parameters[TEXT]; }

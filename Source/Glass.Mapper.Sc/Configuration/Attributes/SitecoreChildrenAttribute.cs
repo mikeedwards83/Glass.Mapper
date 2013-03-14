@@ -29,6 +29,11 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     /// </summary>
     public class SitecoreChildrenAttribute : ChildrenAttribute
     {
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns>AbstractPropertyConfiguration.</returns>
         public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
         {
             var config = new SitecoreChildrenConfiguration();

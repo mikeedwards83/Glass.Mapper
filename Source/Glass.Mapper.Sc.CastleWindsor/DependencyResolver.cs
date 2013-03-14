@@ -22,8 +22,15 @@ using System.Collections.Generic;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
+    /// <summary>
+    /// Class DependencyResolver
+    /// </summary>
     public class DependencyResolver : IDependencyResolver
     {
+        /// <summary>
+        /// Creates the standard resolver.
+        /// </summary>
+        /// <returns>IDependencyResolver.</returns>
         public static IDependencyResolver CreateStandardResolver()
         {
             IWindsorContainer container=  new WindsorContainer();
@@ -31,12 +38,26 @@ namespace Glass.Mapper.Sc.CastleWindsor
             return new DependencyResolver(container);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DependencyResolver"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
         public DependencyResolver(IWindsorContainer container)
         {
             Container = container;
         }
+        /// <summary>
+        /// Gets the container.
+        /// </summary>
+        /// <value>The container.</value>
         public IWindsorContainer Container { get; private set; }
 
+        /// <summary>
+        /// Resolves the specified args.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="args">The args.</param>
+        /// <returns>``0.</returns>
         public T Resolve<T>(IDictionary<string, object> args = null)
         {
             if (args == null)
@@ -46,6 +67,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
             return Container.Resolve<T>((IDictionary) args);
         }
 
+        /// <summary>
+        /// Resolves all.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>IEnumerable{``0}.</returns>
         public IEnumerable<T> ResolveAll<T>()
         {
             return Container.ResolveAll<T>();

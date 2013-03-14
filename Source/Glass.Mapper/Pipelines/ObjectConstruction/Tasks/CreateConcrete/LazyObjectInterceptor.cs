@@ -22,12 +22,19 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
 
 
+    /// <summary>
+    /// Class LazyObjectInterceptor
+    /// </summary>
     public class LazyObjectInterceptor : IInterceptor
     {
         private readonly ObjectConstructionArgs _args;
 
         private object _actual;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyObjectInterceptor"/> class.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public LazyObjectInterceptor(ObjectConstructionArgs args)
         {
             _args = args;
@@ -36,6 +43,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
       
         #region IInterceptor Members
 
+        /// <summary>
+        /// Intercepts the specified invocation.
+        /// </summary>
+        /// <param name="invocation">The invocation.</param>
         public void Intercept(IInvocation invocation)
         {
             //create class

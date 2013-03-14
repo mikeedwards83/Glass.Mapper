@@ -26,14 +26,33 @@ using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreInfoMapper
+    /// </summary>
     public class SitecoreInfoMapper : AbstractDataMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
+        /// </summary>
         public SitecoreInfoMapper()
         {
             ReadOnly = true;
         }
 
 
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>The value to write</returns>
+        /// <exception cref="System.NotSupportedException">
+        /// Can't set DisplayName. Value is not of type System.String
+        /// or
+        /// Can't set Name. Value is not of type System.String
+        /// or
+        /// You can not save SitecoreInfo {0}.Formatted(scConfig.Type)
+        /// </exception>
+        /// <exception cref="Glass.Mapper.MapperException">You can not set an empty or null Item name</exception>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
@@ -70,6 +89,12 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
+        /// <summary>
+        /// Maps data from the CMS value to the .Net property value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="Glass.Mapper.MapperException">SitecoreInfoType {0} not supported.Formatted(scConfig.Type)</exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
@@ -116,6 +141,10 @@ namespace Glass.Mapper.Sc.DataMappers
             }
         }
 
+        /// <summary>
+        /// Sets up the data mapper for a particular property
+        /// </summary>
+        /// <param name="args">The args.</param>
         public override void Setup(DataMapperResolverArgs args)
         {
             var scConfig = args.PropertyConfiguration as SitecoreInfoConfiguration;
@@ -123,6 +152,12 @@ namespace Glass.Mapper.Sc.DataMappers
             base.Setup(args);
         }
 
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreInfoConfiguration;

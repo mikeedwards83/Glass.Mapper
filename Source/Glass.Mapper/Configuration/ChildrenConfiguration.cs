@@ -23,12 +23,16 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Class ChildrenConfiguration
+    /// </summary>
     public class ChildrenConfiguration : AbstractPropertyConfiguration
     {
 
         /// <summary>
         /// Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
         /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public virtual bool IsLazy
         {
             get;
@@ -38,6 +42,7 @@ namespace Glass.Mapper.Configuration
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public virtual bool InferType
         {
             get;

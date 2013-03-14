@@ -23,9 +23,20 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.Fields
 {
+    /// <summary>
+    /// Class File
+    /// </summary>
     public class File
     {
+        /// <summary>
+        /// Gets the SRC.
+        /// </summary>
+        /// <value>The SRC.</value>
         public string Src { get; internal set; }
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        /// <value>The id.</value>
         public Guid Id { get; set; }
     }
 }

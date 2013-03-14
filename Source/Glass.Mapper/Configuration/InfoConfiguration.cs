@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Class InfoConfiguration
+    /// </summary>
     public class InfoConfiguration : AbstractPropertyConfiguration
     {
     }

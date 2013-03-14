@@ -23,12 +23,23 @@ using System.Text;
 
 namespace Glass.Mapper.Profilers
 {
+    /// <summary>
+    /// Class NullProfiler
+    /// </summary>
     public class NullProfiler : IPerformanceProfiler
     {
+        /// <summary>
+        /// Starts the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         public void Start(string key)
         {
         }
 
+        /// <summary>
+        /// Ends the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         public void End(string key)
         {
         }

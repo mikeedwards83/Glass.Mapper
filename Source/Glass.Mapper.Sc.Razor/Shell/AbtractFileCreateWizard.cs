@@ -18,21 +18,63 @@ using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Razor.Shell
 {
+    /// <summary>
+    /// Class AbtractFileCreateWizard
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class AbtractFileCreateWizard<T> : WizardForm where T:class
     {
 
+        /// <summary>
+        /// Gets or sets the extension.
+        /// </summary>
+        /// <value>The extension.</value>
         public string Extension { get; set; }
+        /// <summary>
+        /// Gets or sets the default file location.
+        /// </summary>
+        /// <value>The default file location.</value>
         public string DefaultFileLocation { get; set; }
+        /// <summary>
+        /// Gets or sets the database.
+        /// </summary>
+        /// <value>The database.</value>
         public string Database { get; set; }
+        /// <summary>
+        /// Gets or sets the item root.
+        /// </summary>
+        /// <value>The item root.</value>
         public string ItemRoot { get; set; }
 
+        /// <summary>
+        /// The file name
+        /// </summary>
         protected Edit FileName;
+        /// <summary>
+        /// The file location treeview
+        /// </summary>
         protected TreeviewEx FileLocationTreeview;
+        /// <summary>
+        /// The file data context
+        /// </summary>
         protected DataContext FileDataContext;
+        /// <summary>
+        /// The item data context
+        /// </summary>
         protected DataContext ItemDataContext;
+        /// <summary>
+        /// The item tree view
+        /// </summary>
         protected TreeviewEx ItemTreeView;
+        /// <summary>
+        /// The master
+        /// </summary>
         protected ISitecoreService Master;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbtractFileCreateWizard{T}"/> class.
+        /// </summary>
+        /// <exception cref="Glass.Mapper.Sc.Razor.RazorException">Exception creating Sitecore Service, have you called the method GlassRazorModuleLoader.Load()?</exception>
         public AbtractFileCreateWizard()
         {
             Extension = "cshtml";
@@ -51,6 +93,16 @@ namespace Glass.Mapper.Sc.Razor.Shell
 
         }
 
+        /// <summary>
+        /// Raises the load event.
+        /// </summary>
+        /// <param name="e">The <see cref="T:System.EventArgs" /> instance containing the event data.</param>
+        /// <remarks>This method notifies the server control that it should perform actions common to each HTTP
+        /// request for the page it is associated with, such as setting up a database query. At this
+        /// stage in the page lifecycle, server controls in the hierarchy are created and initialized,
+        /// view state is restored, and form controls reflect client-side data. Use the IsPostBack
+        /// property to determine whether the page is being loaded in response to a client postback,
+        /// or if it is being loaded and accessed for the first time.</remarks>
         protected override void OnLoad(EventArgs e)
         {
             FileDataContext.Folder = DefaultFileLocation;
@@ -67,6 +119,10 @@ namespace Glass.Mapper.Sc.Razor.Shell
             base.OnLoad(e);
         }
 
+        /// <summary>
+        /// Handles the message.
+        /// </summary>
+        /// <param name="message">The message.</param>
         public override void HandleMessage(Message message)
         {
             Assert.ArgumentNotNull(message, "message");
@@ -89,6 +145,11 @@ namespace Glass.Mapper.Sc.Razor.Shell
 
         }
 
+        /// <summary>
+        /// Gets the relative file path.
+        /// </summary>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NullReferenceException">File location item was null</exception>
         public string GetRelativeFilePath()
         {
             Item fileLocationItem = this.FileLocationTreeview.GetSelectionItem();
@@ -112,6 +173,10 @@ namespace Glass.Mapper.Sc.Razor.Shell
             
         }
 
+        /// <summary>
+        /// Files the exists.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         protected bool FileExists()
         {
             string fullPath =  FileUtil.MapPath(GetRelativeFilePath());
@@ -124,6 +189,10 @@ namespace Glass.Mapper.Sc.Razor.Shell
             return false;
         }
 
+        /// <summary>
+        /// Items the can write.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         protected bool ItemCanWrite()
         {
             Item item = this.ItemTreeView.GetSelectionItem();
@@ -135,6 +204,11 @@ namespace Glass.Mapper.Sc.Razor.Shell
             return true;
         }
 
+        /// <summary>
+        /// Creates the cs HTML file.
+        /// </summary>
+        /// <param name="collection">The collection.</param>
+        /// <param name="templatePath">The template path.</param>
         public void CreateCsHtmlFile(NameValueCollection collection, string templatePath)
         {
 
@@ -142,6 +216,12 @@ namespace Glass.Mapper.Sc.Razor.Shell
             CreateFile(collection, templatePath, path);
 
         }
+        /// <summary>
+        /// Creates the file.
+        /// </summary>
+        /// <param name="collection">The collection.</param>
+        /// <param name="templatePath">The template path.</param>
+        /// <param name="targetPath">The target path.</param>
         public void CreateFile(NameValueCollection collection, string templatePath, string targetPath){
 
             string fullTemplatePath = FileUtil.MapPath(templatePath);
@@ -158,6 +238,10 @@ namespace Glass.Mapper.Sc.Razor.Shell
         }
 
 
+        /// <summary>
+        /// Creates the item.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public void CreateItem(T item)
         {
            Item parent =  ItemTreeView.GetSelectionItem();

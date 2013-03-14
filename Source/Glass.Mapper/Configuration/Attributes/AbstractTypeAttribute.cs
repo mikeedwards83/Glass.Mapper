@@ -23,12 +23,23 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
+    /// <summary>
+    /// Class AbstractTypeAttribute
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public abstract class AbstractTypeAttribute : Attribute 
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractTypeAttribute"/> class.
+        /// </summary>
         public AbstractTypeAttribute()
         { }
 
+        /// <summary>
+        /// Configures the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="config">The config.</param>
         public virtual void Configure(Type type, AbstractTypeConfiguration config)
         {
             config.Type = type;

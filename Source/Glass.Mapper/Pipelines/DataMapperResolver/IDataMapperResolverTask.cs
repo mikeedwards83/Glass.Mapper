@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.DataMapperResolver
 {
+    /// <summary>
+    /// Interface IDataMapperResolverTask
+    /// </summary>
     public interface IDataMapperResolverTask : IPipelineTask<DataMapperResolverArgs>
     {
     }

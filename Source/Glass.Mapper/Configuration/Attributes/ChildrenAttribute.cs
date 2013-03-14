@@ -41,6 +41,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
         /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public virtual bool IsLazy
         {
             get;
@@ -50,12 +51,18 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public virtual bool InferType 
         { 
             get; 
             set; 
         }
 
+        /// <summary>
+        /// Configures the specified property info.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <param name="config">The config.</param>
         public void Configure(System.Reflection.PropertyInfo propertyInfo, ChildrenConfiguration config)
         {
             config.InferType = this.InferType;

@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Enum SitecoreInfoType
+    /// </summary>
     public enum SitecoreInfoType
     {
         /// <summary>

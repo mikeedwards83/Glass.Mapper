@@ -24,8 +24,15 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreQueryConfiguration
+    /// </summary>
     public class SitecoreQueryConfiguration : QueryConfiguration
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether [use query context].
+        /// </summary>
+        /// <value><c>true</c> if [use query context]; otherwise, <c>false</c>.</value>
         public bool UseQueryContext { get; set; }
  
     }

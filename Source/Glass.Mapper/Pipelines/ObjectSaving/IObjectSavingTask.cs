@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Glass.Mapper.Pipelines.ObjectSaving
 {
+    /// <summary>
+    /// Interface IObjectSavingTask
+    /// </summary>
     public interface  IObjectSavingTask : IPipelineTask<ObjectSavingArgs>
     {
     }

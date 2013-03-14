@@ -24,6 +24,9 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Class SitecoreNodeConfiguration
+    /// </summary>
     public class SitecoreNodeConfiguration : NodeConfiguration
     {
 

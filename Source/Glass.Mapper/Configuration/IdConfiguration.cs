@@ -23,8 +23,15 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Class IdConfiguration
+    /// </summary>
     public class IdConfiguration : AbstractPropertyConfiguration
     {
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        /// <value>The type.</value>
         public Type Type { get; set; }
     }
 }

@@ -23,12 +23,27 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// Enum SitecoreInfoUrlOptions
+    /// </summary>
     [Flags]
     public enum SitecoreInfoUrlOptions
     {
+        /// <summary>
+        /// The default
+        /// </summary>
         Default = 0x00,
+        /// <summary>
+        /// The add aspx extension
+        /// </summary>
         AddAspxExtension = 0x01,
+        /// <summary>
+        /// The always include server URL
+        /// </summary>
         AlwaysIncludeServerUrl = 0x02,
+        /// <summary>
+        /// The encode names
+        /// </summary>
         EncodeNames = 0x04,
 
         /// <summary>
@@ -56,8 +71,17 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         LanguageLocationQueryString = 0x128,
 
+        /// <summary>
+        /// The shorten urls
+        /// </summary>
         ShortenUrls = 0x256,
+        /// <summary>
+        /// The site resolving
+        /// </summary>
         SiteResolving = 0x512,
+        /// <summary>
+        /// The use use display name
+        /// </summary>
         UseUseDisplayName = 0x1024
 
 

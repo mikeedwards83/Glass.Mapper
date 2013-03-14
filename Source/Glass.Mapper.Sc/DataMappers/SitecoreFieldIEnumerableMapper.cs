@@ -27,11 +27,25 @@ using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
-    
+
+    /// <summary>
+    /// Class SitecoreFieldIEnumerableMapper
+    /// </summary>
     public class SitecoreFieldIEnumerableMapper : AbstractSitecoreFieldMapper
     {
+        /// <summary>
+        /// Gets the mapper.
+        /// </summary>
+        /// <value>The mapper.</value>
         public AbstractSitecoreFieldMapper Mapper { get; private set; }
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             Type type = config.PropertyInfo.PropertyType;
@@ -58,6 +72,13 @@ namespace Glass.Mapper.Sc.DataMappers
             return list;
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
@@ -83,6 +104,12 @@ namespace Glass.Mapper.Sc.DataMappers
                 return string.Empty;
         }
 
+        /// <summary>
+        /// Determines whether this instance can handle the specified configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
         {
             var scConfig = configuration as SitecoreFieldConfiguration;
@@ -100,6 +127,12 @@ namespace Glass.Mapper.Sc.DataMappers
             return true;
         }
 
+        /// <summary>
+        /// Sets up the data mapper for a particular property
+        /// </summary>
+        /// <param name="args">The args.</param>
+        /// <exception cref="Glass.Mapper.MapperException">No mapper to handle type {0} on property {1} class {2}.Formatted(type.FullName, property.Name,
+        ///                                                                                        property.ReflectedType.FullName)</exception>
         public override void Setup(DataMapperResolverArgs args)
         {
             base.Setup(args);

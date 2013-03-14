@@ -23,14 +23,33 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Class QueryConfiguration
+    /// </summary>
     public class QueryConfiguration : AbstractPropertyConfiguration
     {
+        /// <summary>
+        /// Gets or sets the query.
+        /// </summary>
+        /// <value>The query.</value>
         public string Query { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lazy.
+        /// </summary>
+        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is relative.
+        /// </summary>
+        /// <value><c>true</c> if this instance is relative; otherwise, <c>false</c>.</value>
         public bool IsRelative { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [infer type].
+        /// </summary>
+        /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType { get; set; }
     }
 }

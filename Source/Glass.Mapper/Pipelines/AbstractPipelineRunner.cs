@@ -35,10 +35,22 @@ namespace Glass.Mapper.Pipelines
     {
         IEnumerable<K> _tasks;
 
+        /// <summary>
+        /// Gets the tasks.
+        /// </summary>
+        /// <value>The tasks.</value>
         public IEnumerable<K> Tasks { get { return _tasks; } }
 
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>The profiler.</value>
         public IPerformanceProfiler Profiler { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPipelineRunner{T, K}"/> class.
+        /// </summary>
+        /// <param name="tasks">The tasks.</param>
         public AbstractPipelineRunner(IEnumerable<K> tasks)
         {
             _tasks = tasks;
@@ -48,7 +60,8 @@ namespace Glass.Mapper.Pipelines
         /// <summary>
         /// Runs a pipeline and returns the resultant arguments
         /// </summary>
-        /// <returns></returns>
+        /// <param name="args">The args.</param>
+        /// <returns>`0.</returns>
         public virtual T Run(T args)
         {
             if (_tasks != null)

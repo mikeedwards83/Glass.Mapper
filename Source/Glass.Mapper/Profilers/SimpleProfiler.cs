@@ -24,10 +24,18 @@ using System.Text;
 
 namespace Glass.Mapper.Profilers
 {
+    /// <summary>
+    /// Class SimpleProfiler
+    /// </summary>
     public class SimpleProfiler : IPerformanceProfiler
     {
         private Dictionary<string, Stopwatch> _watches = new Dictionary<string, Stopwatch>();
 
+        /// <summary>
+        /// Starts the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <exception cref="System.NotSupportedException">Watch with key {0} already started.Formatted(key)</exception>
         public void Start(string key)
         {
             if (_watches.ContainsKey(key))
@@ -38,6 +46,11 @@ namespace Glass.Mapper.Profilers
             watch.Start();
         }
 
+        /// <summary>
+        /// Ends the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <exception cref="System.NotSupportedException">No Watch with key {0} found.Formatted(key)</exception>
         public void End(string key)
         {
             if (!_watches.ContainsKey(key))

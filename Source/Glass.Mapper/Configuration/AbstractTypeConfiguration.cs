@@ -30,37 +30,53 @@ namespace Glass.Mapper.Configuration
     [DebuggerDisplay("Type: {Type}")]
     public abstract class AbstractTypeConfiguration
     {
-        private List<AbstractPropertyConfiguration> _properties; 
+        private List<AbstractPropertyConfiguration> _properties;
 
         /// <summary>
         /// The type this configuration represents
         /// </summary>
+        /// <value>The type.</value>
         public Type Type { get;  set; }
 
         /// <summary>
         /// A list of the properties configured on a type
         /// </summary>
+        /// <value>The properties.</value>
         public IEnumerable<AbstractPropertyConfiguration> Properties { get { return _properties; } }
 
         /// <summary>
         /// A list of the constructors on a type
         /// </summary>
+        /// <value>The constructor methods.</value>
         public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.
+        /// </summary>
         public AbstractTypeConfiguration()
         {
             _properties = new List<AbstractPropertyConfiguration>();
         }
 
-       
 
+
+        /// <summary>
+        /// Adds the property.
+        /// </summary>
+        /// <param name="property">The property.</param>
         public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
             _properties.Add(property);
         }
 
 
+        /// <summary>
+        /// Maps the properties to object.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <param name="service">The service.</param>
+        /// <param name="context">The context.</param>
         public void MapPropertiesToObject( object obj, IAbstractService service, AbstractTypeCreationContext context)
         {
             //create properties 

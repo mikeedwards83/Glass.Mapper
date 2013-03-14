@@ -26,6 +26,9 @@ using System.Reflection;
 
 namespace Glass.Mapper
 {
+    /// <summary>
+    /// Class Utilities
+    /// </summary>
     public   class Utilities 
     {
 
@@ -33,7 +36,9 @@ namespace Glass.Mapper
         /// <summary>
         /// Returns a delegate method that will load a class based on its constuctor
         /// </summary>
-        /// <returns></returns>
+        /// <param name="type">The type.</param>
+        /// <returns>IDictionary{ConstructorInfoDelegate}.</returns>
+        /// <exception cref="MapperException">Only supports constructors with  a maximum of 4 parameters</exception>
         public static IDictionary<ConstructorInfo, Delegate> CreateConstructorDelegates(Type type)
         {
             var constructors = type.GetConstructors();
@@ -92,14 +97,17 @@ namespace Glass.Mapper
             return dic;
         }
 
+        /// <summary>
+        /// The flags
+        /// </summary>
         public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
 
         /// <summary>
         /// Gets a property based on the type and name
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="type">The type.</param>
+        /// <param name="name">The name.</param>
+        /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetProperty(Type type, string name)
         {
             var property = type.GetProperty(name, Flags);
@@ -121,8 +129,8 @@ namespace Glass.Mapper
         /// <summary>
         /// Gets all properties on a type
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">The type.</param>
+        /// <returns>IEnumerable{PropertyInfo}.</returns>
         public static IEnumerable<PropertyInfo> GetAllProperties(Type type)
         {
             List<Type> typeList = new List<Type>();
@@ -147,7 +155,14 @@ namespace Glass.Mapper
             return propertyList;
         }
 
-        
+
+        /// <summary>
+        /// Creates the type of the generic.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.Object.</returns>
         public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
         {
             Type genericType = type.MakeGenericType(arguments);
@@ -162,9 +177,9 @@ namespace Glass.Mapper
         /// <summary>
         /// Returns a PropertyInfo based on a link expression, it will pull the first property name from the linq express.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="expression"></param>
-        /// <returns></returns>
+        /// <param name="type">The type.</param>
+        /// <param name="expression">The expression.</param>
+        /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetPropertyInfo(Type type, Expression expression)
         {
             string name = "";

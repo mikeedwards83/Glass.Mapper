@@ -38,6 +38,9 @@ namespace Glass.Mapper.Sc
         private readonly ISitecoreService _service;
         private readonly Context _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassHtml"/> class.
+        /// </summary>
         /// <param name="service">The service that will be used to load and save data</param>
         public GlassHtml(ISitecoreService service)
         {
@@ -46,6 +49,11 @@ namespace Glass.Mapper.Sc
         }
 
 
+        /// <summary>
+        /// Edits the frame.
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <returns>GlassEditFrame.</returns>
         public GlassEditFrame EditFrame(string buttons)
         {
             var frame = new GlassEditFrame(buttons, HttpContext.Current);
@@ -58,8 +66,8 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
         /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field)
         {
@@ -70,8 +78,8 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
         /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
         /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, AbstractParameters parameters)
@@ -83,8 +91,8 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
         /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
         /// <param name="parameters">Additional rendering parameters, e.g. class=myCssClass</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, string parameters)
@@ -96,10 +104,9 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
         /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
-        /// <param name="service">The service that will be used to load and save data</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
@@ -110,8 +117,8 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
         /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
@@ -137,9 +144,8 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
         /// <param name="field">The field that should be made editable</param>
-        /// <param name="target">The target object that contains the item to be edited</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
-        /// <param name="service">The service that will be used to load and save data</param>
+        /// <param name="target">The target object that contains the item to be edited</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
         public string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
@@ -183,7 +189,7 @@ namespace Glass.Mapper.Sc
         }
 
         /// <summary>
-        /// Checks it and attribute is part of the NameValueCollection and updates it with the 
+        /// Checks it and attribute is part of the NameValueCollection and updates it with the
         /// default if it isn't.
         /// </summary>
         /// <param name="collection">The collection of attributes</param>
@@ -199,7 +205,7 @@ namespace Glass.Mapper.Sc
         /// Render HTML for a link
         /// </summary>
         /// <param name="link">The link to render</param>
-        /// <returns>An "a" HTML element </returns>
+        /// <returns>An "a" HTML element</returns>
         public virtual string RenderLink(Fields.Link link)
         {
 
@@ -212,7 +218,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="link">The link to render</param>
         /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
-        /// <returns>An "a" HTML element </returns>
+        /// <returns>An "a" HTML element</returns>
         public virtual string RenderLink(Fields.Link link, NameValueCollection attributes)
         {
 
@@ -226,7 +232,7 @@ namespace Glass.Mapper.Sc
         /// <param name="link">The link to render</param>
         /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
-        /// <returns>An "a" HTML element </returns>
+        /// <returns>An "a" HTML element</returns>
         public virtual string RenderLink(Fields.Link link, NameValueCollection attributes, string contents)
         {
             if (link == null) return "";
@@ -253,6 +259,7 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// Indicates if the site is in editing mode
         /// </summary>
+        /// <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
         public static bool IsInEditingMode
         {
             get
@@ -263,16 +270,53 @@ namespace Glass.Mapper.Sc
         }
 
 
+        /// <summary>
+        /// Makes the editable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <param name="target">The target.</param>
+        /// <returns>System.String.</returns>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
         {
             return MakeEditable(field, standardOutput, target, string.Empty);
         }
 
+        /// <summary>
+        /// Makes the editable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <param name="target">The target.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target, AbstractParameters parameters)
         {
             return MakeEditable<T>(field, standardOutput, target, parameters.ToString());
         }
 
+        /// <summary>
+        /// Makes the editable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <param name="target">The target.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// To many parameters in linq expression {0}.Formatted(field.Body)
+        /// or
+        /// Expression doesn't evaluate to a member {0}.Formatted(field.Body)
+        /// or
+        /// Page editting error. Could not find property {0} on type {1}.Formatted(memberExpression.Member.Name, config.Type.FullName)
+        /// or
+        /// Page editting error. Could not find data handler for property {2} {0}.{1}.Formatted(
+        ///                         prop.DeclaringType, prop.Name, prop.MemberType)
+        /// </exception>
+        /// <exception cref="System.NullReferenceException">Context cannot be null</exception>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target,  string parameters)
         {
 

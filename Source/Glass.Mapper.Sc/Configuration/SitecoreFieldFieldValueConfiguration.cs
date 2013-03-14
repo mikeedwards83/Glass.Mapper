@@ -14,11 +14,13 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The Id (Guid) of the field to load
         /// </summary>
+        /// <value>The field id.</value>
         public ID FieldId { get; set; }
 
         /// <summary>
         /// The value for the field if using Code First
         /// </summary>
+        /// <value>The field value.</value>
         public string FieldValue { get; set; }
     }
 }

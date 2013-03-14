@@ -4,8 +4,15 @@ using Sitecore;
 
 namespace Glass.Mapper.Sc.Razor.Shell.Commands
 {
+    /// <summary>
+    /// Class CreateDynamicRazor
+    /// </summary>
     public class CreateDynamicRazor : global::Sitecore.Shell.Framework.Commands.Command
     {
+        /// <summary>
+        /// Executes the command in the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public override void Execute(global::Sitecore.Shell.Framework.Commands.CommandContext context)
         {
             if (context.Items.Length == 1)
@@ -26,6 +33,10 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
             }
         }
 
+        /// <summary>
+        /// Runs the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         protected void Run(ClientPipelineArgs args)
         {
             UrlString str = new UrlString(UIUtil.GetUri("control:GlassDynamicRazor", "id={AE723732-6D09-4DBA-B553-A1B399EB077D}&locationId=" + args.Parameters["id"]));

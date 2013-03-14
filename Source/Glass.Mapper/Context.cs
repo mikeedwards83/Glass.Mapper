@@ -29,6 +29,9 @@ namespace Glass.Mapper
     /// </summary>
     public class Context
     {
+        /// <summary>
+        /// The default context name
+        /// </summary>
         public const string DefaultContextName = "Default";
 
         #region STATICS
@@ -36,13 +39,18 @@ namespace Glass.Mapper
         /// <summary>
         /// The default Context. Used by services if no Context is specified.
         /// </summary>
+        /// <value>The default.</value>
         public static Context Default { get; private set; }
 
         /// <summary>
-        /// Contains the list of Contexts currently loaded. 
+        /// Contains the list of Contexts currently loaded.
         /// </summary>
+        /// <value>The contexts.</value>
         public static IDictionary<string, Context> Contexts { get; private set; }
 
+        /// <summary>
+        /// Initializes static members of the <see cref="Context"/> class.
+        /// </summary>
         static Context()
         {
             Contexts = new Dictionary<string, Context>();
@@ -50,6 +58,8 @@ namespace Glass.Mapper
         /// <summary>
         /// Creates a Context and creates it as the default Context. This is assigned to the Default static property.
         /// </summary>
+        /// <param name="resolver">The resolver.</param>
+        /// <returns>Context.</returns>
         public static Context Create(IDependencyResolver resolver)
         {
             return Context.Create(resolver, DefaultContextName, true);
@@ -58,9 +68,11 @@ namespace Glass.Mapper
         /// <summary>
         /// Creates a new context and adds it to the Contexts dictionary.
         /// </summary>
+        /// <param name="resolver">The resolver.</param>
         /// <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
         /// <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
-        /// <returns></returns>
+        /// <returns>Context.</returns>
+        /// <exception cref="System.NullReferenceException">No dependency resolver set.</exception>
         public static Context Create(IDependencyResolver resolver, string contextName, bool isDefault = false)
         {
 
@@ -92,13 +104,18 @@ namespace Glass.Mapper
         /// <summary>
         /// List of the type configurations loaded by this context
         /// </summary>
+        /// <value>The type configurations.</value>
         public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
 
         /// <summary>
         /// The dependency resolver used by services using the context
         /// </summary>
+        /// <value>The dependency resolver.</value>
         public IDependencyResolver DependencyResolver { get; set; }
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Context"/> class from being created.
+        /// </summary>
         private Context()
         {
             TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
@@ -107,8 +124,8 @@ namespace Glass.Mapper
         /// <summary>
         /// Gets a type configuration based on type
         /// </summary>
-        /// <param name="type">The configuration </param>
-        /// <returns></returns>
+        /// <param name="type">The type.</param>
+        /// <returns>AbstractTypeConfiguration.</returns>
         public AbstractTypeConfiguration this[Type type]
         {
             get
@@ -119,7 +136,10 @@ namespace Glass.Mapper
                     return null;
             }
         }
-        
+
+        /// <summary>
+        /// Loads the specified loaders.
+        /// </summary>
         /// <param name="loaders">The list of configuration loaders to load into the context.</param>
         public void Load(params IConfigurationLoader[] loaders)
         {
@@ -144,6 +164,12 @@ namespace Glass.Mapper
 
         }
 
+        /// <summary>
+        /// Processes the properties.
+        /// </summary>
+        /// <param name="properties">The properties.</param>
+        /// <exception cref="System.NullReferenceException">Could not find data mapper for property {0} on type {1}
+        ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
             DataMapperResolver runner = new DataMapperResolver(DependencyResolver.ResolveAll<IDataMapperResolverTask>());
@@ -165,6 +191,11 @@ namespace Glass.Mapper
             }
         }
 
+        /// <summary>
+        /// Gets the type configuration.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns>AbstractTypeConfiguration.</returns>
         public AbstractTypeConfiguration GetTypeConfiguration(object obj)
         {
             var type = obj.GetType();

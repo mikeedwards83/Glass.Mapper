@@ -29,22 +29,51 @@ using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+    /// <summary>
+    /// Class SitecoreFieldLinkMapper
+    /// </summary>
     public class SitecoreFieldLinkMapper : AbstractSitecoreFieldMapper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreFieldLinkMapper"/> class.
+        /// </summary>
         public SitecoreFieldLinkMapper() : base(typeof (Link))
         {
         }
 
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the field value.
+        /// </summary>
+        /// <param name="fieldValue">The field value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
         public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
 
@@ -109,6 +138,18 @@ namespace Glass.Mapper.Sc.DataMappers
             return link;
         }
 
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// or
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// </exception>
         public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             Link link = value as Link;

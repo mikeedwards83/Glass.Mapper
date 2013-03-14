@@ -28,11 +28,17 @@ using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper
 {
+    /// <summary>
+    /// Class AbstractService
+    /// </summary>
     public abstract class AbstractService : IAbstractService
     {
-
         private IPerformanceProfiler _profiler;
 
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>The profiler.</value>
         public IPerformanceProfiler Profiler
         {
             get { return _profiler; }
@@ -45,6 +51,10 @@ namespace Glass.Mapper
             }
         }
 
+        /// <summary>
+        /// Gets the glass context.
+        /// </summary>
+        /// <value>The glass context.</value>
         public  Context GlassContext { get; private set; }
 
         private ConfigurationResolver _configurationResolver;
@@ -52,18 +62,30 @@ namespace Glass.Mapper
         private ObjectConstruction _objectConstruction;
 
         private ObjectSaving _objectSaving;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractService"/> class.
+        /// </summary>
         public AbstractService()
             : this(Context.Default)
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractService"/> class.
+        /// </summary>
+        /// <param name="contextName">Name of the context.</param>
         public AbstractService(string contextName)
             : this(Context.Contexts[contextName])
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractService"/> class.
+        /// </summary>
+        /// <param name="glassContext">The glass context.</param>
+        /// <exception cref="System.NullReferenceException">Context is null</exception>
         public AbstractService(Context glassContext)
         {
 
@@ -85,6 +107,12 @@ namespace Glass.Mapper
 
         }
 
+        /// <summary>
+        /// Instantiates the object.
+        /// </summary>
+        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //run the pipeline to get the configuration to load
@@ -103,6 +131,10 @@ namespace Glass.Mapper
             return objectArgs.Result;
         }
 
+        /// <summary>
+        /// Saves the object.
+        /// </summary>
+        /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
         public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             //Run the object construction
@@ -113,32 +145,43 @@ namespace Glass.Mapper
         /// <summary>
         /// Used to create the context used by DataMappers to map data to a class
         /// </summary>
-        /// <param name="creationContext"></param>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="creationContext">The Type Creation Context used to create the instance</param>
+        /// <param name="obj">The newly instantiated object without any data mapped</param>
+        /// <returns>AbstractDataMappingContext.</returns>
         public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
 
 
         /// <summary>
         /// Used to create the context used by DataMappers to map data from a class
         /// </summary>
-        /// <param name="creationContext"></param>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="creationContext">The Saving Context</param>
+        /// <returns>AbstractDataMappingContext.</returns>
         public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 
+    /// <summary>
+    /// Interface IAbstractService
+    /// </summary>
     public interface IAbstractService
     {
+        /// <summary>
+        /// Gets the glass context.
+        /// </summary>
+        /// <value>The glass context.</value>
         Context GlassContext { get;  }
 
+        /// <summary>
+        /// Instantiates the object.
+        /// </summary>
+        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
+        /// <returns>System.Object.</returns>
         object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
-          /// <summary>
+        /// <summary>
         /// Used to create the context used by DataMappers to map data to a class
         /// </summary>
         /// <param name="creationContext">The Type Creation Context used to create the instance</param>
         /// <param name="obj">The newly instantiated object without any data mapped</param>
-        /// <returns></returns>
+        /// <returns>AbstractDataMappingContext.</returns>
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
 
 
@@ -146,7 +189,7 @@ namespace Glass.Mapper
         /// Used to create the context used by DataMappers to map data from a class
         /// </summary>
         /// <param name="creationContext">The Saving Context</param>
-        /// <returns></returns>
+        /// <returns>AbstractDataMappingContext.</returns>
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 }

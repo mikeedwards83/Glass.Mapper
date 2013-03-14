@@ -24,8 +24,15 @@ using System.Text;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// Class SitecoreTypeSavingContext
+    /// </summary>
     public class SitecoreTypeSavingContext : AbstractTypeSavingContext
     {
+        /// <summary>
+        /// Gets or sets the item.
+        /// </summary>
+        /// <value>The item.</value>
         public Item Item { get; set; }
     }
 }

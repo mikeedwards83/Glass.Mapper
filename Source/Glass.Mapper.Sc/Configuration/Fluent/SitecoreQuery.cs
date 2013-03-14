@@ -45,9 +45,14 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// Indicates that a query should be execute to load data into the property.
     /// The query can be either absolute or relative to the current item.
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SitecoreQuery<T> : AbstractPropertyBuilder<T, SitecoreQueryConfiguration>
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreQuery{T}"/> class.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
         public SitecoreQuery(Expression<Func<T, object>> ex):base(ex)
         {
             Configuration.IsLazy = true;
@@ -56,7 +61,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Indicates that the results should be loaded lazily
         /// </summary>
-        /// <returns></returns>
         public SitecoreQuery<T> IsNotLazy()
         {
             Configuration.IsLazy = false;
@@ -65,6 +69,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
+        /// <returns>SitecoreQuery{`0}.</returns>
         public SitecoreQuery<T> InferType()
         {
             Configuration.InferType = true;
@@ -73,6 +78,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// Use the Sitecore.Data.Query.QueryContext when querying for data
         /// </summary>
+        /// <returns>SitecoreQuery{`0}.</returns>
         public SitecoreQuery<T> UseQueryContext()
         {
             Configuration.UseQueryContext = true;
@@ -89,6 +95,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <summary>
         /// The query to execute
         /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>SitecoreQuery{`0}.</returns>
         public SitecoreQuery<T> Query(string query)
         {
             Configuration.Query = query;
