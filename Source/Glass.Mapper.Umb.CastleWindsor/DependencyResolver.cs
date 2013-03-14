@@ -20,7 +20,7 @@ using System.Collections;
 using Castle.Windsor;
 using System.Collections.Generic;
 
-namespace Glass.Mapper.Sc.CastleWindsor
+namespace Glass.Mapper.Umb.CastleWindsor
 {
     /// <summary>
     /// Class DependencyResolver
@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public static IDependencyResolver CreateStandardResolver()
         {
             IWindsorContainer container=  new WindsorContainer();
-            container.Install(new SitecoreInstaller());
+            container.Install(new UmbracoInstaller());
             return new DependencyResolver(container);
         }
 
@@ -46,6 +46,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             Container = container;
         }
+
         /// <summary>
         /// Gets the container.
         /// </summary>
@@ -78,6 +79,3 @@ namespace Glass.Mapper.Sc.CastleWindsor
         }
     }
 }
-
-
-

@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
 using Umbraco.Core.Models;
@@ -53,7 +54,7 @@ namespace Glass.Mapper.Umb.Integration
             
             _expected = "hello world";
 
-            _context = Context.Create(new GlassConfig());
+            _context = Context.Create(DependencyResolver.CreateStandardResolver());
 
             _context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
             

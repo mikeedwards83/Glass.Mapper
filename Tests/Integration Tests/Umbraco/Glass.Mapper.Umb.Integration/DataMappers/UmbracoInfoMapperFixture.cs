@@ -18,6 +18,7 @@
 
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.DataMappers;
 using NUnit.Framework;
@@ -170,7 +171,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
 
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var dataContext = new UmbracoDataMappingContext(null, content, new UmbracoService(contentService, context));
             dataContext.PropertyValue = expected;
 

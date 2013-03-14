@@ -18,6 +18,7 @@
 
 using System;
 using System.Linq;
+using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Fluent;
 using NUnit.Framework;
@@ -48,7 +49,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
                                                                      new MediaService(unitOfWork, repoFactory));
             var dataTypeService = new DataTypeService(unitOfWork, repoFactory);
 
-            var context = Context.Create(new Umb.GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var loader = new UmbracoFluentConfigurationLoader();
             var stubConfig = loader.Add<Stub>();
             stubConfig.Configure(x =>

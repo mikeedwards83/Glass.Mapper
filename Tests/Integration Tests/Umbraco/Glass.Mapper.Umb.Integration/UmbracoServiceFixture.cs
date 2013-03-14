@@ -18,6 +18,7 @@
 
 using System;
 using System.Linq;
+using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
@@ -38,7 +39,7 @@ namespace Glass.Mapper.Umb.Integration
         public void GetItem_UsingItemId_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
             var service = new UmbracoService(_contentService, context);
@@ -55,7 +56,7 @@ namespace Glass.Mapper.Umb.Integration
         public void GetItem_UsingItemIdInt_ReturnsItem()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
             var content = _contentService.GetById(new Guid("{24814F74-CE52-4975-B9F3-15ABCBB132D6}"));
@@ -72,7 +73,7 @@ namespace Glass.Mapper.Umb.Integration
         public void GetItem_UsingItemId_ReturnsItemName()
         {
             //Assign
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
             var service = new UmbracoService(_contentService, context);
@@ -95,7 +96,7 @@ namespace Glass.Mapper.Umb.Integration
         {
             //Assign
             string expected = "new name";
-            var context = Context.Create(new GlassConfig());
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
             var currentItem = _contentService.GetById(new Guid("{24814F74-CE52-4975-B9F3-15ABCBB132D6}"));
             var service = new UmbracoService(_contentService, context);
@@ -124,7 +125,7 @@ namespace Glass.Mapper.Umb.Integration
         //    string expected = "new name";
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
         //    var currentItem = db.GetItem(itemPath);
         //    var service = new UmbracoService(db, context);
@@ -167,7 +168,7 @@ namespace Glass.Mapper.Umb.Integration
         //    string expected = "new name";
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
         //    var currentItem = db.GetItem(itemPath);
         //    var service = new UmbracoService(db, context);
@@ -212,7 +213,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateTypes_TwoItems_ReturnsTwoClasses()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -238,7 +239,7 @@ namespace Glass.Mapper.Umb.Integration
         //    //Assign
         //    var language = LanguageManager.GetLanguage("af-ZA");
 
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -265,7 +266,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_NoConstructorArgs_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -284,7 +285,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_NoConstructorArgsTyped_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -303,7 +304,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_OneConstructorArgs_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -325,7 +326,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_OneConstructorArgsTyped_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -347,7 +348,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_TwoConstructorArgs_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -371,7 +372,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_TwoConstructorArgsTyped_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -395,7 +396,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_ThreeConstructorArgs_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -422,7 +423,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_ThreeConstructorArgsTyped_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -449,7 +450,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_FourConstructorArgs_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -477,7 +478,7 @@ namespace Glass.Mapper.Umb.Integration
         //public void CreateType_FourConstructorArgsTyped_ReturnsItem()
         //{
         //    //Assign
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
@@ -513,7 +514,7 @@ namespace Glass.Mapper.Umb.Integration
         //    string childPath = "/Umbraco/content/Tests/UmbracoService/Create/newChild";
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
         //    var service = new UmbracoService(db);
 
@@ -548,7 +549,7 @@ namespace Glass.Mapper.Umb.Integration
         //    string childPath = "/Umbraco/content/Tests/UmbracoService/Delete/Target";
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
         //    var service = new UmbracoService(db);
 
@@ -587,7 +588,7 @@ namespace Glass.Mapper.Umb.Integration
         //    string targetNewPath = "/Umbraco/content/Tests/UmbracoService/Move/Parent2/Target";
 
         //    var db = Umbraco.Configuration.Factory.GetDatabase("master");
-        //    var context = Context.Create(new GlassConfig());
+        //    var context = Context.Create(DependencyResolver.CreateStandardResolver());
         //    context.Load(new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration"));
         //    var service = new UmbracoService(db);
 

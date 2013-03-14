@@ -246,6 +246,10 @@
     <Compile Include="TestFixtureSetupTearDown.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Umb.CastleWindsor\Glass.Mapper.Umb.CastleWindsor.csproj">
+      <Project>{53c429e4-2583-4eb9-8226-554c70834e26}</Project>
+      <Name>Glass.Mapper.Umb.CastleWindsor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Umb\Glass.Mapper.Umb.csproj">
       <Project>{7bfbd78c-70af-45b3-83bd-b5f9b0de2fbf}</Project>
       <Name>Glass.Mapper.Umb</Name>

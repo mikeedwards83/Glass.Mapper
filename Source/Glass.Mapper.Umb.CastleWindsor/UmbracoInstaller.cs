@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using Castle.MicroKernel.Registration;
@@ -30,26 +30,23 @@ using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Umb.DataMappers;
 
-namespace Glass.Mapper.Umb
+namespace Glass.Mapper.Umb.CastleWindsor
 {
-    /// <summary>
-    /// GlassConfig
-    /// </summary>
-    public class GlassConfig : GlassCastleConfigBase
+    public class UmbracoInstaller : IWindsorInstaller
     {
         /// <summary>
-        /// Configures the specified container.
+        /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="contextName">Name of the context.</param>
-        public override void Configure(WindsorContainer container, string contextName)
+        /// <param name="store">The configuration store.</param>
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
                 new DataMapperInstaller(),
                 new DataMapperTasksInstaller(),
                 new ConfigurationResolverTaskInstaller(),
-                new ObjectionConstructionTaskInstaller(), 
+                new ObjectionConstructionTaskInstaller(),
                 new ObjectSavingTaskInstaller()
                 );
         }
@@ -109,13 +106,13 @@ namespace Glass.Mapper.Umb
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoIdMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoInfoMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoItemMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoLinkedMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoParentMapper>().LifestyleTransient()
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoLinkedMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoParentMapper>().LifestyleTransient()//,
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoQueryMapper>()
                 //         .DynamicParameters((k, d) =>
-                //                                {
-                //                                    d["parameters"] = k.ResolveAll<IUmbracoQueryParameter>();
-                //                                })
+                //         {
+                //             d["parameters"] = k.ResolveAll<IUmbracoQueryParameter>();
+                //         })
                 //         .LifestyleTransient()
                 );
         }
@@ -123,7 +120,7 @@ namespace Glass.Mapper.Umb
 
     /// <summary>
     /// Data Mapper Resolver Tasks -
-    /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g. 
+    /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g.
     /// </summary>
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
@@ -144,7 +141,7 @@ namespace Glass.Mapper.Umb
     }
 
     /// <summary>
-    /// Configuration Resolver Tasks - These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed.
+    /// Configuration Resolver Tasks - These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passsed.
     /// </summary>
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
@@ -155,7 +152,7 @@ namespace Glass.Mapper.Umb
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            // These tasks are run when Glass.Mapper tries to find the configration the user has requested based on the type passsed, e.g. 
+            // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
             // if your code contained
             //       service.GetItem<MyClass>(id) 
             // the standard resolver will return the MyClass configuration. 
