@@ -197,22 +197,23 @@ namespace Glass.Mapper.Configuration.Attributes
                 // inheritence chain to find the first declared attribute.
                 if (attr == null)
                 {
-                    var interfaces = property.DeclaringType.GetInterfaces();
+	                if (property.DeclaringType != null)
+	                {
+		                var interfaces = property.DeclaringType.GetInterfaces();
 
-                    //TODO: put a check in here to check that two interface don't implement an attribute
-                    foreach (var inter in interfaces)
-                    {
-                        var interProperty = inter.GetProperty(property.Name);
-                        if (interProperty != null)
-                            attr = GetPropertyAttribute(interProperty);
+		                //TODO: put a check in here to check that two interface don't implement an attribute
+		                foreach (var inter in interfaces)
+		                {
+			                var interProperty = inter.GetProperty(property.Name);
+			                if (interProperty != null)
+				                attr = GetPropertyAttribute(interProperty);
 
-                        if (attr != null) break;
-                    }
+			                if (attr != null) break;
+		                }
+	                }
                 }
-                
-                if (attr != null)
-                {
-                   
+                else
+				{
                     var config = attr.Configure(property);
                     return config;
                 }
