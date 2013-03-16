@@ -19,10 +19,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Glass.Mapper.Sc.Configuration;
-using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -45,6 +41,8 @@ namespace Glass.Mapper.Sc
         /// <value>The glass context.</value>
         Context GlassContext { get; }
 
+        #region  AddVersion
+
         /// <summary>
         /// Adds a version of the item
         /// </summary>
@@ -53,90 +51,214 @@ namespace Glass.Mapper.Sc
         /// <returns>``0.</returns>
         T AddVersion<T>(T target) where T : class;
 
+        #endregion
+
+        #region Create
+
         /// <summary>
-        /// Gets the item.
+        /// Creates a new Sitecore item.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id">The id.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the SitecoreClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="K">The type of the parent item</typeparam>
+        /// <param name="parent">The parent of the new item to create. Must have the SitecoreIdAttribute or fluent equivalent</param>
+        /// <param name="newItem">New item to create, must have the attribute SitecoreInfoAttribute of type SitecoreInfoType.Name or the fluent equivalent</param>
+        /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
+        /// <param name="silent">If set to true, no events will be raised due to saving.</param>
         /// <returns>``0.</returns>
-        T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class;
+        T Create<T, K>(K parent, T newItem, bool updateStatistics = true, bool silent = false)
+            where T : class
+            where K : class;
+
+        #endregion
+
+        #region  CreateType
 
         /// <summary>
-        /// Retrieve a Sitecore item as the specified type.
+        /// Creates the type.
         /// </summary>
-        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <param name="id">The ID of the Sitecore item</param>
-        /// <param name="language">The language of the item to return</param>
+        /// <param name="type">The type.</param>
+        /// <param name="item">The item.</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
-        T GetItem<T>(Guid id, Language language, bool isLazy = false, bool inferType = false) where T : class;
+        /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
+        /// <returns>System.Object.</returns>
+        object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters);
 
         /// <summary>
-        /// Retrieve a Sitecore item as the specified type.
+        /// Creates a class from the specified item
         /// </summary>
-        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T>(Item item, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Creates a class from the specified item with a single constructor parameter
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <param name="id">The ID of the Sitecore item</param>
-        /// <param name="language">The language of the item to return</param>
+        /// <param name="item">The item to load data from</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
-        T GetItem<T, K>(Guid id, Language language, K param1, bool isLazy = false, bool inferType = false) where T : class;
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T, K>(Item item, K param1, bool isLazy = false, bool inferType = false);
 
         /// <summary>
-        /// Retrieve a Sitecore item as the specified type.
+        /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
-        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <param name="id">The ID of the Sitecore item</param>
-        /// <param name="language">The language of the item to return</param>
+        /// <param name="item">The item to load data from</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
-        T GetItem<T, K, L>(Guid id, Language language, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class;
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T, K, L>(Item item, K param1, L param2, bool isLazy = false, bool inferType = false);
 
         /// <summary>
-        /// Retrieve a Sitecore item as the specified type.
+        /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
-        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <param name="id">The ID of the Sitecore item</param>
-        /// <param name="language">The language of the item to return</param>
+        /// <param name="item">The item to load data from</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
-        T GetItem<T, K, L, M>(Guid id, Language language, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class;
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T, K, L, M>(Item item, K param1, L param2, M param3, bool isLazy = false, bool inferType = false);
 
         /// <summary>
-        /// Retrieve a Sitecore item as the specified type.
+        /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
-        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <typeparam name="M">The type of the third constructor parameter</typeparam>
         /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
-        /// <param name="id">The ID of the Sitecore item</param>
-        /// <param name="language">The language of the item to return</param>
+        /// <param name="item">The item to load data from</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T, K, L, M, N>(Item item, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false);
+
+        #endregion
+
+        #region CreateTypes
+
+        /// <summary>
+        /// Create a collection of classes from the specified type
+        /// </summary>
+        /// <param name="isLazy">If true creates a proxy for each class</param>
+        /// <param name="inferType">Infer the type to be loaded from the item template</param>
+        /// <param name="type">The type to return</param>
+        /// <param name="getItems">A function that returns the list of items to load</param>
+        /// <returns>An enumerable of the items as the specified type</returns>
+        IEnumerable CreateTypes(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems);
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>
+        /// Delete an item from Sitecore
+        /// </summary>
+        /// <typeparam name="T">The type being deleted. The type must have a property with the SitecoreIdAttribute.</typeparam>
+        /// <param name="item">The class to delete</param>
+        void Delete<T>(T item) where T : class;
+
+        #endregion
+
+        #region Dynamics
+
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="id">The ID of the item to return</param>
+        /// <returns>dynamic.</returns>
+        dynamic GetDynamicItem(Guid id);
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="path">The path of the item to return</param>
+        /// <returns>dynamic.</returns>
+        dynamic GetDynamicItem(string path);
+        /// <summary>
+        /// Returns a dynamic item that can be used with the dynamic keyword
+        /// </summary>
+        /// <param name="item">The item to convert</param>
+        /// <returns>dynamic.</returns>
+        dynamic GetDynamicItem(Item item);
+
+        #endregion
+
+        #region GetItem - Path
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
-        T GetItem<T, K, L, M, N>(Guid id, Language language, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+        /// <returns>``0.</returns>
+        T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        T GetItem<T, K, L>(string path, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        T GetItem<T, K, L, M>(string path, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        T GetItem<T, K, L, M, N>(string path, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        T GetItem<T, K>(string path, K param1, bool isLazy = false, bool inferType = false) where T : class;
+
+        #endregion
+
+        #region GetItem - Path, Language
 
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
@@ -212,6 +334,12 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
         T GetItem<T, K, L, M, N>(string path, Language language, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+
+
+        #endregion
+
+        #region GetItem - Path, Language, Version
+
 
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
@@ -293,6 +421,171 @@ namespace Glass.Mapper.Sc
         /// <returns>The Sitecore item as the specified type</returns>
         T GetItem<T, K, L, M, N>(string path, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
 
+
+
+        #endregion
+
+        #region GetItem - Guid
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K>(Guid id, K param1, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L>(Guid id, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L, M>(Guid id, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L, M, N>(Guid id, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+
+
+        #endregion
+
+        #region GetItem - Guid, Language
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T>(Guid id, Language language, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K>(Guid id, Language language, K param1, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L>(Guid id, Language language, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L, M>(Guid id, Language language, K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="language">The language of the item to return</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The Sitecore item as the specified type</returns>
+        T GetItem<T, K, L, M, N>(Guid id, Language language, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+
+
+
+
+
+        #endregion
+
+        #region GetItem - Guid, Language, Version
+
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
         /// </summary>
@@ -373,21 +666,23 @@ namespace Glass.Mapper.Sc
         /// <returns>The Sitecore item as the specified type</returns>
         T GetItem<T, K, L, M, N>(Guid id, Language language, global::Sitecore.Data.Version version, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
 
+
+        #endregion
+
+        #region Move
+
         /// <summary>
-        /// Gets the item.
+        /// Moves the specified item.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="path">The path.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>``0.</returns>
-        T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class;
-        /// <summary>
-        /// Saves the specified target.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="target">The target.</param>
-        void Save<T>(T target);
+        /// <typeparam name="K"></typeparam>
+        /// <param name="item">The item.</param>
+        /// <param name="newParent">The new parent.</param>
+        void Move<T, K>(T item, K newParent);
+
+        #endregion
+        
+        #region Query
 
         /// <summary>
         /// Query Sitecore for a set of items. Proxy classes are created.
@@ -399,6 +694,10 @@ namespace Glass.Mapper.Sc
         /// <returns>Sitecore items as proxy classes of the specified type</returns>
         IEnumerable<T> Query<T>(string query, bool isLazy = false, bool inferType = false) where T : class;
 
+        #endregion
+
+        #region QuerySingle
+
         /// <summary>
         /// Query Sitecore for a single item.
         /// </summary>
@@ -409,35 +708,42 @@ namespace Glass.Mapper.Sc
         /// <returns>Sitecore item as the specified type</returns>
         T QuerySingle<T>(string query, bool isLazy = false, bool inferType = false) where T : class;
 
+
+        #endregion
+
+        #region Save
+
+        /// <summary>
+        /// Saves the specified target.
+        /// </summary>
+        /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
+        /// <param name="silent">If set to true, no events will be raised due to saving.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">The target.</param>
+        void Save<T>(T target, bool updateStatistics = true, bool silent = false);
+
+        #endregion
+
+        #region WriteToItem
+
         /// <summary>
         /// Writes to item.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="item">The item.</param>
-        /// <param name="config">The config.</param>
-        void WriteToItem<T>(T target, Item item, SitecoreTypeConfiguration config = null);
+        /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
+        /// <param name="silent">If set to true, no events will be raised due to saving.</param>
+        /// <param name="target">The object to read data from.</param>
+        /// <param name="item">The item to write data to.</param>
+        void WriteToItem<T>(T target, Item item, bool updateStatistics = true, bool silent = false);
 
-        /// <summary>
-        /// Creates the type.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="item">The item.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
-        /// <returns>System.Object.</returns>
-        object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters);
+        #endregion
 
-        /// <summary>
-        /// Create a collection of classes from the specified type
-        /// </summary>
-        /// <param name="isLazy">If true creates a proxy for each class</param>
-        /// <param name="inferType">Infer the type to be loaded from the item template</param>
-        /// <param name="type">The type to return</param>
-        /// <param name="getItems">A function that returns the list of items to load</param>
-        /// <returns>An enumerable of the items as the specified type</returns>
-        IEnumerable CreateTypes(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems);
+       
+
+       
+
+   
+
 
         /// <summary>
         /// Creates the data mapping context.
@@ -454,103 +760,6 @@ namespace Glass.Mapper.Sc
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
 
         /// <summary>
-        /// Creates a class from the specified item
-        /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
-        /// <param name="item">The item to load data from</param>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
-        T CreateType<T>(Item item, bool isLazy = false, bool inferType = false) where T : class;
-
-        /// <summary>
-        /// Creates a class from the specified item with a single constructor parameter
-        /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <param name="item">The item to load data from</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
-        T CreateType<T, K>(Item item, K param1, bool isLazy = false, bool inferType = false);
-
-        /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
-        /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <param name="item">The item to load data from</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>
-        /// <param name="param2">The value of the second parameter of the constructor</param>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
-        T CreateType<T, K, L>(Item item, K param1, L param2, bool isLazy = false, bool inferType = false);
-
-        /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
-        /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <param name="item">The item to load data from</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>
-        /// <param name="param2">The value of the second parameter of the constructor</param>
-        /// <param name="param3">The value of the third parameter of the constructor</param>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
-        T CreateType<T, K, L, M>(Item item, K param1, L param2, M param3, bool isLazy = false, bool inferType = false);
-
-        /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
-        /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
-        /// <param name="item">The item to load data from</param>
-        /// <param name="param1">The value of the first parameter of the constructor</param>
-        /// <param name="param2">The value of the second parameter of the constructor</param>
-        /// <param name="param3">The value of the third parameter of the constructor</param>
-        /// <param name="param4">The value of the fourth parameter of the constructor</param>
-        /// <param name="isLazy">If true creates a proxy for the class</param>
-        /// <param name="inferType">Infer the type to be loaded from the template</param>
-        /// <returns>The item as the specified type</returns>
-        T CreateType<T, K, L, M, N>(Item item, K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false);
-
-        /// <summary>
-        /// Creates a new Sitecore item.
-        /// </summary>
-        /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the SitecoreClassAttribute or fluent equivalent</typeparam>
-        /// <typeparam name="K">The type of the parent item</typeparam>
-        /// <param name="parent">The parent of the new item to create. Must have the SitecoreIdAttribute or fluent equivalent</param>
-        /// <param name="newItem">New item to create, must have the attribute SitecoreInfoAttribute of type SitecoreInfoType.Name or the fluent equivalent</param>
-        /// <returns>``0.</returns>
-        T Create<T, K>(K parent, T newItem)
-            where T : class
-            where K : class;
-
-        /// <summary>
-        /// Delete an item from Sitecore
-        /// </summary>
-        /// <typeparam name="T">The type being deleted. The type must have a property with the SitecoreIdAttribute.</typeparam>
-        /// <param name="item">The class to delete</param>
-        void Delete<T>(T item) where T : class;
-
-        /// <summary>
-        /// Moves the specified item.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
-        /// <param name="item">The item.</param>
-        /// <param name="newParent">The new parent.</param>
-        void Move<T, K>(T item, K newParent);
-        /// <summary>
         /// Instantiates the object.
         /// </summary>
         /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
@@ -562,24 +771,7 @@ namespace Glass.Mapper.Sc
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
         void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext);
 
-        /// <summary>
-        /// Returns a dynamic item that can be used with the dynamic keyword
-        /// </summary>
-        /// <param name="id">The ID of the item to return</param>
-        /// <returns>dynamic.</returns>
-        dynamic GetDynamicItem(Guid id);
-        /// <summary>
-        /// Returns a dynamic item that can be used with the dynamic keyword
-        /// </summary>
-        /// <param name="path">The path of the item to return</param>
-        /// <returns>dynamic.</returns>
-        dynamic GetDynamicItem(string path);
-        /// <summary>
-        /// Returns a dynamic item that can be used with the dynamic keyword
-        /// </summary>
-        /// <param name="item">The item to convert</param>
-        /// <returns>dynamic.</returns>
-        dynamic GetDynamicItem(Item item);
+        
 
     }
 }
