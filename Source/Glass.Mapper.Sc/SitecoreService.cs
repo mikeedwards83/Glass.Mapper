@@ -360,7 +360,7 @@ namespace Glass.Mapper.Sc
         /// <param name="type">The type to return</param>
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        public IEnumerable CreateTypes(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems)
+        public IEnumerable CreateTypes(Type type, Func<IEnumerable<Item>> getItems, bool isLazy = false, bool inferType = false)
         {
             return Utilities.CreateGenericType(typeof(LazyItemEnumerable<>), new Type[] { type }, getItems, isLazy, inferType, this) as IEnumerable;
         }
@@ -1070,7 +1070,7 @@ namespace Glass.Mapper.Sc
         /// <returns>Sitecore items as proxy classes of the specified type</returns>
         public IEnumerable<T> Query<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
-            return CreateTypes(isLazy, inferType, typeof(T), () => { return Database.SelectItems(query); }) as IEnumerable<T>;
+            return CreateTypes( typeof(T), () => { return Database.SelectItems(query); }, isLazy, inferType) as IEnumerable<T>;
         }
 
         #endregion

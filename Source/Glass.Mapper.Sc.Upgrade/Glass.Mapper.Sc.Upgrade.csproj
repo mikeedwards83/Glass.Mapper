@@ -51,6 +51,7 @@
     <Compile Include="Configuration\Fluent\SitecoreClass.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SitecoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">

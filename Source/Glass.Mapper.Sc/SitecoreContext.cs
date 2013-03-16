@@ -88,7 +88,7 @@ namespace Glass.Mapper.Sc
         {
             Item item = global::Sitecore.Context.Item;
             var results = item.Axes.SelectItems(query);
-            return base.CreateTypes(isLazy, inferType, typeof(T), () => { return results; }) as IEnumerable<T>;
+            return base.CreateTypes(typeof(T), () => { return results; }, isLazy, inferType) as IEnumerable<T>;
 
         }
 

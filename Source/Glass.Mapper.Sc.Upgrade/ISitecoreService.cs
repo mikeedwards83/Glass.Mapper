@@ -9,7 +9,7 @@ using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Upgrade
 {
-    public interface ISitecoreService
+    public interface ISitecoreService : Glass.Mapper.Sc.ISitecoreService
     {
 
       

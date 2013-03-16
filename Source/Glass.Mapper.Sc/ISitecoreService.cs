@@ -166,7 +166,7 @@ namespace Glass.Mapper.Sc
         /// <param name="type">The type to return</param>
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        IEnumerable CreateTypes(bool isLazy, bool inferType, Type type, Func<IEnumerable<Item>> getItems);
+        IEnumerable CreateTypes(Type type, Func<IEnumerable<Item>> getItems, bool isLazy = false, bool inferType = false);
 
         #endregion
 

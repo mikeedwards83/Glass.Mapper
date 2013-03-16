@@ -781,7 +781,7 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var results =
-                service.CreateTypes(false, false, typeof (StubClass), () => new[] {result1, result2}) as
+                service.CreateTypes( typeof (StubClass), () => new[] {result1, result2}, false, false) as
                 IEnumerable<StubClass>;
 
             //Assert
@@ -807,7 +807,7 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var results =
-                service.CreateTypes(false, false, typeof(StubClass), () => new[] { result1, result2 }) as
+                service.CreateTypes(typeof(StubClass), () => new[] { result1, result2 }, false, false) as
                 IEnumerable<StubClass>;
 
             //Assert
