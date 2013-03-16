@@ -100,7 +100,17 @@ namespace Glass.Mapper.Configuration
         public void AutoMapProperties()
         {
             //TODO: ME - probably need some binding flags.
-            var properties = Type.GetProperties();
+            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
+                                 BindingFlags.FlattenHierarchy;
+            IEnumerable<PropertyInfo> properties = Type.GetProperties(flags);
+
+            if (Type.IsInterface)
+            {
+                foreach (var inter in Type.GetInterfaces())
+                {
+                    properties = properties.Union(inter.GetProperties(flags));
+                }
+            }
 
             foreach (var property in properties)
             {
