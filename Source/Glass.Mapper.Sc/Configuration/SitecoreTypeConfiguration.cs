@@ -160,6 +160,13 @@ namespace Glass.Mapper.Sc.Configuration
             string name = property.Name;
             SitecoreInfoType infoType;
 
+            if (name.ToLowerInvariant() == "id")
+            {
+                SitecoreIdConfiguration idConfig = new SitecoreIdConfiguration();
+                idConfig.PropertyInfo = property;
+                return idConfig;
+            }
+
             if (name.ToLowerInvariant() == "parent")
             {
                 SitecoreParentConfiguration parentConfig = new SitecoreParentConfiguration();

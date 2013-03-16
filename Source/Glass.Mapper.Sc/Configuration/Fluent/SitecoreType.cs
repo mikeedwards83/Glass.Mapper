@@ -304,9 +304,18 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreType<T> Import<K>(SitecoreType<K> typeConfig)
         {
             typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
+          
+            if (typeConfig._configuration.AutoMap)
+                Config.AutoMap = true;
+
             return this;
         }
 
+        public SitecoreType<T> AutoMap()
+        {
+            Config.AutoMap = true;
+            return this;
+        }
 
 
     #region ISitecoreClass Members

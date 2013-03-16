@@ -9,11 +9,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
         {
             var loader = new SitecoreFluentConfigurationLoader();
 
-            var newsArticle = loader.Add<NewsArticle>();
-            newsArticle.Field(x => x.Abstract);
-            newsArticle.Field(x => x.Date);
-            newsArticle.Field(x => x.FeaturedImage);
-            newsArticle.Field(x => x.MainBody);
+            var newsArticle = loader.Add<NewsArticle>().AutoMap();
             newsArticle.Import(Misc.ContentBase);
 
             return loader;

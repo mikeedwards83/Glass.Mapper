@@ -10,12 +10,8 @@ namespace Glass.Mapper.Sites.Sc.Models.Config
         {
             get
             {
-                var contentBase = new SitecoreType<ContentBase>();
-
-                contentBase.Id(x => x.Id);
+                var contentBase = new SitecoreType<ContentBase>().AutoMap();
                 contentBase.Field(x => x.Title).FieldName("Page Title");
-                contentBase.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
-
                 return contentBase;
             }
 

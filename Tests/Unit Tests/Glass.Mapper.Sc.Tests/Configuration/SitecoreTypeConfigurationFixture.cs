@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
     {
         #region AutoMapProperty
 
-        
+
         [Test]
         public void AutoMapProperty_MappingSitecoreInfo_ReturnsInfoConfig()
         {
@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
         {
             //Assign
             var typeConfig = new StubSitecoreTypeConfiguration();
-            typeConfig.Type = typeof(StubClass);
+            typeConfig.Type = typeof (StubClass);
 
             var prop = typeConfig.Type.GetProperty("Children");
 
@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
         {
             //Assign
             var typeConfig = new StubSitecoreTypeConfiguration();
-            typeConfig.Type = typeof(StubClass);
+            typeConfig.Type = typeof (StubClass);
 
             var prop = typeConfig.Type.GetProperty("Parent");
 
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
         {
             //Assign
             var typeConfig = new StubSitecoreTypeConfiguration();
-            typeConfig.Type = typeof(StubClass);
+            typeConfig.Type = typeof (StubClass);
 
             var prop = typeConfig.Type.GetProperty("FieldName");
 
@@ -83,6 +83,44 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             Assert.AreEqual(prop, propConfig.PropertyInfo);
             Assert.AreEqual("FieldName", propConfig.CastTo<SitecoreFieldConfiguration>().FieldName);
         }
+
+        [Test]
+        public void AutoMapProperty_MappingSitecoreId_ReturnsIdConfig()
+        {
+            //Assign
+            var typeConfig = new StubSitecoreTypeConfiguration();
+            typeConfig.Type = typeof (StubClass);
+
+            var prop = typeConfig.Type.GetProperty("Id");
+
+            //Act
+            var propConfig = typeConfig.StubAutoMapProperty(prop);
+
+            //Assert
+            Assert.IsTrue(propConfig is SitecoreIdConfiguration);
+            Assert.AreEqual(prop, propConfig.PropertyInfo);
+        }
+
+        #endregion
+
+        #region AutoMapProperties
+
+        [Test]
+        public void AutoMapProperties_MapsAllPropertiesToConfiguration()
+        {
+            //Assign
+            var typeConfig = new StubSitecoreTypeConfiguration();
+            typeConfig.Type = typeof(StubClass);
+
+            //Act
+            typeConfig.AutoMapProperties();
+
+            //Assert
+            Assert.AreEqual(5, typeConfig.Properties.Count());
+            Assert.IsNotNull(typeConfig.IdConfig);
+            
+        }
+    
 
         #endregion
         #region Stubs
@@ -97,12 +135,17 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             
         }
 
-        public class StubClass
+        public class StubClass:StubClassBase
         {
             public string Name { get; set; }
             public string Parent { get; set; }
             public string Children { get; set; }
             public string FieldName { get; set; }
+        }
+        public class StubClassBase
+        {
+            public virtual string Id { get; set; }
+            
         }
 
         #endregion
