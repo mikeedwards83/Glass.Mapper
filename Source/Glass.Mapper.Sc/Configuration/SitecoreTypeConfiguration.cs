@@ -59,6 +59,7 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         /// <value>The version config.</value>
         public SitecoreInfoConfiguration VersionConfig { get; set; }
+
         /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
@@ -152,6 +153,38 @@ namespace Glass.Mapper.Sc.Configuration
             {
                 return database.GetItem(id);
             }
+        }
+
+        protected override AbstractPropertyConfiguration AutoMapProperty(System.Reflection.PropertyInfo property)
+        {
+            string name = property.Name;
+            SitecoreInfoType infoType;
+
+            if (name.ToLowerInvariant() == "parent")
+            {
+                SitecoreParentConfiguration parentConfig = new SitecoreParentConfiguration();
+                parentConfig.PropertyInfo = property;
+                return parentConfig;
+            }
+            if (name.ToLowerInvariant() == "children")
+            {
+                SitecoreChildrenConfiguration childrenConfig = new SitecoreChildrenConfiguration();
+                childrenConfig.PropertyInfo = property;
+                return childrenConfig;
+            }
+
+            if (Enum.TryParse(name, true, out infoType))
+            {
+                SitecoreInfoConfiguration infoConfig = new SitecoreInfoConfiguration();
+                infoConfig.PropertyInfo = property;
+                infoConfig.Type = infoType;
+                return infoConfig;
+            }
+
+            SitecoreFieldConfiguration fieldConfig = new SitecoreFieldConfiguration();
+            fieldConfig.FieldName = name;
+            fieldConfig.PropertyInfo = property;
+            return fieldConfig;
         }
     }
 }

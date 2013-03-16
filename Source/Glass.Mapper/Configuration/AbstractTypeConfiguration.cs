@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Glass.Mapper.Configuration.Attributes;
+using System.Linq;
 
 namespace Glass.Mapper.Configuration
 {
@@ -50,6 +50,11 @@ namespace Glass.Mapper.Configuration
         /// <value>The constructor methods.</value>
         public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
 
+        /// <summary>
+        /// Indicates properties should be automatically mapped
+        /// </summary>
+        public bool AutoMap { get; set; }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.
@@ -67,7 +72,8 @@ namespace Glass.Mapper.Configuration
         /// <param name="property">The property.</param>
         public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
-            _properties.Add(property);
+            if(property != null)
+                _properties.Add(property);
         }
 
 
@@ -88,7 +94,34 @@ namespace Glass.Mapper.Configuration
             }
         }
 
+        /// <summary>
+        /// Called when the AutoMap property is true. Automatically maps un-specified properties.
+        /// </summary>
+        public void AutoMapProperties()
+        {
+            //TODO: ME - probably need some binding flags.
+            var properties = Type.GetProperties();
 
+            foreach (var property in properties)
+            {
+                if (Properties.All(x => x.PropertyInfo != property))
+                {
+                    var propConfig = AutoMapProperty(property);
+                    if(propConfig != null)
+                        AddProperty(propConfig);
+                }
+            }
+
+        }
+        /// <summary>
+        /// Called to map each property automatically
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        protected virtual AbstractPropertyConfiguration AutoMapProperty(PropertyInfo property)
+        {
+            return null;
+        }
     }
 }
 
