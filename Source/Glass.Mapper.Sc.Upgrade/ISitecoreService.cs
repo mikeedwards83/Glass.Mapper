@@ -7,7 +7,9 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 
-namespace Glass.Mapper.Sc.Upgrade
+//The namespace is kept the same as the original
+namespace Glass.Sitecore.Mapper
+
 {
     public interface ISitecoreService : Glass.Mapper.Sc.ISitecoreService
     {

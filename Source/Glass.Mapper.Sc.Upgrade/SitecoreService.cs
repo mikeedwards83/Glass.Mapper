@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Upgrade
+//The namespace is kept the same as the original
+namespace Glass.Sitecore.Mapper
 {
     /// <summary>
     /// This is class is the upgrade class for Glass.Sitecore.Mapper.SitecoreService
