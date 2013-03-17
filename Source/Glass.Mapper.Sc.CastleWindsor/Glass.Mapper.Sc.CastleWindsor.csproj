@@ -52,6 +52,8 @@
   <ItemGroup>
     <None Include="App_Start\GlassMapper.cs.pp" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreInstaller.cs" />
     <None Include="packages.config" />
