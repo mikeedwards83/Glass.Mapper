@@ -76,6 +76,11 @@
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.items.png" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.webpage.png" />
     <Content Include="docs\tutorial\sitecore\tutorial08\tutorial08.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.itemspostsort.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.itemspresort.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.sortitem.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.subitemsortingfield.PNG" />
     <Content Include="trello.html" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.editing.png" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.ascx" />
@@ -92,6 +97,7 @@
     <Compile Include="docs\tutorial\sitecore\tutorial07\tutorial07.newslanding.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial08\tutorial08.global.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial08\tutorial08.event.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial09\tutorial09.sortorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
   </ItemGroup>
