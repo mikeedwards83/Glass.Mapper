@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Start\GlassMapper.cs.pp" />
+    <None Include="App_Start\GlassMapperSc.cs.pp" />
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Config.cs" />
