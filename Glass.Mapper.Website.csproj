@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\concepts\example-fluent-1.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial01\tutorial01.app_start.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.ascx.cs">
       <DependentUpon>tutorial02.homepage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -72,6 +73,8 @@
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepageconfig.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticleconfig.cs" />
+    <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.html" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.items.png" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.webpage.png" />
