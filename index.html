@@ -66,10 +66,11 @@ title: Welcome
                         <div href="#" class="thumbnail">
                             <img src="{{post.image}}" alt="{{post.title}}">
                             <div class="caption">
-                                <h3>{{post.title}}</h3>
                                 <p class="pull-right">
                                     <strong><small>Date: {{ post.date | date_to_string }} </small></strong>
                                 </p>
+                                <h3>{{post.title}}</h3>
+                                
                                 <p>
                                     {{post.abstract}}
                                 </p>
