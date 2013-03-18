@@ -1,0 +1,93 @@
+---
+layout: MainLayout
+title: Auto-Mapping
+image: /Glass.Mapper/_posts/2013-03-18-Image.PNG
+abstract: One of the new features go Glass V3 is it's ability to auto map properties.
+---
+
+<div class="page-header">
+    <h1>Auto-Mapping <small>18 March 2013</small></h1>
+</div>
+
+<p class="lead">
+    One of the exciting new features of Glass V3 is the ability to auto map properties.
+</p>
+<p>
+    One of the original complaints of previous versions of Glass was the amount of code need to configure it. Well in this version we have 
+    created the ability to automatically map properties. I use the Sitecore version as an example but we will have the same in Umbraco.
+</p>
+<p>
+    To activate auto-mapping for attributes you just need to set the AutoMap property to true on SitecoreType attribute:
+</p>
+<pre class="cs" ref="gh-pages">
+    [SitecoreType(AutoMap =  true)]
+    public class HomePage
+    {
+        public virtual string Title { get; set; }
+        public virtual string MainBody { get; set; }
+    }
+</pre>
+<p>
+    Or if you are using fluent configuration:
+</p>
+<pre class="cs" ref="gh-pages">
+    var homePage = loader.Add<HomePage>().AutoMap();
+</pre>
+<p>
+    It is that simple!
+</p>
+<p>
+    So how does it map? Most properties will automatically be mapped to a corresponding field name, so in our homepage class the property
+    "Title" will be mapped to a Title field. However we also map special property names to specific metadata or relationships, in our extended
+    homepage class below we map the following piece of data:
+</p>
+<ul>
+    <li>Id - mapped to the items ID</li>
+    <li>Parent - mapped to the items parent</li>
+    <li>Children - maps to the items children</li>
+    <li>Url - maps to the items Url</li>
+    <li>DisplayName - maps to the items display name</li>
+</ul>
+<pre class="cs" ref="gh-pages">
+    [SitecoreType(AutoMap =  true)]
+    public class HomePage
+    {
+        public virtual string Title { get; set; }
+        public virtual string MainBody { get; set; }
+    
+        public virtual Guid Id { get; set; }
+        public virtual ContentPage Parent { get; set; }
+        public virtual IEnumerable&lt;ContentPage&gt; Children { get; set; }
+        public virtual string Url { get; set; }
+        public virtual string DisplayName { get; set; }
+    }
+</pre>
+<p>
+    All the properties defined in the SitecoreInfoType are supported as auto-mapped properties.
+</p>
+<p>
+    You can also mix and match those elements that are auto-mapped and those that aren't. For example if I have an item where
+    most of the fields match the properties but one field name has a space in it I can just specify the exception:
+</p>
+<pre class="cs" ref="gh-pages">
+    [SitecoreType(AutoMap =  true)]
+    public class Product
+    {
+        public virtual string Title { get; set; }
+        public virtual string Description { get; set; }
+        
+        [SitecoreField("Product Cost")
+        public virtual string Cost { get; set; }
+    }
+</pre>
+
+<p>
+    I think this is an exciting enhancement to Glass and should make development of Glass solutions much quicker.
+</p>
+<p>
+    Glass V3 isn't out just yet, we are just going through our last bit of testing before we make available for beta.
+</p>
+
+<p class="muted">
+    Mike -<a href="https://twitter.com/mikeedwards83">@mikeedwards83</a> 
+</p>
