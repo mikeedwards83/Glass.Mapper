@@ -2,6 +2,7 @@
 
 namespace Glass.Mapper.Sites.Sc.Models.Misc
 {
+    [SitecoreType(AutoMap=true)]
     public class MenuItem
     {
         public virtual string Title { get; set; }

@@ -24,17 +24,10 @@ title: Tutorial 3 - Item information and making links
     Notice that for the list of child items we are using the MenuItem class, this will allow us to recursively descend down the 
     tree if we need to.
 </p>
-<p>Again we need to create the configuration for this:</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial03/tutorial03.config.cs" ref="gh-pages"></pre>
 <p>
-    Notice that in this configuration we use the Info method to get the Url and Children method to instruct Glass.Mapper to 
-    load child items into the Children property. When referencing children you should ensure the property use the generic
-    IEnumerable type.
+    In this model we have used two special property names Url and Children, when auto-mapping Glass.Mapper will populate the Url property
+    with the Url of the item and the Children property with the Children of the item.
 </p>
-<p>
-    We need to update our Global.asax file to now load our new configuration:
-</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial03/tutorial03.global.cs" ref="gh-pages"></pre>
 <p>
     Our code behind is similar to the homepage sublayout but instead of getting the current item we get home item:
 </p>

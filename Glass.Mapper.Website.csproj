@@ -66,8 +66,6 @@
       <DependentUpon>tutorial02.homepage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.config.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.global.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.menuitem.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepage.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepageconfig.cs" />
