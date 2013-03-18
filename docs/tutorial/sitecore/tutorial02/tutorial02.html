@@ -23,24 +23,18 @@ title: Tutorial 2 - Creating a simple Home page
     later but it shouldn't affect your code.
 </p>
 <p>
-    For this demo we are going to use the fluent configuration however if you prefer you can use attribute configuration. 
-    The code below shows how you can configure the two fields, by default Glass.Mapper will use the name of the property as
-    the field name, however if for some reason the property name is different to the field name you can specify the field name 
-    to use.
+    For this demo we are going to use the attribute configuration however if you prefer you can use fluent configuration (we will 
+    look at this later). The code below shows how you can configure the two fields, we have set the class to AutoMap. AutoMapping
+    will treat every property as a field or item metadata (e.g. if you have property called Url it will be populated with the items URL).
+    To use AutoMapping you field name must match the name of your property.
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.config.cs" ref="gh-pages"></pre>
 <p>
-    Now we have configuration need to tell Glass.Mapper to load it, we do this in the Application_Start method of the Global.asax
-    page.
+    That is all we need to do to map our homepage model.
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.global.cs" ref="gh-pages"></pre>
+/p>
 <p>
-    The first line creates a new Glass.Mapper context and we pass it a configuration file. Don't worry about the config file for 
-    now, the default one will work for us at the moment. The next line makes Glass.Mapper load our homepage.
-
-</p>
-<p>
-    Now that we have everything configured for Glass.Mapper we can turn our attention to the home page sublayout. In the code 
+    Now that we have our model we can turn our attention to the home page sublayout. In the code 
     behind we place the following code:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.ascx.cs" ref="gh-pages"></pre>
