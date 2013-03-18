@@ -13,8 +13,8 @@ abstract: One of the new features go Glass V3 is it's ability to auto map proper
     One of the exciting new features of Glass V3 is the ability to auto map properties.
 </p>
 <p>
-    One of the original complaints of previous versions of Glass was the amount of code need to configure it. Well in this version we have 
-    created the ability to automatically map properties. I use the Sitecore version as an example but we will have the same in Umbraco.
+    One of the original complaints of previous versions of Glass was the amount of code needed to configure it. Well in this version we have 
+    created the ability to automatically map properties. I have used the Sitecore version as an example but we will have the same in Umbraco.
 </p>
 <p>
     To activate auto-mapping for attributes you just need to set the AutoMap property to true on SitecoreType attribute:
@@ -42,11 +42,11 @@ abstract: One of the new features go Glass V3 is it's ability to auto map proper
     homepage class below we map the following piece of data:
 </p>
 <ul>
-    <li>Id - mapped to the items ID</li>
-    <li>Parent - mapped to the items parent</li>
-    <li>Children - maps to the items children</li>
-    <li>Url - maps to the items Url</li>
-    <li>DisplayName - maps to the items display name</li>
+    <li>Id - mapped to the item's ID</li>
+    <li>Parent - mapped to the item's parent</li>
+    <li>Children - maps to the item's children</li>
+    <li>Url - maps to the item's Url</li>
+    <li>DisplayName - maps to the item's display name</li>
 </ul>
 <pre class="cs" ref="gh-pages">
     [SitecoreType(AutoMap =  true)]
@@ -63,7 +63,7 @@ abstract: One of the new features go Glass V3 is it's ability to auto map proper
     }
 </pre>
 <p>
-    All the properties defined in the SitecoreInfoType are supported as auto-mapped properties.
+    All the properties defined in the SitecoreInfoType enum are supported as auto-mapped properties.
 </p>
 <p>
     You can also mix and match those elements that are auto-mapped and those that aren't. For example if I have an item where

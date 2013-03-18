@@ -104,6 +104,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />
+    <Content Include="images\blog\2013-03-18-Image.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
