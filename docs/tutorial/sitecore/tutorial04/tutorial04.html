@@ -27,15 +27,14 @@ title: Tutorial 4 - Complex field types
     <li>Main Body - Rich Text</li>
 </ul>
 <p>
-    The model for out News Article looks like this:
+    The model for out News Article looks like this, I have added an attribute to every property to show you how the code
+    will look if you don't use auto-mapping:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.newsarticle.cs" ref="gh-pages"></pre>
 <p>
     Notice that for the FeaturedImage field we use the a special Glass.Mapper type <strong>Glass.Mapper.Sc.Fields.Image</strong>. There 
     are variety of different field types for handling the more complex field types in the <strong>Glass.Mapper.Sc.Fields</strong> namespace.
 </p>
-<p>The configuration for the news article is straight forward:</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.newsarticleconfig.cs" ref="gh-pages"></pre>
 <p>
     We now need to update the home page to have the additional featured news field:
 </p>
@@ -45,12 +44,7 @@ title: Tutorial 4 - Complex field types
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepage.cs" ref="gh-pages"></pre>
 <p>
-    Finally we have to update our config to map the new field:
-</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepageconfig.cs" ref="gh-pages"></pre>
-<p>
-    Notice that to map a tree list we just made a property that contains the type we want to load the target items as
-    and simply update the configuration.
+    Notice that to map a tree list we just made a property that contains the type we want to load the target items.
 </p>
 <p>All that remains to be done is updating the ASCX page to render out the selected news articles:</p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial04/tutorial04.homepage.ascx" ref="gh-pages"></pre>
