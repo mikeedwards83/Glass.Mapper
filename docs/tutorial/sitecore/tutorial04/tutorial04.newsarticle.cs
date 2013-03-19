@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Content
         [SitecoreField]
         public virtual DateTime Date { get; set; }
 
-        [SitecoreInfo(SitecoreInfoType.Url)
+        [SitecoreInfo(SitecoreInfoType.Url)]
         public virtual string Url { get; set; }
     }
 }
