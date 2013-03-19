@@ -18,25 +18,17 @@ title: Tutorial 6 - Using inheritance
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.contentbase.cs" ref="gh-pages"></pre>
 <p>
-    We slightly change how we define the configuration for this class, instead we create a static property that will return
-    the configuration, the reason for this will be come clear further down:
-</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.contentbase.config.cs" ref="gh-pages"></pre>
-<p>
     Now that we have the base type defined we can update the NewsArticle class to inherit from it, and remove the properties 
     that now exist on the base type:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.newsarticle.cs" ref="gh-pages"></pre>
 <p>
-    We then update the NewsArticle configuration to import the ContentBase configuration by referencing the static property we
-    wrote earlier:
-</p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.newsarticle.config.cs" ref="gh-pages"></pre>
-<p>
     Notice that we have now simplified the NewsArticle configuration so that it only defines the properties that exist on the
     NewsArticle class itself.
 </p>
-
+<p>
+    We can also update the HomePage class to inherit from the ContentBase as well.
+</p>
 <p>
     This completes the this tutorial, we have seen how we can restructure our code to use inheritance and setup the configuration 
     to import the different types.
