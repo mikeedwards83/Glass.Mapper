@@ -2,11 +2,12 @@
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Glass.Mapper.Sites.Sc.App_Start.GlassMapperSc), "Start")]
+
 namespace Glass.Mapper.Sites.Sc.App_Start
 {
-    public static class GlassMapper
+    public static class GlassMapperSc
     {
-        [assembly: WebActivator.PreApplicationStartMethod(typeof(Glass.Mapper.Sites.Sc.App_Start.GlassMapper), "Start")]
         public static void Start()
         {
             //create the resolver
