@@ -2,9 +2,9 @@
 version: 1
 id: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
 database: master
-path: /sitecore/templates/Site/Base/Titles/Titles/Page Title
+path: /sitecore/templates/Site/Base/Titles/Titles/Title
 parent: {FD6993FB-D19D-46BF-A0F1-FD96F896FBEB}
-name: Page Title
+name: Title
 master: {00000000-0000-0000-0000-000000000000}
 template: {455A3E98-A627-4B40-8035-E683A0331AC7}
 templatekey: Template field
@@ -26,7 +26,7 @@ content-length: 2
 ----version----
 language: en
 version: 1
-revision: 85630ad5-e420-4f58-be95-4bb00bbf0f85
+revision: 9afcf400-f582-4cbc-9c58-e14d19f2107d
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -55,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-85630ad5-e420-4f58-be95-4bb00bbf0f85
+9afcf400-f582-4cbc-9c58-e14d19f2107d
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130218T072627:634967691878229009
+20130318T222936:634992425769138892
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
