@@ -1,33 +1,36 @@
 ---
 layout: DocsLayout
-title: Tutorial 8 - Attribute configuration
+title: Tutorial 8 - Fluent configuration
 ---
 
 <div class="page-header">
-    <h1>Tutorial 8 - Attribute configuration<small> </small></h1>
+    <h1>Tutorial 8 - Fluent configuration<small> </small></h1>
 </div>
 <p>
-    In this tutorial we will look at how we can use attribute configuration. So far in the tutorials we have used fluent configuration
-    but this isn't for everyone.
+    In this tutorial we will look at how we can use fluent configuration. So far in the tutorials we have used attribute configuration
+    but this isn't for everyone. Fluent configuration allows you to separate your configuration from the models you are using in you
+    code. This is useful if are creating business logic that works across different CMS solutions.
 </p>
 <p>
-    For this demo we will be creating the events area of our website.
-</p>
-<p>
-    Our event model is shown below, every class that you want to use with attribute configuration must have the SitecoreTypeAttribute defined
-    on the class. There is an attribute that pairs with the fleunt methods, everything you can do with fluent configuration you can do 
-    with attribute configuration, it is just a choice of style. 
+    For this tutorial we will be creating the events area of our website. The model for our events page is shown below, notice that
+    it doesn't contain any attributes:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial08/tutorial08.event.cs" ref="gh-pages"></pre>
 <p>
-    Now we have our configured class we need to tell Glass.Mapper to load the configuration, this is done using the SitecoreAttributeConfigurationLoader 
-    and updating our Application_Start method in the Global class. The loader takes a list of assemblies to load types from, it will search 
-    through the assemblies you have listed and load any classes that have the SitecoreTypeAttribute:
+    We now define the configuration in a separate class shown below, everything you can do with attribute configuration you can do 
+    with fluent configuration, it is just a matter of style. The example code below shows how to use auto mapping as well 
+    as how to map individual properties.
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial08/tutorial08.eventconfig.cs" ref="gh-pages"></pre>
+<p>
+    Now we have our configured class we need to tell Glass.Mapper to load the configuration, this is achieved
+    by updating the Start method in the App_Start.GlassMapperSc class. In the code below you can see that I have
+    added an extract call to our configuration class when calling the context.Load method:
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial08/tutorial08.global.cs" ref="gh-pages"></pre>
 <p>
-    After configuring your classes there isn't and different in how you use Glass.Mapper, navigate to GitHub to get the code
-    for the event sublayout and event landing page.
+    There is no different in how you can use your classes once you have mapped them with either fluent or attribute configuration.
+    Please visit GitHub to grab the code for the events landing page and the event page.
 </p>
 <p>
     <a href="../tutorial09/tutorial09.html">Tutorial 9 - Handling passed in items</a>
