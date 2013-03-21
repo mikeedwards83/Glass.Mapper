@@ -35,7 +35,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         protected virtual void GetModel()
         {
-            if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(typeof(T)))
+            if (typeof(T).IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
                 Model = SitecoreContext.GetDynamicItem(LayoutItem);
             else
                 Model = SitecoreContext.CreateType<T>(LayoutItem, IsLazy, InferType);
