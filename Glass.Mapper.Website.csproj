@@ -69,6 +69,7 @@
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.menuitem.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepage.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
+    <Content Include="docs\api\Glass.Mapper.Sc.Dynamic.DynamicItem.html" />
     <Content Include="docs\concepts\automapping.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
