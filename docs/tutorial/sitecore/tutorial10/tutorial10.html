@@ -1,0 +1,56 @@
+---
+layout: DocsLayout
+title: Tutorial 10 - Dynamic items
+---
+
+<div class="page-header">
+    <h1>Tutorial 10 - Dynamic items<small> </small></h1>
+</div>
+<p>
+    Sometimes you might not want to create a model, you might just want to render data out quickly. This is where the 
+    dynamic keyword support comes in. The dynamic support allows you to pull data directly from Sitecore without a model, 
+    the easier way to explain this is to see it in action.
+</p>
+<p>
+    I have created a new sublayout called Metadata which will be used to contain the data I want to rendering in the head
+    section of the page. The code behind for the sublayout uses the GlassUserControl but takes the keyword dynamic:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial10/tutorial10.metadata.ascx.cs" ref="gh-pages"></pre>
+<p>
+    My ascx markup looks like this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial10/tutorial10.metadata.ascx" ref="gh-pages"></pre>
+<p>
+    In the markup you can see we are pulling the items Title and the Updated fields. To render these fields in the background
+    they are sent through the FieldRender control, you don't have to worry about this but it does mean that Rich Text
+    fields will have links updated correctly.
+</p>
+<p>
+    Next we set the canonical Url by calling the Url property, you can actually get more metadata about an item than this
+    by using the enum values on the <a href="/Glass.Mapper/docs/api/Glass.Mapper.Sc.Configuration.SitecoreInfoType.html">Glass.Mapper.Sc.Configuration.SitecoreInfoType</a> type.
+</p>
+<p>
+    The dynamic item also supports navigating up and down the tree by using the Parent and Children properties. The Parent
+    property will return another dynamic type and the Children will return and IEnumerable&lt;dynamic&gt;. 
+</p>
+<p>
+    If we look at the source of our page we now get some metadata with minimal effort:
+</p>
+<pre class="xml">
+    &lt;title&gt;Events&lt;/title&gt;
+
+    &lt;metadata name="updated" content="03/03/2013 11:39:56" /&gt;
+
+    &lt;link rel="canonical" href="http://sitecore.glass.com/Events.aspx" /&gt;
+
+    &lt;link rel="prev" href="http://sitecore.glass.com/" /&gt;
+
+
+    &lt;link rel="next" href="http://sitecore.glass.com/Events/2013.aspx"/&gt;
+</pre>
+<p>
+    Dynamic items are great when you just want to get data our of Sitecore with minimal effort. 
+</p>
+<p>
+    <a href="../tutorial10/tutorial10.html">Tutorial 10 - Dynamic Items</a>
+</p>
