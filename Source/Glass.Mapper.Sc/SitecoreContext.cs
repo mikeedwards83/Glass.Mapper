@@ -115,6 +115,18 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The current item as the specified type</returns>
+        public dynamic GetCurrentDynamicItem()
+        {
+            return base.GetDynamicItem(global::Sitecore.Context.Item);
+        }
+
+        /// <summary>
+        /// Retrieves the current item as the specified type
+        /// </summary>
+        /// <param name="type">The type to return.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The current item as the specified type</returns>
         public object GetCurrentItem(Type type, bool isLazy = false, bool inferType = false)
         {
             return base.CreateType(type, global::Sitecore.Context.Item, isLazy, inferType);

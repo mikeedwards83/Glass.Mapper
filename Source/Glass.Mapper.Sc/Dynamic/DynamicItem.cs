@@ -79,6 +79,12 @@ namespace Glass.Mapper.Sc.Dynamic
 
             string name = binder.Name;
 
+            if (name == "Id")
+            {
+                result = _item.ID;
+                return true;
+            }
+
 
             if (_item.Fields[name] != null)
             {
