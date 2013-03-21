@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.29\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.31\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.29\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.31\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.29\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.31\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -234,6 +234,7 @@
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\Landing\NewsLandingSublayout.ascx" />
     <Content Include="layouts\Site\MainLayout.aspx" />
+    <Content Include="layouts\Site\Misc\Metadata.ascx" />
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
@@ -298,6 +299,13 @@
     </Compile>
     <Compile Include="layouts\Site\Landing\NewsLandingSublayout.ascx.designer.cs">
       <DependentUpon>NewsLandingSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\Metadata.ascx.cs">
+      <DependentUpon>Metadata.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\Metadata.ascx.designer.cs">
+      <DependentUpon>Metadata.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.cs">
       <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
