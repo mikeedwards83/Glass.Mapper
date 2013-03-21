@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Linq.Expressions;
 using Glass.Mapper.Sc.RenderField;
 
@@ -17,6 +18,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The model.</value>
         public T Model { get; set; }
 
+        public bool InferType { get; set; }
+
+        public bool IsLazy { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
         /// </summary>
@@ -27,13 +32,22 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         public GlassUserControl() : base() { }
 
+
+        protected virtual void GetModel()
+        {
+            if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(typeof(T)))
+                Model = SitecoreContext.GetDynamicItem(LayoutItem);
+            else
+                Model = SitecoreContext.CreateType<T>(LayoutItem, IsLazy, InferType);
+        }
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load" /> event.
         /// </summary>
         /// <param name="e">The <see cref="T:System.EventArgs" /> object that contains the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
-            Model = SitecoreContext.CreateType<T>(LayoutItem, false, false);
+            GetModel();
             base.OnLoad(e);
         }
 
