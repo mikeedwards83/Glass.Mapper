@@ -29,6 +29,12 @@ title: Auto-mapping
 <pre class="cs" ref="gh-pages">
     var homePage = loader.Add&lt;HomePage&gt;().AutoMap();
 </pre>
+
+<p>
+    Auto-mapping does put some limitations on you field names because your field name need to be valid in C#, however if 
+    for some reason your field name can't be valid in C# you can add a custom mapping for the field as detailed further down.    
+</p>
+
 <p>
     By default the auto-mapping will treat a property as a field unless it has a particular name detailed in the table below: 
 </p>
@@ -50,6 +56,7 @@ title: Auto-mapping
         <td>Maps the items children.</td>
     </tr>
 </table>
+
 <p>
     The auto-mapper will automatically map the properties that match the enum values on the following types:
 </p>
@@ -70,4 +77,24 @@ title: Auto-mapping
     }
 </pre>
 
+<p>
+    Auto-mapping allows you to mix statically mapped and properties with the auto-mapped properties, see the example below:
+</p>
+<pre class="cs" ref="gh-pages">
+    [SitecoreType(AutoMap =  true)]
+    public class HomePage
+    {
+        public virtual string Title { get; set; }
+        public virtual string MainBody { get; set; }
+        
+        [SitecoreQuery("/sitecore/content/home/news/*")]
+        public virtual IEnumerable&lt;News&gt; { get; set; }
+    
+        [SitecoreField("Featured Image")]
+        public virtual Image FeaturedImage { get; set; }
+    }
+</pre>
 
+<p>
+    Auto-mapping is a great way to get a model quickly created with the minimal amount of code.
+</p>

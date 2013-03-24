@@ -1,0 +1,49 @@
+---
+layout: MainLayout
+title: OnDemand Mapping
+image: /Glass.Mapper/images/blog/2013-03-18-Image.PNG
+abstract: One of the new features go Glass V3 is it's ability to auto map properties.
+---
+
+<div class="page-header">
+    <h1>OnDemand Mapping<small>24 March 2013</small></h1>
+</div>
+
+<p>
+    Last week I showed you how you could reduce the amount of code you would need to write with 
+    <a href="http://mikeedwards83.github.com/Glass.Mapper/2013/03/18/AutoMapping.html">Auto-Mapping</a>, however what if you 
+    want to write event less configuration? How about not having to write any?
+</p>
+<p>
+    Look at our example HomePage class below, notice that is is a pure C# object with absolutely no configuration!  
+</p>
+
+<pre class="cs" ref="gh-pages">
+    public class HomePage
+    {
+        public virtual string Title { get; set; }
+        public virtual string MainBody { get; set; }
+        public virtual string Url{ get; set;}
+    }
+</pre>
+
+<p>
+    With this class we can now request data from the CMS:
+</p>
+
+<pre class="cs" ref="gh-pages">
+    var homePage = sitecoreContext.GetCurrentItem&lt;HomePage&gt;();
+</pre>
+
+<p>
+    The configuration for the classes is created the first time your request the class, afterwards the configuration is cached 
+    to improve performance.
+</p>
+<p>
+    You will need stick to the same rules defined by <a href="/Glass.Mapper/docs/concepts/automapping.html"> auto-mapping</a>, 
+    and you can't use any static mapping.
+</p>
+
+<p class="muted">
+    Mike -<a href="https://twitter.com/mikeedwards83">@mikeedwards83</a> 
+</p>
