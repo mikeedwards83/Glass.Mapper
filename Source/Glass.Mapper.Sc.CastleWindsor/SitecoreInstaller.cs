@@ -20,6 +20,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
@@ -29,6 +30,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
@@ -232,6 +234,15 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .ImplementedBy<ConfigurationStandardResolverTask>()
                          .LifestyleTransient()
                 );
+
+            if (Config.OnDemandMapping)
+            {
+                container.Register(
+                    Component.For<IConfigurationResolverTask>()
+                             .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
+                             .LifestyleTransient()
+                    );
+            }
         }
     }
 

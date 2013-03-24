@@ -27,15 +27,25 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DependencyResolver : IDependencyResolver
     {
+
+        /// <summary>
+        /// Creates the standard resolver.
+        /// </summary>
+        /// <returns>IDependencyResolver.</returns>
+        public static IDependencyResolver CreateStandardResolver(Config config)
+        {
+            IWindsorContainer container = new WindsorContainer();
+            container.Install(new SitecoreInstaller(config));
+            return new DependencyResolver(container);
+        }
+
         /// <summary>
         /// Creates the standard resolver.
         /// </summary>
         /// <returns>IDependencyResolver.</returns>
         public static IDependencyResolver CreateStandardResolver()
         {
-            IWindsorContainer container=  new WindsorContainer();
-            container.Install(new SitecoreInstaller());
-            return new DependencyResolver(container);
+            return CreateStandardResolver(new Config());
         }
 
         /// <summary>

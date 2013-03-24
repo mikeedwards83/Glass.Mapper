@@ -27,6 +27,7 @@
 .\Debug\layouts\Site\MainLayout.aspx
 .\Debug\layouts\Site\Misc\Metadata.ascx
 .\Debug\layouts\Site\Misc\TopNavigationSublayout.ascx
+.\Debug\layouts\Testing\AdvancedDynamics.ascx
 .\Debug\sitecore_files\Web.config
 .\Debug\Web.config
 .\Debug\layouts\Testing\D2.cshtml

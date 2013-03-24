@@ -236,6 +236,7 @@
     <Content Include="layouts\Site\MainLayout.aspx" />
     <Content Include="layouts\Site\Misc\Metadata.ascx" />
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
+    <Content Include="layouts\Testing\AdvancedDynamics.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
     <Content Include="layouts\Testing\D2.cshtml" />
@@ -313,6 +314,13 @@
     </Compile>
     <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.designer.cs">
       <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Testing\AdvancedDynamics.ascx.cs">
+      <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Testing\AdvancedDynamics.ascx.designer.cs">
+      <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
     <Compile Include="Models\Config\ContentConfig.cs" />
