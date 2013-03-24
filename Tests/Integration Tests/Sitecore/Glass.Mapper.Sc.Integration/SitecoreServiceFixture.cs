@@ -1288,9 +1288,7 @@ namespace Glass.Mapper.Sc.Integration
                 item["DateField"] = date.ToString("yyyyMMddThhmmss");
             }
 
-            var config = new Config() {OnDemandMapping = true};
-
-            var context = Context.Create(DependencyResolver.CreateStandardResolver(config));
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var service = new SitecoreService(db, context); 
 
             //Act

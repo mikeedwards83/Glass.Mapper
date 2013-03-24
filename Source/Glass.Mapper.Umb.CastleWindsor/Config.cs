@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Glass.Mapper.Sc.CastleWindsor
+﻿namespace Glass.Mapper.Umb.CastleWindsor
 {
     public class Config
     {
@@ -16,8 +11,5 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         public bool UseWindsorContructor { get; set; }
 
-        /// <summary>
-        /// If set to true classes with no mapping can be loaded by Glass.Mapper
-        /// </summary>
     }
 }

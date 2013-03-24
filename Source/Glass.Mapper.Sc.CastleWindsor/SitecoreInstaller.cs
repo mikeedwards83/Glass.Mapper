@@ -235,14 +235,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .LifestyleTransient()
                 );
 
-            if (Config.OnDemandMapping)
-            {
-                container.Register(
-                    Component.For<IConfigurationResolverTask>()
-                             .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
-                             .LifestyleTransient()
-                    );
-            }
+            container.Register(
+                Component.For<IConfigurationResolverTask>()
+                         .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
+                         .LifestyleTransient()
+                );
         }
     }
 
