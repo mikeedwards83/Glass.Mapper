@@ -1,0 +1,58 @@
+---
+layout: DocsLayout
+title: Download
+---
+<div class="page-header">
+    <h1>Download <small>- Where can you get it?</small></h1>
+</div>
+
+<h2>Stable</h2>
+<p>
+    Stable releases of Glass.Mapper will be available from Nuget.org. At the moment we are in the final stages
+    of beta testing the different parts of Glass.Mapper,in the mean time you can download pre-releases from
+    our own build server. 
+</p>
+<h2>Pre-Releases</h2>
+<p>
+    You can download the pre-releases of Glass.Mapper from our own build server by setting up a custom
+    package source for Nuget in Visual Studio:
+</p>
+<p>
+    <strong>http://build.glass.oss.eduservlab.net/guestAuth/app/nuget/v1/FeedService.svc/</strong>
+</p>
+<p>
+    Pre-release versions are build every night by our nightly build assuming we have changed some code in the source.
+</p>
+<p>
+    Our build server has been kindly hosted by <a href="http://www.eduserv.org.uk">Eduserv</a>.
+</p>
+<h3>How to setup a package source</h3>
+<p>
+    The following instructions will show you how you can setup a package source for Nuget in Visual Studio.
+</p>
+<ol>
+    <li>Open Visual Studio</li>
+    <li>Click on the Tools menu</li>
+    <li>Click the Library Package Manager sub-menu</li>
+    <li>Click the Package Manager Settings Options.</li>
+    <li>You should now see the Options window and it should be open at Package Managers/General</li>
+    <li>Select the next option down Package Sources. You should see on the right hand side under Available Package 
+        Sources the Nuget Official package source.</li>
+    <li>Click the plus symbol in the top right of the screen, this should add a package source.</li>
+    <li>Select the new source and in the Name box at the bottom of the window enter Glass Build Server.</li>
+    <li>Copy the URL above into the Source box.</li>
+    <li>Click the Update button.</li>
+    <li>Click Ok to close the Options window.</li>
+</ol>
+<p>
+    Now that you have setup Nuget to use the Glass Build Server as a second package source you should see it appear in the
+    Nuget Package Manager. Within your project open the Package Manager screen and you should see the Glass Build Server
+    listed under Online:
+</p>
+<img src="/Glass.Mapper/images/Nuget-SourcesList.PNG"/>
+<p>
+    When searching for Pre-Release versions of Glass.Mapper you need to ensure you have selected Include Prerelease from the 
+    dropdown menus at the top of the Package Manager window:
+</p>
+<img src="/Glass.Mapper/images/Nuget-Prerelease.PNG"/>
+

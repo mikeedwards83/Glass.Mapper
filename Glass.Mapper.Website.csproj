@@ -71,6 +71,7 @@
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
     <Content Include="docs\api\Glass.Mapper.Sc.Dynamic.DynamicItem.html" />
     <Content Include="docs\concepts\automapping.html" />
+    <Content Include="download.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
     <Content Include="docs\tutorial\sitecore\tutorial07\tutorial07.html" />
@@ -84,6 +85,8 @@
     <Content Include="docs\tutorial\sitecore\tutorial09\tutorial09.subitemsortingfield.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial10\tutorial10.html" />
     <Content Include="docs\tutorial\sitecore\tutorial10\tutorial10.metadata.ascx" />
+    <Content Include="images\Nuget-Prerelease.PNG" />
+    <Content Include="images\Nuget-SourcesList.PNG" />
     <Content Include="trello.html" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.editing.png" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.newsarticle.ascx" />
@@ -108,6 +111,8 @@
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />
     <Content Include="images\blog\2013-03-18-Image.PNG" />
+    <Content Include="_posts\2013-03-24-OnDemandMapping.html" />
+    <Content Include="_posts\2013-03-25-Prerelease.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
