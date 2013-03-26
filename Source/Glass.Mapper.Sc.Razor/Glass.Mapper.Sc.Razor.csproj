@@ -37,10 +37,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\Glass.Mapper.Sc\bin\Debug\Sitecore.Kernel.dll</HintPath>
+    <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
+    <Reference Include="Sitecore.Mvc, Version=1.0.4549.26863, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />

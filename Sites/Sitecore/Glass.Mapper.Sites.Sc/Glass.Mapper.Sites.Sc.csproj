@@ -43,12 +43,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\Castle.Windsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Glass.Mapper, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.31\lib\net40\Glass.Mapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.31\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+    </Reference>
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.31\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -63,6 +79,10 @@
       <HintPath>..\..\..\Depends\Sitecore\bin\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Mvp.Xml">
       <HintPath>..\..\..\Depends\Sitecore\bin\Mvp.Xml.dll</HintPath>
     </Reference>
@@ -157,6 +177,10 @@
     <Reference Include="Telerik.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\Telerik.Web.UI.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -210,12 +234,15 @@
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\Landing\NewsLandingSublayout.ascx" />
     <Content Include="layouts\Site\MainLayout.aspx" />
+    <Content Include="layouts\Site\Misc\Metadata.ascx" />
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
+    <Content Include="layouts\Testing\AdvancedDynamics.ascx" />
     <Content Include="sitecore_files\Web.config" />
     <Content Include="Web.config" />
     <Content Include="layouts\Testing\D2.cshtml" />
     <Content Include="layouts\Testing\T1.cshtml" />
     <Content Include="layouts\Testing\B1.cshtml" />
+    <Content Include="packages.config" />
     <None Include="Web.config.MVC" />
     <None Include="Web.config.Oracle" />
   </ItemGroup>
@@ -234,6 +261,7 @@
     <Content Include="xsl\system\WebEdit\Hidden Rendering.xslt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\GlassMapperSc.cs" />
     <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -273,6 +301,13 @@
     <Compile Include="layouts\Site\Landing\NewsLandingSublayout.ascx.designer.cs">
       <DependentUpon>NewsLandingSublayout.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\Site\Misc\Metadata.ascx.cs">
+      <DependentUpon>Metadata.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Misc\Metadata.ascx.designer.cs">
+      <DependentUpon>Metadata.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.cs">
       <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -280,10 +315,15 @@
     <Compile Include="layouts\Site\Misc\TopNavigationSublayout.ascx.designer.cs">
       <DependentUpon>TopNavigationSublayout.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\Testing\AdvancedDynamics.ascx.cs">
+      <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Testing\AdvancedDynamics.ascx.designer.cs">
+      <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
-    <Compile Include="Models\Config\Content.cs" />
-    <Compile Include="Models\Config\Landing.cs" />
-    <Compile Include="Models\Config\Misc.cs" />
+    <Compile Include="Models\Config\ContentConfig.cs" />
     <Compile Include="Models\Content\Event.cs" />
     <Compile Include="Models\Content\NewsArticle.cs" />
     <Compile Include="Models\Landing\EventsLanding.cs" />
@@ -293,21 +333,9 @@
     <Compile Include="Models\Misc\MenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}</Project>
-      <Name>Glass.Mapper.Sc.CastleWindsor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Razor\Glass.Mapper.Sc.Razor.csproj">
       <Project>{717c4adb-b71a-4dff-bec5-afd343776194}</Project>
       <Name>Glass.Mapper.Sc.Razor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
-      <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

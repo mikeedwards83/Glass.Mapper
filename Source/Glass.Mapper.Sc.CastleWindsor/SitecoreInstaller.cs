@@ -20,6 +20,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
@@ -28,6 +29,8 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
@@ -38,8 +41,16 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class SitecoreInstaller : IWindsorInstaller
     {
+        public Config Config { get; private set; }
 
+        public SitecoreInstaller():this(new Config())
+        {
+        }
 
+        public SitecoreInstaller(Config config)
+        {
+            Config = config;
+        }
 
 
         /// <summary>
@@ -51,12 +62,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
-                new DataMapperInstaller(),
-                new QueryParameterInstaller(),
-                new DataMapperTasksInstaller(),
-                new ConfigurationResolverTaskInstaller(),
-                new ObjectionConstructionTaskInstaller(),
-                new ObjectSavingTaskInstaller()
+                new DataMapperInstaller(Config),
+                new QueryParameterInstaller(Config),
+                new DataMapperTasksInstaller(Config),
+                new ConfigurationResolverTaskInstaller(Config),
+                new ObjectionConstructionTaskInstaller(Config),
+                new ObjectSavingTaskInstaller(Config)
                 );
         }
     }
@@ -67,6 +78,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
+        public Config Config { get; private set; }
+
+        public DataMapperInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -133,6 +151,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class QueryParameterInstaller : IWindsorInstaller
     {
+        public Config Config { get; private set; }
+
+        public QueryParameterInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -156,6 +181,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
+         public Config Config { get; private set; }
+
+        public DataMapperTasksInstaller(Config config)
+        {
+            Config = config;
+        }
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -177,6 +208,15 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
+
+         public Config Config { get; private set; }
+
+        public ConfigurationResolverTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -194,6 +234,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .ImplementedBy<ConfigurationStandardResolverTask>()
                          .LifestyleTransient()
                 );
+
+            container.Register(
+                Component.For<IConfigurationResolverTask>()
+                         .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
+                         .LifestyleTransient()
+                );
         }
     }
 
@@ -202,6 +248,15 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
+
+         public Config Config { get; private set; }
+
+        public ObjectionConstructionTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -209,6 +264,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            if (Config.UseWindsorContructor)
+            {
+                container.Register(
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleTransient() 
+                    );
+            }
+
             container.Register(
                 // Tasks are called in the order they are specified below.
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
@@ -222,6 +284,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+         public Config Config { get; private set; }
+
+        public ObjectSavingTaskInstaller(Config config)
+        {
+            Config = config;
+        }
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>

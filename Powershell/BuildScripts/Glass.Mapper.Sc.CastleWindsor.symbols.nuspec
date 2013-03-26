@@ -16,7 +16,7 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
-		<dependency id="WebActivator" version="1.0.0.0" />
+		<dependency id="WebActivatorEx" version="1.0.0.0" />
 	</dependencies>
   </metadata>
   <files>

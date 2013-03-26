@@ -2,11 +2,12 @@
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperSc), "Start")]
+
 namespace $rootnamespace$.App_Start
 {
-    public static class  GlassMapper
+    public static class  GlassMapperSc
     {
-        [assembly: WebActivator.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapper), "Start")]
         public static void Start()
         {
             //create the resolver
@@ -15,7 +16,7 @@ namespace $rootnamespace$.App_Start
             //create a context
             var context = Glass.Mapper.Context.Create(resolver);
 
-            var attributes = new UmbracoAttributeConfigurationLoader("$assemblyname$");
+            var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
 
             context.Load(              
                 attributes

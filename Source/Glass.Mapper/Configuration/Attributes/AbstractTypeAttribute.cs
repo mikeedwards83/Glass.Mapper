@@ -44,8 +44,13 @@ namespace Glass.Mapper.Configuration.Attributes
         {
             config.Type = type;
             config.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
-
+            config.AutoMap = AutoMap;
         }
+
+        /// <summary>
+        /// Indicates that properties should be automapped rather than loaded explicitly. 
+        /// </summary>
+        public bool AutoMap { get; set; }
     }
 }
 

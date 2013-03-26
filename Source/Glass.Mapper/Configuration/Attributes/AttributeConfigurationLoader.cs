@@ -194,26 +194,25 @@ namespace Glass.Mapper.Configuration.Attributes
                 var attr = GetPropertyAttribute(property);
 
                 //if we can't get a umbraco attribute from current property we search down the 
-                // inheritence chain to find the first declared attribute.
+                // inheritance chain to find the first declared attribute.
                 if (attr == null)
                 {
-	                if (property.DeclaringType != null)
-	                {
-		                var interfaces = property.DeclaringType.GetInterfaces();
+                    var interfaces = property.DeclaringType.GetInterfaces();
 
-		                //TODO: put a check in here to check that two interface don't implement an attribute
-		                foreach (var inter in interfaces)
-		                {
-			                var interProperty = inter.GetProperty(property.Name);
-			                if (interProperty != null)
-				                attr = GetPropertyAttribute(interProperty);
+                    //TODO: put a check in here to check that two interface don't implement an attribute
+                    foreach (var inter in interfaces)
+                    {
+                        var interProperty = inter.GetProperty(property.Name);
+                        if (interProperty != null)
+                            attr = GetPropertyAttribute(interProperty);
 
-			                if (attr != null) break;
-		                }
-	                }
+                        if (attr != null) break;
+                    }
                 }
-                else
-				{
+                
+                if (attr != null)
+                {
+                   
                     var config = attr.Configure(property);
                     return config;
                 }

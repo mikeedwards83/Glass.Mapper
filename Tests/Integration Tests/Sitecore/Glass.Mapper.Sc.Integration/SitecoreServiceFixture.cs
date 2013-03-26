@@ -781,7 +781,7 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var results =
-                service.CreateTypes(false, false, typeof (StubClass), () => new[] {result1, result2}) as
+                service.CreateTypes( typeof (StubClass), () => new[] {result1, result2}, false, false) as
                 IEnumerable<StubClass>;
 
             //Assert
@@ -807,7 +807,7 @@ namespace Glass.Mapper.Sc.Integration
 
             //Act
             var results =
-                service.CreateTypes(false, false, typeof(StubClass), () => new[] { result1, result2 }) as
+                service.CreateTypes(typeof(StubClass), () => new[] { result1, result2 }, false, false) as
                 IEnumerable<StubClass>;
 
             //Assert
@@ -1260,11 +1260,49 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
+
+        public class OnDemandMapping
+        {
+            public virtual string StringField { get; set; }
+            public virtual DateTime DateField { get; set; }
+        }
        
 
         #endregion
 
-      
+        #region OnDemand Mapping
+
+        [Test]
+        public void OnDemandMapping_AutomaticallyMapsProperties()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
+            DateTime date = new DateTime(2013,04,03,12,15,10);
+
+            var item = db.GetItem(path);
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var service = new SitecoreService(db, context); 
+
+            //Act
+            var result = service.GetItem<OnDemandMapping>(path);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(text, result.StringField);
+            Assert.AreEqual(date, result.DateField);
+
+
+        }
+
+        #endregion
     }
 }
 

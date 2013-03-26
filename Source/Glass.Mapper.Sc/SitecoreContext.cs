@@ -61,6 +61,8 @@ namespace Glass.Mapper.Sc
 
 
 
+
+
         /// <summary>
         /// Gets the home item.
         /// </summary>
@@ -86,7 +88,7 @@ namespace Glass.Mapper.Sc
         {
             Item item = global::Sitecore.Context.Item;
             var results = item.Axes.SelectItems(query);
-            return base.CreateTypes(isLazy, inferType, typeof(T), () => { return results; }) as IEnumerable<T>;
+            return base.CreateTypes(typeof(T), () => { return results; }, isLazy, inferType) as IEnumerable<T>;
 
         }
 
@@ -105,6 +107,18 @@ namespace Glass.Mapper.Sc
             return base.CreateType<T>(result, isLazy, inferType);
         }
 
+
+        /// <summary>
+        /// Retrieves the current item as the specified type
+        /// </summary>
+        /// <param name="type">The type to return.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>The current item as the specified type</returns>
+        public dynamic GetCurrentDynamicItem()
+        {
+            return base.GetDynamicItem(global::Sitecore.Context.Item);
+        }
 
         /// <summary>
         /// Retrieves the current item as the specified type
