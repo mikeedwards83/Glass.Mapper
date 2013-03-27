@@ -9,12 +9,97 @@ title: FAQ
 
 <h2>Building</h2>
 <dl>
-    <dt>I have added the binary file to the "Depends" directory but they still show as an error in Visual Studio</dt>
+    <dt>
+        I have added the binary file to the "Depends" directory but they still show as an error in Visual Studio
+    </dt>
     <dd>
-        Make sure you have downloaded the correct version of Sitecore (see <a href="../dependencies.html">Glass Dependencies</a>< for the current version in use)
-        and that you have copied the "bin" and "bin_Net4" directories form the website root.  These directories need to exist in the "Depends" directory for Visual Studio to reference them correctly.
+        Make sure you have downloaded the correct version of Sitecore (see <a href="/docs/dependencies.html">Glass Dependencies</a> for the current version in use)
+        and that you have copied both the "bin" and "bin_Net4" directories form the website root.  These directories need to exist in the "Depends" directory for Visual Studio to reference them correctly.
         <img src="images/GlassSitecoreDepends.png"/>
     </dd>
-
+    <dt>
+        My build is failing with an error like
+        [Error	200	Unable to copy file "xxxx" to "xxxx". Could not find a part of the path 'xxx'.	C:\Program Files (x86)\MSBuild\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets	189	6	xxxx]
+        
+        This is due to 
+    </dt>
+    <!-- -->
+    <dt>
+        I don't have TDS help me
+    </dt>
+    <dd>
+        <p>
+            Can download a 30 day trial form the <a href="http://www.hhogdev.com/Products/Team-Development-for-Sitecore/Overview.aspx">Hedgehog Development</a> site.  
+            Otherwise contact up on the <a href="/googlegroup.html"> Goolge Group </a> and someone will get a package to you.
+        </p>
+        <p>
+            You don't need the items to build the core of the solution so you can just unload the following project
+        </p>
+        <ul>
+            <li>
+                Glass.Mapper.Sc.Integration.Tds
+            </li>
+            <li>
+                Glass.Mapper.Sc.Razor.Tds
+            </li>
+            <li>
+                Glass.Mapper.Sites.Sc.Tds
+            </li>
+        </ul>
+    </dd>
+    <!-- -->
+     <dt>
+        I don't have Sitecore help me
+    </dt>
+    <dd>
+        <p>
+            If you are implementing for another CMS or working on the existing Umbraco implementation all you need to do is unload the following projects.
+            It also might be a good idea to create a new solution file with only the projects you are working on, be careful that you don't miss out on any new projects that could be added by someone else
+        </p>
+        <ul>
+            <li>
+                Glass.Mapper.Sites.Sc
+            </li>
+            <li>
+                Glass.Mapper.Sites.Sc.Tds
+            </li>
+            <li>
+                Glass.Mapper.Sc
+            </li>
+            <li>
+                Glass.Mapper.Sc.CastleWindsor
+            </li>
+            <li>
+                Glass.Mapper.Sc.Razor
+            </li>
+            <li>
+                Glass.Mapper.Sc.Razor.Tds
+            </li>
+            <li>
+                Glass.Mapper.Sc.Razor.Website
+            </li>
+            <li>
+                Glass.Mapper.Sc.Upgrade
+            </li>
+            <li>
+                Glass.Mapper.Sc.Website
+            </li>
+            <li>
+                Glass.Mapper.Sc.Integration
+            </li>
+            <li>
+                Glass.Mapper.Sc.Integration.Tds
+            </li>
+            <li>
+                Glass.Mapper.Sc.CastleWindsor.Tests
+            </li>
+            <li>
+                Glass.Mapper.Sc.Tests
+            </li>
+            <li>
+                Glass.Mapper.Sc.Upgrade.Tests
+            </li>
+        </ul>
+    </dd>
 </dl>
 
