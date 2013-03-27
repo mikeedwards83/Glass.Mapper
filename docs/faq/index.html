@@ -20,10 +20,20 @@ title: FAQ
     <dt>
         My build is failing with an error like
         [Error	200	Unable to copy file "xxxx" to "xxxx". Could not find a part of the path 'xxx'.	C:\Program Files (x86)\MSBuild\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets	189	6	xxxx]
-        
-        This is due to 
     </dt>
-    <!-- -->
+    <dd>
+        <p>
+            This is due to TDS not being configured for your sites location on disk. 
+            Go to the Solution explorer and edit the TDS projects
+            <img src="images/TDSProjectConfiguration.png"/>
+            <img src="images/TDSProjectConfigurationOption.png"/>
+            Click the Build option and edit the "Sitecore Deploy Folder".  This needs to point to the site of your disk.
+            <img src="images/TDSProjectConfigurationScreen.png"/>
+        </p>
+        <p>
+            I like to have my own build configuration so you don't need to touch the default one. 
+        </p>
+    </dd>
     <dt>
         I don't have TDS help me
     </dt>
