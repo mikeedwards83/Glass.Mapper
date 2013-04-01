@@ -154,9 +154,8 @@ namespace Glass.Mapper
                 //first we have to add each type config to the collection
                 foreach (var typeConfig in typeConfigurations)
                 {
-                    //we now run the auto-mapping after all the static configuration is loaded
-                    if(typeConfig.AutoMap)
-                        typeConfig.AutoMapProperties();
+                    
+                    typeConfig.PerformAutoMap();
 
                     TypeConfigurations.Add(typeConfig.Type, typeConfig);
                 }

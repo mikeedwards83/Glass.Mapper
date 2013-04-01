@@ -113,7 +113,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             typeConfig.Type = typeof(StubClass);
 
             //Act
-            typeConfig.AutoMapProperties();
+            typeConfig.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, typeConfig.Properties.Count());

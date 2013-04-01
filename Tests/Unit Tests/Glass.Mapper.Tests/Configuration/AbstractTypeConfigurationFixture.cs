@@ -48,7 +48,7 @@ namespace Glass.Mapper.Tests.Configuration
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -70,7 +70,7 @@ namespace Glass.Mapper.Tests.Configuration
             _configuration.AddProperty(property2);
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Tests.Configuration
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -106,7 +106,7 @@ namespace Glass.Mapper.Tests.Configuration
             _configuration.AddProperty(property2);
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
