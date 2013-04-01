@@ -1,0 +1,57 @@
+---
+layout: DocsLayout
+title: Tutorial 11 - Sitecore Context
+---
+
+<div class="page-header">
+    <h1>Tutorial 11 - Sitecore Context and Service classes and Saving Items<small> </small></h1>
+</div>
+<p>
+    The SitecoreService class represents the Sitecore.Data.Database class and allows you to get items out of Sitecore.
+</p>
+<p>
+    The SitecoreContext class is the equivalent of accessing items via the Sitecore.Context namespace. It has a variety of 
+    methods for getting the current item plus the site root. It also inherits from the SitecoreService class so that you 
+    can access and request items from the database in Sitecore.Context.Database.
+</p>
+<p>
+    In this tutorial we will use the two services to create a comments control that allows a site user to create a comment
+    that is added to the Sitecore database. First lets define our two models, the first model represents that page that the
+    comments will be added to and could represent any item in our solution. The second class is the comment itself that will
+    be saved back to Sitecore:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentPage.cs" ref="gh-pages"></pre>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.Comment.cs" ref="gh-pages"></pre>
+<p>
+    Now that we have or model lets layout the page, I have used a mixture of WebControls and inline statements to create
+    the forms and comments rendering: 
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentPage.ascx" ref="gh-pages"></pre>
+<p>
+    The code behind for our comment sublayout looks like this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentPage.ascx.cs" ref="gh-pages"></pre>
+<p>
+    The UserControl still inherits from the GlassUserControl so we still specify the model type we want loaded, this allows
+    the UserControl to do most of the work.
+</p>
+<p>
+    Within the the click event we create an instance of the SitecoreContext and SitecoreService classes. Notice that the 
+    SitecoreService class takes the name of the database we want to save items to.
+    The SitecoreContext class allows use to grab the current page as a CommentPage type. We could use the Model property but 
+    I wanted to show how you could use the SitecoreContext class. 
+</p>
+<p>
+    We then map the data from the form into a the Comment class. It is important to note that the Name property will be used
+    by Glass.Mapper as the Sitecore item name so we need to ensure that name is something Sitecore friendly.
+</p>
+<p>
+    Next we save the comment to the master database, Glass.Mapper doesn't bypass the security settings in Sitecore so you either
+    have to disable the security or ensure you have the correct Create permissions assigned. It is important
+    that the parent item type (the CommentPage type) has a property that represents the items Id, if you want to save
+    the item as a specific language you also need to ensure that the parent as the a property to represent the language.
+</p>
+
+
+
+
