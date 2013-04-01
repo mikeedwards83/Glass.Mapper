@@ -9,7 +9,9 @@
     <projectUrl>http://mikeedwards83.github.com/Glass.Mapper/</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>This it a test build</description>
+    <description>
+		Add support for the Razor syntax in Sitecore as web controls.
+	</description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
     <tags>Glass Mapper Sitecore Razor</tags>
