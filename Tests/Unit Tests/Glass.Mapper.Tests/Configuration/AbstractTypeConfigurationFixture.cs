@@ -46,7 +46,7 @@ namespace Glass.Mapper.Tests.Configuration
             //Assign
             _configuration.Type = typeof(StubClass);
             Assert.AreEqual(0, _configuration.Properties.Count());
-
+            _configuration.AutoMap = true;
             //Act
             _configuration.PerformAutoMap();
 
@@ -59,6 +59,8 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(StubClass);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             AbstractPropertyConfiguration property1 = Substitute.For<AbstractPropertyConfiguration>();
@@ -81,6 +83,8 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(IStubInterface);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             //Act
@@ -95,6 +99,8 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(IStubInterface);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             AbstractPropertyConfiguration property1 = Substitute.For<AbstractPropertyConfiguration>();
