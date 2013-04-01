@@ -162,7 +162,7 @@
             <param name="service">The service.</param>
             <param name="context">The context.</param>
         </member>
-        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.AutoMapProperties">
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.PerformAutoMap">
             <summary>
             Called when the AutoMap property is true. Automatically maps un-specified properties.
             </summary>

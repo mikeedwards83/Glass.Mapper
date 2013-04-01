@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.4-beta\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.6-beta\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.4-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.6-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.4-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.6-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -203,6 +203,7 @@
     <Content Include="App_Config\Include\Glass.Config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
     <None Include="App_Config\Include\ja-JP.config.example" />
     <None Include="App_Config\Include\LiveMode.config.example" />
     <None Include="App_Config\Include\ScalabilitySettings.config.example" />

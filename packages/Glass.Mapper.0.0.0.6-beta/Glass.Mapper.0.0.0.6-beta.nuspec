@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <id>Glass.Mapper.Sc</id>
-    <version>0.0.0.1-beta</version>
-    <title>Glass.Mapper.Sc</title>
+    <id>Glass.Mapper</id>
+    <version>0.0.0.6-beta</version>
+    <title>Glass.Mapper</title>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
@@ -11,12 +11,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This it a test build</description>
     <summary>This it a test build</summary>
-    <tags>Glass Mapper Sitecore</tags>
+    <tags>Glass Mapper</tags>
     <dependencies>
-      <dependency id="Glass.Mapper" version="0.0.0" />
+      <dependency id="Castle.Windsor" version="3.2.0" />
     </dependencies>
     <references>
-      <reference file="Glass.Mapper.Sc.dll" />
+      <reference file="Glass.Mapper.dll" />
     </references>
   </metadata>
 </package>

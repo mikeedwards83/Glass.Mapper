@@ -6,7 +6,12 @@
 .\Debug\App_Config\FieldTypes.config
 .\Debug\App_Config\Icons.config
 .\Debug\App_Config\Include\Glass.Config
+.\Debug\App_Config\Include\Glass.Mapper.Sc.Mvc.config
 .\Debug\App_Config\Include\Sitecore.WebDAV.config
+.\Debug\App_Config\Include\Sitecore.Mvc.config
+.\Debug\App_Config\Include\Sitecore.MvcAnalytics.config
+.\Debug\App_Config\Include\Sitecore.MvcExperienceEditor.config
+.\Debug\App_Config\Include\Sitecore.MvcSimulator.config
 .\Debug\App_Config\LanguageDefinitions.config
 .\Debug\App_Config\MimeTypes.config
 .\Debug\App_Config\Portraits.config
