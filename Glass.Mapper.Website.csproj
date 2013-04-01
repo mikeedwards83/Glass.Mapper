@@ -76,6 +76,9 @@
     <Content Include="docs\FAQ\index.html" />
     <Content Include="docs\tutorial\sitecore\tutorial11\tutorial11.CommentSublayout.ascx" />
     <Content Include="docs\tutorial\sitecore\tutorial11\tutorial11.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslanding.xml" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.PNG" />
     <Content Include="download.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
@@ -190,6 +193,9 @@
     <Content Include="js\site.min.js.map">
       <DependentUpon>site.js</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
