@@ -19,6 +19,7 @@
 .\Debug\App_Config\Security\GlobalRoles.config
 .\Debug\App_Config\XamlSharp.config
 .\Debug\Design.config
+.\Debug\layouts\Site\Content\CommentSublayout.ascx
 .\Debug\layouts\Site\Content\EventSublayout.ascx
 .\Debug\layouts\Site\Content\NewsArticleSublayout.ascx
 .\Debug\layouts\Site\Landing\EventsLandingSublayout.ascx
