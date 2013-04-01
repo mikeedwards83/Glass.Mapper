@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {7EC6F403-E080-4DFD-AE18-06702812FAAD}
+database: master
+path: /sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/SetFieldRichText
+parent: {22316FCE-C8BE-41FB-B7F3-80D840426516}
+name: SetFieldRichText
+master: {00000000-0000-0000-0000-000000000000}
+template: {EA18940A-ACC5-4450-8176-AE3AC15A8CC4}
+templatekey: DataMapperRichTextField
+
+----version----
+language: en
+version: 1
+revision: e210d880-22bd-4d02-aa5f-7adb5a41087f
+
+----field----
+field: {73ED5DC5-5B00-486A-B935-8CB28FD29FDB}
+name: Field
+key: field
+content-length: 93
+
+<p>Test with <a href="~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z">link</a></p>
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20121228T124119
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e210d880-22bd-4d02-aa5f-7adb5a41087f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20121228T125821:634922963018778236
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+extranet\Anonymous

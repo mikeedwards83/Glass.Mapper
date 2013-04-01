@@ -1,0 +1,32 @@
+<HTML>
+	<HEAD>
+		<title>UnhandledException</title>
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<link href="sitecore/login/login.css" rel="stylesheet" type="text/css">
+	</HEAD>
+	<body>
+		<form id="Form1" method="post">
+			<table style="WIDTH: 100%; HEIGHT: 100%" cellspacing="0" cellpadding="0">
+				<tr>
+					<td style="background:#4b4b4b;filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#4b4b4b', EndColorStr='#595959');height:64;" 
+							align="right" 
+							valign="top">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: #ebecf1 url(/sitecore/login/steel.png) repeat-x;height:599;">
+						<DIV style="font: 18pt verdana;" align="center">The site is down for maintainance.</DIV>
+						<P align="center"><BR>
+							&nbsp;</P>
+						<DIV align="center"><B>Description:</B>&nbsp;The system is being updated, please wait. 
+						</DIV>
+					</td>
+				</tr>
+				<tr>
+					<td style="color:White;padding:0 8 8 0; background:#4b4b4b; filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#595959', EndColorStr='#4b4b4b');" align="right" valign="bottom"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</HTML>

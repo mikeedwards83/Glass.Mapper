@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {4DD3F559-E865-4F92-946D-6D37CA19C56D}
+database: master
+path: /sitecore/content/Tests/GlassHtml/MakeEditable/Target
+parent: {BE646B5B-F3B8-4AC7-B33F-BB0CCFCCCA23}
+name: Target
+master: {00000000-0000-0000-0000-000000000000}
+template: {47A18B96-5762-4879-8F19-A63AB4EA2332}
+templatekey: EditableItem
+
+----version----
+language: en
+version: 1
+revision: 9a8dbd44-9089-493b-95d3-c5e43ad53f7c
+
+----field----
+field: {E0D2D948-10FF-4A66-8500-C03A314BB251}
+name: StringField
+key: stringfield
+content-length: 18
+
+test content field
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130119T094031
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+9a8dbd44-9089-493b-95d3-c5e43ad53f7c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130119T102605:634941879658996137
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 17
+
+default\Anonymous

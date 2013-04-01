@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Glass.Sitecore.Mapper.Razor.Web.Ui;
+using Glass.Sitecore.Mapper;
+
+namespace {{namespace}}
+{
+    public class {{className}} : AbstractRazorControl<{{insertYourType}}>
+    {
+        ISitecoreContext _context;
+		             
+        public override {{insertYourType}} GetModel()
+        {
+            _context = new SitecoreContext();
+
+           return  _context.GetCurrentItem<{{insertYourType}}>();
+        }
+    }
+}

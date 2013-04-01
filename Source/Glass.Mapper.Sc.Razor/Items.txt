@@ -1,0 +1,9 @@
+﻿
+
+#core database:
+
+/sitecore/content/Applications/Layouts/IDE/New File/Renderings/GlassRazor
+
+
+#master database
+/sitecore/templates/Glass/

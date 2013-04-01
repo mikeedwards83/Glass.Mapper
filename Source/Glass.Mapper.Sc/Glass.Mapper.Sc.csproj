@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Glass.Mapper.Sc</RootNamespace>
+    <AssemblyName>Glass.Mapper.Sc</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Glass.Mapper.Sc.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeFirst\FieldInfo.cs" />
+    <Compile Include="CodeFirst\GlassDataProvider.cs" />
+    <Compile Include="CodeFirst\SectionInfo.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoader.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreFieldFieldValueAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreInfoAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreLinkedAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreNodeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreParentAttribute.cs" />
+    <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
+    <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\ISitecoreType.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreChildren.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreType.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreField.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreId.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreInfo.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreNode.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreLinked.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreParent.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreQuery.cs" />
+    <Compile Include="Configuration\SitecoreChildrenConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreFieldConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreFieldSettings.cs" />
+    <Compile Include="Configuration\SitecoreFieldType.cs" />
+    <Compile Include="Configuration\SitecoreIdConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreInfoConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreInfoType.cs" />
+    <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
+    <Compile Include="Configuration\SitecoreLinkedConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
+    <Compile Include="Configuration\SitecoreNodeConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreParentConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
+    <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreItemMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIntegerMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldImageMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldGuidMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldFloatMapper.cs" />
+    <Compile Include="DataMappers\SitecoreChildrenMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldBooleanMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDateTimeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDecimalMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDoubleMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldEnumMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldFileMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIEnumerableMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLinkMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNullableMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldRulesMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStreamMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldStringMapper.cs" />
+    <Compile Include="DataMappers\SitecoreIdMapper.cs" />
+    <Compile Include="DataMappers\SitecoreInfoMapper.cs" />
+    <Compile Include="DataMappers\SitecoreLinkedMapper.cs" />
+    <Compile Include="DataMappers\SitecoreParentMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldTypeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryMapper.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ISitecoreQueryParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
+    <Compile Include="Dynamic\Dy.cs" />
+    <Compile Include="Dynamic\DynamicCollection.cs" />
+    <Compile Include="Dynamic\DynamicField.cs" />
+    <Compile Include="Dynamic\DynamicItem.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Fields\File.cs" />
+    <Compile Include="Fields\Image.cs" />
+    <Compile Include="Fields\Link.cs" />
+    <Compile Include="Fields\LinkType.cs" />
+    <Compile Include="Fields\TriState.cs" />
+    <Compile Include="GlassHtml.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="ISitecoreContext.cs" />
+    <Compile Include="ISitecoreService.cs" />
+    <Compile Include="ItemEditing.cs" />
+    <Compile Include="ItemExtensions.cs" />
+    <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Pipelines\Response\GetModel.cs" />
+    <Compile Include="Profilers\SitecoreProfiler.cs" />
+    <Compile Include="RenderField\AbstractParameters.cs" />
+    <Compile Include="RenderField\DateParameters.cs" />
+    <Compile Include="RenderField\ImageParameters.cs" />
+    <Compile Include="RenderField\LinkParameters.cs" />
+    <Compile Include="SitecoreContext.cs" />
+    <Compile Include="SitecoreDataMappingContext.cs" />
+    <Compile Include="SitecoreTypeCreationContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SitecoreService.cs" />
+    <Compile Include="SitecoreTypeSavingContext.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Ui\AbstractGlassPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\AbstractGlassUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\GlassDynamicPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\GlassDynamicUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\GlassEditFrame.cs" />
+    <Compile Include="Web\Ui\GlassPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\GlassUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Ui\UiUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pipelines\ContentResolver\" />
+    <Folder Include="Pipelines\MappingPipeline\" />
+    <Folder Include="Pipelines\ObjectConstruction\" />
+    <Folder Include="Pipelines\TypeResolver\" />
+    <Folder Include="Proxies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\SitecorePropertyConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

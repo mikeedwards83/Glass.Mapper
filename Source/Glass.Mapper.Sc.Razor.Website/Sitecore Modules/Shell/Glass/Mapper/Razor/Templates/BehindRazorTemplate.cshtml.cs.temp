@@ -1,0 +1,13 @@
+﻿using Glass.Mapper.Sc.Razor.Web.Ui;
+
+namespace {{namespace}}
+{
+	public class {{className}} : AbstractRazorControl<{{insertYourType}}>
+	{             
+		public override {{insertYourType}} GetModel()
+		{
+			var item = GetDataSourceOrContextItem();
+			return SitecoreService.CreateType<{{insertYourType}}>(item);
+		}
+	}
+}

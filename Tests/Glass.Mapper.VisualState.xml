@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]F:\Glass\Glass.Mapper\Tests\Glass.Mapper.nunit</TopNode>
+  <SelectedNode>[0-1254]Glass.Mapper.Sc.Integration.ConnectionFixture.ConnectionTest_ReadsSitecoreItem</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]F:\Glass\Glass.Mapper\Tests\Glass.Mapper.nunit" Expanded="true" />
+    <Node UniqueName="[0-1090]Glass" Expanded="true" />
+    <Node UniqueName="[0-1091]Glass.Mapper" Expanded="true" />
+    <Node UniqueName="[0-1092]Glass.Mapper.Sc" Expanded="true" />
+    <Node UniqueName="[0-1093]Glass.Mapper.Sc.Tests" Expanded="true" />
+    <Node UniqueName="[0-1094]Glass.Mapper.Sc.Tests.Configuration" Expanded="true" />
+    <Node UniqueName="[0-1095]Glass.Mapper.Sc.Tests.Configuration.Attributes" Expanded="true" />
+    <Node UniqueName="[0-1003]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreChildrenAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1026]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreFieldAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1054]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreInfoAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1064]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreLinkedAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1073]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreNodeAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1081]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreParentAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1010]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreQueryAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1015]Glass.Mapper.Sc.Tests.Configuration.Attributes.SitecoreTypeAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1240]Glass" Expanded="true" />
+    <Node UniqueName="[0-1241]Glass.Mapper" Expanded="true" />
+    <Node UniqueName="[0-1242]Glass.Mapper.Tests" Expanded="true" />
+    <Node UniqueName="[0-1243]Glass.Mapper.Tests.Configuration" Expanded="true" />
+    <Node UniqueName="[0-1097]Glass.Mapper.Tests.Configuration.AbstractTypeConfigurationFixture" Expanded="true" />
+    <Node UniqueName="[0-1244]Glass.Mapper.Tests.Configuration.Attributes" Expanded="true" />
+    <Node UniqueName="[0-1114]Glass.Mapper.Tests.Configuration.Attributes.AbstractClassAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1117]Glass.Mapper.Tests.Configuration.Attributes.AbstractPropertyAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1099]Glass.Mapper.Tests.Configuration.Attributes.AttributeConfigurationLoaderFixture" Expanded="true" />
+    <Node UniqueName="[0-1119]Glass.Mapper.Tests.Configuration.Attributes.ChildrenAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1121]Glass.Mapper.Tests.Configuration.Attributes.ChildrenAttributeFixture.Does_ChildrenAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1128]Glass.Mapper.Tests.Configuration.Attributes.FieldAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1130]Glass.Mapper.Tests.Configuration.Attributes.FieldAttributeFixture.Does_FieldAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1136]Glass.Mapper.Tests.Configuration.Attributes.IdAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1140]Glass.Mapper.Tests.Configuration.Attributes.InfoAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1143]Glass.Mapper.Tests.Configuration.Attributes.LinkedAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1145]Glass.Mapper.Tests.Configuration.Attributes.LinkedAttributeFixture.Does_QueryAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1152]Glass.Mapper.Tests.Configuration.Attributes.NodeAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1154]Glass.Mapper.Tests.Configuration.Attributes.NodeAttributeFixture.Does_NodeAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1162]Glass.Mapper.Tests.Configuration.Attributes.ParentAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1164]Glass.Mapper.Tests.Configuration.Attributes.ParentAttributeFixture.Does_ParentAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1172]Glass.Mapper.Tests.Configuration.Attributes.QueryAttributeFixture" Expanded="true" />
+    <Node UniqueName="[0-1174]Glass.Mapper.Tests.Configuration.Attributes.QueryAttributeFixture.Does_QueryAttribute_Have_Properties" Expanded="true" />
+    <Node UniqueName="[0-1197]Glass.Mapper.Tests.ExtensionMethodFixture" Expanded="true" />
+    <Node UniqueName="[0-1198]Glass.Mapper.Tests.ExtensionMethodFixture.Formatted_ParametersPassedToMethod_ReturnsCorrectlyFormattedString" Expanded="true" />
+    <Node UniqueName="[0-1206]Glass.Mapper.Tests.ExtensionMethodFixture.IsNotNullOrEmpty_TestSetOfValues_ReturnsExpectedResult" Expanded="true" />
+    <Node UniqueName="[0-1202]Glass.Mapper.Tests.ExtensionMethodFixture.IsNullOrEmpty_TestSetOfValues_ReturnsExpectedResult" Expanded="true" />
+    <Node UniqueName="[0-1245]Glass.Mapper.Tests.Pipelines" Expanded="true" />
+    <Node UniqueName="[0-1229]Glass.Mapper.Tests.Pipelines.AbstractPipelineRunnerFixture" Expanded="true" />
+    <Node UniqueName="[0-1246]Glass.Mapper.Tests.Pipelines.ConfigurationResolver" Expanded="true" />
+    <Node UniqueName="[0-1247]Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks" Expanded="true" />
+    <Node UniqueName="[0-1248]Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResolver" Expanded="true" />
+    <Node UniqueName="[0-1210]Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResolver.ConfigurationStandardResolverTaskFixture" Expanded="true" />
+    <Node UniqueName="[0-1249]Glass.Mapper.Tests.Pipelines.ObjectConstruction" Expanded="true" />
+    <Node UniqueName="[0-1250]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks" Expanded="true" />
+    <Node UniqueName="[0-1251]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete" Expanded="true" />
+    <Node UniqueName="[0-1234]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTaskFixture" Expanded="true" />
+    <Node UniqueName="[0-1212]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectInterceptorFixture" Expanded="true" />
+    <Node UniqueName="[0-1252]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface" Expanded="true" />
+    <Node UniqueName="[0-1214]Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceTaskFixture" Expanded="true" />
+    <Node UniqueName="[0-1258]F:\Glass\Glass.Mapper\Tests\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration\bin\Debug\Glass.Mapper.Sc.Integration.dll" Expanded="true" />
+    <Node UniqueName="[0-1259]Glass" Expanded="true" />
+    <Node UniqueName="[0-1260]Glass.Mapper" Expanded="true" />
+    <Node UniqueName="[0-1261]Glass.Mapper.Sc" Expanded="true" />
+    <Node UniqueName="[0-1262]Glass.Mapper.Sc.Integration" Expanded="true" />
+    <Node UniqueName="[0-1253]Glass.Mapper.Sc.Integration.ConnectionFixture" Expanded="true" />
+    <Node UniqueName="[0-1255]Glass.Mapper.Sc.Integration.SitecoreServiceFixture" Expanded="true" />
+  </Nodes>
+</VisualState>

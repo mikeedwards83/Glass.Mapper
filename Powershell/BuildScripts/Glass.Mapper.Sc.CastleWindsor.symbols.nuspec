@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Glass.Mapper.Sc.CastleWindsor</id>
+    <version>$version$</version>
+    <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+    <owners>Michael Edwards</owners>
+    <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>http://mikeedwards83.github.com/Glass.Mapper/</projectUrl>
+    <!--<iconUrl></iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+		Allows you to map data from Sitecore using the Castle Windsor DI Container. Allows you to map fields,
+		relationships and queries as well as supporting the Page Editor.
+	</description>
+    <releaseNotes>This is a pre-release version of the package.</releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore</tags>
+    <language>en-GB</language>
+    <dependencies>
+		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
+		<dependency id="WebActivatorEx" version="1.0.0.0" />
+	</dependencies>
+  </metadata>
+  <files>
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Debug\Glass.Mapper.Sc.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Debug\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.pdb" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Debug\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.xml" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Start\**" target="content\App_Start" />
+	  <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
+
+  </files>
+</package>
