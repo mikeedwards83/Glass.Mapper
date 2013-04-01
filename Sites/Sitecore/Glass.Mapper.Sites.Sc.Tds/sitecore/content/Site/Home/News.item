@@ -30,8 +30,8 @@ revision: d999a3e7-b33d-4a2a-9d69-1b39c5687ecb
 
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
-name: Page Title
-key: page title
+name: Title
+key: title
 content-length: 4
 
 News

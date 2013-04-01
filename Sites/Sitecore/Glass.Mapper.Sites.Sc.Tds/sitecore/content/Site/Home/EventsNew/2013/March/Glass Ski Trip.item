@@ -1,9 +1,9 @@
 ----item----
 version: 1
-id: {D5D94EC6-C01F-4363-9065-1C5181283D11}
+id: {4643353F-DB4F-4B48-B6D0-5B8B284B01A5}
 database: master
-path: /sitecore/content/Site/Home/Events/2013/March/Glass Ski Trip
-parent: {C8B6DCCC-47B8-4789-9F2F-B9FCE6D619EF}
+path: /sitecore/content/Site/Home/EventsNew/2013/March/Glass Ski Trip
+parent: {1DD21F57-F94A-4428-81A5-514AB65D48C7}
 name: Glass Ski Trip
 master: {00000000-0000-0000-0000-000000000000}
 template: {5386DC93-0A99-40F6-A228-403D0E305D25}
