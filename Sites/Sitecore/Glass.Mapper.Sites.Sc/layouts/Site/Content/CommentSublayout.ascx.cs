@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sites.Sc.layouts.Site.Content
 
             var comment = new Comment();
 
-            //This value will be used for the name of the item
+            //This value will be used for the name   of the item
             comment.Name = DateTime.Now.ToString("yy-MM-ddThh-mm-ss");
             comment.Content = CommentContent.Text;
             comment.FullName = CommentName.Text;
