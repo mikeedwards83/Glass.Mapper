@@ -79,6 +79,10 @@
     <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.html" />
     <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslanding.xml" />
     <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.item.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.webpage.PNG" />
     <Content Include="download.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
@@ -120,6 +124,11 @@
     <Compile Include="docs\tutorial\sitecore\tutorial11\tutorial11.CommentSublayout.ascx.cs">
       <DependentUpon>tutorial11.CommentSublayout.ascx</DependentUpon>
     </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslanding.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx.cs">
+      <DependentUpon>tutorial13.rsslandingsublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.serviceinstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />

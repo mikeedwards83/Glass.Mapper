@@ -1,0 +1,65 @@
+---
+layout: DocsLayout
+title: Tutorial 13 - Windsor Construction
+---
+
+<div class="page-header">
+    <h1>Tutorial 13 - Windsor Construction<small> </small></h1>
+</div>
+<p>
+    With Glass you can turn on Castle Windsor construction so that your models are instantiated by the Castle
+    Windsor container. You might ask why you would want to do this, well it allows you to combine services
+    with data mapped from Sitecore in one call. 
+</p>
+<p>
+    To demo this I am going to create a landing page that lists out RSS feed items. I want the URL to the RSS
+    feed to specified in Sitecore along with the number of articles I want to display. My model will look like 
+    this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslanding.cs" ref="gh-pages"></pre>
+<p>
+    Notice that the constructor on my model takes an RSS Service, I need to get Castle Windsor to load this service
+    and also tell Glass.Mapper to use the Windsor Construction. We need to update the GlassMapperSc class in the 
+    App_Start folder, first we create an instance of the Config class and set the UseWindsorConstructor property
+    to true:
+</p>
+<pre class="cs">
+    var config = new Config();
+    config.UseWindsorContructor = true;
+</pre>
+<p>
+    Now we need to load our new services in to the Windsor Container:
+</p>
+<pre class="cs">
+    //create the resolver
+    var resolver = DependencyResolver.CreateStandardResolver(config);
+
+    //install the custom services
+    var container = (resolver as DependencyResolver).Container;
+    container.Install(new ServiceInstaller());
+</pre>
+<p>
+    I have created a ServiceInstaller to ensure I keep my code organised:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.serviceinstaller.cs" ref="gh-pages"></pre>
+<p>
+    I now have my container setup and Glass.Mapper ready to use, lets look at the sublayout code:
+</p>
+<pre class="github xml" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslandingsublayout.ascx" ref="gh-pages"></pre>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslandingsublayout.ascx.cs" ref="gh-pages"></pre>
+<p>
+    My sublayout still remains really simple.
+</p>
+<p>
+    Finally in Sitecore I just need to set the  RSS URL and number or articles to display:
+</p>
+<img src="tutorial13.item.PNG" />
+<p>
+    Once we publish everything and load the page we can see the RSS feed items rendered:
+</p>
+<img src="tutorial13.webpage.PNG"/>
+<p>
+    In this tutorial we have seen how you can enable the Castle Windsor construction to allow you to create a class
+    that contains both Sitecore data and service in a single call.
+</p>
+
