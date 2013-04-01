@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Glass.Mapper.Sc</id>
-    <version>0.0.0.6-beta</version>
+    <version>0.0.0.7-beta</version>
     <title>Glass.Mapper.Sc</title>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</owners>

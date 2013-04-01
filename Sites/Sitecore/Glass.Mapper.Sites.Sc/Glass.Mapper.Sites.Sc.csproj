@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.6-beta\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.7-beta\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.6-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.6-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -163,6 +163,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -234,6 +236,7 @@
     <Content Include="layouts\Site\Content\CommentSublayout.ascx" />
     <Content Include="layouts\Site\Content\EventSublayout.ascx" />
     <Content Include="layouts\Site\Content\NewsArticleSublayout.ascx" />
+    <Content Include="layouts\Site\Landing\RssLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\EventsLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\Landing\NewsLandingSublayout.ascx" />
@@ -268,6 +271,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\GlassMapperSc.cs" />
+    <Compile Include="App_Start\ServiceInstaller.cs" />
     <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -292,6 +296,13 @@
     </Compile>
     <Compile Include="layouts\Site\Content\NewsArticleSublayout.ascx.designer.cs">
       <DependentUpon>NewsArticleSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\RssLandingSublayout.ascx.cs">
+      <DependentUpon>RssLandingSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\RssLandingSublayout.ascx.designer.cs">
+      <DependentUpon>RssLandingSublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Landing\EventsLandingSublayout.ascx.cs">
       <DependentUpon>EventsLandingSublayout.ascx</DependentUpon>
@@ -336,6 +347,7 @@
       <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
+    <Compile Include="Models\Landing\RssLanding.cs" />
     <Compile Include="Models\Config\ContentConfig.cs" />
     <Compile Include="Models\Content\Comment.cs" />
     <Compile Include="Models\Content\CommentPage.cs" />
@@ -346,6 +358,8 @@
     <Compile Include="Models\Landing\NewsLanding.cs" />
     <Compile Include="Models\Misc\ContentBase.cs" />
     <Compile Include="Models\Misc\MenuItem.cs" />
+    <Compile Include="Services\Rss\RssService.cs" />
+    <Compile Include="Services\Rss\IRssService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Razor\Glass.Mapper.Sc.Razor.csproj">

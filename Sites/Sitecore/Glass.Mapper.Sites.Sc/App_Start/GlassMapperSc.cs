@@ -10,8 +10,15 @@ namespace Glass.Mapper.Sites.Sc.App_Start
     {
         public static void Start()
         {
+            var config = new Config();
+            config.UseWindsorContructor = true;
+
             //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver();
+            var resolver = DependencyResolver.CreateStandardResolver(config);
+
+            //install the custom services
+            var container = (resolver as DependencyResolver).Container;
+            container.Install(new ServiceInstaller());
 
             //create a context
             var context = Glass.Mapper.Context.Create(resolver);
@@ -23,5 +30,6 @@ namespace Glass.Mapper.Sites.Sc.App_Start
                 Models.Config.ContentConfig.Load()
                 );
         }
+
     }
 }

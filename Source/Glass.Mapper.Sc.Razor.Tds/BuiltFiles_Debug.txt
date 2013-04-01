@@ -27,6 +27,7 @@
 .\Debug\layouts\Site\Content\CommentSublayout.ascx
 .\Debug\layouts\Site\Content\EventSublayout.ascx
 .\Debug\layouts\Site\Content\NewsArticleSublayout.ascx
+.\Debug\layouts\Site\Landing\RssLandingSublayout.ascx
 .\Debug\layouts\Site\Landing\EventsLandingSublayout.ascx
 .\Debug\layouts\Site\Landing\HomePageSublayout.ascx
 .\Debug\layouts\Site\Landing\NewsLandingSublayout.ascx
@@ -162,6 +163,7 @@
 .\Debug\bin\ComponentArt.UIFramework.lic
 .\Debug\bin\ComponentArt.Web.UI.dll
 .\Debug\bin\Glass.Mapper.CastleWindsor.dll
+.\Debug\bin\Glass.Mapper.CastleWindsor.pdb
 .\Debug\bin\Glass.Mapper.dll
 .\Debug\bin\Glass.Mapper.pdb
 .\Debug\bin\Glass.Mapper.Sc.CastleWindsor.dll
