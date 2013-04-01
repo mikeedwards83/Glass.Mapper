@@ -6,7 +6,7 @@ using Glass.Mapper.Sites.Sc.Models.Misc;
 
 namespace Glass.Mapper.Sites.Sc.Models.Content
 {
-    [SitecoreType]
+    [SitecoreType(AutoMap = true)]
     public class NewsArticle : ContentBase
     {
         [SitecoreField]

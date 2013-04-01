@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Glass.Mapper</id>
-    <version>0.0.0.31</version>
+    <version>0.0.0.1-beta</version>
     <title>Glass.Mapper</title>
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</owners>

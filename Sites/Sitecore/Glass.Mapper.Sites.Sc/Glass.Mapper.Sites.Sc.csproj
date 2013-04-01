@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.31\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.1-beta\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.31\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.1-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.31\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.1-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -228,6 +228,7 @@
     <Content Include="App_Config\XamlSharp.config" />
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
+    <Content Include="layouts\Site\Content\CommentSublayout.ascx" />
     <Content Include="layouts\Site\Content\EventSublayout.ascx" />
     <Content Include="layouts\Site\Content\NewsArticleSublayout.ascx" />
     <Content Include="layouts\Site\Landing\EventsLandingSublayout.ascx" />
@@ -265,6 +266,13 @@
     <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Content\CommentSublayout.ascx.cs">
+      <DependentUpon>CommentSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Content\CommentSublayout.ascx.designer.cs">
+      <DependentUpon>CommentSublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Content\EventSublayout.ascx.cs">
       <DependentUpon>EventSublayout.ascx</DependentUpon>
@@ -324,6 +332,8 @@
     </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
     <Compile Include="Models\Config\ContentConfig.cs" />
+    <Compile Include="Models\Content\Comment.cs" />
+    <Compile Include="Models\Content\CommentPage.cs" />
     <Compile Include="Models\Content\Event.cs" />
     <Compile Include="Models\Content\NewsArticle.cs" />
     <Compile Include="Models\Landing\EventsLanding.cs" />
@@ -351,7 +361,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58442</DevelopmentServerPort>
+          <DevelopmentServerPort>49288</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -1070,6 +1070,29 @@
             Interface IGlassConfiguration
             </summary>
         </member>
+        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.IConfigurationResolverTask">
+            <summary>
+            Interface IConfigurationResolverTask
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.IPipelineTask`1">
+            <summary>
+            Interface IPipelineTask
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.IPipelineTask`1.Execute(`0)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver.ConfigurationOnDemandResolverTask`1.Execute(Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
         <member name="T:Glass.Mapper.Profilers.ChainedProfiler">
             <summary>
             Class ChainedProfiler
@@ -1234,23 +1257,6 @@
             Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolver"/> class.
             </summary>
             <param name="tasks">The tasks.</param>
-        </member>
-        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.IConfigurationResolverTask">
-            <summary>
-            Interface IConfigurationResolverTask
-            </summary>
-        </member>
-        <member name="T:Glass.Mapper.Pipelines.IPipelineTask`1">
-            <summary>
-            Interface IPipelineTask
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="M:Glass.Mapper.Pipelines.IPipelineTask`1.Execute(`0)">
-            <summary>
-            Executes the specified args.
-            </summary>
-            <param name="args">The args.</param>
         </member>
         <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver.ConfigurationStandardResolverTask">
             <summary>
