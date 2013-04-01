@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 
 namespace Glass.Mapper.Sc.DataMappers
@@ -108,7 +109,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// Sets up the data mapper for a particular property
         /// </summary>
         /// <param name="args">The args.</param>
-        public override void Setup(Pipelines.DataMapperResolver.DataMapperResolverArgs args)
+        public override void Setup(DataMapperResolverArgs args)
         {
             _baseMapper.Setup(args);
             base.Setup(args);
