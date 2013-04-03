@@ -97,16 +97,29 @@ namespace Glass.Mapper.Configuration
         /// <summary>
         /// Called when the AutoMap property is true. Automatically maps un-specified properties.
         /// </summary>
-        public void AutoMapProperties()
+        public void PerformAutoMap()
         {
-            //TODO: ME - probably need some binding flags.
-            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
-                                 BindingFlags.FlattenHierarchy;
-            IEnumerable<PropertyInfo> properties = Type.GetProperties(flags);
-
-            if (Type.IsInterface)
+            //we now run the auto-mapping after all the static configuration is loaded
+            if (this.AutoMap)
             {
-                foreach (var inter in Type.GetInterfaces())
+                //TODO: ME - probably need some binding flags.
+                foreach (var propConfig in AutoMapProperties(Type))
+                {
+                    AddProperty(propConfig);
+                }
+            }
+        
+        }
+
+        public virtual IEnumerable<AbstractPropertyConfiguration> AutoMapProperties(Type type)
+        {
+            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
+                                    BindingFlags.FlattenHierarchy;
+            IEnumerable<PropertyInfo> properties = type.GetProperties(flags);
+
+            if (type.IsInterface)
+            {
+                foreach (var inter in type.GetInterfaces())
                 {
                     properties = properties.Union(inter.GetProperties(flags));
                 }
@@ -117,12 +130,12 @@ namespace Glass.Mapper.Configuration
                 if (Properties.All(x => x.PropertyInfo != property))
                 {
                     var propConfig = AutoMapProperty(property);
-                    if(propConfig != null)
-                        AddProperty(propConfig);
+                    if (propConfig != null)
+                        yield return propConfig;
                 }
             }
-
         }
+
         /// <summary>
         /// Called to map each property automatically
         /// </summary>

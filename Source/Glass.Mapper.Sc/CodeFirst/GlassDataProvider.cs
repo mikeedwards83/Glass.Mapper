@@ -75,7 +75,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// The glass folder id
         /// </summary>
-        public static readonly ID GlassFolderId = new ID("{19BC20D3-CCAB-4048-9CA9-4AA631AB109F}");
+        public static  ID GlassFolderId = new ID("{19BC20D3-CCAB-4048-9CA9-4AA631AB109F}");
 
         /// <summary>
         /// Gets the name of the database.
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             _contextName = context;
            
-
+           
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             }
 
 
-            return base.GetItemDefinition(itemId, context);
+            return null;
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// The _setup lock
         /// </summary>
-        public readonly object _setupLock = new object();
+        public static readonly object _setupLock = new object();
         /// <summary>
         /// The _setup complete
         /// </summary>
@@ -492,9 +492,8 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// Setups the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public void Setup(CallContext context)
+        public  void Setup(CallContext context)
         {
-            if (_setupComplete || _setupProcessing) return;
 
             lock (_setupLock)
             {
@@ -504,9 +503,9 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 global::Sitecore.Diagnostics.Log.Info("Started CodeFirst setup", this);
 
-               
 
-                var providers = Factory.GetDatabase("master").GetDataProviders();
+                var db = Factory.GetDatabase("master");
+                var providers = db.GetDataProviders();
                 var provider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
 
                 var templateFolder = provider.GetItemDefinition(TemplateFolderId, context);
@@ -515,8 +514,11 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (glassFolder == ItemDefinition.Empty || glassFolder == null)
                 {
-                    provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
-                    glassFolder = provider.GetItemDefinition(GlassFolderId, context);
+                    var templatesFolderItem = db.GetItem(TemplateFolderId);
+
+                    var glassFolderItem = templatesFolderItem.Add("GlassTemplates", new TemplateID(FolderTemplateId));
+                  //  provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
+                    glassFolder = provider.GetItemDefinition(glassFolderItem.ID, context);
                 }
 
                 _glsContext = Context.Contexts[_contextName];
@@ -536,9 +538,10 @@ namespace Glass.Mapper.Sc.CodeFirst
                         namespaces = namespaces.SkipWhile(x => x != "Templates").Skip(1);
 
                         ItemDefinition containing = glassFolder;
-                        var children = provider.GetChildIDs(containing, context);
                         foreach (var ns in namespaces)
                         {
+                            var children = provider.GetChildIDs(containing, context);
+
                             ItemDefinition found = null;
                             foreach (ID child in children)
                             {
@@ -593,7 +596,13 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 global::Sitecore.Diagnostics.Log.Info("Finished CodeFirst setup", this);
 
-              
+
+                db.Caches.DataCache.Clear();
+                db.Caches.ItemCache.Clear();
+                db.Caches.ItemPathsCache.Clear();
+                db.Caches.StandardValuesCache.Clear();
+                db.Caches.PathCache.Clear();
+                
 
                 _setupComplete = true;
             }
@@ -636,7 +645,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             }
 
             //if there are no children left delete the folder 
-            if (childIds.Count == 0)
+            if (childIds.Count == 0 && folder.ID != GlassFolderId)
             {
                 provider.DeleteItem(folder, context);
                 return true;

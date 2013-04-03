@@ -29,6 +29,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
                             container.Kernel.AddComponent(type.FullName, type, LifestyleType.Transient);
 
                         args.Result = container.Resolve(type);
+                        
+                        if(args.Result != null)
+                            args.Configuration.MapPropertiesToObject(args.Result, args.Service, args.AbstractTypeCreationContext);
                     }
                 }
             }

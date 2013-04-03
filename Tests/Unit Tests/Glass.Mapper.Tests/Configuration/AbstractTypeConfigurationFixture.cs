@@ -46,9 +46,9 @@ namespace Glass.Mapper.Tests.Configuration
             //Assign
             _configuration.Type = typeof(StubClass);
             Assert.AreEqual(0, _configuration.Properties.Count());
-
+            _configuration.AutoMap = true;
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -59,6 +59,8 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(StubClass);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             AbstractPropertyConfiguration property1 = Substitute.For<AbstractPropertyConfiguration>();
@@ -70,7 +72,7 @@ namespace Glass.Mapper.Tests.Configuration
             _configuration.AddProperty(property2);
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -81,10 +83,12 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(IStubInterface);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());
@@ -95,6 +99,8 @@ namespace Glass.Mapper.Tests.Configuration
         {
             //Assign
             _configuration.Type = typeof(IStubInterface);
+            _configuration.AutoMap = true;
+
             Assert.AreEqual(0, _configuration.Properties.Count());
 
             AbstractPropertyConfiguration property1 = Substitute.For<AbstractPropertyConfiguration>();
@@ -106,7 +112,7 @@ namespace Glass.Mapper.Tests.Configuration
             _configuration.AddProperty(property2);
 
             //Act
-            _configuration.AutoMapProperties();
+            _configuration.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, _configuration.Properties.Count());

@@ -1099,7 +1099,7 @@ namespace Glass.Mapper.Sc.Integration
         #region Method - Delete
 
         [Test]
-        public void Delete_RemovesItemFromDatabse()
+        public void Delete_RemovesItemFromDatabase()
         {
             //Assign
             string parentPath = "/sitecore/content/Tests/SitecoreService/Delete";
@@ -1111,6 +1111,14 @@ namespace Glass.Mapper.Sc.Integration
             var service = new SitecoreService(db);
 
             var parent = db.GetItem(parentPath);
+
+            //clean up any outstanding items
+
+            using (new SecurityDisabler())
+            {
+                parent.DeleteChildren();
+            }
+
             var child = parent.Add("Target", new TemplateID(new ID(StubClass.TemplateId)));
             
             Assert.IsNotNull(child);

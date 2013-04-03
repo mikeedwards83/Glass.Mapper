@@ -36,6 +36,9 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -138,6 +141,7 @@
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />

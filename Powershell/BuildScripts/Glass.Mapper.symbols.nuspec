@@ -9,8 +9,8 @@
 		<projectUrl>http://mikeedwards83.github.com/Glass.Mapper/</projectUrl>
 		<!--<iconUrl></iconUrl>-->
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>This it a test build</description>
-		<releaseNotes>This is a pre-release version of the package.</releaseNotes>
+		<description>This is the Glass.Mapper core assembly that allows you to build ORMs for any CMS.</description>
+		<releaseNotes>This is a beta version of the package.</releaseNotes>
 		<copyright>Copyright (C) by Michael Edwards</copyright>
 		<tags>Glass Mapper</tags>
 		<language>en-GB</language>

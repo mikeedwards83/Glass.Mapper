@@ -37,8 +37,8 @@ content-length: 77
 {D61E2F65-B9AE-4827-A1CE-B53042251ADD}|{7A9DF5B1-7AF9-4BE4-AF37-C1834D5A343E}
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
-name: Page Title
-key: page title
+name: Title
+key: title
 content-length: 15
 
 Glass Demo Site

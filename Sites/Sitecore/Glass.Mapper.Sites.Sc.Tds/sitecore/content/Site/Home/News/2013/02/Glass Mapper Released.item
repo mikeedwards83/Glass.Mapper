@@ -44,8 +44,8 @@ content-length: 15
 20130201T000000
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
-name: Page Title
-key: page title
+name: Title
+key: title
 content-length: 30
 
 Glass Mappers Official Release

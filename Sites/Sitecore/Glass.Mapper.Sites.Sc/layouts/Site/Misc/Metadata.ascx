@@ -2,7 +2,7 @@
 
 <title><%=Model.Title %></title>
 
-<metadata name="updated" content="<%=Model.__updated %>" />
+<meta runatname="updated" content="<%=Model.__updated %>" />
 
 <link rel="canonical" href="http://sitecore.glass.com<%=Model.Url %>" />
 

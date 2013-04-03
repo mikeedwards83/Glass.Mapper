@@ -23,8 +23,8 @@ revision: fd08a1cc-aa6e-48c2-bff0-4a744204147d
 
 ----field----
 field: {8BB2157E-A97E-45F8-BE6D-9EE022DE6FB5}
-name: Page Title
-key: page title
+name: Title
+key: title
 content-length: 6
 
 Events

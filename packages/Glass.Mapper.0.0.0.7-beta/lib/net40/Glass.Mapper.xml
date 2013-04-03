@@ -1,0 +1,1697 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Glass.Mapper</name>
+    </assembly>
+    <members>
+        <member name="T:Glass.Mapper.AbstractDataMapper">
+            <summary>
+            A data mapper converts data from the CMS stored value to the .Net data type
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.MapCmsToProperty(Glass.Mapper.AbstractDataMappingContext)">
+            <summary>
+            Takes CMS data and writes it to the property
+            </summary>
+            <param name="mappingContext">The mapping context.</param>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.MapPropertyToCms(Glass.Mapper.AbstractDataMappingContext)">
+            <summary>
+            Takes a Property value and writes it to a CMS value
+            </summary>
+            <param name="mappingContext">The mapping context.</param>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.MapToCms(Glass.Mapper.AbstractDataMappingContext)">
+            <summary>
+            Maps data from the .Net property value to the CMS value
+            </summary>
+            <param name="mappingContext">The mapping context.</param>
+            <returns>The value to write</returns>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.MapToProperty(Glass.Mapper.AbstractDataMappingContext)">
+            <summary>
+            Maps data from the CMS value to the .Net property value
+            </summary>
+            <param name="mappingContext">The mapping context.</param>
+            <returns>System.Object.</returns>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.Setup(Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs)">
+            <summary>
+            Sets up the data mapper for a particular property
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMapper.CanHandle(Glass.Mapper.Configuration.AbstractPropertyConfiguration,Glass.Mapper.Context)">
+            <summary>
+            Indicates that the data mapper will mapper to and from the property
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="context">The context.</param>
+            <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="P:Glass.Mapper.AbstractDataMapper.ReadOnly">
+            <summary>
+            Gets or sets a value indicating whether [read only].
+            </summary>
+            <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractDataMapper.Configuration">
+            <summary>
+            The property this Data Mapper will populate
+            </summary>
+            <value>The configuration.</value>
+        </member>
+        <member name="T:Glass.Mapper.AbstractDataMappingContext">
+            <summary>
+            Represents the context when a CMS value is mapper to/from a .Net property value
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.AbstractDataMappingContext.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.AbstractDataMappingContext"/> class.
+            </summary>
+            <param name="obj">The obj.</param>
+        </member>
+        <member name="P:Glass.Mapper.AbstractDataMappingContext.CmsValue">
+            <summary>
+            Value stored by the CMS
+            </summary>
+            <value>The CMS value.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractDataMappingContext.PropertyValue">
+            <summary>
+            Value stored by the Property
+            </summary>
+            <value>The property value.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractDataMappingContext.Object">
+            <summary>
+            The object containing the property being mapped
+            </summary>
+            <value>The object.</value>
+        </member>
+        <member name="M:Glass.Mapper.IAbstractService.CreateDataMappingContext(Glass.Mapper.AbstractTypeCreationContext,System.Object)">
+            <summary>
+            Used to create the context used by DataMappers to map data to a class
+            </summary>
+            <param name="creationContext">The Type Creation Context used to create the instance</param>
+            <param name="obj">The newly instantiated object without any data mapped</param>
+            <returns></returns>
+        </member>
+        <member name="M:Glass.Mapper.IAbstractService.CreateDataMappingContext(Glass.Mapper.AbstractTypeSavingContext)">
+            <summary>
+            Used to create the context used by DataMappers to map data from a class
+            </summary>
+            <param name="creationContext">The Saving Context</param>
+            <returns></returns>
+        </member>
+        <member name="M:Glass.Mapper.AbstractService.CreateDataMappingContext(Glass.Mapper.AbstractTypeCreationContext,System.Object)">
+            <summary>
+            Used to create the context used by DataMappers to map data to a class
+            </summary>
+            <param name="creationContext"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Glass.Mapper.AbstractService.CreateDataMappingContext(Glass.Mapper.AbstractTypeSavingContext)">
+            <summary>
+            Used to create the context used by DataMappers to map data from a class
+            </summary>
+            <param name="creationContext"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Glass.Mapper.AbstractTypeSavingContext">
+            <summary>
+            Class AbstractTypeSavingContext
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeSavingContext.Config">
+            <summary>
+            Gets or sets the config.
+            </summary>
+            <value>The config.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeSavingContext.Object">
+            <summary>
+            Gets or sets the object.
+            </summary>
+            <value>The object.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.AbstractTypeConfiguration">
+            <summary>
+            Represents the configuration for a .Net type
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.AbstractTypeConfiguration"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.AddProperty(Glass.Mapper.Configuration.AbstractPropertyConfiguration)">
+            <summary>
+            Adds the property.
+            </summary>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.MapPropertiesToObject(System.Object,Glass.Mapper.IAbstractService,Glass.Mapper.AbstractTypeCreationContext)">
+            <summary>
+            Maps the properties to object.
+            </summary>
+            <param name="obj">The obj.</param>
+            <param name="service">The service.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.PerformAutoMap">
+            <summary>
+            Called when the AutoMap property is true. Automatically maps un-specified properties.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractTypeConfiguration.AutoMapProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Called to map each property automatically
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractTypeConfiguration.Type">
+            <summary>
+            The type this configuration represents
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractTypeConfiguration.Properties">
+            <summary>
+            A list of the properties configured on a type
+            </summary>
+            <value>The properties.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractTypeConfiguration.ConstructorMethods">
+            <summary>
+            A list of the constructors on a type
+            </summary>
+            <value>The constructor methods.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractTypeConfiguration.AutoMap">
+            <summary>
+            Indicates properties should be automatically mapped
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.AbstractPropertyConfiguration">
+            <summary>
+            Represents the configuration for a property on a .Net type
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.AbstractPropertyConfiguration.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/> that represents this instance.</returns>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractPropertyConfiguration.PropertyInfo">
+            <summary>
+            Gets or sets the property info.
+            </summary>
+            <value>The property info.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.AbstractPropertyConfiguration.Mapper">
+            <summary>
+            Gets the mapper.
+            </summary>
+            <value>The mapper.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2">
+            <summary>
+            Class AttributeConfigurationLoader
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K"></typeparam>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.IConfigurationLoader">
+            <summary>
+            Interface IConfigurationLoader
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.IConfigurationLoader.Load">
+            <summary>
+            Loads this instance.
+            </summary>
+            <returns>IEnumerable{AbstractTypeConfiguration}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2"/> class.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.FindAssembly(System.String)">
+            <summary>
+            Finds the assembly.
+            </summary>
+            <param name="assemblyName">Name of the assembly.</param>
+            <returns>Assembly.</returns>
+            <exception cref="T:Glass.Mapper.Configuration.ConfigurationException">Could not find assembly called {0}.Formatted(assemblyName)</exception>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.Load">
+            <summary>
+            Loads this instance.
+            </summary>
+            <returns>IEnumerable{AbstractTypeConfiguration}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.LoadFromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Processes a specific assembly
+            </summary>
+            <param name="assembly">The assembly.</param>
+            <returns>IEnumerable{`0}.</returns>
+            <exception cref="T:Glass.Mapper.Configuration.ConfigurationException">Failed to load types {0}.Formatted(ex.LoaderExceptions.First().Message)</exception>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.ConfigCreated(Glass.Mapper.Configuration.AbstractTypeConfiguration)">
+            <summary>
+            This method is called after a configuration has been loaded. Use this method for any specific
+            post configuration processing
+            </summary>
+            <param name="config">The config.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.LoadPropertiesFromType(System.Type)">
+            <summary>
+            Loads the type of the properties from.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>IEnumerable{AbstractPropertyConfiguration}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.ProcessProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Processes the property.
+            </summary>
+            <param name="property">The property.</param>
+            <returns>AbstractPropertyConfiguration.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader`2.GetPropertyAttribute(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets the property attribute.
+            </summary>
+            <param name="info">The info.</param>
+            <returns>AbstractPropertyAttribute.</returns>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.AbstractPropertyAttribute">
+            <summary>
+            Abstract class for all property attributes
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AbstractPropertyAttribute.Configure(System.Reflection.PropertyInfo)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <returns>AbstractPropertyConfiguration.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AbstractPropertyAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.AbstractPropertyConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.ChildrenAttribute">
+            <summary>
+            Indicates that the property should contain the children of the current item
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.ChildrenAttribute.#ctor">
+            <summary>
+            Used to retrieve the children of an item as a specific type.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.ChildrenAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.ChildrenConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.ChildrenAttribute.IsLazy">
+            <summary>
+            Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.ChildrenAttribute.InferType">
+            <summary>
+            Indicates the type should be inferred from the item template
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.AbstractTypeAttribute">
+            <summary>
+            Class AbstractTypeAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AbstractTypeAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.AbstractTypeAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.AbstractTypeAttribute.Configure(System.Type,Glass.Mapper.Configuration.AbstractTypeConfiguration)">
+            <summary>
+            Configures the specified type.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.AbstractTypeAttribute.AutoMap">
+            <summary>
+            Indicates that properties should be automapped rather than loaded explicitly. 
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.IdAttribute">
+            <summary>
+            Class IdAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.IdAttribute.#ctor(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.IdAttribute"/> class.
+            </summary>
+            <param name="acceptedTypes">The accepted types.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.IdAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.IdConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+            <exception cref="T:Glass.Mapper.Configuration.ConfigurationException">Property type {0} not supported as an ID on {1}
+                                .Formatted(propertyInfo.PropertyType.FullName, propertyInfo.DeclaringType.FullName)</exception>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.IdAttribute.AcceptedTypes">
+            <summary>
+            Gets the accepted types.
+            </summary>
+            <value>The accepted types.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.InfoAttribute">
+            <summary>
+            Class InfoAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.InfoAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.InfoConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.LinkedAttribute">
+            <summary>
+            Class LinkedAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.LinkedAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.LinkedAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.LinkedAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.LinkedConfiguration)">
+            <summary>
+            Configures the specified info.
+            </summary>
+            <param name="info">The info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.LinkedAttribute.IsLazy">
+            <summary>
+            Indicates if linked items should be loaded lazily. Default value is true. If false linked items will be loaded when the contain object is created.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.LinkedAttribute.InferType">
+            <summary>
+            Indicates the type should be inferred from the item template
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.NodeAttribute">
+            <summary>
+            Class NodeAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.NodeAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.NodeAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.NodeAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.NodeConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.NodeAttribute.IsLazy">
+            <summary>
+            Indicates that the item should be loaded lazily. Default value is true. If false the item will be loaded when the containing object is created.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.NodeAttribute.Path">
+            <summary>
+            The path to the item. If both a path and ID are specified the ID will be used.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.NodeAttribute.Id">
+            <summary>
+            The Id of the item.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.ParentAttribute">
+            <summary>
+            Class ParentAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.ParentAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.ParentAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.ParentAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.ParentConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.ParentAttribute.IsLazy">
+            <summary>
+            Indicates if the parent should be loaded lazily. Default value is true. If false parent will be loaded when the contain object is created.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.ParentAttribute.InferType">
+            <summary>
+            Indicates the type should be inferred from the item template
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.FieldAttribute">
+            <summary>
+            Class FieldAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.FieldAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.FieldAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.FieldAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.FieldConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.FieldAttribute.ReadOnly">
+            <summary>
+            When true the field will not be save back
+            </summary>
+            <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.Attributes.QueryAttribute">
+            <summary>
+            Class QueryAttribute
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.QueryAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.Attributes.QueryAttribute"/> class.
+            </summary>
+            <param name="query">The query.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.Attributes.QueryAttribute.Configure(System.Reflection.PropertyInfo,Glass.Mapper.Configuration.QueryConfiguration)">
+            <summary>
+            Configures the specified property info.
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="config">The config.</param>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.QueryAttribute.Query">
+            <summary>
+            The query to execute
+            </summary>
+            <value>The query.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.QueryAttribute.IsLazy">
+            <summary>
+            Indicates that the results should be loaded lazily
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.QueryAttribute.IsRelative">
+            <summary>
+            Indicates that the field is relative to the current item.
+            </summary>
+            <value><c>true</c> if this instance is relative; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.Attributes.QueryAttribute.InferType">
+            <summary>
+            Indicates the type should be inferred from the item template
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.ChildrenConfiguration">
+            <summary>
+            Class ChildrenConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.ChildrenConfiguration.IsLazy">
+            <summary>
+            Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.ChildrenConfiguration.InferType">
+            <summary>
+            Indicates the type should be inferred from the item template
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.ConfigurationException">
+            <summary>
+            Class ConfigurationException
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.ConfigurationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ApplicationException" /> class with a specified error message.
+            </summary>
+            <param name="message">A message that describes the error.</param>
+        </member>
+        <member name="M:Glass.Mapper.Configuration.ConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Configuration.ConfigurationException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="ex">The ex.</param>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.FieldConfiguration">
+            <summary>
+            Class FieldConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.FieldConfiguration.ReadOnly">
+            <summary>
+            Gets or sets a value indicating whether [read only].
+            </summary>
+            <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.IdConfiguration">
+            <summary>
+            Class IdConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.IdConfiguration.Type">
+            <summary>
+            Gets or sets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.InfoConfiguration">
+            <summary>
+            Class InfoConfiguration
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.LinkedConfiguration">
+            <summary>
+            Class LinkedConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.LinkedConfiguration.IsLazy">
+            <summary>
+            Gets or sets a value indicating whether this instance is lazy.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.LinkedConfiguration.InferType">
+            <summary>
+            Gets or sets a value indicating whether [infer type].
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.NodeConfiguration">
+            <summary>
+            Class NodeConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.NodeConfiguration.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.NodeConfiguration.IsLazy">
+            <summary>
+            Gets or sets a value indicating whether this instance is lazy.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.NodeConfiguration.Path">
+            <summary>
+            Gets or sets the path.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.NodeConfiguration.InferType">
+            <summary>
+            Gets or sets a value indicating whether [infer type].
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.ParentConfiguration">
+            <summary>
+            Class ParentConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.ParentConfiguration.IsLazy">
+            <summary>
+            Gets or sets a value indicating whether this instance is lazy.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.ParentConfiguration.InferType">
+            <summary>
+            Gets or sets a value indicating whether [infer type].
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Configuration.QueryConfiguration">
+            <summary>
+            Class QueryConfiguration
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.QueryConfiguration.Query">
+            <summary>
+            Gets or sets the query.
+            </summary>
+            <value>The query.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.QueryConfiguration.IsLazy">
+            <summary>
+            Gets or sets a value indicating whether this instance is lazy.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.QueryConfiguration.IsRelative">
+            <summary>
+            Gets or sets a value indicating whether this instance is relative.
+            </summary>
+            <value><c>true</c> if this instance is relative; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.Configuration.QueryConfiguration.InferType">
+            <summary>
+            Gets or sets a value indicating whether [infer type].
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Context">
+            <summary>
+            The context contains the configuration of Glass.Mapper
+            </summary>
+        </member>
+        <member name="F:Glass.Mapper.Context.DefaultContextName">
+            <summary>
+            The default context name
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Context.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Glass.Mapper.Context"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Context.Create(Glass.Mapper.IDependencyResolver)">
+            <summary>
+            Creates a Context and creates it as the default Context. This is assigned to the Default static property.
+            </summary>
+            <param name="resolver">The resolver.</param>
+            <returns>Context.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Context.Create(Glass.Mapper.IDependencyResolver,System.String,System.Boolean)">
+            <summary>
+            Creates a new context and adds it to the Contexts dictionary.
+            </summary>
+            <param name="resolver">The resolver.</param>
+            <param name="contextName">The context name, used as the key in the Contexts dictionary.</param>
+            <param name="isDefault">Indicates if this is the default context. If it is the context is assigned to the Default static property.</param>
+            <returns>Context.</returns>
+            <exception cref="T:System.NullReferenceException">No dependency resolver set.</exception>
+        </member>
+        <member name="M:Glass.Mapper.Context.Clear">
+            <summary>
+            Clears all static and default contexts
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Context.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Glass.Mapper.Context"/> class from being created.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Context.Load(Glass.Mapper.Configuration.IConfigurationLoader[])">
+            <summary>
+            Loads the specified loaders.
+            </summary>
+            <param name="loaders">The list of configuration loaders to load into the context.</param>
+        </member>
+        <member name="M:Glass.Mapper.Context.ProcessProperties(System.Collections.Generic.IEnumerable{Glass.Mapper.Configuration.AbstractPropertyConfiguration})">
+            <summary>
+            Processes the properties.
+            </summary>
+            <param name="properties">The properties.</param>
+            <exception cref="T:System.NullReferenceException">Could not find data mapper for property {0} on type {1}
+                                    .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
+        </member>
+        <member name="M:Glass.Mapper.Context.GetTypeConfiguration(System.Object)">
+            <summary>
+            Gets the type configuration.
+            </summary>
+            <param name="obj">The obj.</param>
+            <returns>AbstractTypeConfiguration.</returns>
+        </member>
+        <member name="P:Glass.Mapper.Context.Default">
+            <summary>
+            The default Context. Used by services if no Context is specified.
+            </summary>
+            <value>The default.</value>
+        </member>
+        <member name="P:Glass.Mapper.Context.Contexts">
+            <summary>
+            Contains the list of Contexts currently loaded.
+            </summary>
+            <value>The contexts.</value>
+        </member>
+        <member name="P:Glass.Mapper.Context.TypeConfigurations">
+            <summary>
+            List of the type configurations loaded by this context
+            </summary>
+            <value>The type configurations.</value>
+        </member>
+        <member name="P:Glass.Mapper.Context.DependencyResolver">
+            <summary>
+            The dependency resolver used by services using the context
+            </summary>
+            <value>The dependency resolver.</value>
+        </member>
+        <member name="P:Glass.Mapper.Context.Item(System.Type)">
+            <summary>
+            Gets a type configuration based on type
+            </summary>
+            <param name="type">The type.</param>
+            <returns>AbstractTypeConfiguration.</returns>
+        </member>
+        <member name="T:Glass.Mapper.ExtensionMethods">
+            <summary>
+            Class ExtensionMethods
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.Formatted(System.String,System.Object[])">
+            <summary>
+            Replaces the format item in a specified string with the string representation
+            of a corresponding object in a specified array.
+            </summary>
+            <param name="target">A composite format string (see Remarks).</param>
+            <param name="args">An object array that contains zero or more objects to format.</param>
+            <returns>A copy of format in which the format items have been replaced by the string
+            representation of the corresponding objects in args.</returns>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.IsNullOrEmpty(System.String)">
+            <summary>
+            Indicates whether the specified string is null or an System.String.Empty
+            string.
+            </summary>
+            <param name="target">The string to test.</param>
+            <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.IsNotNullOrEmpty(System.String)">
+            <summary>
+            Indicates whether the specified string is not null and isn't System.String.Empty
+            string.
+            </summary>
+            <param name="target">The string to test.</param>
+            <returns>flase if the value parameter is null or an empty string (""); otherwise, true.</returns>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Fors the each.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">The list.</param>
+            <param name="action">The action.</param>
+            <returns>IEnumerable{``0}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.MakeEnumerable``1(``0)">
+            <summary>
+            Makes the enumerable.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The obj.</param>
+            <returns>IEnumerable{``0}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.ExtensionMethods.CastTo``1(System.Object)">
+            <summary>
+            Casts to.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="target">The target.</param>
+            <returns>``0.</returns>
+        </member>
+        <member name="T:Glass.Mapper.AbstractTypeCreationContext">
+            <summary>
+            The base class for the context loading an item from the CMS
+            </summary>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeCreationContext.InferType">
+            <summary>
+            Gets or sets a value indicating whether [infer type].
+            </summary>
+            <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeCreationContext.IsLazy">
+            <summary>
+            Gets or sets a value indicating whether this instance is lazy.
+            </summary>
+            <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeCreationContext.RequestedType">
+            <summary>
+            Gets or sets the type of the requested.
+            </summary>
+            <value>The type of the requested.</value>
+        </member>
+        <member name="P:Glass.Mapper.AbstractTypeCreationContext.ConstructorParameters">
+            <summary>
+            Gets or sets the constructor parameters.
+            </summary>
+            <value>The constructor parameters.</value>
+        </member>
+        <member name="T:Glass.Mapper.FakePropertyInfo">
+            <summary>
+            This is used to fake the System.Reflection.PropertyInfo class when needed.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.FakePropertyInfo"/> class.
+            </summary>
+            <param name="propertyType">Type of the property.</param>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.#ctor(System.Type,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.FakePropertyInfo"/> class.
+            </summary>
+            <param name="propertyType">Type of the property.</param>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetAccessors(System.Boolean)">
+            <summary>
+            Returns an array whose elements reflect the public and, if specified, non-public get, set, and other accessors of the property reflected by the current instance.
+            </summary>
+            <param name="nonPublic">Indicates whether non-public methods should be returned in the MethodInfo array. true if non-public methods are to be included; otherwise, false.</param>
+            <returns>An array of <see cref="T:System.Reflection.MethodInfo"/> objects whose elements reflect the get, set, and other accessors of the property reflected by the current instance. If <paramref name="nonPublic"/> is true, this array contains public and non-public get, set, and other accessors. If <paramref name="nonPublic"/> is false, this array contains only public get, set, and other accessors. If no accessors with the specified visibility are found, this method returns an array with zero (0) elements.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetGetMethod(System.Boolean)">
+            <summary>
+            When overridden in a derived class, returns the public or non-public get accessor for this property.
+            </summary>
+            <param name="nonPublic">Indicates whether a non-public get accessor should be returned. true if a non-public accessor is to be returned; otherwise, false.</param>
+            <returns>A MethodInfo object representing the get accessor for this property, if <paramref name="nonPublic"/> is true. Returns null if <paramref name="nonPublic"/> is false and the get accessor is non-public, or if <paramref name="nonPublic"/> is true but no get accessors exist.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetIndexParameters">
+            <summary>
+            When overridden in a derived class, returns an array of all the index parameters for the property.
+            </summary>
+            <returns>An array of type ParameterInfo containing the parameters for the indexes.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetSetMethod(System.Boolean)">
+            <summary>
+            When overridden in a derived class, returns the set accessor for this property.
+            </summary>
+            <param name="nonPublic">Indicates whether the accessor should be returned if it is non-public. true if a non-public accessor is to be returned; otherwise, false.</param>
+            <returns>Value Condition A <see cref="T:System.Reflection.MethodInfo"/> object representing the Set method for this property. The set accessor is public.-or- <paramref name="nonPublic"/> is true and the set accessor is non-public. null<paramref name="nonPublic"/> is true, but the property is read-only.-or- <paramref name="nonPublic"/> is false and the set accessor is non-public.-or- There is no set accessor.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetValue(System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)">
+            <summary>
+            When overridden in a derived class, returns the value of a property having the specified binding, index, and <see cref="T:System.Globalization.CultureInfo"/>.
+            </summary>
+            <param name="obj">The object whose property value will be returned.</param>
+            <param name="invokeAttr">The invocation attribute. This must be a bit flag from BindingFlags : InvokeMethod, CreateInstance, Static, GetField, SetField, GetProperty, or SetProperty. A suitable invocation attribute must be specified. If a static member is to be invoked, the Static flag of BindingFlags must be set.</param>
+            <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of MemberInfo objects via reflection. If <paramref name="binder"/> is null, the default binder is used.</param>
+            <param name="index">Optional index values for indexed properties. This value should be null for non-indexed properties.</param>
+            <param name="culture">The CultureInfo object that represents the culture for which the resource is to be localized. Note that if the resource is not localized for this culture, the CultureInfo.Parent method will be called successively in search of a match. If this value is null, the CultureInfo is obtained from the CultureInfo.CurrentUICulture property.</param>
+            <returns>The property value for <paramref name="obj"/>.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.SetValue(System.Object,System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)">
+            <summary>
+            When overridden in a derived class, sets the property value for the given object to the given value.
+            </summary>
+            <param name="obj">The object whose property value will be set.</param>
+            <param name="value">The new value for this property.</param>
+            <param name="invokeAttr">The invocation attribute. This must be a bit flag from <see cref="T:System.Reflection.BindingFlags"/> : InvokeMethod, CreateInstance, Static, GetField, SetField, GetProperty, or SetProperty. A suitable invocation attribute must be specified. If a static member is to be invoked, the Static flag of BindingFlags must be set.</param>
+            <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo"/> objects through reflection. If <paramref name="binder"/> is null, the default binder is used.</param>
+            <param name="index">Optional index values for indexed properties. This value should be null for non-indexed properties.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> object that represents the culture for which the resource is to be localized. Note that if the resource is not localized for this culture, the CultureInfo.Parent method will be called successively in search of a match. If this value is null, the CultureInfo is obtained from the CultureInfo.CurrentUICulture property.</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetCustomAttributes(System.Type,System.Boolean)">
+            <summary>
+            When overridden in a derived class, returns an array of custom attributes identified by <see cref="T:System.Type"/>.
+            </summary>
+            <param name="attributeType">The type of attribute to search for. Only attributes that are assignable to this type are returned.</param>
+            <param name="inherit">Specifies whether to search this member's inheritance chain to find the attributes.</param>
+            <returns>An array of custom attributes applied to this member, or an array with zero (0) elements if no attributes have been applied.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.GetCustomAttributes(System.Boolean)">
+            <summary>
+            When overridden in a derived class, returns an array containing all the custom attributes.
+            </summary>
+            <param name="inherit">Specifies whether to search this member's inheritance chain to find the attributes.</param>
+            <returns>An array that contains all the custom attributes, or an array with zero elements if no attributes are defined.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Glass.Mapper.FakePropertyInfo.IsDefined(System.Type,System.Boolean)">
+            <summary>
+            When overridden in a derived class, indicates whether one or more instance of <paramref name="attributeType"/> is applied to this member.
+            </summary>
+            <param name="attributeType">The Type object to which the custom attributes are applied.</param>
+            <param name="inherit">Specifies whether to search this member's inheritance chain to find the attributes.</param>
+            <returns>true if one or more instance of <paramref name="attributeType"/> is applied to this member; otherwise false.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.Attributes">
+            <summary>
+            Gets the attributes for this property.
+            </summary>
+            <value>The attributes.</value>
+            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>Attributes of this property.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.CanRead">
+            <summary>
+            Gets a value indicating whether the property can be read.
+            </summary>
+            <value><c>true</c> if this instance can read; otherwise, <c>false</c>.</value>
+            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>true if this property can be read; otherwise, false.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.CanWrite">
+            <summary>
+            Gets a value indicating whether the property can be written to.
+            </summary>
+            <value><c>true</c> if this instance can write; otherwise, <c>false</c>.</value>
+            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>true if this property can be written to; otherwise, false.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.PropertyType">
+            <summary>
+            Gets the type of this property.
+            </summary>
+            <value>The type of the property.</value>
+            <returns>The type of this property.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.DeclaringType">
+            <summary>
+            Gets the class that declares this member.
+            </summary>
+            <value>The type of the declaring.</value>
+            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>The Type object for the class that declares this member.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.Name">
+            <summary>
+            Gets the name of the current member.
+            </summary>
+            <value>The name.</value>
+            <returns>A <see cref="T:System.String" /> containing the name of this member.</returns>
+        </member>
+        <member name="P:Glass.Mapper.FakePropertyInfo.ReflectedType">
+            <summary>
+            Gets the class object that was used to obtain this instance of MemberInfo.
+            </summary>
+            <value>The type of the reflected.</value>
+            <returns>The Type object through which this MemberInfo object was obtained.</returns>
+        </member>
+        <member name="T:Glass.Mapper.IDependencyResolver">
+            <summary>
+            Interface IDependencyResolver
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.IDependencyResolver.Resolve``1(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Resolves the specified args.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="args">The args.</param>
+            <returns>``0.</returns>
+        </member>
+        <member name="M:Glass.Mapper.IDependencyResolver.ResolveAll``1">
+            <summary>
+            Resolves all.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns>IEnumerable{``0}.</returns>
+        </member>
+        <member name="T:Glass.Mapper.IGlassConfiguration">
+            <summary>
+            Interface IGlassConfiguration
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.IConfigurationResolverTask">
+            <summary>
+            Interface IConfigurationResolverTask
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.IPipelineTask`1">
+            <summary>
+            Interface IPipelineTask
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.IPipelineTask`1.Execute(`0)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver.ConfigurationOnDemandResolverTask`1.Execute(Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="T:Glass.Mapper.Profilers.ChainedProfiler">
+            <summary>
+            Class ChainedProfiler
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Profilers.IPerformanceProfiler">
+            <summary>
+            Interface IPerformanceProfiler
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.IPerformanceProfiler.Start(System.String)">
+            <summary>
+            Starts the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.IPerformanceProfiler.End(System.String)">
+            <summary>
+            Ends the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.ChainedProfiler.#ctor(System.Collections.Generic.IEnumerable{Glass.Mapper.Profilers.IPerformanceProfiler})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Profilers.ChainedProfiler"/> class.
+            </summary>
+            <param name="profilers">The profilers.</param>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.ChainedProfiler.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Profilers.ChainedProfiler"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.ChainedProfiler.Start(System.String)">
+            <summary>
+            Starts the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.ChainedProfiler.End(System.String)">
+            <summary>
+            Ends the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="P:Glass.Mapper.Profilers.ChainedProfiler.Profilers">
+            <summary>
+            Gets or sets the profilers.
+            </summary>
+            <value>The profilers.</value>
+        </member>
+        <member name="T:Glass.Mapper.MapperException">
+            <summary>
+            Class MapperException
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.MapperException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Exception" /> class with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Glass.Mapper.MapperException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.MapperException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="ex">The ex.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.AbstractPipelineArgs">
+            <summary>
+            Abstract class that acts as the base class for all arguments passed in pipelines
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.AbstractPipelineArgs.#ctor(Glass.Mapper.Context)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.AbstractPipelineArgs"/> class.
+            </summary>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.AbstractPipelineArgs.AbortPipeline">
+            <summary>
+            Aborts the pipeline.
+            </summary>
+            <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.AbstractPipelineArgs.Context">
+            <summary>
+            Gets the context.
+            </summary>
+            <value>The context.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.AbstractPipelineArgs.IsAborted">
+            <summary>
+            Gets a value indicating whether this instance is aborted.
+            </summary>
+            <value><c>true</c> if this instance is aborted; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.AbstractPipelineRunner`2">
+            <summary>
+            The abstract base class that represents a pipeline runner. The runner calls each individual task
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K"></typeparam>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.AbstractPipelineRunner`2.#ctor(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.AbstractPipelineRunner`2"/> class.
+            </summary>
+            <param name="tasks">The tasks.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.AbstractPipelineRunner`2.Run(`0)">
+            <summary>
+            Runs a pipeline and returns the resultant arguments
+            </summary>
+            <param name="args">The args.</param>
+            <returns>`0.</returns>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.AbstractPipelineRunner`2.Tasks">
+            <summary>
+            Gets the tasks.
+            </summary>
+            <value>The tasks.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.AbstractPipelineRunner`2.Profiler">
+            <summary>
+            Gets or sets the profiler.
+            </summary>
+            <value>The profiler.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs">
+            <summary>
+            Class ConfigurationResolverArgs
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs.#ctor(Glass.Mapper.Context,Glass.Mapper.AbstractTypeCreationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="abstractTypeCreationContext">The abstract type creation context.</param>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs.AbstractTypeCreationContext">
+            <summary>
+            Gets the abstract type creation context.
+            </summary>
+            <value>The abstract type creation context.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs.Result">
+            <summary>
+            Gets or sets the result.
+            </summary>
+            <value>The result.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolver">
+            <summary>
+            Class ConfigurationResolver
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolver.#ctor(System.Collections.Generic.IEnumerable{Glass.Mapper.Pipelines.ConfigurationResolver.IConfigurationResolverTask})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolver"/> class.
+            </summary>
+            <param name="tasks">The tasks.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver.ConfigurationStandardResolverTask">
+            <summary>
+            Class ConfigurationStandardResolverTask
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver.ConfigurationStandardResolverTask.Execute(Glass.Mapper.Pipelines.ConfigurationResolver.ConfigurationResolverArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs">
+            <summary>
+            Class DataMapperResolverArgs
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs.#ctor(Glass.Mapper.Context,Glass.Mapper.Configuration.AbstractPropertyConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs.PropertyConfiguration">
+            <summary>
+            The configuration of the property to load
+            </summary>
+            <value>The property configuration.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs.Result">
+            <summary>
+            The data mapper to use when loading the property
+            </summary>
+            <value>The result.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs.DataMappers">
+            <summary>
+            A list of all the data mappers loaded by the current context
+            </summary>
+            <value>The data mappers.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolver">
+            <summary>
+            Class DataMapperResolver
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolver.#ctor(System.Collections.Generic.IEnumerable{Glass.Mapper.Pipelines.DataMapperResolver.IDataMapperResolverTask})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolver"/> class.
+            </summary>
+            <param name="tasks">The tasks.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.DataMapperResolver.IDataMapperResolverTask">
+            <summary>
+            Interface IDataMapperResolverTask
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.DataMapperResolver.Tasks.DataMapperStandardResolverTask">
+            <summary>
+            Class DataMapperStandardResolverTask
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.DataMapperResolver.Tasks.DataMapperStandardResolverTask.Execute(Glass.Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+            <exception cref="T:Glass.Mapper.MapperException">Could not find data mapper to handler property {0}.Formatted(args.PropertyConfiguration)</exception>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.IObjectConstructionTask">
+            <summary>
+            Interface IObjectConstructionTask
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionException">
+            <summary>
+            Class ObjectConstructionException
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ApplicationException" /> class with a specified error message.
+            </summary>
+            <param name="message">A message that describes the error.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstruction">
+            <summary>
+            Class ObjectConstruction
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstruction.#ctor(System.Collections.Generic.IEnumerable{Glass.Mapper.Pipelines.ObjectConstruction.IObjectConstructionTask})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstruction"/> class.
+            </summary>
+            <param name="tasks">The tasks.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs">
+            <summary>
+            Class ObjectConstructionArgs
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs.#ctor(Glass.Mapper.Context,Glass.Mapper.AbstractTypeCreationContext,Glass.Mapper.Configuration.AbstractTypeConfiguration,Glass.Mapper.IAbstractService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="abstractTypeCreationContext">The abstract type creation context.</param>
+            <param name="configuration">The configuration.</param>
+            <param name="service">The service.</param>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs.AbstractTypeCreationContext">
+            <summary>
+            Context of the item being created
+            </summary>
+            <value>The abstract type creation context.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs.Configuration">
+            <summary>
+            The configuration to use to load the object
+            </summary>
+            <value>The configuration.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs.Service">
+            <summary>
+            Gets the service.
+            </summary>
+            <value>The service.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs.Result">
+            <summary>
+            Gets or sets the result.
+            </summary>
+            <value>The result.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask">
+            <summary>
+            Class CreateConcreteTask
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask.Execute(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask.CreateLazyObject(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Creates the lazy object.
+            </summary>
+            <param name="args">The args.</param>
+            <returns>System.Object.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.CreateConcreteTask.CreateObject(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Creates the object.
+            </summary>
+            <param name="args">The args.</param>
+            <returns>System.Object.</returns>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectProxyHook">
+            <summary>
+            Class LazyObjectProxyHook
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectProxyHook.MethodsInspected">
+            <summary>
+            Invoked by the generation process to notify that the whole process has completed.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectProxyHook.NonProxyableMemberNotification(System.Type,System.Reflection.MemberInfo)">
+            <summary>
+            Invoked by the generation process to notify that a member was not marked as virtual.
+            </summary>
+            <param name="type">The type which declares the non-virtual member.</param>
+            <param name="memberInfo">The non-virtual member.</param>
+            <exception cref="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionException">Can not proxy method {0} on class {1}..Formatted(memberInfo.Name, type.FullName)</exception>
+            <remarks>This method gives an opportunity to inspect any non-proxyable member of a type that has
+            been requested to be proxied, and if appropriate - throw an exception to notify the caller.</remarks>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectProxyHook.ShouldInterceptMethod(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            Invoked by the generation process to determine if the specified method should be proxied.
+            </summary>
+            <param name="type">The type which declares the given method.</param>
+            <param name="methodInfo">The method to inspect.</param>
+            <returns>True if the given method should be proxied; false otherwise.</returns>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectInterceptor">
+            <summary>
+            Class LazyObjectInterceptor
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectInterceptor.#ctor(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectInterceptor"/> class.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete.LazyObjectInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
+            <summary>
+            Intercepts the specified invocation.
+            </summary>
+            <param name="invocation">The invocation.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceProxyHook">
+            <summary>
+            Class CreateInterfaceProxyHook
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceProxyHook.MethodsInspected">
+            <summary>
+            Invoked by the generation process to notify that the whole process has completed.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceProxyHook.NonProxyableMemberNotification(System.Type,System.Reflection.MemberInfo)">
+            <summary>
+            Invoked by the generation process to notify that a member was not marked as virtual.
+            </summary>
+            <param name="type">The type which declares the non-virtual member.</param>
+            <param name="memberInfo">The non-virtual member.</param>
+            <exception cref="T:Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionException">Can not proxy method {0} on interface {1}. Only properties of interface can be proxied.Formatted(memberInfo.Name, type.FullName)</exception>
+            <remarks>This method gives an opportunity to inspect any non-proxyable member of a type that has
+            been requested to be proxied, and if appropriate - throw an exception to notify the caller.</remarks>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceProxyHook.ShouldInterceptMethod(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            Invoked by the generation process to determine if the specified method should be proxied.
+            </summary>
+            <param name="type">The type which declares the given method.</param>
+            <param name="methodInfo">The method to inspect.</param>
+            <returns>True if the given method should be proxied; false otherwise.</returns>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceTask">
+            <summary>
+            Creates classes based on interfaces
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceTask.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceTask"/> class.
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.CreateInterfaceTask.Execute(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.InterfacePropertyInterceptor">
+            <summary>
+            Class InterfacePropertyInterceptor
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.InterfacePropertyInterceptor.#ctor(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.InterfacePropertyInterceptor"/> class.
+            </summary>
+            <param name="args">The args.</param>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface.InterfacePropertyInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
+            <summary>
+            Intercepts the specified invocation.
+            </summary>
+            <param name="invocation">The invocation.</param>
+            <exception cref="T:Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectSaving.IObjectSavingTask">
+            <summary>
+            Interface IObjectSavingTask
+            </summary>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectSaving.ObjectSaving">
+            <summary>
+            Class ObjectSaving
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectSaving.ObjectSaving.#ctor(System.Collections.Generic.IEnumerable{Glass.Mapper.Pipelines.ObjectSaving.IObjectSavingTask})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectSaving.ObjectSaving"/> class.
+            </summary>
+            <param name="tasks">The tasks.</param>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs">
+            <summary>
+            Class ObjectSavingArgs
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs.#ctor(Glass.Mapper.Context,System.Object,Glass.Mapper.AbstractTypeSavingContext,Glass.Mapper.IAbstractService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="target">The target.</param>
+            <param name="savingContext">The saving context.</param>
+            <param name="service">The service.</param>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs.Target">
+            <summary>
+            Gets the target.
+            </summary>
+            <value>The target.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs.SavingContext">
+            <summary>
+            Gets the saving context.
+            </summary>
+            <value>The saving context.</value>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs.Service">
+            <summary>
+            Gets the service.
+            </summary>
+            <value>The service.</value>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.ObjectSaving.Tasks.StandardSavingTask">
+            <summary>
+            Class StandardSavingTask
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.ObjectSaving.Tasks.StandardSavingTask.Execute(Glass.Mapper.Pipelines.ObjectSaving.ObjectSavingArgs)">
+            <summary>
+            Executes the specified args.
+            </summary>
+            <param name="args">The args.</param>
+            <exception cref="T:Glass.Mapper.Pipelines.PipelineException">No config set, can not save object</exception>
+        </member>
+        <member name="T:Glass.Mapper.Pipelines.PipelineException">
+            <summary>
+            Class PipelineException
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Pipelines.PipelineException.#ctor(System.String,Glass.Mapper.Pipelines.AbstractPipelineArgs)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Glass.Mapper.Pipelines.PipelineException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="args">The args.</param>
+        </member>
+        <member name="P:Glass.Mapper.Pipelines.PipelineException.Args">
+            <summary>
+            Gets the args.
+            </summary>
+            <value>The args.</value>
+        </member>
+        <member name="T:Glass.Mapper.Profilers.NullProfiler">
+            <summary>
+            Class NullProfiler
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.NullProfiler.Start(System.String)">
+            <summary>
+            Starts the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.NullProfiler.End(System.String)">
+            <summary>
+            Ends the specified key.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="T:Glass.Mapper.Profilers.SimpleProfiler">
+            <summary>
+            Class SimpleProfiler
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.SimpleProfiler.Start(System.String)">
+            <summary>
+            Starts the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <exception cref="T:System.NotSupportedException">Watch with key {0} already started.Formatted(key)</exception>
+        </member>
+        <member name="M:Glass.Mapper.Profilers.SimpleProfiler.End(System.String)">
+            <summary>
+            Ends the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <exception cref="T:System.NotSupportedException">No Watch with key {0} found.Formatted(key)</exception>
+        </member>
+        <member name="T:Glass.Mapper.Utilities">
+            <summary>
+            Class Utilities
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Utilities.CreateConstructorDelegates(System.Type)">
+            <summary>
+            Returns a delegate method that will load a class based on its constuctor
+            </summary>
+            <param name="type">The type.</param>
+            <returns>IDictionary{ConstructorInfoDelegate}.</returns>
+            <exception cref="T:Glass.Mapper.MapperException">Only supports constructors with  a maximum of 4 parameters</exception>
+        </member>
+        <member name="F:Glass.Mapper.Utilities.Flags">
+            <summary>
+            The flags
+            </summary>
+        </member>
+        <member name="M:Glass.Mapper.Utilities.GetProperty(System.Type,System.String)">
+            <summary>
+            Gets a property based on the type and name
+            </summary>
+            <param name="type">The type.</param>
+            <param name="name">The name.</param>
+            <returns>PropertyInfo.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Utilities.GetAllProperties(System.Type)">
+            <summary>
+            Gets all properties on a type
+            </summary>
+            <param name="type">The type.</param>
+            <returns>IEnumerable{PropertyInfo}.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Utilities.CreateGenericType(System.Type,System.Type[],System.Object[])">
+            <summary>
+            Creates the type of the generic.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="arguments">The arguments.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>System.Object.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Utilities.GetPropertyInfo(System.Type,System.Linq.Expressions.Expression)">
+            <summary>
+            Returns a PropertyInfo based on a link expression, it will pull the first property name from the linq express.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="expression">The expression.</param>
+            <returns>PropertyInfo.</returns>
+        </member>
+    </members>
+</doc>

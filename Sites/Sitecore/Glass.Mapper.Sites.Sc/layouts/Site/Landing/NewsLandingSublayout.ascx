@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="span7">
-                    <a title="<%=article.Title %>" class="pull-right">Read More</a>
+                    <a title="<%=article.Title %>" class="pull-right" href="<%=article.Url %>">Read More</a>
                 </div>
             </div>
 

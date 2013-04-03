@@ -111,9 +111,10 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             //Assign
             var typeConfig = new StubSitecoreTypeConfiguration();
             typeConfig.Type = typeof(StubClass);
+            typeConfig.AutoMap = true;
 
             //Act
-            typeConfig.AutoMapProperties();
+            typeConfig.PerformAutoMap();
 
             //Assert
             Assert.AreEqual(5, typeConfig.Properties.Count());

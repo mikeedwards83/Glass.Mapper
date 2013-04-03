@@ -10,25 +10,64 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using NUnit.Framework;
 using Sitecore;
+using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.DataProviders;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Integration.CodeFirst
 {
     [TestFixture]
     public class GlassDataProviderFixture
     {
+        [SetUp]
+        public void Setup()
+        {
+            //remove provider from database
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var providers = GetProviders(db);
+            var toRemove = providers.Where(x => x is GlassDataProvider).ToList();
+            toRemove.ForEach(x => providers.Remove(x));
+            
+            var path = "/sitecore/templates/glasstemplates";
+            var rootFolder = db.GetItem(path);
+            if (rootFolder != null)
+                rootFolder.Delete();
+
+
+
+        }
+
+
         [Test]
         public void GlassDataProvider_ReturnsGlassTemplateFolder()
         {
             //Assign
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
 
+            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+
+            InjectionDataProvider(db, dataProvider);
+
             var context = Context.Create(DependencyResolver.CreateStandardResolver());
+
             var path = "/sitecore/templates/glasstemplates";
 
+            db.Caches.DataCache.Clear();
+            db.Caches.ItemCache.Clear();
+            db.Caches.ItemPathsCache.Clear();
+            db.Caches.StandardValuesCache.Clear();
+            db.Caches.PathCache.Clear();
             //Act
             var folder = db.GetItem(path);
+
+            var tempFolder = db.GetItem("/sitecore/templates");
+
+            foreach (Item item in tempFolder.Children)
+            {
+                Console.WriteLine(item.Name);
+            }
 
             //Assert
             Assert.AreEqual(folder.Name, "GlassTemplates");
@@ -206,8 +245,18 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
         private void InjectionDataProvider(Database db, DataProvider provider)
         {
-            var addMethod = typeof(Database).GetMethod("AddDataProvider", BindingFlags.NonPublic | BindingFlags.Instance);
-            addMethod.Invoke(db, new[] { provider });
+            var providers = GetProviders(db);
+
+            providers.Insert(0,provider);
+            //var addMethod = typeof(Database).GetMethod("AddDataProvider", BindingFlags.NonPublic | BindingFlags.Instance);
+            //addMethod.Invoke(db, new[] { provider });
+        }
+
+        public DataProviderCollection GetProviders(Database db )
+        {
+            var providersField = typeof(Database).GetField("_dataProviders", BindingFlags.NonPublic | BindingFlags.Instance);
+            var providers = providersField.GetValue(db) as DataProviderCollection;
+            return providers;
         }
     
 }

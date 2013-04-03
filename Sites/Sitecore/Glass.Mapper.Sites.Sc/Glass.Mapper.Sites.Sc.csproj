@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.31\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.7-beta\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.31\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.31\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -163,7 +163,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -183,6 +186,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="layouts\Site\Xml\" />
     <Folder Include="Properties\" />
     <Folder Include="sitecore modules\Shell\" />
     <Folder Include="sitecore modules\Web\" />
@@ -203,14 +207,15 @@
     <Content Include="App_Config\Include\Glass.Config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
     <None Include="App_Config\Include\ja-JP.config.example" />
     <None Include="App_Config\Include\LiveMode.config.example" />
     <None Include="App_Config\Include\ScalabilitySettings.config.example" />
-    <None Include="App_Config\Include\Sitecore.Mvc.config.disabled" />
-    <None Include="App_Config\Include\Sitecore.MvcAnalytics.config.disabled" />
-    <None Include="App_Config\Include\Sitecore.MvcExperienceEditor.config.disabled" />
-    <None Include="App_Config\Include\Sitecore.MvcSimulator.config.disabled" />
     <Content Include="App_Config\Include\Sitecore.WebDAV.config" />
+    <Content Include="App_Config\Include\Sitecore.Mvc.config" />
+    <Content Include="App_Config\Include\Sitecore.MvcAnalytics.config" />
+    <Content Include="App_Config\Include\Sitecore.MvcExperienceEditor.config" />
+    <Content Include="App_Config\Include\Sitecore.MvcSimulator.config" />
     <None Include="App_Config\Include\SitecoreSettings.config.example" />
     <None Include="App_Config\Include\SiteDefinition.config.example" />
     <None Include="App_Config\Include\WebDeploy.config.example" />
@@ -228,8 +233,10 @@
     <Content Include="App_Config\XamlSharp.config" />
     <None Include="default.htm.sitedown" />
     <Content Include="Design.config" />
+    <Content Include="layouts\Site\Content\CommentSublayout.ascx" />
     <Content Include="layouts\Site\Content\EventSublayout.ascx" />
     <Content Include="layouts\Site\Content\NewsArticleSublayout.ascx" />
+    <Content Include="layouts\Site\Landing\RssLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\EventsLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
     <Content Include="layouts\Site\Landing\NewsLandingSublayout.ascx" />
@@ -238,12 +245,14 @@
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
     <Content Include="layouts\Testing\AdvancedDynamics.ascx" />
     <Content Include="sitecore_files\Web.config" />
-    <Content Include="Web.config" />
+    <None Include="Web.config.old" />
     <Content Include="layouts\Testing\D2.cshtml" />
     <Content Include="layouts\Testing\T1.cshtml" />
     <Content Include="layouts\Testing\B1.cshtml" />
     <Content Include="packages.config" />
-    <None Include="Web.config.MVC" />
+    <Content Include="layouts\Site\MvcXmlLayout.cshtml" />
+    <Content Include="layouts\Site\Landing\NewsLandingXml.cshtml" />
+    <None Include="Web.config" />
     <None Include="Web.config.Oracle" />
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +271,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\GlassMapperSc.cs" />
+    <Compile Include="App_Start\ServiceInstaller.cs" />
     <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Content\CommentSublayout.ascx.cs">
+      <DependentUpon>CommentSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Content\CommentSublayout.ascx.designer.cs">
+      <DependentUpon>CommentSublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Content\EventSublayout.ascx.cs">
       <DependentUpon>EventSublayout.ascx</DependentUpon>
@@ -279,6 +296,13 @@
     </Compile>
     <Compile Include="layouts\Site\Content\NewsArticleSublayout.ascx.designer.cs">
       <DependentUpon>NewsArticleSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\RssLandingSublayout.ascx.cs">
+      <DependentUpon>RssLandingSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\Site\Landing\RssLandingSublayout.ascx.designer.cs">
+      <DependentUpon>RssLandingSublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Site\Landing\EventsLandingSublayout.ascx.cs">
       <DependentUpon>EventsLandingSublayout.ascx</DependentUpon>
@@ -323,7 +347,10 @@
       <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
+    <Compile Include="Models\Landing\RssLanding.cs" />
     <Compile Include="Models\Config\ContentConfig.cs" />
+    <Compile Include="Models\Content\Comment.cs" />
+    <Compile Include="Models\Content\CommentPage.cs" />
     <Compile Include="Models\Content\Event.cs" />
     <Compile Include="Models\Content\NewsArticle.cs" />
     <Compile Include="Models\Landing\EventsLanding.cs" />
@@ -331,6 +358,8 @@
     <Compile Include="Models\Landing\NewsLanding.cs" />
     <Compile Include="Models\Misc\ContentBase.cs" />
     <Compile Include="Models\Misc\MenuItem.cs" />
+    <Compile Include="Services\Rss\RssService.cs" />
+    <Compile Include="Services\Rss\IRssService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Razor\Glass.Mapper.Sc.Razor.csproj">
@@ -351,7 +380,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58442</DevelopmentServerPort>
+          <DevelopmentServerPort>49288</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -147,6 +147,36 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #region Method - MapToProperty
 
         [Test]
+        public void MapToProperty_RelativeQuery_ReturnsNoResults()
+        {
+            //Assign
+            //Assign
+            var config = new SitecoreQueryConfiguration();
+            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+            config.Query = "../Results/DoesNotExist/*";
+            config.IsRelative = true;
+
+            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var mapper = new SitecoreQueryMapper(null);
+            mapper.Setup(new DataMapperResolverArgs(context, config));
+
+            var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Source");
+            var service = new SitecoreService(Database, context);
+
+            var result1 = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/Result1");
+            var result2 = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/Result2");
+
+            //Act
+            var results =
+                mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as IEnumerable<StubMapped>;
+
+            //Assert
+            Assert.AreEqual(0, results.Count());
+        }
+
+        [Test]
         public void MapToProperty_RelativeQuery_ReturnsResults()
         {
             //Assign
