@@ -22,15 +22,15 @@ using Glass.Mapper.Umb.Configuration;
 namespace Glass.Mapper.Umb.DataMappers
 {
     /// <summary>
-    /// UmbracoPropertyStringMapper
+    /// UmbracoPropertyDateTimeMapper
     /// </summary>
-    public class UmbracoPropertyStringMapper : AbstractUmbracoPropertyMapper
+    public class UmbracoPropertyDateTimeMapper : AbstractUmbracoPropertyMapper
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UmbracoPropertyStringMapper"/> class.
+        /// Initializes a new instance of the <see cref="UmbracoPropertyDateTimeMapper"/> class.
         /// </summary>
-        public UmbracoPropertyStringMapper()
-            : base(typeof(string))
+        public UmbracoPropertyDateTimeMapper()
+            : base(typeof(DateTime))
         {
         }
 
@@ -55,7 +55,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue as string;
+            return propertyValue is DateTime ? (DateTime)propertyValue : new DateTime();
         }
     }
 }

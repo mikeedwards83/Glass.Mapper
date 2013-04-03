@@ -22,15 +22,15 @@ using Glass.Mapper.Umb.Configuration;
 namespace Glass.Mapper.Umb.DataMappers
 {
     /// <summary>
-    /// UmbracoPropertyStringMapper
+    /// UmbracoPropertyFloatMapper
     /// </summary>
-    public class UmbracoPropertyStringMapper : AbstractUmbracoPropertyMapper
+    public class UmbracoPropertyFloatMapper : AbstractUmbracoPropertyMapper
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UmbracoPropertyStringMapper"/> class.
+        /// Initializes a new instance of the <see cref="UmbracoPropertyFloatMapper"/> class.
         /// </summary>
-        public UmbracoPropertyStringMapper()
-            : base(typeof(string))
+        public UmbracoPropertyFloatMapper()
+            : base(typeof(float))
         {
         }
 
@@ -55,7 +55,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue as string;
+            return propertyValue is float ? (float)propertyValue : 0;
         }
     }
 }

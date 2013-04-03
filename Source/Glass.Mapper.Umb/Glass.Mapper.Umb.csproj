@@ -247,6 +247,15 @@
     <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyNullableMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyEnumMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyLongMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyGuidMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyIntegerMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyFloatMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyDoubleMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyDecimalMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyDateTimeMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyBooleanMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyStringMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyTypeMapper.cs" />
@@ -256,8 +265,8 @@
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Property\File.cs" />
-    <Compile Include="Property\Image.cs" />
+    <Compile Include="PropertyTypes\File.cs" />
+    <Compile Include="PropertyTypes\Image.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ContentExtensions.cs" />
     <Compile Include="IUmbracoService.cs" />
@@ -270,10 +279,6 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pipelines\ClassConstruction\" />
-    <Folder Include="Pipelines\ContentResolver\" />
-    <Folder Include="Pipelines\ObjectConstruction\" />
-    <Folder Include="Pipelines\TypeResolver\" />
     <Folder Include="Proxies\" />
   </ItemGroup>
   <ItemGroup>

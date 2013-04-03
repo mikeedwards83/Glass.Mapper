@@ -108,41 +108,30 @@ namespace Glass.Mapper.Umb.CastleWindsor
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyBooleanMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDateTimeMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDecimalMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDoubleMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldEnumMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldFileMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldFloatMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldGuidMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldIEnumerableMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldImageMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldIntegerMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldLinkMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldLongMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNameValueCollectionMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDateTimeMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDoubleMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDecimalMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableFloatMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableGuidMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldNullableIntMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldRulesMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldStreamMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDateTimeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDecimalMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDoubleMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyEnumMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFileMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFloatMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyGuidMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIEnumerableMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyImageMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIntegerMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLinkMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLongMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNameValueCollectionMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDateTimeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDoubleMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDecimalMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableFloatMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableGuidMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableIntegerMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableLongMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyRulesMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyStreamMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyStringMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldTypeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyTypeMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoIdMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoInfoMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoItemMapper>().LifestyleTransient(),

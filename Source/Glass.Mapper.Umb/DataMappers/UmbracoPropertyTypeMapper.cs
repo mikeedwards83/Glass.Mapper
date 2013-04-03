@@ -30,11 +30,11 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <summary>
         /// Gets the property value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="propertyValue">The value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public override object GetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
+        public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             return context.Service.CreateType(config.PropertyInfo.PropertyType, null, IsLazy, InferType);
         }

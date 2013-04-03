@@ -22,18 +22,10 @@ using Glass.Mapper.Umb.Configuration;
 namespace Glass.Mapper.Umb.DataMappers
 {
     /// <summary>
-    /// UmbracoPropertyStringMapper
+    /// UmbracoPropertyEnumMapper
     /// </summary>
-    public class UmbracoPropertyStringMapper : AbstractUmbracoPropertyMapper
+    public class UmbracoPropertyEnumMapper : AbstractUmbracoPropertyMapper
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UmbracoPropertyStringMapper"/> class.
-        /// </summary>
-        public UmbracoPropertyStringMapper()
-            : base(typeof(string))
-        {
-        }
-
         /// <summary>
         /// Sets the property value.
         /// </summary>
@@ -43,7 +35,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return value;
+            return Enum.GetName(config.PropertyInfo.PropertyType, value);
         }
 
         /// <summary>
@@ -55,7 +47,28 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue as string;
+            Type enumType = config.PropertyInfo.PropertyType;
+
+            int intValue;
+
+            if (int.TryParse(propertyValue.ToString(), out intValue))
+                return Enum.ToObject(enumType, intValue);
+            
+            if (Enum.IsDefined(enumType, propertyValue))
+                return Enum.Parse(enumType, propertyValue.ToString(), true);
+                
+            throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(propertyValue, enumType.FullName));
+        }
+
+        /// <summary>
+        /// Determines whether this instance can handle the specified configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
+        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
+        {
+            return configuration.PropertyInfo.PropertyType.IsEnum;
         }
     }
 }

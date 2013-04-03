@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Glass.Mapper.Umb.Property
+namespace Glass.Mapper.Umb.PropertyTypes
 {
     /// <summary>
     /// Class Image
