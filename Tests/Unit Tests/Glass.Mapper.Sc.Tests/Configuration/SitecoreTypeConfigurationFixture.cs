@@ -124,6 +124,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration
     
 
         #endregion
+
         #region Stubs
 
 

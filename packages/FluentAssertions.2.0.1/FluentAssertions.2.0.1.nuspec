@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>FluentAssertions</id>
-    <version>2.0.0.1</version>
+    <version>2.0.1</version>
     <title>Fluent Assertions</title>
     <authors>Dennis Doomen,  Martin Opdam</authors>
     <owners>Dennis Doomen,  Martin Opdam</owners>
@@ -12,7 +12,10 @@
     <description>A very extensive set of extension methods that allow you to more naturally specify the expected outcome of a TDD or 
       BDD-style unit test. Runs on .NET 3.5, 4.0 and 4.5 (Desktop and Windows Store), Silverlight 4 and 5 and Windows Phone 7.5. Supports the unit test frameworks NUnit, XUnit, MBUnit, Gallio and MSpec.</description>
     <summary>Fluent methods for asserting the result of TDD/BDD specs for .NET 3.5/4.0/4.5 (Desktop and Windows Store), SL 4/5, WP7 (Mango). Supports the unit test frameworks NUnit, XUnit, MBUnit, Gallio and MSpec.</summary>
-    <releaseNotes>What are the major features
+    <releaseNotes>What's new in 2.0.1
+      * Small bug-fix to better intercept and/or prevent exceptions while scanning for methods annotated with [ValueFormatter]
+      
+      What are the major features
       * Added support for .NET 4.5, Windows Phone 7.5 and .NET for Windows Store Apps
       * Added support for MBUnit and the Gallio framework
       * Added a completely new extensible API for comparing two objects graph for equivalence that will replace the object.ShouldHave() API in the future (issue 11841).
@@ -79,5 +82,11 @@
       <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
       <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
     </frameworkAssemblies>
+    <references>
+      <reference file="FluentAssertions.dll" />
+      <reference file="FluentAssertions.WindowsPhone.dll" />
+      <reference file="FluentAssertions.Silverlight.dll" />
+      <reference file="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll" />
+    </references>
   </metadata>
 </package>

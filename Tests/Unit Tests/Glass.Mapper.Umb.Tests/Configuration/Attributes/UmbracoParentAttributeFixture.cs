@@ -31,7 +31,13 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         [Test]
         public void Does_UmbracoParentAttribute_Extend_ParentAttribute()
         {
-            typeof(ParentAttribute).IsAssignableFrom(typeof(UmbracoParentAttribute)).Should().BeTrue();
+            //Assign
+            var type = typeof(ParentAttribute);
+
+            //Act
+
+            //Assert
+            type.IsAssignableFrom(typeof(UmbracoParentAttribute)).Should().BeTrue();
         }
 
         [Test]
@@ -39,20 +45,37 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         [TestCase("InferType")]
         public void Does_UmbracoNodeAttributee_Have_Properties(string propertyName)
         {
+            //Assign
             var properties = typeof(UmbracoParentAttribute).GetProperties();
+
+            //Act
+
+            //Assert
             properties.Any(x => x.Name == propertyName).Should().BeTrue();
         }
 
         [Test]
         public void Does_Constructor_Set_IsLazy_True()
         {
-            new UmbracoParentAttribute().IsLazy.Should().BeTrue();
+            //Assign
+            var parentAttribute = new UmbracoParentAttribute();
+
+            //Act
+
+            //Assert
+            parentAttribute.IsLazy.Should().BeTrue();
         }
 
         [Test]
         public void Does_Constructor_Set_InferType_False()
         {
-            new UmbracoParentAttribute().InferType.Should().BeFalse();
+            //Assign
+            var parentAttribute = new UmbracoParentAttribute();
+
+            //Act
+
+            //Assert
+            parentAttribute.InferType.Should().BeFalse();
         }
 
         #region Method - Configure
@@ -63,7 +86,6 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             //Assign
             var attr = new UmbracoParentAttribute();
             var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
-
 
             //Act
             var result = attr.Configure(propertyInfo) as UmbracoParentConfiguration;

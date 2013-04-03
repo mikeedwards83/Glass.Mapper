@@ -178,6 +178,32 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             config.Invoke(this);
             return this;
         }
+
+        /// <summary>
+        /// Imports the properties form another type
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="typeConfig">The type config.</param>
+        /// <returns>SitecoreType{`0}.</returns>
+        public UmbracoType<T> Import<K>(UmbracoType<K> typeConfig)
+        {
+            typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
+
+            if (typeConfig._configuration.AutoMap)
+                Config.AutoMap = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Autoes the map.
+        /// </summary>
+        /// <returns></returns>
+        public UmbracoType<T> AutoMap()
+        {
+            Config.AutoMap = true;
+            return this;
+        }
         
         #region IUmbracoClass Members
 

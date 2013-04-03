@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3}</ProjectGuid>
+    <ProjectGuid>{78DAC667-C78D-40A9-BE19-0563836B7163}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Glass.Mapper.Sc.CastleWindsor.Tests</RootNamespace>
-    <AssemblyName>Glass.Mapper.Sc.CastleWindsor.Tests</AssemblyName>
+    <RootNamespace>Glass.Mapper.Umb.CastleWindsor.Tests</RootNamespace>
+    <AssemblyName>Glass.Mapper.Umb.CastleWindsor.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,8 +39,7 @@
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\packages\NSubstitute.1.5.0.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -57,17 +55,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}</Project>
-      <Name>Glass.Mapper.Sc.CastleWindsor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Umb.CastleWindsor\Glass.Mapper.Umb.CastleWindsor.csproj">
+      <Project>{53c429e4-2583-4eb9-8226-554c70834e26}</Project>
+      <Name>Glass.Mapper.Umb.CastleWindsor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

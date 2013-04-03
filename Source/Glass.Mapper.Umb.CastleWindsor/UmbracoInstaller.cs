@@ -20,6 +20,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
@@ -28,12 +29,34 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.DataMappers;
 
 namespace Glass.Mapper.Umb.CastleWindsor
 {
+    /// <summary>
+    /// UmbracoInstaller
+    /// </summary>
     public class UmbracoInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public UmbracoInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -43,11 +66,11 @@ namespace Glass.Mapper.Umb.CastleWindsor
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
-                new DataMapperInstaller(),
-                new DataMapperTasksInstaller(),
-                new ConfigurationResolverTaskInstaller(),
-                new ObjectionConstructionTaskInstaller(),
-                new ObjectSavingTaskInstaller()
+                new DataMapperInstaller(Config),
+                new DataMapperTasksInstaller(Config),
+                new ConfigurationResolverTaskInstaller(Config),
+                new ObjectionConstructionTaskInstaller(Config),
+                new ObjectSavingTaskInstaller(Config)
                 );
         }
     }
@@ -58,6 +81,23 @@ namespace Glass.Mapper.Umb.CastleWindsor
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public DataMapperInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
@@ -125,6 +165,23 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperTasksInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public DataMapperTasksInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
@@ -146,6 +203,23 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationResolverTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ConfigurationResolverTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
@@ -162,6 +236,12 @@ namespace Glass.Mapper.Umb.CastleWindsor
                          .ImplementedBy<ConfigurationStandardResolverTask>()
                          .LifestyleTransient()
                 );
+
+            container.Register(
+                Component.For<IConfigurationResolverTask>()
+                         .ImplementedBy<ConfigurationOnDemandResolverTask<UmbracoTypeConfiguration>>()
+                         .LifestyleTransient()
+                );
         }
     }
 
@@ -171,12 +251,36 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectionConstructionTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ObjectionConstructionTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            if (Config.UseWindsorContructor)
+            {
+                container.Register(
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleTransient()
+                    );
+            }
+
             container.Register(
                 // Tasks are called in the order they are specified below.
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
@@ -190,6 +294,23 @@ namespace Glass.Mapper.Umb.CastleWindsor
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectSavingTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ObjectSavingTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>

@@ -256,7 +256,10 @@
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Property\File.cs" />
+    <Compile Include="Property\Image.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="ContentExtensions.cs" />
     <Compile Include="IUmbracoService.cs" />
     <Compile Include="LazyContentEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

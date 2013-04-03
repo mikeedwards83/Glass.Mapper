@@ -2,6 +2,7 @@
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
+using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
 
 namespace Glass.Mapper.Umb
