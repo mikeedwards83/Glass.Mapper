@@ -12,9 +12,8 @@ title: Blog
     {% for post in site.posts %}
     
     <li>
-		<h2><a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a></h2>
-        <p><small>{{ post.date | date_to_string }}</small></p>
-        <p><small>{{ post.abstract }}</small></p>
+		<h2><a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
+        <p>{{ post.abstract }}</p>
 		<a href="/Glass.Mapper{{ post.url }}#disqus_thread"></a>
     </li>
     {% endfor %}
