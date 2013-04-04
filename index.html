@@ -12,47 +12,51 @@ title: Welcome
             </p>
             <p><a href="/Glass.Mapper/getting-started/index.html" class="btn btn-primary btn-large">Get Started <i class="icon-play icon-white"></i></a></p>
         </div>
+		
+		<div class="row-fluid">
+            <div class="span3">
+				<p>
+					Glass.Mapper has been the redevelopment of the very popular <a href="https://github.com/Glass-lu/Glass.Sitecore.Mapper">Glass.Sitecore.Mapper</a> project. This project aims to create a more robust and more flexible solution that not only works with many different CMS's. Currently supported are:
+				</p>
+				<ul>
+					<li>Sitecore</li>
+					<li>Umbraco</li>
+				</ul>
 
-        <p>
-            Glass.Mapper has been the redevelopment of the very popular <a href="https://github.com/Glass-lu/Glass.Sitecore.Mapper">Glass.Sitecore.Mapper</a> project. This project aims to create a more robust and more flexible solution that not only works with many different CMS's. Currently supported are:
-        </p>
-        <ul>
-            <li>Sitecore</li>
-            <li>Umbraco</li>
-        </ul>
-
-        <p>
-            A key feature of the implementation is the introduction of pipelines for most of the tasks carried out by Glass.Mapper allowing you to swap in your preferred solution, for example if you don't like the standard way to create a concrete object then you can implement you own and swap it in.
-        </p>
-        <p>
-            The projects core team are:
-        </p>
-        <ul>
-            <li>Michael Edwards</li>
-            <li>Aaron Job</li>
-            <li>Tom Dudfield</li>
-            <li>David Peel</li>
-            <li>Charles Turano</li>
-        </ul>
-        <p>
-            Please contact us with any questions.
-        </p>
+				<p>
+					A key feature of the implementation is the introduction of pipelines for most of the tasks carried out by Glass.Mapper allowing you to swap in your preferred solution, for example if you don't like the standard way to create a concrete object then you can implement you own and swap it in.
+				</p>
+            </div>
+            <div class="span3">
+				<p>
+					The projects core team are:
+				</p>
+				<ul>
+					<li>Michael Edwards</li>
+					<li>Aaron Job</li>
+					<li>Tom Dudfield</li>
+					<li>David Peel</li>
+					<li>Charles Turano</li>
+				</ul>
+				<p>
+					Please contact us with any questions.
+				</p>
+            </div>
+            <div class="span3">
+				<h2>Glass Groups</h2>
+				<p>
+					If you need help or advice with Glass.Mapper then join our <a href="/Glass.Mapper/googlegroup.html">Google Group</a>.
+				</p>
+            </div>
+	    </div>
+		
         <iframe height="30px" src="http://ghbtns.com/github-btn.html?user=mikeedwards83&repo=Glass.Mapper&type=fork&size=large&count=true" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
-        <div class="alert alert-info">
-            <h2>Glass Groups</h2>
-            <p>
-                If you need help or advice with Glass.Mapper then join our <a href="/Glass.Mapper/googlegroup.html">Google Group</a>.
-                
-
-            </p>
-
-        </div>
     </div>
     <div class="span3">
-        <h3>Lastest Blog Posts</h3>
+        <h3>Lastest Posts</h3>
         <ul class="thumbnails">
             {% for post in site.posts %}
-                {% if forloop.index < 3 %}
+                {% if forloop.index < 4 %}
                     <li>
                         <div href="#" class="thumbnail">
                             <img src="{{post.image}}" alt="{{post.title}}">
@@ -73,7 +77,6 @@ title: Welcome
                     </li>
                 {% endif %}
             {% endfor %}
-
         </ul>
     </div>
 </div>
