@@ -12,7 +12,7 @@ title: Blog
     {% for post in site.posts %}
     
     <li>
-       {{ post.date | date_to_string }} &raquo; <a href="/Glass.Mapper{{ post.url }}#disqus_thread"><strong>{{post.title}}</strong></a>
+       {{ post.date | date_to_string }} &raquo; <a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a><a href="/Glass.Mapper{{ post.url }}#disqus_thread"></a>
     </li>
     {% endfor %}
     
