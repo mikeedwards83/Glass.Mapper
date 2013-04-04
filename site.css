@@ -9,6 +9,9 @@ padding: 40px;}
 .hero-unit h1 {
 margin: 0;
 }
+.blogthumbnail {
+ max-height: 20px;
+}
 @media (max-width: 979px){
 body {
     margin: 0;
