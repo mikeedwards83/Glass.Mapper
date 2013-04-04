@@ -10,6 +10,9 @@
 	  h1, h2, h3, h4, h5, h6 {
 	  font-family: 'Libre Baskerville', serif;}
 
+	  .brand, .hero-unit > h1{
+	  font-family: 'Montserrat Subrayada', sans-serif;
+	  }
       /* Wrapper for page content to push down footer */
       #wrap {
         min-height: 100%;
