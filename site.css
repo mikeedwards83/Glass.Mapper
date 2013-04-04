@@ -4,3 +4,8 @@
 .fixed {
     position: fixed;   
 }
+@media (max-width: 979px){
+body {
+    margin: 0;
+}
+}
