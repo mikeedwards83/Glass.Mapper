@@ -49,10 +49,10 @@ title: Welcome
         </div>
     </div>
     <div class="span3">
-        <h2>Lastest Blog Posts</h2>
+        <h3>Lastest Blog Posts</h3>
         <ul class="thumbnails">
             {% for post in site.posts %}
-                {% if forloop.index < 5%}
+                {% if forloop.index < 3 %}
                     <li>
                         <div href="#" class="thumbnail">
                             <img src="{{post.image}}" alt="{{post.title}}">
@@ -60,7 +60,7 @@ title: Welcome
                                 <p class="pull-right">
                                     <strong><small>Date: {{ post.date | date_to_string }} </small></strong>
                                 </p>
-                                <h3>{{post.title}}</h3>
+                                <h4>{{post.title}}</h4>
                                 
                                 <p>
                                     {{post.abstract}}
