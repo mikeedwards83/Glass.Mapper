@@ -50,9 +50,9 @@ margin: 0;
  max-height: 100px;
 }
 @media (max-width: 979px){
-body {
-    margin: 0;
-}
+      #wrap > .container-fluid {
+        padding-top: 0;
+      }
 .hero-unit {
 padding: 30px;}
 }
