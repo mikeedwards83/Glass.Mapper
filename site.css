@@ -35,6 +35,9 @@
         }
       }
 
+	  .herobtn {
+width: 100px;
+}
 
       #wrap > .container-fluid {
         padding: 60px;
