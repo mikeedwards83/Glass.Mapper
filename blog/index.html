@@ -13,6 +13,7 @@ title: Blog
     
     <li>
 		<h2><a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
+		<img src="{{post.image}}" alt="{{post.title}}">
         <p>{{ post.abstract }}</p>
 		<a href="/Glass.Mapper{{ post.url }}#disqus_thread"></a>
     </li>
