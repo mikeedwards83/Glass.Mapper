@@ -1,1 +1,2 @@
 F:\Glass\Glass.Mapper-Website\obj\Debug\Glass.Mapper.Website.csprojResolveAssemblyReference.cache
+C:\Code\Glass Site\obj\Debug\Glass.Mapper.Website.csprojResolveAssemblyReference.cache
