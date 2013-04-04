@@ -4,6 +4,8 @@
 .fixed {
     position: fixed;   
 }
+.hero-unit {
+padding: 40px;}
 @media (max-width: 979px){
 body {
     margin: 0;
