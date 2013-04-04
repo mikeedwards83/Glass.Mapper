@@ -6,6 +6,9 @@
         height: 100%;
         /* The html and body elements cannot have any padding or margin. */
       }
+	  
+	  h1, h2, h3, h4, h5, h6 {
+	  font-family: 'Libre Baskerville', serif;}
 
       /* Wrapper for page content to push down footer */
       #wrap {
