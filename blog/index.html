@@ -1,13 +1,39 @@
 ---
+    def group_by_month(posts)
+      months = []
+      posts_by_month = {}
+      posts.reverse.each do |post|
+        key = Time.utc(post.date.year, post.date.month)
+        if posts_by_month.has_key?(key)
+          posts_by_month[key] << post
+        else
+          posts_by_month[key] = [post]
+          months << key
+        end
+      end
+      return [months,posts_by_month]
+    end
 layout: MainLayout
 title: Blog
 caption: keeping up to date
+      archive_data = group_by_month(site.posts)
+      months = archive_data[0]
+      posts_by_month = archive_data[1]
 ---
 
 <div class="row-fluid">
     <div class="span12">
 {% include pageheader.html %}
-
+<div class="archives">
+{% for month in page.months %}
+<h2>{{ month | date:"%B" }} <small>{{ month | date:"%Y" }}</small></h2>
+  <ul>
+  {% for post in page.posts_by_month[month] %}
+    <li><a href="{{ post.url }}">{{ post.title | truncate:65 }}</a></li>
+  {% endfor %}
+  </ul>
+{% endfor %}
+</div>
 		<ul class="unstyled">
 			{% for post in site.posts %}
 			
