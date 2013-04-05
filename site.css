@@ -62,7 +62,7 @@ width: 100px;
 }
 
       #wrap > .container-fluid {
-        padding: 60px;
+        padding-top: 60px;
       }
 .fixed {
     position: fixed;   
