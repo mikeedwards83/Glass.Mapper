@@ -67,6 +67,10 @@ float:right;
 padding:30px;
 }
 
+.navbar-inverse .nav-collapse .nav>li>a, .navbar-inverse .nav-collapse .dropdown-menu a {
+color: #fff;
+}
+
 .hero-unit h1 {
 font-size:40px;
 }
