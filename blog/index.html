@@ -4,12 +4,9 @@ title: Blog
 caption: keeping up to date
 ---
 
-
 <div class="row-fluid">
     <div class="span12">
-		<div class="page-header">
-			<h1>{{ page.title }} <small class="hidden-phone"> - {{ page.caption }}</small></h1>
-		</div>
+{% include pageheader.html %}
 
 		<ul class="unstyled">
 			{% for post in site.posts %}
