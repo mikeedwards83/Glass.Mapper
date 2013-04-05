@@ -6,13 +6,13 @@ abstract: We will soon be releasing the first beta of Glass.Mapper version 3.
 caption: 02 Feb 2013
 ---
 
-			{% if page.url == post.url %}
+			{% if post == "" %}
 {% include pageheader.html %}
 			{% endif %}
-
+{{ page.title }} 
 <p class="lead">
     We will soon be ready to release the first beta of Glass.Mapper version 3 and a lot has changed since the original Glass.Sitecore.Mapper.
-</p>
+</p>{{ post.title }} 
 <p>
     Below are just a few of the improvements and features in version 3:
 </p>
