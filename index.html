@@ -49,7 +49,7 @@ title: Welcome
             </div>
 	    </div>
     </div>
-    <div class="span3">
+    <aside class="span3">
         <h3>Lastest Posts</h3>
         <ul class="thumbnails">
             {% for post in site.posts %}
@@ -57,13 +57,13 @@ title: Welcome
                     <li>
                         <div href="#" class="thumbnail">
                             <div class="caption">
-                                <p class="caption pull-right">
-                                    <strong><small>{{ post.date | date_to_string }} </small></strong>
-                                </p>
                                 <h4>{{post.title}}</h4>
                                 <p class="text-center"><img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
                                 <p>
                                     {{post.abstract}}
+                                </p>
+                                <p class="caption pull-right">
+                                    <strong><small>{{ post.date | date_to_string }} </small></strong>
                                 </p>
                                 <p>
                                     <a href="/Glass.Mapper{{post.url}}" class="btn btn-info">Read More</a>
@@ -74,7 +74,7 @@ title: Welcome
                 {% endif %}
             {% endfor %}
         </ul>
-    </div>
+    </aside>
 </div>
 
 
