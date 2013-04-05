@@ -34,6 +34,9 @@
       #footer > .container-fluid {
         padding-top: 15px;
       }
+      #wrap > .container-fluid {
+        padding: 60px;
+      }
       /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 979px){
 .hero-unit h1 {
@@ -61,9 +64,6 @@ font-size: 20px;
 width: 100px;
 }
 
-      #wrap > .container-fluid {
-        padding-top: 60px;
-      }
 .fixed {
     position: fixed;   
 }
