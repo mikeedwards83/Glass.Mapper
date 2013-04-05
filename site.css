@@ -85,6 +85,14 @@ padding:0;
 float:none;
 }
 
+#wrap {
+margin:0 auto -90px;
+}
+
+#push,#footer {
+height:90px;
+}
+
 #footer {
 margin-left:-20px;
 margin-right:-20px;
