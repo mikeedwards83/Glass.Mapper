@@ -9,6 +9,7 @@ caption: keeping up to date
 {% include pageheader.html %}
 
 	{% for post in site.posts %}
+	{% post.showdetail = 0 %}
 		<h2><a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
 		{{ post.content }}
 		<a href="/Glass.Mapper{{ post.url }}#disqus_thread"></a>
