@@ -65,6 +65,7 @@ margin:0;
 
 .blogthumbnail {
 max-height:100px;
+width: 100%;
 }
 
 .github{
