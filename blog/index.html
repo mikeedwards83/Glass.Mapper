@@ -1,4 +1,9 @@
 ---
+layout: MainLayout
+title: Blog
+caption: keeping up to date
+---
+{% highlight ruby %}
     def group_by_month(posts)
       months = []
       posts_by_month = {}
@@ -13,13 +18,10 @@
       end
       return [months,posts_by_month]
     end
-layout: MainLayout
-title: Blog
-caption: keeping up to date
       archive_data = group_by_month(site.posts)
       months = archive_data[0]
       posts_by_month = archive_data[1]
----
+{% endhighlight %}
 
 <div class="row-fluid">
     <div class="span12">
