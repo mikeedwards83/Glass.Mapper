@@ -36,6 +36,9 @@
       }
       /* Lastly, apply responsive CSS fixes as necessary */
       @media (max-width: 767px) {
+.hero-unit h1 {
+font-size: 20px;
+}
         #footer {
           margin-left: -20px;
           margin-right: -20px;
@@ -63,6 +66,9 @@ margin: 0;
  max-height: 100px;
 }
 @media (max-width: 979px){
+.hero-unit h1 {
+font-size: 40px;
+}
       #wrap > .container-fluid {
         padding-top: 0;
       }
