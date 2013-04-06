@@ -10,5 +10,5 @@
 <link rel="next" href="http://sitecore.glass.com<%=child.Url %>"/>
 <% } %>
 
-<metadata name="updated" content="<%=Model.__updated %>" />
+<meta name="updated" content="<%=Model.__updated %>" />
 

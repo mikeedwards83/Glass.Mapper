@@ -1,20 +1,29 @@
 ---
 layout: MainLayout
 title: Blog
+caption: keeping up to date
 ---
 
+<div class="row-fluid">
+    <div class="span12">
+{% include pageheader.html %}
 
-<div class="page-header">
-    <h1>Blog <small>- Keeping up to date</small></h1>
+	{% for post in site.posts %}
+		<h2><a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
+		{{ post.content }}
+		<a href="/Glass.Mapper{{ post.url }}#disqus_thread"></a>
+	{% endfor %}
+	 <script type="text/javascript">
+		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		var disqus_shortname = 'glassmapper'; // required: replace example with your forum shortname
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function () {
+			var s = document.createElement('script'); s.async = true;
+			s.type = 'text/javascript';
+			s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+			(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+		}());
+		</script>
+	</div>
 </div>
-
-<ul>
-    {% for post in site.posts %}
-    
-    <li>
-       {{ post.date | date_to_string }} &raquo; <a href="/Glass.Mapper{{ post.url }}"><strong>{{post.title}}</strong></a>
-    </li>
-    {% endfor %}
-    
-</ul>
-

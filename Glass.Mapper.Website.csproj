@@ -74,6 +74,15 @@
     <Content Include="docs\dependencies.html" />
     <Content Include="docs\FAQ\images\GlassSitecoreDepends.png" />
     <Content Include="docs\FAQ\index.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial11\tutorial11.CommentSublayout.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial11\tutorial11.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslanding.xml" />
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.item.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx" />
+    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.webpage.PNG" />
     <Content Include="download.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.nugetsearch.png" />
@@ -110,6 +119,16 @@
     <Compile Include="docs\tutorial\sitecore\tutorial10\tutorial10.metadata.ascx.cs">
       <DependentUpon>tutorial10.metadata.ascx</DependentUpon>
     </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial11\tutorial11.Comment.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial11\tutorial11.CommentPage.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial11\tutorial11.CommentSublayout.ascx.cs">
+      <DependentUpon>tutorial11.CommentSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslanding.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx.cs">
+      <DependentUpon>tutorial13.rsslandingsublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.serviceinstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />
@@ -183,6 +202,9 @@
     <Content Include="js\site.min.js.map">
       <DependentUpon>site.js</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
