@@ -23,10 +23,11 @@ title: FAQ
     </dt>
     <dd>
         <p>
-            This is due to TDS not being configured for your sites location on disk. 
-            Go to the Solution explorer and edit the TDS projects
+            This is due to TDS not being configured for your sites location on disk.  Go to the Solution explorer and edit the TDS projects
+            <br/>
             <img src="images/TDSProjectConfiguration.png"/>
             <img src="images/TDSProjectConfigurationOption.png"/>
+            <br/>
             Click the Build option and edit the "Sitecore Deploy Folder".  This needs to point to the site of your disk.
             <img src="images/TDSProjectConfigurationScreen.png"/>
         </p>
@@ -40,7 +41,7 @@ title: FAQ
     <dd>
         <p>
             Can download a 30 day trial form the <a href="http://www.hhogdev.com/Products/Team-Development-for-Sitecore/Overview.aspx">Hedgehog Development</a> site.  
-            Otherwise contact up on the <a href="/googlegroup.html"> Goolge Group </a> and someone will get a package to you.
+            Otherwise contact up on the <a href="/googlegroup.html"> Google Group </a> and someone will get a package to you.
         </p>
         <p>
             You don't need the items to build the core of the solution so you can just unload the following project
@@ -108,6 +109,38 @@ title: FAQ
             </li>
             <li>
                 Glass.Mapper.Sc.Upgrade.Tests
+            </li>
+        </ul>
+    </dd>
+    
+    <dt>
+        I get the Could not copy the file "xxx\license.xml" because it was not found.	Glass.Mapper.Sc.Integration
+    </dt>
+    <dd>
+        You need to copy your license.xml to the data directory of the Integration tests
+    </dd>
+    
+    <dt>
+        NUnit is not there
+    </dt>
+    <dd>
+        enable <a href ="http://docs.nuget.org/docs/workflows/using-nuget-without-committing-packages">package restore</a> on the solution an NuGet will work it all out for you.
+    </dd>
+
+    <dt>
+        The tests are failing.
+    </dt>
+    <dd>
+        There is any number of reasons why the test might fail.  Here is a list of things to try before contacting us
+        <ul>
+            <li>
+                Have you synced up the TDS projects?
+            </li>
+            <li>
+                Can you access the glass test site?
+            </li>
+            <li>
+                Are the TDS projects set up correctly?
             </li>
         </ul>
     </dd>
