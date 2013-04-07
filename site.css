@@ -63,6 +63,10 @@ padding:40px;
 margin:0;
 }
 
+.blogitem {
+margin:10px;
+}
+
 .blogthumbnail {
 max-height:100px;
 width:auto\9;

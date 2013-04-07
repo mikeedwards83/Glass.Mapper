@@ -51,29 +51,25 @@ title: Welcome
     </div>
     <aside class="span4">
         <h3><a href="/Glass.Mapper/blog/index.html">Lastest Posts</a></h3>
-        <ul class="thumbnails">
-            {% for post in site.posts %}
-                {% if forloop.index < 4 %}
-                    <li>
-                        <div href="#" class="thumbnail">
-                            <div class="caption">
-                                <h4>{{post.title}}</h4>
-                                <p class="text-center"><img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
-                                <p>
-                                    {{post.abstract}}
-                                </p>
-                                <p class="caption pull-right">
-                                    <strong><small>{{ post.date | date_to_string }} </small></strong>
-                                </p>
-                                <p>
-                                    <a href="/Glass.Mapper{{post.url}}" class="btn btn-inverse">Read More</a>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+		{% for post in site.posts %}
+			{% if forloop.index < 4 %}
+			<div href="#" class="thumbnail">
+				<div class="caption">
+					<h4>{{post.title}}</h4>
+					<p class="text-center"><img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
+					<p>
+						{{post.abstract}}
+					</p>
+					<p class="caption pull-right">
+						<strong><small>{{ post.date | date_to_string }} </small></strong>
+					</p>
+					<p>
+						<a href="/Glass.Mapper{{post.url}}" class="btn btn-inverse">Read More</a>
+					</p>
+				</div>
+			</div>
+			{% endif %}
+		{% endfor %}
     </aside>
 </div>
 
