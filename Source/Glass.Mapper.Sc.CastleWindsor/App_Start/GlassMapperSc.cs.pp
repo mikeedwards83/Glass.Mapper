@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*************************************
+
+DO NTO CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
+
+**************************************/
+
+
+
+
+using System;
 using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -18,7 +27,7 @@ namespace $rootnamespace$.App_Start
 
 			//install the custom services
 			var container = (resolver as DependencyResolver).Container;
-			GlassMapperScCustom.CastleConfig(container);
+			GlassMapperScCustom.CastleConfig(container, config);
 
 			//create a context
 			var context = Glass.Mapper.Context.Create(resolver);
