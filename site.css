@@ -44,7 +44,9 @@ padding-top:15px;
 }
 
 #wrap > .container-fluid {
-padding:60px;
+padding-top:60px;
+padding-left:60px;
+padding-right:60px;
 }
 
 .herobtn {
@@ -65,7 +67,7 @@ margin:0;
 }
 
 .blogitem {
-margin-bottom:30px;
+margin-bottom:20px;
 }
 
 .blogthumbnail {
