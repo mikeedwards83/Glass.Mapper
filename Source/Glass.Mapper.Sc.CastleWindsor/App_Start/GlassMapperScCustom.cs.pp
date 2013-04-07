@@ -13,8 +13,10 @@ namespace $rootnamespace$.App_Start
 		public static void CastleConfig(IWindsorContainer container, Config config){
 			container.Install(new SitecoreInstaller(config));
 		}
-		public static IEnumerable<IConfigurationLoader> GlassLoaders(){
-			return new IConfigurationLoader[]{};
+		public static IConfigurationLoader[] GlassLoaders(){
+			var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
+			
+			return new IConfigurationLoader[]{attributes};
 		}
     }
 }
