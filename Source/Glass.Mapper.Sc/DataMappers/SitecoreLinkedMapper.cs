@@ -115,7 +115,7 @@ namespace Glass.Mapper.Sc.DataMappers
             Type outerType = Utilities.GetGenericOuter(configuration.PropertyInfo.PropertyType);
             Type innerType = Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
 
-            return typeof (IEnumerable<>) == outerType && context.TypeConfigurations.ContainsKey(innerType);
+            return typeof (IEnumerable<>) == outerType;// && context.TypeConfigurations.ContainsKey(innerType);
         }
     }
 }

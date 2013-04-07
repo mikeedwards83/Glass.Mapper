@@ -27,8 +27,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeConfig.Type = typeof (StubClass);
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            var service = Substitute.For<AbstractService>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
 
             Assert.IsNull(args.Result);
 
@@ -103,6 +104,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var resolver = DependencyResolver.CreateStandardResolver() as DependencyResolver;
             var context = Context.Create(resolver);
+            var service = Substitute.For<AbstractService>();
 
             resolver.Container.Register(
                 Component.For<StubServiceInterface>().ImplementedBy<StubService>().LifestyleTransient()
@@ -114,7 +116,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null );
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service );
 
             Assert.IsNull(args.Result);
 

@@ -171,11 +171,13 @@ namespace Glass.Mapper.Sc.DataMappers
                 Type outerType = Utilities.GetGenericOuter(configuration.PropertyInfo.PropertyType);
                 Type innerType = Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
 
-                return typeof (IEnumerable<>) == outerType && context.TypeConfigurations.ContainsKey(innerType);
+                return typeof (IEnumerable<>) == outerType;// && context.TypeConfigurations.ContainsKey(innerType);
             }
             else
             {
-                return context.TypeConfigurations.ContainsKey(configuration.PropertyInfo.PropertyType);
+                //We are now assuming auto-mapping works
+                return true;
+                //return context.TypeConfigurations.ContainsKey(configuration.PropertyInfo.PropertyType);
             }
         }
 
