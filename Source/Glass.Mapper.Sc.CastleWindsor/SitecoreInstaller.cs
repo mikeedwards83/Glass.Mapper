@@ -33,6 +33,7 @@ using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
+using Glass.Mapper.Sc.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
@@ -264,6 +265,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            //dynamic must be first
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                );
+
             if (Config.UseWindsorContructor)
             {
                 container.Register(

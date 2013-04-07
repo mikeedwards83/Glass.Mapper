@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_ConfigIsNodeAndClassNotMapped_ReturnsFalse()
+        public void CanHandle_ConfigIsNodeAndClassNotMapped_ReturnsTrueOndemand()
         {
             //Assign
             var config = new SitecoreNodeConfiguration();
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]

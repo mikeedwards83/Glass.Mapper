@@ -50,7 +50,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_TypeHasNotBeenLoadedByGlass_ReturnsFalse()
+        public void CanHandle_TypeHasNotBeenLoadedByGlass_ReturnsTrueOnDemand()
         {
             //Assign
             var mapper = new SitecoreFieldTypeMapper();
@@ -63,7 +63,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         #endregion

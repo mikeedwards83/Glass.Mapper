@@ -75,7 +75,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_IsEnumerableOfNotMappedClassWithLinkedConfig_ReturnsFalse()
+        public void CanHandle_IsEnumerableOfNotMappedClassWithLinkedConfig_ReturnsTrueOnDemand()
         {
             //Assign
             var config = new SitecoreLinkedConfiguration();
@@ -89,7 +89,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
 
         }
 

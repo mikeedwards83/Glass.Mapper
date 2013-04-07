@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_CorrectConfigIEnumerableNotMappedClass_ReturnsFalse()
+        public void CanHandle_CorrectConfigIEnumerableNotMappedClass_ReturnsTrueOnDemand()
         {
             //Assign
             var mapper = new SitecoreQueryMapper(null);
@@ -85,11 +85,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void CanHandle_CorrectConfigNotMappedClass_ReturnsFalse()
+        public void CanHandle_CorrectConfigNotMappedClass_ReturnsTrueOnDemand()
         {
             //Assign
             var mapper = new SitecoreQueryMapper(null);
@@ -103,7 +103,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
