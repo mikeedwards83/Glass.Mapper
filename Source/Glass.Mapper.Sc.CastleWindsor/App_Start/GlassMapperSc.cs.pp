@@ -6,21 +6,27 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace $rootnamespace$.App_Start
 {
-    public static class  GlassMapperSc
-    {
-        public static void Start()
-        {
-            //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver();
+	public static class  GlassMapperSc
+	{
+		public static void Start()
+		{
+			//create the resolver
+			var resolver = DependencyResolver.CreateStandardResolver();
 
-            //create a context
-            var context = Glass.Mapper.Context.Create(resolver);
+			//install the custom services
+			var container = (resolver as DependencyResolver).Container;
+			GlassMapperScCustom.CastleConfig(container);
 
-            var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
+			//create a context
+			var context = Glass.Mapper.Context.Create(resolver);
 
-            context.Load(              
-                attributes
-                );
-        }
-    }
+			var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
+
+			var loaders = GlassMapperScCustom.GlassLoaders();
+
+			context.Load(              
+				loaders.Union(new []{attributes});
+				);
+		}
+	}
 }
