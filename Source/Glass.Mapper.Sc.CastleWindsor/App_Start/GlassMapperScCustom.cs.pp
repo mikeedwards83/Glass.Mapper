@@ -10,7 +10,7 @@ namespace $rootnamespace$.App_Start
 		public static Config GetConfig(){
 			return new Config();
 		}
-		public static void CastleConfig(IWindsorContainer container, IConfig config){
+		public static void CastleConfig(IWindsorContainer container, Config config){
 			container.Install(new SitecoreInstaller(config));
 		}
 		public static IEnumerable<IConfigurationLoader> GlassLoaders(){

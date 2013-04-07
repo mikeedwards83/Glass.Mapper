@@ -265,6 +265,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <param name="store">The configuration store.</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            //dynamic must be first
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                );
+
             if (Config.UseWindsorContructor)
             {
                 container.Register(
@@ -274,7 +279,6 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
