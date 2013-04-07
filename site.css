@@ -57,7 +57,7 @@ position:fixed;
 
 .hero-unit {
 padding:40px;
-margin-top:10px;
+margin-top:15px;
 }
 
 .hero-unit h1 {
@@ -96,6 +96,10 @@ padding-top:0;
 }
 
 @media (max-width: 767px){
+.hero-unit {
+margin-top:0;
+}
+
 .hero-unit h1 {
 font-size:20px;
 }
