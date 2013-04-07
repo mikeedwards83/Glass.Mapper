@@ -1,4 +1,6 @@
-﻿using Castle.Windsor;
+﻿using System.Collections.Generic;
+using Castle.Windsor;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.CastleWindsor;
 
 namespace $rootnamespace$.App_Start

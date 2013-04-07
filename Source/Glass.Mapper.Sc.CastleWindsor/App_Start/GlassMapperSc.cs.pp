@@ -28,7 +28,7 @@ namespace $rootnamespace$.App_Start
 			var loaders = GlassMapperScCustom.GlassLoaders();
 
 			context.Load(              
-				loaders.Union(new []{attributes});
+				loaders.Union(new []{attributes}).ToArray()
 				);
 		}
 	}
