@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
