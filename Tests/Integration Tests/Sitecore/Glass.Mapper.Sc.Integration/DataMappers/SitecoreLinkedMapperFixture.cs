@@ -62,7 +62,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreLinkedConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
             var mapper = new SitecoreLinkedMapper();
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreLinkedConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>));
             var mapper = new SitecoreLinkedMapper();
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -100,7 +100,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreLinkedConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(List<StubMapped>));
             var mapper = new SitecoreLinkedMapper();
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -119,7 +119,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
             var mapper = new SitecoreLinkedMapper();
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -138,7 +138,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreLinkedConfiguration();
             config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
             var mapper = new SitecoreLinkedMapper();
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
 
@@ -172,7 +172,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
             config.Option = SitecoreLinkedOptions.Referrers;
             
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreLinkedMapper();
@@ -205,7 +205,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
             config.Option = SitecoreLinkedOptions.References;
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var mapper = new SitecoreLinkedMapper();
@@ -250,7 +250,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
                 config.Option = SitecoreLinkedOptions.All;
 
-                var context = Context.Create(DependencyResolver.CreateStandardResolver());
+                var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
                 var mapper = new SitecoreLinkedMapper();

@@ -33,9 +33,10 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
         /// </summary>
         public SitecoreContext()
-            : base(global::Sitecore.Context.Database)
+            : base(global::Sitecore.Context.Database, 
+            Sitecore.Context.Site.Properties["glassContext"]??Context.DefaultContextName)
         {
-
+            
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService" /> class.

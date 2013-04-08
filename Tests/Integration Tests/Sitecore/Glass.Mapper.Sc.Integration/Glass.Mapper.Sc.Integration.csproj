@@ -113,6 +113,7 @@
     <Compile Include="SetupSitecoreForTesting.cs" />
     <Compile Include="SitecoreContextFixture.cs" />
     <Compile Include="SitecoreServiceFixture.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Commands.config">

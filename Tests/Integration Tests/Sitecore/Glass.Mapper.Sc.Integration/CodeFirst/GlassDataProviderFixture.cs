@@ -50,7 +50,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             InjectionDataProvider(db, dataProvider);
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var path = "/sitecore/templates/glasstemplates";
 
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -116,7 +116,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -162,7 +162,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 

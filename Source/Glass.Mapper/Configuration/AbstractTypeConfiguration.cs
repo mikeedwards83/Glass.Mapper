@@ -72,6 +72,9 @@ namespace Glass.Mapper.Configuration
         /// <param name="property">The property.</param>
         public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
+            if(_properties.Any(x=>x.PropertyInfo.Name == property.PropertyInfo.Name))
+                throw new MapperException("You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(property.PropertyInfo.Name, this.Type.Name));
+
             if(property != null)
                 _properties.Add(property);
         }
@@ -129,6 +132,10 @@ namespace Glass.Mapper.Configuration
             {
                 if (Properties.All(x => x.PropertyInfo != property))
                 {
+                    //skipped already mapped properties
+                    if(_properties.Any(x=>x.PropertyInfo.Name == property.Name))
+                        continue;
+
                     var propConfig = AutoMapProperty(property);
                     if (propConfig != null)
                         yield return propConfig;

@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(

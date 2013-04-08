@@ -23,7 +23,7 @@ namespace $rootnamespace$.App_Start
 			var config = GlassMapperScCustom.GetConfig();
 
 			//create the resolver
-			var resolver = DependencyResolver.CreateStandardResolver(config);
+			var resolver = DependencyResolver.CreateStandardResolver();
 
 			//install the custom services
 			var container = (resolver as DependencyResolver).Container;

@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration
             _expected = "hello world";
             _id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
-            _context = Context.Create(DependencyResolver.CreateStandardResolver());
+            _context = Context.Create(Utilities.CreateStandardResolver());
 
 
             _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
