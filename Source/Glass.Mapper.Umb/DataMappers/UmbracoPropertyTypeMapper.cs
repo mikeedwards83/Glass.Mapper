@@ -69,8 +69,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration,  Context context)
         {
-            return context[configuration.PropertyInfo.PropertyType] != null &&
-                   configuration is UmbracoPropertyConfiguration;
+            return configuration is UmbracoPropertyConfiguration; //context[configuration.PropertyInfo.PropertyType] != null &&
         }
 
         /// <summary>

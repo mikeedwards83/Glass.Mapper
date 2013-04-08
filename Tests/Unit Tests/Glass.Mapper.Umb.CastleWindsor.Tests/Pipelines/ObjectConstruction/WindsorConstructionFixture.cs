@@ -21,8 +21,9 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeConfig.Type = typeof (StubClass);
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            var service = Substitute.For<AbstractService>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
 
             Assert.IsNull(args.Result);
 
@@ -106,9 +107,10 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeConfig.Type = typeof(StubClassWithService);
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            var service = Substitute.For<AbstractService>();
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null );
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
 
             Assert.IsNull(args.Result);
 

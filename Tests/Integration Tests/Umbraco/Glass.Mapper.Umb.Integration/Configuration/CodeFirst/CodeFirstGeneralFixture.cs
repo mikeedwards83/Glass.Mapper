@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using NUnit.Framework;
@@ -57,7 +56,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.CodeFirst
 			const string contentTypeName = "Test Type";
 			const string contentTypeProperty = "TestProperty";
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = WindsorContainer.GetContext();
 			var loader = new UmbracoAttributeConfigurationLoader("Glass.Mapper.Umb.Integration");
 			context.Load(loader);
 

@@ -51,6 +51,13 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <summary>
         /// Initializes a new instance of the <see cref="UmbracoInstaller"/> class.
         /// </summary>
+        public UmbracoInstaller() : this(new Config())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInstaller"/> class.
+        /// </summary>
         /// <param name="config">The config.</param>
         public UmbracoInstaller(Config config)
         {

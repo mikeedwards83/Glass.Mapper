@@ -36,8 +36,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </returns>
         public static IDependencyResolver CreateStandardResolver(Config config)
         {
-            IWindsorContainer container=  new WindsorContainer();
-            container.Install(new UmbracoInstaller(config));
+            IWindsorContainer container = new WindsorContainer();
             return new DependencyResolver(container);
         }
 
@@ -75,8 +74,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         {
             if (args == null)
                 return Container.Resolve<T>();
-
-
+            
             return Container.Resolve<T>((IDictionary) args);
         }
 

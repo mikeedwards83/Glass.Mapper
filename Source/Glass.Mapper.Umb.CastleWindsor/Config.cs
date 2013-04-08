@@ -17,6 +17,5 @@
         /// Indicates that classes should be build using the Windsor dependency resolver. Default is False
         /// </summary>
         public bool UseWindsorContructor { get; set; }
-
     }
 }

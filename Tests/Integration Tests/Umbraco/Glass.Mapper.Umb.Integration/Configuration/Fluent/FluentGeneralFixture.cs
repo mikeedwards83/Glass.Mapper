@@ -48,8 +48,8 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
                                                                      new ContentService(unitOfWork),
                                                                      new MediaService(unitOfWork, repoFactory));
             var dataTypeService = new DataTypeService(unitOfWork, repoFactory);
+            var context = WindsorContainer.GetContext();
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
             var loader = new UmbracoFluentConfigurationLoader();
             var stubConfig = loader.Add<Stub>();
             stubConfig.Configure(x =>

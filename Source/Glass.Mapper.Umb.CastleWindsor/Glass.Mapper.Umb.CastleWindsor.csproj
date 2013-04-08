@@ -57,6 +57,7 @@
     <Compile Include="UmbracoInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Start\GlassMapperUmbCustom.cs.pp" />
     <None Include="App_Start\GlassMapperUmb.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>
