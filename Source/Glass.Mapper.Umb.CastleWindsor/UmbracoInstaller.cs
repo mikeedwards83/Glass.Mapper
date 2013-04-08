@@ -123,7 +123,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFloatMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyGuidMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIEnumerableMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyImageMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyImageMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIntegerMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLinkMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLongMapper>().LifestyleTransient(),

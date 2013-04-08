@@ -247,6 +247,7 @@
     <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoPropertyImageMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyNullableMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyEnumMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyLongMapper.cs" />
@@ -277,6 +278,8 @@
     <Compile Include="UmbracoService.cs" />
     <Compile Include="UmbracoDataMappingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Ui\GlassTemplatePage.cs" />
+    <Compile Include="Web\Ui\GlassViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Proxies\" />

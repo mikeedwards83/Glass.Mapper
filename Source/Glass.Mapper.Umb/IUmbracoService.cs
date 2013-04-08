@@ -56,7 +56,7 @@ namespace Glass.Mapper.Umb
         /// <returns></returns>
         object CreateType(Type type, IContent content, bool isLazy, bool inferType,
                           params object[] constructorParameters);
-
+        
         /// <summary>
         /// Creates a class from the specified content
         /// </summary>

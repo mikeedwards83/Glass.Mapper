@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
@@ -56,9 +57,9 @@ namespace Glass.Mapper.Umb.DataMappers
             var config = Configuration as UmbracoPropertyConfiguration;
             var context = mappingContext as UmbracoDataMappingContext;
 
-            if (context.Content.Properties.Contains(config.PropertyAlias))
+            if (context.Content.Properties.Select(p => p.Alias.ToLowerInvariant()).Contains(config.PropertyAlias.ToLowerInvariant()))
             {
-                var property = context.Content.Properties[config.PropertyAlias];
+                var property = context.Content.Properties.FirstOrDefault(p => p.Alias.ToLowerInvariant() == config.PropertyAlias.ToLowerInvariant());
                 return GetProperty(property, config, context);
             }
 
@@ -119,6 +120,29 @@ namespace Glass.Mapper.Umb.DataMappers
         {
             return configuration is UmbracoPropertyConfiguration &&
                    TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);
+        }
+    }
+
+    public class LowercaseComparer : IEqualityComparer<string>
+    {
+        public bool Equals(object x, object y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetHashCode(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(string x, string y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetHashCode(string obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

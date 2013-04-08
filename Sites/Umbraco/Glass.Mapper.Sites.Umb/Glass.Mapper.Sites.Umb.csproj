@@ -42,6 +42,12 @@
     <Reference Include="businesslogic">
       <HintPath>..\..\..\packages\UmbracoCms.Core.6.0.3\lib\businesslogic.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="ClientDependency.Core">
       <HintPath>..\..\..\packages\UmbracoCms.Core.6.0.3\lib\ClientDependency.Core.dll</HintPath>
     </Reference>
@@ -216,11 +222,28 @@
     <Reference Include="UrlRewritingNet.UrlRewriter">
       <HintPath>..\..\..\packages\UmbracoCms.Core.6.0.3\lib\UrlRewritingNet.UrlRewriter.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\GlassMapperUmb.cs" />
+    <Compile Include="App_Start\GlassMapperUmbCustom.cs" />
+    <Compile Include="App_Start\ServiceInstaller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Config\ContentConfig.cs" />
+    <Compile Include="Models\Content\Comment.cs" />
+    <Compile Include="Models\Content\CommentPage.cs" />
+    <Compile Include="Models\Content\Event.cs" />
+    <Compile Include="Models\Content\NewsArticle.cs" />
+    <Compile Include="Models\Landing\EventsLanding.cs" />
+    <Compile Include="Models\Landing\HomePage.cs" />
+    <Compile Include="Models\Landing\NewsLanding.cs" />
+    <Compile Include="Models\Landing\RssLanding.cs" />
+    <Compile Include="Models\Misc\ContentBase.cs" />
+    <Compile Include="Models\Misc\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -243,7 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -311,6 +334,44 @@
   <ItemGroup>
     <Content Include="App_Browsers\Form.browser" />
     <Content Include="App_Browsers\w3cvalidator.browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\TopNavigationView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HomePageLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Umb.CastleWindsor\Glass.Mapper.Umb.CastleWindsor.csproj">
+      <Project>{53c429e4-2583-4eb9-8226-554c70834e26}</Project>
+      <Name>Glass.Mapper.Umb.CastleWindsor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Umb\Glass.Mapper.Umb.csproj">
+      <Project>{7bfbd78c-70af-45b3-83bd-b5f9b0de2fbf}</Project>
+      <Name>Glass.Mapper.Umb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EventLandingLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\MetaData.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EventPageLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NewsLandingLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NewsPageLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

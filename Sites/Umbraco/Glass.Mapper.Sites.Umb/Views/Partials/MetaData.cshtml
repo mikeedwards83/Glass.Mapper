@@ -1,0 +1,12 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<Glass.Mapper.Sites.Umb.Models.Misc.ContentBase>
+<title>@Model.Title</title>
+<meta runatname="updated" content="@Model.UpdateDate" />
+<link rel="canonical" href="/@Model.Url" />
+@*@if (Model.Parent != null)
+{
+    <link rel="prev" href="/@Model.Parent.Url" />
+}*@
+@foreach (var child in Model.Children)
+{
+<link rel="next" href="/@child.Url"/>
+}
