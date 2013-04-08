@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace $rootnamespace$.App_Start
 {
@@ -13,8 +14,10 @@ namespace $rootnamespace$.App_Start
 		public static void CastleConfig(IWindsorContainer container, Config config){
 			container.Install(new SitecoreInstaller(config));
 		}
-		public static IEnumerable<IConfigurationLoader> GlassLoaders(){
-			return new IConfigurationLoader[]{};
+		public static IConfigurationLoader[] GlassLoaders(){
+			var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
+			
+			return new IConfigurationLoader[]{attributes};
 		}
     }
 }

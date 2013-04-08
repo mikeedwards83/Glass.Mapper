@@ -31,13 +31,8 @@ namespace $rootnamespace$.App_Start
 
 			//create a context
 			var context = Glass.Mapper.Context.Create(resolver);
-
-			var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
-
-			var loaders = GlassMapperScCustom.GlassLoaders();
-
-			context.Load(              
-				loaders.Union(new []{attributes}).ToArray()
+			context.Load(      
+				GlassMapperScCustom.GlassLoaders()        				
 				);
 		}
 	}
