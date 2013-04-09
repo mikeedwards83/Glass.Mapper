@@ -43,6 +43,19 @@ namespace Glass.Mapper.Umb
         }
 
         /// <summary>
+        /// Gets the home item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        public T GetHomeItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            var item = ContentService.GetChildren(-1).FirstOrDefault();
+            return CreateType(typeof(T), item, isLazy, inferType) as T;
+        }
+
+        /// <summary>
         /// Gets the item.
         /// </summary>
         /// <typeparam name="T"></typeparam>

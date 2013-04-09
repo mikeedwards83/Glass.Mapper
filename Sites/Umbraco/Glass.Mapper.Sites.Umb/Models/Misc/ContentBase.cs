@@ -10,7 +10,5 @@ namespace Glass.Mapper.Sites.Umb.Models.Misc
 
         [UmbracoId]
         public virtual Guid Key { get; set; }
-      
-        public virtual string Url { get; set; }
     }
 }

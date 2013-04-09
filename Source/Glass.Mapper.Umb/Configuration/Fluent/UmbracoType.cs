@@ -133,18 +133,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
-        
-        /// <summary>
-        /// Map an item's linked items to a class property
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        /// <returns></returns>
-        public UmbracoLinked<T> Linked(Expression<Func<T, object>> ex)
-        {
-            var builder = new UmbracoLinked<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
-            return builder;
-        }
 
         /// <summary>
         /// Map item properties to a class properties
@@ -154,17 +142,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         public UmbracoType<T> Properties(Action<IUmbracoClassFields<T>> properties)
         {
             properties.Invoke(this);
-            return this;
-        }
-
-        /// <summary>
-        /// Map an item's linked items to a class properties
-        /// </summary>
-        /// <param name="links">The links.</param>
-        /// <returns></returns>
-        public UmbracoType<T> Links(Action<IUmbracoLinkedItems<T>> links)
-        {
-            links.Invoke(this);
             return this;
         }
 
@@ -230,7 +207,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     public interface IUmbracoClass<T> : 
         IUmbracoClassFields<T>,
         IUmbracoClassInfos<T>,
-        IUmbracoLinkedItems<T>,
         IUmbracoClassId<T>
     {
     }
@@ -275,20 +251,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         /// <returns></returns>
         UmbracoInfo<T> Info(Expression<Func<T, object>> ex);
-    }
-
-    /// <summary>
-    /// IUmbracoLinkedItems
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IUmbracoLinkedItems<T>
-    {
-        /// <summary>
-        /// Linkeds the specified ex.
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        /// <returns></returns>
-        UmbracoLinked<T> Linked(Expression<Func<T, object>> ex);
     }
 
     #endregion

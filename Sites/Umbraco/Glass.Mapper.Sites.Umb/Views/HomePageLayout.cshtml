@@ -3,27 +3,29 @@
     Layout = "BaseLayout.cshtml";
 }
 <div class="hero-unit">
-    <h1>@Model.Title</h1>
+    <h1 style="color: #@Model.HeroColour">@Model.Title</h1>
     @Html.Raw(Model.MainBody)
 </div>
 
 <div class="span6">
     <h3>Featured News</h3>
-    @*<ul class="thumbnails">
-        <% foreach (var news in Model.News)
-           { %>
-        <li class="span3">
+    <ul class="thumbnails">
+        @foreach (var news in Model.NewsLanding.Articles.Take(Model.NewsArticlesToShow))
+        {
+        <li>
             <div class="thumbnail">
-                <img src="<%=news.FeaturedImage.Src  %>" alt="<%=news.FeaturedImage.Alt %>">
+                @if (news.FeaturedImage != null)
+                {
+                    <img src="@news.FeaturedImage.Src"  />
+                }
                 <h4>
-                    <a href="<%=news.Url %>">
-                        <%=news.Title %>
+                    <a href="@Umbraco.NiceUrl(news.Id)">
+                        @news.Title
                     </a>
                 </h4>
-                <p><%=news.Abstract %></p>
+                <p>@news.Abstract</p>
             </div>
         </li>
-
-        <% } %>
-    </ul>*@
+        }
+    </ul>
 </div>

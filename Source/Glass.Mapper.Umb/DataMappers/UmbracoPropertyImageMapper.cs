@@ -19,6 +19,7 @@
 using System;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.PropertyTypes;
+using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
 
@@ -46,32 +47,37 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetProperty(Umbraco.Core.Models.Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            Image img = new Image();
-            /*var mediaService = new MediaService(new RepositoryFactory());
-            mediaService.GetById(property.Value)
-            ImageFiseld scImg = new ImagseField(field);
+            if (property == null)
+                return null;
 
-            int height = 0;
-            int.TryParse(scImg.Height, out height);
-            int width = 0;
-            int.TryParse(scImg.Width, out width);
-            int hSpace = 0;
-            int.TryParse(scImg.HSpace, out hSpace);
-            int vSpace = 0;
-            int.TryParse(scImg.VSpace, out vSpace);
+            var mediaService = new MediaService(new RepositoryFactory());
+            int id;
 
-            img.Alt = scImg.Alt;
-            img.Border = scImg.Border;
-            img.Class = scImg.Class;
-            img.Height = height;
-            img.HSpace = hSpace;
-            img.MediaId = scImg.MediaID.Guid;
-            if (scImg.MediaItem != null)
-                img.Src = MediaManager.GetMediaUrl(scImg.MediaItem);
-            img.VSpace = vSpace;
-            img.Width = width;*/
+            if (!int.TryParse(property.Value.ToString(), out id))
+                return null;
 
-            return img;
+            var image = mediaService.GetById(id);
+
+            if (image != null)
+            {
+                int width;
+                int.TryParse(image.Properties["umbracoWidth"].Value.ToString(), out width);
+                int height;
+                int.TryParse(image.Properties["umbracoHeight"].Value.ToString(), out height);
+
+                var img = new Image
+                    {
+                        Id = image.Id,
+                        Alt = image.Name,
+                        Src = image.Properties["umbracoFile"].Value.ToString(),
+                        Width = width,
+                        Height = height,
+                        Extension = image.Properties["umbracoExtension"].Value.ToString()
+                    };
+                return img;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -83,6 +89,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <param name="context">The context.</param>
         public override void SetProperty(Umbraco.Core.Models.Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
+            throw new NotImplementedException();
            /* Image img = value as Image;
             var item = field.Item;
 

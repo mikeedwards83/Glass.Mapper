@@ -41,13 +41,13 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         [Sequential]
         public void MapToProperty_UmbracoInfoType_GetsExpectedValueFromUmbraco(
             [Values(
-                UmbracoInfoType.Url,
+                //UmbracoInfoType.Url,
                 UmbracoInfoType.ContentTypeAlias,
                 UmbracoInfoType.ContentTypeName,
                 UmbracoInfoType.Name
                 )] UmbracoInfoType type,
             [Values(
-                "target", //Url
+                //"target", //Url
                 "TestType", //ContentTypeAlias
                 "Test Type", //ContentTypeName
                 "Target" //Name

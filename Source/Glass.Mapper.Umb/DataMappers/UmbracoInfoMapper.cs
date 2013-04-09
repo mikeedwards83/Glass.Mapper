@@ -98,8 +98,8 @@ namespace Glass.Mapper.Umb.DataMappers
                     return content.ContentType.Alias;
                 case UmbracoInfoType.ContentTypeName:
                     return content.ContentType.Name;
-                case UmbracoInfoType.Url:
-                    return content.Name.FormatUrl().ToLower();
+                //case UmbracoInfoType.Url:
+                //    return content.Name.FormatUrl().ToLower();
                 case UmbracoInfoType.Version:
                     return content.Version;
                 default:

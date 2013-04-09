@@ -10,8 +10,6 @@ namespace Glass.Mapper.Sites.Umb.Models.Misc
 
         public virtual string Title { get; set; }
 
-        public virtual string Url { get; set; }
-
         public virtual IEnumerable<MenuItem> Children { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 <div class="page-header">
     <h1>@Model.Title<small></small></h1>
 </div>
+@Html.Raw(Model.MainBody)
 <ul class="thumbnails">
     @foreach (var evnt in Model.Events.OrderBy(x=>x.Start))
     {

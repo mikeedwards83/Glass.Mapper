@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
@@ -17,6 +18,15 @@ namespace Glass.Mapper.Umb
         /// The content service.
         /// </value>
         IContentService ContentService { get; }
+
+        /// <summary>
+        /// Gets the home item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns></returns>
+        T GetHomeItem<T>(bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Gets the item.

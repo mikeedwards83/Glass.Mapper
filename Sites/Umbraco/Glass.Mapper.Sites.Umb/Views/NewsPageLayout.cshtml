@@ -5,4 +5,11 @@
 <div class="page-header">
     <h1>@Model.Title <small>Date: @Model.Date.ToString("dd MMM yyyy")</small></h1>
 </div>
-@Model.MainBody
+@Html.Raw(Model.MainBody)
+<h3>Tags</h3>
+<ul>
+@foreach (var tag in Model.Tags)
+{
+    <li>@tag</li>
+}
+</ul>

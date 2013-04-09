@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Glass.Mapper.Sites.Umb.Models.Misc;
+using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
 using Glass.Mapper.Umb.PropertyTypes;
 
@@ -21,5 +23,8 @@ namespace Glass.Mapper.Sites.Umb.Models.Content
 
         [UmbracoProperty]
         public virtual DateTime Date { get; set; }
+
+        [UmbracoProperty("Tags", UmbracoPropertyType.Tags)]
+        public virtual IEnumerable<string> Tags { get; set; }
     }
 }

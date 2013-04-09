@@ -26,10 +26,10 @@ namespace Glass.Mapper.Umb.Configuration
         /// The item's Content Type name. The property type must be System.String
         /// </summary>
         ContentTypeName,
-        /// <summary>
-        /// The item's URL. The property type must be System.String
-        /// </summary>
-        Url,
+        ///// <summary>
+        ///// The item's URL. The property type must be System.String
+        ///// </summary>
+        //Url,
         /// <summary>
         /// The item's version. The property type must be System.Int32
         /// </summary>
