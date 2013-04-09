@@ -59,5 +59,13 @@ namespace Glass.Mapper.Umb.PropertyTypes
         /// The id.
         /// </value>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size.
+        /// </summary>
+        /// <value>
+        /// The size.
+        /// </value>
+        public int Size { get; set; }
     }
 }

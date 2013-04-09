@@ -12,14 +12,12 @@ namespace Glass.Mapper.Sites.Umb.App_Start
 {
     public static class GlassMapperUmbCustom
     {
-        public static Config GetConfig()
+        public static void CastleConfig(IWindsorContainer container)
         {
-            return new Config();
-        }
-        public static void CastleConfig(IWindsorContainer container, Config config)
-        {
+            var config = new Config();
             container.Install(new UmbracoInstaller(config));
         }
+
         public static IConfigurationLoader[] GlassLoaders()
         {
             var attributes = new UmbracoAttributeConfigurationLoader("Glass.Mapper.Sites.Umb");

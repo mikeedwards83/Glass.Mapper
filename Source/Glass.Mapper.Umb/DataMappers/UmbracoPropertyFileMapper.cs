@@ -18,23 +18,22 @@
 
 using System;
 using Glass.Mapper.Umb.Configuration;
-using Glass.Mapper.Umb.PropertyTypes;
-using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
+using File = Glass.Mapper.Umb.PropertyTypes.File;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
     /// <summary>
-    /// Class SitecoreFieldIUmbracoPropertyImageMappermageMapper
+    /// Class UmbracoPropertyFileMapper
     /// </summary>
-    public class UmbracoPropertyImageMapper : AbstractUmbracoPropertyMapper
+    public class UmbracoPropertyFileMapper : AbstractUmbracoPropertyMapper
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UmbracoPropertyImageMapper" /> class.
+        /// Initializes a new instance of the <see cref="UmbracoPropertyFileMapper" /> class.
         /// </summary>
-        public UmbracoPropertyImageMapper()
-            : base(typeof(Image))
+        public UmbracoPropertyFileMapper()
+            : base(typeof(File))
         {
         }
 
@@ -56,25 +55,19 @@ namespace Glass.Mapper.Umb.DataMappers
             if (!int.TryParse(property.Value.ToString(), out id))
                 return null;
 
-            var image = mediaService.GetById(id);
+            var file = mediaService.GetById(id);
 
-            if (image != null)
+            if (file != null)
             {
-                int width;
-                int.TryParse(image.Properties["umbracoWidth"].Value.ToString(), out width);
-                int height;
-                int.TryParse(image.Properties["umbracoHeight"].Value.ToString(), out height);
                 int bytes;
-                int.TryParse(image.Properties["umbracoBytes"].Value.ToString(), out bytes);
+                int.TryParse(file.Properties["umbracoBytes"].Value.ToString(), out bytes);
 
-                var img = new Image
+                var img = new File
                     {
-                        Id = image.Id,
-                        Alt = image.Name,
-                        Src = image.Properties["umbracoFile"].Value.ToString(),
-                        Width = width,
-                        Height = height,
-                        Extension = image.Properties["umbracoExtension"].Value.ToString(),
+                        Id = file.Id,
+                        Name = file.Name,
+                        Src = file.Properties["umbracoFile"].Value.ToString(),
+                        Extension = file.Properties["umbracoExtension"].Value.ToString(),
                         Size = bytes
                     };
                 return img;

@@ -11,7 +11,7 @@ namespace Glass.Mapper.Umb.Integration
         public static Context GetContext()
         {
             var config = new Config();
-            var resolver = DependencyResolver.CreateStandardResolver(config);
+            var resolver = DependencyResolver.CreateStandardResolver();
             var context = Context.Create(resolver);
             ((DependencyResolver)resolver).Container.Install(new UmbracoInstaller(config));
             return context;

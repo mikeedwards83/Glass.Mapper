@@ -69,7 +69,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
@@ -110,7 +110,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoChildrenMapper>().LifestyleTransient(),
@@ -119,7 +119,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDecimalMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDoubleMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyEnumMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFileMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFileMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFloatMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyGuidMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIEnumerableMapper>().LifestyleTransient(),
@@ -181,7 +181,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified.
             container.Register(
@@ -219,7 +219,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
             // if your code contained
@@ -267,7 +267,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             if (Config.UseWindsorContructor)
             {
@@ -311,7 +311,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified below.
             container.Register(

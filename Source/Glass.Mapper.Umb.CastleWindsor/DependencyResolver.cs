@@ -30,25 +30,15 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <summary>
         /// Creates the standard resolver.
         /// </summary>
-        /// <param name="config">The config.</param>
         /// <returns>
         /// IDependencyResolver.
         /// </returns>
-        public static IDependencyResolver CreateStandardResolver(Config config)
+        public static DependencyResolver CreateStandardResolver()
         {
             IWindsorContainer container = new WindsorContainer();
             return new DependencyResolver(container);
         }
-
-        /// <summary>
-        /// Creates the standard resolver.
-        /// </summary>
-        /// <returns>IDependencyResolver.</returns>
-        public static IDependencyResolver CreateStandardResolver()
-        {
-            return CreateStandardResolver(new Config());
-        }
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="DependencyResolver"/> class.
         /// </summary>

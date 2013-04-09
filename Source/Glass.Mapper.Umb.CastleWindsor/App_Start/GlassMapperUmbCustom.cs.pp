@@ -8,12 +8,11 @@ namespace $rootnamespace$.App_Start
 {
     public static class GlassMapperUmbCustom
     {
-		public static Config GetConfig(){
-			return new Config();
-		}
-		public static void CastleConfig(IWindsorContainer container, Config config){
+		public static void CastleConfig(IWindsorContainer container){
+			var config = new Config();
 			container.Install(new UmbracoInstaller(config));
 		}
+
 		public static IConfigurationLoader[] GlassLoaders(){
 			var attributes = new UmbracoAttributeConfigurationLoader("$assemblyname$");
 			

@@ -24,6 +24,9 @@ namespace Glass.Mapper.Sites.Umb.Models.Content
         [UmbracoProperty]
         public virtual DateTime Date { get; set; }
 
+        [UmbracoProperty]
+        public virtual File Document { get; set; }
+
         [UmbracoProperty("Tags", UmbracoPropertyType.Tags)]
         public virtual IEnumerable<string> Tags { get; set; }
     }

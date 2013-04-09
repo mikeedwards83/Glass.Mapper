@@ -6,6 +6,10 @@
     <h1>@Model.Title <small>Date: @Model.Date.ToString("dd MMM yyyy")</small></h1>
 </div>
 @Html.Raw(Model.MainBody)
+@if (Model.Document != null)
+{
+    <a href="@Model.Document.Src">@Model.Document.Name</a>
+}
 <h3>Tags</h3>
 <ul>
 @foreach (var tag in Model.Tags)

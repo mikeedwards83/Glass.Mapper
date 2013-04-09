@@ -11,17 +11,14 @@ namespace Glass.Mapper.Sites.Umb.App_Start
     {
         public static void Start()
         {
-            var config = GlassMapperUmbCustom.GetConfig();
-
             //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver(config);
+            var resolver = DependencyResolver.CreateStandardResolver();
 
             //install the custom services
-            var container = (resolver as DependencyResolver).Container;
-            GlassMapperUmbCustom.CastleConfig(container, config);
+            GlassMapperUmbCustom.CastleConfig(resolver.Container);
 
             //create a context
-            var context = Glass.Mapper.Context.Create(resolver);
+            var context = Context.Create(resolver);
             context.Load(
                 GlassMapperUmbCustom.GlassLoaders()
                 );
