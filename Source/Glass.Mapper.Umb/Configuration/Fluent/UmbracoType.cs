@@ -133,18 +133,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
-        
-        /// <summary>
-        /// Map an item's linked items to a class property
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        /// <returns></returns>
-        public UmbracoLinked<T> Linked(Expression<Func<T, object>> ex)
-        {
-            var builder = new UmbracoLinked<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
-            return builder;
-        }
 
         /// <summary>
         /// Map item properties to a class properties
@@ -160,22 +148,37 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <summary>
         /// Map an item's linked items to a class properties
         /// </summary>
-        /// <param name="links">The links.</param>
-        /// <returns></returns>
-        public UmbracoType<T> Links(Action<IUmbracoLinkedItems<T>> links)
-        {
-            links.Invoke(this);
-            return this;
-        }
-
-        /// <summary>
-        /// Map an item's linked items to a class properties
-        /// </summary>
         /// <param name="config">The config.</param>
         /// <returns></returns>
         public UmbracoType<T> Configure(Action<IUmbracoClass<T>> config)
         {
             config.Invoke(this);
+            return this;
+        }
+
+        /// <summary>
+        /// Imports the properties form another type
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="typeConfig">The type config.</param>
+        /// <returns>SitecoreType{`0}.</returns>
+        public UmbracoType<T> Import<K>(UmbracoType<K> typeConfig)
+        {
+            typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
+
+            if (typeConfig._configuration.AutoMap)
+                Config.AutoMap = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Autoes the map.
+        /// </summary>
+        /// <returns></returns>
+        public UmbracoType<T> AutoMap()
+        {
+            Config.AutoMap = true;
             return this;
         }
         
@@ -204,7 +207,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     public interface IUmbracoClass<T> : 
         IUmbracoClassFields<T>,
         IUmbracoClassInfos<T>,
-        IUmbracoLinkedItems<T>,
         IUmbracoClassId<T>
     {
     }
@@ -249,20 +251,6 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         /// <returns></returns>
         UmbracoInfo<T> Info(Expression<Func<T, object>> ex);
-    }
-
-    /// <summary>
-    /// IUmbracoLinkedItems
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IUmbracoLinkedItems<T>
-    {
-        /// <summary>
-        /// Linkeds the specified ex.
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        /// <returns></returns>
-        UmbracoLinked<T> Linked(Expression<Func<T, object>> ex);
     }
 
     #endregion

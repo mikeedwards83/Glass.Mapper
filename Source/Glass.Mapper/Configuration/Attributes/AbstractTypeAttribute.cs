@@ -30,12 +30,6 @@ namespace Glass.Mapper.Configuration.Attributes
     public abstract class AbstractTypeAttribute : Attribute 
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractTypeAttribute"/> class.
-        /// </summary>
-        public AbstractTypeAttribute()
-        { }
-
-        /// <summary>
         /// Configures the specified type.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -51,6 +45,14 @@ namespace Glass.Mapper.Configuration.Attributes
         /// Indicates that properties should be automapped rather than loaded explicitly. 
         /// </summary>
         public bool AutoMap { get; set; }
+
+        /// <summary>
+        /// Indicates that the class is used in a code first scenario.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [code first]; otherwise, <c>false</c>.
+        /// </value>
+        public bool CodeFirst { get; set; }
     }
 }
 

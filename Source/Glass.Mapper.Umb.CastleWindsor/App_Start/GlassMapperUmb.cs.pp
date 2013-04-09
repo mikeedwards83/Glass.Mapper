@@ -13,13 +13,13 @@ namespace $rootnamespace$.App_Start
             //create the resolver
             var resolver = DependencyResolver.CreateStandardResolver();
 
+			//install the custom services
+			GlassMapperUmbCustom.CastleConfig(resolver.Container);
+
             //create a context
             var context = Glass.Mapper.Context.Create(resolver);
-
-            var attributes = new UmbracoAttributeConfigurationLoader("$assemblyname$");
-
-            context.Load(              
-                attributes
+            context.Load(    
+				GlassMapperUmbCustom.GlassLoaders()   
                 );
         }
     }

@@ -20,6 +20,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
@@ -28,26 +29,55 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.DataMappers;
 
 namespace Glass.Mapper.Umb.CastleWindsor
 {
+    /// <summary>
+    /// UmbracoInstaller
+    /// </summary>
     public class UmbracoInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInstaller"/> class.
+        /// </summary>
+        public UmbracoInstaller() : this(new Config())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UmbracoInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public UmbracoInstaller(Config config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
-                new DataMapperInstaller(),
-                new DataMapperTasksInstaller(),
-                new ConfigurationResolverTaskInstaller(),
-                new ObjectionConstructionTaskInstaller(),
-                new ObjectSavingTaskInstaller()
+                new DataMapperInstaller(Config),
+                new DataMapperTasksInstaller(Config),
+                new ConfigurationResolverTaskInstaller(Config),
+                new ObjectionConstructionTaskInstaller(Config),
+                new ObjectSavingTaskInstaller(Config)
                 );
         }
     }
@@ -59,54 +89,59 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class DataMapperInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public DataMapperInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyBooleanMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDateTimeMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDecimalMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldDoubleMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldEnumMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldFileMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldFloatMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldGuidMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldIEnumerableMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldImageMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldIntegerMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldLinkMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldLongMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNameValueCollectionMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDateTimeMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDoubleMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableDecimalMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableFloatMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>()
-                //         .ImplementedBy<UmbracoFieldNullableGuidMapper>()
-                //         .LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldNullableIntMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldRulesMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldStreamMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDateTimeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDecimalMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyDoubleMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyEnumMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFileMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyFloatMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyGuidMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIEnumerableMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyImageMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyIntegerMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLinkMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyLongMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNameValueCollectionMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDateTimeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDoubleMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableDecimalMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableFloatMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableGuidMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableIntegerMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyNullableLongMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyRulesMapper>().LifestyleTransient(),
+                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyStreamMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyStringMapper>().LifestyleTransient(),
-                //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoFieldTypeMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoPropertyTypeMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoIdMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoInfoMapper>().LifestyleTransient(),
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoItemMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<UmbracoLinkedMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<UmbracoParentMapper>().LifestyleTransient()//,
                 //Component.For<AbstractDataMapper>().ImplementedBy<UmbracoQueryMapper>()
                 //         .DynamicParameters((k, d) =>
@@ -125,11 +160,28 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class DataMapperTasksInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperTasksInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public DataMapperTasksInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified.
             container.Register(
@@ -146,11 +198,28 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationResolverTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ConfigurationResolverTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
             // if your code contained
@@ -162,6 +231,12 @@ namespace Glass.Mapper.Umb.CastleWindsor
                          .ImplementedBy<ConfigurationStandardResolverTask>()
                          .LifestyleTransient()
                 );
+
+            container.Register(
+                Component.For<IConfigurationResolverTask>()
+                         .ImplementedBy<ConfigurationOnDemandResolverTask<UmbracoTypeConfiguration>>()
+                         .LifestyleTransient()
+                );
         }
     }
 
@@ -171,12 +246,36 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectionConstructionTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ObjectionConstructionTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            if (Config.UseWindsorContructor)
+            {
+                container.Register(
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleTransient()
+                    );
+            }
+
             container.Register(
                 // Tasks are called in the order they are specified below.
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
@@ -191,11 +290,28 @@ namespace Glass.Mapper.Umb.CastleWindsor
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
         /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
+        public Config Config { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectSavingTaskInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
+        public ObjectSavingTaskInstaller(Config config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified below.
             container.Register(
