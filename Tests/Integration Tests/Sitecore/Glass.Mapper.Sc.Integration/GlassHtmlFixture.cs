@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -88,7 +88,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -136,7 +136,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -183,7 +183,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -231,7 +231,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -278,7 +278,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -327,7 +327,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -374,7 +374,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -422,7 +422,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -469,7 +469,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -517,7 +517,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -564,7 +564,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -612,7 +612,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -659,7 +659,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -707,7 +707,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
@@ -754,7 +754,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 

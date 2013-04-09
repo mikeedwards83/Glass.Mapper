@@ -38,7 +38,8 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
             string name = "Target";
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            
+            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
