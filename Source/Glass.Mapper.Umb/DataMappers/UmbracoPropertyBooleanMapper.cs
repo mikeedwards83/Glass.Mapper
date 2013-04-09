@@ -43,7 +43,9 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object SetPropertyValue(object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return value;
+            if (value is bool && (bool)value)
+                return "1";
+            return "0";
         }
 
         /// <summary>
@@ -55,7 +57,9 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue is bool && (bool)propertyValue;
+            if (propertyValue != null && propertyValue.ToString() == "1")
+                return true;
+            return false;
         }
     }
 }

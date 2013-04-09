@@ -1,12 +1,12 @@
-@inherits Umbraco.Web.Mvc.UmbracoViewPage<Glass.Mapper.Sites.Umb.Models.Misc.ContentBase>
+@inherits Glass.Mapper.Umb.Web.Ui.GlassTemplatePage<Glass.Mapper.Sites.Umb.Models.Misc.MetaData>
 <title>@Model.Title</title>
 <meta runatname="updated" content="@Model.UpdateDate" />
-<link rel="canonical" href="/@Model.Url" />
-@*@if (Model.Parent != null)
+<link rel="canonical" href="@Umbraco.NiceUrl(Model.Id)" />
+@if (Model.Parent != null)
 {
-    <link rel="prev" href="/@Model.Parent.Url" />
-}*@
+    <link rel="prev" href="@Umbraco.NiceUrl(Model.Parent.Id)" />
+}
 @foreach (var child in Model.Children)
 {
-<link rel="next" href="/@child.Url"/>
+<link rel="next" href="@Umbraco.NiceUrl(child.Id)"/>
 }

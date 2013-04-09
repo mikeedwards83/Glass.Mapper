@@ -37,6 +37,18 @@ namespace Glass.Mapper.Umb.Configuration
         /// <summary>
         /// The item's Name. The property type must be System.String
         /// </summary>
-        Name
+        Name,
+        /// <summary>
+        /// The create date
+        /// </summary>
+        CreateDate,
+        /// <summary>
+        /// The update date
+        /// </summary>
+        UpdateDate,
+        /// <summary>
+        /// The creator
+        /// </summary>
+        Creator
     }
 }

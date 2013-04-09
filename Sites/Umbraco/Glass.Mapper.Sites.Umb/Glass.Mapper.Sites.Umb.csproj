@@ -243,6 +243,7 @@
     <Compile Include="Models\Landing\NewsLanding.cs" />
     <Compile Include="Models\Landing\RssLanding.cs" />
     <Compile Include="Models\Misc\ContentBase.cs" />
+    <Compile Include="Models\Misc\MetaData.cs" />
     <Compile Include="Models\Misc\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

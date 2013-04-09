@@ -19,7 +19,7 @@
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
-using Umbraco.Core;
+using umbraco.BusinessLogic;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Umb.DataMappers
             var context = mappingContext as UmbracoDataMappingContext;
             var content = context.Content;
             var config = Configuration as UmbracoInfoConfiguration;
-            
+
             switch (config.Type)
             {
                 case UmbracoInfoType.Name:
@@ -100,8 +100,15 @@ namespace Glass.Mapper.Umb.DataMappers
                     return content.ContentType.Name;
                 //case UmbracoInfoType.Url:
                 //    return content.Name.FormatUrl().ToLower();
+                case UmbracoInfoType.CreateDate:
+                    return content.CreateDate;
+                case UmbracoInfoType.UpdateDate:
+                    return content.UpdateDate;
                 case UmbracoInfoType.Version:
                     return content.Version;
+                case UmbracoInfoType.Creator:
+                    var user = new User(content.CreatorId);
+                    return user.LoginName;
                 default:
                     throw new MapperException("UmbracoInfoType {0} not supported".Formatted(config.Type));
             }

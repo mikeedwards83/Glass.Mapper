@@ -62,6 +62,9 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
                 x.Info(y => y.ContentTypeAlias).InfoType(UmbracoInfoType.ContentTypeAlias);
                 x.Info(y => y.Path).InfoType(UmbracoInfoType.Path);
                 x.Info(y => y.Version).InfoType(UmbracoInfoType.Version);
+                x.Info(y => y.CreateDate).InfoType(UmbracoInfoType.CreateDate);
+                x.Info(y => y.UpdateDate).InfoType(UmbracoInfoType.UpdateDate);
+                x.Info(y => y.Creator).InfoType(UmbracoInfoType.Creator);
             });
 
             context.Load(loader);
@@ -100,6 +103,9 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             Assert.AreEqual(content.ParentId + "," + content.Id, result.Path);
             Assert.AreEqual(contentTypeAlias, result.ContentTypeAlias);
             Assert.AreEqual(content.Version, result.Version);
+            Assert.AreEqual(content.CreateDate, result.CreateDate);
+            Assert.AreEqual(content.UpdateDate, result.UpdateDate);
+            Assert.AreEqual("admin", result.Creator);
         }
 
         #region Stub
@@ -114,6 +120,9 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             public virtual string ContentTypeAlias { get; set; }
             public virtual string Path { get; set; }
             public virtual Guid Version { get; set; }
+            public virtual DateTime CreateDate { get; set; }
+            public virtual DateTime UpdateDate { get; set; }
+            public virtual string Creator { get; set; }
         }
 
         #endregion

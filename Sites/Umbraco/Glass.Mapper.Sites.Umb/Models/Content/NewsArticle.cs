@@ -18,6 +18,12 @@ namespace Glass.Mapper.Sites.Umb.Models.Content
         [UmbracoProperty]
         public virtual string MainBody { get; set; }
 
+        [UmbracoInfo(UmbracoInfoType.Creator)]
+        public virtual string Creator { get; set; }
+
+        [UmbracoProperty]
+        public virtual bool ShowImage { get; set; }
+
         [UmbracoProperty]
         public virtual Image FeaturedImage { get; set; }
 

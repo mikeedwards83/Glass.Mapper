@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Umbraco.Core.Services;
+using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
 
 namespace Glass.Mapper.Umb.Web.Ui
@@ -11,10 +12,17 @@ namespace Glass.Mapper.Umb.Web.Ui
     /// <summary>
     /// GlassTemplatePage
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class GlassTemplatePage : UmbracoTemplatePage
     {
         private readonly IUmbracoService _umbracoService;
+
+        /// <summary>
+        /// Gets or sets the render model.
+        /// </summary>
+        /// <value>
+        /// The render model.
+        /// </value>
+        public RenderModel RenderModel { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassTemplatePage{T}"/> class.
@@ -42,6 +50,15 @@ namespace Glass.Mapper.Umb.Web.Ui
         public IUmbracoService UmbracoService
         {
             get { return _umbracoService; }
+        }
+
+        /// <summary>
+        /// Initializes the page.
+        /// </summary>
+        protected override void InitializePage()
+        {
+            base.InitializePage();
+            RenderModel = Model;
         }
 
         /// <summary>
