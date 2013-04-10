@@ -8,6 +8,7 @@ using Glass.Mapper.Sc.CodeFirst;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
+using Glass.Mapper.Sc.Integration.CodeFirst.Templates.GlassDataProvider;
 using NUnit.Framework;
 using Sitecore;
 using Sitecore.Collections;
@@ -111,6 +112,44 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass1");
+
+        }
+
+        [Test]
+        public void GlassDataProvider_TemplateInNamespace_ReturnsTemplate()
+        {
+            //Assign
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+
+            var loader = new SitecoreFluentConfigurationLoader();
+
+            loader.Add<CodeFirstClass2>()
+                  .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
+                  .TemplateName("CodeFirstClass2")
+                  .CodeFirst();
+
+            context.Load(loader);
+
+            var path = "/sitecore/templates/glasstemplates/GlassDataProvider/CodeFirstClass2";
+
+            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+
+            dataProvider.Initialise(db);
+
+            var master = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            InjectionDataProvider(master, dataProvider);
+
+
+            //Act
+            var folder = db.GetItem(path);
+
+
+            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
+            //Assert
+            Assert.AreEqual(folder.Name, "CodeFirstClass2");
 
         }
 
@@ -269,8 +308,14 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             var providers = providersField.GetValue(db) as DataProviderCollection;
             return providers;
         }
+        
     
 }
+
+    namespace Templates.GlassDataProvider
+    {
+        public class CodeFirstClass2{}
+    }
 }
 
 

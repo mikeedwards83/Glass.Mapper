@@ -1,0 +1,9 @@
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+	  <pipelines>
+		  <initialize>
+			  <processor type="Glass.Mapper.Sc.Pipelines.Initialise.CodeFirstInitialise, Glass.Mapper.Sc"/>
+		  </initialize>
+	  </pipelines>
+  </sitecore>
+</configuration>
