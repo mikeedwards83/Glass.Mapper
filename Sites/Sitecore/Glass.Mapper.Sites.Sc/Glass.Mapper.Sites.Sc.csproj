@@ -252,7 +252,9 @@
     <Content Include="packages.config" />
     <Content Include="layouts\Site\MvcXmlLayout.cshtml" />
     <Content Include="layouts\Site\Landing\NewsLandingXml.cshtml" />
-    <None Include="Web.config" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config.Oracle" />
   </ItemGroup>
   <ItemGroup>

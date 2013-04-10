@@ -48,6 +48,8 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
 
+            dataProvider.Initialise(db);
+
             InjectionDataProvider(db, dataProvider);
 
             var context = Context.Create(Utilities.CreateStandardResolver());
@@ -95,6 +97,8 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
 
+            dataProvider.Initialise(db);
+
             var master = Sitecore.Configuration.Factory.GetDatabase("master");
 
             InjectionDataProvider(master, dataProvider);
@@ -137,7 +141,11 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
 
+
+
             var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+
+            dataProvider.Initialise(db);
 
             var master = Sitecore.Configuration.Factory.GetDatabase("master");
 
@@ -204,8 +212,11 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
             var master = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+
+            dataProvider.Initialise(db);
 
             InjectionDataProvider(master, dataProvider);
 
