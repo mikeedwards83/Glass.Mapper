@@ -82,13 +82,11 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </summary>
         /// <value>The name of the database.</value>
         public string DatabaseName { get; private set; }
-
+        
         /// <summary>
-        /// Gets the database.
+        /// The name of the GlassContext to load
         /// </summary>
-        /// <value>The database.</value>
-        public new Database Database { get { return Factory.GetDatabase(DatabaseName); } }
-
+        public string ContextName { get; set; }
 
         /// <summary>
         /// Gets or sets the section table.
@@ -102,37 +100,29 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <value>The field table.</value>
         private List<FieldInfo> FieldTable { get; set; }
 
-        private Context _glsContext;
-        private string _contextName;
-
         /// <summary>
         /// The _type configurations
         /// </summary>
         public Dictionary<Type, SitecoreTypeConfiguration> _typeConfigurations;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
-        /// </summary>
+        
         public GlassDataProvider()
         {
             SectionTable = new List<SectionInfo>();
             FieldTable = new List<FieldInfo>();
-            
-
+           
         }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
         /// </summary>
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="context">The context.</param>
-        public GlassDataProvider(string databaseName, string context)
-            : this()
+        public GlassDataProvider(string databaseName, string context):this()
         {
-
+         
             DatabaseName = databaseName;
 
-            _contextName = context;
+            ContextName = context;
            
            
         }
@@ -302,7 +292,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                 .OfType<SitecoreFieldConfiguration>()
                 .Select(x => new { x.SectionName, x.SectionSortOrder });
 
-            var providers = Database.GetDataProviders();
+            var providers = context.DataManager.Database.GetDataProviders();
             var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
             //If sitecore contains a section with the same name in the database, use that one instead of creating a new one
             var existing = otherProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => otherProvider.GetItemDefinition(id, context)).ToList();
@@ -351,7 +341,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             IDList fieldIds = new IDList();
 
-            var providers = Database.GetDataProviders();
+            var providers = context.DataManager.Database.GetDataProviders();
             var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
 
             foreach (var field in fields)
@@ -484,10 +474,6 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// The _setup complete
         /// </summary>
         public static bool _setupComplete = false;
-        /// <summary>
-        /// The _setup processing
-        /// </summary>
-        public static bool _setupProcessing = false;
 
         /// <summary>
         /// Setups the specified context.
@@ -500,13 +486,9 @@ namespace Glass.Mapper.Sc.CodeFirst
             
             lock (_setupLock)
             {
-                //if(_setupProcessing && _setupComplete == false)
-                //    throw new MapperException("Concurrency exception");
                 try
                 {
-                    if (_setupComplete) return;// || !Context.Contexts.ContainsKey(_contextName)) return;
-
-                    _setupProcessing = true;
+                    if (_setupComplete) return;
 
                     global::Sitecore.Diagnostics.Log.Info("Started CodeFirst setup", this);
 
@@ -519,18 +501,14 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                     if (glassFolder == ItemDefinition.Empty || glassFolder == null)
                     {
-                        var templatesFolderItem = db.GetItem(TemplateFolderId);
-
-                        var glassFolderItem = templatesFolderItem.Add("GlassTemplates", new TemplateID(FolderTemplateId));
-                          provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
-                        //glassFolder = provider.GetItemDefinition(glassFolderItem.ID, context);
+                        provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
                     }
 
-                    if (Context.Contexts.Keys.Any(x => x == _contextName))
+                    if (Context.Contexts.Keys.Any(x => x == ContextName))
                     {
 
-                        _glsContext = Context.Contexts[_contextName];
-                        _typeConfigurations = _glsContext.TypeConfigurations
+                        var glsContext = Context.Contexts[ContextName];
+                        _typeConfigurations = glsContext.TypeConfigurations
                                                          .Where(x => x.Value is SitecoreTypeConfiguration)
                                                          .ToDictionary(x => x.Key,
                                                                        x => x.Value as SitecoreTypeConfiguration);

@@ -1,11 +1,8 @@
 ﻿/*************************************
 
-DO NTO CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
+DO NOT CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
 
 **************************************/
-
-
-
 
 using System;
 using System.Linq;
@@ -31,6 +28,8 @@ namespace $rootnamespace$.App_Start
 			context.Load(      
 				GlassMapperScCustom.GlassLoaders()        				
 				);
+
+			GlassMapperScCustom.PostLoad();
 		}
 	}
 }

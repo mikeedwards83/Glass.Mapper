@@ -91,8 +91,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             else
                 scConfig.TemplateId = ID.Null;
 
-            scConfig.CodeFirst = scConfig.CodeFirst;
-            scConfig.TemplateName = scConfig.TemplateName;
+            scConfig.CodeFirst = this.CodeFirst;
+            scConfig.TemplateName = this.TemplateName;
 
             base.Configure(type, config);
         }

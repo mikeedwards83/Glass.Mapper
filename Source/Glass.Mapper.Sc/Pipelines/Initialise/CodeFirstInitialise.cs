@@ -6,6 +6,7 @@ using Glass.Mapper.Sc.CodeFirst;
 using Sitecore.Data;
 using Sitecore.Data.DataProviders;
 using Sitecore.Pipelines;
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Pipelines.Initialise
 {
@@ -19,7 +20,10 @@ namespace Glass.Mapper.Sc.Pipelines.Initialise
                 var provider = db.GetDataProviders().FirstOrDefault(x => x is GlassDataProvider) as GlassDataProvider;
                 if (provider != null)
                 {
-                    provider.Initialise(db);
+                    using (new SecurityDisabler())
+                    {
+                        provider.Initialise(db);
+                    }
                 }
             }
         }
