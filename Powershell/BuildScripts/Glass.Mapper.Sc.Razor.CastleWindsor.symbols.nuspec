@@ -27,6 +27,5 @@
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Debug\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor.CastleWindsor" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\App_Start\**" target="content\App_Start" />
-	  <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
   </files>
 </package>
