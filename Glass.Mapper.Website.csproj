@@ -60,7 +60,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CNAME.cs" />
+    <None Include="CNAME" />
     <Compile Include="docs\concepts\example-fluent-1.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial01\tutorial01.app_start.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.ascx.cs">
