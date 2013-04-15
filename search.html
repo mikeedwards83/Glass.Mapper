@@ -1,0 +1,20 @@
+﻿---
+layout: MainLayout
+title: Search
+---
+
+{% include pageheader.html %}
+
+<script>
+    (function () {
+        var cx = '014689282445025896600:rr-n8rcrnr0';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+    })();
+</script>
+<gcse:search></gcse:search>
