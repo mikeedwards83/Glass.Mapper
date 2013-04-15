@@ -5,12 +5,16 @@ title: Search
 
 {% include pageheader.html %}
 
-<form class="form-search" action="/search.html">
+<div class="row-fluid">
+    <div class="span4"></div>
+    <form class="form-search" action="/search.html">
     <div class="input-append">
-        <input class="span5" id="appendedInputButtons" type="text" name="q">
+        <input class="span5" id="appendedInputButtons" type="text" name="q" id="form-search-text">
         <button class="btn" type="button" type="submit">Search</button>
     </div>
 </form>
+</div>
+
 
 <script>
     (function () {
@@ -23,5 +27,13 @@ title: Search
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(gcse, s);
     })();
+
+    (function($) {
+        $(function() {
+            var q = getParameterByName("q");
+            var input = $("#form-search-text");
+            input.value(q);
+        });
+    })(jQuery);
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
