@@ -5,6 +5,13 @@ title: Search
 
 {% include pageheader.html %}
 
+<form class="form-search" action="/search.html">
+    <div class="input-append">
+        <input class="span5" id="appendedInputButtons" type="text" name="q">
+        <button class="btn" type="button" type="submit">Search</button>
+    </div>
+</form>
+
 <script>
     (function () {
         var cx = '014689282445025896600:rr-n8rcrnr0';
@@ -17,4 +24,4 @@ title: Search
         s.parentNode.insertBefore(gcse, s);
     })();
 </script>
-<gcse:search></gcse:search>
+<gcse:searchresults-only></gcse:searchresults-only>
