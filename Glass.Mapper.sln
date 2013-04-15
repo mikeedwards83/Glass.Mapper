@@ -55,8 +55,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{AD56
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Website", "Source\Glass.Mapper.Sc.Website\Glass.Mapper.Sc.Website.csproj", "{93420975-6370-4E1F-BC3C-9F9B4EEECEB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sites.Umb", "Sites\Umbraco\Glass.Mapper.Sites.Umb\Glass.Mapper.Sites.Umb.csproj", "{1CE133F3-FEAC-425C-A82A-87D57429BBEC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0BA8AB6D-CC44-442B-A62A-F5F511623190}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
@@ -75,6 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
 		Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec
@@ -98,6 +97,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Umb.CastleWindsor", "Source\Glass.Mapper.Umb.CastleWindsor\Glass.Mapper.Umb.CastleWindsor.csproj", "{53C429E4-2583-4EB9-8226-554C70834E26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.CastleWindsor.Tests", "Tests\Unit Tests\Glass.Mapper.Sc.CastleWindsor.Tests\Glass.Mapper.Sc.CastleWindsor.Tests.csproj", "{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Umb.CastleWindsor.Tests", "Tests\Unit Tests\Glass.Mapper.Umb.CastleWindsor.Tests\Glass.Mapper.Umb.CastleWindsor.Tests.csproj", "{78DAC667-C78D-40A9-BE19-0563836B7163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sites.Umb", "Sites\Umbraco\Glass.Mapper.Sites.Umb\Glass.Mapper.Sites.Umb.csproj", "{15D5E556-908C-4918-81D5-FFAA35926F51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Razor.CastleWindsor", "Source\Glass.Mapper.Sc.Razor.CastleWindsor\Glass.Mapper.Sc.Razor.CastleWindsor.csproj", "{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,10 +157,6 @@ Global
 		{93420975-6370-4E1F-BC3C-9F9B4EEECEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93420975-6370-4E1F-BC3C-9F9B4EEECEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93420975-6370-4E1F-BC3C-9F9B4EEECEB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CE133F3-FEAC-425C-A82A-87D57429BBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -187,6 +187,18 @@ Global
 		{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DAC667-C78D-40A9-BE19-0563836B7163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DAC667-C78D-40A9-BE19-0563836B7163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DAC667-C78D-40A9-BE19-0563836B7163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DAC667-C78D-40A9-BE19-0563836B7163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D5E556-908C-4918-81D5-FFAA35926F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D5E556-908C-4918-81D5-FFAA35926F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D5E556-908C-4918-81D5-FFAA35926F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D5E556-908C-4918-81D5-FFAA35926F51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,6 +214,7 @@ Global
 		{A1C14499-379C-4DBB-AD8F-9DE9D28381A7} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{53C429E4-2583-4EB9-8226-554C70834E26} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
+		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{43520702-B92E-4A67-8CE5-1B3246DC9D75} = {2CDDAA46-B9F4-4965-AA06-57F2457BF785}
 		{184BB116-635E-470B-8343-7605D4BA684E} = {2CDDAA46-B9F4-4965-AA06-57F2457BF785}
 		{728CF1A7-0F06-4464-B434-33A982D97C82} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
@@ -209,6 +222,7 @@ Global
 		{5BE06222-6401-40C5-B6D2-617D4C35D99F} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{9597B9F9-973F-4EDD-ABB6-B38FF17FC523} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{4ACFDE21-2D89-4A0F-B9C2-3A3FA7071EE3} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
+		{78DAC667-C78D-40A9-BE19-0563836B7163} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}
 		{21D9A6AB-A672-4F18-8B93-A3AE0B3791AE} = {184BB116-635E-470B-8343-7605D4BA684E}
 		{710154AE-11A9-4150-B02F-C2F20BE71C8B} = {184BB116-635E-470B-8343-7605D4BA684E}
 		{85C3DE6A-9C0A-47BF-AD70-826403897A28} = {9F18504D-9A3D-486C-A72B-4F380BE968EC}
@@ -218,7 +232,7 @@ Global
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861} = {21D9A6AB-A672-4F18-8B93-A3AE0B3791AE}
 		{FEE6B0E9-B4A4-404C-9236-4396B2261C17} = {21D9A6AB-A672-4F18-8B93-A3AE0B3791AE}
 		{F6C553A6-5021-4903-8EE2-9F3B0E23C5B9} = {710154AE-11A9-4150-B02F-C2F20BE71C8B}
-		{1CE133F3-FEAC-425C-A82A-87D57429BBEC} = {AD565F99-7F92-4452-9861-28B4465BBC62}
+		{15D5E556-908C-4918-81D5-FFAA35926F51} = {AD565F99-7F92-4452-9861-28B4465BBC62}
 		{BB82676E-FB23-497B-9B81-B04DEC16D530} = {733749DF-44C8-484B-B5FB-6EDF785BAB83}
 		{47FF9E2D-AB07-494C-8B87-CBA26C7EC451} = {733749DF-44C8-484B-B5FB-6EDF785BAB83}
 	EndGlobalSection

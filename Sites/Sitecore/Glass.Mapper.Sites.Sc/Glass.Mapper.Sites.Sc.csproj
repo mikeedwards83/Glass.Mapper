@@ -252,7 +252,9 @@
     <Content Include="packages.config" />
     <Content Include="layouts\Site\MvcXmlLayout.cshtml" />
     <Content Include="layouts\Site\Landing\NewsLandingXml.cshtml" />
-    <None Include="Web.config" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config.Oracle" />
   </ItemGroup>
   <ItemGroup>
@@ -380,7 +382,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49288</DevelopmentServerPort>
+          <DevelopmentServerPort>52012</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

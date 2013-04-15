@@ -33,6 +33,7 @@ using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
+using Glass.Mapper.Sc.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
@@ -58,7 +59,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
@@ -90,7 +91,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
            
             container.Register(
@@ -163,7 +164,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
                 Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleTransient(),
@@ -192,7 +193,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified.
             container.Register(
@@ -222,7 +223,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passed, e.g. 
             // if your code contained
@@ -262,8 +263,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            //dynamic must be first
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                );
+
             if (Config.UseWindsorContructor)
             {
                 container.Register(
@@ -295,7 +301,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="store">The configuration store.</param>
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             // Tasks are called in the order they are specified below.
             container.Register(

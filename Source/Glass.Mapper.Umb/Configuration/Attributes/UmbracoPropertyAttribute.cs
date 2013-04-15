@@ -32,6 +32,13 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
     public class UmbracoPropertyAttribute : FieldAttribute
     {
         /// <summary>
+        /// Indicates that the property should pull data from an Umbraco property.
+        /// </summary>
+        public UmbracoPropertyAttribute()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UmbracoPropertyAttribute"/> class.
         /// </summary>
         /// <param name="propertyAlias">The property alias.</param>
@@ -41,16 +48,16 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UmbracoPropertyAttribute"/> class.
+        /// Initializes a new instance of the <see cref="UmbracoPropertyAttribute" /> class.
         /// </summary>
         /// <param name="propertyAlias">The property alias.</param>
         /// <param name="propertyType">Type of the property.</param>
-        /// <param name="documentTab">The document tab.</param>
+        /// <param name="contentTab">The content tab.</param>
         /// <param name="codeFirst">if set to <c>true</c> [code first].</param>
-        public UmbracoPropertyAttribute(string propertyAlias, UmbracoPropertyType propertyType, string documentTab = "General Properties", bool codeFirst = true)
+        public UmbracoPropertyAttribute(string propertyAlias, UmbracoPropertyType propertyType, string contentTab = "General Properties", bool codeFirst = true)
         {
             PropertyAlias = propertyAlias;
-            ContentTab = documentTab;
+            ContentTab = contentTab;
             CodeFirst = codeFirst;
             PropertyType = propertyType;
         }
@@ -132,13 +139,6 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         #endregion
 
         /// <summary>
-        /// Indicates that the property should pull data from an Umbraco property.
-        /// </summary>
-        public UmbracoPropertyAttribute()
-        {
-        }
-
-        /// <summary>
         /// Configures the specified property info.
         /// </summary>
         /// <param name="propertyInfo">The property info.</param>
@@ -168,7 +168,15 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             config.ContentTab = this.ContentTab;
             config.PropertyType = this.PropertyType;
             config.Setting = this.Setting;
-            base.Configure(propertyInfo, config);
+
+			// if the property name / alias has not been set, use the name of the 
+			// reflected property
+	        if (String.IsNullOrEmpty(config.PropertyAlias))
+	        {
+		        config.PropertyAlias = propertyInfo.Name;
+	        }
+
+	        base.Configure(propertyInfo, config);
         }
     }
 }

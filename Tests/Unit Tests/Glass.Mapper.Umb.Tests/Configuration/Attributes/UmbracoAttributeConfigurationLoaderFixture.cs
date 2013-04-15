@@ -42,14 +42,13 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             var typeConfig = results.First(x => x.Type == typeof (StubClass));
             typeConfig.Should().NotBeNull();
 
-            var propertyNames = new[] {"Children", "Property", "Id", /*"Info", "Linked", "Node",*/ "Parent"/*, "Query"*/};
+            var propertyNames = new[] {"Children", "Property", "Id", "Info", /*"Linked", "Node",*/ "Parent"/*, "Query"*/};
 
             foreach(var propertyName in propertyNames)
             {
                 var propInfo = typeof (StubClass).GetProperty(propertyName);
                 typeConfig.Properties.Any(x=>x.PropertyInfo == propInfo).Should().BeTrue();
             }
-
         }
 
         #region Stubs
@@ -66,8 +65,8 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             [UmbracoId]
             public int Id { get; set; }
 
-            //[UmbracoInfo]
-            //public string Info { get; set; }
+            [UmbracoInfo]
+            public string Info { get; set; }
 
             //[UmbracoLinked]
             //public string Linked { get; set; }
@@ -80,8 +79,6 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
 
             //[UmbracoQuery("")]
             //public string Query { get; set; }
-
-            
         }
 
         #endregion

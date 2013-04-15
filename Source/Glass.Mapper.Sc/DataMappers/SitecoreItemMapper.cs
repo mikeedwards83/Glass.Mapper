@@ -100,7 +100,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
         {
-            return configuration is SitecoreNodeConfiguration && context.TypeConfigurations.ContainsKey(configuration.PropertyInfo.PropertyType);
+            return configuration is SitecoreNodeConfiguration;// && context.TypeConfigurations.ContainsKey(configuration.PropertyInfo.PropertyType);
         }
     }
 }

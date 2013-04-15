@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             //Assert
             Assert.AreEqual(new Guid("{C10794CE-624F-4F72-A2B9-14336F3FB582}"), result.Id);
-            Assert.AreEqual("/~/media/C10794CE624F4F72A2B914336F3FB582.ashx", result.Src);
+            Assert.IsTrue(result.Src.EndsWith("/~/media/C10794CE624F4F72A2B914336F3FB582.ashx"));
         }
         [Test]
         public void GetViewValue_FieldEmpty_ReturnEmptyValues()

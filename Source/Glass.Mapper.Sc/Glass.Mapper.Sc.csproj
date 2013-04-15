@@ -141,6 +141,8 @@
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
@@ -178,7 +180,6 @@
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
-    <Folder Include="Pipelines\ObjectConstruction\" />
     <Folder Include="Pipelines\TypeResolver\" />
     <Folder Include="Proxies\" />
   </ItemGroup>

@@ -61,12 +61,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public string BranchId { get; set; }
 
         /// <summary>
-        /// Indicates that the class is used in a code first scenario.
-        /// </summary>
-        /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
-        public bool CodeFirst { get; set; }
-
-        /// <summary>
         /// Overrides the default template name when using code first
         /// </summary>
         /// <value>The name of the template.</value>
@@ -97,8 +91,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             else
                 scConfig.TemplateId = ID.Null;
 
-            scConfig.CodeFirst = scConfig.CodeFirst;
-            scConfig.TemplateName = scConfig.TemplateName;
+            scConfig.CodeFirst = this.CodeFirst;
+            scConfig.TemplateName = this.TemplateName;
 
             base.Configure(type, config);
         }

@@ -83,7 +83,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
             Database = "master";
             try
             {
-                Master = new SitecoreService(Database, GlassRazorModuleLoader.ContextName);
+                Master = new SitecoreService(Database, GlassRazorSettings.ContextName);
             }
             catch (KeyNotFoundException ex)
             {

@@ -31,7 +31,6 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
     public class UmbracoPropertyStringMapperFixture
     {
         private ContentService _contentService;
-        private const string ContentTypeProperty = "TestProperty";
         
         #region Method - GetProperty
 
@@ -40,9 +39,10 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         {
             //Assign
             var fieldValue = "hello world";
+            var contentTypeProperty = "TestProperty";
             
             var content = _contentService.GetById(new Guid("{5F6D851E-46C0-40C7-A93A-EC3F6D7EBA3E}"));
-            var property = content.Properties[ContentTypeProperty];
+            var property = content.Properties[contentTypeProperty];
             property.Value = fieldValue;
 
             var mapper = new UmbracoPropertyStringMapper();
@@ -63,9 +63,10 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         public void SetProperty_PropertyString_ValueWrittenToProperty()
         {
             //Assign
+            var contentTypeProperty = "TestProperty";
             var expected = "Test data";
             var content = _contentService.GetById(new Guid("{5F6D851E-46C0-40C7-A93A-EC3F6D7EBA3E}"));
-            var property = content.Properties[ContentTypeProperty];
+            var property = content.Properties[contentTypeProperty];
 
             var mapper = new UmbracoPropertyStringMapper();
             var config = new UmbracoPropertyConfiguration();
@@ -126,14 +127,14 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var definitions = dataTypeService.GetDataTypeDefinitionByControlId(new Guid("ec15c1e5-9d90-422a-aa52-4f7622c63bea"));
             dataTypeService.Save(definitions.FirstOrDefault());
             var propertyType = new PropertyType(definitions.FirstOrDefault());
-            propertyType.Alias = ContentTypeProperty;
+            propertyType.Alias = "TestProperty";
             contentType.AddPropertyType(propertyType);
             contentTypeService.Save(contentType);
             Assert.Greater(contentType.Id, 0);
 
             var content = new Content(name, -1, contentType);
             content.Key = new Guid("{5F6D851E-46C0-40C7-A93A-EC3F6D7EBA3E}");
-            content.SetPropertyValue(ContentTypeProperty, fieldValue);
+            content.SetPropertyValue("TestProperty", fieldValue);
             _contentService.Save(content);
         }
 

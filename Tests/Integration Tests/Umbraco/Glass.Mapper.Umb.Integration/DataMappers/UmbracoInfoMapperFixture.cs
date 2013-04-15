@@ -41,16 +41,18 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         [Sequential]
         public void MapToProperty_UmbracoInfoType_GetsExpectedValueFromUmbraco(
             [Values(
-                UmbracoInfoType.Url,
+                //UmbracoInfoType.Url,
                 UmbracoInfoType.ContentTypeAlias,
                 UmbracoInfoType.ContentTypeName,
-                UmbracoInfoType.Name
+                UmbracoInfoType.Name,
+                UmbracoInfoType.Creator
                 )] UmbracoInfoType type,
             [Values(
-                "target", //Url
+                //"target", //Url
                 "TestType", //ContentTypeAlias
                 "Test Type", //ContentTypeName
-                "Target" //Name
+                "Target", //Name
+                "admin" //Creator
                 )] object expected
             )
         {
@@ -138,6 +140,56 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var contentService = new ContentService(_unitOfWork, _repoFactory);
             var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
             var expected = content.Path;
+
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext);
+
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
+        public void MapToProperty_UmbracoInfoTypeCreateDate_ReturnsCreateDateAsDateTime()
+        {
+            //Assign
+            var type = UmbracoInfoType.CreateDate;
+
+            var mapper = new UmbracoInfoMapper();
+            var config = new UmbracoInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var contentService = new ContentService(_unitOfWork, _repoFactory);
+            var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
+            var expected = content.CreateDate;
+
+            Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
+            var dataContext = new UmbracoDataMappingContext(null, content, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext);
+
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
+        public void MapToProperty_UmbracoInfoTypeUpdateDate_ReturnsUpdateDateAsDateTime()
+        {
+            //Assign
+            var type = UmbracoInfoType.UpdateDate;
+
+            var mapper = new UmbracoInfoMapper();
+            var config = new UmbracoInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var contentService = new ContentService(_unitOfWork, _repoFactory);
+            var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
+            var expected = content.UpdateDate;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
             var dataContext = new UmbracoDataMappingContext(null, content, null);

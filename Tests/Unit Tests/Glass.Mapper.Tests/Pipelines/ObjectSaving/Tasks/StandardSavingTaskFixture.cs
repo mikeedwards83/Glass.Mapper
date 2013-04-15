@@ -76,6 +76,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
             property1.Mapper = mapper1;
             config1.PropertyInfo = typeof (Stub).GetProperty("Property");
+            property1.PropertyInfo = config1.PropertyInfo;
             mapper1.Setup(new DataMapperResolverArgs(null, config1));
 
             var property2 = Substitute.For<AbstractPropertyConfiguration>();
@@ -83,7 +84,8 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
             var mapper2 = new StubMapper();
 
             property2.Mapper = mapper2;
-            config2.PropertyInfo = typeof (Stub).GetProperty("Property");
+            config2.PropertyInfo = typeof (Stub).GetProperty("Property2");
+            property2.PropertyInfo = config2.PropertyInfo;
             mapper2.Setup(new DataMapperResolverArgs(null, config2));
 
             savingContext.Config = new AttributeConfigurationLoaderFixture.StubTypeConfiguration();
@@ -105,6 +107,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
         public class Stub
         {
             public string Property { get; set; }
+            public string Property2 { get; set; }
         }
 
         public class StubMapper : AbstractDataMapper

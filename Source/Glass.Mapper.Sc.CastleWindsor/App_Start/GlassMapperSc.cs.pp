@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*************************************
+
+DO NOT CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
+
+**************************************/
+
+using System;
+using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 
@@ -6,21 +13,23 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace $rootnamespace$.App_Start
 {
-    public static class  GlassMapperSc
-    {
-        public static void Start()
-        {
-            //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver();
+	public static class  GlassMapperSc
+	{
+		public static void Start()
+		{
+			//create the resolver
+			var resolver = DependencyResolver.CreateStandardResolver();
 
-            //create a context
-            var context = Glass.Mapper.Context.Create(resolver);
+			//install the custom services
+			GlassMapperScCustom.CastleConfig(resolver.Container);
 
-            var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
+			//create a context
+			var context = Glass.Mapper.Context.Create(resolver);
+			context.Load(      
+				GlassMapperScCustom.GlassLoaders()        				
+				);
 
-            context.Load(              
-                attributes
-                );
-        }
-    }
+			GlassMapperScCustom.PostLoad();
+		}
+	}
 }

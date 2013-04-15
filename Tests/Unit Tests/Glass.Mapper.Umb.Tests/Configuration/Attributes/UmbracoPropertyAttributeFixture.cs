@@ -31,74 +31,106 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         [Test]
         public void Does_UmbracoPropertyAttribute_Extend_FieldAttribute()
         {
-            typeof(FieldAttribute).IsAssignableFrom(typeof(UmbracoPropertyAttribute)).Should().BeTrue();
+            //Assign
+            var type = typeof(FieldAttribute);
+
+            //Act
+
+            //Assert
+            type.IsAssignableFrom(typeof(UmbracoPropertyAttribute)).Should().BeTrue();
         }
 
         [Test]
         [TestCase("PropertyAlias")]
         [TestCase("Setting")]
-        [TestCase("ReadOnly")]
+        [TestCase("CodeFirst")]
         [TestCase("PropertyName")]
+        [TestCase("PropertyType")]
+        [TestCase("ContentTab")]
         [TestCase("PropertyDescription")]
         [TestCase("PropertyIsMandatory")]
         [TestCase("PropertyValidation")]
-        [TestCase("ContentTab")]
-        [TestCase("PropertyType")]
         public void Does_UmbracoPropertyAttribute_Have_Properties(string propertyName)
         {
+            //Assign
             var properties = typeof(UmbracoPropertyAttribute).GetProperties();
+
+            //Act
+
+            //Assert
             properties.Any(x => x.Name == propertyName).Should().BeTrue();
         }
 
         [Test]
         public void Default_Constructor_Set_Setting_To_Default()
         {
+            //Assign
             var testUmbracoPropertyAttribute = new UmbracoPropertyAttribute();
+
+            //Act
+
+            //Assert
             testUmbracoPropertyAttribute.Setting.ShouldBeEquivalentTo(UmbracoPropertySettings.Default);
         }
 
         [Test]
         public void Constructor_Sets_PropertyAlias()
         {
+            //Assign
             var testPropertyAlias = "testPropertyAlias";
+
+            //Act
             var testUmbracoPropertyAttribute = new UmbracoPropertyAttribute(testPropertyAlias);
+
+            //Assert
             testUmbracoPropertyAttribute.PropertyAlias.ShouldBeEquivalentTo(testPropertyAlias);
         }
 
         [Test]
         public void Constructor_Sets_PropertyIdAndPropertyType()
         {
+            //Assign
             var testPropertyId = "test";
+            var testContentTab = "General Properties";
+            var testCodeFirst = true;
+
+            //Act
             var testUmbracoPropertyAttribute = new UmbracoPropertyAttribute("test", UmbracoPropertyType.NotSet);
+
+            //Assert
+            testUmbracoPropertyAttribute.CodeFirst.ShouldBeEquivalentTo(testCodeFirst);
+            testUmbracoPropertyAttribute.ContentTab.ShouldBeEquivalentTo(testContentTab);
+            testUmbracoPropertyAttribute.PropertyAlias.ShouldBeEquivalentTo(testPropertyId);
+            testUmbracoPropertyAttribute.PropertyType.ShouldBeEquivalentTo(UmbracoPropertyType.NotSet);
+        }
+
+        [Test]
+        public void Constructor_Sets_PropertyIdAndPropertyTypeAndContentTab()
+        {
+            //Assign
+            var testPropertyId = "test";
+            var testContentTab = "test";
+            var testCodeFirst = false;
+
+            //Act
+            var testUmbracoPropertyAttribute = new UmbracoPropertyAttribute("test", UmbracoPropertyType.NotSet, "test", false);
+
+            //Assert
+            testUmbracoPropertyAttribute.CodeFirst.ShouldBeEquivalentTo(testCodeFirst);
+            testUmbracoPropertyAttribute.ContentTab.ShouldBeEquivalentTo(testContentTab);
             testUmbracoPropertyAttribute.PropertyAlias.ShouldBeEquivalentTo(testPropertyId);
             testUmbracoPropertyAttribute.PropertyType.ShouldBeEquivalentTo(UmbracoPropertyType.NotSet);
         }
 
         #region Method - Configure
-
-        [Test]
-        public void Configure_ConfigureCalled_UmbracoPropertyConfigurationReturned()
-        {
-            //Assign
-            var attr = new UmbracoPropertyAttribute(string.Empty);
-            var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
-
-
-            //Act
-            var result = attr.Configure(propertyInfo) as UmbracoPropertyConfiguration;
-
-            //Assert
-            result.Should().NotBeNull();
-        }
-
+        
         [Test]
         public void Configure_SettingNotSet_SettingsReturnAsDefault()
         {
             //Assign
             var attr = new UmbracoPropertyAttribute(string.Empty);
             var propertyInfo = typeof(StubClass).GetProperty("DummyProperty");
-
-
+            
             //Act
             var result = attr.Configure(propertyInfo) as UmbracoPropertyConfiguration;
 
@@ -186,9 +218,9 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
 
         [Test]
         [Sequential]
-        public void Configure_SettingDocumentTab_DocumentTabIsSetOnConfiguration(
-            [Values("document tab")] string value,
-            [Values("document tab")] string expected)
+        public void Configure_SettingContentTab_ContentTabIsSetOnConfiguration(
+            [Values("content tab")] string value,
+            [Values("content tab")] string expected)
         {
             //Assign
             var attr = new UmbracoPropertyAttribute(string.Empty);

@@ -52,10 +52,12 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UmbracoInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Start\GlassMapperUmbCustom.cs.pp" />
     <None Include="App_Start\GlassMapperUmb.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -66,7 +66,7 @@
     <Compile Include="Dynamic\RazorDynamicItem.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="GlassHtmlFacade.cs" />
-    <Compile Include="GlassRazorModuleLoader.cs" />
+    <Compile Include="GlassRazorSettings.cs" />
     <Compile Include="IRazorControl.cs" />
     <Compile Include="Model\GlassBehindRazor.cs" />
     <Compile Include="Model\GlassDynamicRazor.cs" />

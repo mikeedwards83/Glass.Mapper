@@ -39,7 +39,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreFieldTypeMapper();
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -50,20 +50,20 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void CanHandle_TypeHasNotBeenLoadedByGlass_ReturnsFalse()
+        public void CanHandle_TypeHasNotBeenLoadedByGlass_ReturnsTrueOnDemand()
         {
             //Assign
             var mapper = new SitecoreFieldTypeMapper();
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyFalse");
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
             var result = mapper.CanHandle(config, context);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         #endregion
@@ -82,7 +82,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof (StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
@@ -113,7 +113,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
@@ -144,7 +144,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
@@ -180,7 +180,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
@@ -217,7 +217,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
@@ -254,7 +254,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(Database, context);
 
