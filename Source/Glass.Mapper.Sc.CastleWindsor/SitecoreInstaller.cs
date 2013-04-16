@@ -44,6 +44,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     {
         public Config Config { get; private set; }
 
+        public IWindsorInstaller DataMapperInstaller { get; set; }
+        
+        public IWindsorInstaller QueryParameterInstaller { get; set; }
+        
+        public IWindsorInstaller DataMapperTaskInstaller { get; set; }
+
+        public IWindsorInstaller ConfigurationResolverTaskInstaller { get; set; }
+
+        public IWindsorInstaller ObjectionConstructionTaskInstaller { get; set; }
+
+        public IWindsorInstaller ObjectSavingTaskInstaller { get; set; }
+
         public SitecoreInstaller():this(new Config())
         {
         }
@@ -51,6 +63,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public SitecoreInstaller(Config config)
         {
             Config = config;
+
+            DataMapperInstaller = new DataMapperInstaller(config);
+            QueryParameterInstaller = new QueryParameterInstaller(config);
+            DataMapperTaskInstaller = new DataMapperTaskInstaller(config);
+            ConfigurationResolverTaskInstaller = new ConfigurationResolverTaskInstaller(config);
+            ObjectionConstructionTaskInstaller = new ObjectionConstructionTaskInstaller(config);
+            ObjectSavingTaskInstaller = new ObjectSavingTaskInstaller(config);
         }
 
 
@@ -63,12 +82,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             // For more on component registration read: http://docs.castleproject.org/Windsor.Registering-components-one-by-one.ashx
             container.Install(
-                new DataMapperInstaller(Config),
-                new QueryParameterInstaller(Config),
-                new DataMapperTasksInstaller(Config),
-                new ConfigurationResolverTaskInstaller(Config),
-                new ObjectionConstructionTaskInstaller(Config),
-                new ObjectSavingTaskInstaller(Config)
+                DataMapperInstaller,
+                QueryParameterInstaller,
+                DataMapperTaskInstaller,
+                ConfigurationResolverTaskInstaller,
+                ObjectionConstructionTaskInstaller,
+                ObjectSavingTaskInstaller
                 );
         }
     }
@@ -180,11 +199,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// Data Mapper Resolver Tasks -
     /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g.
     /// </summary>
-    public class DataMapperTasksInstaller : IWindsorInstaller
+    public class DataMapperTaskInstaller : IWindsorInstaller
     {
          public Config Config { get; private set; }
 
-        public DataMapperTasksInstaller(Config config)
+        public DataMapperTaskInstaller(Config config)
         {
             Config = config;
         }
