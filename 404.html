@@ -28,12 +28,13 @@ caption: It seems we couldn't find the page you were looking for.
     The page you are looking for maybe here <span id="oldPage"></span> on the old site
 </p>
 <script type="text/javascript">
-    (function($) {
-        $(function() {
+    (function ($) {
+        $(function () {
             var oldPage = $("#oldPage");
-            var oldSite = "http://s399856118.websitehome.co.uk/";
+            var oldSite = "http://s399856118.websitehome.co.uk";
             var oldUrl = oldSite + window.location.pathname;
             oldPage.html(oldUrl);
+            oldPage.Attr("href", oldUrl);
         });
 
     })(jQuery);
