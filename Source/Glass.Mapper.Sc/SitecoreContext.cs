@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
@@ -33,8 +34,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
         /// </summary>
         public SitecoreContext()
-            : base(global::Sitecore.Context.Database, 
-            Sitecore.Context.Site.Properties["glassContext"]??Context.DefaultContextName)
+            : base(global::Sitecore.Context.Database, GetContextFromSite())
         {
             
         }
@@ -55,6 +55,23 @@ namespace Glass.Mapper.Sc
             : base(global::Sitecore.Context.Database, context)
         {
 
+        }
+
+        /// <summary>
+        /// Used for unit tests only
+        /// </summary>
+        /// <param name="database"></param>
+        internal SitecoreContext(Database database):
+            base(database, GetContextFromSite())
+        {
+            
+        }
+        private static string GetContextFromSite()
+        {
+            if (Sitecore.Context.Site == null)
+                return Context.DefaultContextName;
+
+            return Sitecore.Context.Site.Properties["glassContext"] ?? Context.DefaultContextName;
         }
 
         #region ISitecoreContext Members

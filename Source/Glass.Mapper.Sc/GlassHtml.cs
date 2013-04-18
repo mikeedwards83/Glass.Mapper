@@ -35,17 +35,17 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class GlassHtml
     {
-        private readonly ISitecoreService _service;
+        public  ISitecoreContext SitecoreContext { get; private set; }
         private readonly Context _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtml"/> class.
         /// </summary>
-        /// <param name="service">The service that will be used to load and save data</param>
-        public GlassHtml(ISitecoreService service)
+        /// <param name="sitecoreContext">The service that will be used to load and save data</param>
+        public GlassHtml(ISitecoreContext sitecoreContext)
         {
-            _service = service;
-            _context = service.GlassContext;
+            SitecoreContext = sitecoreContext;
+            _context = sitecoreContext.GlassContext;
         }
 
 
@@ -54,9 +54,9 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <returns>GlassEditFrame.</returns>
-        public GlassEditFrame EditFrame(string buttons)
+        public GlassEditFrame EditFrame(string buttons, string path = null)
         {
-            var frame = new GlassEditFrame(buttons, HttpContext.Current);
+            var frame = new GlassEditFrame(buttons, HttpContext.Current.Response.Output, path);
             frame.RenderFirstPart();
             return frame;
         }
@@ -403,7 +403,7 @@ namespace Glass.Mapper.Sc
                 //    throw new MapperException("Page editting error. Type {0} can not be used for editing. Could not find property with SitecoreID attribute. See inner exception".Formatted(typeof(T).FullName), ex);
                 //}
 
-                var scClass = config.ResolveItem(finalTarget, _service.Database);
+                var scClass = config.ResolveItem(finalTarget, SitecoreContext.Database);
 
                 //lambda expression does not always return expected memberinfo when inheriting
                 //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo

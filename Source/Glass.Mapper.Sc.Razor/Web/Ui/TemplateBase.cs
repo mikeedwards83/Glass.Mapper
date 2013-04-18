@@ -18,17 +18,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// Class TemplateBase
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TemplateBase<T>:RazorEngine.Templating.TemplateBase<T>
+    public class TemplateBase<T> : RazorEngine.Templating.TemplateBase<T>
     {
-        HtmlHelper _helper;
+        private HtmlHelper _helper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateBase{T}"/> class.
         /// </summary>
         public TemplateBase()
         {
-            
-            
+
+
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get
             {
-               return ParentControl.Controls.Cast<Control>()
-                             .Where(x => x is global::Sitecore.Web.UI.WebControls.Placeholder)
-                             .Cast<global::Sitecore.Web.UI.WebControls.Placeholder>();
+                return ParentControl.Controls.Cast<Control>()
+                                    .Where(x => x is global::Sitecore.Web.UI.WebControls.Placeholder)
+                                    .Cast<global::Sitecore.Web.UI.WebControls.Placeholder>();
             }
         }
 
@@ -75,11 +75,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="service">The service.</param>
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
-        public void Configure(ISitecoreService service, ViewDataDictionary viewData, Control parentControl)
-
+        public void Configure(ISitecoreContext context, ViewDataDictionary viewData, Control parentControl)
         {
-            GlassHtml = new GlassHtmlFacade(service);
-            Html =  new HtmlHelper(new ViewContext(), new ViewDataContainer() { ViewData = ViewData });
+            GlassHtml = new GlassHtmlFacade(context, this.CurrentWriter);
+            Html = new HtmlHelper(new ViewContext(), new ViewDataContainer() {ViewData = ViewData});
             ViewData = viewData;
             ParentControl = parentControl;
         }
@@ -115,7 +114,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             var placeHolder = Placeholders.FirstOrDefault(x => x.Key == key);
 
             if (placeHolder == null)
-                placeHolder = new global::Sitecore.Web.UI.WebControls.Placeholder { Key = key };
+                placeHolder = new global::Sitecore.Web.UI.WebControls.Placeholder {Key = key};
             ParentControl.Controls.Add(placeHolder);
 
             var sb = new StringBuilder();
@@ -141,11 +140,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <typeparam name="T1">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
         /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field, string parameters)
+        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field,
+                                           Expression<Func<T1, string>> standardOutput)
         {
-            return GlassHtml.Editable(target, field, parameters);
+            return GlassHtml.Editable(target, field);
         }
 
         /// <summary>
@@ -154,12 +153,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <typeparam name="T1">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
-        /// <param name="standardOutput">The standard output.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field, Expression<Func<T1, string>> standardOutput)
+        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field, string parameters)
         {
-            return GlassHtml.Editable(target, field, standardOutput);
+            return GlassHtml.Editable(target, field, parameters);
         }
+
 
         /// <summary>
         /// Renders the image.
@@ -211,5 +211,39 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+        /// <summary>
+        /// Editables the specified field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <returns>RawString.</returns>
+        /// <exception cref="System.NullReferenceException">
+        /// No field set
+        /// or
+        /// No model set
+        /// </exception>
+        public RawString Editable(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
+        {
+            if (field == null) throw new NullReferenceException("No field set");
+
+            if (Model == null) throw new NullReferenceException("No model set");
+
+            if (standardOutput == null) throw new NullReferenceException("No standard output set");
+
+            try
+            {
+                return GlassHtml.Editable(this.Model, field, standardOutput);
+            }
+            catch (Exception ex)
+            {
+                return new RawString(ex.Message);
+            }
+
+        }
+
+        public bool IsInEditingMode
+        {
+            get { return Sc.GlassHtml.IsInEditingMode; }
+
+        }
     }
 }

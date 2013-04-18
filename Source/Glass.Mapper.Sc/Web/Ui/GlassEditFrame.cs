@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -38,11 +39,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <param name="context">The context.</param>
-        public GlassEditFrame(string buttons, HttpContext context)
+        public GlassEditFrame(string buttons, TextWriter writer, string path = "")
         {
             _frame = new EditFrame();
+            _frame.DataSource = path;
             _frame.Buttons = buttons;
-            _writer = new HtmlTextWriter(context.Response.Output);
+            _writer = new HtmlTextWriter(writer);
 
         }
         /// <summary>

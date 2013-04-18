@@ -30,7 +30,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private static volatile Dictionary<string, string> _viewCache;
         private static volatile FileSystemWatcher _fileSystemWatcher;
 
-        private ISitecoreService _sitecoreService;
+        private ISitecoreContext _sitecoreContext;
 
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// Gets the sitecore service.
         /// </summary>
         /// <value>The sitecore service.</value>
-        public ISitecoreService SitecoreService
+        public ISitecoreContext SitecoreContext
         {
             get
             {
-                if(_sitecoreService == null)
-                    _sitecoreService = new SitecoreService(Sitecore.Context.Database, ContextName);
+                if(_sitecoreContext == null)
+                    _sitecoreContext = new SitecoreContext(ContextName);
                 
-                return _sitecoreService;
+                return _sitecoreContext;
             }
         }
 
@@ -230,7 +230,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
                 var template = RazorEngine.Razor.CreateTemplate(viewContents, Model) as TemplateBase<T>;
 
-                template.Configure(SitecoreService, ViewData, this);
+                template.Configure(SitecoreContext, ViewData, this);
 
                 output.Write( template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
 
