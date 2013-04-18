@@ -24,6 +24,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Sitecore.SecurityModel;
@@ -1075,8 +1076,15 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
 
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
             var parent = service.GetItem<StubClass>(parentPath);
-            var child = new StubClass();
+            
+                        var child = new StubClass();
             child.Name = "newChild";
 
             //Act
@@ -1088,7 +1096,10 @@ namespace Glass.Mapper.Sc.Integration
             //Assert
             var newItem = db.GetItem(childPath);
 
-            newItem.Delete();
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
 
             Assert.AreEqual(child.Name,newItem.Name);
             Assert.AreEqual(child.Id, newItem.ID.Guid);
@@ -1113,14 +1124,14 @@ namespace Glass.Mapper.Sc.Integration
             var parent = db.GetItem(parentPath);
 
             //clean up any outstanding items
-
+            Item child;
             using (new SecurityDisabler())
             {
                 parent.DeleteChildren();
-            }
 
-            var child = parent.Add("Target", new TemplateID(new ID(StubClass.TemplateId)));
-            
+
+                child = parent.Add("Target", new TemplateID(new ID(StubClass.TemplateId)));
+            }
             Assert.IsNotNull(child);
 
             var childClass = service.GetItem<StubClass>(childPath);

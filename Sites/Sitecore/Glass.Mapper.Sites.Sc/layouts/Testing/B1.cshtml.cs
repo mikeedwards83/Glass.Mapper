@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sites.Sc.Layouts.Razor
         public override ContentBase GetModel()
         {
             var item = GetDataSourceOrContextItem();
-            return SitecoreService.CreateType<ContentBase>(item);
+            return SitecoreContext.CreateType<ContentBase>(item);
         }
     }
 }
