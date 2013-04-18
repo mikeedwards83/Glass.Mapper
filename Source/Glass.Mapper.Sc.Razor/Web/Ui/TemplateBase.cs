@@ -31,17 +31,31 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+        public ISitecoreContext SitecoreContext { get; set; }
+
         /// <summary>
         /// Gets the view data.
         /// </summary>
         /// <value>The view data.</value>
         public ViewDataDictionary ViewData { get; private set; }
 
+
+        private GlassHtmlFacade _glassHtml;
+
         /// <summary>
         /// Gets the glass HTML.
         /// </summary>
         /// <value>The glass HTML.</value>
-        public GlassHtmlFacade GlassHtml { get; private set; }
+        public GlassHtmlFacade GlassHtml
+        {
+            get
+            {
+                if (_glassHtml == null)
+                    _glassHtml = new GlassHtmlFacade(SitecoreContext, this.CurrentWriter);
+
+                return _glassHtml;
+            }
+        }
 
         /// <summary>
         /// Gets the HTML.
@@ -75,9 +89,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="service">The service.</param>
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
-        public void Configure(ISitecoreContext context, ViewDataDictionary viewData, Control parentControl)
+        public void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, Control parentControl)
         {
-            GlassHtml = new GlassHtmlFacade(context, this.CurrentWriter);
+            SitecoreContext = sitecoreContext;
+
             Html = new HtmlHelper(new ViewContext(), new ViewDataContainer() {ViewData = ViewData});
             ViewData = viewData;
             ParentControl = parentControl;
