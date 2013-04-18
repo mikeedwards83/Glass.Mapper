@@ -61,7 +61,7 @@ title: Welcome
 			{% if forloop.index < 4 %}
 			<div href="#" class="thumbnail blogitem">
 				<div class="caption">
-					<h4>{{post.title}}</h4>
+				    <h4><a href="{{post.url}}" class="btn btn-inverse">{{post.title}}</a></h4>
 					<p class="text-center"><img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
 					<p>
 						{{post.abstract}}
@@ -70,7 +70,7 @@ title: Welcome
 						<strong><small>{{ post.date | date_to_string }} </small></strong>
 					</p>
 					<p>
-						<a href="/Glass.Mapper{{post.url}}" class="btn btn-inverse">Read More</a>
+						<a href="{{post.url}}" class="btn btn-inverse">Read More</a>
 					</p>
 				</div>
 			</div>
