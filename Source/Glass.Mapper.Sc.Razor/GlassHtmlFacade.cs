@@ -141,7 +141,9 @@ namespace Glass.Mapper.Sc.Razor
 
         public GlassEditFrame EditFrame(string buttons, string path = null)
         {
-            return new GlassEditFrame(buttons, _writer, path);
+            var frame = new GlassEditFrame(buttons, _writer, path);
+            frame.RenderFirstPart();
+            return frame;
         }
     }
 }
