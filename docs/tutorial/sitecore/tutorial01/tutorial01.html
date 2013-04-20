@@ -7,8 +7,7 @@ title: Tutorial 1 - Background
 
 <p>
     This series of tutorials will take you through the process of building a simple site using Glass.Mapper. When you have
-    completed all the tutorials you will have a simple Sitecore site and also have covered the majority of features in 
-    Glass.Mapper.
+    completed all the tutorials you will have a simple Sitecore site and covered the majority of the features in Glass.Mapper.
 </p>
 <p>
     For this tutorial we will be using many common open source projects to help us build the site, these are listed below:
@@ -22,46 +21,50 @@ title: Tutorial 1 - Background
 </ul>
 
 <p>
-    Having a knowledge of these projects is advantageous but not required to complete all the tutorials. You can also swap out
-    that Castle Windsor project for your favourite dependency injection framework.
+    Having knowledge of these projects is advantageous but not required to complete all the tutorials. 
 </p>
 <p>
     You can find the complete source for the site in the <a href="https://github.com/mikeedwards83/tree/develop/Sites/Sitecore">Github repo</a>:
 </p>
 
 <h2>Getting started</h2>
-<p>
+<p>c
     You first task will be to download Glass.Mapper.Sc from Nuget. If you open the Nuget package manager and search for Glass.Mapper.Sc you will see
     a large selection of different projects:
 </p>
 <img src="tutorial01.nugetsearch.png"/>
 <p>
     The two we will focus on is Glass.Mapper.Sc and Glass.Mapper.Sc.CastleWindsor, the first project (Glass.Mapper.Sc) is the basic project
-    that doesn't include any dependency injection framework. If you want to use this project you will need to integrate your favourite dependency
-    injection framework to get this working. For this demo we are going to use the Glass.Mapper.Sc.CastleWindsor project, this has the popular
+    that doesn't include any dependency injection framework, this allows you to use Glass.Mapper.Sc with other dependency injection frameworks, 
+    if you want to use this project you will need to integrate your favourite dependency
+    injection framework. For this demo we are going to use the Glass.Mapper.Sc.CastleWindsor project, this has the popular
     Castle Windsor dependency injection framework already configured and ready for you to go.
 </p>
 <p>
     Click the Install button for Glass.Mapper.Sc.CastleWindsor.
 </p>
 <p>
-    When the solution install several items are downloaded, most of these are dependencies but one additional item that gets download is a file 
+    When the solution installs several items are downloaded, most of these are dependencies but there are two additional items that are downloaded and 
     inserted in to the App_Start folder: 
 </p>
 <img src="tutorial01.appstart.PNG"/>
 <p>
-    This file is used by WebActivator to load Glass.Mapper.Sc when the application starts. I won't go into how WebActivator works but I will discuss
-    the code in the file works. If you open the file you should see code similar to that below but with your namespaces:
+    This file is used by WebActivator to load Glass.Mapper.Sc when the application starts. I won't go into how WebActivator works but I will discuss how
+    the code in the file works. If you open the GlassMapperSc file you should see code similar to that below but with your namespaces:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial01/tutorial01.app_start.cs" ref="gh-pages"></pre>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial01/tutorial01.tutorial01.GlassMapperSc.cs" ref="gh-pages"></pre>
 <p>
     This code sets up the dependency resolver we want to use, in this tutorial we are using Castle Windsor. We then create a Glass.Mapper Context, 
-    the context stores all the configuration we need for Glass.Mapper to run. Further down we can see an attribute loader, this will scan
-    the current assembly for any models that have been marked up with attributes (but more on that later). Finally we pass the attribute loader
-    to our context to so that the context can load all the required models.
+    the context stores all the configuration we need for Glass.Mapper to run. 
 </p>
 <p>
-    Don't worry if this doesn't all make sense straight away, as you go through the tutorials it will all be come clear. With a single click on Nuget 
+    The second file GlassMapperScCustom is where you can do most of your configuration, we can see that it configures the DI container in the CastleConfig
+    method and tells Glass to use an attribute loader in the GlassLoaders method. The attribute loaded takes the name of the assembly to load classes from.
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial01/tutorial01.app_start.cs" ref="gh-pages"></pre>
+
+<p>
+    Don't worry if this doesn't all make sense straight away, as you go through the tutorials it will all be come clear. With a single click of Nuget 
     we have installed and setup everything we need to get Glass.Mapper.Sc working.
 </p>
 <p>

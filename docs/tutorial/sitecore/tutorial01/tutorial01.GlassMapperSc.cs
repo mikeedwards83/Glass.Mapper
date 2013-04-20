@@ -10,20 +10,19 @@ namespace Glass.Mapper.Sites.Sc.App_Start
     {
         public static void Start()
         {
-            var config = GlassMapperScCustom.GetConfig();
-
             //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver(config);
+            var resolver = DependencyResolver.CreateStandardResolver();
 
             //install the custom services
-            var container = (resolver as DependencyResolver).Container;
-            GlassMapperScCustom.CastleConfig(container, config);
+            GlassMapperScCustom.CastleConfig(resolver.Container);
 
             //create a context
             var context = Glass.Mapper.Context.Create(resolver);
             context.Load(
                 GlassMapperScCustom.GlassLoaders()
                 );
+
+            GlassMapperScCustom.PostLoad();
         }
     }
 }
