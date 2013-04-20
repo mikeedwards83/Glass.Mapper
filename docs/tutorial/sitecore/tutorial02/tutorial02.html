@@ -16,15 +16,11 @@ title: Tutorial 2 - Creating a simple Home page
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.cs" ref="gh-pages"></pre>
 <p>
-    This class is very simple class but notice that the properties use the keyword virtual. We will explain why this is needed
-    later but it shouldn't affect your code.
+    This class is very simple class but notice that the properties use the keyword virtual, this is important to allow
+    Glass to lazy load you classes later on. You will also notice that we haven't added any other markup to our class, Glass.Mapper
+    can automatically infer what data to load for you using <a href="/2013/03/24/OnDemandMapping.html">OnDemand Mapping</a>.
 </p>
-<p>
-    For this demo we are going to use the attribute configuration however if you prefer you can use fluent configuration (we will 
-    look at this later). The code below shows how you can configure the two fields, we have set the class to AutoMap. AutoMapping
-    will treat every property as a field or item metadata (e.g. if you have property called Url it will be populated with the items URL).
-    To use AutoMapping you field name must match the name of your property.
-</p>
+
 <p>
     Now that we have our model we can turn our attention to the home page sublayout. In the code 
     behind we place the following code:
@@ -35,7 +31,8 @@ title: Tutorial 2 - Creating a simple Home page
     via Glass.Mapper. The second line then loads the current context item into the HomePage class.
 </p>
 <p>
-    Finally we have the HTML output:
+    Finally we have the ASCX HTML, you will notice that I have used inline statements to render the data, you can use 
+    ASP.NET Web Controls if you wish.
 </p>
 <pre class="github cs" file="docs/tutorial/sitecore/tutorial02/tutorial02.homepage.ascx" ref="gh-pages"></pre>
 <p>
