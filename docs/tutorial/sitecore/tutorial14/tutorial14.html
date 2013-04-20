@@ -1,0 +1,52 @@
+---
+layout: DocsLayout
+title: Tutorial 14 - MVC Page Editor Support
+---
+
+{% include pageheader.html %}
+<p>
+    This tutorial will look at the MVC page editor support, Glass supports both editable fields
+    and edit frames in MVC.
+</p>
+<p>
+    For this tutorial I will have a single page that lists blog posts, I want to be
+    able to edit each blog post in the page as well as us an edit frame to edit the associated 
+    item.
+</p>
+<p>
+    For this solution I have to very simple models to represent the landing page and the blog
+    post:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.bloglanding.cs" ref="gh-pages"></pre>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.blogpost.cs" ref="gh-pages"></pre>
+<p>
+    The HTML for the MVC rendering looks like this:
+</p>
+<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.bloglanding.cshtml" ref="gh-pages"></pre>
+<p>
+    The first thing to note about the above layout is that it inherits from the <strong>Glass.Mapper.Sc.Web.Mvc.GlassView</strong>
+    class. This class exposes the additional methods to support editable fields and edit frames. On the page it looks like
+    this:
+</p>
+<img src="tutorial14.webpage.png" class="img-polaroid"/>
+<p>
+    To make a field editable you can use the Editable method in the same way you would with a
+    sublayout:
+</p>
+<pre class="cs">
+    &lt;h3&gt;@Editable(post, x => x.Title)&lt;/h3&gt;
+</pre>
+<p>
+    To use an edit frame use a using statement and call the BeginEditFrame method:
+</p>
+<pre class="cs">
+            @using (BeginEditFrame(post.Path))
+            {
+                &lt;h3&gt;@Editable(post, x => x.Title)&lt;/h3&gt;
+                @Editable(post, x => x.MainBody)
+            }
+</pre>
+<p>
+    When using Edit Frame you can specify the data source of the item you want to load into the 
+    Edit Frame and also the Path of the buttons to display.
+</p>
