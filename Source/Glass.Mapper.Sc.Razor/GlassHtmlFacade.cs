@@ -139,11 +139,13 @@ namespace Glass.Mapper.Sc.Razor
             return _glassHtml.RenderLink(link, attributes, contents).RawString();
         }
 
-        public GlassEditFrame EditFrame(string buttons, string path = null)
+        public GlassEditFrame EditFrame(string buttons, string dataSource = null)
         {
+            
             var frame = new GlassEditFrame(buttons, _writer, path);
             frame.RenderFirstPart();
             return frame;
+            
         }
     }
 }

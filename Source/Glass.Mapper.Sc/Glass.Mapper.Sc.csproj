@@ -43,6 +43,8 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -156,6 +158,9 @@
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Mvc\GlassView.cs" />
+    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc\MvcEditFrame.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
