@@ -95,7 +95,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new HtmlString(GlassHtml.Editable(target, field, parameters));
         }
 
-        public GlassEditFrame EditFrame(string buttons, string dataSource)
+        public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
             var frame = new GlassEditFrame(buttons, this.Output, dataSource);
             frame.RenderFirstPart();
@@ -106,7 +106,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public GlassEditFrame EditFrame(string dataSource)
+        public GlassEditFrame BeginEditFrame(string dataSource)
         {
             var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output, dataSource);
             frame.RenderFirstPart();
@@ -117,7 +117,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// Creates an edit frame using the current context item
         /// </summary>
         /// <returns></returns>
-        public GlassEditFrame EditFrame()
+        public GlassEditFrame BeginEditFrame()
         {
             var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output);
             frame.RenderFirstPart();
