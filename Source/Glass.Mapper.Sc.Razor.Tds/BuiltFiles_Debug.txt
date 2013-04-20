@@ -27,6 +27,7 @@
 .\Debug\layouts\Site\Content\CommentSublayout.ascx
 .\Debug\layouts\Site\Content\EventSublayout.ascx
 .\Debug\layouts\Site\Content\NewsArticleSublayout.ascx
+.\Debug\layouts\Site\Landing\BbcNewsSublayout.ascx
 .\Debug\layouts\Site\Landing\RssLandingSublayout.ascx
 .\Debug\layouts\Site\Landing\EventsLandingSublayout.ascx
 .\Debug\layouts\Site\Landing\HomePageSublayout.ascx
