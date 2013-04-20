@@ -151,11 +151,6 @@
             The _type configurations
             </summary>
         </member>
-        <member name="M:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Glass.Mapper.Sc.CodeFirst.GlassDataProvider"/> class.
-            </summary>
-        </member>
         <member name="M:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.#ctor(System.String,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:Glass.Mapper.Sc.CodeFirst.GlassDataProvider"/> class.
@@ -280,12 +275,7 @@
             The _setup complete
             </summary>
         </member>
-        <member name="F:Glass.Mapper.Sc.CodeFirst.GlassDataProvider._setupProcessing">
-            <summary>
-            The _setup processing
-            </summary>
-        </member>
-        <member name="M:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.Setup(Sitecore.Data.DataProviders.CallContext)">
+        <member name="M:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.Initialise(Sitecore.Data.Database)">
             <summary>
             Setups the specified context.
             </summary>
@@ -315,11 +305,10 @@
             </summary>
             <value>The name of the database.</value>
         </member>
-        <member name="P:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.Database">
+        <member name="P:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.ContextName">
             <summary>
-            Gets the database.
+            The name of the GlassContext to load
             </summary>
-            <value>The database.</value>
         </member>
         <member name="P:Glass.Mapper.Sc.CodeFirst.GlassDataProvider.SectionTable">
             <summary>
@@ -505,12 +494,6 @@
             Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
             </summary>
             <value>The branch id.</value>
-        </member>
-        <member name="P:Glass.Mapper.Sc.Configuration.Attributes.SitecoreTypeAttribute.CodeFirst">
-            <summary>
-            Indicates that the class is used in a code first scenario.
-            </summary>
-            <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
         </member>
         <member name="P:Glass.Mapper.Sc.Configuration.Attributes.SitecoreTypeAttribute.TemplateName">
             <summary>
@@ -3525,13 +3508,13 @@
             This class contains a set of helpers that make converting items mapped in Glass.Sitecore.Mapper to HTML
             </summary>
         </member>
-        <member name="M:Glass.Mapper.Sc.GlassHtml.#ctor(Glass.Mapper.Sc.ISitecoreService)">
+        <member name="M:Glass.Mapper.Sc.GlassHtml.#ctor(Glass.Mapper.Sc.ISitecoreContext)">
             <summary>
             Initializes a new instance of the <see cref="T:Glass.Mapper.Sc.GlassHtml"/> class.
             </summary>
-            <param name="service">The service that will be used to load and save data</param>
+            <param name="sitecoreContext">The service that will be used to load and save data</param>
         </member>
-        <member name="M:Glass.Mapper.Sc.GlassHtml.EditFrame(System.String)">
+        <member name="M:Glass.Mapper.Sc.GlassHtml.EditFrame(System.String,System.String)">
             <summary>
             Edits the frame.
             </summary>
@@ -5677,6 +5660,12 @@
             </summary>
             <param name="context">The context.</param>
         </member>
+        <member name="M:Glass.Mapper.Sc.SitecoreContext.#ctor(Sitecore.Data.Database)">
+            <summary>
+            Used for unit tests only
+            </summary>
+            <param name="database"></param>
+        </member>
         <member name="M:Glass.Mapper.Sc.SitecoreContext.GetHomeItem``1(System.Boolean,System.Boolean)">
             <summary>
             Gets the home item.
@@ -5921,6 +5910,82 @@
             <param name="language">The language.</param>
             <returns>IEnumerable{Item}.</returns>
         </member>
+        <member name="T:Glass.Mapper.Sc.Web.Mvc.GlassView`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TModel"></typeparam>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <param name="field">The field that should be made editable</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <param name="field">The field that should be made editable</param>
+            <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <param name="field">The field that should be made editable</param>
+            <param name="parameters"> </param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="parameters"> </param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.BeginEditFrame(System.String)">
+            <summary>
+            Creates an Edit Frame using the Default Buttons list
+            </summary>
+            <param name="dataSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Mvc.GlassView`1.BeginEditFrame">
+            <summary>
+            Creates an edit frame using the current context item
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Glass.Mapper.Sc.Web.Mvc.GlassView`1.GlassHtml">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Glass.Mapper.Sc.Web.Ui.AbstractGlassPage">
             <summary>
             Class AbstractGlassPage
@@ -6140,7 +6205,7 @@
             Class GlassEditFrame
             </summary>
         </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.GlassEditFrame.#ctor(System.String,System.Web.HttpContext)">
+        <member name="M:Glass.Mapper.Sc.Web.Ui.GlassEditFrame.#ctor(System.String,System.IO.TextWriter,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:Glass.Mapper.Sc.Web.Ui.GlassEditFrame"/> class.
             </summary>

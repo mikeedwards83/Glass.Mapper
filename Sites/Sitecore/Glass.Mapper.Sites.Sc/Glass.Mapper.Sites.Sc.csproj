@@ -54,17 +54,17 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=3.0.2.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.0.0.0.7-beta\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.3.0.2.5-beta\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=3.0.2.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.10-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.0.0.0.7-beta\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.2.4\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -208,6 +208,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
     <None Include="App_Config\Include\ja-JP.config.example" />
     <None Include="App_Config\Include\LiveMode.config.example" />
     <None Include="App_Config\Include\ScalabilitySettings.config.example" />
@@ -246,6 +247,7 @@
     <Content Include="layouts\Site\Misc\TopNavigationSublayout.ascx" />
     <Content Include="layouts\Testing\AdvancedDynamics.ascx" />
     <Content Include="sitecore_files\Web.config" />
+    <Content Include="layouts\Site\Landing\BlogLandingXml.cshtml" />
     <None Include="Web.config.old" />
     <Content Include="layouts\Testing\D2.cshtml" />
     <Content Include="layouts\Testing\T1.cshtml" />
@@ -274,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\GlassMapperSc.cs" />
+    <Compile Include="App_Start\GlassMapperScCustom.cs" />
     <Compile Include="App_Start\ServiceInstaller.cs" />
     <Compile Include="Client\Item\EventSortOrder.cs" />
     <Compile Include="Global.asax.cs">

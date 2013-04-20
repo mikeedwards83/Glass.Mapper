@@ -9,12 +9,6 @@
             Class DependencyResolver
             </summary>
         </member>
-        <member name="M:Glass.Mapper.Sc.CastleWindsor.DependencyResolver.CreateStandardResolver(Glass.Mapper.Sc.CastleWindsor.Config)">
-            <summary>
-            Creates the standard resolver.
-            </summary>
-            <returns>IDependencyResolver.</returns>
-        </member>
         <member name="M:Glass.Mapper.Sc.CastleWindsor.DependencyResolver.CreateStandardResolver">
             <summary>
             Creates the standard resolver.

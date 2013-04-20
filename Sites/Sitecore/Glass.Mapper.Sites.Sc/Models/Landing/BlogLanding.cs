@@ -10,6 +10,6 @@ namespace Glass.Mapper.Sites.Sc.Models.Landing
     public class BlogLanding : ContentBase
     {
         public virtual string MainBody { get; set; }
-        public virtual IEnumerable<BlogPost> Posts { get; set; }
+        public virtual IEnumerable<BlogPost> Children { get; set; }
     }
 }
