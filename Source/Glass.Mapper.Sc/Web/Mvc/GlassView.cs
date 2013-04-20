@@ -101,5 +101,27 @@ namespace Glass.Mapper.Sc.Web.Mvc
             frame.RenderFirstPart();
             return frame;
         }
+        /// <summary>
+        /// Creates an Edit Frame using the Default Buttons list
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <returns></returns>
+        public GlassEditFrame EditFrame(string dataSource)
+        {
+            var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output, dataSource);
+            frame.RenderFirstPart();
+            return frame;
+        }
+
+        /// <summary>
+        /// Creates an edit frame using the current context item
+        /// </summary>
+        /// <returns></returns>
+        public GlassEditFrame EditFrame()
+        {
+            var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output);
+            frame.RenderFirstPart();
+            return frame;
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public class GlassEditFrame : IDisposable
     {
-        public const string DefaultEditButons = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/Default";
+        public const string DefaultEditButtons = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/Default";
 
         EditFrame _frame;
         HtmlTextWriter _writer;

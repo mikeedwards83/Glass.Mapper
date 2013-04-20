@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, string dataSource)
         {
-            return BeginEditFrame(htmlHelper, dataSource, GlassEditFrame.DefaultEditButons);
+            return BeginEditFrame(htmlHelper, dataSource, GlassEditFrame.DefaultEditButtons);
         }
 
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, ID dataSource, ID buttons)
