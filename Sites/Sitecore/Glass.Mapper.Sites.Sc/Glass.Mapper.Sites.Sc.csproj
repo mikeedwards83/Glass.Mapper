@@ -236,6 +236,7 @@
     <Content Include="layouts\Site\Content\CommentSublayout.ascx" />
     <Content Include="layouts\Site\Content\EventSublayout.ascx" />
     <Content Include="layouts\Site\Content\NewsArticleSublayout.ascx" />
+    <Content Include="layouts\Site\Landing\BbcNewsSublayout.ascx" />
     <Content Include="layouts\Site\Landing\RssLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\EventsLandingSublayout.ascx" />
     <Content Include="layouts\Site\Landing\HomePageSublayout.ascx" />
@@ -349,6 +350,8 @@
       <DependentUpon>AdvancedDynamics.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Testing\B1.cshtml.cs" />
+    <Compile Include="Models\Content\BlogPost.cs" />
+    <Compile Include="Models\Landing\BlogLanding.cs" />
     <Compile Include="Models\Landing\RssLanding.cs" />
     <Compile Include="Models\Config\ContentConfig.cs" />
     <Compile Include="Models\Content\Comment.cs" />

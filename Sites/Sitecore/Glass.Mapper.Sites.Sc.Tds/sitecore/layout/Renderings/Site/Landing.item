@@ -2,9 +2,9 @@
 version: 1
 id: {2E0C1F15-CA92-4E7B-BF42-9394B61F91CD}
 database: master
-path: /sitecore/layout/Renderings/Site/Content
+path: /sitecore/layout/Renderings/Site/Landing
 parent: {E833D260-6E8A-4854-B93C-625E7E6C720A}
-name: Content
+name: Landing
 master: {00000000-0000-0000-0000-000000000000}
 template: {7EE0975B-0698-493E-B3A2-0B2EF33D0522}
 templatekey: Rendering Folder

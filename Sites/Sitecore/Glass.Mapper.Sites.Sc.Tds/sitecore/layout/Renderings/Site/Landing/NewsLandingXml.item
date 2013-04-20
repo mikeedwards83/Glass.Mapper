@@ -2,7 +2,7 @@
 version: 1
 id: {477E133C-E7A5-4877-BEF1-68CDA2BD4E5D}
 database: master
-path: /sitecore/layout/Renderings/Site/Content/NewsLandingXml
+path: /sitecore/layout/Renderings/Site/Landing/NewsLandingXml
 parent: {2E0C1F15-CA92-4E7B-BF42-9394B61F91CD}
 name: NewsLandingXml
 master: {00000000-0000-0000-0000-000000000000}
