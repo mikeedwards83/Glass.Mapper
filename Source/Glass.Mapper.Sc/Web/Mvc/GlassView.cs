@@ -15,7 +15,17 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <summary>
         /// 
         /// </summary>
-        public GlassHtml GlassHtml { get; private set; }
+        public IGlassHtml GlassHtml { get; private set; }
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is in editing mode.
+        /// </summary>
+        /// <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
+        public bool IsInEditingMode
+        {
+            get { return Sc.GlassHtml.IsInEditingMode; }
+        }
 
         public override void InitHelpers()
         {

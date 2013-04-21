@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// This class contains a set of helpers that make converting items mapped in Glass.Sitecore.Mapper to HTML
     /// </summary>
-    public class GlassHtml
+    public class GlassHtml : IGlassHtml
     {
         public  ISitecoreContext SitecoreContext { get; private set; }
         private readonly Context _context;

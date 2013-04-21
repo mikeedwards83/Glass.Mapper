@@ -11,11 +11,18 @@ namespace Glass.Mapper.Sc.Razor
     public class GlassHtmlFacade 
     {
         private readonly TextWriter _writer;
-        public GlassHtml _glassHtml;
+        public IGlassHtml _glassHtml;
 
         public ISitecoreContext SitecoreContext
         {
             get { return _glassHtml.SitecoreContext; }
+        }
+
+
+        public IGlassHtml GlassHtml
+        {
+            get { return _glassHtml; }
+            set { _glassHtml = value; }
         }
 
         /// <summary>

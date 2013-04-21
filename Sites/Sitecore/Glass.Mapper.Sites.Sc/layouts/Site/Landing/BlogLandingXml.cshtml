@@ -1,9 +1,8 @@
 ﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Glass.Mapper.Sites.Sc.Models.Landing.BlogLanding>
-<h2>@Model.Title</h2>
+<h2>@Editable(x=>x.Title)</h2>
 <ul>
     @foreach (var post in Model.Children)
     {
-        
         <li>
             @using (BeginEditFrame(post.Path))
             {

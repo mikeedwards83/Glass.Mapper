@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public static string Editable<T>(GlassHtml glassHtml, T model, Expression<Func<T, object>> field)
+        public static string Editable<T>(IGlassHtml glassHtml, T model, Expression<Func<T, object>> field)
         {
 
             if (field == null) throw new NullReferenceException("No field set");
@@ -57,7 +57,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, string parameters)
+        public static string Editable<T>(IGlassHtml glassHtml,T model, Expression<Func<T, object>> field, string parameters)
         {
             if (field == null) throw new NullReferenceException("No field set");
             if (model == null) throw new NullReferenceException("No model set");
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, AbstractParameters parameters)
+        public static string Editable<T>(IGlassHtml glassHtml, T model, Expression<Func<T, object>> field, AbstractParameters parameters)
         {
 
             if (field == null) throw new NullReferenceException("No field set");
@@ -122,7 +122,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public static  string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
+        public static  string Editable<T>(IGlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
 
             if (field == null) throw new NullReferenceException("No field set");
@@ -160,7 +160,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public static string Editable<T>(GlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
+        public static string Editable<T>(IGlassHtml glassHtml,T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
 
             if (field == null) throw new NullReferenceException("No field set");

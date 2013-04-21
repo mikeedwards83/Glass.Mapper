@@ -138,6 +138,7 @@
     <Compile Include="Fields\TriState.cs" />
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="IGlassHtml.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />

@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         ISitecoreContext _sitecoreContext;
-        GlassHtml _glassHtml;
+        IGlassHtml _glassHtml;
 
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
         public bool IsInEditingMode
         {
-            get { return GlassHtml.IsInEditingMode; }
+            get { return Sc.GlassHtml.IsInEditingMode; }
         }
 
         /// <summary>
@@ -57,9 +57,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Access to rendering helpers
         /// </summary>
         /// <value>The glass HTML.</value>
-        protected virtual GlassHtml GlassHtml
+        protected virtual IGlassHtml GlassHtml
         {
             get { return _glassHtml; }
+            set { _glassHtml = value; }
         }
 
         /// <summary>
