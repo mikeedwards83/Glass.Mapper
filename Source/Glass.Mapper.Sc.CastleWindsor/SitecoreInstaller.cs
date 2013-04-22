@@ -33,6 +33,7 @@ using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
+using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.CastleWindsor
@@ -249,6 +250,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
             //       service.GetItem<MyClass>(id) 
             // the standard resolver will return the MyClass configuration. 
             // Tasks are called in the order they are specified below.
+
+            container.Register(
+               Component.For<IConfigurationResolverTask>()
+                        .ImplementedBy<TemplateInferredTypeTask>()
+                        .LifestyleTransient()
+               );
+
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationStandardResolverTask>()
@@ -260,6 +268,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
                          .LifestyleTransient()
                 );
+
+           
         }
     }
 

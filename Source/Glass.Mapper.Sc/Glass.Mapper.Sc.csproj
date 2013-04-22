@@ -144,6 +144,7 @@
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
