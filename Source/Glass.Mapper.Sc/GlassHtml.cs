@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data.Items;
+using Sitecore.Text;
 using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc
@@ -163,6 +164,14 @@ namespace Glass.Mapper.Sc
             return RenderImage(image, null);
         }
 
+
+        public const string ImageWidth = "width";
+        public const string ImageHeight = "height";
+        public const string ImageAllowStretch = "as";
+        public const string ImageBackgroundColour = "bc";
+        public const string ImageScaleImage = "sc";
+        public const string ImageTagFormat = "<img src='{0}' {1} />";
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
@@ -175,17 +184,43 @@ namespace Glass.Mapper.Sc
 
             if (attributes == null) attributes = new NameValueCollection();
 
-            string format = "<img src='{0}' {1}/>";
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, "class", image.Class);
             AttributeCheck(attributes, "alt", image.Alt);
-            if (image.Height > 0)
-                AttributeCheck(attributes, "height", image.Height.ToString());
-            if (image.Width > 0)
-                AttributeCheck(attributes, "width", image.Width.ToString());
+            //if (image.Height > 0)
+            //    AttributeCheck(attributes, "height", image.Height.ToString());
+            //if (image.Width > 0)
+            //    AttributeCheck(attributes, "width", image.Width.ToString());
 
-            return format.Formatted(image.Src, Utilities.ConvertAttributes(attributes));
+
+            var builder = new UrlBuilder(image.Src);
+
+            //append to url values
+            if (attributes[ImageWidth].IsNotNullOrEmpty())
+                builder["w"] = attributes[ImageWidth];
+            if (attributes[ImageHeight].IsNotNullOrEmpty())
+                builder["h"] = attributes[ImageHeight];
+
+            if (attributes[ImageAllowStretch].IsNotNullOrEmpty())
+            {
+                builder[ImageAllowStretch] = attributes[ImageAllowStretch];
+                attributes.Remove(ImageAllowStretch);
+            }
+
+            if (attributes[ImageBackgroundColour].IsNotNullOrEmpty())
+            {
+                builder[ImageBackgroundColour] = attributes[ImageBackgroundColour];
+                attributes.Remove(ImageBackgroundColour);
+            }
+
+            if (attributes[ImageScaleImage].IsNotNullOrEmpty())
+            {
+                builder[ImageScaleImage] = attributes[ImageScaleImage];
+                attributes.Remove(ImageScaleImage);
+            }
+
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
         }
 
         /// <summary>
