@@ -18,6 +18,11 @@ color: #2fa4e7;
 
 .navbar .brand {
 font-family:'Montserrat Subrayada', sans-serif;
+text-indent: -9999px;
+background: url(Images/glass-mapper-logo-sml.png) no-repeat 50% 50%;
+width: 190px;
+height: 110px;
+padding: 0;
 }
 
 .hero-unit > h1 {
@@ -82,21 +87,27 @@ width:auto\9;
 }
 
 @media (max-width: 979px){
-.hero-unit {
-padding:30px;
-}
+    .hero-unit {
+    padding:30px;
+    }
 
-.navbar-inverse .nav-collapse .nav>li>a, .navbar-inverse .nav-collapse .dropdown-menu a {
-color: #fff;
-}
+    .navbar-inverse .nav-collapse .nav>li>a, .navbar-inverse .nav-collapse .dropdown-menu a {
+    color: #fff;
+    }
 
-.hero-unit h1 {
-font-size:40px;
-}
+    .hero-unit h1 {
+    font-size:40px;
+    }
 
-#wrap > .container-fluid {
-padding-top:0;
-}
+    #wrap > .container-fluid {
+    padding-top:0;
+    }
+
+    .navbar-search {
+        position: absolute;
+        top: 5px;
+        right: 80px;
+    }
 }
 
 @media (max-width: 767px){
@@ -130,4 +141,9 @@ margin-right:-20px;
 padding-left:20px;
 padding-right:20px;
 }
+}
+@media (max-width: 470px) {
+    .navbar-search {
+        display: none;
+    }
 }
