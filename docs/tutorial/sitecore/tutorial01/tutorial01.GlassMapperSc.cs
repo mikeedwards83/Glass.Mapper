@@ -13,14 +13,16 @@ namespace Glass.Mapper.Sites.Sc.App_Start
             //create the resolver
             var resolver = DependencyResolver.CreateStandardResolver();
 
+            //install the custom services
+            GlassMapperScCustom.CastleConfig(resolver.Container);
+
             //create a context
             var context = Glass.Mapper.Context.Create(resolver);
-
-            var attributes = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sites.Sc");
-
             context.Load(
-                attributes
+                GlassMapperScCustom.GlassLoaders()
                 );
+
+            GlassMapperScCustom.PostLoad();
         }
     }
 }

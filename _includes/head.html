@@ -8,37 +8,44 @@
 	<link href="http://fonts.googleapis.com/css?family=Droid+Sans|Libre+Baskerville|Montserrat+Subrayada" rel="stylesheet" type="text/css">
     <link href="//bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet" />
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/Glass.Mapper/site.css" rel="stylesheet" />
+    <link href="/site.css" rel="stylesheet" />
     <link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet"/>    
 	
     <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<script type="text/javascript">var switchTo5x=true;</script>
 	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 	<script type="text/javascript">stLight.options({publisher: "bfd3c89a-41f8-45ce-9a63-645439289aee", doNotHash: true, doNotCopy: false, hashAddressBar: false});</script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
   <div id="wrap">
     <header class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-		  <a class="brand" href="/Glass.Mapper/">Glass.Mapper</a>
-          <div class="nav-collapse collapse">
-			<ul class="nav">
-				<li><a href="/Glass.Mapper/download.html"><i class="icon-download-alt icon-white"></i> Download</a></li>
-				<li><a href="/Glass.Mapper/blog/index.html"><i class="icon-book icon-white"></i> Blog</a></li>
-				<li><a href="/Glass.Mapper/docs/index.html"><i class="icon-file icon-white"></i> Docs</a></li>
-				<li><a href="/Glass.Mapper/docs/contribute.html"><i class="icon-random  icon-white"></i> Contribute</a></li>
-				<li><a href="/Glass.Mapper/googlegroup.html"><i class="icon-envelope icon-white"></i> Support</a></li>
-				<li><a href="/Glass.Mapper/trello.html"><i class="icon-list icon-white"></i> Progress</a></li>
-				<li><a href="/Glass.Mapper/team/index.html"><i class="icon-user icon-white"></i> Team</a></li>
-			</ul>
-          </div><!--/.nav-collapse -->
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/">Glass.Mapper</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="/download.html"><i class="icon-download-alt icon-white"></i> Download</a></li>
+                        <li><a href="/blog/index.html"><i class="icon-book icon-white"></i> Blog</a></li>
+                        <li><a href="/docs/index.html"><i class="icon-file icon-white"></i> Docs</a></li>
+                        <li><a href="/docs/contribute.html"><i class="icon-random  icon-white"></i> Contribute</a></li>
+                        <li><a href="/googlegroup.html"><i class="icon-envelope icon-white"></i> Support</a></li>
+                        <li><a href="/trello.html"><i class="icon-list icon-white"></i> Progress</a></li>
+                        <li><a href="/team/index.html"><i class="icon-user icon-white"></i> Team</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+                <form class="navbar-search" action="/search.html">
+                    <div class="input-append">
+                        <input name="q" type="text" class="span2" placeholder="Search">
+                        <button class=" btn"><i class="icon-search"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </header>
     <div class="container-fluid">

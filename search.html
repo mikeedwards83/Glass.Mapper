@@ -1,0 +1,39 @@
+---
+layout: MainLayout
+title: Search
+---
+
+{% include pageheader.html %}
+
+<div>
+    <div class="span4"></div>
+    <form class="form-search" action="/search.html">
+        <div class="input-append">
+            <input class="span5" id="form-search-text" type="text" name="q">
+            <button class="btn" type="button" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    (function () {
+        var cx = '014689282445025896600:rr-n8rcrnr0';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+    })();
+
+    (function($) {
+        $(function() {
+            var q = getParameterByName("q");
+            var input = $("#form-search-text");
+            input.val(q);
+        });
+    })(jQuery);
+</script>
+<gcse:searchresults-only></gcse:searchresults-only>

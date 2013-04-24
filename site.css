@@ -76,7 +76,9 @@ width:auto\9;
 }
 
 .github{
-float:right;
+/* ME- removed because it caused problems in the  tutorials
+    float:right;
+    */
 }
 
 @media (max-width: 979px){

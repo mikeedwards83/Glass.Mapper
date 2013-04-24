@@ -60,8 +60,22 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\releases\Glass.Mapper.html" />
+    <Content Include="docs\releases\Glass.Mapper.Sc.CastleWindsor.html" />
+    <Content Include="docs\releases\Glass.Mapper.Sc.html" />
+    <Content Include="docs\releases\Glass.Mapper.Sc.Razor.CastleWindsor.html" />
+    <Content Include="docs\releases\Glass.Mapper.Sc.Razor.html" />
+    <Content Include="docs\releases\index.html" />
+    <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
+    <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
+    <Content Include="images\blog\2012-03-17-VugImage.PNG" />
+    <Content Include="_posts\2013-04-08-SitecoreVirtualUserGroup.html" />
+    <Content Include="_posts\2013-04-08-SitecoreVirtualUserGroupFiles.html" />
+    <None Include="CNAME" />
     <Compile Include="docs\concepts\example-fluent-1.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial01\tutorial01.app_start.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial01\tutorial01.GlassMapperScCustom.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial01\tutorial01.GlassMapperSc.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial02\tutorial02.homepage.ascx.cs">
       <DependentUpon>tutorial02.homepage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -69,6 +83,8 @@
     <Compile Include="docs\tutorial\sitecore\tutorial03\tutorial03.menuitem.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.homepage.cs" />
     <Compile Include="docs\tutorial\sitecore\tutorial04\tutorial04.newsarticle.cs" />
+    <Content Include="404.html" />
+    <Content Include="search.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.Dynamic.DynamicItem.html" />
     <Content Include="docs\concepts\automapping.html" />
     <Content Include="docs\dependencies.html" />
@@ -129,6 +145,8 @@
       <DependentUpon>tutorial13.rsslandingsublayout.ascx</DependentUpon>
     </Compile>
     <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.serviceinstaller.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial14\tutorial14.blogpost.cs" />
+    <Compile Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />
