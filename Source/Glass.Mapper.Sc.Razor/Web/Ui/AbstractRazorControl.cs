@@ -93,9 +93,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get
             {
-                if(_sitecoreContext == null)
-                    _sitecoreContext = new SitecoreContext(ContextName);
-                
+                if (_sitecoreContext == null)
+                {
+                    if (ContextName.IsNotNullOrEmpty())
+                        _sitecoreContext = new SitecoreContext(ContextName);
+                    else
+                        _sitecoreContext = new SitecoreContext();
+                }
                 return _sitecoreContext;
             }
         }
