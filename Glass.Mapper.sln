@@ -78,8 +78,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec.disabled = Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec.disabled
-		Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec.disabled = Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec.disabled
+		Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec
 		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
 		Powershell\BuildScripts\utilities.ps1 = Powershell\BuildScripts\utilities.ps1
 	EndProjectSection
