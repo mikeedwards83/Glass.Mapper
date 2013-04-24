@@ -3,6 +3,7 @@ using Castle.Windsor;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Sitecore.SecurityModel;
 
 namespace $rootnamespace$.App_Start
 {
@@ -18,6 +19,24 @@ namespace $rootnamespace$.App_Start
 			var attributes = new SitecoreAttributeConfigurationLoader("$assemblyname$");
 			
 			return new IConfigurationLoader[]{attributes};
+		}
+		public static void PostLoad(){
+			//Comment this code in to activate CodeFist
+			/* CODE FIRST START
+            var dbs = Sitecore.Configuration.Factory.GetDatabases();
+            foreach (var db in dbs)
+            {
+                var provider = db.GetDataProviders().FirstOrDefault(x => x is GlassDataProvider) as GlassDataProvider;
+                if (provider != null)
+                {
+                    using (new SecurityDisabler())
+                    {
+                        provider.Initialise(db);
+                    }
+                }
+            }
+             * CODE FIRST END
+             */
 		}
     }
 }

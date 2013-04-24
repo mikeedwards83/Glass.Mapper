@@ -18,6 +18,7 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
+		<dependency id="RazorEngine" version="3.2.0" />
     </dependencies>
   </metadata>
   <files>
