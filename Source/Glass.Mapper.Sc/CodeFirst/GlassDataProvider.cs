@@ -516,8 +516,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                             if (clsTemplate == ItemDefinition.Empty || clsTemplate == null)
                             {
                                 var containingFolder = GetTemplateFolder(cls.Key.Namespace, glassFolder, provider, context);
-
-                                
+                                clsTemplate = CreateTemplateItem(cls.Value, cls.Key, provider, containingFolder, context);
                             }
 
                             BaseTemplateChecks(clsTemplate, provider, context, cls.Value);
@@ -560,6 +559,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             sqlDataProvider.CreateItem(config.TemplateId, templateName, TemplateTemplateId, containingFolder,
                                 context);
             var clsTemplate = sqlDataProvider.GetItemDefinition(config.TemplateId, context);
+            
             //Assign the base template
             var templateItem = Factory.GetDatabase("master").GetItem(clsTemplate.ID);
 
@@ -743,7 +743,11 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <param name="provider">The provider.</param>
         /// <param name="context">The context.</param>
         /// <param name="config">The config.</param>
-        private void BaseTemplateChecks(ItemDefinition template, DataProvider provider, CallContext context, SitecoreTypeConfiguration config)
+        private void BaseTemplateChecks(
+            ItemDefinition template, 
+            DataProvider provider, 
+            CallContext context, 
+            SitecoreTypeConfiguration config)
         {
             //check base templates
 
