@@ -43,6 +43,8 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -136,11 +138,13 @@
     <Compile Include="Fields\TriState.cs" />
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="IGlassHtml.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
@@ -156,6 +160,8 @@
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Web\Mvc\GlassView.cs" />
+    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

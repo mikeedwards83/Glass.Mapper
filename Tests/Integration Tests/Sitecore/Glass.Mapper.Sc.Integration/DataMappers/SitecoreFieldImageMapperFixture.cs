@@ -57,7 +57,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(15, result.HSpace);
             Assert.AreEqual(480, result.Height);
             Assert.AreEqual(new Guid("{D897833C-1F53-4FAE-B54B-BB5B11B8F851}"), result.MediaId);
-            Assert.AreEqual("/~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx", result.Src);
+            Assert.IsTrue(result.Src.EndsWith("/~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx"));
             Assert.AreEqual(20, result.VSpace);
             Assert.AreEqual(640, result.Width);
         }

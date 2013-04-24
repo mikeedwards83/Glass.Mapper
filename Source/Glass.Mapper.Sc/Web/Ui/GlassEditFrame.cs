@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -31,6 +32,8 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public class GlassEditFrame : IDisposable
     {
+        public const string DefaultEditButtons = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/Default";
+
         EditFrame _frame;
         HtmlTextWriter _writer;
         /// <summary>
@@ -38,13 +41,20 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <param name="context">The context.</param>
-        public GlassEditFrame(string buttons, HttpContext context)
+        public GlassEditFrame(string buttons, TextWriter writer, string dataSource = "")
         {
             _frame = new EditFrame();
+            _frame.DataSource = dataSource;
             _frame.Buttons = buttons;
-            _writer = new HtmlTextWriter(context.Response.Output);
+            _writer = new HtmlTextWriter(writer);
 
         }
+
+        public GlassEditFrame(EditFrame frame)
+        {
+            _frame = frame;
+        }
+
         /// <summary>
         /// Renders the first part.
         /// </summary>

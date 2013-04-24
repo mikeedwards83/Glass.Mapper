@@ -98,6 +98,7 @@
     <Compile Include="Web\Ui\AbstractRazorControl.cs" />
     <Compile Include="Web\Ui\DynamicControl.cs" />
     <Compile Include="Web\Ui\DynamicTemplate.cs" />
+    <Compile Include="Web\Ui\GlassRazorControl.cs" />
     <Compile Include="Web\Ui\TemplateBase.cs" />
     <Compile Include="Web\Ui\TemplateModel.cs" />
     <Compile Include="Web\Ui\TypedControl.cs" />

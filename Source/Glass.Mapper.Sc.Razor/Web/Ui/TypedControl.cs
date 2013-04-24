@@ -13,8 +13,7 @@
         /// <returns>`0.</returns>
         public override T GetModel()
         {
-            ISitecoreContext _context = new SitecoreContext(ContextName);
-            return _context.CreateType<T>(GetDataSourceOrContextItem(), false, false);
+            return SitecoreContext.CreateType<T>(GetDataSourceOrContextItem(), false, false);
         }
     }
 }
