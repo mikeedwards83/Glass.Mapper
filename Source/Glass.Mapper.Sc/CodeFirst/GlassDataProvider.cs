@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,9 +26,11 @@ using Sitecore.Data.DataProviders;
 using System.Xml;
 using Sitecore.Collections;
 using Sitecore.Data;
+using Sitecore.Data.DataProviders.Sql;
 using Sitecore.Data.Managers;
 using Sitecore.Configuration;
 using Sitecore.Caching;
+using Sitecore.Exceptions;
 using Sitecore.SecurityModel;
 using Glass.Mapper.Sc.Configuration;
 
@@ -105,6 +108,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </summary>
         public Dictionary<Type, SitecoreTypeConfiguration> _typeConfigurations;
 
+        
         
         public GlassDataProvider()
         {
@@ -492,17 +496,9 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                     global::Sitecore.Diagnostics.Log.Info("Started CodeFirst setup", this);
 
-                    var providers = db.GetDataProviders();
-                    var provider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
+                    var provider = GetBaseProvider(db);
 
-                    var templateFolder = provider.GetItemDefinition(TemplateFolderId, context);
-
-                    var glassFolder = provider.GetItemDefinition(GlassFolderId, context);
-
-                    if (glassFolder == ItemDefinition.Empty || glassFolder == null)
-                    {
-                        provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
-                    }
+                    var glassFolder = GetGlassTemplateFolder(provider, context);
 
                     if (Context.Contexts.Keys.Any(x => x == ContextName))
                     {
@@ -519,55 +515,9 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                             if (clsTemplate == ItemDefinition.Empty || clsTemplate == null)
                             {
+                                var containingFolder = GetTemplateFolder(cls.Key.Namespace, glassFolder, provider, context);
 
-                                //setup folders
-                                IEnumerable<string> namespaces = cls.Key.Namespace.Split('.');
-                                namespaces = namespaces.SkipWhile(x => x != "Templates").Skip(1);
-
-                                ItemDefinition containing = glassFolder;
-                                foreach (var ns in namespaces)
-                                {
-                                    var children = provider.GetChildIDs(containing, context);
-
-                                    ItemDefinition found = null;
-                                    foreach (ID child in children)
-                                    {
-                                        if (!ID.IsNullOrEmpty(child))
-                                        {
-                                            var childDef = provider.GetItemDefinition(child, context);
-                                            if (childDef.Name == ns)
-                                                found = childDef;
-                                        }
-                                    }
-
-                                    if (found == null)
-                                    {
-                                        ID newId = ID.NewID;
-                                        provider.CreateItem(newId, ns, FolderTemplateId, containing, context);
-                                        found = provider.GetItemDefinition(newId, context);
-                                    }
-                                    containing = found;
-
-                                }
-
-                                //create the template in Sitecore
-                                string templateName = cls.Value.TemplateName;
-
-                                if (string.IsNullOrEmpty(templateName))
-                                    templateName = cls.Key.Name;
-
-                                provider.CreateItem(cls.Value.TemplateId, templateName, TemplateTemplateId, containing,
-                                                    context);
-                                clsTemplate = provider.GetItemDefinition(cls.Value.TemplateId, context);
-                                //Assign the base template
-                                var templateItem = Factory.GetDatabase("master").GetItem(clsTemplate.ID);
-
-                                using (new SecurityDisabler())
-                                {
-                                    templateItem.Editing.BeginEdit();
-                                    templateItem["__Base template"] = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
-                                    templateItem.Editing.EndEdit();
-                                }
+                                
                             }
 
                             BaseTemplateChecks(clsTemplate, provider, context, cls.Value);
@@ -586,12 +536,9 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                         global::Sitecore.Diagnostics.Log.Info("Finished CodeFirst setup", this);
                     }
-
-                    db.Caches.DataCache.Clear();
-                    db.Caches.ItemCache.Clear();
-                    db.Caches.ItemPathsCache.Clear();
-                    db.Caches.StandardValuesCache.Clear();
-                    db.Caches.PathCache.Clear();
+                    
+                    ClearCaches(db);
+                   
                 }
                 finally 
                 {
@@ -599,6 +546,139 @@ namespace Glass.Mapper.Sc.CodeFirst
                 }
 
             }
+        }
+
+        public ItemDefinition CreateTemplateItem(
+            SitecoreTypeConfiguration config, Type type, DataProvider sqlDataProvider, ItemDefinition containingFolder, CallContext context)
+        {
+            //create the template in Sitecore
+            string templateName = config.TemplateName;
+
+            if (string.IsNullOrEmpty(templateName))
+                templateName = type.Name;
+
+            sqlDataProvider.CreateItem(config.TemplateId, templateName, TemplateTemplateId, containingFolder,
+                                context);
+            var clsTemplate = sqlDataProvider.GetItemDefinition(config.TemplateId, context);
+            //Assign the base template
+            var templateItem = Factory.GetDatabase("master").GetItem(clsTemplate.ID);
+
+            using (new SecurityDisabler())
+            {
+                templateItem.Editing.BeginEdit();
+                templateItem["__Base template"] = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
+                templateItem.Editing.EndEdit();
+            }
+
+            return clsTemplate;
+        }
+
+        /// <summary>
+        /// Gets the template folder that the class template should be created in using the classes
+        /// namespace. 
+        /// </summary>
+        /// <param name="nameSpace"></param>
+        /// <param name="defaultFolder"></param>
+        /// <param name="sqlDataProvider"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public ItemDefinition GetTemplateFolder(string nameSpace, ItemDefinition defaultFolder, DataProvider sqlDataProvider, CallContext context)
+        {
+            //setup folders
+            IEnumerable<string> namespaces = nameSpace.Split('.');
+            namespaces = namespaces.SkipWhile(x => x != "Templates").Skip(1);
+
+            ItemDefinition containingFolder = defaultFolder;
+            foreach (var ns in namespaces)
+            {
+                var children = sqlDataProvider.GetChildIDs(containingFolder, context);
+
+                ItemDefinition found = null;
+                foreach (ID child in children)
+                {
+                    if (!ID.IsNullOrEmpty(child))
+                    {
+                        var childDef = sqlDataProvider.GetItemDefinition(child, context);
+                        if (childDef.Name == ns)
+                            found = childDef;
+                    }
+                }
+
+                if (found == null)
+                {
+                    ID newId = ID.NewID;
+                    sqlDataProvider.CreateItem(newId, ns, FolderTemplateId, containingFolder, context);
+                    found = sqlDataProvider.GetItemDefinition(newId, context);
+                }
+                containingFolder = found;
+            }
+
+            if (containingFolder == null)
+            {
+                Sitecore.Diagnostics.Log.Error("Failed to load containing folder {0}".Formatted(nameSpace), this);
+                throw new RequiredObjectIsNullException("Failed to load containing folder {0}".Formatted(nameSpace));
+            }
+
+            return containingFolder;
+        }
+
+        /// <summary>
+        /// Clears the all caches on the database
+        /// </summary>
+        /// <param name="db"></param>
+        private void ClearCaches(Database db)
+        {
+            db.Caches.DataCache.Clear();
+            db.Caches.ItemCache.Clear();
+            db.Caches.ItemPathsCache.Clear();
+            db.Caches.StandardValuesCache.Clear();
+            db.Caches.PathCache.Clear();
+        }
+
+        /// <summary>
+        /// Gets the base SQL provider that will store physical items
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        private DataProvider GetBaseProvider(Database db)
+        {
+            var providers = db.GetDataProviders();
+            var provider = providers.FirstOrDefault(x => x is SqlDataProvider);
+
+            if (provider == null)
+            {
+                Sitecore.Diagnostics.Log.Error("Failed to find SqlDataProvider", this);
+                throw new RequiredObjectIsNullException("Failed to find SqlDataProvider");
+            }
+
+            return provider;
+        }
+
+        /// <summary>
+        /// Creates the item /sitecore/templates/glasstemplates
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private ItemDefinition GetGlassTemplateFolder(DataProvider provider, CallContext context)
+        {
+            var templateFolder = provider.GetItemDefinition(TemplateFolderId, context);
+
+            var glassFolder = provider.GetItemDefinition(GlassFolderId, context);
+
+            if (glassFolder == ItemDefinition.Empty || glassFolder == null)
+            {
+                provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
+                glassFolder = provider.GetItemDefinition(GlassFolderId, context);
+            }
+
+            if (glassFolder == null)
+            {
+                Sitecore.Diagnostics.Log.Error("Failed to find GlassTemplates folder", this);
+                throw new RequiredObjectIsNullException("Failed to find GlassTemplates folder");
+            }
+
+            return glassFolder;
         }
 
         /// <summary>
@@ -610,6 +690,10 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <returns>True of the folder is deleted itself.</returns>
         private bool RemoveDeletedClasses(ItemDefinition folder, DataProvider provider, CallContext context)
         {
+            if (folder == null) throw new ArgumentNullException("folder");
+            if (provider == null) throw new ArgumentNullException("provider");
+            if (context == null) throw new ArgumentNullException("context");
+
             var childIds = provider.GetChildIDs(folder, context);
 
             //check child items

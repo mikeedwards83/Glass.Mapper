@@ -23,29 +23,38 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
     public class GlassDataProviderFixture
     {
         private SecurityDisabler _disabler;
+        private Database _db;
+        private GlassDataProvider _dataProvider;
+        private Context _context;
 
         [SetUp]
         public void Setup()
         {
             _disabler = new SecurityDisabler();
+            _db = Sitecore.Configuration.Factory.GetDatabase("master");
+            _dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+            _context = Context.Create(Utilities.CreateStandardResolver());
 
-            //remove provider from database
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-
-            var providers = GetProviders(db);
-            var toRemove = providers.Where(x => x is GlassDataProvider).ToList();
-            toRemove.ForEach(x => providers.Remove(x));
-            
-            var path = "/sitecore/templates/glasstemplates";
-            var rootFolder = db.GetItem(path);
-            if (rootFolder != null)
-                rootFolder.Delete();
+            InjectionDataProvider(_db, _dataProvider);
 
         }
         [TearDown]
         public void TearDown()
         {
+            var providers = GetProviders(_db);
+            var toRemove = providers.Where(x => x is GlassDataProvider).ToList();
+            toRemove.ForEach(x => providers.Remove(x));
+
+            var path = "/sitecore/templates/glasstemplates";
+            var rootFolder = _db.GetItem(path);
+            if (rootFolder != null)
+                rootFolder.Delete();
             _disabler.Dispose();
+           
+            _db = null;
+            _dataProvider = null;
+            _disabler = null;
+
         }
 
 
@@ -53,46 +62,27 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         public void GlassDataProvider_ReturnsGlassTemplateFolder()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            _dataProvider.Initialise(_db);
 
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
-
-            dataProvider.Initialise(db);
-
-            InjectionDataProvider(db, dataProvider);
-
-            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var path = "/sitecore/templates/glasstemplates";
 
-            db.Caches.DataCache.Clear();
-            db.Caches.ItemCache.Clear();
-            db.Caches.ItemPathsCache.Clear();
-            db.Caches.StandardValuesCache.Clear();
-            db.Caches.PathCache.Clear();
+            _db.Caches.DataCache.Clear();
+            _db.Caches.ItemCache.Clear();
+            _db.Caches.ItemPathsCache.Clear();
+            _db.Caches.StandardValuesCache.Clear();
+            _db.Caches.PathCache.Clear();
             //Act
-            var folder = db.GetItem(path);
-
-            var tempFolder = db.GetItem("/sitecore/templates");
-
-            foreach (Item item in tempFolder.Children)
-            {
-                Console.WriteLine(item.Name);
-            }
+            var folder = _db.GetItem(path);
 
             //Assert
             Assert.AreEqual(folder.Name, "GlassTemplates");
-
         }
 
         [Test]
         public void GlassDataProvider_ReturnsTemplate()
         {
             //Assign
-
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(Utilities.CreateStandardResolver());
-
             var loader = new SitecoreFluentConfigurationLoader();
 
             loader.Add<CodeFirstClass1>()
@@ -100,24 +90,15 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
                   .TemplateName("CodeFirstClass1")
                   .CodeFirst();
 
-            context.Load(loader);
+            _context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
 
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
-
-            dataProvider.Initialise(db);
-
-            var master = Sitecore.Configuration.Factory.GetDatabase("master");
-
-            InjectionDataProvider(master, dataProvider);
-
+            _dataProvider.Initialise(_db);
 
             //Act
-            var folder = db.GetItem(path);
+            var folder = _db.GetItem(path);
 
-
-            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass1");
 
@@ -127,10 +108,6 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         public void GlassDataProvider_TemplateInNamespace_ReturnsTemplate()
         {
             //Assign
-
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(Utilities.CreateStandardResolver());
-
             var loader = new SitecoreFluentConfigurationLoader();
 
             loader.Add<CodeFirstClass2>()
@@ -138,24 +115,16 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
                   .TemplateName("CodeFirstClass2")
                   .CodeFirst();
 
-            context.Load(loader);
+            _context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/GlassDataProvider/CodeFirstClass2";
 
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
-
-            dataProvider.Initialise(db);
-
-            var master = Sitecore.Configuration.Factory.GetDatabase("master");
-
-            InjectionDataProvider(master, dataProvider);
-
+            _dataProvider.Initialise(_db);
 
             //Act
-            var folder = db.GetItem(path);
-
-
+            var folder = _db.GetItem(path);
             string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
+
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass2");
 
@@ -165,10 +134,6 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         public void GlassDataProvider_ReturnsTemplateWithSectionAndField()
         {
             //Assign
-
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(Utilities.CreateStandardResolver());
-
             var loader = new SitecoreFluentConfigurationLoader();
 
             loader.Add<CodeFirstClass1>()
@@ -182,25 +147,14 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
                            .SectionName("TestSection")
                 );
 
-
-
-            context.Load(loader);
+            _context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
 
-
-
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
-
-            dataProvider.Initialise(db);
-
-            var master = Sitecore.Configuration.Factory.GetDatabase("master");
-
-            InjectionDataProvider(master, dataProvider);
-
+            _dataProvider.Initialise(_db);
 
             //Act
-            var folder = db.GetItem(path);
+            var folder = _db.GetItem(path);
             
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass1");
@@ -215,9 +169,6 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         public void GlassDataProvider_ReturnsTemplateWithSectionAndField_AllPropertiesSet()
         {
             //Assign
-
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(Utilities.CreateStandardResolver());
 
             var loader = new SitecoreFluentConfigurationLoader();
 
@@ -254,21 +205,14 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
                            .ValidationRegularExpression(validationRegEx)
                 );
 
-
-
-            context.Load(loader);
+            _context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
-            var master = Sitecore.Configuration.Factory.GetDatabase("master");
 
-            var dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
-
-            dataProvider.Initialise(db);
-
-            InjectionDataProvider(master, dataProvider);
+            _dataProvider.Initialise(_db);
 
             //Act
-            var folder = db.GetItem(path);
+            var folder = _db.GetItem(path);
 
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass1");
@@ -291,9 +235,6 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             Assert.AreEqual("1", field[TemplateFieldIDs.Unversioned]);
             Assert.AreEqual(validationErrorText, field[TemplateFieldIDs.ValidationText]);
             Assert.AreEqual(validationRegEx, field[TemplateFieldIDs.Validation]);
-
-
-
         }
 
         public class CodeFirstClass1
