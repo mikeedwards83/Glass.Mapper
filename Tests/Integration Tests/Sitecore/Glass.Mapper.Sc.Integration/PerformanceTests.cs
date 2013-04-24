@@ -37,10 +37,10 @@ namespace Glass.Mapper.Sc.Integration
         private Database _db;
         private SitecoreService _service;
         private bool _hasRun = false;
-        private Stopwatch _glassWatch;
-        private Stopwatch _rawWatch;
-        private double _glassTotal;
-        private double _rawTotal;
+        private Stopwatch _5LevelsWatch;
+        private Stopwatch _singleWatch;
+        private double _5levelsTotal;
+        private double _singleTotal;
 
         [SetUp]
         public void Setup()
@@ -52,8 +52,8 @@ namespace Glass.Mapper.Sc.Integration
             else
                 _hasRun = true;
 
-            _glassWatch = new Stopwatch();
-            _rawWatch= new Stopwatch();
+            _5LevelsWatch = new Stopwatch();
+            _singleWatch= new Stopwatch();
             
 
             _expected = "hello world";
@@ -89,31 +89,94 @@ namespace Glass.Mapper.Sc.Integration
 
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
+                _5LevelsWatch.Reset();
+                _singleWatch.Reset();
 
-                _rawWatch.Start();
+                _singleWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
-                _rawWatch.Stop();
-                _rawTotal = _rawWatch.ElapsedTicks;
+                _singleWatch.Stop();
+                _singleTotal = _singleWatch.ElapsedTicks;
 
-                _glassWatch.Start();
+                _5LevelsWatch.Start();
                 var glassItem = _service.GetItem<StubClass>(_id);
                 var value2 = glassItem.Field;
-                _glassWatch.Stop();
-                _glassTotal = _glassWatch.ElapsedTicks;
+                _5LevelsWatch.Stop();
+                _5levelsTotal = _5LevelsWatch.ElapsedTicks;
 
             }
 
-            double total = _glassTotal / _rawTotal;
-            Console.WriteLine("Preformance Test Count: {0} Ratio: {1}".Formatted(count, total));
+            double total = _5levelsTotal / _singleTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1}".Formatted(count, total));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        public void GetItems_InheritanceTest(
+            [Values(100, 200, 300)] int count
+            )
+        {
+            string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+
+            for (int i = 0; i < count; i++)
+            {
+                _5LevelsWatch.Reset();
+                _singleWatch.Reset();
+
+                _singleWatch.Start();
+
+                var glassItem1 = _service.GetItem<StubClassLevel5>(path);
+                var value1 = glassItem1.Field;
+
+                _singleWatch.Stop();
+                _singleTotal = _singleWatch.ElapsedTicks;
+
+                _5LevelsWatch.Start();
+                var glassItem2 = _service.GetItem<StubClassLevel1>(path);
+                var value2 = glassItem2.Field;
+                _5LevelsWatch.Stop();
+                _5levelsTotal = _5LevelsWatch.ElapsedTicks;
+
+            }
+
+            double total = _5levelsTotal / _singleTotal;
+            Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _singleTotal, _5levelsTotal, total));
         }
 
         #region Stubs
 
         [SitecoreType]
         public class StubClass
+        {
+            [SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field { get; set; }
+
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+        }
+
+        [SitecoreType]
+        public class StubClassLevel1 : StubClassLevel2
+        {
+            
+        }
+        [SitecoreType]
+        public class StubClassLevel2 : StubClassLevel3
+        {
+
+        }
+        [SitecoreType]
+        public class StubClassLevel3 : StubClassLevel4
+        {
+
+        }
+        [SitecoreType]
+        public class StubClassLevel4 : StubClassLevel5
+        {
+
+        }
+        [SitecoreType]
+        public class StubClassLevel5
         {
             [SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
             public virtual string Field { get; set; }

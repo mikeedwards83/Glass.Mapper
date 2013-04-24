@@ -15,15 +15,20 @@ using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.DataProviders;
 using Sitecore.Data.Items;
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.CodeFirst
 {
     [TestFixture]
     public class GlassDataProviderFixture
     {
+        private SecurityDisabler _disabler;
+
         [SetUp]
         public void Setup()
         {
+            _disabler = new SecurityDisabler();
+
             //remove provider from database
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
 
@@ -36,8 +41,11 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             if (rootFolder != null)
                 rootFolder.Delete();
 
-
-
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            _disabler.Dispose();
         }
 
 

@@ -11,5 +11,7 @@ namespace Glass.Mapper.Sites.Sc.Models.Misc
         public virtual Guid Id { get; set; }
       
         public virtual string Url { get; set; }
+
+        public virtual string Path { get; set; }
     }
 }

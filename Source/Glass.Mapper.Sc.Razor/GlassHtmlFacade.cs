@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Web.Ui;
 
 namespace Glass.Mapper.Sc.Razor
 {
@@ -8,15 +10,30 @@ namespace Glass.Mapper.Sc.Razor
     /// </summary>
     public class GlassHtmlFacade 
     {
-        private GlassHtml _glassHtml;
+        private readonly TextWriter _writer;
+        public IGlassHtml _glassHtml;
+
+        public ISitecoreContext SitecoreContext
+        {
+            get { return _glassHtml.SitecoreContext; }
+        }
+
+
+        public IGlassHtml GlassHtml
+        {
+            get { return _glassHtml; }
+            set { _glassHtml = value; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtmlFacade"/> class.
         /// </summary>
         /// <param name="service">The service.</param>
-        public GlassHtmlFacade(ISitecoreService service)
-            
+        public GlassHtmlFacade(ISitecoreContext context, TextWriter writer)
+
         {
-            _glassHtml = new GlassHtml(service);
+            _writer = writer;
+            _glassHtml = new GlassHtml(context);
         }
 
         /// <summary>
@@ -127,6 +144,15 @@ namespace Glass.Mapper.Sc.Razor
         public  RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes, string contents)
         {
             return _glassHtml.RenderLink(link, attributes, contents).RawString();
+        }
+
+        public GlassEditFrame EditFrame(string buttons, string dataSource = null)
+        {
+
+            var frame = new GlassEditFrame(buttons, _writer, dataSource);
+            frame.RenderFirstPart();
+            return frame;
+            
         }
     }
 }

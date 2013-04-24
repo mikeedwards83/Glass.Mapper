@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data.Items;
+using Sitecore.Text;
 using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc
@@ -33,19 +34,19 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// This class contains a set of helpers that make converting items mapped in Glass.Sitecore.Mapper to HTML
     /// </summary>
-    public class GlassHtml
+    public class GlassHtml : IGlassHtml
     {
-        private readonly ISitecoreService _service;
+        public  ISitecoreContext SitecoreContext { get; private set; }
         private readonly Context _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtml"/> class.
         /// </summary>
-        /// <param name="service">The service that will be used to load and save data</param>
-        public GlassHtml(ISitecoreService service)
+        /// <param name="sitecoreContext">The service that will be used to load and save data</param>
+        public GlassHtml(ISitecoreContext sitecoreContext)
         {
-            _service = service;
-            _context = service.GlassContext;
+            SitecoreContext = sitecoreContext;
+            _context = sitecoreContext.GlassContext;
         }
 
 
@@ -54,9 +55,9 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <returns>GlassEditFrame.</returns>
-        public GlassEditFrame EditFrame(string buttons)
+        public GlassEditFrame EditFrame(string buttons, string path = null)
         {
-            var frame = new GlassEditFrame(buttons, HttpContext.Current);
+            var frame = new GlassEditFrame(buttons, HttpContext.Current.Response.Output, path);
             frame.RenderFirstPart();
             return frame;
         }
@@ -163,6 +164,14 @@ namespace Glass.Mapper.Sc
             return RenderImage(image, null);
         }
 
+
+        public const string ImageWidth = "width";
+        public const string ImageHeight = "height";
+        public const string ImageAllowStretch = "as";
+        public const string ImageBackgroundColour = "bc";
+        public const string ImageScaleImage = "sc";
+        public const string ImageTagFormat = "<img src='{0}' {1} />";
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
@@ -175,17 +184,43 @@ namespace Glass.Mapper.Sc
 
             if (attributes == null) attributes = new NameValueCollection();
 
-            string format = "<img src='{0}' {1}/>";
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, "class", image.Class);
             AttributeCheck(attributes, "alt", image.Alt);
-            if (image.Height > 0)
-                AttributeCheck(attributes, "height", image.Height.ToString());
-            if (image.Width > 0)
-                AttributeCheck(attributes, "width", image.Width.ToString());
+            //if (image.Height > 0)
+            //    AttributeCheck(attributes, "height", image.Height.ToString());
+            //if (image.Width > 0)
+            //    AttributeCheck(attributes, "width", image.Width.ToString());
 
-            return format.Formatted(image.Src, Utilities.ConvertAttributes(attributes));
+
+            var builder = new UrlBuilder(image.Src);
+
+            //append to url values
+            if (attributes[ImageWidth].IsNotNullOrEmpty())
+                builder["w"] = attributes[ImageWidth];
+            if (attributes[ImageHeight].IsNotNullOrEmpty())
+                builder["h"] = attributes[ImageHeight];
+
+            if (attributes[ImageAllowStretch].IsNotNullOrEmpty())
+            {
+                builder[ImageAllowStretch] = attributes[ImageAllowStretch];
+                attributes.Remove(ImageAllowStretch);
+            }
+
+            if (attributes[ImageBackgroundColour].IsNotNullOrEmpty())
+            {
+                builder[ImageBackgroundColour] = attributes[ImageBackgroundColour];
+                attributes.Remove(ImageBackgroundColour);
+            }
+
+            if (attributes[ImageScaleImage].IsNotNullOrEmpty())
+            {
+                builder[ImageScaleImage] = attributes[ImageScaleImage];
+                attributes.Remove(ImageScaleImage);
+            }
+
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
         }
 
         /// <summary>
@@ -403,7 +438,7 @@ namespace Glass.Mapper.Sc
                 //    throw new MapperException("Page editting error. Type {0} can not be used for editing. Could not find property with SitecoreID attribute. See inner exception".Formatted(typeof(T).FullName), ex);
                 //}
 
-                var scClass = config.ResolveItem(finalTarget, _service.Database);
+                var scClass = config.ResolveItem(finalTarget, SitecoreContext.Database);
 
                 //lambda expression does not always return expected memberinfo when inheriting
                 //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
