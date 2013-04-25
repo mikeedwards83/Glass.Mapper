@@ -6,7 +6,7 @@
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
-    <projectUrl>http://mikeedwards83.github.com/Glass.Mapper/</projectUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
@@ -14,7 +14,7 @@
 	</description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
-    <tags>Glass Mapper Sitecore Razor</tags>
+    <tags>Glass Mapper Sitecore Razor Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper.Sc" version="0.0.0" />
