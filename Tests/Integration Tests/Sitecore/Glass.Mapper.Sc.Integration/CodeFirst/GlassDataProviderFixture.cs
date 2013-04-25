@@ -8,7 +8,6 @@ using Glass.Mapper.Sc.CodeFirst;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
-using Glass.Mapper.Sc.Integration.CodeFirst.Templates.GlassDataProvider;
 using NUnit.Framework;
 using Sitecore;
 using Sitecore.Collections;
@@ -110,14 +109,40 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
             var loader = new SitecoreFluentConfigurationLoader();
 
-            loader.Add<CodeFirstClass2>()
+            loader.Add<Templates.Level1.CodeFirstClass2>()
                   .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
                   .TemplateName("CodeFirstClass2")
                   .CodeFirst();
 
             _context.Load(loader);
 
-            var path = "/sitecore/templates/glasstemplates/GlassDataProvider/CodeFirstClass2";
+            var path = "/sitecore/templates/glasstemplates/Level1/CodeFirstClass2";
+
+            _dataProvider.Initialise(_db);
+
+            //Act
+            var folder = _db.GetItem(path);
+            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
+
+            //Assert
+            Assert.AreEqual(folder.Name, "CodeFirstClass2");
+
+        }
+
+        [Test]
+        public void GlassDataProvider_TemplateInNamespaceTwoDeep_ReturnsTemplate()
+        {
+            //Assign
+            var loader = new SitecoreFluentConfigurationLoader();
+
+            loader.Add<Templates.Level1.Level2.CodeFirstClass2>()
+                  .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
+                  .TemplateName("CodeFirstClass2")
+                  .CodeFirst();
+
+            _context.Load(loader);
+
+            var path = "/sitecore/templates/glasstemplates/Level1/Level2/CodeFirstClass2";
 
             _dataProvider.Initialise(_db);
 
@@ -261,9 +286,14 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
     
 }
 
-    namespace Templates.GlassDataProvider
+    namespace Templates.Level1
     {
         public class CodeFirstClass2{}
+    }
+
+    namespace Templates.Level1.Level2
+    {
+        public class CodeFirstClass2 { }
     }
 }
 
