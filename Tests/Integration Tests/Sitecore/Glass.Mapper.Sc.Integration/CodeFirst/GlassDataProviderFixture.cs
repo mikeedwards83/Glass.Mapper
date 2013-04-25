@@ -135,7 +135,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
             var loader = new SitecoreFluentConfigurationLoader();
 
-            loader.Add<Templates.Level1.Level2.CodeFirstClass2>()
+            loader.Add<Templates.Level1.Level2.CodeFirstClass3>()
                   .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
                   .TemplateName("CodeFirstClass2")
                   .CodeFirst();
@@ -152,6 +152,39 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass2");
+
+        }
+
+        [Test]
+        public void GlassDataProvider_TemplateInNamespaceTwoDeep_ReturnsTemplateTwoTemplates()
+        {
+            //Assign
+            var loader = new SitecoreFluentConfigurationLoader();
+
+            loader.Add<Templates.Level1.Level2.CodeFirstClass3>()
+                  .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
+                  .TemplateName("CodeFirstClass3")
+                  .CodeFirst();
+
+            loader.Add<Templates.Level1.Level2.CodeFirstClass4>()
+                 .TemplateId("{42B45E08-20A4-434B-8AC7-ED8ABCE5B3BE}")
+                 .TemplateName("CodeFirstClass4")
+                 .CodeFirst();
+
+            _context.Load(loader);
+
+            var path1 = "/sitecore/templates/glasstemplates/Level1/Level2/CodeFirstClass3";
+            var path2 = "/sitecore/templates/glasstemplates/Level1/Level2/CodeFirstClass4";
+
+            _dataProvider.Initialise(_db);
+
+            //Act
+            var template1 = _db.GetItem(path1);
+            var template2 = _db.GetItem(path2);
+
+            //Assert
+            Assert.AreEqual(template1.Name, "CodeFirstClass3");
+            Assert.AreEqual(template2.Name, "CodeFirstClass4");
 
         }
 
@@ -293,7 +326,8 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
     namespace Templates.Level1.Level2
     {
-        public class CodeFirstClass2 { }
+        public class CodeFirstClass3 { }
+        public class CodeFirstClass4 { }
     }
 }
 
