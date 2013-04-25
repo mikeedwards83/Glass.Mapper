@@ -236,7 +236,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
                 template.Configure(SitecoreContext, ViewData, this);
 
-                output.Write( template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
+                output.Write(template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
 
                 Profiler.Start("Razor engine {0}".Formatted(this.View));
 
@@ -247,14 +247,29 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                 ex.Errors.ForEach(x =>
                                       {
                                           errors.AppendLine("File: {0}".Formatted(View));
-                                          errors.AppendLine( x.ErrorText);
+                                          errors.AppendLine(x.ErrorText);
                                       });
-                 
-                 
-                throw new RazorException(errors.ToString());
-                 
-                 
+
+
+             //   throw new RazorException(errors.ToString());
+
+                WriteException(output, ex);
             }
+            catch (Exception ex)
+            {
+                WriteException(output, ex);
+            }
+        }
+
+        private void WriteException(HtmlTextWriter output, Exception ex)
+        {
+            output.Write("<h1>Glass Razor Rendering Exception</h1>");
+            output.Write("<p>View: {0}</p>".Formatted(this.View));
+            output.Write("<p>{0}</p>".Formatted(ex.Message));
+            output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
+        
+            Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(this.View), ex, this);
+
         }
 
         /// <summary>
