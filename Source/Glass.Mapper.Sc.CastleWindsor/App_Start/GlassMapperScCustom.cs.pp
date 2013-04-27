@@ -21,7 +21,7 @@ namespace $rootnamespace$.App_Start
 			return new IConfigurationLoader[]{attributes};
 		}
 		public static void PostLoad(){
-			//Comment this code in to activate CodeFist
+			//Remove the comments to activate CodeFist
 			/* CODE FIRST START
             var dbs = Sitecore.Configuration.Factory.GetDatabases();
             foreach (var db in dbs)
