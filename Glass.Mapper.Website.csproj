@@ -66,6 +66,7 @@
     <Content Include="docs\releases\Glass.Mapper.Sc.Razor.CastleWindsor.html" />
     <Content Include="docs\releases\Glass.Mapper.Sc.Razor.html" />
     <Content Include="docs\releases\index.html" />
+    <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
     <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
