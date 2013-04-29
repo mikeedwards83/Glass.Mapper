@@ -76,7 +76,7 @@ namespace Glass.Mapper
         /// <returns>true if this property can be read; otherwise, false.</returns>
         public override bool CanRead
         {
-            get { throw new NotImplementedException(); }
+			get { return _declaringType.GetProperty(_name).CanRead; }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Glass.Mapper
         /// <returns>true if this property can be written to; otherwise, false.</returns>
         public override bool CanWrite
         {
-            get { throw new NotImplementedException(); }
+			get { return _declaringType.GetProperty(_name).CanWrite; }
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NotImplementedException"></exception>
         public override MethodInfo GetGetMethod(bool nonPublic)
         {
-            throw new NotImplementedException();
+			return _declaringType.GetProperty(_name).GetGetMethod(nonPublic);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NotImplementedException"></exception>
         public override MethodInfo GetSetMethod(bool nonPublic)
         {
-            throw new NotImplementedException();
+	        return _declaringType.GetProperty(_name).GetSetMethod(nonPublic);
         }
 
         /// <summary>
