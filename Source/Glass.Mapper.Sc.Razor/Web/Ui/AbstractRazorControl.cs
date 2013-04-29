@@ -20,6 +20,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <typeparam name="T"></typeparam>
     public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
     {
+        IPerformanceProfiler _profiler = new SitecoreProfiler();
+        public IPerformanceProfiler Profiler
+        {
+            get{
+                return _profiler;
+            }
+            set
+            {
+                _profiler = value;
+            }
+        }
 
       //  private static volatile FileSystemWatcher _fileWatcher = null;
         private static readonly object _fileWatcherKey = new object();
@@ -31,13 +42,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private static volatile FileSystemWatcher _fileSystemWatcher;
 
         private ISitecoreContext _sitecoreContext;
-
-
-        /// <summary>
-        /// Gets or sets the profiler.
-        /// </summary>
-        /// <value>The profiler.</value>
-        public IPerformanceProfiler Profiler { get; set; }
 
         /// <summary>
         /// A list of placeholders to render on the page.
@@ -93,12 +97,23 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get
             {
+                
                 if (_sitecoreContext == null)
                 {
                     if (ContextName.IsNotNullOrEmpty())
-                        _sitecoreContext = new SitecoreContext(ContextName);
+                    {
+                        _sitecoreContext = new SitecoreContext(ContextName)
+                            {
+                                Profiler = Profiler
+                            };
+                    }
                     else
-                        _sitecoreContext = new SitecoreContext();
+                    {
+                        _sitecoreContext = new SitecoreContext()
+                        {
+                            Profiler = Profiler
+                        };
+                    }
                 }
                 return _sitecoreContext;
             }
@@ -140,8 +155,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// </summary>
         public AbstractRazorControl()
         {
-            Profiler = new SitecoreProfiler();
-
             if (_viewCache == null)
             {
                 lock (_key)
@@ -224,7 +237,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>When developing custom server controls, you can override this method to generate content for an ASP.NET page.</remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
+            Profiler.Start("Get Model");
+            
             Model = GetModel();
+            
+            Profiler.End("Get Model");
 
             var viewContents = GetRazorView(View);
 
@@ -232,13 +249,26 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             {
                 Profiler.Start("Razor engine {0}".Formatted(this.View));
 
-                var template = RazorEngine.Razor.CreateTemplate(viewContents, Model) as TemplateBase<T>;
+                Profiler.Start("Create Template");
+
+                var template = RazorEngine.Razor.GetTemplate<T>(viewContents, Model, View) as TemplateBase<T>;
+            //    var template = RazorEngine.Razor.CreateTemplate<T>(viewContents, Model) as TemplateBase<T>;
+              
+                Profiler.End("Create Template");
+
+                Profiler.Start("Configure Template");
 
                 template.Configure(SitecoreContext, ViewData, this);
 
+                Profiler.End("Configure Template");
+
+                Profiler.Start("Run Template");
+
                 output.Write(template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
 
-                Profiler.Start("Razor engine {0}".Formatted(this.View));
+                Profiler.End("Run Template");
+
+                Profiler.End("Razor engine {0}".Formatted(this.View));
 
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)

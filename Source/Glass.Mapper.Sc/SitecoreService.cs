@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
@@ -36,6 +37,19 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreService : AbstractService, ISitecoreService
     {
+        IPerformanceProfiler _profiler = new NullProfiler();
+        public IPerformanceProfiler Profiler
+        {
+            get
+            {
+                return _profiler;
+            }
+            set
+            {
+                _profiler = value;
+            }
+        }
+
         /// <summary>
         /// Gets the database.
         /// </summary>
