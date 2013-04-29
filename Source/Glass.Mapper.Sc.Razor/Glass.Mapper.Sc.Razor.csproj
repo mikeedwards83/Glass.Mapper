@@ -76,6 +76,7 @@
     <Compile Include="Pipelines\GetRenderer\GetBehindViewRendering.cs" />
     <Compile Include="Pipelines\GetRenderer\GetDynamicViewRendering.cs" />
     <Compile Include="Pipelines\GetRenderer\GetTypedViewRendering.cs" />
+    <Compile Include="Pipelines\Initialise\CacheWarmer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawString.cs" />
     <Compile Include="RazorException.cs" />
@@ -90,6 +91,8 @@
     <Compile Include="Shell\Wizards\BehindWizard.cs" />
     <Compile Include="Shell\Wizards\DynamicWizard.cs" />
     <Compile Include="Shell\Wizards\TypedWizard.cs" />
+    <Compile Include="SitecoreIds.cs" />
+    <Compile Include="ViewManager.cs" />
     <Compile Include="Web\Mvc\AbstractViewRendering.cs" />
     <Compile Include="Web\Mvc\BehindViewRenderer.cs" />
     <Compile Include="Web\Mvc\DynamicViewRenderer.cs" />
