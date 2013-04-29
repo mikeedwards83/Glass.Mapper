@@ -143,7 +143,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var type = Utilities.GetGenericArgument(property.PropertyType);
 
             var configCopy = scConfig.Copy();
-            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name);
+            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name, property.DeclaringType);
 
             Mapper =
                 args.DataMappers.FirstOrDefault(
