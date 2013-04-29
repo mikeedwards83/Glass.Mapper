@@ -20,9 +20,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using Glass.Mapper.Configuration;
 using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
 
@@ -53,7 +55,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Act
             var attr = new StubFieldAttribute();
             var config = new FieldConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -70,7 +72,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Act
             var attr = new StubFieldAttribute();
             var config = new FieldConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
          //   attr.Name = "test field name";
 
@@ -89,8 +91,8 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Act
             var attr = new StubFieldAttribute();
             var config = new FieldConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
-
+			var propertyInfo = typeof(StubItem).GetProperty("X");
+			
             attr.ReadOnly = true;
 
             //Act
@@ -113,6 +115,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
                 throw new NotImplementedException();
             }
         }
+
+		public struct StubItem
+		{
+			public object X { get; set; }
+		}
 
         #endregion
     }

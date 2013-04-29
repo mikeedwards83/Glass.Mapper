@@ -58,7 +58,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -76,7 +76,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>), typeof(object));
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped), typeof(object));
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -112,7 +112,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -130,7 +130,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreQueryMapper(null);
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -152,7 +152,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "../Results/DoesNotExist/*";
             config.IsRelative = true;
 
@@ -182,7 +182,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "../Results/*";
             config.IsRelative = true;
 
@@ -215,7 +215,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/*";
             config.IsRelative = false;
 
@@ -248,7 +248,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             config.Query = "../Results/Result1";
             config.IsRelative = true;
 
@@ -278,7 +278,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             config.Query = "/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/Result1";
             config.IsRelative = false;
 
@@ -308,7 +308,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "../Results/*";
             config.IsRelative = true;
             config.UseQueryContext = true;
@@ -342,7 +342,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Results/*";
             config.IsRelative = false;
             config.UseQueryContext = true;
@@ -376,7 +376,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             //Assign
             var config = new SitecoreQueryConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Query = "{path}/../Results/*";
             config.IsRelative = false;
             config.UseQueryContext = true;

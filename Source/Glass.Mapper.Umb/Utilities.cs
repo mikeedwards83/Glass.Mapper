@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Glass.Mapper.Umb
@@ -8,6 +10,10 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public static class Utilities
     {
+		private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
+			new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
+
+
         /// <summary>
         /// Creates the type of the generic.
         /// </summary>
@@ -20,9 +26,9 @@ namespace Glass.Mapper.Umb
             Type genericType = type.MakeGenericType(arguments);
             object obj;
             if (parameters != null && parameters.Any())
-                obj = Activator.CreateInstance(genericType, parameters);
+				obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
             else
-                obj = Activator.CreateInstance(genericType);
+				obj = GetActivator(genericType)();
             return obj;
         }
 
@@ -43,5 +49,11 @@ namespace Glass.Mapper.Umb
             if (!types.Any()) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
             return types[0];
         }
+
+		private static ActivationManager.CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
+		{
+			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
+			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
+		}
     }
 }

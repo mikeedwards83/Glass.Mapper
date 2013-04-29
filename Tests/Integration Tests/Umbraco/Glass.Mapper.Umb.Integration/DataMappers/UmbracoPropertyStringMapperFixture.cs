@@ -88,7 +88,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             //Assign
             var mapper = new UmbracoPropertyStringMapper();
             var config = new UmbracoPropertyConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(String));
+			config.PropertyInfo = new FakePropertyInfo(typeof(String), typeof(object));
 
             //Act
             var result = mapper.CanHandle(config, null);
