@@ -40,10 +40,10 @@ namespace Glass.Mapper
 	    /// </summary>
 	    /// <param name="propertyType">Type of the property.</param>
 	    /// <param name="declaringType">Type that declares this property member</param>
-	    public FakePropertyInfo(Type propertyType, Type declaringType)
+        public FakePropertyInfo(Type propertyType, Type declaringType)
         {
             _propertyType = propertyType;
-		    _declaringType = declaringType;
+            _declaringType = declaringType;
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="FakePropertyInfo"/> class.
@@ -52,8 +52,9 @@ namespace Glass.Mapper
 		/// <param name="name">The name.</param>
 		/// <param name="declaringType">Type that declares this property member</param>
         public FakePropertyInfo(Type propertyType, string name, Type declaringType)
-            : this(propertyType, declaringType)
         {
+            _propertyType = propertyType;
+             _declaringType = declaringType;
             _name = name;
         }
 

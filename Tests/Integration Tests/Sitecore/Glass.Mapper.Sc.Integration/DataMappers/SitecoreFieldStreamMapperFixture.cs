@@ -105,7 +105,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreFieldStreamMapper();
             var config = new SitecoreFieldConfiguration();
-			config.PropertyInfo = new FakePropertyInfo(typeof(Stream), typeof(object));
+
+            config.PropertyInfo = typeof (StubClass).GetProperty("Stream");
             
             //Act
             var result = mapper.CanHandle(config, null);
@@ -114,6 +115,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsTrue(result);
         }
 
+        #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public Stream Stream { get; set; }
+        }
         #endregion
     }
 }

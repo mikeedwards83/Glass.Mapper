@@ -136,7 +136,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             var mapper = new SitecoreFieldStringMapper();
             var config = new SitecoreFieldConfiguration();
-			config.PropertyInfo = new FakePropertyInfo(typeof(string), typeof(object));
+            config.PropertyInfo = typeof(StubClass).GetProperty("String");
+
 
             Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
 
@@ -198,7 +199,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreFieldStringMapper();
             var config = new SitecoreFieldConfiguration();
-			config.PropertyInfo = new FakePropertyInfo(typeof(String), typeof(object));
+            config.PropertyInfo = typeof (StubClass).GetProperty("String");
 
             //Act
             var result = mapper.CanHandle(config, null);
@@ -207,6 +208,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsTrue(result);
         }
 
+        #endregion
+
+        #region Stub
+
+        public class StubClass
+        {
+            public string String { get; set; }
+        }
         #endregion
     }
 }
