@@ -37,10 +37,10 @@ namespace Glass.Mapper.Sc.Integration
         private Database _db;
         private SitecoreService _service;
         private bool _hasRun = false;
-        private Stopwatch _5LevelsWatch;
-        private Stopwatch _singleWatch;
-        private double _5levelsTotal;
-        private double _singleTotal;
+        private Stopwatch _glassWatch;
+        private Stopwatch _rawWatch;
+        private double _glassTotal;
+        private double _rawTotal;
 
         [SetUp]
         public void Setup()
@@ -52,8 +52,8 @@ namespace Glass.Mapper.Sc.Integration
             else
                 _hasRun = true;
 
-            _5LevelsWatch = new Stopwatch();
-            _singleWatch= new Stopwatch();
+            _glassWatch = new Stopwatch();
+            _rawWatch= new Stopwatch();
             
 
             _expected = "hello world";
@@ -89,25 +89,56 @@ namespace Glass.Mapper.Sc.Integration
 
             for (int i = 0; i < count; i++)
             {
-                _5LevelsWatch.Reset();
-                _singleWatch.Reset();
+                _glassWatch.Reset();
+                _rawWatch.Reset();
 
-                _singleWatch.Start();
+                _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
-                _singleWatch.Stop();
-                _singleTotal = _singleWatch.ElapsedTicks;
+                _rawWatch.Stop();
+                _rawTotal = _rawWatch.ElapsedTicks;
 
-                _5LevelsWatch.Start();
+                _glassWatch.Start();
                 var glassItem = _service.GetItem<StubClass>(_id);
                 var value2 = glassItem.Field;
-                _5LevelsWatch.Stop();
-                _5levelsTotal = _5LevelsWatch.ElapsedTicks;
+                _glassWatch.Stop();
+                _glassTotal = _glassWatch.ElapsedTicks;
 
             }
 
-            double total = _5levelsTotal / _singleTotal;
-            Console.WriteLine("Performance Test Count: {0} Ratio: {1}".Formatted(count, total));
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void GetItems_LotsOfProperties(
+            [Values(1000, 10000, 50000)] int count
+            )
+        {
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Reset();
+                _rawWatch.Reset();
+
+                _rawWatch.Start();
+                var rawItem = _db.GetItem(new ID(_id));
+                var value1 = rawItem["Field"];
+                _rawWatch.Stop();
+                _rawTotal = _rawWatch.ElapsedTicks;
+
+                _glassWatch.Start();
+                var glassItem = _service.GetItem<StubClassWithLotsOfProperties>(_id);
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+                _glassTotal = _glassWatch.ElapsedTicks;
+
+            }
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
         }
 
         [Test]
@@ -120,30 +151,100 @@ namespace Glass.Mapper.Sc.Integration
 
             for (int i = 0; i < count; i++)
             {
-                _5LevelsWatch.Reset();
-                _singleWatch.Reset();
+                _glassWatch.Reset();
+                _rawWatch.Reset();
 
-                _singleWatch.Start();
+                _rawWatch.Start();
 
                 var glassItem1 = _service.GetItem<StubClassLevel5>(path);
                 var value1 = glassItem1.Field;
 
-                _singleWatch.Stop();
-                _singleTotal = _singleWatch.ElapsedTicks;
+                _rawWatch.Stop();
+                _rawTotal = _rawWatch.ElapsedTicks;
 
-                _5LevelsWatch.Start();
+                _glassWatch.Start();
                 var glassItem2 = _service.GetItem<StubClassLevel1>(path);
                 var value2 = glassItem2.Field;
-                _5LevelsWatch.Stop();
-                _5levelsTotal = _5LevelsWatch.ElapsedTicks;
+                _glassWatch.Stop();
+                _glassTotal = _glassWatch.ElapsedTicks;
 
             }
 
-            double total = _5levelsTotal / _singleTotal;
-            Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _singleTotal, _5levelsTotal, total));
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
         }
 
         #region Stubs
+
+
+        [SitecoreType]
+        public class StubClassWithLotsOfProperties
+        {
+            [SitecoreField("Field",Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field1 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field2 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field3 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field4 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field5 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field6 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field7 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field8 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field9 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field10 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field11 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field12 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field13 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field14 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field15 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field16 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field17 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field18 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field19 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field20 { get; set; }
+
+
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+        }
+
 
         [SitecoreType]
         public class StubClass
