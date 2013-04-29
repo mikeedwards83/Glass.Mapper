@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -77,7 +77,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped), typeof(object));
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -95,7 +95,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act

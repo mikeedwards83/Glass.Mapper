@@ -57,9 +57,8 @@ namespace Glass.Mapper
         {
             var result  = MapToProperty(mappingContext);
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
             if (result != null)
-               Configuration.PropertyInfo.SetValue(mappingContext.Object, result, null);
+				Configuration.PropertySetter(mappingContext.Object, result);
         }
 
         /// <summary>
@@ -70,8 +69,7 @@ namespace Glass.Mapper
         {
             if (ReadOnly) return;
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
-            mappingContext.PropertyValue = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+			mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
             MapToCms(mappingContext);
         }
 
