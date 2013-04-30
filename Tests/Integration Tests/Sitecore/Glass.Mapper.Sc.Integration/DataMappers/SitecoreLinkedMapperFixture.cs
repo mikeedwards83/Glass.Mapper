@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             var mapper = new SitecoreLinkedMapper();
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -79,7 +79,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubNotMapped>), typeof(object));
             var mapper = new SitecoreLinkedMapper();
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -98,7 +98,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(List<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(List<StubMapped>), typeof(object));
             var mapper = new SitecoreLinkedMapper();
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -117,7 +117,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             var mapper = new SitecoreLinkedMapper();
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -136,7 +136,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+			config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped), typeof(object));
             var mapper = new SitecoreLinkedMapper();
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -169,7 +169,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Option = SitecoreLinkedOptions.Referrers;
             
             var context = Context.Create(Utilities.CreateStandardResolver());
@@ -202,7 +202,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 var template = Database.GetItem("/sitecore/templates/Tests/DataMappers/DataMappersSingleField");
          
             var config = new SitecoreLinkedConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+			config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
             config.Option = SitecoreLinkedOptions.References;
 
             var context = Context.Create(Utilities.CreateStandardResolver());
@@ -247,7 +247,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                
 
                 var config = new SitecoreLinkedConfiguration();
-                config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>));
+				config.PropertyInfo = new FakePropertyInfo(typeof(IEnumerable<StubMapped>), typeof(object));
                 config.Option = SitecoreLinkedOptions.All;
 
                 var context = Context.Create(Utilities.CreateStandardResolver());

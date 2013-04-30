@@ -105,7 +105,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreFieldStreamMapper();
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(Stream));
+			config.PropertyInfo = new FakePropertyInfo(typeof(Stream), typeof(object));
             
             //Act
             var result = mapper.CanHandle(config, null);

@@ -51,6 +51,7 @@
     <Compile Include="AbstractDataMappingContext.cs" />
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
+    <Compile Include="ActivationManager.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />

@@ -31,24 +31,28 @@ namespace Glass.Mapper
     {
 
         Type _propertyType;
+	    Type _declaringType;
 
         string _name;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FakePropertyInfo"/> class.
-        /// </summary>
-        /// <param name="propertyType">Type of the property.</param>
-        public FakePropertyInfo(Type propertyType)
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="FakePropertyInfo"/> class.
+	    /// </summary>
+	    /// <param name="propertyType">Type of the property.</param>
+	    /// <param name="declaringType">Type that declares this property member</param>
+	    public FakePropertyInfo(Type propertyType, Type declaringType)
         {
             _propertyType = propertyType;
+		    _declaringType = declaringType;
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="FakePropertyInfo"/> class.
         /// </summary>
         /// <param name="propertyType">Type of the property.</param>
-        /// <param name="name">The name.</param>
-        public FakePropertyInfo(Type propertyType, string name)
-            : this(propertyType)
+		/// <param name="name">The name.</param>
+		/// <param name="declaringType">Type that declares this property member</param>
+        public FakePropertyInfo(Type propertyType, string name, Type declaringType)
+            : this(propertyType, declaringType)
         {
             _name = name;
         }
@@ -72,7 +76,7 @@ namespace Glass.Mapper
         /// <returns>true if this property can be read; otherwise, false.</returns>
         public override bool CanRead
         {
-            get { throw new NotImplementedException(); }
+			get { return _declaringType.GetProperty(_name).CanRead; }
         }
 
         /// <summary>
@@ -83,7 +87,7 @@ namespace Glass.Mapper
         /// <returns>true if this property can be written to; otherwise, false.</returns>
         public override bool CanWrite
         {
-            get { throw new NotImplementedException(); }
+			get { return _declaringType.GetProperty(_name).CanWrite; }
         }
 
         /// <summary>
@@ -105,7 +109,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NotImplementedException"></exception>
         public override MethodInfo GetGetMethod(bool nonPublic)
         {
-            throw new NotImplementedException();
+			return _declaringType.GetProperty(_name).GetGetMethod(nonPublic);
         }
 
         /// <summary>
@@ -126,7 +130,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NotImplementedException"></exception>
         public override MethodInfo GetSetMethod(bool nonPublic)
         {
-            throw new NotImplementedException();
+	        return _declaringType.GetProperty(_name).GetSetMethod(nonPublic);
         }
 
         /// <summary>
@@ -177,7 +181,7 @@ namespace Glass.Mapper
         /// <returns>The Type object for the class that declares this member.</returns>
         public override Type DeclaringType
         {
-            get { throw new NotImplementedException(); }
+            get { return _declaringType; }
         }
 
         /// <summary>
