@@ -1,7 +1,14 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.IO;
+using System.Web.UI;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Razor.RenderingTypes;
+using Glass.Mapper.Sc.Razor.Web.Ui;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Data.Fields;
+using Sitecore.Diagnostics;
+using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Razor
 {
@@ -10,7 +17,7 @@ namespace Glass.Mapper.Sc.Razor
     /// </summary>
     public class GlassHtmlFacade 
     {
-        private readonly TextWriter _writer;
+        private readonly HtmlTextWriter _writer;
         public IGlassHtml _glassHtml;
 
         public ISitecoreContext SitecoreContext
@@ -29,7 +36,7 @@ namespace Glass.Mapper.Sc.Razor
         /// Initializes a new instance of the <see cref="GlassHtmlFacade"/> class.
         /// </summary>
         /// <param name="service">The service.</param>
-        public GlassHtmlFacade(ISitecoreContext context, TextWriter writer)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer)
 
         {
             _writer = writer;
@@ -153,6 +160,30 @@ namespace Glass.Mapper.Sc.Razor
             frame.RenderFirstPart();
             return frame;
             
+        }
+
+        public void RenderPartial<T>(string path, T model)
+        {
+            var item = Sitecore.Context.Database.GetItem(path);
+
+            Assert.IsNotNull(item, "Could not find rendering item {0}".Formatted(path));
+
+            var renderType = new PartialRazorRenderingType();
+
+            NameValueCollection parameters = new NameValueCollection();
+
+            foreach (Field field in item.Fields)
+            {
+                parameters.Add(field.Name, field.Value);
+            }
+
+            var control = renderType.GetControl(parameters, false) as PartialControl<T>;
+
+            control.SetModel(model);
+
+            var webControl = control as WebControl;
+            webControl.RenderControl(_writer);
+
         }
     }
 }

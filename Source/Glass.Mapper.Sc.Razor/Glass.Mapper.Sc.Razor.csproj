@@ -82,6 +82,7 @@
     <Compile Include="RazorException.cs" />
     <Compile Include="RenderingTypes\AbstractCachingRenderingType.cs" />
     <Compile Include="RenderingTypes\BehindRazorRenderingType.cs" />
+    <Compile Include="RenderingTypes\PartialRazorRenderingType.cs" />
     <Compile Include="RenderingTypes\DynamicRazorRenderingType.cs" />
     <Compile Include="RenderingTypes\TypedRazorRenderingType.cs" />
     <Compile Include="Shell\AbtractFileCreateWizard.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Web\Ui\DynamicControl.cs" />
     <Compile Include="Web\Ui\DynamicTemplate.cs" />
     <Compile Include="Web\Ui\GlassRazorControl.cs" />
+    <Compile Include="Web\Ui\PartialControl.cs" />
     <Compile Include="Web\Ui\TemplateBase.cs" />
     <Compile Include="Web\Ui\TemplateModel.cs" />
     <Compile Include="Web\Ui\TypedControl.cs" />

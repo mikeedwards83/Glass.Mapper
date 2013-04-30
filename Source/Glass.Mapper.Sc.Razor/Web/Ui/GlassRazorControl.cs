@@ -35,8 +35,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
 
             NameValueCollection parameters = new NameValueCollection();
-
-
+            
             foreach (Field field in item.Fields)
             {
                 parameters.Add(field.Name, field.Value);
