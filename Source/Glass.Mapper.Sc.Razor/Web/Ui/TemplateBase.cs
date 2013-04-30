@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             get
             {
                 if (_glassHtml == null)
-                    _glassHtml = new GlassHtmlFacade(SitecoreContext, this.CurrentWriter);
+                    _glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(this.CurrentWriter));
 
                 return _glassHtml;
             }
