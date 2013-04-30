@@ -61,7 +61,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubChildrenAttribute();
             var config = new ChildrenConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             attr.InferType = true;
 
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubChildrenAttribute();
             var config = new ChildrenConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -97,7 +97,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubChildrenAttribute();
             var config = new ChildrenConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             attr.IsLazy = false;
 
@@ -122,6 +122,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
                 throw new NotImplementedException();
             }
         }
+
+		public class StubItem
+		{
+			public object X { get; set; }
+		}
 
         #endregion
     }

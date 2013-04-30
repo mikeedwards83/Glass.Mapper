@@ -45,8 +45,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubInfoAttribute();
             var config = new InfoConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
-            
+            var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -66,6 +65,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
                 throw new NotImplementedException();
             }
         }
+
+		public class StubItem
+		{
+			public object X { get; set; }
+		}
 
         #endregion
     }

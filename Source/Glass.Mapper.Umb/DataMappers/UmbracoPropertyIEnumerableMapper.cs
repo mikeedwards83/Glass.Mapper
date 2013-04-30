@@ -134,7 +134,7 @@ namespace Glass.Mapper.Umb.DataMappers
             var type = Utilities.GetGenericArgument(property.PropertyType);
 
             var configCopy = config.Copy();
-            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name);
+            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name, property.DeclaringType);
 
             Mapper =
                 args.DataMappers.FirstOrDefault(

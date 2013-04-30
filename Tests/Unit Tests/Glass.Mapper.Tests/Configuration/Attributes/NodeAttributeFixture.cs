@@ -62,7 +62,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -79,7 +79,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
             var path = "some path";
             
             attr.Path = path;
@@ -99,7 +99,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubNodeAttribute();
             var config = new NodeConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
             var id = "some id";
 
             attr.Id = id;
@@ -131,6 +131,11 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
                 throw new NotImplementedException();
             }
         }
+
+		public class StubItem
+		{
+			public object X { get; set; }
+		}
 
         #endregion 
     }
