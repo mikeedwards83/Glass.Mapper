@@ -59,6 +59,7 @@ namespace Glass.Mapper.Sc.Tests
         }
 
         [Test]
+        [Sequential]
         public void GetPropertyFuncAndSetPropertyAction_ReadWriteUsingActionAndFunction_ReturnsString(
             [Values(
                 "GetPublicSetPublic",
@@ -67,7 +68,15 @@ namespace Glass.Mapper.Sc.Tests
                 "GetPublicSetProtected",
                 "GetPublicSetPrivate",
                 "GetPublicNoSet"
-                )] string propertyName
+                )] string propertyName,
+            [Values(
+                "some value",
+                "some value",
+                "some value",
+                "some value",
+                "some value",
+                null
+                )] string expected
         )
         {
             //Assign
@@ -75,7 +84,6 @@ namespace Glass.Mapper.Sc.Tests
 
             var getFunc = Utilities.GetPropertyFunc(info);
             var setActi = Utilities.SetPropertyAction(info);
-            var expected = "some value";
             var stub = new StubClass();
 
             //Act
