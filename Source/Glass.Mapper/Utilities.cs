@@ -226,26 +226,38 @@ namespace Glass.Mapper
 			PropertyInfo propertyInfo = property;
 			Type type = property.DeclaringType;
 
-			if (type == null)
-			{
-				throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
-			}
+            if (propertyInfo.CanWrite)
+            {
+                if (type == null)
+                {
+                    throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+                }
 
-			Type propertyType = propertyInfo.PropertyType;
+                Type propertyType = propertyInfo.PropertyType;
 
-			ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
-			ParameterExpression valueParameter = Expression.Parameter(typeof(object), "value");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
+                ParameterExpression valueParameter = Expression.Parameter(typeof(object), "value");
 
-			Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
-				Expression.Assign(
-					Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
-					Expression.Convert(valueParameter, propertyType)),
-				instanceParameter,
-				valueParameter
-				);
+                Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
+                    Expression.Assign(
+                        Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
+                        Expression.Convert(valueParameter, propertyType)),
+                    instanceParameter,
+                    valueParameter
+                    );
 
-			return lambda.Compile();
-		}
+                return lambda.Compile();
+            }
+            else
+            {
+
+
+                return (object instance, object value) =>
+                {
+                    propertyInfo.SetValue(instance, value, null);
+                };
+            }
+        }
 
 	    /// <summary>
 	    /// Creates a function delegate that can be used to get a property's value
