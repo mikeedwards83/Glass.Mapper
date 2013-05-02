@@ -60,6 +60,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\releases\Glass.Mapper.Umb.CastleWindsor.html" />
+    <Content Include="docs\releases\Glass.Mapper.Umb.html" />
     <Content Include="docs\releases\Glass.Mapper.html" />
     <Content Include="docs\releases\Glass.Mapper.Sc.CastleWindsor.html" />
     <Content Include="docs\releases\Glass.Mapper.Sc.html" />
