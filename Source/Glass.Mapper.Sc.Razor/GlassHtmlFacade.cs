@@ -155,6 +155,7 @@ namespace Glass.Mapper.Sc.Razor
 
         public GlassEditFrame EditFrame(string buttons, string dataSource = null)
         {
+            
 
             var frame = new GlassEditFrame(buttons, _writer, dataSource);
             frame.RenderFirstPart();
@@ -168,8 +169,6 @@ namespace Glass.Mapper.Sc.Razor
 
             Assert.IsNotNull(item, "Could not find rendering item {0}".Formatted(path));
 
-            var renderType = new PartialRazorRenderingType();
-
             NameValueCollection parameters = new NameValueCollection();
 
             foreach (Field field in item.Fields)
@@ -177,13 +176,21 @@ namespace Glass.Mapper.Sc.Razor
                 parameters.Add(field.Name, field.Value);
             }
 
-            var control = renderType.GetControl(parameters, false) as PartialControl<T>;
-
-            control.SetModel(model);
-
+            Control  control = null;
+            
+            if (item.TemplateID == SitecoreIds.GlassBehindRazorId)
+            {
+                var renderType = new BehindRazorRenderingType();
+                control = renderType.GetControl(parameters, false);
+            }
+            else
+            {
+                var renderType = new PartialRazorRenderingType();
+                control = renderType.GetControl(parameters, false);
+                control.CastTo<PartialControl<T>>().SetModel(model);
+            }
             var webControl = control as WebControl;
             webControl.RenderControl(_writer);
-
         }
     }
 }
