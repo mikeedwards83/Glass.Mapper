@@ -101,7 +101,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            ///this will only be used by the SitecoreFieldIEnumerableMapper
+            return value as string;
         }
 
         /// <summary>
@@ -114,7 +115,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            ///this will only be used by the SitecoreFieldIEnumerableMapper
+            return fieldValue;
         }
     }
 }
