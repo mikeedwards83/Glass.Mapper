@@ -30,6 +30,7 @@ namespace Glass.Mapper.Umb
             else
 				obj = GetActivator(genericType)();
             return obj;
+
         }
 
         /// <summary>
