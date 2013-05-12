@@ -9,25 +9,14 @@ namespace Glass.Mapper.Sc.Razor.Web.Mvc
     /// </summary>
     public class TypedViewRenderer :AbstractViewRendering
     {
-        /// <summary>
-        /// Gets or sets the type.
-        /// </summary>
-        /// <value>The type.</value>
-        public string Type{get;set;}
-        /// <summary>
-        /// Gets or sets the assembly.
-        /// </summary>
-        /// <value>The assembly.</value>
-        public string Assembly{get;set;}
-
-
+        
         /// <summary>
         /// Renders the specified writer.
         /// </summary>
         /// <param name="writer">The writer.</param>
         public override void Render(System.IO.TextWriter writer)
         {
-            WebControl control = TypedRazorRenderingType.CreateControl(Path, Type, Assembly, ContextName) as WebControl;
+            WebControl control = TypedRazorRenderingType.CreateControl(Path, ContextName) as WebControl;
             if (control != null)
             {
                 HtmlTextWriter htmlWriter = new HtmlTextWriter(writer);

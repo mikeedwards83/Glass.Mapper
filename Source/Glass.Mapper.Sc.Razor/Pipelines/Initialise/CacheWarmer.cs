@@ -29,17 +29,17 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.Initialise
 
         protected void WarmDb(Database db)
         {
-            var viewManager = new ViewManager();
+            
 
             var behind = db.GetItem(SitecoreIds.GlassBehindRazorId);
             var typed = db.GetItem(SitecoreIds.GlassTypedRazorId);
             var dynamic = db.GetItem(SitecoreIds.GlassDynamicRazorId);
 
-            WarmType(behind, viewManager);
-            WarmType(typed, viewManager);
-            WarmType(dynamic, viewManager);
+            WarmType(behind);
+            WarmType(typed);
+            WarmType(dynamic);
         }
-        protected void WarmType(Item item, ViewManager viewManager)
+        protected void WarmType(Item item)
         {
             if (item != null)
             {
@@ -47,8 +47,7 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.Initialise
                 foreach (var rendering in renderings)
                 {
                     var path = rendering.GetSourceItem()["Name"];
-                    var contents = viewManager.GetRazorView(path);
-                    RazorEngine.Razor.GetTemplate(contents, path);
+                    ViewManager.GetRazorView(path);
                 }
             }
         }

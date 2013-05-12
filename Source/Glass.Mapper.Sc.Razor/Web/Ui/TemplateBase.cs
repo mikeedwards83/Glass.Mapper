@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// Class TemplateBase
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TemplateBase<T> : RazorEngine.Templating.TemplateBase<T>
+    public class TemplateBase<T> : RazorEngine.Templating.TemplateBase<T>, ITemplateBase
     {
         private HtmlHelper _helper;
 

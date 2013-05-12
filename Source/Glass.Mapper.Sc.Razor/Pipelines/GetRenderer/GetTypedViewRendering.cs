@@ -25,8 +25,6 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
             {
                 TypedViewRenderer render = new TypedViewRenderer();
                 render.Path = renderItem["Name"];
-                render.Type = renderItem["Type"];
-                render.Assembly = renderItem["assembly"];
                 render.ContextName = renderItem["ContextName"];
 
                 render.DataSource = rendering.DataSource;

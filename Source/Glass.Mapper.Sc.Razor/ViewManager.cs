@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using RazorEngine.Templating;
 
 namespace Glass.Mapper.Sc.Razor
 {
@@ -13,15 +14,15 @@ namespace Glass.Mapper.Sc.Razor
         private static volatile FileSystemWatcher _fileSystemWatcher;
         //  private static volatile FileSystemWatcher _fileWatcher = null;
         private static readonly object _fileWatcherKey = new object();
-        private readonly object _key = new object();
+        private static readonly object _key = new object();
         private static readonly object _viewKey = new object();
 
-        private static volatile Dictionary<string, string> _viewCache;
+        private static volatile Dictionary<string, CachedView> _viewCache;
 
         /// <summary>
         /// The view loader
         /// </summary>
-        Func<string, string> ViewLoader = viewPath =>
+        static Func<string, string> ViewLoader = viewPath =>
         {
             try
             {
@@ -36,7 +37,7 @@ namespace Glass.Mapper.Sc.Razor
         };
 
 
-        public ViewManager()
+        static ViewManager()
         {
             if (_viewCache == null)
             {
@@ -44,7 +45,7 @@ namespace Glass.Mapper.Sc.Razor
                 {
                     if (_viewCache == null)
                     {
-                        _viewCache = new Dictionary<string, string>();
+                        _viewCache = new Dictionary<string, CachedView>();
                     }
                 }
             }
@@ -76,7 +77,7 @@ namespace Glass.Mapper.Sc.Razor
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="e">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
-        private void OnChanged(object source, FileSystemEventArgs e)
+        private static void OnChanged(object source, FileSystemEventArgs e)
         {
             string path = e.FullPath.ToLower();
             if (_viewCache.ContainsKey(path))
@@ -102,9 +103,8 @@ namespace Glass.Mapper.Sc.Razor
         /// </summary>
         /// <param name="viewPath">The view path.</param>
         /// <returns>System.String.</returns>
-        public virtual string GetRazorView(string viewPath)
+        public static CachedView GetRazorView(string viewPath)
         {
-            string finalview = null;
             viewPath = GetFullPath(viewPath);
 
             viewPath = viewPath.ToLower();
@@ -113,9 +113,7 @@ namespace Glass.Mapper.Sc.Razor
             {
                 UpdateCache(viewPath, ViewLoader);
             }
-            finalview = _viewCache[viewPath];
-            
-            return finalview;
+            return  _viewCache[viewPath];
         }
 
         /// <summary>
@@ -125,20 +123,30 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="viewLoader">The view loader.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="System.NullReferenceException">Could not find file {0}..Formatted(viewPath)</exception>
-        private static string UpdateCache(string viewPath, Func<string, string> viewLoader)
+        private static CachedView UpdateCache(string viewPath, Func<string, string> viewLoader)
         {
             viewPath = viewPath.ToLower();
 
             string finalview = viewLoader(viewPath);
+
             if (finalview == null) throw new NullReferenceException("Could not find file {0}.".Formatted(viewPath));
+
+            var cached = new CachedView();
+
 
             lock (_viewKey)
             {
-                _viewCache[viewPath] = finalview;
+                cached.ViewContent = finalview;
+                cached.Template = RazorEngine.Razor.CreateTemplate(cached.ViewContent);
+                cached.Type = cached.Template.GetType().BaseType.GetGenericArguments()[0];
+                cached.Name = viewPath;
+                _viewCache[viewPath] = cached;
+
             }
 
-            return finalview;
+            return cached;
         }
+
 
     }
 }

@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// The path to the Razor view
         /// </summary>
         /// <value>The view.</value>
-        public string View
+        public CachedView View
         {
             get;
             set;
@@ -146,7 +146,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>If an empty string is returned, the control will not be cached.</remarks>
         protected override string GetCachingID()
         {
-            return this.View;
+            return this.View.Name;
         }
 
         /// <summary>
@@ -157,22 +157,20 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>When developing custom server controls, you can override this method to generate content for an ASP.NET page.</remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
-            Profiler.Start("Get Model");
-            
-            Model = GetModel();
-            
-            Profiler.End("Get Model");
+           Profiler.Start("Get Model");
 
-            var viewContents = ViewManager.GetRazorView(View);
+            Model = GetModel();
+
+            Profiler.End("Get Model");
 
             try
             {
-                Profiler.Start("Razor engine {0}".Formatted(this.View));
+                Profiler.Start("Razor engine {0}".Formatted(this.View.Name));
 
                 Profiler.Start("Create Template");
 
-                var template = RazorEngine.Razor.GetTemplate<T>(viewContents, Model, View) as TemplateBase<T>;
-            //    var template = RazorEngine.Razor.CreateTemplate<T>(viewContents, Model) as TemplateBase<T>;
+                var template =
+                    RazorEngine.Razor.GetTemplate<T>(View.ViewContent, Model, View.Name) as ITemplateBase;
               
                 Profiler.End("Create Template");
 
@@ -184,7 +182,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
                 Profiler.Start("Run Template");
 
-                output.Write(template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
+                output.Write( ((RazorEngine.Templating.ITemplate)template).Run(new ExecuteContext()));
 
                 Profiler.End("Run Template");
 

@@ -43,7 +43,7 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
         public static System.Web.UI.WebControls.WebControl CreateControl(string view, string contextName)
         {
             IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(typeof(DynamicControl)) as IRazorControl;
-            control.View = view;
+            control.View = ViewManager.GetRazorView(view); ;
             control.ContextName = contextName;
             return control as System.Web.UI.WebControls.WebControl;
         }

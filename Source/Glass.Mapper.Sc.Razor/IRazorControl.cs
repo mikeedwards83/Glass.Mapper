@@ -9,7 +9,7 @@
         /// Gets or sets the view.
         /// </summary>
         /// <value>The view.</value>
-        string View
+        CachedView View
         {
             get;
             set;

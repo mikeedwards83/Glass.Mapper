@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
             var viewType = GetControlType(typeName, _typeLoader);
 
             IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(viewType) as IRazorControl;
-            control.View = view;
+            control.View = ViewManager.GetRazorView(view); ;
             control.ContextName = contextName;
             return control as global::Sitecore.Web.UI.WebControl;
         }
