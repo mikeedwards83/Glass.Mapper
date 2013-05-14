@@ -1105,6 +1105,46 @@ namespace Glass.Mapper.Sc.Integration
             Assert.AreEqual(child.Id, newItem.ID.Guid);
         }
 
+        [Test]
+        public void Create_AutoMappedClass_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChildAutoMapped";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClassAutoMapped>(parentPath);
+
+            var child = new StubClassAutoMapped();
+            child.Name = "newChildAutoMapped";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
         #endregion
 
         #region Method - Delete
@@ -1285,7 +1325,23 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string StringField { get; set; }
             public virtual DateTime DateField { get; set; }
         }
-       
+
+        [SitecoreType(TemplateId = StubClassAutoMapped.TemplateId, AutoMap = true)]
+        public class StubClassAutoMapped
+        {
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+
+
+            public virtual Guid Id { get; set; }
+
+            public virtual Language Language { get; set; }
+
+            public virtual string Path { get; set; }
+
+            public virtual int Version { get; set; }
+
+            public virtual string Name { get; set; }
+        }
 
         #endregion
 
