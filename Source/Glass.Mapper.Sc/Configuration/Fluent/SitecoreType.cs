@@ -155,6 +155,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return builder;
         }
 
+        /// <summary>
+        /// Ignore a specific property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreIgnore{`0}.</returns>
+        public SitecoreIgnore<T> Ignore(Expression<Func<T, object>> ex)
+        {
+            SitecoreIgnore<T> builder = new SitecoreIgnore<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
+        }
+
 
         /// <summary>
         /// Map the item ID to a class property

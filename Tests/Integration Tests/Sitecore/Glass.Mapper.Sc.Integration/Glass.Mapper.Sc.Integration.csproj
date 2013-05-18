@@ -93,6 +93,7 @@
     <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
