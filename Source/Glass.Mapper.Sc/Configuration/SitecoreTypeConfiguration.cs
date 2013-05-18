@@ -129,12 +129,7 @@ namespace Glass.Mapper.Sc.Configuration
                 throw new NotSupportedException("Cannot get ID for item");
             }
 
-            if (LanguageConfig != null)
-            {
-                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
-                if (language == null)
-                    language = Language.Current;
-            }
+            language = GetLanguage(target);
 
             if (VersionConfig != null)
             {
@@ -153,6 +148,18 @@ namespace Glass.Mapper.Sc.Configuration
             {
                 return database.GetItem(id);
             }
+        }
+
+        public Language GetLanguage(object target)
+        {
+            Language language = null;
+            if (LanguageConfig != null)
+            {
+                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
+                if (language == null)
+                    language = Language.Current;
+            }
+            return language;
         }
 
         protected override AbstractPropertyConfiguration AutoMapProperty(System.Reflection.PropertyInfo property)

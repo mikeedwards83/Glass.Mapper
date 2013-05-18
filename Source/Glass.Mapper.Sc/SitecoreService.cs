@@ -187,6 +187,7 @@ namespace Glass.Mapper.Sc
 
             Item pItem = parentType.ResolveItem(parent, Database);
 
+            
             if (pItem == null)
                 throw new MapperException("Could not find parent item");
 
@@ -199,9 +200,17 @@ namespace Glass.Mapper.Sc
 
             string tempName = Guid.NewGuid().ToString();
 
+               
 
             ID templateId = newType.TemplateId;
             ID branchId = newType.BranchId;
+            Language language = newType.GetLanguage(newItem);
+
+            //check that parent item language is equal to new item language, if not change parent to other language
+            if (language != null && pItem.Language != language)
+            {
+                pItem = Database.GetItem(pItem.ID, language);
+            }
 
             Item item = null;
 
