@@ -53,7 +53,7 @@ namespace Glass.Mapper
         /// Takes CMS data and writes it to the property
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
             var result  = MapToProperty(mappingContext);
 
@@ -65,7 +65,7 @@ namespace Glass.Mapper
         /// Takes a Property value and writes it to a CMS value
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        public virtual  void MapPropertyToCms(AbstractDataMappingContext mappingContext)
         {
             if (ReadOnly) return;
 
