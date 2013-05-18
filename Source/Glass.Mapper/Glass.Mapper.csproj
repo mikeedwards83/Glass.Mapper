@@ -59,6 +59,7 @@
     <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\IdAttribute.cs" />
+    <Compile Include="Configuration\Attributes\IgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
     <Compile Include="Configuration\Attributes\LinkedAttribute.cs" />
     <Compile Include="Configuration\Attributes\NodeAttribute.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Configuration\FieldConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationLoader.cs" />
     <Compile Include="Configuration\IdConfiguration.cs" />
+    <Compile Include="Configuration\IgnoreConfiguration.cs" />
     <Compile Include="Configuration\InfoConfiguration.cs" />
     <Compile Include="Configuration\LinkedConfiguration.cs" />
     <Compile Include="Configuration\NodeConfiguration.cs" />

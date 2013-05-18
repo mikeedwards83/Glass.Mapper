@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
         public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
         {
-            return Configuration is IgnoreAttribute;
+            return configuration is IgnoreConfiguration;
         }
     }
 }

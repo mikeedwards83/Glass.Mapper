@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 
@@ -28,6 +29,24 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public class SitecoreIgnoreMapperFixture : AbstractMapperFixture
     {
+
+        #region Method - CanHandle
+
+        [Test]
+        public void CanHandle_IgnoreCOnfigurtion_ReturnsTrue()
+        {
+            //Assign
+            var mapper = new SitecoreIgnoreMapper();
+            var config = new SitecoreIgnoreConfiguration();
+
+            //ACt
+            var result = mapper.CanHandle(config, null);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        #endregion
 
         #region Method - MapCmsToProperty
 
@@ -59,6 +78,39 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             //Assert
             Assert.AreEqual(stub.Field, propertyValue);
+        }
+
+        [Test]
+        public void MapCmsToProperty_AutoMap()
+        {
+            //Assign
+            var fieldValue = "hello world";
+            var propertyValue = "goodbye world";
+
+            var path = "/sitecore/content/Tests/DataMappers/SitecoreIgnoreMapper/Target";
+
+            var item = Database.GetItem(path);
+            var field = item.Fields["Field"];
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(item.Database, context);
+
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+          
+
+            //Act
+            var notIgnored = service.GetItem<StubClassNotIgnored>(path);
+            var ignored = service.GetItem<StubClassIgnored>(path);
+
+            //Assert
+            Assert.AreEqual(fieldValue, notIgnored.Field);
+            Assert.AreEqual(null, ignored.Field);
         }
 
         #endregion
@@ -104,6 +156,21 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             public string Field { get; set; }
         }
+
+        [SitecoreType(AutoMap = true)]
+        public class StubClassNotIgnored
+        {
+            public string Field { get; set; }
+        }
+
+        [SitecoreType(AutoMap = true)]
+        public class StubClassIgnored
+        {
+            [SitecoreIgnore]
+            public string Field { get; set; }
+        }
+
+
         #endregion
     }
 }
