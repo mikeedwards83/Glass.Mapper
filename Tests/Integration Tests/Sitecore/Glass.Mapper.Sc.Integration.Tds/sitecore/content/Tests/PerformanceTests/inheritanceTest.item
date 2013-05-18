@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {B75B43E9-E044-48A4-9C83-DE965482FC00}
+id: {1B8C332B-CDB7-4CBB-83AF-ADA51B8F4278}
 database: master
-path: /sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms
-parent: {4BF5B341-73D1-4180-9808-3355C0A281B8}
-name: MapToCms
+path: /sitecore/content/Tests/PerformanceTests/inheritanceTest
+parent: {30E9F1A0-E1F4-4CD3-B476-FDB5F54D9E4E}
+name: inheritanceTest
 master: {00000000-0000-0000-0000-000000000000}
 template: {3A1B89BA-3885-4BD6-8326-67605764676C}
 templatekey: DataMappersSingleField
@@ -12,15 +12,15 @@ templatekey: DataMappersSingleField
 ----version----
 language: en
 version: 1
-revision: 7b877f31-6efe-422a-876d-1d70c48cd11c
+revision: 030797f2-e96f-4d6c-9a8e-0d982e43e591
 
 ----field----
 field: {6B43481F-F129-4F53-BEEE-EA84F9B1A6D4}
 name: Field
 key: field
-content-length: 14
+content-length: 11
 
-test value set
+hello world
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -34,7 +34,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20121216T214506
+20121228T131214
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-7b877f31-6efe-422a-876d-1d70c48cd11c
+030797f2-e96f-4d6c-9a8e-0d982e43e591
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20130518T174136:635044956967596095
+20121228T132645:634922980058532854
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
