@@ -1,4 +1,5 @@
 ﻿using System;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;
 using Sitecore.Mvc.Data;
@@ -10,6 +11,10 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 {
     public class GetModel : GetModelProcessor
     {
+
+        public const string ModelTypeField = "Model Type";
+        public const string ModelField = "Model";
+
         public GetModel()
         {
             ContextName = "Default";
@@ -46,15 +51,15 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (obj == null)
                 return (object)null;
             else
-                return GetObject(obj["Model"]);
+                return GetObject(obj[ModelField], rendering.Item.Database);
         }
         protected virtual object GetFromPropertyValue(Rendering rendering, GetModelArgs args)
         {
-            string model = rendering.Properties["Model"];
+            string model = rendering.Properties[ModelField];
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object)null;
             else
-                return GetObject(model);
+                return GetObject(model, rendering.Item.Database);
         }
 
         protected virtual object GetFromLayout(Rendering rendering, GetModelArgs args)
@@ -66,7 +71,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object) null;
             else
-                return GetObject(model);
+                return GetObject(model, rendering.Item.Database);
         }
 
         protected virtual object GetFromItem(Rendering rendering, GetModelArgs args)
@@ -75,15 +80,37 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object) null;
             else
-                return GetObject(model);
+                return GetObject(model, rendering.Item.Database);
         }
 
 
-        public object GetObject(string model)
+        public object GetObject(string model, Database db)
         {
 
             if (model.IsNullOrEmpty())
                 return null;
+
+            //must be a path to a Model item
+            if (model.StartsWith("/sitecore"))
+            {
+                var target = db.GetItem(model);
+                if (target == null)
+                    return null;
+
+                string newModel = target[ModelTypeField];
+                return GetObject(newModel, db);
+            }
+            //if guid must be that to Model item
+            Guid targetId;
+            if (Guid.TryParse(model, out targetId))
+            {
+                var target = db.GetItem(new ID(targetId));
+                if (target == null)
+                    return null;
+
+                string newModel = target[ModelTypeField];
+                return GetObject(newModel, db);
+            }
 
             var type = Type.GetType(model, true);
 
@@ -102,6 +129,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             return null;
         }
 
+        
       
     }
 }
