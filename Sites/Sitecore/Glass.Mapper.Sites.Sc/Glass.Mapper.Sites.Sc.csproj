@@ -56,16 +56,15 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=3.0.2.5, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=3.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.3.0.2.5-beta\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.3.0.1.8\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=3.0.2.10, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=3.0.2.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.10-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.8\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=3.0.3.6, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor">
       <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.3.6\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">

@@ -3508,6 +3508,130 @@
             This class contains a set of helpers that make converting items mapped in Glass.Sitecore.Mapper to HTML
             </summary>
         </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.EditFrame(System.String,System.String)">
+            <summary>
+            Edits the frame.
+            </summary>
+            <param name="buttons">The buttons.</param>
+            <returns>GlassEditFrame.</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="parameters">Additional rendering parameters, e.g. class=myCssClass</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}})">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="target">The target object that contains the item to be edited</param>
+            <param name="field">The field that should be made editable</param>
+            <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+            <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},``0)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="field">The field that should be made editable</param>
+            <param name="target">The target object that contains the item to be edited</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.Editable``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}},``0)">
+            <summary>
+            Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
+            </summary>
+            <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+            <param name="field">The field that should be made editable</param>
+            <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+            <param name="target">The target object that contains the item to be edited</param>
+            <returns>HTML output to either render the editable controls or normal HTML</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.RenderImage(Glass.Mapper.Sc.Fields.Image)">
+            <summary>
+            Renders HTML for an image
+            </summary>
+            <param name="image">The image to render</param>
+            <returns>An img HTML element</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.RenderImage(Glass.Mapper.Sc.Fields.Image,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Renders HTML for an image
+            </summary>
+            <param name="image">The image to render</param>
+            <param name="attributes">Additional attributes to add. Do not include alt or src</param>
+            <returns>An img HTML element</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.AttributeCheck(System.Collections.Specialized.NameValueCollection,System.String,System.String)">
+            <summary>
+            Checks it and attribute is part of the NameValueCollection and updates it with the
+            default if it isn't.
+            </summary>
+            <param name="collection">The collection of attributes</param>
+            <param name="name">The name of the attribute in the collection</param>
+            <param name="defaultValue">The default value for the attribute</param>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.RenderLink(Glass.Mapper.Sc.Fields.Link)">
+            <summary>
+            Render HTML for a link
+            </summary>
+            <param name="link">The link to render</param>
+            <returns>An "a" HTML element</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.RenderLink(Glass.Mapper.Sc.Fields.Link,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Render HTML for a link
+            </summary>
+            <param name="link">The link to render</param>
+            <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
+            <returns>An "a" HTML element</returns>
+        </member>
+        <member name="M:Glass.Mapper.Sc.IGlassHtml.RenderLink(Glass.Mapper.Sc.Fields.Link,System.Collections.Specialized.NameValueCollection,System.String)">
+            <summary>
+            Render HTML for a link
+            </summary>
+            <param name="link">The link to render</param>
+            <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
+            <param name="contents">Content to go in the link instead of the standard text</param>
+            <returns>An "a" HTML element</returns>
+        </member>
         <member name="M:Glass.Mapper.Sc.GlassHtml.#ctor(Glass.Mapper.Sc.ISitecoreContext)">
             <summary>
             Initializes a new instance of the <see cref="T:Glass.Mapper.Sc.GlassHtml"/> class.
@@ -5986,6 +6110,12 @@
             
             </summary>
         </member>
+        <member name="P:Glass.Mapper.Sc.Web.Mvc.GlassView`1.IsInEditingMode">
+            <summary>
+            Gets a value indicating whether this instance is in editing mode.
+            </summary>
+            <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
+        </member>
         <member name="T:Glass.Mapper.Sc.Web.Ui.AbstractGlassPage">
             <summary>
             Class AbstractGlassPage
@@ -6057,6 +6187,12 @@
             Represents the current Sitecore context
             </summary>
             <value>The sitecore context.</value>
+        </member>
+        <member name="P:Glass.Mapper.Sc.Web.Ui.AbstractGlassPage.IsInEditingMode">
+            <summary>
+            Gets a value indicating whether this instance is in editing mode.
+            </summary>
+            <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
         </member>
         <member name="P:Glass.Mapper.Sc.Web.Ui.AbstractGlassPage.GlassHtml">
             <summary>
@@ -6365,7 +6501,7 @@
             Class UiUtilities
             </summary>
         </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.GlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.IGlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
             <summary>
             Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
             </summary>
@@ -6380,23 +6516,7 @@
             No model set
             </exception>
         </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.GlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String)">
-            <summary>
-            Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="glassHtml">The glass HTML.</param>
-            <param name="model">The model.</param>
-            <param name="field">The field.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>System.String.</returns>
-            <exception cref="T:System.NullReferenceException">
-            No field set
-            or
-            No model set
-            </exception>
-        </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.GlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
+        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.IGlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String)">
             <summary>
             Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
             </summary>
@@ -6412,7 +6532,23 @@
             No model set
             </exception>
         </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.GlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}})">
+        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.IGlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
+            <summary>
+            Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="glassHtml">The glass HTML.</param>
+            <param name="model">The model.</param>
+            <param name="field">The field.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NullReferenceException">
+            No field set
+            or
+            No model set
+            </exception>
+        </member>
+        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.IGlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}})">
             <summary>
             Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
             </summary>
@@ -6430,7 +6566,7 @@
             No model set
             </exception>
         </member>
-        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.GlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
+        <member name="M:Glass.Mapper.Sc.Web.Ui.UiUtilities.Editable``1(Glass.Mapper.Sc.IGlassHtml,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.String}},Glass.Mapper.Sc.RenderField.AbstractParameters)">
             <summary>
             Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
             </summary>
