@@ -62,9 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.10-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=3.0.3.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.2.4\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.3.6\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>

@@ -44,7 +44,6 @@ temp/
 upload/
 Builds/
 !*.textile
-Source/Glass.Sitecore.Mapper.Demo/data/
 *.suo
 packages/Sitecore/*
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/Data/license.xml
@@ -56,3 +55,5 @@ Depends/Sitecore/bin/*
 Depends/Sitecore/bin_Net4/*
 
 Depends/Sitecore7/
+
+!lib/*
