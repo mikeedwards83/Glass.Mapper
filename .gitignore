@@ -55,5 +55,6 @@ Depends/Sitecore/bin/*
 Depends/Sitecore/bin_Net4/*
 
 Depends/Sitecore7/
+Nugets/*
 
 !lib/*
