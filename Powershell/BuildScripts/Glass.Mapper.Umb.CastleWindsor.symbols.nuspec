@@ -17,7 +17,7 @@
     <tags>Glass Mapper Umbraco Razor Glass.Mapper MVC</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Umb" version="0.0.0" />
+		<dependency id="Glass.Mapper.Umb" version="3.0.0" />
 		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 	</dependencies>
