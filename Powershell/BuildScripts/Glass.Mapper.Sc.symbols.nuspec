@@ -10,9 +10,10 @@
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
+    Only install this package if you intend to use your own DI setup, otherwise install Glass.Mapper.Sc.CastleWindsor.
+    
 		An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
-		relationships and queries as well as supporting the Page Editor. You will need to use your own
-		DI setup with this package, if you don't want to do this use the Glass.Mapper.Sc.CastleWindsor nuget.
+		relationships and queries as well as supporting the Page Editor.
 	</description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
