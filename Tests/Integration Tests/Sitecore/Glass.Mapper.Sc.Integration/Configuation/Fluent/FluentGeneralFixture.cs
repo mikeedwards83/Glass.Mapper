@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
@@ -87,6 +88,7 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
 
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 namespace Glass.Mapper.Umb.Configuration
 {
     /// <summary>
@@ -113,6 +114,7 @@ namespace Glass.Mapper.Umb.Configuration
         Upload,
     }
 }
+
 
 
 

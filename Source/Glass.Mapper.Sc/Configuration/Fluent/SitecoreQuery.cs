@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 /*
    Copyright 2011 Michael Edwards
  
@@ -108,6 +109,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
 
     }
 }
+
 
 
 

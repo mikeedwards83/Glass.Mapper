@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Configuration;
 using Umbraco.Core.Models;
@@ -174,6 +175,7 @@ namespace Glass.Mapper.Umb.Configuration
         }
     }
 }
+
 
 
 

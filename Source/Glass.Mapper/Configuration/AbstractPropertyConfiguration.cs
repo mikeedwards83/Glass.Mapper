@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Reflection;
 
@@ -75,6 +76,7 @@ namespace Glass.Mapper.Configuration
         }
     }
 }
+
 
 
 

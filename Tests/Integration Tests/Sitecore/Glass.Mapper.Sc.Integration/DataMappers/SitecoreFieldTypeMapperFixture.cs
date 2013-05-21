@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -304,6 +305,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Configuration;
@@ -51,6 +52,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         }
     }
 }
+
 
 
 

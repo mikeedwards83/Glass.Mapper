@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,8 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/
+*/ 
 //-CRE-
+
 
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -451,6 +452,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
 
 }
+
 
 
 

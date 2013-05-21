@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -57,6 +58,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Tests")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Explorables")]
+
 
 
 

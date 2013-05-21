@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Diagnostics;
 using Glass.Mapper.Sc.CastleWindsor;
@@ -378,6 +379,7 @@ namespace Glass.Mapper.Sc.Integration
 
     }
 }
+
 
 
 

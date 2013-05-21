@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
@@ -69,6 +70,7 @@ namespace Glass.Mapper.Sc
         }
     }
 }
+
 
 
 

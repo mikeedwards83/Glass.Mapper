@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 
 namespace Glass.Mapper.Umb.PropertyTypes
@@ -62,3 +63,4 @@ namespace Glass.Mapper.Umb.PropertyTypes
         public int Size { get; set; }
     }
 }
+

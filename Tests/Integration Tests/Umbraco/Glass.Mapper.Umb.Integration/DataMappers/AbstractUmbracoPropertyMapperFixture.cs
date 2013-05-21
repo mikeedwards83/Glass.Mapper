@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -259,3 +260,4 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         #endregion
     }
 }
+

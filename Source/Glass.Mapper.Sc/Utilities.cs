@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -213,6 +214,7 @@ namespace Glass.Mapper.Sc
         }
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using FluentAssertions;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.Configuration.Attributes;
@@ -82,6 +83,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         #endregion
     }
 }
+
 
 
 

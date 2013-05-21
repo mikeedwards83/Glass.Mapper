@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -219,6 +220,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #endregion
     }
 }
+
 
 
 

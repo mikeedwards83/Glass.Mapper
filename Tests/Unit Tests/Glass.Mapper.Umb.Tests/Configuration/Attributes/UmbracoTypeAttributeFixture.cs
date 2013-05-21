@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq;
 using FluentAssertions;
@@ -136,6 +137,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         #endregion
     }
 }
+
 
 
 
