@@ -12,6 +12,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Installs Umbraco Cms in your Visual Studio ASP.NET Webforms project</description>
     <summary>Installs Umbraco Cms in your Visual Studio ASP.NET Webforms project</summary>
+    <releaseNotes />
+    <copyright />
     <language>en-US</language>
     <tags>umbraco</tags>
     <dependencies>

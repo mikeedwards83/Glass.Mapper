@@ -57,6 +57,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Website", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0BA8AB6D-CC44-442B-A62A-F5F511623190}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
@@ -101,6 +104,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Umb.CastleWindsor.Tests", "Tests\Unit Tests\Glass.Mapper.Umb.CastleWindsor.Tests\Glass.Mapper.Umb.CastleWindsor.Tests.csproj", "{78DAC667-C78D-40A9-BE19-0563836B7163}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sites.Umb", "Sites\Umbraco\Glass.Mapper.Sites.Umb\Glass.Mapper.Sites.Umb.csproj", "{15D5E556-908C-4918-81D5-FFAA35926F51}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Razor.CastleWindsor", "Source\Glass.Mapper.Sc.Razor.CastleWindsor\Glass.Mapper.Sc.Razor.CastleWindsor.csproj", "{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}"
 EndProject
 Global

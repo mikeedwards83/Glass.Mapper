@@ -8,10 +8,10 @@
       <section name="umbraco.presentation.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
     </sectionGroup>
 
-    <section name="clientDependency" type="ClientDependency.Core.Config.ClientDependencySection, ClientDependency.Core" requirePermission="false"/>
-    <section name="Examine" type="Examine.Config.ExamineSettings, Examine" requirePermission="false"/>
-    <section name="ExamineLuceneIndexSets" type="UmbracoExamine.Config.ExamineLuceneIndexes, UmbracoExamine" requirePermission="false"/>
-    <section name="FileSystemProviders" type="Umbraco.Core.Configuration.FileSystemProvidersSection, Umbraco.Core" requirePermission="false"/>
+    <section name="clientDependency" type="ClientDependency.Core.Config.ClientDependencySection, ClientDependency.Core" requirePermission="false" />
+    <section name="Examine" type="Examine.Config.ExamineSettings, Examine" requirePermission="false" />
+    <section name="ExamineLuceneIndexSets" type="UmbracoExamine.Config.ExamineLuceneIndexes, UmbracoExamine" requirePermission="false" />
+    <section name="FileSystemProviders" type="Umbraco.Core.Configuration.FileSystemProvidersSection, Umbraco.Core" requirePermission="false" />
     <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" requirePermission="false" />
     <section name="BaseRestExtensions" type="Umbraco.Web.BaseRest.Configuration.BaseRestSection, umbraco" requirePermission="false" />
 
@@ -32,8 +32,8 @@
   <BaseRestExtensions configSource="config\BaseRestExtensions.config" />
 
   <appSettings>
-    <add key="umbracoDbDSN" value=""/>
-    <add key="umbracoConfigurationStatus" value=""/>
+    
+    <add key="umbracoConfigurationStatus" value="6.0.5" />
     <add key="umbracoReservedUrls" value="~/config/splashes/booting.aspx,~/install/default.aspx,~/config/splashes/noNodes.aspx,~/VSEnterpriseHelper.axd" />
     <add key="umbracoReservedPaths" value="~/umbraco,~/install/" />
     <add key="umbracoContentXML" value="~/App_Data/umbraco.config" />
@@ -42,8 +42,8 @@
     <add key="umbracoEnableStat" value="false" />
     <add key="umbracoHideTopLevelNodeFromPath" value="true" />
     <add key="umbracoEditXhtmlMode" value="true" />
-    <add key="umbracoUseDirectoryUrls" value="false" />
-    <add key="umbracoDebugMode" value="false"/>
+    <add key="umbracoUseDirectoryUrls" value="true" />
+    <add key="umbracoDebugMode" value="false" />
     <add key="umbracoTimeOutInMinutes" value="20" />
     <add key="umbracoVersionCheckPeriod" value="7" />
     <add key="umbracoDisableXsltExtensions" value="true" />
@@ -53,20 +53,20 @@
     <add key="umbracoUseMediumTrust" value="false" />
 
     <!-- Set this to true to enable storing the xml cache locally to the IIS server even if the app files are stored centrally on a SAN/NAS Alex Norcliffe 2010 02 for 4.1  -->
-    <add key="umbracoContentXMLUseLocalTemp" value="false"/>
+    <add key="umbracoContentXMLUseLocalTemp" value="false" />
 
-    <add key="webpages:Enabled" value="false"/>
-    <add key="enableSimpleMembership" value="false"/>
-    <add key="autoFormsAuthentication" value="false"/>
+    <add key="webpages:Enabled" value="false" />
+    <add key="enableSimpleMembership" value="false" />
+    <add key="autoFormsAuthentication" value="false" />
 
     <add key="log4net.Config" value="config\log4net.config" />
   </appSettings>
 
   <system.data>
     <DbProviderFactories>
-      <remove invariant="System.Data.SqlServerCe.4.0"/>
+      <remove invariant="System.Data.SqlServerCe.4.0" />
       <add name="Microsoft SQL Server Compact Data Provider 4.0" invariant="System.Data.SqlServerCe.4.0" description=".NET Framework Data Provider for Microsoft SQL Server Compact" type="System.Data.SqlServerCe.SqlCeProviderFactory, System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
-      <remove invariant="MySql.Data.MySqlClient"/>
+      <remove invariant="MySql.Data.MySqlClient" />
       <add name="MySQL Data Provider" invariant="MySql.Data.MySqlClient" description=".Net Framework Data Provider for MySQL" type="MySql.Data.MySqlClient.MySqlClientFactory, MySql.Data, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
     </DbProviderFactories>
   </system.data>
@@ -80,8 +80,8 @@
   </system.net>
 
   <connectionStrings>
-    <remove name="umbracoDbDSN"/>
-    <add name="umbracoDbDSN" connectionString="" providerName="" />
+    <remove name="umbracoDbDSN" />
+    <add name="umbracoDbDSN" connectionString="Data Source=|DataDirectory|\Umbraco.sdf" providerName="System.Data.SqlServerCe.4.0" />
     <!-- Important: If you're upgrading Umbraco, do not clear the connection string / provider name during your web.config merge. -->
   </connectionStrings>
 
@@ -110,7 +110,7 @@
       <!-- ASPNETAJAX -->
       <add name="ScriptModule" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
       <!-- CLIENT DEPENDENCY -->
-      <add name="ClientDependencyModule" type="ClientDependency.Core.Module.ClientDependencyModule, ClientDependency.Core"/>
+      <add name="ClientDependencyModule" type="ClientDependency.Core.Module.ClientDependencyModule, ClientDependency.Core" />
     </httpModules>
     <httpHandlers>
       <remove verb="*" path="*.asmx" />
@@ -122,7 +122,7 @@
       <add verb="*" path="umbraco/channels.aspx" type="umbraco.presentation.channels.api, umbraco" />
       <add verb="*" path="umbraco/channels/word.aspx" type="umbraco.presentation.channels.wordApi, umbraco" />
       <!-- CLIENT DEPENDENCY -->
-      <add verb="*" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core "/>
+      <add verb="*" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core " />
       <!-- SPELL CHECKER -->
       <add verb="GET,HEAD,POST" path="GoogleSpellChecker.ashx" type="umbraco.presentation.umbraco_client.tinymce3.plugins.spellchecker.GoogleSpellChecker,umbraco" />
     </httpHandlers>
@@ -144,9 +144,9 @@
       </assemblies>
 
       <buildProviders>
-        <add extension=".cshtml" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines"/>
-        <add extension=".vbhtml" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines"/>
-        <add extension=".razor" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines"/>
+        <add extension=".cshtml" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines" />
+        <add extension=".vbhtml" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines" />
+        <add extension=".razor" type="umbraco.MacroEngines.RazorBuildProvider, umbraco.MacroEngines" />
       </buildProviders>
     </compilation>
 
@@ -159,7 +159,7 @@
     <!-- Membership Provider -->
     <membership defaultProvider="UmbracoMembershipProvider" userIsOnlineTimeWindow="15">
       <providers>
-        <clear/>
+        <clear />
         <add name="UmbracoMembershipProvider" type="umbraco.providers.members.UmbracoMembershipProvider" enablePasswordRetrieval="false" enablePasswordReset="false" requiresQuestionAndAnswer="false" defaultMemberTypeAlias="Another Type" passwordFormat="Hashed" />
         <add name="UsersMembershipProvider" type="umbraco.providers.UsersMembershipProvider" enablePasswordRetrieval="false" enablePasswordReset="false" requiresQuestionAndAnswer="false" passwordFormat="Hashed" />
       </providers>
@@ -167,14 +167,14 @@
     <!-- added by NH to support membership providers in access layer -->
     <roleManager enabled="true" defaultProvider="UmbracoRoleProvider">
       <providers>
-        <clear/>
+        <clear />
         <add name="UmbracoRoleProvider" type="umbraco.providers.members.UmbracoRoleProvider" />
       </providers>
     </roleManager>
     <!-- Sitemap provider-->
     <siteMap defaultProvider="UmbracoSiteMapProvider" enabled="true">
       <providers>
-        <clear/>
+        <clear />
         <add name="UmbracoSiteMapProvider" type="umbraco.presentation.nodeFactory.UmbracoSiteMapProvider" defaultDescriptionAlias="description" securityTrimmingEnabled="true" />
       </providers>
     </siteMap>
@@ -200,11 +200,11 @@
       <add name="ScriptModule" preCondition="managedHandler" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
 
       <remove name="ClientDependencyModule" />
-      <add name="ClientDependencyModule" type="ClientDependency.Core.Module.ClientDependencyModule, ClientDependency.Core"/>
+      <add name="ClientDependencyModule" type="ClientDependency.Core.Module.ClientDependencyModule, ClientDependency.Core" />
 
       <!-- Needed for login/membership to work on homepage (as per http://stackoverflow.com/questions/218057/httpcontext-current-session-is-null-when-routing-requests) -->
       <remove name="FormsAuthentication" />
-      <add name="FormsAuthentication" type="System.Web.Security.FormsAuthenticationModule"/>
+      <add name="FormsAuthentication" type="System.Web.Security.FormsAuthenticationModule" />
     </modules>
 
     <handlers accessPolicy="Read, Write, Script, Execute">
@@ -222,8 +222,8 @@
       <add name="ScriptResource" verb="GET,HEAD" path="ScriptResource.axd" preCondition="integratedMode" type="System.Web.Handlers.ScriptResourceHandler, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
       <add verb="*" name="Channels" preCondition="integratedMode" path="umbraco/channels.aspx" type="umbraco.presentation.channels.api, umbraco" />
       <add verb="*" name="Channels_Word" preCondition="integratedMode" path="umbraco/channels/word.aspx" type="umbraco.presentation.channels.wordApi, umbraco" />
-      <add verb="*" name="ClientDependency" preCondition="integratedMode" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core "/>
-      <add verb="GET,HEAD,POST" preCondition="integratedMode" name="SpellChecker" path="GoogleSpellChecker.ashx" type="umbraco.presentation.umbraco_client.tinymce3.plugins.spellchecker.GoogleSpellChecker,umbraco"/>
+      <add verb="*" name="ClientDependency" preCondition="integratedMode" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core " />
+      <add verb="GET,HEAD,POST" preCondition="integratedMode" name="SpellChecker" path="GoogleSpellChecker.ashx" type="umbraco.presentation.umbraco_client.tinymce3.plugins.spellchecker.GoogleSpellChecker,umbraco" />
     </handlers>
 
     <!-- Adobe AIR mime type -->
@@ -258,25 +258,25 @@
       <!-- Ensure correct version of MVC -->
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35"/>
-        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0"/>
+        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
 
   <system.web.webPages.razor>
-    <host factoryType="umbraco.MacroEngines.RazorUmbracoFactory, umbraco.MacroEngines"/>
+    <host factoryType="umbraco.MacroEngines.RazorUmbracoFactory, umbraco.MacroEngines" />
     <pages pageBaseType="umbraco.MacroEngines.DynamicNodeContext">
       <namespaces>
         <add namespace="Microsoft.Web.Helpers" />

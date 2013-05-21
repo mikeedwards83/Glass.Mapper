@@ -163,7 +163,7 @@
 
     <!-- To switch the default rendering engine to MVC, change this value from WebForms to Mvc -->
     <!-- Do not set useAspNetMasterPages to false, it is not relevant to MVC usage -->
-    <defaultRenderingEngine>WebForms</defaultRenderingEngine>
+    <defaultRenderingEngine>Mvc</defaultRenderingEngine>
   </templates>
 
 
