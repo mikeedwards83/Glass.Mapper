@@ -19,9 +19,9 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Source\Glass.Mapper\bin\Debug\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
-		<file src="Source\Glass.Mapper\bin\Debug\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
-		<file src="Source\Glass.Mapper\bin\Debug\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
+		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
+		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
+		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
 		<file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
 	</files>
 </package>

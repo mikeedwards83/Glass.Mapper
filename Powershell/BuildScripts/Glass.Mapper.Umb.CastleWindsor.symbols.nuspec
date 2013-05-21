@@ -23,8 +23,8 @@
 	</dependencies>
   </metadata>
   <files>
-	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\bin\Debug\Glass.Mapper.Umb.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Umb.CastleWindsor.dll" />
-	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\bin\Debug\Glass.Mapper.Umb.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Umb.CastleWindsor.xml" />
+	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\bin\Release\Glass.Mapper.Umb.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Umb.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\bin\Release\Glass.Mapper.Umb.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Umb.CastleWindsor.xml" />
 	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Umb.CastleWindsor" />
 	  <file src="Source\Glass.Mapper.Umb.CastleWindsor\App_Start\**" target="content\App_Start" />
 

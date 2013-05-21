@@ -24,9 +24,9 @@
     </dependencies>
   </metadata>
   <files>
-	  <file src="Source\Glass.Mapper.Sc\bin\Debug\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
-	  <file src="Source\Glass.Mapper.Sc\bin\Debug\Glass.Mapper.Sc.pdb" target="lib\net40\Glass.Mapper.Sc.pdb" />
-	  <file src="Source\Glass.Mapper.Sc\bin\Debug\Glass.Mapper.Sc.xml" target="lib\net40\Glass.Mapper.Sc.xml" />
+	  <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
+	  <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.pdb" target="lib\net40\Glass.Mapper.Sc.pdb" />
+	  <file src="Source\Glass.Mapper.Sc\bin\Release\Glass.Mapper.Sc.xml" target="lib\net40\Glass.Mapper.Sc.xml" />
 	  <file src="Source\Glass.Mapper.Sc\**.cs" target="src\Source\Glass.Mapper.Sc" />
   </files>
 </package>
