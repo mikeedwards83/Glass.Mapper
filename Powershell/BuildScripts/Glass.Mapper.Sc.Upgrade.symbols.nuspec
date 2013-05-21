@@ -19,9 +19,9 @@
     </dependencies>
   </metadata>
   <files>
-	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Debug\Glass.Mapper.Sc.Upgrade.dll" target="lib\net40\Glass.Mapper.Sc.Upgrade.dll" />
-	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Debug\Glass.Mapper.Sc.Upgrade.pdb" target="lib\net40\Glass.Mapper.Sc.Upgrade.pdb" />
-	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Debug\Glass.Mapper.Sc.Upgrade.xml" target="lib\net40\Glass.Mapper.Sc.Upgrade.xml" />
+	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.dll" target="lib\net40\Glass.Mapper.Sc.Upgrade.dll" />
+	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.pdb" target="lib\net40\Glass.Mapper.Sc.Upgrade.pdb" />
+	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.xml" target="lib\net40\Glass.Mapper.Sc.Upgrade.xml" />
 	  <file src="Source\Glass.Mapper.Sc.Upgrade\**.cs" target="src\Source\Glass.Mapper.Sc.Upgrade" />
   </files>
 </package>
