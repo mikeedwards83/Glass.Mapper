@@ -216,7 +216,10 @@ namespace Glass.Mapper
 
             //check interfaces encase this is an interface proxy
             string name = type.Name;
-            var interfaceType = type.GetInterfaces().FirstOrDefault(x => name.Contains(x.Name));
+            //ME - I added the OrderByDescending in response to issue 53
+            // raised on the Glass.Sitecore.Mapper project. Longest name should be compared first
+            // to get the most specific interface
+            var interfaceType = type.GetInterfaces().OrderByDescending(x=>x.Name.Length).FirstOrDefault(x => name.Contains(x.Name));
 
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
