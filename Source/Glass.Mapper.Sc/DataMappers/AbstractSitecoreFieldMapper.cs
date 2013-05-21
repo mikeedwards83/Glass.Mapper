@@ -56,7 +56,12 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext =  mappingContext  as SitecoreDataMappingContext ;
 
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+            
+            if(field ==null)
+               return;
+            
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+
 
             SetField(field, value, scConfig, scContext);
         }
