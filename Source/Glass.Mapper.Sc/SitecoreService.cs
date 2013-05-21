@@ -38,6 +38,12 @@ namespace Glass.Mapper.Sc
     public class SitecoreService : AbstractService, ISitecoreService
     {
         IPerformanceProfiler _profiler = new NullProfiler();
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>
+        /// The profiler.
+        /// </value>
         public IPerformanceProfiler Profiler
         {
             get
@@ -471,11 +477,12 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="language">The language of the item to return</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
         public T GetItem<T, K>(string path, K param1, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(path);
@@ -489,12 +496,13 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="language">The language of the item to return</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
         public T GetItem<T, K, L>(string path, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(path);

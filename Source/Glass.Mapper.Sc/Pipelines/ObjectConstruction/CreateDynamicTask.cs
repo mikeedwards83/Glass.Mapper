@@ -8,8 +8,15 @@ using Glass.Mapper.Sc.Dynamic;
 
 namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
+    /// <summary>
+    /// CreateDynamicTask
+    /// </summary>
     public class CreateDynamicTask : IObjectConstructionTask
     {
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null)

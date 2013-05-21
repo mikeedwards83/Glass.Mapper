@@ -27,6 +27,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
             get { return Sc.GlassHtml.IsInEditingMode; }
         }
 
+        /// <summary>
+        /// Inits the helpers.
+        /// </summary>
         public override void InitHelpers()
         {
             base.InitHelpers();
@@ -105,6 +108,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new HtmlString(GlassHtml.Editable(target, field, parameters));
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
             var frame = new GlassEditFrame(buttons, this.Output, dataSource);

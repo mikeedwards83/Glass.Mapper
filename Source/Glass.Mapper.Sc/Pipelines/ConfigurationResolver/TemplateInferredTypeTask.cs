@@ -7,10 +7,17 @@ using Glass.Mapper.Sc.Configuration;
 
 namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 {
+    /// <summary>
+    /// TemplateInferredTypeTask
+    /// </summary>
     public class TemplateInferredTypeTask : IConfigurationResolverTask
     {
         #region IPipelineTask<ConfigurationResolverArgs> Members
 
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
             if (args.Result == null)

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
+    /// <summary>
+    /// Ignore Configuration
+    /// </summary>
     public class IgnoreConfiguration : AbstractPropertyConfiguration
     {
     }

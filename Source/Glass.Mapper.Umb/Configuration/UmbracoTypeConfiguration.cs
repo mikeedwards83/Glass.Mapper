@@ -129,6 +129,11 @@ namespace Glass.Mapper.Umb.Configuration
             throw new NotSupportedException("Can not get ID for item");
         }
 
+        /// <summary>
+        /// Called to map each property automatically
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         protected override AbstractPropertyConfiguration AutoMapProperty(System.Reflection.PropertyInfo property)
         {
             string name = property.Name;

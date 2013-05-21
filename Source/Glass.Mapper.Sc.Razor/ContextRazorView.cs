@@ -30,7 +30,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <summary>
         /// Gets the <see cref="T:System.Web.HttpContext" /> object associated with the server control for the current Web request.
         /// </summary>
-        /// <value>The context.</value>
+        /// <value>
+        /// The context.
+        /// </value>
         /// <returns>The specified <see cref="T:System.Web.HttpContext" /> object associated with the current request.</returns>
         public string Context { get; set; }
 

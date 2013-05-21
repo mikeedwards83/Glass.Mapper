@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
+    /// <summary>
+    /// Config
+    /// </summary>
     public class Config
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Config"/> class.
+        /// </summary>
         public Config()
         {
             UseWindsorContructor = false;
@@ -14,10 +20,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <summary>
         /// Indicates that classes should be build using the Windsor dependency resolver. Default is False
         /// </summary>
+        /// <value>
+        /// <c>true</c> if [use windsor contructor]; otherwise, <c>false</c>.
+        /// </value>
         public bool UseWindsorContructor { get; set; }
-
-        /// <summary>
-        /// If set to true classes with no mapping can be loaded by Glass.Mapper
-        /// </summary>
     }
 }

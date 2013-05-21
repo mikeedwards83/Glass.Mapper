@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
             {
                 Master = new SitecoreService(Database, GlassRazorSettings.ContextName);
             }
-            catch (KeyNotFoundException ex)
+            catch (KeyNotFoundException)
             {
                 throw new RazorException(
                     "Exception creating Sitecore Service, have you called the method GlassRazorModuleLoader.Load()?");

@@ -30,8 +30,6 @@ namespace Glass.Mapper.Tests
     [TestFixture]
     public class ContextFixture
     {
-        private IGlassConfiguration _glassConfig;
-
         [TearDown]
         public void TearDown()
         {

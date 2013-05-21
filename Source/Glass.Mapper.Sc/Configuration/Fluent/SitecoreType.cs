@@ -324,6 +324,10 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Autoes the map.
+        /// </summary>
+        /// <returns></returns>
         public SitecoreType<T> AutoMap()
         {
             Config.AutoMap = true;

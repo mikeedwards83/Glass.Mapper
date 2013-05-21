@@ -18,8 +18,20 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The model.</value>
         public T Model { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [infer type].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [infer type]; otherwise, <c>false</c>.
+        /// </value>
         public bool InferType { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lazy.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is lazy; otherwise, <c>false</c>.
+        /// </value>
         public bool IsLazy { get; set; }
 
         /// <summary>
@@ -33,6 +45,9 @@ namespace Glass.Mapper.Sc.Web.Ui
         public GlassUserControl() : base() { }
 
 
+        /// <summary>
+        /// Gets the model.
+        /// </summary>
         protected virtual void GetModel()
         {
 

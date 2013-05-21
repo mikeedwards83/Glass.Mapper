@@ -6,6 +6,10 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {
+    /// <summary>
+    /// ConfigurationOnDemandResolverTask
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ConfigurationOnDemandResolverTask<T> : IConfigurationResolverTask where T: AbstractTypeConfiguration, new ()
     {
         /// <summary>

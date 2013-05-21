@@ -9,14 +9,24 @@ using Sitecore.Pipelines;
 
 namespace Glass.Mapper.Sc.Razor.Pipelines.Initialise
 {
+    /// <summary>
+    /// CacheWarmer
+    /// </summary>
     public class CacheWarmer
     {
+        /// <summary>
+        /// Processes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Process(PipelineArgs args)
         {
             Task task = new Task(Warm);
             task.Start();
         }
 
+        /// <summary>
+        /// Warms this instance.
+        /// </summary>
         protected void Warm()
         {
             var dbs = Sitecore.Configuration.Factory.GetDatabases();
@@ -27,6 +37,10 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.Initialise
             }
         }
 
+        /// <summary>
+        /// Warms the db.
+        /// </summary>
+        /// <param name="db">The db.</param>
         protected void WarmDb(Database db)
         {
             
@@ -39,6 +53,10 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.Initialise
             WarmType(typed);
             WarmType(dynamic);
         }
+        /// <summary>
+        /// Warms the type.
+        /// </summary>
+        /// <param name="item">The item.</param>
         protected void WarmType(Item item)
         {
             if (item != null)

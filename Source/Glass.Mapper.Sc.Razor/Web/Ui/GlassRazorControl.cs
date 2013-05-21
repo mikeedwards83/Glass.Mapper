@@ -25,6 +25,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private WebControl _control;
 
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Load" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="T:System.EventArgs" /> object that contains the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
 
@@ -57,6 +61,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         }
 
 
+        /// <summary>
+        /// Sends server control content to a provided <see cref="T:System.Web.UI.HtmlTextWriter"></see> object, which writes the content to be rendered on the client.
+        /// </summary>
+        /// <param name="output">The <see cref="T:System.Web.UI.HtmlTextWriter"></see> object that receives the server control content.</param>
+        /// <remarks>
+        /// When developing custom server controls, you can override this method to generate content for an ASP.NET page.
+        /// </remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
             if (_control != null)

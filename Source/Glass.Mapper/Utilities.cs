@@ -297,6 +297,12 @@ namespace Glass.Mapper
 	        }
 		}
 
+        /// <summary>
+        /// Gets the activator.
+        /// </summary>
+        /// <param name="forType">For type.</param>
+        /// <param name="parameterTypes">The parameter types.</param>
+        /// <returns></returns>
 		protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
 		{
 			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();

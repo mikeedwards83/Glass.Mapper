@@ -83,14 +83,11 @@ namespace Glass.Mapper.Sc.DataMappers
                         var itemLinks1 = references();
                         var itemLinks2 = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferrers(item);
                         return itemLinks1.Union(itemLinks2.Select(x => x.GetSourceItem()));
-                        break;
                     case SitecoreLinkedOptions.References:
                         return references();
-                        break;
                     case SitecoreLinkedOptions.Referrers:
                         var itemLinks4 = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferrers(item);
                         return itemLinks4.Select(x => x.GetSourceItem());
-                        break;
                     default:
                         return new List<Item>();
                 }

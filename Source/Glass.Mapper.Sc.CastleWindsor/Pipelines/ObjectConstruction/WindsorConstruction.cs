@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
 {
+    /// <summary>
+    /// WindsorConstruction
+    /// </summary>
     public class WindsorConstruction : IObjectConstructionTask
     {
+        /// <summary>
+        /// Executes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null)
@@ -25,8 +33,8 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
 
                     if (type.IsClass)
                     {
-                        if(!container.Kernel.HasComponent(type))
-                            container.Kernel.AddComponent(type.FullName, type, LifestyleType.Transient);
+                        if (!container.Kernel.HasComponent(type))
+                            container.Kernel.Register(Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient));
 
                         args.Result = container.Resolve(type);
                         

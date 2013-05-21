@@ -125,9 +125,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\UmbracoCms.Core.6.0.3\lib\Our.Umbraco.uGoLive.Checks.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=3.9.42.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\ServiceStack.Text.3.9.42\lib\net35\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\..\packages\ServiceStack.Text.3.9.46\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="SQLCE4Umbraco, Version=1.0.4834.18855, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

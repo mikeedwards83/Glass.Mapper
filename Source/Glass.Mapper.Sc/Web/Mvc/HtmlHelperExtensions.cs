@@ -10,38 +10,86 @@ using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
+    /// <summary>
+    /// HtmlHelperExtensions
+    /// </summary>
     public static class HtmlHelperExtensions
     {
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper)
         {
             return BeginEditFrame(htmlHelper, "");
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, ID dataSource)
         {
             return BeginEditFrame(htmlHelper, dataSource.ToString());
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, string dataSource)
         {
             return BeginEditFrame(htmlHelper, dataSource, GlassEditFrame.DefaultEditButtons);
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, ID dataSource, ID buttons)
         {
             return BeginEditFrame(htmlHelper, dataSource.ToString(), buttons.ToString());
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, ID dataSource, string buttons)
         {
             return BeginEditFrame(htmlHelper, dataSource.ToString(), buttons);
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, string dataSource, ID buttons)
         {
             return BeginEditFrame(htmlHelper, dataSource, buttons.ToString());
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, string dataSource, string buttons)
         {
             var frame = new GlassEditFrame(buttons, htmlHelper.ViewContext.Writer, dataSource);
@@ -49,6 +97,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return frame;
         }
 
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="editFrame">The edit frame.</param>
+        /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, EditFrame editFrame)
         {
             var writter = new HtmlTextWriter(htmlHelper.ViewContext.Writer);

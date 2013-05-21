@@ -43,24 +43,73 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class SitecoreInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the data mapper installer.
+        /// </summary>
+        /// <value>
+        /// The data mapper installer.
+        /// </value>
         public IWindsorInstaller DataMapperInstaller { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the query parameter installer.
+        /// </summary>
+        /// <value>
+        /// The query parameter installer.
+        /// </value>
         public IWindsorInstaller QueryParameterInstaller { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the data mapper task installer.
+        /// </summary>
+        /// <value>
+        /// The data mapper task installer.
+        /// </value>
         public IWindsorInstaller DataMapperTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the configuration resolver task installer.
+        /// </summary>
+        /// <value>
+        /// The configuration resolver task installer.
+        /// </value>
         public IWindsorInstaller ConfigurationResolverTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the objection construction task installer.
+        /// </summary>
+        /// <value>
+        /// The objection construction task installer.
+        /// </value>
         public IWindsorInstaller ObjectionConstructionTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the object saving task installer.
+        /// </summary>
+        /// <value>
+        /// The object saving task installer.
+        /// </value>
         public IWindsorInstaller ObjectSavingTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
+        /// </summary>
         public SitecoreInstaller():this(new Config())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public SitecoreInstaller(Config config)
         {
             Config = config;
@@ -99,8 +148,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public DataMapperInstaller(Config config)
         {
             Config = config;
@@ -173,8 +232,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class QueryParameterInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryParameterInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public QueryParameterInstaller(Config config)
         {
             Config = config;
@@ -203,8 +272,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="DataMapperTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public DataMapperTaskInstaller(Config config)
         {
             Config = config;
@@ -231,8 +310,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
 
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ConfigurationResolverTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ConfigurationResolverTaskInstaller(Config config)
         {
             Config = config;
@@ -280,8 +369,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
 
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ObjectionConstructionTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ObjectionConstructionTaskInstaller(Config config)
         {
             Config = config;
@@ -320,8 +419,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ObjectSavingTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ObjectSavingTaskInstaller(Config config)
         {
             Config = config;

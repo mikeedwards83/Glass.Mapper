@@ -115,8 +115,11 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </summary>
         public Dictionary<Type, SitecoreTypeConfiguration> _typeConfigurations;
 
-        
-        
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
+        /// </summary>
         public GlassDataProvider()
         {
             SectionTable = new List<SectionInfo>();
@@ -489,7 +492,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// Setups the specified context.
         /// </summary>
-        /// <param name="context">The context.</param>
+        /// <param name="db">The db.</param>
         public  void Initialise(Database db)
         {
             var manager = new DataManager(db);
@@ -554,6 +557,17 @@ namespace Glass.Mapper.Sc.CodeFirst
             }
         }
 
+        /// <summary>
+        /// Creates the template item.
+        /// </summary>
+        /// <param name="db">The db.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="sqlDataProvider">The SQL data provider.</param>
+        /// <param name="containingFolder">The containing folder.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="Sitecore.Exceptions.RequiredObjectIsNullException">TemplateItem is null for ID {0}.Formatted(templateDefinition.ID)</exception>
         public ItemDefinition CreateTemplateItem(
             Database db,
             SitecoreTypeConfiguration config, 

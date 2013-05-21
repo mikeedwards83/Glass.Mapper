@@ -21,6 +21,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
     {
         IPerformanceProfiler _profiler = new SitecoreProfiler();
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>
+        /// The profiler.
+        /// </value>
         public IPerformanceProfiler Profiler
         {
             get{
@@ -34,6 +40,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         private ISitecoreContext _sitecoreContext;
 
+        /// <summary>
+        /// Gets the view manager.
+        /// </summary>
+        /// <value>
+        /// The view manager.
+        /// </value>
         public ViewManager ViewManager { get; private set; }
 
         /// <summary>

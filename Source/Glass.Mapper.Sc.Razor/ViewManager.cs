@@ -8,6 +8,9 @@ using RazorEngine.Templating;
 
 namespace Glass.Mapper.Sc.Razor
 {
+    /// <summary>
+    /// ViewManager
+    /// </summary>
     public class ViewManager
     {
 
@@ -37,6 +40,9 @@ namespace Glass.Mapper.Sc.Razor
         };
 
 
+        /// <summary>
+        /// Initializes the <see cref="ViewManager"/> class.
+        /// </summary>
         static ViewManager()
         {
             if (_viewCache == null)

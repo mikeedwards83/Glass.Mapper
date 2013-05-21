@@ -6,15 +6,27 @@ using Glass.Mapper.Sc.Web.Ui;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// IGlassHtml
+    /// </summary>
     public interface IGlassHtml
     {
+        /// <summary>
+        /// Gets the sitecore context.
+        /// </summary>
+        /// <value>
+        /// The sitecore context.
+        /// </value>
         ISitecoreContext SitecoreContext { get; }
 
         /// <summary>
         /// Edits the frame.
         /// </summary>
         /// <param name="buttons">The buttons.</param>
-        /// <returns>GlassEditFrame.</returns>
+        /// <param name="path">The path.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
         GlassEditFrame EditFrame(string buttons, string path = null);
 
         /// <summary>

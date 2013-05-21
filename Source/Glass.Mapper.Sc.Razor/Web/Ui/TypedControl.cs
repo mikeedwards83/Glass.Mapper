@@ -5,7 +5,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <summary>
     /// Class TypedControl
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public  class TypedControl : AbstractRazorControl<object> 
     {
         /// <summary>

@@ -33,10 +33,10 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
         /// Creates the control.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <param name="type">The type.</param>
-        /// <param name="assembly">The assembly.</param>
         /// <param name="contextName">Name of the context.</param>
-        /// <returns>Sitecore.Web.UI.WebControl.</returns>
+        /// <returns>
+        /// Sitecore.Web.UI.WebControl.
+        /// </returns>
         public static global::Sitecore.Web.UI.WebControl CreateControl(string view, string contextName)
         {
             IRazorControl control = new TypedControl();

@@ -6,6 +6,9 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration
 {
+    /// <summary>
+    /// SitecoreIgnoreConfiguration
+    /// </summary>
     public class SitecoreIgnoreConfiguration : IgnoreConfiguration
     {
     }

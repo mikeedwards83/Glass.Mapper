@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction
                     if (type.IsClass)
                     {
                         if(!container.Kernel.HasComponent(type))
-                            container.Kernel.AddComponent(type.FullName, type, LifestyleType.Transient);
+                            container.Kernel.Register(Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient));
 
                         args.Result = container.Resolve(type);
                         

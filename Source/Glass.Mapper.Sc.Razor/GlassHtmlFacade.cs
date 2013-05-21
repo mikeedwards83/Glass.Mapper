@@ -18,14 +18,27 @@ namespace Glass.Mapper.Sc.Razor
     public class GlassHtmlFacade 
     {
         private readonly HtmlTextWriter _writer;
-        public IGlassHtml _glassHtml;
 
+        private IGlassHtml _glassHtml;
+
+        /// <summary>
+        /// Gets the sitecore context.
+        /// </summary>
+        /// <value>
+        /// The sitecore context.
+        /// </value>
         public ISitecoreContext SitecoreContext
         {
             get { return _glassHtml.SitecoreContext; }
         }
 
 
+        /// <summary>
+        /// Gets or sets the glass HTML.
+        /// </summary>
+        /// <value>
+        /// The glass HTML.
+        /// </value>
         public IGlassHtml GlassHtml
         {
             get { return _glassHtml; }
@@ -33,9 +46,10 @@ namespace Glass.Mapper.Sc.Razor
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GlassHtmlFacade"/> class.
+        /// Initializes a new instance of the <see cref="GlassHtmlFacade" /> class.
         /// </summary>
-        /// <param name="service">The service.</param>
+        /// <param name="context">The context.</param>
+        /// <param name="writer">The writer.</param>
         public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer)
 
         {
@@ -153,6 +167,12 @@ namespace Glass.Mapper.Sc.Razor
             return _glassHtml.RenderLink(link, attributes, contents).RawString();
         }
 
+        /// <summary>
+        /// Edits the frame.
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <returns></returns>
         public GlassEditFrame EditFrame(string buttons, string dataSource = null)
         {
             
@@ -163,6 +183,12 @@ namespace Glass.Mapper.Sc.Razor
             
         }
 
+        /// <summary>
+        /// Renders the partial.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="model">The model.</param>
         public void RenderPartial<T>(string path, T model)
         {
             var item = Sitecore.Context.Database.GetItem(path);

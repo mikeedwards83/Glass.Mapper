@@ -7,8 +7,15 @@ using Glass.Mapper.Sc.Configuration.Fluent;
 
 namespace Glass.Mapper.Sc.Upgrade.Configuration.Fluent
 {
+    /// <summary>
+    /// SitecoreClass
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SitecoreClass<T>: SitecoreType<T>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreClass{T}"/> class.
+        /// </summary>
         public SitecoreClass()
         {
 
@@ -28,7 +35,7 @@ namespace Glass.Mapper.Sc.Upgrade.Configuration.Fluent
         /// <summary>
         /// Map Sitecore items to a class properties
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="items">The items.</param>
         /// <returns></returns>
         public SitecoreType<T> Items(Action<ISitecoreClassNodes<T>> items)
         {

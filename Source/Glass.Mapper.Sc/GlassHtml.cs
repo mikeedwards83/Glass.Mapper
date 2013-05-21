@@ -36,6 +36,12 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class GlassHtml : IGlassHtml
     {
+        /// <summary>
+        /// Gets the sitecore context.
+        /// </summary>
+        /// <value>
+        /// The sitecore context.
+        /// </value>
         public  ISitecoreContext SitecoreContext { get; private set; }
         private readonly Context _context;
 
@@ -54,7 +60,10 @@ namespace Glass.Mapper.Sc
         /// Edits the frame.
         /// </summary>
         /// <param name="buttons">The buttons.</param>
-        /// <returns>GlassEditFrame.</returns>
+        /// <param name="path">The path.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
         public GlassEditFrame EditFrame(string buttons, string path = null)
         {
             var frame = new GlassEditFrame(buttons, HttpContext.Current.Response.Output, path);
@@ -165,11 +174,29 @@ namespace Glass.Mapper.Sc
         }
 
 
+        /// <summary>
+        /// The image width
+        /// </summary>
         public const string ImageWidth = "width";
+        /// <summary>
+        /// The image height
+        /// </summary>
         public const string ImageHeight = "height";
+        /// <summary>
+        /// The image allow stretch
+        /// </summary>
         public const string ImageAllowStretch = "as";
+        /// <summary>
+        /// The image background colour
+        /// </summary>
         public const string ImageBackgroundColour = "bc";
+        /// <summary>
+        /// The image scale image
+        /// </summary>
         public const string ImageScaleImage = "sc";
+        /// <summary>
+        /// The image tag format
+        /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1} />";
 
         /// <summary>

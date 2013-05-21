@@ -104,7 +104,7 @@
       <HintPath>..\..\..\packages\UmbracoCms.Core.6.0.3\lib\Our.Umbraco.uGoLive.Checks.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\..\packages\ServiceStack.Text.3.9.43\lib\net35\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\..\..\packages\ServiceStack.Text.3.9.46\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="SQLCE4Umbraco">
       <HintPath>..\..\..\packages\UmbracoCms.Core.6.0.3\lib\SQLCE4Umbraco.dll</HintPath>

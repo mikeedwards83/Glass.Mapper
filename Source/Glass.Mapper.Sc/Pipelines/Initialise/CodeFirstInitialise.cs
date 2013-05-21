@@ -10,8 +10,15 @@ using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Pipelines.Initialise
 {
+    /// <summary>
+    /// CodeFirstInitialise
+    /// </summary>
     public class CodeFirstInitialise
     {
+        /// <summary>
+        /// Processes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public void Process(PipelineArgs args)
         {
             var dbs = Sitecore.Configuration.Factory.GetDatabases();

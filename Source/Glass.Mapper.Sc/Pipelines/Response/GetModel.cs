@@ -9,19 +9,43 @@ using Sitecore.Mvc.Presentation;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class GetModel : GetModelProcessor
     {
 
+        /// <summary>
+        /// The model type field
+        /// </summary>
         public const string ModelTypeField = "Model Type";
+
+        /// <summary>
+        /// The model field
+        /// </summary>
         public const string ModelField = "Model";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetModel"/> class.
+        /// </summary>
         public GetModel()
         {
             ContextName = "Default";
 
         }
+
+        /// <summary>
+        /// Gets or sets the name of the context.
+        /// </summary>
+        /// <value>
+        /// The name of the context.
+        /// </value>
         public string ContextName { get; set; }
 
+        /// <summary>
+        /// Processes the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
         public override void Process(GetModelArgs args)
         {
             if (args.Result == null)
@@ -45,6 +69,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
         }
+
+        /// <summary>
+        /// Gets from field.
+        /// </summary>
+        /// <param name="rendering">The rendering.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         protected virtual object GetFromField(Rendering rendering, GetModelArgs args)
         {
             Item obj = ObjectExtensions.ValueOrDefault<RenderingItem, Item>(rendering.RenderingItem, (Func<RenderingItem, Item>)(i => i.InnerItem));
@@ -53,6 +84,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             else
                 return GetObject(obj[ModelField], rendering.Item.Database);
         }
+
+        /// <summary>
+        /// Gets from property value.
+        /// </summary>
+        /// <param name="rendering">The rendering.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         protected virtual object GetFromPropertyValue(Rendering rendering, GetModelArgs args)
         {
             string model = rendering.Properties[ModelField];
@@ -62,6 +100,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return GetObject(model, rendering.Item.Database);
         }
 
+        /// <summary>
+        /// Gets from layout.
+        /// </summary>
+        /// <param name="rendering">The rendering.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         protected virtual object GetFromLayout(Rendering rendering, GetModelArgs args)
         {
             string pathOrId = rendering.Properties["LayoutId"];
@@ -74,6 +118,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return GetObject(model, rendering.Item.Database);
         }
 
+        /// <summary>
+        /// Gets from item.
+        /// </summary>
+        /// <param name="rendering">The rendering.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         protected virtual object GetFromItem(Rendering rendering, GetModelArgs args)
         {
             string model = ObjectExtensions.ValueOrDefault<Item, string>(rendering.Item, (Func<Item, string>)(i => i["MvcLayoutModel"]));
@@ -84,6 +134,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         }
 
 
+        /// <summary>
+        /// Gets the object.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="db">The db.</param>
+        /// <returns></returns>
+        /// <exception cref="Glass.Mapper.MapperException">Failed to find context {0}.Formatted(ContextName)</exception>
         public object GetObject(string model, Database db)
         {
 

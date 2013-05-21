@@ -20,8 +20,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <typeparam name="T"></typeparam>
     public class TemplateBase<T> : RazorEngine.Templating.TemplateBase<T>, ITemplateBase
     {
-        private HtmlHelper _helper;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateBase{T}"/> class.
         /// </summary>
@@ -31,6 +29,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+        /// <summary>
+        /// Gets or sets the sitecore context.
+        /// </summary>
+        /// <value>
+        /// The sitecore context.
+        /// </value>
         public ISitecoreContext SitecoreContext { get; set; }
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Configures the specified service.
         /// </summary>
-        /// <param name="service">The service.</param>
+        /// <param name="sitecoreContext">The sitecore context.</param>
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
         public void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, Control parentControl)
@@ -155,7 +159,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <typeparam name="T1">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
-        /// <returns>IEncodedString.</returns>
+        /// <param name="standardOutput">The standard output.</param>
+        /// <returns>
+        /// IEncodedString.
+        /// </returns>
         public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field,
                                            Expression<Func<T1, string>> standardOutput)
         {
@@ -230,12 +237,13 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// Editables the specified field.
         /// </summary>
         /// <param name="field">The field.</param>
-        /// <returns>RawString.</returns>
-        /// <exception cref="System.NullReferenceException">
-        /// No field set
+        /// <param name="standardOutput">The standard output.</param>
+        /// <returns>
+        /// RawString.
+        /// </returns>
+        /// <exception cref="System.NullReferenceException">No field set
         /// or
-        /// No model set
-        /// </exception>
+        /// No model set</exception>
         public RawString Editable(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
             if (field == null) throw new NullReferenceException("No field set");
@@ -255,6 +263,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is in editing mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.
+        /// </value>
         public bool IsInEditingMode
         {
             get { return Sc.GlassHtml.IsInEditingMode; }

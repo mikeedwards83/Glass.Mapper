@@ -97,11 +97,13 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="value">The value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.String.</returns>
+        /// <returns>
+        /// System.String.
+        /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            ///this will only be used by the SitecoreFieldIEnumerableMapper
+            //this will only be used by the SitecoreFieldIEnumerableMapper
             return value as string;
         }
 
@@ -111,11 +113,13 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="fieldValue">The field value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Object.</returns>
+        /// <returns>
+        /// System.Object.
+        /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            ///this will only be used by the SitecoreFieldIEnumerableMapper
+            //this will only be used by the SitecoreFieldIEnumerableMapper
             return fieldValue;
         }
     }
