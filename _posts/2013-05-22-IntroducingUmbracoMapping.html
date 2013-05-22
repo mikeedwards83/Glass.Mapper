@@ -12,12 +12,11 @@ caption: 22 May 2013
 </p>
 <p>
     We have been working extending support for Umbraco 6 in Glass.Mapper. There is an <a href="http://nuget.org/packages/Glass.Mapper.Umb.CastleWindsor/">early release available</a> to try 
-	out the integration in Umbraco.	
+	out the integration with Umbraco.	
 </p>
 <p>
 	The features included in this release are:
 	<ul>
-		<li>Castle Windsor DI</li>
 		<li>Reading Data</li>
 		<li>Writing Data</li>
 		<li>Auto Mapping</li>
@@ -25,6 +24,7 @@ caption: 22 May 2013
 		<li>Fluent Configuration</li>
 		<li>Attribute Configuration</li>
 		<li>Constructor Injection</li>
+		<li>Castle Windsor DI</li>
 	</ul>
 </p>
 <p>
@@ -38,12 +38,12 @@ caption: 22 May 2013
         public virtual string MainBody { get; set; }
         public virtual int NewsArticlesToShow { get; set; }
         public virtual string HeroColour { get; set; }
-        [UmbracoProperty("NewsLanding", UmbracoPropertyType.ContentPicker)]
-        public virtual NewsLanding NewsLanding { get; set; }
+        [UmbracoProperty("NewsLanding")]
+        public virtual NewsLanding LandingPage { get; set; }
     }
 </pre>
 <p>
-	To map your razor layout to your model, inherit GlassTemplatePage.
+	To map your razor layout to your model, inherit from GlassTemplatePage.
 </p>
 <pre class="cs" ref="gh-pages">
 @inherits Glass.Mapper.Umb.Web.Ui.GlassTemplatePage&lt;Glass.Mapper.Sites.Umb.Models.Landing.HomePage&gt;
