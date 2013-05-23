@@ -26,15 +26,15 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// PartialControl
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PartialControl<T> : AbstractRazorControl<T>
+    public class PartialControl : TypedControl
     {
-        T _tempModel;
+        object _tempModel;
 
         /// <summary>
         /// Sets the model.
         /// </summary>
         /// <param name="model">The model.</param>
-        public void SetModel(T model)
+        public void SetModel(object model)
         {
            _tempModel = model;
         }
@@ -43,7 +43,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// Gets the model.
         /// </summary>
         /// <returns></returns>
-        public override T GetModel()
+        public override object GetModel()
         {
             return _tempModel;
         }

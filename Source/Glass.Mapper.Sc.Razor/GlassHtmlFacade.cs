@@ -230,7 +230,7 @@ namespace Glass.Mapper.Sc.Razor
             {
                 var renderType = new PartialRazorRenderingType();
                 control = renderType.GetControl(parameters, false);
-                control.CastTo<PartialControl<T>>().SetModel(model);
+                control.CastTo<PartialControl>().SetModel(model);
             }
             var webControl = control as WebControl;
             webControl.RenderControl(_writer);
