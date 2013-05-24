@@ -383,7 +383,7 @@ namespace Glass.Mapper.Sc
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target,  string parameters)
         {
 
-            if (standardOutput == null || IsInEditingMode)
+            if (IsInEditingMode)
             {
                 if (field.Parameters.Count > 1)
                     throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
@@ -521,7 +521,10 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return standardOutput.Compile().Invoke(target);
+                if (standardOutput != null)
+                    return standardOutput.Compile().Invoke(target);
+                else
+                    return field.Compile().Invoke(target).ToString();
             }
             //return field.Compile().Invoke(target).ToString();
         }
