@@ -183,18 +183,8 @@ namespace Glass.Mapper.Sc
         /// The image height
         /// </summary>
         public const string ImageHeight = "height";
-        /// <summary>
-        /// The image allow stretch
-        /// </summary>
-        public const string ImageAllowStretch = "as";
-        /// <summary>
-        /// The image background colour
-        /// </summary>
-        public const string ImageBackgroundColour = "bc";
-        /// <summary>
-        /// The image scale image
-        /// </summary>
-        public const string ImageScaleImage = "sc";
+     
+    
         /// <summary>
         /// The image tag format
         /// </summary>
@@ -216,7 +206,7 @@ namespace Glass.Mapper.Sc
                                              ImageParameters attributes = null,
                                              bool isEditable = false)
         {
-            if (IsInEditingMode)
+            if (IsInEditingMode && isEditable)
             {
                 return Editable(model, field, attributes);
             }
@@ -238,40 +228,27 @@ namespace Glass.Mapper.Sc
 
             if (attributes == null) attributes = new NameValueCollection();
            
+           
+            var builder = new UrlBuilder(image.Src);
+            
+            //append to url values
+            if (attributes[ImageWidth].IsNotNullOrEmpty())
+                attributes.Add(ImageParameters.WIDTH, attributes[ImageWidth]);
+            if (attributes[ImageHeight].IsNotNullOrEmpty())
+                attributes.Add(ImageParameters.HEIGHT, attributes[ImageHeight]);
+
+            foreach (var key in attributes.AllKeys)
+            {
+                if(key=="alt" || key=="class" || key=="style")
+                    continue;
+                
+                builder[key] = attributes[key];
+            }
+
             //should there be some warning about these removals?
             AttributeCheck(attributes, "class", image.Class);
             AttributeCheck(attributes, "alt", image.Alt);
-            //if (image.Height > 0)
-            //    AttributeCheck(attributes, "height", image.Height.ToString());
-            //if (image.Width > 0)
-            //    AttributeCheck(attributes, "width", image.Width.ToString());
 
-
-            var builder = new UrlBuilder(image.Src);
-
-            //append to url values
-            if (attributes[ImageWidth].IsNotNullOrEmpty())
-                builder["w"] = attributes[ImageWidth];
-            if (attributes[ImageHeight].IsNotNullOrEmpty())
-                builder["h"] = attributes[ImageHeight];
-
-            if (attributes[ImageAllowStretch].IsNotNullOrEmpty())
-            {
-                builder[ImageAllowStretch] = attributes[ImageAllowStretch];
-                attributes.Remove(ImageAllowStretch);
-            }
-
-            if (attributes[ImageBackgroundColour].IsNotNullOrEmpty())
-            {
-                builder[ImageBackgroundColour] = attributes[ImageBackgroundColour];
-                attributes.Remove(ImageBackgroundColour);
-            }
-
-            if (attributes[ImageScaleImage].IsNotNullOrEmpty())
-            {
-                builder[ImageScaleImage] = attributes[ImageScaleImage];
-                attributes.Remove(ImageScaleImage);
-            }
 
             return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
         }
