@@ -195,24 +195,24 @@ namespace Glass.Mapper.Sc
        /// <summary>
        /// Renders an image allowing simple page editor support
        /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <param name="model"></param>
-       /// <param name="field"></param>
-       /// <param name="attributes"></param>
-       /// <param name="isEditable"></param>
+       /// <typeparam name="T">The model type</typeparam>
+       /// <param name="model">The model that contains the image field</param>
+       /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+       /// <param name="parameters">Image parameters, e.g. width, height</param>
+       /// <param name="isEditable">Indicates if the field should be editable</param>
        /// <returns></returns>
         public virtual string RenderImage<T>(T model,
                                              Expression<Func<T, object>> field, 
-                                             ImageParameters attributes = null,
+                                             ImageParameters parameters = null,
                                              bool isEditable = false)
         {
             if (IsInEditingMode && isEditable)
             {
-                return Editable(model, field, attributes);
+                return Editable(model, field, parameters);
             }
             else
             {
-                return RenderImage(field.Compile().Invoke(model) as Fields.Image, attributes.Parameters);
+                return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters==null ? null : parameters.Parameters);
             }
         }
 
@@ -224,6 +224,12 @@ namespace Glass.Mapper.Sc
         /// <returns>An img HTML element</returns>
         public virtual string RenderImage(Fields.Image image, NameValueCollection attributes)
         {
+
+            /*
+             * ME - This method is used to render images rather than going back to the fieldrender
+             * because it stops another call having to be passed to Sitecore.
+             */
+
             if (image == null) return "";
 
             if (attributes == null) attributes = new NameValueCollection();
