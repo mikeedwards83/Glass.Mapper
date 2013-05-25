@@ -200,6 +200,32 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1} />";
 
+
+     
+       /// <summary>
+       /// Renders an image allowing simple page editor support
+       /// </summary>
+       /// <typeparam name="T"></typeparam>
+       /// <param name="model"></param>
+       /// <param name="field"></param>
+       /// <param name="attributes"></param>
+       /// <param name="isEditable"></param>
+       /// <returns></returns>
+        public virtual string RenderImage<T>(T model,
+                                             Expression<Func<T, object>> field, 
+                                             ImageParameters attributes = null,
+                                             bool isEditable = false)
+        {
+            if (IsInEditingMode)
+            {
+                return Editable(model, field, attributes);
+            }
+            else
+            {
+                return RenderImage(field.Compile().Invoke(model) as Fields.Image, attributes.Parameters);
+            }
+        }
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
@@ -211,8 +237,7 @@ namespace Glass.Mapper.Sc
             if (image == null) return "";
 
             if (attributes == null) attributes = new NameValueCollection();
-
-
+           
             //should there be some warning about these removals?
             AttributeCheck(attributes, "class", image.Class);
             AttributeCheck(attributes, "alt", image.Alt);
@@ -419,53 +444,12 @@ namespace Glass.Mapper.Sc
 
                 var site = global::Sitecore.Context.Site;
 
-
                 if (_context == null) 
                     throw new NullReferenceException("Context cannot be null");
-                
-                //ME - test if we can remove this
-                ////if the class a proxy then we have to get it's base type
-                //Type type;
-                //if (finalTarget is IProxyTargetAccessor)
-                //{
-                //    //first try the base type
-                //    type = finalTarget.GetType().BaseType;
-
-                //    //if it doesn't contain the base type then we need to check the interfaces
-                //    if (!context.TypeConfigurations.ContainsKey(type))
-                //    {
-
-                //        var interfaces = finalTarget.GetType().GetInterfaces();
-
-                //        string name = finalTarget.GetType().Name;
-                //        //be default castle will use the name of the class it is proxying for it's own name
-                //        foreach (var inter in interfaces)
-                //        {
-                //            if (name.StartsWith(inter.Name))
-                //            {
-                //                type = inter;
-                //                break;
-                //            }
-                //        }
-                //    }
-                //}
-                //else
-                //    type = finalTarget.GetType();
-
 
                 var config = _context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
 
-                //Guid id = Guid.Empty;
-
-                //try
-                //{
-                //    id = context.GetClassId(type, finalTarget);
-                //}
-                //catch (SitecoreIdException ex)
-                //{
-                //    throw new MapperException("Page editting error. Type {0} can not be used for editing. Could not find property with SitecoreID attribute. See inner exception".Formatted(typeof(T).FullName), ex);
-                //}
-
+              
                 var scClass = config.ResolveItem(finalTarget, SitecoreContext.Database);
 
                 //lambda expression does not always return expected memberinfo when inheriting
