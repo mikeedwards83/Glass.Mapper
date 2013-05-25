@@ -117,6 +117,21 @@ namespace Glass.Mapper.Sc
         [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
         string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target);
 
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="field"></param>
+        /// <param name="attributes"></param>
+        /// <param name="isEditable"></param>
+        /// <returns></returns>
+        string RenderImage<T>(T model,
+                              Expression<Func<T, object>> field,
+                              ImageParameters attributes = null,
+                              bool isEditable = false);
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
