@@ -491,7 +491,7 @@ namespace Glass.Mapper.Sc
                 if (standardOutput != null)
                     return standardOutput.Compile().Invoke(target);
                 else
-                    return field.Compile().Invoke(target).ToString();
+                    return (field.Compile().Invoke(target) ?? string.Empty).ToString();
             }
             //return field.Compile().Invoke(target).ToString();
         }

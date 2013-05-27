@@ -124,12 +124,12 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
         /// <param name="field"></param>
-        /// <param name="attributes"></param>
+        /// <param name="parameters"></param>
         /// <param name="isEditable"></param>
         /// <returns></returns>
         string RenderImage<T>(T model,
                               Expression<Func<T, object>> field,
-                              ImageParameters attributes = null,
+                              ImageParameters parameters = null,
                               bool isEditable = false);
 
         /// <summary>
