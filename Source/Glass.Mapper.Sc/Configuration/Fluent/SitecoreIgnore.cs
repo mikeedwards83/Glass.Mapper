@@ -27,7 +27,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// SitecoreIgnore
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SitecoreIgnore<T> : AbstractPropertyBuilder<T, SitecoreFieldConfiguration>
+    public class SitecoreIgnore<T> : AbstractPropertyBuilder<T, SitecoreIgnoreConfiguration>
     {
      /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreField{T}"/> class.
@@ -36,7 +36,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreIgnore(Expression<Func<T, object>> ex)
             : base(ex)
         {
-            Configuration.FieldName = Configuration.PropertyInfo.Name;
+           // Configuration.FieldName = Configuration.PropertyInfo.Name;
         }
     }
 }

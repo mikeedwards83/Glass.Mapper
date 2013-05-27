@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
 using NUnit.Framework;
 using Sitecore.SecurityModel;
@@ -40,7 +41,6 @@ namespace Glass.Mapper.Sc.Integration
              
             
             //Assign
-            string path = "/sitecore/content/Tests/SitecoreService/AddVersion/Target2";
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -101,6 +101,84 @@ namespace Glass.Mapper.Sc.Integration
 
         }
 
+        [Test]
+        public void OrderOfIgnoreIssue1_ConfiguredShouldBeSet_TitleShouldBeIgnored()
+        {
+            //Assign
+            string path = "/sitecore/content/Tests/Misc/FieldConfigOrder";
+            string expected = "Hello space";
+
+
+            var fluentConfig = new SitecoreFluentConfigurationLoader();
+
+            var typeConfig = fluentConfig.Add<FieldOrderOnIgnore>();
+            typeConfig.AutoMap();
+            typeConfig.Ignore(x => x.Title);
+            typeConfig.Field(x => x.ConfiguredTitle).FieldName("Title");
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(fluentConfig);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["Title"] = expected;
+            }
+            
+            var scContext = new SitecoreContext(db);
+
+
+            //Act
+            var instance = scContext.GetItem<FieldOrderOnIgnore>(path);
+           
+
+            //Assert
+            Assert.AreEqual(expected, instance.ConfiguredTitle);
+            Assert.IsNullOrEmpty(instance.Title);
+        }
+
+        [Test]
+        public void OrderOfIgnoreIssue2_ConfiguredShouldBeSet_TitleShouldBeIgnored()
+        {
+            //Assign
+            string path = "/sitecore/content/Tests/Misc/FieldConfigOrder";
+            string expected = "Hello space";
+
+
+            var fluentConfig = new SitecoreFluentConfigurationLoader();
+
+            var typeConfig = fluentConfig.Add<FieldOrderOnIgnore>();
+            typeConfig.AutoMap();
+            typeConfig.Field(x => x.ConfiguredTitle).FieldName("Title");
+            typeConfig.Ignore(x => x.Title);
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(fluentConfig);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["Title"] = expected;
+            }
+
+            var scContext = new SitecoreContext(db);
+
+
+            //Act
+            var instance = scContext.GetItem<FieldOrderOnIgnore>(path);
+
+
+            //Assert
+            Assert.AreEqual(expected, instance.ConfiguredTitle);
+            Assert.IsNullOrEmpty(instance.Title);
+        }
+
 #region Stubs
         [SitecoreType]
         public interface IBase
@@ -124,6 +202,12 @@ namespace Glass.Mapper.Sc.Integration
 
             [SitecoreField("Image Space")]
             public virtual Image ImageSpace { get; set; }
+        }
+
+        public class FieldOrderOnIgnore
+        {
+            public virtual string Title { get; set; }
+            public virtual string ConfiguredTitle { get; set; }
         }
 
 #endregion
