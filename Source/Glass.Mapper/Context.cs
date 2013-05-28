@@ -82,6 +82,7 @@ namespace Glass.Mapper
 
             var context = new Context();
             context.DependencyResolver = resolver;
+            context.Name = contextName;
             Contexts[contextName] = context;
 
             if (isDefault)
@@ -101,6 +102,8 @@ namespace Glass.Mapper
         }
 
         #endregion
+
+        public string Name { get; private set; }
 
         /// <summary>
         /// List of the type configurations loaded by this context
