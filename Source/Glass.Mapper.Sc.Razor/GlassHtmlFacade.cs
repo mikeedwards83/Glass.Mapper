@@ -166,7 +166,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
-        public virtual string RenderImage<T>(T model,
+        public virtual RawString RenderImage<T>(T model,
                                              Expression<Func<T, object>> field,
                                              ImageParameters parameters = null,
                                              bool isEditable = false)
