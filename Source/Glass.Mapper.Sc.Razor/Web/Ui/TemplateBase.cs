@@ -120,7 +120,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             Html = new HtmlHelper(new ViewContext(), new ViewDataContainer() {ViewData = ViewData});
             ViewData = viewData;
             ParentControl = parentControl;
-            IsPostback = parentControl.Page.IsPostBack;
+            if (parentControl != null && parentControl.Page != null)
+                IsPostback = parentControl.Page.IsPostBack;
+            else
+                IsPostback = HttpContext.Current.Request.HttpMethod.ToUpperInvariant() = "POST";
         }
 
         /// <summary>
