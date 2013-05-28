@@ -30,6 +30,7 @@ using Sitecore.Web.UI.WebControls;
 using Image = Glass.Mapper.Sc.Fields.Image;
 using System.Web;
 using System.Web.UI.WebControls;
+using Glass.Mapper.Sc.RenderField;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
@@ -224,7 +225,22 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return GlassHtml.RenderImage(image, attributes);
         }
 
-
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
+        public virtual RawString RenderImage<T>(T model,
+                                             Expression<Func<T, object>> field,
+                                             ImageParameters parameters = null,
+                                             bool isEditable = false)
+        {
+            return GlassHtml.RenderImage<T>(model, field, parameters, isEditable);
+        }
 
         /// <summary>
         /// Editables the specified field.
