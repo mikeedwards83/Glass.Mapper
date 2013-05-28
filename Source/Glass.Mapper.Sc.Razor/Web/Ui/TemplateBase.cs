@@ -123,7 +123,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             if (parentControl != null && parentControl.Page != null)
                 IsPostback = parentControl.Page.IsPostBack;
             else
-                IsPostback = HttpContext.Current.Request.HttpMethod.ToUpperInvariant() = "POST";
+                IsPostback = HttpContext.Current.Request.HttpMethod.ToUpperInvariant() == "POST";
         }
 
         /// <summary>
