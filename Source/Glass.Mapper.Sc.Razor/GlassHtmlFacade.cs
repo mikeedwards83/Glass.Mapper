@@ -13,15 +13,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq.Expressions;
 using System.Web.UI;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.Razor.RenderingTypes;
 using Glass.Mapper.Sc.Razor.Web.Ui;
+using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data.Fields;
 using Sitecore.Diagnostics;
@@ -153,6 +155,26 @@ namespace Glass.Mapper.Sc.Razor
         {
             return _glassHtml.RenderImage(image, attributes).RawString();
         }
+
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
+        public virtual string RenderImage<T>(T model,
+                                             Expression<Func<T, object>> field,
+                                             ImageParameters parameters = null,
+                                             bool isEditable = false)
+        {
+            return _glassHtml.RenderImage<T>(model, field, parameters, isEditable).RawString();
+        }
+
+
         /// <summary>
         /// Renders the link.
         /// </summary>
