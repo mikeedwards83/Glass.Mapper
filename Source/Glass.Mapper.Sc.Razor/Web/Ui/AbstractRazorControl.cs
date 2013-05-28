@@ -241,7 +241,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private void WriteException(HtmlTextWriter output, Exception ex)
         {
             output.Write("<h1>Glass Razor Rendering Exception</h1>");
-            output.Write("<p>View: {0}</p>".Formatted(this.View));
+            output.Write("<p>View: {0}</p>".Formatted(this.View.Name));
             output.Write("<p>{0}</p>".Formatted(ex.Message));
             output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
         
