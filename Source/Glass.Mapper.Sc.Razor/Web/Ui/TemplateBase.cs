@@ -28,6 +28,8 @@ using Glass.Mapper.Sc.Razor.Web.Mvc;
 using RazorEngine.Text;
 using Sitecore.Web.UI.WebControls;
 using Image = Glass.Mapper.Sc.Fields.Image;
+using System.Web;
+using System.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
@@ -110,13 +112,14 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="sitecoreContext">The sitecore context.</param>
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
-        public void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, Control parentControl)
+        public void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, WebControl parentControl)
         {
             SitecoreContext = sitecoreContext;
 
             Html = new HtmlHelper(new ViewContext(), new ViewDataContainer() {ViewData = ViewData});
             ViewData = viewData;
             ParentControl = parentControl;
+            IsPostback = parentControl.Page.IsPostBack;
         }
 
         /// <summary>
@@ -183,7 +186,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field,
                                            Expression<Func<T1, string>> standardOutput)
         {
-            return GlassHtml.Editable(target, field);
+            return GlassHtml.Editable(target, field, standardOutput);
         }
 
         /// <summary>
@@ -289,6 +292,19 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         public bool IsInEditingMode
         {
             get { return Sc.GlassHtml.IsInEditingMode; }
+
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is in editing mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPostback
+        {
+            get;
+            private set;
 
         }
     }

@@ -230,7 +230,7 @@ namespace Glass.Mapper.Sc
              * because it stops another call having to be passed to Sitecore.
              */
 
-            if (image == null) return "";
+            if (image == null || image.Src.IsNullOrWhiteSpace()) return "";
 
             if (attributes == null) attributes = new NameValueCollection();
            

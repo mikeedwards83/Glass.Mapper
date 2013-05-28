@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
@@ -35,7 +36,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="sitecoreContext">The sitecore context.</param>
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
-        void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, Control parentControl);
+        void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, WebControl parentControl);
     }
 }
 
