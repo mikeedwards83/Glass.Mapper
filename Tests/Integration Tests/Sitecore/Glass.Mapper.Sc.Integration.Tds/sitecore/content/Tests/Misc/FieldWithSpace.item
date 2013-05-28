@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {FEBCA239-2D78-4383-BB2B-ECEEC037E05C}
+database: master
+path: /sitecore/content/Tests/Misc/FieldWithSpace
+parent: {A112E4F1-D0E0-475E-AB8E-92F399989696}
+name: FieldWithSpace
+master: {00000000-0000-0000-0000-000000000000}
+template: {213C3018-8914-4774-8B01-F7BB20E6F092}
+templatekey: MiscTemplate
+
+----version----
+language: en
+version: 1
+revision: 0956acfc-2d54-4db8-9abe-1af381599b9e
+
+----field----
+field: {74B26783-1722-4501-883D-70E76D0DFD8B}
+name: Image Space
+key: image space
+content-length: 137
+
+<image mediaid="{C2CE5623-1E36-4535-9A01-669E1541DDAF}" mediapath="/Tests/Dayonta" src="~/media/C2CE56231E3645359A01669E1541DDAF.ashx" />
+----field----
+field: {3F29F851-9189-4F04-9B76-0F877F07CF0E}
+name: Field With Space
+key: field with space
+content-length: 11
+
+Hello space
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130523T232219
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+0956acfc-2d54-4db8-9abe-1af381599b9e
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130524T072547:635049771476731532
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
