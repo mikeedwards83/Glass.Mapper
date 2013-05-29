@@ -146,31 +146,40 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="viewLoader">The view loader.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="System.NullReferenceException">Could not find file {0}..Formatted(viewPath)</exception>
-        private static CachedView UpdateCache(string viewPath, Func<string, string> viewLoader)
+        private static void UpdateCache(string viewPath, Func<string, string> viewLoader)
         {
             viewPath = viewPath.ToLower();
 
             string finalview = viewLoader(viewPath);
 
-            if (finalview == null) throw new NullReferenceException("Could not find file {0}.".Formatted(viewPath));
-
-            var cached = new CachedView();
-
 
             lock (_viewKey)
             {
-                cached.ViewContent = finalview;
-                cached.Template = RazorEngine.Razor.CreateTemplate(cached.ViewContent);
-                cached.Type = cached.Template.GetType().BaseType.GetGenericArguments()[0];
-                cached.Name = viewPath;
-                _viewCache[viewPath] = cached;
+                if (finalview.IsNullOrWhiteSpace())
+                {
+                    Sitecore.Diagnostics.Log.Warn("Could not update cached view because view content was null or empty {0}".Formatted(viewPath), "");
+                    _viewCache.Remove(viewPath);
+                }
+                else{
+                    try
+                    {
+                        var cached = new CachedView();
 
+                        cached.ViewContent = finalview;
+
+                        var template = RazorEngine.Razor.CreateTemplate(cached.ViewContent);
+                        cached.Type = template.GetType().BaseType.GetGenericArguments()[0];
+                        cached.Name = viewPath;
+                        _viewCache[viewPath] = cached;
+                    }
+                    catch (Exception ex)
+                    {
+                        Sitecore.Diagnostics.Log.Error("Failed to update Razor cache.", ex, "");
+                        _viewCache.Remove(viewPath);
+                    }
+                }
             }
-
-            return cached;
         }
-
-
     }
 }
 

@@ -35,14 +35,6 @@ namespace Glass.Mapper.Sc.Razor
         public string ViewContent { get; set; }
 
         /// <summary>
-        /// Gets or sets the template.
-        /// </summary>
-        /// <value>
-        /// The template.
-        /// </value>
-        public ITemplate Template { get; set; }
-
-        /// <summary>
         /// Gets or sets the type.
         /// </summary>
         /// <value>
