@@ -136,6 +136,11 @@ namespace Glass.Mapper.Sc.Razor
             {
                 UpdateCache(viewPath, ViewLoader);
             }
+            if (!_viewCache.ContainsKey(viewPath))
+            {
+                Sitecore.Diagnostics.Log.Warn("Failed to find razor view {0}".Formatted(viewPath), string.Empty);
+                return null;
+            }
             return  _viewCache[viewPath];
         }
 

@@ -13,11 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Generic;
+using System.Web.UI;
 using Sitecore.Web.UI;
+using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Razor.RenderingTypes
 {
@@ -85,6 +87,17 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
 
             return finalType;
         }
+        public static WebControl ErrorControl(string viewpath)
+        {
+            var placeholder = new Placeholder();
+            var error = new LiteralControl();
+            error.Text = " Failed to load razor view {0}".Formatted(viewpath);
+
+            placeholder.Controls.Add(error);
+            return placeholder;
+        }
     }
+
+    
 }
 

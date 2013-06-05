@@ -58,8 +58,14 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
 
             Type codeBehindType = GetControlType(typeName, _typeLoader);
 
+            var razorView = ViewManager.GetRazorView(view);
+
+            if (razorView == null)
+            {
+                return AbstractCachingRenderingType.ErrorControl(view);
+            }
             IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(codeBehindType) as IRazorControl;
-            control.View = ViewManager.GetRazorView(view);
+            control.View = razorView;
             control.ContextName = contextName;
             return control as global::Sitecore.Web.UI.WebControl;
         }
