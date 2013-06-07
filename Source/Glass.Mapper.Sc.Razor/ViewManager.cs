@@ -128,19 +128,26 @@ namespace Glass.Mapper.Sc.Razor
         /// <returns>System.String.</returns>
         public static CachedView GetRazorView(string viewPath)
         {
+            Sitecore.Diagnostics.Profiler.StartOperation("Razor - Get view {0}".Formatted(viewPath));
+
             viewPath = GetFullPath(viewPath);
 
             viewPath = viewPath.ToLower();
 
             if (!_viewCache.ContainsKey(viewPath))
             {
+                Sitecore.Diagnostics.Profiler.StartOperation("Razor - Updating view cache {0}".Formatted(viewPath));
                 UpdateCache(viewPath, ViewLoader);
+                Sitecore.Diagnostics.Profiler.EndOperation("Razor - Updating view cache {0}".Formatted(viewPath));
             }
             if (!_viewCache.ContainsKey(viewPath))
             {
                 Sitecore.Diagnostics.Log.Warn("Failed to find razor view {0}".Formatted(viewPath), string.Empty);
                 return null;
             }
+
+            Sitecore.Diagnostics.Profiler.EndOperation("Razor - Get view {0}".Formatted(viewPath));
+
             return  _viewCache[viewPath];
         }
 

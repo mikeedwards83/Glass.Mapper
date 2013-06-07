@@ -186,37 +186,36 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>When developing custom server controls, you can override this method to generate content for an ASP.NET page.</remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
-           Profiler.Start("Get Model");
-
-            Model = GetModel();
-
-            Profiler.End("Get Model");
-
             try
             {
-                Profiler.Start("Razor engine {0}".Formatted(this.View.Name));
+             
+                    Profiler.Start("Razor engine {0}".Formatted(this.View.Name));
 
-                Profiler.Start("Create Template");
+                    Profiler.Start("Get Model");
 
-                var template =
-                    RazorEngine.Razor.GetTemplate<T>(View.ViewContent, Model, View.Name) as ITemplateBase;
-              
-                Profiler.End("Create Template");
+                    Model = GetModel();
 
-                Profiler.Start("Configure Template");
+                    Profiler.End("Get Model");
 
-                template.Configure(SitecoreContext, ViewData, this);
 
-                Profiler.End("Configure Template");
+                    Profiler.Start("Create Template");
 
-                Profiler.Start("Run Template");
+                    var template =
+                        RazorEngine.Razor.GetTemplate<T>(View.ViewContent, Model, View.Name) as ITemplateBase;
 
-                output.Write( ((RazorEngine.Templating.ITemplate)template).Run(new ExecuteContext()));
+                    Profiler.End("Create Template");
 
-                Profiler.End("Run Template");
+                    Profiler.Start("Configure Template");
 
-                Profiler.End("Razor engine {0}".Formatted(this.View));
+                    template.Configure(SitecoreContext, ViewData, this);
 
+                    Profiler.End("Configure Template");
+
+                    Profiler.Start("Run Template");
+
+                    output.Write(((RazorEngine.Templating.ITemplate)template).Run(new ExecuteContext()));
+
+                    Profiler.End("Run Template");
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)
             {
@@ -228,13 +227,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                                       });
 
 
-             //   throw new RazorException(errors.ToString());
+                //   throw new RazorException(errors.ToString());
 
                 WriteException(output, ex);
             }
             catch (Exception ex)
             {
                 WriteException(output, ex);
+            }
+            finally
+            {
+                Profiler.End("Razor engine {0}".Formatted(this.View));
             }
         }
 

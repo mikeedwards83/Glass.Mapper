@@ -73,10 +73,15 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             _control = renderType.GetControl(parameters, false) as WebControl;
             _control.DataSource = this.DataSource;
 
+            this.Controls.Add(_control);
 
             base.OnLoad(e);
         }
 
+        protected override string GetCachingID()
+        {
+            return this.Path;
+        }
 
         /// <summary>
         /// Sends server control content to a provided <see cref="T:System.Web.UI.HtmlTextWriter"></see> object, which writes the content to be rendered on the client.
