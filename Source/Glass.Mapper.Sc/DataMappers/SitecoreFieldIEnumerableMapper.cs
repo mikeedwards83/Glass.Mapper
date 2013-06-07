@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (list == null)
             {
-                return string.Empty;
+                return null;
             }
 
             List<string> sList = new List<string>();
@@ -102,7 +102,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (sList.Any())
                 return sList.Aggregate((x, y) => x + "|" + y);
             else
-                return string.Empty;
+                return null;
         }
 
         /// <summary>

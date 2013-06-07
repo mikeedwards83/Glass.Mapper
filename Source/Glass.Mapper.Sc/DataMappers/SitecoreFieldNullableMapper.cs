@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             if (value == null)
             {
-                field.Value = string.Empty;
+                field.Value = null;
                 return;
             }
 

@@ -80,16 +80,14 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return;
             }
-            else if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
+            
+            if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
             {
                 throw new NotSupportedException("It is not possible to save data from a rich text field when the data isn't raw."
                     + "Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));
             }
-            else
-            {
-                string fieldValue = (value ?? "").ToString();
-                field.Value = fieldValue;
-            }
+            
+            field.Value = value != null ? value.ToString() : null;
         }
 
         /// <summary>
