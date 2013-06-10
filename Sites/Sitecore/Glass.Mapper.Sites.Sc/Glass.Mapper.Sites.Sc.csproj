@@ -113,16 +113,16 @@
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=1.0.4549.26863, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.Analytics">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.Analytics.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.DeviceSimulator">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.ExperienceEditor">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
     </Reference>
     <Reference Include="sitecore.nexus">
       <HintPath>..\..\..\Depends\Sitecore\bin\sitecore.nexus.dll</HintPath>
@@ -198,7 +198,9 @@
     <Content Include="App_Browsers\Form.browser" />
     <Content Include="App_Browsers\XamlPage.browser" />
     <Content Include="App_Config\Commands.config" />
-    <Content Include="App_Config\ConnectionStrings.config" />
+    <Content Include="App_Config\ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Config\ConnectionStringsOracle.config" />
     <Content Include="App_Config\FieldTypes.config" />
     <Content Include="App_Config\Icons.config" />
