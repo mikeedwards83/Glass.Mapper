@@ -59,8 +59,16 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
         /// <returns>System.Web.UI.WebControls.WebControl.</returns>
         public static System.Web.UI.WebControls.WebControl CreateControl(string view, string contextName)
         {
+
+            var razorView = ViewManager.GetRazorView(view);
+
+            if (razorView == null)
+            {
+                return AbstractCachingRenderingType.ErrorControl(view);
+            }
+
             IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(typeof(DynamicControl)) as IRazorControl;
-            control.View = ViewManager.GetRazorView(view); ;
+            control.View = razorView;
             control.ContextName = contextName;
             return control as System.Web.UI.WebControls.WebControl;
         }

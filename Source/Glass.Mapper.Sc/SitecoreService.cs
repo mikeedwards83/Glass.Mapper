@@ -189,9 +189,6 @@ namespace Glass.Mapper.Sc
                 throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(K).FullName), ex);
             }
 
-
-
-
             Item pItem = parentType.ResolveItem(parent, Database);
 
             
@@ -205,10 +202,20 @@ namespace Glass.Mapper.Sc
             if (nameProperty == null)
                 throw new MapperException("The type {0} does not have a property with attribute SitecoreInfo(SitecoreInfoType.Name)".Formatted(newType.Type.FullName));
 
-            string tempName = Guid.NewGuid().ToString();
+            string name = string.Empty;
 
+            try
+            {
+                name = nameProperty.PropertyInfo.GetValue(newItem, null).ToString();
+            }
+            catch
+            {
+                throw new MapperException("Failed to get item name");
+            }
+
+            if (name.IsNullOrEmpty())
+                throw new MapperException("New class has no name");
                
-
             ID templateId = newType.TemplateId;
             ID branchId = newType.BranchId;
             Language language = newType.GetLanguage(newItem);
@@ -221,13 +228,13 @@ namespace Glass.Mapper.Sc
 
             Item item = null;
 
-            if (!ID.IsNullOrEmpty(templateId))
+            if (!ID.IsNullOrEmpty(branchId))
             {
-                item = pItem.Add(tempName, new TemplateID(templateId));
+                item = pItem.Add(name, new BranchId(branchId));
             }
-            else if (!ID.IsNullOrEmpty(branchId))
+            else if (!ID.IsNullOrEmpty(templateId))
             {
-                item = pItem.Add(tempName, new BranchId(branchId));
+                item = pItem.Add(name, new TemplateID(templateId));
             }
             else
             {
@@ -251,8 +258,6 @@ namespace Glass.Mapper.Sc
             newType.MapPropertiesToObject(newItem, this, typeContext);
 
             return newItem;
-            //   return CreateClass<T>(false, false, item);
-
         }
 
 

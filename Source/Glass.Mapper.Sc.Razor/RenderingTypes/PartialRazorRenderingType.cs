@@ -52,9 +52,15 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
         /// <returns>Sitecore.Web.UI.WebControl.</returns>
         public static global::Sitecore.Web.UI.WebControl CreateControl(string view, string contextName)
         {
+            var razorView = ViewManager.GetRazorView(view);
+
+            if (razorView == null)
+            {
+                return AbstractCachingRenderingType.ErrorControl(view);
+            }
 
             IRazorControl control = new PartialControl();
-            control.View = ViewManager.GetRazorView(view); ;
+            control.View = razorView;
             control.ContextName = contextName;
             return control as global::Sitecore.Web.UI.WebControl;
         }
