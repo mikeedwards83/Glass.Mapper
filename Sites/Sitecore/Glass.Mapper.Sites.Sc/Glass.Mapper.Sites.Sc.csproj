@@ -139,6 +139,10 @@
     <Reference Include="Sitecore.SegmentBuilder">
       <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.SegmentBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Shell.MarketingAutomation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Shell.MarketingAutomation.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Update">
       <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Update.dll</HintPath>
     </Reference>
@@ -180,6 +184,10 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="Telerik.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2012.2.607.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
