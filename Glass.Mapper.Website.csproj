@@ -74,6 +74,9 @@
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\tutorial01.html" />
     <Content Include="docs\tutorial\sitecore\tutorial16\tutorial16.html" />
     <Content Include="docs\tutorial\sitecore\tutorial15\tutorial15.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial17\Tutorial17.InferredItems.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial17\Tutorial17.InferredRendering.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial17\tutorial17.html" />
     <Content Include="images\blog\2013-04-28Sitecore7Search.PNG" />
     <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
     <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
