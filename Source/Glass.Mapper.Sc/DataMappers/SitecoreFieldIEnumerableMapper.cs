@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -86,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (list == null)
             {
-                return string.Empty;
+                return null;
             }
 
             List<string> sList = new List<string>();
@@ -101,7 +102,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (sList.Any())
                 return sList.Aggregate((x, y) => x + "|" + y);
             else
-                return string.Empty;
+                return null;
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var type = Utilities.GetGenericArgument(property.PropertyType);
 
             var configCopy = scConfig.Copy();
-            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name);
+            configCopy.PropertyInfo = new FakePropertyInfo(type, property.Name, property.DeclaringType);
 
             Mapper =
                 args.DataMappers.FirstOrDefault(
@@ -162,6 +163,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 }
+
 
 
 

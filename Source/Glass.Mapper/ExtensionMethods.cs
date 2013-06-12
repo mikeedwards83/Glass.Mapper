@@ -54,6 +54,23 @@ namespace Glass.Mapper
             return string.IsNullOrEmpty(target);
         }
 
+        //
+        // Summary:
+        //     Indicates whether a specified string is null, empty, or consists only of
+        //     white-space characters.
+        //
+        // Parameters:
+        //   value:
+        //     The string to test.
+        //
+        // Returns:
+        //     true if the value parameter is null or System.String.Empty, or if value consists
+        //     exclusively of white-space characters.
+        public static bool IsNullOrWhiteSpace(this string target)
+        {
+            return string.IsNullOrWhiteSpace(target);
+        }
+
         /// <summary>
         /// Indicates whether the specified string is not null and isn't System.String.Empty
         /// string.
@@ -118,6 +135,7 @@ namespace Glass.Mapper
         #endregion
     }
 }
+
 
 
 

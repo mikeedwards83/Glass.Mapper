@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -114,6 +115,11 @@ namespace Glass.Mapper.Configuration
         
         }
 
+        /// <summary>
+        /// Autoes the map properties.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public virtual IEnumerable<AbstractPropertyConfiguration> AutoMapProperties(Type type)
         {
             BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
@@ -154,6 +160,7 @@ namespace Glass.Mapper.Configuration
         }
     }
 }
+
 
 
 

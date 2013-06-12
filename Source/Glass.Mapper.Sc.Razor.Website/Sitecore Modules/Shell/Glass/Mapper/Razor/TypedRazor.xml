@@ -24,18 +24,6 @@ limitations under the License.
         </Border>
         <Literal Text="This wizard will take you through the process of creating a Razor CSHTML page that uses the Glass Typed Sitecore integrtion."/>
       </WizardFormFirstPage>
-      <WizardFormPage ID="typeNamePage" Header="Type Name" Text="Enter the name of the type for the razor view." Icon="Software/32x32/text_code.png">
-        <WizardFormIndent>
-          <GridPanel Width="100%" CellPadding="2" Columns="2">
-            <Literal Text="Type Name:" Style="white-space:nowrap"/>
-            <Edit ID="TypeName" Value="MyApp.Website.Models.News" Width="100%" GridPanel.Width="100%"/>
-          </GridPanel>
-          <GridPanel Width="100%" CellPadding="2" Columns="2">
-            <Literal Text="Assembly Name:" Style="white-space:nowrap"/>
-            <Edit ID="AssemblyName" Value="MyApp.Website" Width="100%" GridPanel.Width="100%"/>
-          </GridPanel>
-        </WizardFormIndent>
-      </WizardFormPage>
       <WizardFormPage ID="fileNamePage" Header="File Name" Text="Enter a name for the CSHTML file." Icon="Software/32x32/text_code.png">
         <WizardFormIndent>
           <GridPanel Width="100%" CellPadding="2" Columns="2">

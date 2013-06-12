@@ -16,11 +16,13 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
@@ -36,6 +38,25 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreService : AbstractService, ISitecoreService
     {
+        IPerformanceProfiler _profiler = new NullProfiler();
+        /// <summary>
+        /// Gets or sets the profiler.
+        /// </summary>
+        /// <value>
+        /// The profiler.
+        /// </value>
+        public IPerformanceProfiler Profiler
+        {
+            get
+            {
+                return _profiler;
+            }
+            set
+            {
+                _profiler = value;
+            }
+        }
+
         /// <summary>
         /// Gets the database.
         /// </summary>
@@ -168,11 +189,9 @@ namespace Glass.Mapper.Sc
                 throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(K).FullName), ex);
             }
 
-
-
-
             Item pItem = parentType.ResolveItem(parent, Database);
 
+            
             if (pItem == null)
                 throw new MapperException("Could not find parent item");
 
@@ -183,21 +202,39 @@ namespace Glass.Mapper.Sc
             if (nameProperty == null)
                 throw new MapperException("The type {0} does not have a property with attribute SitecoreInfo(SitecoreInfoType.Name)".Formatted(newType.Type.FullName));
 
-            string tempName = Guid.NewGuid().ToString();
+            string name = string.Empty;
 
+            try
+            {
+                name = nameProperty.PropertyInfo.GetValue(newItem, null).ToString();
+            }
+            catch
+            {
+                throw new MapperException("Failed to get item name");
+            }
 
+            if (name.IsNullOrEmpty())
+                throw new MapperException("New class has no name");
+               
             ID templateId = newType.TemplateId;
             ID branchId = newType.BranchId;
+            Language language = newType.GetLanguage(newItem);
+
+            //check that parent item language is equal to new item language, if not change parent to other language
+            if (language != null && pItem.Language != language)
+            {
+                pItem = Database.GetItem(pItem.ID, language);
+            }
 
             Item item = null;
 
-            if (!ID.IsNullOrEmpty(templateId))
+            if (!ID.IsNullOrEmpty(branchId))
             {
-                item = pItem.Add(tempName, new TemplateID(templateId));
+                item = pItem.Add(name, new BranchId(branchId));
             }
-            else if (!ID.IsNullOrEmpty(branchId))
+            else if (!ID.IsNullOrEmpty(templateId))
             {
-                item = pItem.Add(tempName, new BranchId(branchId));
+                item = pItem.Add(name, new TemplateID(templateId));
             }
             else
             {
@@ -221,8 +258,6 @@ namespace Glass.Mapper.Sc
             newType.MapPropertiesToObject(newItem, this, typeContext);
 
             return newItem;
-            //   return CreateClass<T>(false, false, item);
-
         }
 
 
@@ -448,11 +483,12 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="language">The language of the item to return</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
         public T GetItem<T, K>(string path, K param1, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(path);
@@ -466,12 +502,13 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="K">The type of the first constructor parameter</typeparam>
         /// <typeparam name="L">The type of the second constructor parameter</typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="language">The language of the item to return</param>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <returns>The Sitecore item as the specified type</returns>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
         public T GetItem<T, K, L>(string path, K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
         {
             Item item = Database.GetItem(path);
@@ -1183,6 +1220,7 @@ namespace Glass.Mapper.Sc
 
     } 
 }
+
 
 
 

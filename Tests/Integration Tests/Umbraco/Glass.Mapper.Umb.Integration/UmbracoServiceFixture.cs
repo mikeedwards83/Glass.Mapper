@@ -13,8 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/
+*/ 
 //-CRE-
+
 
 using System;
 using System.Linq;
@@ -737,3 +738,4 @@ namespace Glass.Mapper.Umb.Integration
         #endregion
     }
 }
+

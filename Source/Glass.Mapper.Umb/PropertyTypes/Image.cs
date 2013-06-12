@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 
 namespace Glass.Mapper.Umb.PropertyTypes

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -108,9 +109,9 @@ namespace Glass.Mapper.Sc
             Type genericType = type.MakeGenericType(arguments);
             object obj;
             if (parameters != null && parameters.Count() > 0)
-                obj = Activator.CreateInstance(genericType, parameters);
+				obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
             else
-                obj = Activator.CreateInstance(genericType);
+				obj = GetActivator(genericType)();
             return obj;
         }
 
@@ -213,6 +214,7 @@ namespace Glass.Mapper.Sc
         }
     }
 }
+
 
 
 

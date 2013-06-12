@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System.Collections;
 using Castle.Windsor;
 using System.Collections.Generic;
@@ -77,6 +78,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         }
     }
 }
+
 
 
 

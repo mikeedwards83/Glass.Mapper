@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +82,7 @@ namespace Glass.Mapper
 
             var context = new Context();
             context.DependencyResolver = resolver;
+            context.Name = contextName;
             Contexts[contextName] = context;
 
             if (isDefault)
@@ -100,6 +102,8 @@ namespace Glass.Mapper
         }
 
         #endregion
+
+        public string Name { get; private set; }
 
         /// <summary>
         /// List of the type configurations loaded by this context
@@ -215,7 +219,10 @@ namespace Glass.Mapper
 
             //check interfaces encase this is an interface proxy
             string name = type.Name;
-            var interfaceType = type.GetInterfaces().FirstOrDefault(x => name.Contains(x.Name));
+            //ME - I added the OrderByDescending in response to issue 53
+            // raised on the Glass.Sitecore.Mapper project. Longest name should be compared first
+            // to get the most specific interface
+            var interfaceType = type.GetInterfaces().OrderByDescending(x=>x.Name.Length).FirstOrDefault(x => name.Contains(x.Name));
 
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
@@ -224,6 +231,7 @@ namespace Glass.Mapper
         }
     }
 }
+
 
 
 

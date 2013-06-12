@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,25 +54,23 @@ namespace Glass.Mapper
         /// Takes CMS data and writes it to the property
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
             var result  = MapToProperty(mappingContext);
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
             if (result != null)
-               Configuration.PropertyInfo.SetValue(mappingContext.Object, result, null);
+				Configuration.PropertySetter(mappingContext.Object, result);
         }
 
         /// <summary>
         /// Takes a Property value and writes it to a CMS value
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        public virtual  void MapPropertyToCms(AbstractDataMappingContext mappingContext)
         {
             if (ReadOnly) return;
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
-            mappingContext.PropertyValue = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+			mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
             MapToCms(mappingContext);
         }
 
@@ -113,6 +112,7 @@ namespace Glass.Mapper
         
     }
 }
+
 
 
 

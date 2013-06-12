@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq;
 using Glass.Mapper.Umb.CastleWindsor;
@@ -129,6 +130,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
 
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,6 +133,7 @@ namespace Glass.Mapper.Sc
         T GetHomeItem<T>(bool isLazy = false, bool inferType = false) where T : class;
     }
 }
+
 
 
 

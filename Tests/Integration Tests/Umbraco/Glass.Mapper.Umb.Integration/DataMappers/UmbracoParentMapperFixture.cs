@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
@@ -217,6 +218,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
         #endregion
     }
 }
+
 
 
 

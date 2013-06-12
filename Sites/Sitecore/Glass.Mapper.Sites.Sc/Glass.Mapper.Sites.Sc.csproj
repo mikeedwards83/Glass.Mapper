@@ -24,6 +24,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,17 +56,16 @@
     <Reference Include="ComponentArt.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\ComponentArt.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper, Version=3.0.2.5, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper, Version=3.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.3.0.2.5-beta\lib\net40\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.3.0.1.8\lib\net40\Glass.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc, Version=3.0.2.10, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glass.Mapper.Sc, Version=3.0.2.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.10-beta\lib\net40\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.3.0.2.8\lib\net40\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
-    <Reference Include="Glass.Mapper.Sc.CastleWindsor, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.2.4\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
+    <Reference Include="Glass.Mapper.Sc.CastleWindsor">
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.CastleWindsor.3.0.3.6\lib\net40\Glass.Mapper.Sc.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="HedgehogDevelopment.SitecoreProject.Service">
       <HintPath>..\..\..\Depends\Hedgehog\HedgehogDevelopment.SitecoreProject.Service.dll</HintPath>
@@ -112,16 +113,16 @@
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=1.0.4549.26863, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.Analytics">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.Analytics.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.DeviceSimulator">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.DeviceSimulator.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc.ExperienceEditor">
-      <HintPath>..\..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Mvc.ExperienceEditor.dll</HintPath>
     </Reference>
     <Reference Include="sitecore.nexus">
       <HintPath>..\..\..\Depends\Sitecore\bin\sitecore.nexus.dll</HintPath>
@@ -137,6 +138,10 @@
     </Reference>
     <Reference Include="Sitecore.SegmentBuilder">
       <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.SegmentBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Shell.MarketingAutomation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Shell.MarketingAutomation.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Update">
       <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Update.dll</HintPath>
@@ -180,6 +185,10 @@
     <Reference Include="Telerik.Web.UI">
       <HintPath>..\..\..\Depends\Sitecore\bin\Telerik.Web.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2012.2.607.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore\bin\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
@@ -197,7 +206,9 @@
     <Content Include="App_Browsers\Form.browser" />
     <Content Include="App_Browsers\XamlPage.browser" />
     <Content Include="App_Config\Commands.config" />
-    <Content Include="App_Config\ConnectionStrings.config" />
+    <Content Include="App_Config\ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Config\ConnectionStringsOracle.config" />
     <Content Include="App_Config\FieldTypes.config" />
     <Content Include="App_Config\Icons.config" />
@@ -401,6 +412,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

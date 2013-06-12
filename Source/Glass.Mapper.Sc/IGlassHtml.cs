@@ -1,3 +1,20 @@
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
 using System;
 using System.Collections.Specialized;
 using System.Linq.Expressions;
@@ -6,15 +23,27 @@ using Glass.Mapper.Sc.Web.Ui;
 
 namespace Glass.Mapper.Sc
 {
+    /// <summary>
+    /// IGlassHtml
+    /// </summary>
     public interface IGlassHtml
     {
+        /// <summary>
+        /// Gets the sitecore context.
+        /// </summary>
+        /// <value>
+        /// The sitecore context.
+        /// </value>
         ISitecoreContext SitecoreContext { get; }
 
         /// <summary>
         /// Edits the frame.
         /// </summary>
         /// <param name="buttons">The buttons.</param>
-        /// <returns>GlassEditFrame.</returns>
+        /// <param name="path">The path.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
         GlassEditFrame EditFrame(string buttons, string path = null);
 
         /// <summary>
@@ -87,6 +116,21 @@ namespace Glass.Mapper.Sc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
         string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target);
+
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="field"></param>
+        /// <param name="parameters"></param>
+        /// <param name="isEditable"></param>
+        /// <returns></returns>
+        string RenderImage<T>(T model,
+                              Expression<Func<T, object>> field,
+                              ImageParameters parameters = null,
+                              bool isEditable = false);
 
         /// <summary>
         /// Renders HTML for an image

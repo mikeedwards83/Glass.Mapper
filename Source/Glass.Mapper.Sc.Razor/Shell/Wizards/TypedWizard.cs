@@ -1,4 +1,21 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using System;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Web.UI.Sheer;
 using Glass.Mapper.Sc.Razor.Model;
@@ -10,17 +27,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
     /// </summary>
     public class TypedWizard : AbtractFileCreateWizard<GlassTypedRazor>
     {
-        /// <summary>
-        /// Gets or sets the name of the type.
-        /// </summary>
-        /// <value>The name of the type.</value>
-        protected Edit TypeName { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the assembly.
-        /// </summary>
-        /// <value>The name of the assembly.</value>
-        protected Edit AssemblyName { get; set; }
-
+       
         /// <summary>
         /// The template cs HTML
         /// </summary>
@@ -43,19 +50,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
         {
             this.BackButton.Enabled = true;
             this.BackButton.Disabled = false;
-
-            if (page == "typeNamePage" && newpage == "fileNamePage")
-            {
-                string fullType = "{0}, {1}".Formatted(TypeName.Value, AssemblyName.Value);
-                Type type = Type.GetType(fullType);
-
-                if (type == null)
-                {
-                    SheerResponse.Alert("The type you specified could not be found. You may need to compile your application first.");
-                    return false;
-                }
-            }
-
+            
             if (page == "fileNamePage" && newpage == "fileLocationPage")
             {
                 if (FileName.Value.IsNullOrEmpty())
@@ -94,15 +89,12 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
                 this.BackButton.Disabled = true;
 
                 var parameters = new System.Collections.Specialized.NameValueCollection();
-                parameters["typeName"] = TypeName.Value;
 
                 CreateCsHtmlFile(parameters, TemplateCsHtml);
 
                 GlassTypedRazor item = new GlassTypedRazor();
                 item.Name = FileName.Value;
                 item.View = GetRelativeFilePath();
-                item.Type = TypeName.Value;
-                item.Assembly = AssemblyName.Value;
 
                 CreateItem(item);
                 
@@ -115,3 +107,4 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
         }
     }
 }
+

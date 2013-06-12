@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System.Linq;
 using System.Xml;
 using Glass.Mapper.Sc.CastleWindsor;
@@ -309,6 +310,7 @@ namespace Glass.Mapper.Sc.Integration
         #endregion
     }
 }
+
 
 
 

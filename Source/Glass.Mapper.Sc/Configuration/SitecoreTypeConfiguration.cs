@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,12 +100,12 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="database">The database.</param>
-        /// <returns>Item.</returns>
-        /// <exception cref="System.NotSupportedException">
-        /// You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.
+        /// <returns>
+        /// Item.
+        /// </returns>
+        /// <exception cref="System.NotSupportedException">You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.
         /// or
-        /// Cannot get ID for item
-        /// </exception>
+        /// Cannot get ID for item</exception>
         public Item ResolveItem(object target, Database database)
         {
             ID id;
@@ -129,12 +130,7 @@ namespace Glass.Mapper.Sc.Configuration
                 throw new NotSupportedException("Cannot get ID for item");
             }
 
-            if (LanguageConfig != null)
-            {
-                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
-                if (language == null)
-                    language = Language.Current;
-            }
+            language = GetLanguage(target);
 
             if (VersionConfig != null)
             {
@@ -155,6 +151,28 @@ namespace Glass.Mapper.Sc.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets the language.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns></returns>
+        public Language GetLanguage(object target)
+        {
+            Language language = null;
+            if (LanguageConfig != null)
+            {
+                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
+                if (language == null)
+                    language = Language.Current;
+            }
+            return language;
+        }
+
+        /// <summary>
+        /// Called to map each property automatically
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         protected override AbstractPropertyConfiguration AutoMapProperty(System.Reflection.PropertyInfo property)
         {
             string name = property.Name;
@@ -195,6 +213,7 @@ namespace Glass.Mapper.Sc.Configuration
         }
     }
 }
+
 
 
 

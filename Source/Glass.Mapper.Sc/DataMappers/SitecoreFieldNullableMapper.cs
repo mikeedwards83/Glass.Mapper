@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             if (value == null)
             {
-                field.Value = string.Empty;
+                field.Value = null;
                 return;
             }
 
@@ -152,6 +153,7 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreFieldNullableIntMapper :
         SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper> { }
 }
+
 
 
 

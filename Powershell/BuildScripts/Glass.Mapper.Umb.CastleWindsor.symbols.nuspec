@@ -6,16 +6,18 @@
     <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
-    <projectUrl>http://mikeedwards83.github.com/Glass.Mapper/</projectUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>This it a test build</description>
+    <description>
+      Allows you to map data from Umbraco using the Castle Windsor DI Container.
+    </description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
-    <tags>Glass Mapper Umbraco</tags>
+    <tags>Glass Mapper Umbraco Razor Glass.Mapper MVC</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Umb" version="0.0.0" />
+		<dependency id="Glass.Mapper.Umb" version="3.0.0" />
 		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 	</dependencies>

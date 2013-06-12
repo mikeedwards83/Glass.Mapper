@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq.Expressions;
 using Sitecore.Data;
@@ -150,6 +151,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreField<T> Field(Expression<Func<T, object>> ex)
         {
             SitecoreField<T> builder = new SitecoreField<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Ignore a specific property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreIgnore{`0}.</returns>
+        public SitecoreIgnore<T> Ignore(Expression<Func<T, object>> ex)
+        {
+            SitecoreIgnore<T> builder = new SitecoreIgnore<T>(ex);
             _configuration.AddProperty(builder.Configuration);
 
             return builder;
@@ -311,6 +325,10 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Autoes the map.
+        /// </summary>
+        /// <returns></returns>
         public SitecoreType<T> AutoMap()
         {
             Config.AutoMap = true;
@@ -431,5 +449,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     #endregion
 }
  
+
 
 

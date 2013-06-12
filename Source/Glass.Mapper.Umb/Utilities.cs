@@ -1,4 +1,23 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Glass.Mapper.Umb
@@ -8,6 +27,10 @@ namespace Glass.Mapper.Umb
     /// </summary>
     public static class Utilities
     {
+		private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
+			new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
+
+
         /// <summary>
         /// Creates the type of the generic.
         /// </summary>
@@ -20,10 +43,11 @@ namespace Glass.Mapper.Umb
             Type genericType = type.MakeGenericType(arguments);
             object obj;
             if (parameters != null && parameters.Any())
-                obj = Activator.CreateInstance(genericType, parameters);
+				obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
             else
-                obj = Activator.CreateInstance(genericType);
+				obj = GetActivator(genericType)();
             return obj;
+
         }
 
         /// <summary>
@@ -43,5 +67,12 @@ namespace Glass.Mapper.Umb
             if (!types.Any()) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
             return types[0];
         }
+
+		private static ActivationManager.CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
+		{
+			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
+			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
+		}
     }
 }
+

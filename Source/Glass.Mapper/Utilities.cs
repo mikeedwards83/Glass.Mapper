@@ -16,7 +16,9 @@
 */ 
 //-CRE-
 
+
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -31,7 +33,8 @@ namespace Glass.Mapper
     /// </summary>
     public   class Utilities 
     {
-
+		private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators = 
+			new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
         /// <summary>
         /// Returns a delegate method that will load a class based on its constuctor
@@ -167,10 +170,10 @@ namespace Glass.Mapper
         {
             Type genericType = type.MakeGenericType(arguments);
             object obj;
-            if (parameters != null && parameters.Count() > 0)
-                obj = Activator.CreateInstance(genericType, parameters);
-            else
-                obj = Activator.CreateInstance(genericType);
+	        if (parameters != null && parameters.Count() > 0)
+		        obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
+			else
+				obj = GetActivator(genericType)();
             return obj;
         }
 
@@ -210,8 +213,105 @@ namespace Glass.Mapper
 
             return info;
         }
-    }
+
+	    /// <summary>
+	    /// Creates an action delegate that can be used to set a property's value
+	    /// </summary>
+	    /// <remarks>
+	    /// This compiles down to 'native' IL for maximum performance
+	    /// </remarks>
+		/// <param name="property">The property to create a setter for</param>
+	    /// <returns>An action delegate</returns>
+	    public static Action<object, object> SetPropertyAction(PropertyInfo property)
+		{
+			PropertyInfo propertyInfo = property;
+			Type type = property.DeclaringType;
+
+	        if (propertyInfo.CanWrite)
+	        {
+	            if (type == null)
+	            {
+	                throw new InvalidOperationException(
+	                    "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+	            }
+
+	            Type propertyType = propertyInfo.PropertyType;
+
+	            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+	            ParameterExpression valueParameter = Expression.Parameter(typeof (object), "value");
+
+	            Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
+	                Expression.Assign(
+	                    Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
+	                    Expression.Convert(valueParameter, propertyType)),
+	                instanceParameter,
+	                valueParameter
+	                );
+
+	            return lambda.Compile();
+	        }
+	        else
+	        {
+	            return (object instance, object value) =>
+	                       {
+	                           //does nothing
+	                       };
+	        }
+		}
+
+	    /// <summary>
+	    /// Creates a function delegate that can be used to get a property's value
+	    /// </summary>
+	    /// <remarks>
+	    /// This compiles down to 'native' IL for maximum performance
+	    /// </remarks>
+	    /// <param name="property">The property to create a getter for</param>
+	    /// <returns>A function delegate</returns>
+	    public static Func<object, object> GetPropertyFunc(PropertyInfo property)
+		{
+			PropertyInfo propertyInfo = property;
+			Type type = property.DeclaringType;
+
+			if (type == null)
+			{
+				throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+			}
+
+	        if (propertyInfo.CanWrite)
+	        {
+	            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+
+	            Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
+	                Expression.Convert(
+	                    Expression.Property(
+	                        Expression.Convert(instanceParameter, type),
+	                        propertyInfo),
+	                    typeof (object)),
+	                instanceParameter
+	                );
+
+	            return lambda.Compile();
+	        }
+	        else
+	        {
+	            return (object instance) => { return null; };
+	        }
+		}
+
+        /// <summary>
+        /// Gets the activator.
+        /// </summary>
+        /// <param name="forType">For type.</param>
+        /// <param name="parameterTypes">The parameter types.</param>
+        /// <returns></returns>
+		protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
+		{
+			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
+			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
+		}
+   }
 }
+
 
 
 

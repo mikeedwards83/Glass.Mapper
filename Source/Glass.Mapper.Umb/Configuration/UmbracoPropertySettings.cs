@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 
 namespace Glass.Mapper.Umb.Configuration
@@ -40,6 +41,7 @@ namespace Glass.Mapper.Umb.Configuration
         InferType = 0x4
     }
 }
+
 
 
 

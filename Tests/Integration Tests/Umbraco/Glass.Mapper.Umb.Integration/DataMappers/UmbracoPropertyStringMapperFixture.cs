@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
@@ -88,7 +89,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             //Assign
             var mapper = new UmbracoPropertyStringMapper();
             var config = new UmbracoPropertyConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(String));
+	        config.PropertyInfo = typeof (Stub).GetProperty("TestProperty");
 
             //Act
             var result = mapper.CanHandle(config, null);

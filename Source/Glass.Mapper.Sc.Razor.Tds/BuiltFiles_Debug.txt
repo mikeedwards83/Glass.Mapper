@@ -81,7 +81,6 @@
 .\Debug\bin\Newtonsoft.Json.dll
 .\Debug\bin\RadEditor.Net2.dll
 .\Debug\bin\RazorEngine.dll
-.\Debug\bin\RazorEngine.xml
 .\Debug\bin\Sitecore.Analytics.dll
 .\Debug\bin\Sitecore.Apps.Loader.dll
 .\Debug\bin\Sitecore.Automation.MarketingAutomation.dll

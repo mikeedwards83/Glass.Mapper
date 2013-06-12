@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Umb.Configuration;
@@ -158,3 +159,4 @@ namespace Glass.Mapper.Umb.DataMappers
     public class UmbracoPropertyNullableLongMapper :
         UmbracoPropertyNullableMapper<int, UmbracoPropertyLongMapper> { }
 }
+

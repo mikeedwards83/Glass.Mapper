@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq.Expressions;
 using Glass.Mapper.Configuration;
@@ -59,6 +60,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         public Expression<Func<T, object>> Expression { get; private set; }
     }
 }
+
 
 
 

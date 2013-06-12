@@ -72,10 +72,11 @@ namespace Glass.Mapper.Sc.DataMappers
                 return value.ToString();
             }
             else
-                throw new NotSupportedException("The value is not of type System.Double");
+                throw new NotSupportedException("The value is not of type System.Float");
         }
     }
 }
+
 
 
 

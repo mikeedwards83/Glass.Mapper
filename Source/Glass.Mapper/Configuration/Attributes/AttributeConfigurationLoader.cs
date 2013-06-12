@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -235,6 +236,7 @@ namespace Glass.Mapper.Configuration.Attributes
         }
     }
 }
+
 
 
 

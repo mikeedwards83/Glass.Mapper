@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,6 @@ namespace Glass.Mapper.Tests
     [TestFixture]
     public class ContextFixture
     {
-        private IGlassConfiguration _glassConfig;
-
         [TearDown]
         public void TearDown()
         {
@@ -208,6 +207,7 @@ namespace Glass.Mapper.Tests
         #endregion
     }
 }
+
 
 
 

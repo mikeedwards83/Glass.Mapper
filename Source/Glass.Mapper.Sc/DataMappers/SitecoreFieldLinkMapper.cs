@@ -123,8 +123,6 @@ namespace Glass.Mapper.Sc.DataMappers
                     break;
                 default:
                     return null;
-                    break;
-
             }
 
 
@@ -259,6 +257,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
@@ -59,7 +60,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
+            ;
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -77,7 +79,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubNotMapped));
+            config.PropertyInfo = typeof (Stub).GetProperty("StubNotMapped");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -95,7 +97,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             var mapper = new SitecoreItemMapper();
 
-            config.PropertyInfo = new FakePropertyInfo(typeof(StubMapped));
+            config.PropertyInfo = typeof (Stub).GetProperty("StubMapped");
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             //Act
@@ -127,7 +129,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof (Stub).GetProperty("Property");
+            config.PropertyInfo = typeof (Stub).GetProperty("StubMapped");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
             service.CreateType(
@@ -164,7 +166,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
             service.CreateType(
@@ -200,7 +202,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
 
             service.CreateType(
@@ -236,7 +238,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Id = "{EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}";
 
             service.CreateType(
@@ -273,7 +275,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Id = "{EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}";
 
             service.CreateType(
@@ -309,7 +311,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Id = "{03CDE6B5-B2A2-40D6-A944-53D66DDD2CA4}";
 
             service.CreateType(
@@ -345,7 +347,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
             config.IsLazy = true;
 
@@ -382,7 +384,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var service = Substitute.For<ISitecoreService>();
             var expected = new StubMapped();
 
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Path = "/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target";
             config.InferType = true;
 
@@ -418,7 +420,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         public class Stub
         {
-            public StubMapped Property { get; set; }
+            public StubMapped StubMapped { get; set; }
+            public StubNotMapped StubNotMapped { get; set; }
         }
 
 
@@ -426,6 +429,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
     }
 }
+
 
 
 

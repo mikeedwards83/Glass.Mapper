@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -105,7 +106,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreFieldStreamMapper();
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = new FakePropertyInfo(typeof(Stream));
+
+            config.PropertyInfo = typeof (StubClass).GetProperty("Stream");
             
             //Act
             var result = mapper.CanHandle(config, null);
@@ -115,8 +117,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         #endregion
+
+        #region Stubs
+
+        public class StubClass
+        {
+            public Stream Stream { get; set; }
+        }
+        #endregion
     }
 }
+
 
 
 

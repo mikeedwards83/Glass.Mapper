@@ -120,14 +120,12 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.MediaUrl:
                     var media = new global::Sitecore.Data.Items.MediaItem(item);
                     return global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
-                    break;
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
                     if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Sitecore.Data.ID))
                         return item.TemplateID;
-                    else
-                        return item.TemplateID.Guid;
+                    return item.TemplateID.Guid;
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
@@ -164,6 +162,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 }
+
 
 
 

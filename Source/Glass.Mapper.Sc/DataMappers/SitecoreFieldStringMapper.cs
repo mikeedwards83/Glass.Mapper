@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,16 +80,14 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return;
             }
-            else if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
+            
+            if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
             {
                 throw new NotSupportedException("It is not possible to save data from a rich text field when the data isn't raw."
                     + "Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));
             }
-            else
-            {
-                string fieldValue = (value ?? "").ToString();
-                field.Value = fieldValue;
-            }
+            
+            field.Value = value != null ? value.ToString() : null;
         }
 
         /// <summary>
@@ -97,11 +96,14 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="value">The value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.String.</returns>
+        /// <returns>
+        /// System.String.
+        /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            //this will only be used by the SitecoreFieldIEnumerableMapper
+            return value as string;
         }
 
         /// <summary>
@@ -110,14 +112,18 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="fieldValue">The field value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Object.</returns>
+        /// <returns>
+        /// System.Object.
+        /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            //this will only be used by the SitecoreFieldIEnumerableMapper
+            return fieldValue;
         }
     }
 }
+
 
 
 

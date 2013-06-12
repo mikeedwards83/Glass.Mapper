@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
@@ -77,6 +78,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         #endregion
     }
 }
+
 
 
 

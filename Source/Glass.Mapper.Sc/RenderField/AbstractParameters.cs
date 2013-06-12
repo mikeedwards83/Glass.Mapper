@@ -36,12 +36,9 @@ namespace Glass.Mapper.Sc.RenderField
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        protected NameValueCollection Parameters
+        public NameValueCollection Parameters
         {
-            get
-            {
-                return _parameters;
-            }
+            get { return _parameters; }
         }
 
         /// <summary>
@@ -54,8 +51,15 @@ namespace Glass.Mapper.Sc.RenderField
             url.Parameters.Add(Parameters);
             return url.Query;
         }
+
+        public static implicit operator NameValueCollection(AbstractParameters parameters)
+        {
+            return parameters.Parameters;
+        }
+
     }
 }
+
 
 
 
