@@ -810,7 +810,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                 if (!_typeConfigurations.ContainsKey(type)) return;
 
                 var baseConfig = _typeConfigurations[type];
-                if (baseConfig != null && baseConfig.CodeFirst)
+                if (baseConfig != null && baseConfig.TemplateId.Guid != Guid.Empty)
                 {
                     if (!baseTemplatesField.Contains(baseConfig.TemplateId.ToString()))
                     {

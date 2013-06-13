@@ -123,9 +123,6 @@ namespace Glass.Mapper.Sc.Configuration
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         public bool IsRequired { get; set; }
 
-
-
-
         /// <summary>
         /// Gets or sets the field value configs.
         /// </summary>

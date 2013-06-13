@@ -210,11 +210,21 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 
 
             //code first configuration
+            
             var fieldFieldValues = propertyInfo.GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>();
+
+            ////fix: fieldfieldvalues are not passed
+            var interfaceFromProperty = propertyInfo.DeclaringType.GetInterfaces().FirstOrDefault(inter => inter.GetProperty(propertyInfo.Name) != null);
+            if (interfaceFromProperty != null)
+            {
+                fieldFieldValues = interfaceFromProperty.GetProperty(propertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>(); ;
+            }
+                
             var ffvConfigs = fieldFieldValues.Select(x => x.Configure(propertyInfo, config));
             config.FieldValueConfigs = ffvConfigs.ToList();
-            
+
             base.Configure(propertyInfo, config);
+
         }
     }
 }
