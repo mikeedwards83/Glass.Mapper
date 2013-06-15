@@ -83,7 +83,10 @@
     <Content Include="docs\tutorial\sitecore\tutorial18\Tutorial18.ProductItem.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial18\Tutorial18.ProductRendering.PNG" />
     <Content Include="images\blog\2013-04-28Sitecore7Search.PNG" />
+    <Content Include="images\blog\2013-06-15-ImageCopy-Small.PNG" />
+    <Content Include="images\blog\2013-06-15-ImageCopy.PNG" />
     <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
+    <Content Include="_posts\2013-06-15-SitecoreCopyImages.html" />
     <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
