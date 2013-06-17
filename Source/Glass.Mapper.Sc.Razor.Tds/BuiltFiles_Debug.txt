@@ -89,15 +89,12 @@
 .\Debug\bin\Sitecore.Kernel.dll
 .\Debug\bin\Sitecore.Kernel.xml
 .\Debug\bin\Sitecore.Logging.dll
-.\Debug\bin\Sitecore.Mvc.Analytics.dll
-.\Debug\bin\Sitecore.Mvc.DeviceSimulator.dll
-.\Debug\bin\Sitecore.Mvc.dll
-.\Debug\bin\Sitecore.Mvc.ExperienceEditor.dll
 .\Debug\bin\sitecore.nexus.dll
 .\Debug\bin\Sitecore.NVelocity.dll
 .\Debug\bin\Sitecore.Oracle.dll
 .\Debug\bin\Sitecore.Publishing.WebDeploy.dll
 .\Debug\bin\Sitecore.SegmentBuilder.dll
+.\Debug\bin\Sitecore.Shell.MarketingAutomation.dll
 .\Debug\bin\Sitecore.Update.dll
 .\Debug\bin\Sitecore.Zip.dll
 .\Debug\bin\Stimulsoft.Base.dll
@@ -106,5 +103,6 @@
 .\Debug\bin\Stimulsoft.Report.Web.dll
 .\Debug\bin\Stimulsoft.Report.WebDesign.dll
 .\Debug\bin\Telerik.Web.UI.dll
+.\Debug\bin\Telerik.Web.UI.Skins.dll
 .\Debug\bin\Telerik.Web.UI.xml
 .\Debug\bin\WebActivatorEx.dll
