@@ -52,10 +52,10 @@ caption: 15 Jun 2013
             var service = new SitecoreService("master");
             
             //this folder will contain all our images
-            var folder = service.GetItem&gt;Folder&lt;("/sitecore/media library/Images/ImageCopy");
+            var folder = service.GetItem&lt;Folder&gt;("/sitecore/media library/Images/ImageCopy");
             
             //get the image we want to copy
-            var image = service.GetItem&gt;MediaItem&lt;("/sitecore/media library/Images/ImageCopy/Koala");
+            var image = service.GetItem&lt;MediaItem&gt;("/sitecore/media library/Images/ImageCopy/Koala");
 
             //update the name to the new image name
             image.Name = image.Name + DateTime.Now.ToString("yyyyMMddThhmmss");
@@ -65,7 +65,7 @@ caption: 15 Jun 2013
             service.Create(folder, image);
 
             //this code updates the icon for the image
-            string iconUrl = "~/media/{0}.ashx?h=16&thn=1&w=16";
+            string iconUrl = "~/media/{0}.ashx?h=16&amp;thn=1&amp;w=16";
 
             image.Icon = string.Format(iconUrl, image.Id.ToString("N"));
 
