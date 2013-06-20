@@ -365,7 +365,8 @@ namespace Glass.Mapper.Sc
         /// <returns>System.String.</returns>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target, AbstractParameters parameters)
         {
-            return MakeEditable<T>(field, standardOutput, target, parameters.ToString());
+            var parametersString = parameters == null ? string.Empty : parameters.ToString();
+            return MakeEditable<T>(field, standardOutput, target, parametersString);
         }
 
         /// <summary>

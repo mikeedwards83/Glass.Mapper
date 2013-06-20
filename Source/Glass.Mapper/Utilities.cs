@@ -177,6 +177,31 @@ namespace Glass.Mapper
             return obj;
         }
 
+        public static string GetPropertyName(Expression expression)
+        {
+            string name = string.Empty;
+
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Convert:
+                    Expression operand = (expression as UnaryExpression).Operand;
+                    name = operand.CastTo<MemberExpression>().Member.Name;
+                    break;
+
+                case ExpressionType.Call:
+                    name = expression.CastTo<MethodCallExpression>().Method.Name;
+                    break;
+                case ExpressionType.MemberAccess:
+                    name = expression.CastTo<MemberExpression>().Member.Name;
+                    break;
+                case ExpressionType.TypeAs:
+                    var unaryExp = expression.CastTo<UnaryExpression>();
+                    name = GetPropertyName(unaryExp.Operand);
+                    break;
+            }
+            return name;
+        }
+
         /// <summary>
         /// Returns a PropertyInfo based on a link expression, it will pull the first property name from the linq express.
         /// </summary>
@@ -185,22 +210,11 @@ namespace Glass.Mapper
         /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetPropertyInfo(Type type, Expression expression)
         {
-            string name = "";
+            string name = GetPropertyName(expression);
 
-            if (expression.NodeType == ExpressionType.Convert)
-            {
-                Expression operand = (expression as UnaryExpression).Operand;
-                name = operand.CastTo<MemberExpression>().Member.Name;
-
-            }
-            else if (expression.NodeType == ExpressionType.Call)
-            {
-                name = expression.CastTo<MethodCallExpression>().Method.Name;
-            }
-            else if (expression.NodeType == ExpressionType.MemberAccess)
-            {
-                name = expression.CastTo<MemberExpression>().Member.Name;
-            }
+          
+            if(name.IsNullOrEmpty())
+                throw new MapperException("Unable to get property name from lambda expression");
 
             PropertyInfo info = type.GetProperty(name);
 
