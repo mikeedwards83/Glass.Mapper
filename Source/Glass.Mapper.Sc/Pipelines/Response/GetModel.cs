@@ -186,7 +186,8 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return GetObject(newModel, db, renderingItem);
             }
 
-            var type = Type.GetType(model, true);
+
+            var type = Type.GetType(model, false);
 
             if (type == null)
                 return null;
