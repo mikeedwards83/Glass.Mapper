@@ -72,6 +72,7 @@
     <Compile Include="DataMappers\SitecoreFieldDoubleMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
     <Compile Include="Helpers.cs" />
