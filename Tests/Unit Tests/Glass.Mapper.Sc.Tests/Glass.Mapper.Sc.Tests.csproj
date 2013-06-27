@@ -75,6 +75,7 @@
     <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapperFixture.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilitiesFixture.cs" />
