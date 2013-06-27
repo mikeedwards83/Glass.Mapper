@@ -79,7 +79,6 @@
     <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldLinkMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldNullableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />

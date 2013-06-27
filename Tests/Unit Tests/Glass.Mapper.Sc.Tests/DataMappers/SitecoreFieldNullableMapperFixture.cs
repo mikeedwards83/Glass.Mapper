@@ -18,14 +18,11 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
+using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Integration.DataMappers
+namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldNullableMapperFixture : AbstractMapperFixture
@@ -38,15 +35,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var fieldValue = "";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNullableMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper>();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
 
             //Act
             var result = mapper.GetField(field, null, null) as int?;
@@ -60,15 +55,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var fieldValue = "4";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNullableMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper>();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
 
             //Act
             var result = mapper.GetField(field, null, null) as int?;
@@ -85,21 +78,20 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var expected = "";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNullableMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
+
             var value = (int?) null;
             var mapper = new SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper>();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+           item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
+           
                 mapper.SetField(field, value, null, null);
-            }
+            
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
@@ -109,21 +101,20 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var expected = "4";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNullableMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
+
             var value = (int?)4;
             var mapper = new SitecoreFieldNullableMapper<int, SitecoreFieldIntegerMapper>();
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+            
+            item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
+            
                 mapper.SetField(field, value, null, null);
-            }
+            
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
