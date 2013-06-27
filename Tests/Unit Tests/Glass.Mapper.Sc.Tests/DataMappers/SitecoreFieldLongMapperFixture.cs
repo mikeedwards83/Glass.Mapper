@@ -5,49 +5,49 @@ using System.Text;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
-using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
-    public class SitecoreFieldIntegerMapperFixture : AbstractMapperFixture
+    public class SitecoreFieldLongMapperFixture : AbstractMapperFixture
     {
         #region Method - GetField
 
         [Test]
-        public void GetField_FieldContainsValidInteger_ReturnsInteger()
+        public void GetField_FieldContainsValidLong_ReturnsLong()
         {
             //Assign
             string fieldValue = "3";
-            int expected = 3;
-            var mapper = new SitecoreFieldIntegerMapper();
+            long expected = 3;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
+            var mapper = new SitecoreFieldLongMapper();
+            
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
         [Test]
-        public void GetField_FieldContainsEmptyString_ReturnsIntegerZero()
+        public void GetField_FieldContainsEmptyString_ReturnsLongZero()
         {
             //Assign
             string fieldValue = string.Empty;
-            int expected = 0;
+            long expected = 0;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldIntegerMapper();
-
+            var mapper = new SitecoreFieldLongMapper();
+            
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -55,22 +55,23 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
 
         [Test]
         [ExpectedException(typeof(MapperException))]
-        public void GetField_FieldContainsInvalidValidInteger_ReturnsInteger()
+        public void GetField_FieldContainsInvalidValidLong_ReturnsLong()
         {
             //Assign
             string fieldValue = "hello world";
-            int expected = 3;
+            long expected = 3;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldIntegerMapper();
-
+            var mapper = new SitecoreFieldLongMapper();
+            
             //Act
-            var result = (int)mapper.GetField(field, null, null);
+            var result = (long)mapper.GetField(field, null, null);
 
-            //Assert 
+            //Assert
+            Assert.AreEqual(expected, result);
         }
 
         #endregion
@@ -79,22 +80,26 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         #region Method - SetField
 
         [Test]
-        public void SetField_ObjectisValidInteger_SetsFieldValue()
+        public void SetField_ObjectisValidLong_SetsFieldValue()
         {
             //Assign
             string expected = "3";
-            int objectValue = 3;
+            long objectValue = 3;
+
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
+
 
             item.Editing.BeginEdit();
-
             //Act
+
             mapper.SetField(field, objectValue, null, null);
+
+
 
             //Assert
             Assert.AreEqual(expected, field.Value);
@@ -106,18 +111,20 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         {
             //Assign
             double objectValue = 3;
+
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldIntegerMapper();
+            var mapper = new SitecoreFieldLongMapper();
 
+          
             item.Editing.BeginEdit();
+            
             //Act
             mapper.SetField(field, objectValue, null, null);
-
-
+           
             //Assert
         }
 

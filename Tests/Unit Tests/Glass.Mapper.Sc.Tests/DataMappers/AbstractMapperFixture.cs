@@ -7,13 +7,12 @@ using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Tests.DataMappers
 {
-    public class AbstractDataMapperFixture
+    public class AbstractMapperFixture
     {
         [SetUp]
         public void Setup()
         {
             new SecurityDisabler();
-            
         }
     }
 

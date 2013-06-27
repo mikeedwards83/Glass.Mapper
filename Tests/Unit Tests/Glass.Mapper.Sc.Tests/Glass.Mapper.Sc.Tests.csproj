@@ -45,6 +45,7 @@
       <HintPath>..\..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,6 +65,10 @@
     <Compile Include="Configuration\Attributes\SitecoreNodeAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
+    <Compile Include="DataMappers\AbstractMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilitiesFixture.cs" />
   </ItemGroup>
@@ -78,6 +83,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
