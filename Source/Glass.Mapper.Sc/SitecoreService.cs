@@ -22,6 +22,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
@@ -69,7 +72,7 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(Database database, string contextName = "Default")
-            :base(contextName)
+            :this(database, Context.Contexts[contextName])
         {
             Database = database;
         }
@@ -80,9 +83,9 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(string databaseName, string contextName = "Default")
-            : base(contextName)
+            : this(Sitecore.Configuration.Factory.GetDatabase(databaseName), Context.Contexts[contextName])
         {
-            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+           
         }
 
         /// <summary>
@@ -91,9 +94,9 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(string databaseName, Context context)
-            : base(context ?? Context.Default )
+            : this(Sitecore.Configuration.Factory.GetDatabase(databaseName), context ?? Context.Default )
         {
-            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+           
         }
 
         /// <summary>
@@ -102,7 +105,12 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(Database database, Context context)
-            : base(context ?? Context.Default)
+            : base(
+                context ?? Context.Default,
+                context.DependencyResolver.Resolve<ObjectConstruction>(),
+                context.DependencyResolver.Resolve<ConfigurationResolver>(),
+                context.DependencyResolver.Resolve<ObjectSaving>()
+            )
         {
             Database = database;
         }

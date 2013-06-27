@@ -17,6 +17,9 @@
 //-CRE-
 using System;
 using System.Linq;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
@@ -42,8 +45,8 @@ namespace Glass.Mapper.Umb
         /// </summary>
         /// <param name="contentService">The content service.</param>
         /// <param name="contextName">Name of the context.</param>
-        public UmbracoService(IContentService contentService, string contextName = "Default")
-            :base(contextName)
+        public UmbracoService(IContentService contentService, string contextName = "Default"):
+            this(contentService, Context.Contexts[contextName])
         {
             ContentService = contentService;
         }
@@ -54,7 +57,12 @@ namespace Glass.Mapper.Umb
         /// <param name="contentService">The content service.</param>
         /// <param name="context">The context.</param>
         public UmbracoService(IContentService contentService, Context context)
-            : base(context ?? Context.Default)
+            : base(
+                context ?? Context.Default,
+                context.DependencyResolver.Resolve<ObjectConstruction>(),
+                context.DependencyResolver.Resolve<ConfigurationResolver>(),
+                context.DependencyResolver.Resolve<ObjectSaving>()
+            )
         {
             ContentService = contentService;
         }

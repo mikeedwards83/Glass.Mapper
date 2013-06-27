@@ -22,7 +22,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using NSubstitute;
 using NUnit.Framework;
@@ -38,13 +40,19 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            //This isn't ideal
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Install(new SitecoreInstaller());
+            var context = Context.Create(resolver);
+        
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            var service = Substitute.For<AbstractService>();
+            AbstractService service = new StubAbstractService(context,
+                resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
+                resolver.Resolve<ConfigurationResolver>(),
+                resolver.Resolve<ObjectSaving>());
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
 
@@ -119,9 +127,18 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            var resolver = DependencyResolver.CreateStandardResolver() as DependencyResolver;
+
+            //This isn't ideal
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Install(new SitecoreInstaller());
             var context = Context.Create(resolver);
-            var service = Substitute.For<AbstractService>();
+
+            var service = new StubAbstractService(
+                context,
+                resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
+                resolver.Resolve<ConfigurationResolver>(),
+                resolver.Resolve<ObjectSaving>()
+                );
 
             resolver.Container.Register(
                 Component.For<StubServiceInterface>().ImplementedBy<StubService>().LifestyleTransient()
@@ -235,6 +252,28 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
                 Param2 = param2;
                 Param3 = param3;
                 Param4 = param4;
+            }
+        }
+
+        public class StubAbstractService: AbstractService
+        {
+            public StubAbstractService(Context glassContext,
+                                       Mapper.Pipelines.ObjectConstruction.ObjectConstruction objectConstruction,
+                                       ConfigurationResolver configurationResolver,
+                                       ObjectSaving objectSaving)
+                : base(glassContext, objectConstruction, configurationResolver, objectSaving)
+            {
+                
+            }
+            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj)
+            {
+                return null;
+
+            }
+
+            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
+            {
+                return null;
             }
         }
 

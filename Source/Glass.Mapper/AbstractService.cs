@@ -15,13 +15,7 @@
  
 */ 
 //-CRE-
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
@@ -35,7 +29,6 @@ namespace Glass.Mapper
     public abstract class AbstractService : IAbstractService
     {
 
-        private IPerformanceProfiler _profiler;
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -43,17 +36,7 @@ namespace Glass.Mapper
         /// <value>
         /// The profiler.
         /// </value>
-        public IPerformanceProfiler Profiler
-        {
-            get { return _profiler; }
-            set
-            {
-                _configurationResolver.Profiler = value;
-                _objectConstruction.Profiler = value;
-                _objectSaving.Profiler = value;
-                _profiler = value;
-            }
-        }
+        public IPerformanceProfiler Profiler { get; set; }
 
         /// <summary>
         /// Gets the glass context.
@@ -69,30 +52,18 @@ namespace Glass.Mapper
 
         private readonly ObjectSaving _objectSaving;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractService"/> class.
-        /// </summary>
-        protected AbstractService()
-            : this(Context.Default)
-        {
-
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractService"/> class.
-        /// </summary>
-        /// <param name="contextName">Name of the context.</param>
-        protected AbstractService(string contextName)
-            : this(Context.Contexts[contextName])
-        {
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
         /// </summary>
         /// <param name="glassContext">The glass context.</param>
         /// <exception cref="System.NullReferenceException">Context is null</exception>
-        protected AbstractService(Context glassContext)
+        protected AbstractService(
+            Context glassContext,
+            ObjectConstruction objectConstruction,
+            ConfigurationResolver configurationResolver,
+            ObjectSaving objectSaving
+            )
         {
 
 
@@ -100,14 +71,9 @@ namespace Glass.Mapper
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
 
-            var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
-            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
-
-            var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
-            _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
-
-            var objectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
-            _objectSaving = new ObjectSaving(objectSavingTasks);
+            _objectConstruction = objectConstruction;
+            _configurationResolver = configurationResolver;
+            _objectSaving = objectSaving;
 
             Profiler = new NullProfiler();
 

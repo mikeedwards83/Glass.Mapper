@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using NUnit.Framework;
 using NSubstitute;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
@@ -41,7 +42,7 @@ namespace Glass.Mapper.Tests
             //Assign
 
             //Act
-            var service = new StubAbstractService(null);
+            var service = new StubAbstractService(null, null, null, null);
 
             //Assert
         }
@@ -62,9 +63,6 @@ namespace Glass.Mapper.Tests
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();
 
-            resolver.ResolveAll<IConfigurationResolverTask>().Returns(new[] { configTask });
-            resolver.ResolveAll<IObjectConstructionTask>().Returns(new[] { objTask });
-
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());
 
@@ -73,7 +71,11 @@ namespace Glass.Mapper.Tests
             objTask.When(x => x.Execute(Arg.Any<ObjectConstructionArgs>()))
                 .Do(x => x.Arg<ObjectConstructionArgs>().Result = expected);
 
-            var service = new StubAbstractService(context);
+            var service = new StubAbstractService(
+                context, 
+                new ObjectConstruction(new[] { objTask }),
+                new ConfigurationResolver(new[] { configTask }),
+                null);
 
             //Act
             var result = service.InstantiateObject(Substitute.For<AbstractTypeCreationContext>());
@@ -93,7 +95,12 @@ namespace Glass.Mapper.Tests
 
         public class StubAbstractService : AbstractService
         {
-            public StubAbstractService(Context context) : base(context)
+            public StubAbstractService(
+                Context glassContext,
+                ObjectConstruction objectConstruction,
+                ConfigurationResolver configurationResolver,
+                ObjectSaving objectSaving)
+                : base(glassContext, objectConstruction, configurationResolver, objectSaving)
             {
             }
 

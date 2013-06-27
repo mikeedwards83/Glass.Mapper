@@ -140,6 +140,31 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 ObjectionConstructionTaskInstaller,
                 ObjectSavingTaskInstaller
                 );
+
+
+
+            container.Register(
+                Component.For<ObjectConstruction>().DynamicParameters(
+                    (k, d) =>
+                    {
+                        d["tasks"] = k.ResolveAll<IObjectConstructionTask>();
+                    })
+                );
+            container.Register(
+               Component.For<ConfigurationResolver>().DynamicParameters(
+                   (k, d) =>
+                   {
+                       d["tasks"] = k.ResolveAll<IConfigurationResolverTask>();
+                   })
+               );
+            container.Register(
+              Component.For<ObjectSaving>().DynamicParameters(
+                  (k, d) =>
+                  {
+                      d["tasks"] = k.ResolveAll<IObjectSavingTask>();
+                  })
+              );
+
         }
     }
 
@@ -412,6 +437,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
+
+            
         }
     }
 

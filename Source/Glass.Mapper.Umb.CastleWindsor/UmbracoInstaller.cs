@@ -80,6 +80,28 @@ namespace Glass.Mapper.Umb.CastleWindsor
                 new ObjectionConstructionTaskInstaller(Config),
                 new ObjectSavingTaskInstaller(Config)
                 );
+
+            container.Register(
+               Component.For<ObjectConstruction>().DynamicParameters(
+                   (k, d) =>
+                   {
+                       d["tasks"] = k.ResolveAll<IObjectConstructionTask>();
+                   })
+               );
+            container.Register(
+               Component.For<ConfigurationResolver>().DynamicParameters(
+                   (k, d) =>
+                   {
+                       d["tasks"] = k.ResolveAll<IConfigurationResolverTask>();
+                   })
+               );
+            container.Register(
+              Component.For<ObjectSaving>().DynamicParameters(
+                  (k, d) =>
+                  {
+                      d["tasks"] = k.ResolveAll<IObjectSavingTask>();
+                  })
+              );
         }
     }
 
