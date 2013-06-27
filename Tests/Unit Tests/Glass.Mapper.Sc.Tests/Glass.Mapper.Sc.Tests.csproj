@@ -66,6 +66,8 @@
     <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
     <Compile Include="Helpers.cs" />
