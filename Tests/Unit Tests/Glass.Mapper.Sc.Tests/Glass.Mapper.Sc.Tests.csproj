@@ -68,6 +68,7 @@
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDecimalMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
