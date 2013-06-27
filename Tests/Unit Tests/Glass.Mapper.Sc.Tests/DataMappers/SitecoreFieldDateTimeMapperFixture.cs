@@ -18,13 +18,11 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
+using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Integration.DataMappers
+namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldDateTimeMapperFixture : AbstractMapperFixture
@@ -37,16 +35,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             string fieldValue = "20120101T010101";
             DateTime expected = new DateTime(2012,01,01,01,01,01);
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDateTimeMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldDateTimeMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
+          
             //Act
             var result = (DateTime) mapper.GetField(field, null, null);
 
@@ -64,21 +60,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             string expected = "20120101T010101";
             DateTime objectValue = new DateTime(2012, 01, 01, 01, 01, 01);
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDateTimeMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldDateTimeMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
-             
+            item.Editing.BeginEdit();
             //Act
-            using (new ItemEditing(item, true))
-            {
+          
                 mapper.SetField(field, objectValue, null, null);
-            }
+           
         
 
             //Assert
@@ -86,27 +79,25 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof(NotSupportedException))]
+        [ExpectedException(typeof (NotSupportedException))]
         public void SetField_NonDateTimePassed_ExceptionThrown()
         {
             //Assign
             string expected = "20120101T010101";
-            int objectValue = 4; 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldDateTimeMapper/GetField");
-            var field = item.Fields[FieldName];
+            int objectValue = 4;
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldDateTimeMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+            item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
-                mapper.SetField(field, objectValue, null, null);
-            }
+
+            mapper.SetField(field, objectValue, null, null);
+
 
 
             //Assert
