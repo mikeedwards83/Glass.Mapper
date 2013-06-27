@@ -75,7 +75,6 @@
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldDoubleMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
