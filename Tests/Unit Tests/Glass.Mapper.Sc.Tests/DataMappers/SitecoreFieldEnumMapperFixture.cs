@@ -18,14 +18,12 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
+using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Integration.DataMappers
+namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldEnumMapperFixture : AbstractMapperFixture
@@ -38,19 +36,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             string fieldValue = "Value1";
             StubEnum expected = StubEnum.Value1;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-            //Act
+      //Act
             var result = (StubEnum)mapper.GetField(field, config, null);
 
             //Assert
@@ -63,18 +59,16 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             string fieldValue = "2";
             StubEnum expected = StubEnum.Value2;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
+            
             //Act
             var result = (StubEnum)mapper.GetField(field, config, null);
 
@@ -88,17 +82,15 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             string fieldValue = string.Empty;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
 
             //Act
             var result = (StubEnum)mapper.GetField(field, config, null);
@@ -112,19 +104,17 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             string fieldValue = "hello world";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-            //Act
+         //Act
             var result = (StubEnum)mapper.GetField(field, config, null);
 
             //Assert
@@ -141,24 +131,22 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             string expected = "Value2";
             StubEnum objectValue = StubEnum.Value2;
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
 
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+            item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
+           
                 mapper.SetField(field, objectValue, config, null);
-            }
+            
 
 
             //Assert
@@ -171,24 +159,20 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             string objectValue = "hello world";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldEnumMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
 
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
-
+            
             //Act
-            using (new ItemEditing(item, true))
-            {
+           
                 mapper.SetField(field, objectValue, config, null);
-            }
+            
 
 
             //Assert
