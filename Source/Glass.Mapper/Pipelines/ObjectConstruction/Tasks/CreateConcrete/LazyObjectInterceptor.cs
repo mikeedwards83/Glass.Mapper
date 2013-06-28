@@ -54,7 +54,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             if (_actual == null)
             {
                 _args.AbstractTypeCreationContext.IsLazy = false;
-                _actual = _args.Service.InstantiateObject(_args.AbstractTypeCreationContext);
+                _actual = _args.Service.ObjectFactory.InstantiateObject(_args.AbstractTypeCreationContext);
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);

@@ -59,9 +59,17 @@ namespace Glass.Mapper.Tests
             var resolver = Substitute.For<IDependencyResolver>();
 
             var context = Context.Create(resolver);
+            
 
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();
+
+            var objectFactory = new ObjectFactory(
+                context,
+                new ObjectConstruction(new[] {objTask}),
+                new ConfigurationResolver(new[] {configTask}),
+                null,
+                null);
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());
@@ -73,12 +81,11 @@ namespace Glass.Mapper.Tests
 
             var service = new StubAbstractService(
                 context, 
-                new ObjectConstruction(new[] { objTask }),
-                new ConfigurationResolver(new[] { configTask }),
-                null);
+                objectFactory
+               );
 
             //Act
-            var result = service.InstantiateObject(Substitute.For<AbstractTypeCreationContext>());
+            var result = service.ObjectFactory.InstantiateObject(Substitute.For<AbstractTypeCreationContext>());
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -97,10 +104,8 @@ namespace Glass.Mapper.Tests
         {
             public StubAbstractService(
                 Context glassContext,
-                ObjectConstruction objectConstruction,
-                ConfigurationResolver configurationResolver,
-                ObjectSaving objectSaving)
-                : base(glassContext, objectConstruction, configurationResolver, objectSaving)
+               ObjectFactory objectFactory)
+                : base(glassContext, objectFactory)
             {
             }
 

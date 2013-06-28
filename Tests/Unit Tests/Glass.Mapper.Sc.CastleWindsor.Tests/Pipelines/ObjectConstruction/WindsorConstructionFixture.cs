@@ -49,10 +49,10 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeConfig.Type = typeof (StubClass);
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            AbstractService service = new StubAbstractService(context,
-                resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
-                resolver.Resolve<ConfigurationResolver>(),
-                resolver.Resolve<ObjectSaving>());
+            AbstractService service = new StubAbstractService(
+                context,
+                resolver.Resolve<ObjectFactory>()
+                );
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
 
@@ -135,9 +135,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var service = new StubAbstractService(
                 context,
-                resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
-                resolver.Resolve<ConfigurationResolver>(),
-                resolver.Resolve<ObjectSaving>()
+                resolver.Resolve<ObjectFactory>()
                 );
 
             resolver.Container.Register(
@@ -258,10 +256,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
         public class StubAbstractService: AbstractService
         {
             public StubAbstractService(Context glassContext,
-                                       Mapper.Pipelines.ObjectConstruction.ObjectConstruction objectConstruction,
-                                       ConfigurationResolver configurationResolver,
-                                       ObjectSaving objectSaving)
-                : base(glassContext, objectConstruction, configurationResolver, objectSaving)
+                                        ObjectFactory objectFactory
+                                      )
+                : base(glassContext, objectFactory)
             {
                 
             }

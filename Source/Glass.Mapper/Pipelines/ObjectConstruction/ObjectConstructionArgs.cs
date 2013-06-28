@@ -43,7 +43,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// Gets the service.
         /// </summary>
         /// <value>The service.</value>
-        public IAbstractService Service { get; private set; }
+        public AbstractService Service { get; private set; }
 
         /// <summary>
         /// Gets or sets the result.
@@ -62,7 +62,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
             Context context, 
             AbstractTypeCreationContext abstractTypeCreationContext, 
             AbstractTypeConfiguration configuration,
-            IAbstractService service)
+            AbstractService service)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;

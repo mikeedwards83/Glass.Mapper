@@ -41,10 +41,10 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             resolver.Container.Install(new UmbracoInstaller());
             var context = Context.Create(resolver);
 
-            var service = new StubAbstractService(context,
-                    resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
-                resolver.Resolve<ConfigurationResolver>(),
-                resolver.Resolve<ObjectSaving>());
+            var service = new StubAbstractService(
+                context,
+                resolver.Resolve<ObjectFactory>()
+                );
 
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
@@ -129,10 +129,10 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             resolver.Container.Install(new UmbracoInstaller());
             var context = Context.Create(resolver);
 
-            var service = new StubAbstractService(context,
-                    resolver.Resolve<Mapper.Pipelines.ObjectConstruction.ObjectConstruction>(),
-                resolver.Resolve<ConfigurationResolver>(),
-                resolver.Resolve<ObjectSaving>());
+            var service = new StubAbstractService(
+                context,
+                resolver.Resolve<ObjectFactory>()
+                );
 
             resolver.Container.Register(
                 Component.For<StubServiceInterface>().ImplementedBy<StubService>().LifestyleTransient()
@@ -252,10 +252,8 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
         public class StubAbstractService : AbstractService
         {
             public StubAbstractService(Context glassContext,
-                                       Mapper.Pipelines.ObjectConstruction.ObjectConstruction objectConstruction,
-                                       ConfigurationResolver configurationResolver,
-                                       ObjectSaving objectSaving)
-                : base(glassContext, objectConstruction, configurationResolver, objectSaving){}
+                                       ObjectFactory objectFactory)
+                : base(glassContext, objectFactory){}
 
             public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj)
             {
