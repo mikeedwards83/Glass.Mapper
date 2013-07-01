@@ -37,13 +37,7 @@ namespace Glass.Mapper.Umb
         /// </value>
         public IContent Content { get; set; }
 
-        /// <summary>
-        /// Gets or sets the umbraco service.
-        /// </summary>
-        /// <value>
-        /// The umbraco service.
-        /// </value>
-        public IUmbracoService UmbracoService { get; set; }
+       
     }
 }
 

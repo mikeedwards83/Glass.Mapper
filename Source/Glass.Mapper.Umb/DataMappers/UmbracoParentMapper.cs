@@ -52,10 +52,11 @@ namespace Glass.Mapper.Umb.DataMappers
         {
             var umbContext = mappingContext as UmbracoDataMappingContext;
             var umbConfig = Configuration as UmbracoParentConfiguration;
+            var service = umbContext.Service as IUmbracoService;
 
-            return umbContext.Service.CreateType(
+            return service.CreateType(
                 umbConfig.PropertyInfo.PropertyType,
-                umbContext.Service.ContentService.GetById(umbContext.Content.ParentId),
+                service.ContentService.GetById(umbContext.Content.ParentId),
                 umbConfig.IsLazy,
                 umbConfig.InferType);
         }

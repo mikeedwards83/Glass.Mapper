@@ -36,7 +36,7 @@ namespace Glass.Mapper.Pipelines.ObjectSaving.Tasks
         public void Execute(ObjectSavingArgs args)
         {
             var savingContext = args.SavingContext;
-            AbstractDataMappingContext dataMappingContext = args.Service.CreateDataMappingContext(savingContext);
+            AbstractDataMappingContext dataMappingContext = args.Service.ObjectFactory.CreateDataMappingContext(savingContext);
 
             if(savingContext.Config == null)
                 throw new PipelineException("No config set, can not save object", args);

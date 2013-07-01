@@ -27,8 +27,8 @@ namespace Glass.Mapper
     /// <summary>
     /// Class AbstractTypeSavingContext
     /// </summary>
-    public abstract class AbstractTypeSavingContext
-    {
+    public abstract class AbstractTypeSavingContext{
+
         /// <summary>
         /// Gets or sets the config.
         /// </summary>
@@ -39,6 +39,8 @@ namespace Glass.Mapper
         /// </summary>
         /// <value>The object.</value>
         public object Object { get; set; }
+
+        public AbstractService Service { get; set; }
     }
 }
 

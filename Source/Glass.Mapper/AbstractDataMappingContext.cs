@@ -32,9 +32,10 @@ namespace Glass.Mapper
         /// Initializes a new instance of the <see cref="AbstractDataMappingContext"/> class.
         /// </summary>
         /// <param name="obj">The obj.</param>
-        public AbstractDataMappingContext(object obj)
+        public AbstractDataMappingContext(object obj, IAbstractService service)
         {
             this.Object = obj;
+            this.Service = service;
         }
 
         /// <summary>
@@ -54,6 +55,8 @@ namespace Glass.Mapper
         /// </summary>
         /// <value>The object.</value>
         public object Object { get; private set; }
+
+        public IAbstractService Service { get; set; }
     }
 }
 

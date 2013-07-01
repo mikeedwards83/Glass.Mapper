@@ -9,7 +9,7 @@ using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper
 {
-    public class ObjectFactory
+    public abstract class AbstractObjectFactory
     {
           /// <summary>
         /// Gets or sets the profiler.
@@ -25,7 +25,6 @@ namespace Glass.Mapper
         private readonly Context _glassContext;
         private readonly ObjectConstruction _objectConstruction;
         private readonly ObjectSaving _objectSaving;
-        private readonly AbstractService _service;
 
 
         /// <summary>
@@ -33,16 +32,13 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="glassContext">The glass context.</param>
         /// <exception cref="System.NullReferenceException">Context is null</exception>
-        public ObjectFactory(
+        public AbstractObjectFactory(
             Context glassContext,
             ObjectConstruction objectConstruction,
             ConfigurationResolver configurationResolver,
-            ObjectSaving objectSaving,
-            AbstractService service
+            ObjectSaving objectSaving
             )
         {
-
-
             _glassContext = glassContext;
             if (_glassContext == null) 
                 throw new NullReferenceException("Context is null");
@@ -50,10 +46,8 @@ namespace Glass.Mapper
             _objectConstruction = objectConstruction;
             _configurationResolver = configurationResolver;
             _objectSaving = objectSaving;
-            _service = service;
 
             Profiler = new NullProfiler();
-
         }
 
         /// <summary>
@@ -74,7 +68,7 @@ namespace Glass.Mapper
             var config = configurationArgs.Result;
 
             //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(_glassContext, abstractTypeCreationContext, config, _service);
+            var objectArgs = new ObjectConstructionArgs(_glassContext, abstractTypeCreationContext, config);
             _objectConstruction.Run(objectArgs);
 
             return objectArgs.Result;
@@ -87,8 +81,24 @@ namespace Glass.Mapper
         public virtual void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             //Run the object construction
-            var savingArgs = new ObjectSavingArgs(_glassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext, _service);
+            var savingArgs = new ObjectSavingArgs(_glassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext);
             _objectSaving.Run(savingArgs);
         }
+
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data to a class
+        /// </summary>
+        /// <param name="creationContext"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
+
+
+        /// <summary>
+        /// Used to create the context used by DataMappers to map data from a class
+        /// </summary>
+        /// <param name="creationContext">The Saving Context</param>
+        /// <returns></returns>
+        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 }

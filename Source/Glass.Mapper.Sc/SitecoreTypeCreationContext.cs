@@ -29,20 +29,11 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
-
-
-
         /// <summary>
         /// Gets or sets the item.
         /// </summary>
         /// <value>The item.</value>
         public Item Item { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sitecore service.
-        /// </summary>
-        /// <value>The sitecore service.</value>
-        public SitecoreService SitecoreService { get; set; }
     }
     
 }

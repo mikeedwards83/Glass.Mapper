@@ -51,6 +51,8 @@ namespace Glass.Mapper
         /// </summary>
         /// <value>The constructor parameters.</value>
         public object[] ConstructorParameters { get; set; }
+
+        public AbstractService Service { get; set; }
     }
 }
 

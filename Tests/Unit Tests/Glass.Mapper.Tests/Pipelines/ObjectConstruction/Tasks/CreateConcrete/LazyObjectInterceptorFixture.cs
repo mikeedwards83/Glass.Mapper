@@ -37,13 +37,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //Assign
             var typeContext = Substitute.For<AbstractTypeCreationContext>();
             var config = Substitute.For<AbstractTypeConfiguration>();
-            var service = Substitute.For<IAbstractService>();
+            var service = Substitute.For<AbstractObjectFactory>();
 
             var args = new ObjectConstructionArgs(
                 null,
                 typeContext, 
-                config,
-                service
+                config
                 );
 
             var invocation = Substitute.For<IInvocation>();

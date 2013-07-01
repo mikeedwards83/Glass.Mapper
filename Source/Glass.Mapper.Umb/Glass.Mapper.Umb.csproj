@@ -305,6 +305,7 @@
     <Compile Include="IUmbracoService.cs" />
     <Compile Include="LazyContentEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UmbracoObjectFactory.cs" />
     <Compile Include="UmbracoTypeSavingContext.cs" />
     <Compile Include="UmbracoTypeCreationContext.cs" />
     <Compile Include="UmbracoService.cs" />

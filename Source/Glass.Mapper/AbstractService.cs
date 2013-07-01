@@ -26,9 +26,9 @@ namespace Glass.Mapper
     /// <summary>
     /// AbstractService
     /// </summary>
-    public abstract class AbstractService //: IAbstractService
+    public abstract class AbstractService : IAbstractService
     {
-        public ObjectFactory ObjectFactory { get; private set; }
+        public AbstractObjectFactory ObjectFactory { get; private set; }
 
         /// <summary>
         /// Gets the glass context.
@@ -40,59 +40,29 @@ namespace Glass.Mapper
 
         public AbstractService(
             Context glassContext,
-            ObjectFactory objectFactory 
+            AbstractObjectFactory objectFactory 
             )
         {
             ObjectFactory = objectFactory;
             GlassContext = glassContext;
         }
-
-        /// <summary>
-        /// Used to create the context used by DataMappers to map data to a class
-        /// </summary>
-        /// <param name="creationContext"></param>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
-
-
-        /// <summary>
-        /// Used to create the context used by DataMappers to map data from a class
-        /// </summary>
-        /// <param name="creationContext">The Saving Context</param>
-        /// <returns></returns>
-        public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
     }
 
-    ///// <summary>
-    ///// IAbstractService
-    ///// </summary>
-    //public interface IAbstractService
-    //{
-    //    /// <summary>
-    //    /// Gets the glass context.
-    //    /// </summary>
-    //    /// <value>
-    //    /// The glass context.
-    //    /// </value>
-    //    Context GlassContext { get;  }
-        
-    //    /// <summary>
-    //    /// Used to create the context used by DataMappers to map data to a class
-    //    /// </summary>
-    //    /// <param name="creationContext">The Type Creation Context used to create the instance</param>
-    //    /// <param name="obj">The newly instantiated object without any data mapped</param>
-    //    /// <returns></returns>
-    //    AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj);
+    /// <summary>
+    /// IAbstractService
+    /// </summary>
+    public interface IAbstractService
+    {
+        /// <summary>
+        /// Gets the glass context.
+        /// </summary>
+        /// <value>
+        /// The glass context.
+        /// </value>
+        Context GlassContext { get; }
 
-
-    //    /// <summary>
-    //    /// Used to create the context used by DataMappers to map data from a class
-    //    /// </summary>
-    //    /// <param name="creationContext">The Saving Context</param>
-    //    /// <returns></returns>
-    //    AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
-    //}
+       
+    }
 }
 
 

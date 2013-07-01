@@ -54,13 +54,12 @@ namespace Glass.Mapper.Pipelines.ObjectSaving
         public ObjectSavingArgs(
             Context context, 
             object target, 
-            AbstractTypeSavingContext savingContext,
-            AbstractService service)
+            AbstractTypeSavingContext savingContext)
             : base(context)
         {
             Target = target;
             SavingContext = savingContext;
-            Service = service;
+            Service = savingContext.Service;
         }
     }
 }

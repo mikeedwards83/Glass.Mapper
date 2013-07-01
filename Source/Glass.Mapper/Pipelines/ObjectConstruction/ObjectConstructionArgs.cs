@@ -61,13 +61,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         public ObjectConstructionArgs(
             Context context, 
             AbstractTypeCreationContext abstractTypeCreationContext, 
-            AbstractTypeConfiguration configuration,
-            AbstractService service)
+            AbstractTypeConfiguration configuration)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
             Configuration = configuration;
-            Service = service;
+            Service = abstractTypeCreationContext.Service;
         }
 
        

@@ -105,12 +105,23 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(Database database, Context context)
-            : base(
+            : this(
+                database,
                 context ?? Context.Default,
-                context.DependencyResolver.Resolve<ObjectConstruction>(),
-                context.DependencyResolver.Resolve<ConfigurationResolver>(),
-                context.DependencyResolver.Resolve<ObjectSaving>()
+                context.DependencyResolver.Resolve<AbstractObjectFactory>()
             )
+        {
+           
+        }
+
+        /// <summary>
+        /// All constructors must end up here!
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="context"></param>
+        /// <param name="factory"></param>
+        internal SitecoreService(Database database, Context context, AbstractObjectFactory factory)
+           : base(context, factory)
         {
             Database = database;
         }
@@ -261,7 +272,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeCreationContext typeContext = new SitecoreTypeCreationContext();
             typeContext.Item = item;
-            typeContext.SitecoreService = this;
+            typeContext.Service = this;
 
             newType.MapPropertiesToObject(newItem, this, typeContext);
 
@@ -380,13 +391,13 @@ namespace Glass.Mapper.Sc
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
-            creationContext.SitecoreService = this;
+            creationContext.Service = this;
             creationContext.RequestedType = type;
             creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;
             creationContext.IsLazy = isLazy;
-            var obj = InstantiateObject(creationContext);
+            var obj = ObjectFactory.InstantiateObject(creationContext);
 
             return obj;
         }
@@ -1195,7 +1206,7 @@ namespace Glass.Mapper.Sc
 
             item.Editing.BeginEdit();
 
-            SaveObject(savingContext);
+            ObjectFactory.SaveObject(savingContext);
 
             item.Editing.EndEdit(updateStatistics, silent);
         }
@@ -1203,28 +1214,7 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <param name="obj">The obj.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
-        {
-            var scTypeContext =  abstractTypeCreationContext as SitecoreTypeCreationContext;
-            return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
-        }
-
-        /// <summary>
-        /// Used to create the context used by DataMappers to map data from a class
-        /// </summary>
-        /// <param name="creationContext">The Saving Context</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
-        {
-            var scContext = creationContext as SitecoreTypeSavingContext;
-            return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
-        }
+       
 
     } 
 }

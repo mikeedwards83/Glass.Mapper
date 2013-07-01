@@ -51,10 +51,10 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
             AbstractService service = new StubAbstractService(
                 context,
-                resolver.Resolve<ObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>()
                 );
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
             Assert.IsNull(args.Result);
 
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(context, null, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, null, typeConfig);
             var result = new StubClass2();
             args.Result = result;
 
@@ -107,7 +107,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
 
 
@@ -135,7 +135,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var service = new StubAbstractService(
                 context,
-                resolver.Resolve<ObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>()
                 );
 
             resolver.Container.Register(
@@ -148,7 +148,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service );
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig );
 
             Assert.IsNull(args.Result);
 
@@ -186,7 +186,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeCreationContext.ConstructorParameters = new object[]{param1, param2, param3, param4};
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
             Assert.IsNull(args.Result);
 
@@ -256,22 +256,13 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
         public class StubAbstractService: AbstractService
         {
             public StubAbstractService(Context glassContext,
-                                        ObjectFactory objectFactory
+                                        AbstractObjectFactory objectFactory
                                       )
                 : base(glassContext, objectFactory)
             {
                 
             }
-            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj)
-            {
-                return null;
-
-            }
-
-            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
-            {
-                return null;
-            }
+          
         }
 
         #endregion

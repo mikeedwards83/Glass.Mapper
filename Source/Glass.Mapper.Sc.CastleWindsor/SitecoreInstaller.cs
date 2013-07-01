@@ -166,7 +166,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
               );
 
             container.Register(
-                Component.For<ObjectFactory>()
+                Component.For<AbstractObjectFactory>()
                 );
         }
     }
