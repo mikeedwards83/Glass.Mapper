@@ -362,7 +362,8 @@ namespace Glass.Mapper.Umb
                 {
                     Config = config, 
                     Content = content, 
-                    Object = target
+                    Object = target,
+                    Service = this
                 };
 
             //ME-an item with no versions should be null

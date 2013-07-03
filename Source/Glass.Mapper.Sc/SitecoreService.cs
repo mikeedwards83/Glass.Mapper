@@ -1198,7 +1198,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeSavingContext savingContext = new SitecoreTypeSavingContext();
             savingContext.Config = config;
-
+            savingContext.Service = this;
             //ME-an item with no versions should be null
 
             savingContext.Item = item;
