@@ -10,8 +10,8 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreObjectFactory : AbstractObjectFactory
     {
-        public SitecoreObjectFactory(Context glassContext, ObjectConstruction objectConstruction, ConfigurationResolver configurationResolver, ObjectSaving objectSaving) 
-            : base(glassContext, objectConstruction, configurationResolver, objectSaving)
+        public SitecoreObjectFactory(Context context, ObjectConstruction objectConstruction, ConfigurationResolver configurationResolver, ObjectSaving objectSaving)
+            : base(context, objectConstruction, configurationResolver, objectSaving)
         {
         }
 

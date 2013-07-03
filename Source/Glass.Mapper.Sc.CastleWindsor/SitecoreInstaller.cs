@@ -166,7 +166,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
               );
 
             container.Register(
-                Component.For<AbstractObjectFactory>()
+                Component.For<AbstractObjectFactory>().ImplementedBy<SitecoreObjectFactory>()
                 );
         }
     }

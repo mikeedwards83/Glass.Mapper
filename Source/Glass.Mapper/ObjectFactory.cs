@@ -33,13 +33,13 @@ namespace Glass.Mapper
         /// <param name="glassContext">The glass context.</param>
         /// <exception cref="System.NullReferenceException">Context is null</exception>
         public AbstractObjectFactory(
-            Context glassContext,
+            Context context,
             ObjectConstruction objectConstruction,
             ConfigurationResolver configurationResolver,
             ObjectSaving objectSaving
             )
         {
-            _glassContext = glassContext;
+            _glassContext = context;
             if (_glassContext == null) 
                 throw new NullReferenceException("Context is null");
 

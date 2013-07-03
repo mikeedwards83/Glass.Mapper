@@ -108,7 +108,7 @@ namespace Glass.Mapper.Sc
             : this(
                 database,
                 context ?? Context.Default,
-                context.DependencyResolver.Resolve<AbstractObjectFactory>()
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context)
             )
         {
            

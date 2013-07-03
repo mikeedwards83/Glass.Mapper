@@ -102,6 +102,10 @@ namespace Glass.Mapper.Umb.CastleWindsor
                       d["tasks"] = k.ResolveAll<IObjectSavingTask>();
                   })
               );
+
+            container.Register(
+                Component.For<AbstractObjectFactory>().ImplementedBy<UmbracoObjectFactory>()
+                );
         }
     }
 

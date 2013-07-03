@@ -26,6 +26,7 @@ using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Sc.Configuration;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -48,10 +49,10 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
 
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            AbstractService service = new StubAbstractService(
+            var typeCreationContext = new SitecoreTypeCreationContext();
+            typeCreationContext.Service = new StubAbstractService(
                 context,
-                resolver.Resolve<AbstractObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
@@ -78,7 +79,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(context, null, typeConfig);
+            var typeCreationContext = new SitecoreTypeCreationContext();
+
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
             var result = new StubClass2();
             args.Result = result;
 
@@ -133,20 +136,20 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             resolver.Container.Install(new SitecoreInstaller());
             var context = Context.Create(resolver);
 
-            var service = new StubAbstractService(
+
+            var typeCreationContext = new SitecoreTypeCreationContext();
+
+            typeCreationContext.Service = new StubAbstractService(
                 context,
-                resolver.Resolve<AbstractObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
             resolver.Container.Register(
                 Component.For<StubServiceInterface>().ImplementedBy<StubService>().LifestyleTransient()
                 );
-            
-            var typeConfig = Substitute.For<AbstractTypeConfiguration>();
+
+            var typeConfig = new SitecoreTypeConfiguration();
             typeConfig.Type = typeof(StubClassWithService);
-
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig );
 
@@ -255,10 +258,10 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
         public class StubAbstractService: AbstractService
         {
-            public StubAbstractService(Context glassContext,
+            public StubAbstractService(Context context,
                                         AbstractObjectFactory objectFactory
                                       )
-                : base(glassContext, objectFactory)
+                : base(context, objectFactory)
             {
                 
             }

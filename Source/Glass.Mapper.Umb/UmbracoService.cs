@@ -56,11 +56,11 @@ namespace Glass.Mapper.Umb
         /// </summary>
         /// <param name="contentService">The content service.</param>
         /// <param name="context">The context.</param>
-        public UmbracoService(IContentService contentService, Context context)
+        public UmbracoService(IContentService contentService, Context context )
             : this(
                 contentService,
                 context ?? Context.Default,
-                context.DependencyResolver.Resolve<AbstractObjectFactory>()
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context)
             )
         {
         }
