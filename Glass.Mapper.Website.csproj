@@ -82,6 +82,8 @@
     <Content Include="docs\tutorial\sitecore\tutorial17\tutorial17.html" />
     <Content Include="docs\tutorial\sitecore\tutorial18\Tutorial18.ProductItem.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial18\Tutorial18.ProductRendering.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial20\tutorial20.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial20\tutorial20.solutionsetup.PNG" />
     <Content Include="images\blog\2013-04-28Sitecore7Search.PNG" />
     <Content Include="images\blog\2013-06-15-ImageCopy-Small.PNG" />
     <Content Include="images\blog\2013-06-15-ImageCopy.PNG" />
