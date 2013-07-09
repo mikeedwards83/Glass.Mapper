@@ -1,27 +1,32 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Castle.Windsor;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
-
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Glass.Mapper.Sites.Sc.App_Start.GlassMapperSc), "Start")]
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sites.Sc.App_Start
 {
-    public static class GlassMapperSc
+
+    public static class GlassMapperScCustom
     {
-        public static void Start()
+        public static void CastleConfig(IWindsorContainer container)
         {
-            //create the resolver
-            var resolver = DependencyResolver.CreateStandardResolver();
+            var config = new Config();
+            container.Install(new SitecoreInstaller(config));
+        }
 
-            //create a context
-            var context = Glass.Mapper.Context.Create(resolver);
-
+        public static IConfigurationLoader[] GlassLoaders()
+        {
             var attributes = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sites.Sc");
 
-            context.Load(
-                attributes,
-                Models.Config.ContentConfig.Load()
-                );
+            return new IConfigurationLoader[]
+                {
+                    attributes, 
+                    Models.Config.ContentConfig.Load()
+                };
         }
     }
+}
+
 }
