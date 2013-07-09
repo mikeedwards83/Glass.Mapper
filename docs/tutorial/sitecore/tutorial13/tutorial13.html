@@ -30,10 +30,7 @@ title: Tutorial 13 - Windsor Construction
 </p>
 <pre class="cs">
     //create the resolver
-    var resolver = DependencyResolver.CreateStandardResolver(config);
-
-    //install the custom services
-    var container = (resolver as DependencyResolver).Container;
+    container.Install(new SitecoreInstaller(config));
     container.Install(new ServiceInstaller());
 </pre>
 <p>
