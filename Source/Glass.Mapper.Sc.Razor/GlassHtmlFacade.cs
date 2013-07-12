@@ -83,10 +83,11 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
         /// <returns>RawString.</returns>
-        public  RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field)
+        public RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field)
         {
             return _glassHtml.Editable<T>(target, field).RawString();
         }
+  
         /// <summary>
         /// Editables the specified target.
         /// </summary>
@@ -111,6 +112,7 @@ namespace Glass.Mapper.Sc.Razor
         {
             return _glassHtml.Editable<T>(target, field, parameters).RawString();
         }
+
         /// <summary>
         /// Editables the specified target.
         /// </summary>
@@ -136,27 +138,7 @@ namespace Glass.Mapper.Sc.Razor
         {
             return _glassHtml.Editable<T>(target, field, standardOutput, parameters).RawString();
         }
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <returns>RawString.</returns>
-        public  RawString RenderImage(Image image)
-        {
-            return _glassHtml.RenderImage(image).RawString();
-        }
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>RawString.</returns>
-        public  RawString RenderImage(Image image, System.Collections.Specialized.NameValueCollection attributes)
-        {
-            return _glassHtml.RenderImage(image, attributes).RawString();
-        }
-
-
+        
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
@@ -173,6 +155,12 @@ namespace Glass.Mapper.Sc.Razor
         {
             return _glassHtml.RenderImage<T>(model, field, parameters, isEditable).RawString();
         }
+
+
+
+
+
+
 
 
         /// <summary>
@@ -259,6 +247,32 @@ namespace Glass.Mapper.Sc.Razor
             var webControl = control as WebControl;
             webControl.RenderControl(_writer);
         }
+
+
+        #region Obsolete
+
+        /// <summary>
+        /// Renders the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <returns>RawString.</returns>
+        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public RawString RenderImage(Image image)
+        {
+            return _glassHtml.RenderImage(image).RawString();
+        }
+        /// <summary>
+        /// Renders the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="attributes">The attributes.</param>
+        /// <returns>RawString.</returns>
+        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public RawString RenderImage(Image image, System.Collections.Specialized.NameValueCollection attributes)
+        {
+            return _glassHtml.RenderImage(image, attributes).RawString();
+        }
+        #endregion
     }
 }
 

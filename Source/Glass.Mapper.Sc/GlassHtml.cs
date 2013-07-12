@@ -138,41 +138,7 @@ namespace Glass.Mapper.Sc
             return MakeEditable<T>(field, null, target, parameters);
         }
 
-        /// <summary>
-        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
-        /// </summary>
-        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
-        /// <param name="target">The target object that contains the item to be edited</param>
-        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field)")]
-        public string Editable<T>(Expression<Func<T, object>> field, T target)
-        {
-            return MakeEditable<T>(field, null, target);
-        }
-        /// <summary>
-        /// Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
-        /// </summary>
-        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
-        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
-        /// <param name="target">The target object that contains the item to be edited</param>
-        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
-        public string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
-        {
-            return MakeEditable<T>(field, standardOutput, target);
-        }
-
-        /// <summary>
-        /// Renders HTML for an image
-        /// </summary>
-        /// <param name="image">The image to render</param>
-        /// <returns>An img HTML element</returns>
-        public virtual string RenderImage(Fields.Image image)
-        {
-            return RenderImage(image, null);
-        }
+       
 
 
         /// <summary>
@@ -189,8 +155,6 @@ namespace Glass.Mapper.Sc
         /// The image tag format
         /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1} />";
-
-
      
        /// <summary>
        /// Renders an image allowing simple page editor support
@@ -216,49 +180,7 @@ namespace Glass.Mapper.Sc
             }
         }
 
-        /// <summary>
-        /// Renders HTML for an image
-        /// </summary>
-        /// <param name="image">The image to render</param>
-        /// <param name="attributes">Additional attributes to add. Do not include alt or src</param>
-        /// <returns>An img HTML element</returns>
-        public virtual string RenderImage(Fields.Image image, NameValueCollection attributes)
-        {
-
-            /*
-             * ME - This method is used to render images rather than going back to the fieldrender
-             * because it stops another call having to be passed to Sitecore.
-             */
-
-            if (image == null || image.Src.IsNullOrWhiteSpace()) return "";
-
-            if (attributes == null) attributes = new NameValueCollection();
-           
-           
-            var builder = new UrlBuilder(image.Src);
-            
-            //append to url values
-            if (attributes[ImageWidth].IsNotNullOrEmpty())
-                attributes.Add(ImageParameters.WIDTH, attributes[ImageWidth]);
-            if (attributes[ImageHeight].IsNotNullOrEmpty())
-                attributes.Add(ImageParameters.HEIGHT, attributes[ImageHeight]);
-
-            foreach (var key in attributes.AllKeys)
-            {
-                if(key=="alt" || key=="class" || key=="style")
-                    continue;
-                
-                builder[key] = attributes[key];
-            }
-
-            //should there be some warning about these removals?
-            AttributeCheck(attributes, "class", image.Class);
-            AttributeCheck(attributes, "alt", image.Alt);
-
-
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
-        }
-
+      
         /// <summary>
         /// Checks it and attribute is part of the NameValueCollection and updates it with the
         /// default if it isn't.
@@ -271,6 +193,9 @@ namespace Glass.Mapper.Sc
             if (collection[name].IsNullOrEmpty() && !defaultValue.IsNullOrEmpty())
                 collection[name] = defaultValue;
         }
+
+
+
 
         /// <summary>
         /// Render HTML for a link
@@ -339,6 +264,8 @@ namespace Glass.Mapper.Sc
                             global::Sitecore.Context.PageMode.IsPageEditorEditing;
             }
         }
+
+
 
 
         /// <summary>
@@ -496,6 +423,93 @@ namespace Glass.Mapper.Sc
             }
             //return field.Compile().Invoke(target).ToString();
         }
+
+
+
+        #region Obsolete
+
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field)")]
+        public string Editable<T>(Expression<Func<T, object>> field, T target)
+        {
+            return MakeEditable<T>(field, null, target);
+        }
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
+        public string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
+        {
+            return MakeEditable<T>(field, standardOutput, target);
+        }
+
+        /// <summary>
+        /// Renders HTML for an image
+        /// </summary>
+        /// <param name="image">The image to render</param>
+        /// <returns>An img HTML element</returns>
+        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public virtual string RenderImage(Fields.Image image)
+        {
+            return RenderImage(image, null);
+        }
+
+        /// <summary>
+        /// Renders HTML for an image
+        /// </summary>
+        /// <param name="image">The image to render</param>
+        /// <param name="attributes">Additional attributes to add. Do not include alt or src</param>
+        /// <returns>An img HTML element</returns>
+        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public virtual string RenderImage(Fields.Image image, NameValueCollection attributes)
+        {
+
+            /*
+             * ME - This method is used to render images rather than going back to the fieldrender
+             * because it stops another call having to be passed to Sitecore.
+             */
+
+            if (image == null || image.Src.IsNullOrWhiteSpace()) return "";
+
+            if (attributes == null) attributes = new NameValueCollection();
+
+
+            var builder = new UrlBuilder(image.Src);
+
+            //append to url values
+            if (attributes[ImageWidth].IsNotNullOrEmpty())
+                attributes.Add(ImageParameters.WIDTH, attributes[ImageWidth]);
+            if (attributes[ImageHeight].IsNotNullOrEmpty())
+                attributes.Add(ImageParameters.HEIGHT, attributes[ImageHeight]);
+
+            foreach (var key in attributes.AllKeys)
+            {
+                if (key == "alt" || key == "class" || key == "style")
+                    continue;
+
+                builder[key] = attributes[key];
+            }
+
+            //should there be some warning about these removals?
+            AttributeCheck(attributes, "class", image.Class);
+            AttributeCheck(attributes, "alt", image.Alt);
+
+
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
+        }
+
+        #endregion
 
     }
 }

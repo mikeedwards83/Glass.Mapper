@@ -37,8 +37,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <summary>
     /// Class TemplateBase
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class TemplateBase<T> : RazorEngine.Templating.TemplateBase<T>, ITemplateBase
+    /// <typeparam name="TModel"></typeparam>
+    public class TemplateBase<TModel> : RazorEngine.Templating.TemplateBase<TModel>, ITemplateBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateBase{T}"/> class.
@@ -168,14 +168,18 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return Raw(sb.ToString());
         }
 
+
+
+
+
         /// <summary>
         /// Editables the specified target.
         /// </summary>
-        /// <typeparam name="T1">The type of the t1.</typeparam>
+        /// <typeparam name="T">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
         /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field)
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field)
         {
             return GlassHtml.Editable(target, field);
         }
@@ -183,15 +187,40 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Editables the specified target.
         /// </summary>
-        /// <typeparam name="T1">The type of the t1.</typeparam>
+        /// <typeparam name="T">The type of the t1.</typeparam>
+        /// <param name="target">The target.</param>
+        /// <param name="field">The field.</param>
+        /// <returns>IEncodedString.</returns>
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, AbstractParameters parameters)
+        {
+            return GlassHtml.Editable(target, field, parameters);
+        }
+
+        /// <summary>
+        /// Editables the specified target.
+        /// </summary>
+        /// <typeparam name="T">The type of the t1.</typeparam>
+        /// <param name="target">The target.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>IEncodedString.</returns>
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, string parameters)
+        {
+            return GlassHtml.Editable(target, field, parameters);
+        }
+        
+        /// <summary>
+        /// Editables the specified target.
+        /// </summary>
+        /// <typeparam name="T">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
         /// <returns>
         /// IEncodedString.
         /// </returns>
-        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field,
-                                           Expression<Func<T1, string>> standardOutput)
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field,
+                                           Expression<Func<T, string>> standardOutput)
         {
             return GlassHtml.Editable(target, field, standardOutput);
         }
@@ -199,54 +228,39 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Editables the specified target.
         /// </summary>
-        /// <typeparam name="T1">The type of the t1.</typeparam>
+        /// <typeparam name="T">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T1>(T1 target, Expression<Func<T1, object>> field, string parameters)
+        /// <param name="standardOutput">The standard output.</param>
+        /// <returns>
+        /// IEncodedString.
+        /// </returns>
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field,
+                                           Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
-            return GlassHtml.Editable(target, field, parameters);
-        }
-
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <returns>IEncodedString.</returns>
-        public IEncodedString RenderImage(Image image)
-        {
-            return GlassHtml.RenderImage(image);
-        }
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>IEncodedString.</returns>
-        public IEncodedString RenderImage(Image image, NameValueCollection attributes)
-        {
-            return GlassHtml.RenderImage(image, attributes);
+            return GlassHtml.Editable(target, field, standardOutput,parameters);
         }
 
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
+        /// <typeparam name="TModel">The model type</typeparam>
         /// <param name="model">The model that contains the image field</param>
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
-        public virtual RawString RenderImage<T>(T model,
-                                             Expression<Func<T, object>> field,
+        public virtual IEncodedString RenderImage(Expression<Func<TModel, object>> field,
                                              ImageParameters parameters = null,
                                              bool isEditable = false)
         {
-            return GlassHtml.RenderImage<T>(model, field, parameters, isEditable);
+            return GlassHtml.RenderImage(Model, field, parameters, isEditable);
         }
+
+
+
+
+
 
         /// <summary>
         /// Editables the specified field.
@@ -258,7 +272,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// or
         /// No model set
         /// </exception>
-        public RawString Editable(Expression<Func<T, object>> field)
+        public RawString Editable(Expression<Func<TModel, object>> field)
         {
             if (field == null) throw new NullReferenceException("No field set");
 
@@ -286,7 +300,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <exception cref="System.NullReferenceException">No field set
         /// or
         /// No model set</exception>
-        public RawString Editable(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
+        public RawString Editable(Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput)
         {
             if (field == null) throw new NullReferenceException("No field set");
 
@@ -329,5 +343,36 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             private set;
 
         }
+
+
+
+        #region Obsolete
+
+
+        /// <summary>
+        /// Renders the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <returns>IEncodedString.</returns>
+        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public IEncodedString RenderImage(Image image)
+        {
+            return GlassHtml.RenderImage(image);
+        }
+
+        /// <summary>
+        /// Renders the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="attributes">The attributes.</param>
+        /// <returns>IEncodedString.</returns>
+        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        public IEncodedString RenderImage(Image image, NameValueCollection attributes)
+        {
+            return GlassHtml.RenderImage(image, attributes);
+        }
+
+
+        #endregion
     }
 }

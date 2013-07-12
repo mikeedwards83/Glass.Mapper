@@ -122,7 +122,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>System.String.</returns>
         public string Editable(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
-            return   base.Editable(this.Model, field, standardOutput);
+            return  base.Editable(this.Model, field, standardOutput);
         }
 
         /// <summary>
@@ -136,6 +136,23 @@ namespace Glass.Mapper.Sc.Web.Ui
                                AbstractParameters parameters)
         {
             return base.Editable(this.Model, field, standardOutput, parameters);
+        }
+
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
+        public virtual string RenderImage(Expression<Func<T, object>> field,
+                                             ImageParameters parameters = null,
+                                             bool isEditable = false)
+        {
+            return base.RenderImage(this.Model, field, parameters, isEditable);
         }
     }
 }

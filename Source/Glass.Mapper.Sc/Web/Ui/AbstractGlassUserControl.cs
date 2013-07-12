@@ -34,17 +34,24 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public AbstractGlassUserControl(ISitecoreContext context)
+        public AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml)
         {
-            _glassHtml = new GlassHtml(context);
+            _glassHtml = glassHtml;
             _sitecoreContext = context;
 
+        }
+
+        public AbstractGlassUserControl(ISitecoreContext context) 
+            : this(context, new GlassHtml(context))
+        {
+            
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
-        public AbstractGlassUserControl() : this(new SitecoreContext())
+        public AbstractGlassUserControl() 
+            : this(new SitecoreContext())
         {
 
         }
@@ -121,6 +128,19 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
            return  UiUtilities.Editable(GlassHtml, model, field);
         }
+        
+        /// <summary>
+        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model">The model.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>System.String.</returns>
+        public string Editable<T>(T model, Expression<Func<T, object>> field, AbstractParameters parameters)
+        {
+            return UiUtilities.Editable(GlassHtml, model, field, parameters);
+        }
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -135,18 +155,6 @@ namespace Glass.Mapper.Sc.Web.Ui
             return UiUtilities.Editable(GlassHtml, model, field, parameters);
         }
 
-        /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model">The model.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field, AbstractParameters parameters)
-        {
-            return UiUtilities.Editable(GlassHtml, model, field, parameters);
-        }
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -173,6 +181,24 @@ namespace Glass.Mapper.Sc.Web.Ui
         public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
             return UiUtilities.Editable(GlassHtml, model, field, standardOutput, parameters);
+        }
+
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
+        public virtual string RenderImage<T>(T model,
+                                             Expression<Func<T, object>> field,
+                                             ImageParameters parameters = null,
+                                             bool isEditable = false)
+        {
+            return UiUtilities.RenderImage(GlassHtml, model, field, parameters, isEditable);
         }
     }
 

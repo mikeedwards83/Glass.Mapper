@@ -196,6 +196,18 @@ namespace Glass.Mapper.Sc.Web.Ui
                 return ex.Message;
             }
         }
+
+        public static string RenderImage<T>(IGlassHtml glassHtml, T model,
+                                             Expression<Func<T, object>> field,
+                                             ImageParameters parameters = null,
+                                             bool isEditable = false)
+        {
+            if (field == null) throw new NullReferenceException("No field set");
+
+            if (model == null) throw new NullReferenceException("No model set");
+
+            return glassHtml.RenderImage(model, field, parameters, isEditable);
+        }
     }
 }
 
