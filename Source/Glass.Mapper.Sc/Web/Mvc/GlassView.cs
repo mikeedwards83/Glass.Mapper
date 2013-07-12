@@ -162,10 +162,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual HtmlString RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
+            return new HtmlString(GlassHtml.RenderLink(model, field, attributes, isEditable, contents));
         }
 
 
@@ -263,7 +263,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field,
                                                      NameValueCollection attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(this.Model, field, this.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
 
         }
 
@@ -277,10 +277,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual string RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual HtmlString RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
+            return new HtmlString(GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents));
         }
 
 

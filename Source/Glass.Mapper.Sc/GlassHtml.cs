@@ -25,6 +25,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
@@ -428,6 +430,7 @@ namespace Glass.Mapper.Sc
 
                     var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
 
+                  
 
                     var scClass = config.ResolveItem(finalTarget, database);
 
