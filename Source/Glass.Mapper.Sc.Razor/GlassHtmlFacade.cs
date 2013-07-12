@@ -169,36 +169,7 @@ namespace Glass.Mapper.Sc.Razor
 
 
 
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <returns>RawString.</returns>
-        public  RawString RenderLink(Link link)
-        {
-            return _glassHtml.RenderLink(link).RawString();
-        }
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>RawString.</returns>
-        public  RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes)
-        {
-            return _glassHtml.RenderLink(link, attributes).RawString();
-        }
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <param name="contents">The contents.</param>
-        /// <returns>RawString.</returns>
-        public  RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes, string contents)
-        {
-            return _glassHtml.RenderLink(link, attributes, contents).RawString();
-        }
+       
 
 
         /// <summary>
@@ -318,6 +289,40 @@ namespace Glass.Mapper.Sc.Razor
         public RawString RenderImage(Image image, System.Collections.Specialized.NameValueCollection attributes)
         {
             return _glassHtml.RenderImage(image, attributes).RawString();
+        }
+
+        /// <summary>
+        /// Renders the link.
+        /// </summary>
+        /// <param name="link">The link.</param>
+        /// <returns>RawString.</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public RawString RenderLink(Link link)
+        {
+            return _glassHtml.RenderLink(link).RawString();
+        }
+        /// <summary>
+        /// Renders the link.
+        /// </summary>
+        /// <param name="link">The link.</param>
+        /// <param name="attributes">The attributes.</param>
+        /// <returns>RawString.</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes)
+        {
+            return _glassHtml.RenderLink(link, attributes).RawString();
+        }
+        /// <summary>
+        /// Renders the link.
+        /// </summary>
+        /// <param name="link">The link.</param>
+        /// <param name="attributes">The attributes.</param>
+        /// <param name="contents">The contents.</param>
+        /// <returns>RawString.</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes, string contents)
+        {
+            return _glassHtml.RenderLink(link, attributes, contents).RawString();
         }
         #endregion
     }
