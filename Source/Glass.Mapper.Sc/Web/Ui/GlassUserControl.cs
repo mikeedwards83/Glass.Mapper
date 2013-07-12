@@ -82,6 +82,8 @@ namespace Glass.Mapper.Sc.Web.Ui
             base.OnLoad(e);
         }
 
+
+
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
@@ -98,7 +100,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
-        public string Editable(Expression<Func<T, object>> field, string parameters)
+        public string Editable(Expression<Func<T, object>> field, AbstractParameters parameters)
         {
             return base.Editable(this.Model, field, parameters);
         }
@@ -109,10 +111,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
-        public string Editable(Expression<Func<T, object>> field, AbstractParameters parameters)
+        public string Editable(Expression<Func<T, object>> field, string parameters)
         {
             return base.Editable(this.Model, field, parameters);
         }
+
+       
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.

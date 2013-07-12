@@ -144,6 +144,30 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
 
 
+
+
+
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <param name="field">The field that should be made editable</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        public HtmlString Editable(Expression<Func<TModel, object>> field)
+        {
+            return new HtmlString(GlassHtml.Editable(Model, field));
+        }
+
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="parameters"> </param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        public HtmlString Editable(Expression<Func<TModel, object>> field, AbstractParameters parameters)
+        {
+            return new HtmlString(GlassHtml.Editable(Model, field, parameters));
+        }
+
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
@@ -155,17 +179,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new HtmlString(GlassHtml.Editable(Model, field, parameters));
         }
 
-
-
-        /// <summary>
-        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
-        /// </summary>
-        /// <param name="field">The field that should be made editable</param>
-        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        public HtmlString Editable(Expression<Func<TModel, object>> field)
-        {
-            return  Editable(field, (Expression<Func<TModel, string>>)null);
-        }
 
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
@@ -179,7 +192,33 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new HtmlString(GlassHtml.Editable(Model, field, standardOutput));
         }
 
-        
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        public HtmlString Editable(Expression<Func<TModel, object>> field,
+                                   Expression<Func<TModel, string>> standardOutput, AbstractParameters parameters)
+        {
+            return new HtmlString(GlassHtml.Editable(Model, field, standardOutput, parameters));
+        }
+
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
+        public virtual HtmlString RenderImage(Expression<Func<TModel, object>> field,
+                                           ImageParameters parameters = null,
+                                           bool isEditable = false)
+        {
+            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable));
+        }
      
 
 
