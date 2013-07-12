@@ -481,6 +481,7 @@ namespace Glass.Mapper.Sc
                         renderFieldArgs.FieldName = ((SitecoreFieldConfiguration) dataHandler).FieldName;
 
                         renderFieldArgs.Parameters = WebUtil.ParseQueryString(parameters ?? string.Empty);
+                        renderFieldArgs.DisableWebEdit = false;
 
                         CorePipeline.Run("renderField", (PipelineArgs) renderFieldArgs);
 

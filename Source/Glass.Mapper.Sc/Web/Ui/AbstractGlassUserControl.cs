@@ -111,11 +111,22 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                if (DataSource.IsNullOrEmpty())
+                if (DataSourceItem == null)
                     return global::Sitecore.Context.Item;
                 else
-                    return global::Sitecore.Context.Database.GetItem(DataSource);
+                    return DataSourceItem;
 
+            }
+        }
+
+        public Item DataSourceItem
+        {
+            get
+            {
+                if (DataSource.IsNullOrEmpty())
+                    return null;
+                else
+                    return global::Sitecore.Context.Database.GetItem(DataSource);
             }
         }
 

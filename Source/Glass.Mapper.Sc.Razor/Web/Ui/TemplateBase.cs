@@ -257,6 +257,21 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return GlassHtml.RenderImage(target, field, parameters, isEditable);
         }
 
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model</param>
+        /// <param name="field">The link field to user</param>
+        /// <param name="attributes">Any additional link attributes</param>
+        /// <param name="isEditable">Make the link editable</param>
+        /// <param name="contents">Content to override the default decription or item name</param>
+        /// <returns></returns>
+        public virtual IEncodedString RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        {
+
+            return Raw(_glassHtml.RenderLink(model, field, attributes, isEditable, contents));
+        }
 
 
 
@@ -386,6 +401,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+
         /// <summary>
         /// Render HTML for a link
         /// </summary>
@@ -396,10 +412,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual string RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual IEncodedString RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
+            return this.RenderLink(this.Model, field, attributes, isEditable, contents);
         }
 
 
