@@ -17,6 +17,7 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -174,6 +175,38 @@ namespace Glass.Mapper.Sc.Web.Ui
                                              bool isEditable = false)
         {
             return UiUtilities.RenderImage(GlassHtml, model, field, parameters, isEditable);
+        }
+
+        /// <summary>
+        /// Render HTML for a link with contents
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model</param>
+        /// <param name="field">The link field to user</param>
+        /// <param name="attributes">Any additional link attributes</param>
+        /// <param name="isEditable">Make the link editable</param>
+        /// <returns></returns>
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
+                                                     NameValueCollection attributes = null, bool isEditable = false)
+        {
+            return GlassHtml.BeginRenderLink(model, field, this.Response.Output, attributes, isEditable);
+
+        }
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model</param>
+        /// <param name="field">The link field to user</param>
+        /// <param name="attributes">Any additional link attributes</param>
+        /// <param name="isEditable">Make the link editable</param>
+        /// <param name="contents">Content to override the default decription or item name</param>
+        /// <returns></returns>
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        {
+
+            return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
         }
     }
 }

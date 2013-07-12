@@ -19,16 +19,24 @@
 
 using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Collections;
+using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Pipelines;
+using Sitecore.Pipelines.RenderField;
 using Sitecore.Text;
+using Sitecore.Web;
 using Sitecore.Web.UI.WebControls;
+using Sitecore.Xml.Xsl;
 
 namespace Glass.Mapper.Sc
 {
@@ -50,6 +58,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="GlassHtml"/> class.
         /// </summary>
         /// <param name="sitecoreContext">The service that will be used to load and save data</param>
+        /// <param name="writer"></param>
         public GlassHtml(ISitecoreContext sitecoreContext)
         {
             SitecoreContext = sitecoreContext;
@@ -180,7 +189,21 @@ namespace Glass.Mapper.Sc
             }
         }
 
-      
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, NameValueCollection attributes = null, bool isEditable = false)
+        {
+            if (IsInEditingMode && isEditable)
+            {
+                return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
+            }
+            else
+            {
+                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attributes, string.Empty, writer);
+            }
+        }
+
+        
+
+
         /// <summary>
         /// Checks it and attribute is part of the NameValueCollection and updates it with the
         /// default if it isn't.
@@ -188,7 +211,7 @@ namespace Glass.Mapper.Sc
         /// <param name="collection">The collection of attributes</param>
         /// <param name="name">The name of the attribute in the collection</param>
         /// <param name="defaultValue">The default value for the attribute</param>
-        public virtual void AttributeCheck(NameValueCollection collection, string name, string defaultValue)
+        public static void AttributeCheck(NameValueCollection collection, string name, string defaultValue)
         {
             if (collection[name].IsNullOrEmpty() && !defaultValue.IsNullOrEmpty())
                 collection[name] = defaultValue;
@@ -196,62 +219,42 @@ namespace Glass.Mapper.Sc
 
 
 
-
         /// <summary>
         /// Render HTML for a link
         /// </summary>
         /// <param name="link">The link to render</param>
         /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink(Fields.Link link)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
         {
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
 
-            return RenderLink(link, null, string.Empty);
+            RenderingResult result = null;
+            if (IsInEditingMode && isEditable)
+            {
+                
+                result = MakeEditable(
+                    field, 
+                    null, 
+                    model,  
+                    contents == null ? string.Empty: "haschildren=true", 
+                    _context, SitecoreContext.Database, writer);
+            }
+            else
+            {
+                result = BeginRenderLink(
+                        field.Compile().Invoke(model) as Fields.Link, attributes, contents, writer
+                    );
+            }
+
+            result.Dispose();
+            writer.Flush();
+            writer.Close();
+            return sb.ToString();
 
         }
 
-        /// <summary>
-        /// Render HTML for a link
-        /// </summary>
-        /// <param name="link">The link to render</param>
-        /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
-        /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes)
-        {
-
-            return RenderLink(link, attributes, string.Empty);
-
-        }
-
-        /// <summary>
-        /// Render HTML for a link
-        /// </summary>
-        /// <param name="link">The link to render</param>
-        /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
-        /// <param name="contents">Content to go in the link instead of the standard text</param>
-        /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes, string contents)
-        {
-            if (link == null) return "";
-            if (attributes == null) attributes = new NameValueCollection();
-
-            string format = "<a href='{0}{1}' title='{2}' target='{3}' class='{4}' {5}>{6}</a>";
-
-            string cls = attributes.AllKeys.Any(x => x == "class") ? attributes["class"] : link.Class;
-            string anchor = link.Anchor.IsNullOrEmpty() ? "" : "#" + link.Anchor;
-            string target = attributes.AllKeys.Any(x => x == "target") ? attributes["target"] : link.Target;
-
-
-            AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "target", link.Target);
-            AttributeCheck(attributes, "title", link.Title);
-
-            attributes.Remove("href");
-
-
-            return format.Formatted(link.Url, anchor, link.Title, target, cls, Utilities.ConvertAttributes(attributes), contents.IsNullOrEmpty() ? link.Text : contents);
-
-        }
-
+   
         /// <summary>
         /// Indicates if the site is in editing mode
         /// </summary>
@@ -296,6 +299,55 @@ namespace Glass.Mapper.Sc
             return MakeEditable<T>(field, standardOutput, target, parametersString);
         }
 
+
+
+        private string MakeEditable<T>(Expression<Func<T, object>> field,
+                                                Expression<Func<T, string>> standardOutput, T target, string parameters)
+        {
+            StringBuilder sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+            var result = MakeEditable(field, standardOutput, target, parameters, _context, SitecoreContext.Database, writer);
+            result.Dispose();
+            writer.Flush();
+            writer.Close();
+            return sb.ToString();
+        }
+
+        #region Statics
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <param name="link">The link to render</param>
+        /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
+        /// <param name="contents">Content to go in the link instead of the standard text</param>
+        /// <returns>An "a" HTML element</returns>
+        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer)
+        {
+            if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
+            if (attributes == null) attributes = new NameValueCollection();
+
+            string format = "<a href='{0}{1}' title='{2}' target='{3}' class='{4}' {5}>{6}";
+
+            string cls = attributes.AllKeys.Any(x => x == "class") ? attributes["class"] : link.Class;
+            string anchor = link.Anchor.IsNullOrEmpty() ? "" : "#" + link.Anchor;
+            string target = attributes.AllKeys.Any(x => x == "target") ? attributes["target"] : link.Target;
+
+
+            contents = contents == null ? link.Text ?? link.Title : contents;
+
+            AttributeCheck(attributes, "class", link.Class);
+            AttributeCheck(attributes, "target", link.Target);
+            AttributeCheck(attributes, "title", link.Title);
+
+            attributes.Remove("href");
+
+            string firstPart = format.Formatted(link.Url, anchor, link.Title, target, cls, Utilities.ConvertAttributes(attributes), contents);
+            string lastPart = "</a>";
+            return new RenderingResult(writer, firstPart, lastPart);
+        }
+
+
         /// <summary>
         /// Makes the editable.
         /// </summary>
@@ -316,15 +368,21 @@ namespace Glass.Mapper.Sc
         ///                         prop.DeclaringType, prop.Name, prop.MemberType)
         /// </exception>
         /// <exception cref="System.NullReferenceException">Context cannot be null</exception>
-        private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target,  string parameters)
+        private static RenderingResult MakeEditable<T>(
+            Expression<Func<T, object>> field, 
+            Expression<Func<T, string>> standardOutput, 
+            T target, 
+            string parameters, 
+            Context context, Database database,
+            TextWriter writer)
         {
+            string firstPart = string.Empty;
+            string lastPart = string.Empty;
 
             if (IsInEditingMode)
             {
                 if (field.Parameters.Count > 1)
                     throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
-
-
 
                 MemberExpression memberExpression;
 
@@ -355,13 +413,13 @@ namespace Glass.Mapper.Sc
 
                 var site = global::Sitecore.Context.Site;
 
-                if (_context == null) 
+                if (context == null) 
                     throw new NullReferenceException("Context cannot be null");
 
-                var config = _context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
+                var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
 
               
-                var scClass = config.ResolveItem(finalTarget, SitecoreContext.Database);
+                var scClass = config.ResolveItem(finalTarget, database);
 
                 //lambda expression does not always return expected memberinfo when inheriting
                 //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
@@ -406,27 +464,83 @@ namespace Glass.Mapper.Sc
 
                 using (new ContextItemSwitcher(scClass))
                 {
-                    FieldRenderer renderer = new FieldRenderer();
-                    renderer.Item = scClass;
-                    //TODO: - check this works with field ID as well
-                    renderer.FieldName = ((SitecoreFieldConfiguration)dataHandler).FieldName;
-                    renderer.Parameters = parameters;
-                    return renderer.Render();
+                    RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
+                    renderFieldArgs.Item = scClass;
+                    renderFieldArgs.FieldName =  ((SitecoreFieldConfiguration)dataHandler).FieldName;
+
+                    renderFieldArgs.Parameters = WebUtil.ParseQueryString(parameters ?? string.Empty);
+
+                    CorePipeline.Run("renderField", (PipelineArgs)renderFieldArgs);
+
+                    firstPart = renderFieldArgs.Result.FirstPart;
+                    lastPart = renderFieldArgs.Result.LastPart;
+
                 }
             }
             else
             {
                 if (standardOutput != null)
-                    return standardOutput.Compile().Invoke(target);
+                    firstPart = standardOutput.Compile().Invoke(target);
                 else
-                    return (field.Compile().Invoke(target) ?? string.Empty).ToString();
+                    firstPart = (field.Compile().Invoke(target) ?? string.Empty).ToString();
             }
+
+            return new RenderingResult(writer, firstPart, lastPart);
+
             //return field.Compile().Invoke(target).ToString();
         }
 
+        #endregion
 
 
         #region Obsolete
+
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <param name="link">The link to render</param>
+        /// <returns>An "a" HTML element</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public virtual string RenderLink(Fields.Link link)
+        {
+
+            return RenderLink(link, null, string.Empty);
+
+        }
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <param name="link">The link to render</param>
+        /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
+        /// <returns>An "a" HTML element</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes)
+        {
+
+            return RenderLink(link, attributes, string.Empty);
+
+        }
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <param name="link">The link to render</param>
+        /// <param name="attributes">Addtiional attributes to add. Do not include href or title</param>
+        /// <param name="contents">Content to go in the link instead of the standard text</param>
+        /// <returns>An "a" HTML element</returns>
+        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
+        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes, string contents)
+        {
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+
+            BeginRenderLink(link, attributes, contents, writer);
+            writer.Flush();
+            writer.Close();
+            return sb.ToString();
+        }
 
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.

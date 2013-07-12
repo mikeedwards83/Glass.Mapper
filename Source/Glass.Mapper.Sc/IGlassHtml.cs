@@ -17,6 +17,7 @@
 //-CRE-
 using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq.Expressions;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
@@ -132,6 +133,10 @@ namespace Glass.Mapper.Sc
                               ImageParameters parameters = null,
                               bool isEditable = false);
 
+        RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
+                                      NameValueCollection attributes = null, bool isEditable = false);
+        
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
@@ -146,15 +151,6 @@ namespace Glass.Mapper.Sc
         /// <param name="attributes">Additional attributes to add. Do not include alt or src</param>
         /// <returns>An img HTML element</returns>
         string RenderImage(Fields.Image image, NameValueCollection attributes);
-
-        /// <summary>
-        /// Checks it and attribute is part of the NameValueCollection and updates it with the
-        /// default if it isn't.
-        /// </summary>
-        /// <param name="collection">The collection of attributes</param>
-        /// <param name="name">The name of the attribute in the collection</param>
-        /// <param name="defaultValue">The default value for the attribute</param>
-        void AttributeCheck(NameValueCollection collection, string name, string defaultValue);
 
         /// <summary>
         /// Render HTML for a link
@@ -179,5 +175,9 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink(Fields.Link link, NameValueCollection attributes, string contents);
+
+
+        string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null,
+                             bool isEditable = false, string contents = null);
     }
 }
