@@ -107,8 +107,7 @@ namespace Glass.Mapper.Sc
         public SitecoreService(Database database, Context context)
             : this(
                 database,
-                context ?? Context.Default,
-                context.DependencyResolver.Resolve<AbstractObjectFactory>(context)
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context?? Context.Default)
             )
         {
            
@@ -120,8 +119,8 @@ namespace Glass.Mapper.Sc
         /// <param name="database"></param>
         /// <param name="context"></param>
         /// <param name="factory"></param>
-        internal SitecoreService(Database database, Context context, AbstractObjectFactory factory)
-           : base(context, factory)
+        internal SitecoreService(Database database, AbstractObjectFactory factory)
+           : base(factory)
         {
             Database = database;
         }

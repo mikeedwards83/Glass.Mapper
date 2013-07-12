@@ -59,8 +59,7 @@ namespace Glass.Mapper.Umb
         public UmbracoService(IContentService contentService, Context context )
             : this(
                 contentService,
-                context ?? Context.Default,
-                context.DependencyResolver.Resolve<AbstractObjectFactory>(context)
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context ?? Context.Default)
             )
         {
         }
@@ -71,8 +70,8 @@ namespace Glass.Mapper.Umb
         /// <param name="database"></param>
         /// <param name="context"></param>
         /// <param name="factory"></param>
-        internal UmbracoService(IContentService contentService, Context context, AbstractObjectFactory factory)
-           : base(context, factory)
+        internal UmbracoService(IContentService contentService,  AbstractObjectFactory factory)
+           : base(factory)
         {
             ContentService = contentService;
         }

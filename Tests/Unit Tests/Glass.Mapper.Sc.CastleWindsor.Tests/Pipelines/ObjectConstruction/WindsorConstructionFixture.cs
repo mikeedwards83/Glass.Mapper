@@ -51,7 +51,6 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var typeCreationContext = new SitecoreTypeCreationContext();
             typeCreationContext.Service = new StubAbstractService(
-                context,
                 resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
@@ -140,7 +139,6 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = new SitecoreTypeCreationContext();
 
             typeCreationContext.Service = new StubAbstractService(
-                context,
                 resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
@@ -258,10 +256,8 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
         public class StubAbstractService: AbstractService
         {
-            public StubAbstractService(Context context,
-                                        AbstractObjectFactory objectFactory
-                                      )
-                : base(context, objectFactory)
+            public StubAbstractService(AbstractObjectFactory objectFactory)
+                : base( objectFactory)
             {
                 
             }

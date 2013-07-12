@@ -18,11 +18,11 @@ namespace Glass.Mapper
         /// The profiler.
         /// </value>
         public IPerformanceProfiler Profiler { get; set; }
+        public Context Context { get; private set; }
 
      
 
         private readonly ConfigurationResolver _configurationResolver;
-        private readonly Context _glassContext;
         private readonly ObjectConstruction _objectConstruction;
         private readonly ObjectSaving _objectSaving;
 
@@ -39,8 +39,8 @@ namespace Glass.Mapper
             ObjectSaving objectSaving
             )
         {
-            _glassContext = context;
-            if (_glassContext == null) 
+            Context = context;
+            if (Context == null) 
                 throw new NullReferenceException("Context is null");
 
             _objectConstruction = objectConstruction;
@@ -59,7 +59,7 @@ namespace Glass.Mapper
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //run the pipeline to get the configuration to load
-            var configurationArgs = new ConfigurationResolverArgs(_glassContext, abstractTypeCreationContext);
+            var configurationArgs = new ConfigurationResolverArgs(Context, abstractTypeCreationContext);
             _configurationResolver.Run(configurationArgs);
             
             if (configurationArgs.Result == null)
@@ -68,7 +68,7 @@ namespace Glass.Mapper
             var config = configurationArgs.Result;
 
             //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(_glassContext, abstractTypeCreationContext, config);
+            var objectArgs = new ObjectConstructionArgs(Context, abstractTypeCreationContext, config);
             _objectConstruction.Run(objectArgs);
 
             return objectArgs.Result;
@@ -81,7 +81,7 @@ namespace Glass.Mapper
         public virtual void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             //Run the object construction
-            var savingArgs = new ObjectSavingArgs(_glassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext);
+            var savingArgs = new ObjectSavingArgs(Context, abstractTypeSavingContext.Object, abstractTypeSavingContext);
             _objectSaving.Run(savingArgs);
         }
 

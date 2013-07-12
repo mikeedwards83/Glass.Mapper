@@ -43,7 +43,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// Gets the service.
         /// </summary>
         /// <value>The service.</value>
-        public AbstractService Service { get; private set; }
+        public IAbstractService Service { get; private set; }
 
         /// <summary>
         /// Gets or sets the result.

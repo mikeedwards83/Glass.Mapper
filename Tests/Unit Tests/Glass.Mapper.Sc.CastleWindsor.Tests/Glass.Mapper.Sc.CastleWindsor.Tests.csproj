@@ -64,6 +64,10 @@
       <Project>{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}</Project>
       <Name>Glass.Mapper.Sc.CastleWindsor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
       <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
       <Name>Glass.Mapper</Name>

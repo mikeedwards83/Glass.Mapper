@@ -42,8 +42,7 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var context = Context.Create(resolver);
 
             var service = new StubAbstractService(
-                context,
-                resolver.Resolve<AbstractObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
@@ -130,8 +129,7 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var context = Context.Create(resolver);
 
             var service = new StubAbstractService(
-                context,
-                resolver.Resolve<AbstractObjectFactory>()
+                resolver.Resolve<AbstractObjectFactory>(context)
                 );
 
             resolver.Container.Register(
@@ -251,9 +249,8 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
         public class StubAbstractService : AbstractService
         {
-            public StubAbstractService(Context glassContext,
-                                       AbstractObjectFactory objectFactory)
-                : base(glassContext, objectFactory){}
+            public StubAbstractService(AbstractObjectFactory objectFactory)
+                : base(objectFactory){}
 
          
         }

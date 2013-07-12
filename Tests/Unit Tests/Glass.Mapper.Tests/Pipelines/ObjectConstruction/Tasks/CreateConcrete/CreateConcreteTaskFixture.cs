@@ -103,12 +103,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //Assign
             Type type = typeof (StubClass);
             
-            var service = Substitute.For<IAbstractService>();
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
             abstractTypeCreationContext.RequestedType = typeof (StubClass);
+            abstractTypeCreationContext.Service = Substitute.For<IAbstractService>();
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);

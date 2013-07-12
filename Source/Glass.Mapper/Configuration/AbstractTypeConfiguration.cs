@@ -87,7 +87,7 @@ namespace Glass.Mapper.Configuration
         /// <param name="obj">The obj.</param>
         /// <param name="service">The service.</param>
         /// <param name="context">The context.</param>
-        public void MapPropertiesToObject( object obj, AbstractService service, AbstractTypeCreationContext context)
+        public void MapPropertiesToObject( object obj, IAbstractService service, AbstractTypeCreationContext context)
         {
             //create properties 
             AbstractDataMappingContext dataMappingContext = service.ObjectFactory.CreateDataMappingContext(context, obj);

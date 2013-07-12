@@ -39,12 +39,11 @@ namespace Glass.Mapper
         public Context GlassContext { get; private set; }
 
         public AbstractService(
-            Context glassContext,
             AbstractObjectFactory objectFactory 
             )
         {
             ObjectFactory = objectFactory;
-            GlassContext = glassContext;
+            GlassContext = objectFactory.Context;
         }
     }
 
@@ -61,6 +60,7 @@ namespace Glass.Mapper
         /// </value>
         Context GlassContext { get; }
 
+        AbstractObjectFactory ObjectFactory { get;  }
        
     }
 }
