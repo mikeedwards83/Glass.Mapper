@@ -86,7 +86,7 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field)
@@ -98,7 +98,7 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
@@ -111,7 +111,7 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="parameters">Additional rendering parameters, e.g. class=myCssClass</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
@@ -124,7 +124,7 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
@@ -137,7 +137,7 @@ namespace Glass.Mapper.Sc
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
@@ -277,7 +277,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
-        /// <param name="target">The target.</param>
+        /// <param name="target">The model.</param>
         /// <returns>System.String.</returns>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
         {
@@ -290,7 +290,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
-        /// <param name="target">The target.</param>
+        /// <param name="target">The model.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
         private string MakeEditable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target, AbstractParameters parameters)
@@ -327,17 +327,17 @@ namespace Glass.Mapper.Sc
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new NameValueCollection();
 
-            string format = "<a href='{0}{1}' title='{2}' target='{3}' class='{4}' {5}>{6}";
+            string format = "<a href='{0}{1}' title='{2}' model='{3}' class='{4}' {5}>{6}";
 
             string cls = attributes.AllKeys.Any(x => x == "class") ? attributes["class"] : link.Class;
             string anchor = link.Anchor.IsNullOrEmpty() ? "" : "#" + link.Anchor;
-            string target = attributes.AllKeys.Any(x => x == "target") ? attributes["target"] : link.Target;
+            string target = attributes.AllKeys.Any(x => x == "model") ? attributes["model"] : link.Target;
 
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
             AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "target", link.Target);
+            AttributeCheck(attributes, "model", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
             attributes.Remove("href");
@@ -354,7 +354,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
-        /// <param name="target">The target.</param>
+        /// <param name="model">The model.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="Glass.Mapper.MapperException">
@@ -371,123 +371,142 @@ namespace Glass.Mapper.Sc
         private static RenderingResult MakeEditable<T>(
             Expression<Func<T, object>> field, 
             Expression<Func<T, string>> standardOutput, 
-            T target, 
+            T model, 
             string parameters, 
             Context context, Database database,
             TextWriter writer)
         {
+
             string firstPart = string.Empty;
             string lastPart = string.Empty;
 
-            if (IsInEditingMode)
+            try
             {
-                if (field.Parameters.Count > 1)
-                    throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
+                if (field == null) throw new NullReferenceException("No field set");
+                if (model == null) throw new NullReferenceException("No model set");
 
-                MemberExpression memberExpression;
 
-                if (field.Body is UnaryExpression)
+
+
+                if (IsInEditingMode)
                 {
-                    memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
-                }
-                else if (!(field.Body is MemberExpression))
-                {
-                    throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
+                    if (field.Parameters.Count > 1)
+                        throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
+
+                    MemberExpression memberExpression;
+
+                    if (field.Body is UnaryExpression)
+                    {
+                        memberExpression = ((UnaryExpression) field.Body).Operand as MemberExpression;
+                    }
+                    else if (!(field.Body is MemberExpression))
+                    {
+                        throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
+                    }
+                    else
+                    {
+                        memberExpression = (MemberExpression) field.Body;
+                    }
+
+
+
+                    //we have to deconstruct the lambda expression to find the 
+                    //correct model object
+                    //For example if we have the lambda expression x =>x.Children.First().Content
+                    //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
+
+                    //this contains the expression that will evaluate to the object containing the property
+                    var objectExpression = memberExpression.Expression;
+
+                    var finalTarget =
+                        Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(model);
+
+                    var site = global::Sitecore.Context.Site;
+
+                    if (context == null)
+                        throw new NullReferenceException("Context cannot be null");
+
+                    var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
+
+
+                    var scClass = config.ResolveItem(finalTarget, database);
+
+                    //lambda expression does not always return expected memberinfo when inheriting
+                    //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
+                    var prop = config.Type.GetProperty(memberExpression.Member.Name);
+
+                    //interfaces don't deal with inherited properties well
+                    if (prop == null && config.Type.IsInterface)
+                    {
+                        Func<Type, PropertyInfo> interfaceCheck = null;
+                        interfaceCheck = (inter) =>
+                            {
+                                var interfaces = inter.GetInterfaces();
+                                var properties =
+                                    interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
+                                        x => x != null);
+                                if (properties.Any()) return properties.First();
+                                else
+                                    return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
+                            };
+                        prop = interfaceCheck(config.Type);
+                    }
+
+                    if (prop != null && prop.DeclaringType != prop.ReflectedType)
+                    {
+                        //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
+                        prop = prop.DeclaringType.GetProperty(prop.Name);
+                    }
+
+                    if (prop == null)
+                        throw new MapperException(
+                            "Page editting error. Could not find property {0} on type {1}".Formatted(
+                                memberExpression.Member.Name, config.Type.FullName));
+
+                    //ME - changed this to work by name because properties on interfaces do not show up as declared types.
+                    var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
+                    if (dataHandler == null)
+                    {
+                        throw new MapperException(
+                            "Page editting error. Could not find data handler for property {2} {0}.{1}".Formatted(
+                                prop.DeclaringType, prop.Name, prop.MemberType));
+                    }
+
+
+
+                    using (new ContextItemSwitcher(scClass))
+                    {
+                        RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
+                        renderFieldArgs.Item = scClass;
+                        renderFieldArgs.FieldName = ((SitecoreFieldConfiguration) dataHandler).FieldName;
+
+                        renderFieldArgs.Parameters = WebUtil.ParseQueryString(parameters ?? string.Empty);
+
+                        CorePipeline.Run("renderField", (PipelineArgs) renderFieldArgs);
+
+                        firstPart = renderFieldArgs.Result.FirstPart;
+                        lastPart = renderFieldArgs.Result.LastPart;
+
+                    }
                 }
                 else
                 {
-                    memberExpression = (MemberExpression)field.Body;
-                }
-
-
-
-                //we have to deconstruct the lambda expression to find the 
-                //correct target object
-                //For example if we have the lambda expression x =>x.Children.First().Content
-                //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
-
-                //this contains the expression that will evaluate to the object containing the property
-                var objectExpression = memberExpression.Expression;
-
-                var finalTarget = Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(target);
-
-                var site = global::Sitecore.Context.Site;
-
-                if (context == null) 
-                    throw new NullReferenceException("Context cannot be null");
-
-                var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
-
-              
-                var scClass = config.ResolveItem(finalTarget, database);
-
-                //lambda expression does not always return expected memberinfo when inheriting
-                //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
-                var prop = config.Type.GetProperty(memberExpression.Member.Name);
-
-                //interfaces don't deal with inherited properties well
-                if (prop == null && config.Type.IsInterface)
-                {
-                    Func<Type, PropertyInfo> interfaceCheck = null;
-                    interfaceCheck = (inter) =>
-                    {
-                        var interfaces = inter.GetInterfaces();
-                        var properties =
-                            interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
-                                x => x != null);
-                        if (properties.Any()) return properties.First();
-                        else
-                            return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
-                    };
-                    prop = interfaceCheck(config.Type);
-                }
-
-                if (prop != null && prop.DeclaringType != prop.ReflectedType)
-                {
-                    //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
-                    prop = prop.DeclaringType.GetProperty(prop.Name);
-                }
-
-                if (prop == null)
-                    throw new MapperException("Page editting error. Could not find property {0} on type {1}".Formatted(memberExpression.Member.Name, config.Type.FullName));
-
-                //ME - changed this to work by name because properties on interfaces do not show up as declared types.
-                var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
-                if (dataHandler == null)
-                {
-                    throw new MapperException(
-                        "Page editting error. Could not find data handler for property {2} {0}.{1}".Formatted(
-                        prop.DeclaringType, prop.Name, prop.MemberType));
-                }
-
-               
-
-                using (new ContextItemSwitcher(scClass))
-                {
-                    RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
-                    renderFieldArgs.Item = scClass;
-                    renderFieldArgs.FieldName =  ((SitecoreFieldConfiguration)dataHandler).FieldName;
-
-                    renderFieldArgs.Parameters = WebUtil.ParseQueryString(parameters ?? string.Empty);
-
-                    CorePipeline.Run("renderField", (PipelineArgs)renderFieldArgs);
-
-                    firstPart = renderFieldArgs.Result.FirstPart;
-                    lastPart = renderFieldArgs.Result.LastPart;
-
+                    if (standardOutput != null)
+                        firstPart = standardOutput.Compile().Invoke(model);
+                    else
+                        firstPart = (field.Compile().Invoke(model) ?? string.Empty).ToString();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                if (standardOutput != null)
-                    firstPart = standardOutput.Compile().Invoke(target);
-                else
-                    firstPart = (field.Compile().Invoke(target) ?? string.Empty).ToString();
+                firstPart = "<p>{0}</p><pre>{1}</pre>".Formatted(ex.Message, ex.StackTrace);
+                Sitecore.Diagnostics.Log.Error("Failed to render field", ex, typeof(IGlassHtml));
             }
 
             return new RenderingResult(writer, firstPart, lastPart);
 
-            //return field.Compile().Invoke(target).ToString();
+
+            //return field.Compile().Invoke(model).ToString();
         }
 
         #endregion
@@ -547,9 +566,9 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
         /// <param name="field">The field that should be made editable</param>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field)")]
+        [Obsolete("Use Editable<T>(T model, Expression<Func<T, object>> field)")]
         public string Editable<T>(Expression<Func<T, object>> field, T target)
         {
             return MakeEditable<T>(field, null, target);
@@ -560,9 +579,9 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="target">The model object that contains the item to be edited</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
+        [Obsolete("Use Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
         public string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
         {
             return MakeEditable<T>(field, standardOutput, target);

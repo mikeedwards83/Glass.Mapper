@@ -128,7 +128,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>System.String.</returns>
         public string Editable<T>(T model, Expression<Func<T, object>> field)
         {
-            return UiUtilities.Editable(GlassHtml, model, field);
+            return GlassHtml.Editable(model, field);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>System.String.</returns>
         public string Editable<T>(T model, Expression<Func<T, object>> field, AbstractParameters parameters)
         {
-            return UiUtilities.Editable(GlassHtml, model, field, parameters);
+            return GlassHtml.Editable(model, field, parameters);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>System.String.</returns>
         public string Editable<T>(T model, Expression<Func<T, object>> field, string parameters)
         {
-            return UiUtilities.Editable(GlassHtml, model, field, parameters);
+            return GlassHtml.Editable(model, field, parameters);
         }
 
 
@@ -168,7 +168,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>System.String.</returns>
         public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
-            return UiUtilities.Editable(GlassHtml, model, field, standardOutput);
+            return GlassHtml.Editable(model, field, standardOutput);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput,
                                   AbstractParameters parameters)
         {
-            return UiUtilities.Editable(GlassHtml, model, field, standardOutput, parameters);
+            return GlassHtml.Editable(model, field, standardOutput, parameters);
         }
 
 
@@ -201,7 +201,7 @@ namespace Glass.Mapper.Sc.Web.Ui
                                              ImageParameters parameters = null,
                                              bool isEditable = false)
         {
-            return UiUtilities.RenderImage(GlassHtml, model, field, parameters, isEditable);
+            return GlassHtml.RenderImage(model, field, parameters, isEditable);
         }
 
 
