@@ -384,6 +384,18 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
         /// </summary>

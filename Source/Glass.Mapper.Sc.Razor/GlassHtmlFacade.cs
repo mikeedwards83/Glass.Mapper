@@ -157,6 +157,12 @@ namespace Glass.Mapper.Sc.Razor
         }
 
 
+        public bool IsInEditingMode
+        {
+            get { return Sc.GlassHtml.IsInEditingMode; }
+        }
+
+
 
 
 
@@ -209,6 +215,7 @@ namespace Glass.Mapper.Sc.Razor
             return frame;
             
         }
+
 
         /// <summary>
         /// Renders the partial.
