@@ -157,6 +157,7 @@
     <Compile Include="RenderField\DateParameters.cs" />
     <Compile Include="RenderField\ImageParameters.cs" />
     <Compile Include="RenderField\LinkParameters.cs" />
+    <Compile Include="RenderingResult.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
@@ -185,7 +186,6 @@
     <Compile Include="Web\Ui\GlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Web\Ui\UiUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />

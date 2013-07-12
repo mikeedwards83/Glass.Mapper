@@ -16,6 +16,9 @@
 */ 
 //-CRE-
 using System;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
+using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;
@@ -195,23 +198,30 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             var context = Context.Contexts[ContextName];
             if (context == null) throw new MapperException("Failed to find context {0}".Formatted(ContextName));
 
-            if (context.TypeConfigurations.ContainsKey(type))
+            //this is really aggressive
+            if (!context.TypeConfigurations.ContainsKey(type))
             {
-                ISitecoreContext scContext = new SitecoreContext(context);
+                //if the config is null then it is probably an ondemand mapping so we have to load the ondemand part
 
-                if (renderingItem.DataSource.IsNotNullOrEmpty())
-                {
-                    var item = scContext.Database.GetItem(renderingItem.DataSource);
-                    return scContext.CreateType(type, item, false, false, null);
-                }
-                
-                return scContext.GetCurrentItem(type);
+                IConfigurationLoader loader =
+                    new OnDemandLoader<SitecoreTypeConfiguration>(type);
+                context.Load(loader);
+
             }
-            return null;
+            ISitecoreContext scContext = new SitecoreContext(context);
+
+            if (renderingItem.DataSource.IsNotNullOrEmpty())
+            {
+                var item = scContext.Database.GetItem(renderingItem.DataSource);
+                return scContext.CreateType(type, item, false, false, null);
+            }
+
+            return scContext.GetCurrentItem(type);
+
         }
 
-        
-      
+
+
     }
 }
 
