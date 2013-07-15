@@ -36,28 +36,19 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         {
             //Assign
             var typeContext = Substitute.For<AbstractTypeCreationContext>();
-            var config = Substitute.For<AbstractTypeConfiguration>();
-            var service = Substitute.For<AbstractObjectFactory>();
-
-            var args = new ObjectConstructionArgs(
-                null,
-                typeContext, 
-                config
-                );
 
             var invocation = Substitute.For<IInvocation>();
             invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
-            service.InstantiateObject(typeContext).Returns(new StubClass());
 
-            var interceptor = new LazyObjectInterceptor(args);
+            var interceptor = new LazyObjectInterceptor(null, typeContext);
+            interceptor.CreateConcrete = (objectFactory, creationContext) => new StubClass();
 
             //Act
             interceptor.Intercept(invocation);
 
             //Assert
             Assert.IsTrue((bool)invocation.ReturnValue);
-
-
+            Assert.IsFalse(typeContext.IsLazy);
         }
 
         #endregion

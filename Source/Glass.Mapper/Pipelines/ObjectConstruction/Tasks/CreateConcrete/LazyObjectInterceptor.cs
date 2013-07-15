@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
@@ -28,19 +29,33 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     /// </summary>
     public class LazyObjectInterceptor : IInterceptor
     {
-        private readonly ObjectConstructionArgs _args;
-
+        private readonly AbstractObjectFactory _factory;
+        private readonly AbstractTypeCreationContext _typeCreationContext;
         private object _actual;
+
+        internal Func<AbstractObjectFactory, AbstractTypeCreationContext, object> CreateConcrete =
+            (factory, typeCreationContext )=> factory.InstantiateObject(typeCreationContext);
+ 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LazyObjectInterceptor"/> class.
         /// </summary>
         /// <param name="args">The args.</param>
-        public LazyObjectInterceptor(ObjectConstructionArgs args)
+        public LazyObjectInterceptor(ObjectConstructionArgs args):
+            this(args.Service.ObjectFactory, args.AbstractTypeCreationContext)
         {
-            _args = args;
         }
-
+        
+        /// <summary>
+        /// Used for unit tests
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <param name="typeCreationContext"></param>
+        internal LazyObjectInterceptor(AbstractObjectFactory factory, AbstractTypeCreationContext typeCreationContext)
+        {
+            _factory = factory;
+            _typeCreationContext = typeCreationContext;
+        }
       
         #region IInterceptor Members
 
@@ -53,8 +68,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //create class
             if (_actual == null)
             {
-                _args.AbstractTypeCreationContext.IsLazy = false;
-                _actual = _args.Service.ObjectFactory.InstantiateObject(_args.AbstractTypeCreationContext);
+                _typeCreationContext.IsLazy = false;
+                _actual = CreateConcrete(_factory, _typeCreationContext);
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);
