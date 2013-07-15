@@ -64,12 +64,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
             //Assign
             var target = new Stub();
             var savingContext = Substitute.For<AbstractTypeSavingContext>();
-           var service = Substitute.For<AbstractService>();
             var args = new ObjectSavingArgs(null, target, savingContext);
-            var task = new StandardSavingTask();
 
-            var dataContext = Substitute.For<AbstractDataMappingContext>(target);
-            service.ObjectFactory.CreateDataMappingContext(savingContext).Returns(dataContext);
+            var dataContext = Substitute.For<AbstractDataMappingContext>(target,(AbstractService)null);
+
+            var task = new StandardSavingTask();
+            task.GetDataMappingContext = (savingArgs, context) => dataContext;
+
 
             var property1 = Substitute.For<AbstractPropertyConfiguration>();
             var config1 = Substitute.For<AbstractPropertyConfiguration>();

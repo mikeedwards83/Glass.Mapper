@@ -48,7 +48,10 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
 
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
+            var typeCreationContext = new UmbracoTypeCreationContext();
+            typeCreationContext.Service = new StubAbstractService(
+                resolver.Resolve<AbstractObjectFactory>(context)
+                );
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
@@ -74,7 +77,10 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(context, null, typeConfig);
+            var typeCreationContext = new UmbracoTypeCreationContext();
+
+
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
             var result = new StubClass2();
             args.Result = result;
 
@@ -139,8 +145,11 @@ namespace Glass.Mapper.Umb.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClassWithService);
 
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
+            var typeCreationContext = new UmbracoTypeCreationContext();
+            typeCreationContext.Service = new StubAbstractService(
+                resolver.Resolve<AbstractObjectFactory>(context)
+                );
 
             var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 

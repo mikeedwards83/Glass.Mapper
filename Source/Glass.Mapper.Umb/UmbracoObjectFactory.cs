@@ -10,8 +10,8 @@ namespace Glass.Mapper.Umb
 {
     public class UmbracoObjectFactory : AbstractObjectFactory
     {
-        public UmbracoObjectFactory(Context glassContext, ObjectConstruction objectConstruction, ConfigurationResolver configurationResolver, ObjectSaving objectSaving) 
-            : base(glassContext, objectConstruction, configurationResolver, objectSaving)
+        public UmbracoObjectFactory(Context context, ObjectConstruction objectConstruction, ConfigurationResolver configurationResolver, ObjectSaving objectSaving)
+            : base(context, objectConstruction, configurationResolver, objectSaving)
         {
         }
 
