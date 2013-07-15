@@ -627,8 +627,13 @@ namespace Glass.Mapper.Sc
             //append to url values
             if (attributes[ImageWidth].IsNotNullOrEmpty())
                 attributes.Add(ImageParameters.WIDTH, attributes[ImageWidth]);
+            else
+                attributes.Add(ImageParameters.WIDTH, image.Width.ToString());
+
             if (attributes[ImageHeight].IsNotNullOrEmpty())
                 attributes.Add(ImageParameters.HEIGHT, attributes[ImageHeight]);
+            else
+                attributes.Add(ImageParameters.HEIGHT, image.Height.ToString());
 
             foreach (var key in attributes.AllKeys)
             {
