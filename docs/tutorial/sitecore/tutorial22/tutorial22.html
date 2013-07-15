@@ -15,7 +15,7 @@ title: Tutorial 22 - Advanced Page Editor
 <p>
     The list below summaries the list of functions available where the model is passed into the method:
 </p>
-<pre class="csharp">
+<pre class="cs">
 Editable&lt;T&gt;(T model, Expression&lt;Func&lt;T, object&gt;&gt; field)
 Editable&lt;T&gt;(T model, Expression&lt;Func&lt;T, object&gt;&gt; field, AbstractParameters parameters)
 Editable&lt;T&gt;(T model, Expression&lt;Func&lt;T, object&gt;&gt; field, string parameters)
@@ -29,7 +29,7 @@ RenderLink&lt;T&gt;(T model, Expression&lt;Func&lt;T, object&gt;&gt; field, Name
 <p>
     These methods have been shortened on controls that have a model property, for example the GlassUserControl (for WebForms), GlassView (for MVC) and TypedTemplate (for Glass.Mapper.Sc.Razor):
 </p>
-<pre class="csharp">
+<pre class="cs">
 Editable(Expression&lt;Func&lt;T, object&gt;&gt; field)
 Editable(Expression&lt;Func&lt;T, object&gt;&gt; field, AbstractParameters parameters)
 Editable(Expression&lt;Func&lt;T, object&gt;&gt; field, string parameters)
@@ -47,7 +47,7 @@ RenderLink&lt;T&gt;(T model, Expression&lt;Func&lt;T, object&gt;&gt; field, Name
     The Editable method is the most basic method to use to make a field editable and should be used with most fields that are page editable except the Image field and
     General Link field. For example lets assume I have a template with a Title field and the following class:
 </p>
-<pre class="csharp">
+<pre class="cs">
 public class DemoClass{
     public virtual string Title { get; set; }   
 }
@@ -55,7 +55,7 @@ public class DemoClass{
 <p>
     We can make it Editable using the following code:
 </p>
-<pre class="csharp">
+<pre class="cs">
 
     //Webforms
     &lt;%= Editable(Model, x => x.Title) %&gt;  //explicitly stating the model
@@ -74,7 +74,7 @@ public class DemoClass{
     total numbers will come from the search provider and we need to combine this with the content from Sitecore, we can achieve this by using the Editable
     method that allows you to assign a standard output as the second parameter:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //Webforms
     &lt;%= Editable(x=>x.SearchString, x=> string.Format(x.SearchString, startResult, endResult, totalResult)) %&gt;
     
@@ -93,7 +93,7 @@ public class DemoClass{
     The RenderImage method can be used to render the correct HTML to put an image on the page and it can be used to make the image editable in the Page Editor. 
     The image property must be of the type <strong>Glass.Mapper.Sc.Fields.Image</strong>. Assuming I have the following model:
 </p>
-<pre class="csharp">
+<pre class="cs">
 public class DemoClass{
     public virtual Glass.Mapper.Sc.Fields.Image Image { get; set; }
 }
@@ -101,7 +101,7 @@ public class DemoClass{
 <p>
     I can render the image to the page using the following:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderImage(x => x.Image) %&gt;
     
@@ -111,7 +111,7 @@ public class DemoClass{
 <p>
     Making an image editable is very simple and can be achieved by adding the isEditable named parameter:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderImage(x => x.Image, isEditable: true) %&gt;
     
@@ -122,7 +122,7 @@ public class DemoClass{
     The final parameter allows you control how the image is rendered using Sitecore's inbuilt image processor, for example we can change the size of the image:
 </p>
 
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderImage(x => x.Image, new ImageParameters{Width = 100, Height = 50}, true) %&gt;
     
@@ -138,7 +138,7 @@ public class DemoClass{
 <p>
     The RenderLink method allows you to render links to screen of the type <strong>Glass.Mapper.Sc.Fields.Link</strong>. Lets assume I have the following class:
 </p>
-<pre class="csharp">
+<pre class="cs">
 public class DemoClass{
     public virtual Glass.Mapper.Sc.Fields.Link Link { get; set; }   
 }
@@ -146,7 +146,7 @@ public class DemoClass{
 <p>
     To render the correct HTML link elements to the page we just need to call the RenderLink method:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderLink(x => x.Link) %&gt;
     
@@ -156,7 +156,7 @@ public class DemoClass{
 <p>
     To make the link editable we can added the isEditable named parameter:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderLink(x => x.Link, isEditable: true) %&gt;
     
@@ -167,7 +167,7 @@ public class DemoClass{
     By default the text displayed to the user in the link is either the value from the Description field for external links or the name of the target Sitecore item. 
     However sometimes you might want to have more control over the link text presented to the user. To achieve this we can use the <strong>contents</strong> parameter:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;%= RenderLink(x => x.Link, isEditable: true, contents: "Read More &gt;&gt;") %&gt;
     
@@ -180,7 +180,7 @@ public class DemoClass{
     The BeginRenderLink can be used to render a link that should contain multiple HTML elements rather than simple text elements show in the RenderLink method.
     This is useful for when you might want to make images or other HTML elements links that still work within the Page Editor. Assuming we have the following model:
 </p>
-<pre class="csharp">
+<pre class="cs">
 public class DemoClass{
     public virtual Glass.Mapper.Sc.Fields.Link Link { get; set; }   
 }
@@ -188,7 +188,7 @@ public class DemoClass{
 <p>
     We can make an image a link and still support the Page Editor using the following:
 </p>
-<pre class="csharp">
+<pre class="cs">
     //WebForms
     &lt;% using (BeginRenderLink(x => x.GeneralLink, isEditable:true))
        { %&gt;
