@@ -40,10 +40,14 @@ namespace Glass.Mapper
 
         public AbstractService(
             AbstractObjectFactory objectFactory 
-            )
+            ) : this(objectFactory, objectFactory.Context)
+        {
+        }
+        
+        internal AbstractService(AbstractObjectFactory objectFactory, Context context)
         {
             ObjectFactory = objectFactory;
-            GlassContext = objectFactory.Context;
+            GlassContext = context;
         }
     }
 

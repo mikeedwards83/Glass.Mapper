@@ -67,36 +67,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         }
 
-        [Test]
-        public void Execute_LazyType_LazyTypeCreated()
-        {
-            //Assign
-            Type type = typeof (StubClass);
-          
-            var service = Substitute.For<IAbstractService>();
-
-            Context context = Context.Create(Substitute.For<IDependencyResolver>());
-
-            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType = typeof (StubClass);
-            abstractTypeCreationContext.IsLazy = true;
-
-            var configuration = Substitute.For<AbstractTypeConfiguration>();
-            configuration.Type = type;
-            configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
-
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration);
-
-            //Act
-            _task.Execute(args);
-
-            //Assert
-            Assert.IsTrue(args.IsAborted);
-            Assert.IsNotNull(args.Result);
-            Assert.IsTrue(args.Result is StubClass);
-            Assert.IsFalse(args.Result.GetType() == typeof(StubClass));
-        }
-
+     
         [Test]
         public void Execute_ConcreteType_TypeCreated()
         {

@@ -18,13 +18,11 @@
 
 
 using Castle.DynamicProxy;
-using Glass.Mapper.Configuration;
-using Glass.Mapper.Pipelines.ObjectConstruction;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateLazy;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
+namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateLazy
 {
     [TestFixture]
     public class LazyObjectInterceptorFixture
