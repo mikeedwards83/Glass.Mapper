@@ -72,6 +72,7 @@
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\GlassFolder.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\Nuget.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\tutorial01.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial22\tutorial22.html" />
     <Content Include="docs\tutorial\sitecore\tutorial19\Tutorial19.field.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial19\tutorial19.html" />
     <Content Include="docs\tutorial\sitecore\tutorial18\tutorial18.html" />
