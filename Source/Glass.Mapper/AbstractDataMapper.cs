@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper
 {
@@ -38,6 +39,14 @@ namespace Glass.Mapper
     /// </summary>
     public abstract class AbstractDataMapper
     {
+
+        public IPerformanceProfiler Profiler { get; set; }
+
+        public AbstractDataMapper()
+        {
+            Profiler = new NullProfiler();
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether [read only].
         /// </summary>

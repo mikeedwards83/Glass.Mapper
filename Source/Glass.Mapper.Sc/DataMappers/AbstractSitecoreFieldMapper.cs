@@ -37,6 +37,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <value>The types handled.</value>
         public IEnumerable<Type> TypesHandled { get; private set; }
 
+       
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
         /// </summary>
@@ -53,18 +55,30 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>The value to write</returns>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
+
             var scConfig = Configuration as SitecoreFieldConfiguration;
-            var scContext =  mappingContext  as SitecoreDataMappingContext ;
+            var scContext = mappingContext as SitecoreDataMappingContext;
 
-            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
-            
-            if(field ==null)
-               return;
-            
-            object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+            string profileName = "MapToCms {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
+
+            try
+            {
+                Profiler.Start(profileName);
+
+                var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+
+                if (field == null)
+                    return;
+
+                object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
 
-            SetField(field, value, scConfig, scContext);
+                SetField(field, value, scConfig, scContext);
+            }
+            finally
+            {
+                Profiler.End(profileName);
+            }
         }
 
         /// <summary>
@@ -77,12 +91,22 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreFieldConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+            string profileName = "MapToProperty {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
 
-            if (field == null)
-                return null;
+            try
+            {
+                Profiler.Start(profileName);
 
-            return GetField(field, scConfig, scContext);
+                var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+
+                if (field == null)
+                    return null;
+
+                return GetField(field, scConfig, scContext);
+            }
+            finally {
+                Profiler.End(profileName);
+            }
         }
 
         /// <summary>

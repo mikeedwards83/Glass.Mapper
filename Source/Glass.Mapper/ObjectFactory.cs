@@ -58,20 +58,33 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
-            //run the pipeline to get the configuration to load
-            var configurationArgs = new ConfigurationResolverArgs(Context, abstractTypeCreationContext);
-            _configurationResolver.Run(configurationArgs);
-            
-            if (configurationArgs.Result == null)
-                throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName));
+            string profileName = "Instantiate object {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName, abstractTypeCreationContext);
 
-            var config = configurationArgs.Result;
+            try
+            {
+                Profiler.Start(profileName);
 
-            //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(Context, abstractTypeCreationContext, config);
-            _objectConstruction.Run(objectArgs);
+                //run the pipeline to get the configuration to load
+                var configurationArgs = new ConfigurationResolverArgs(Context, abstractTypeCreationContext);
+                _configurationResolver.Run(configurationArgs);
 
-            return objectArgs.Result;
+                if (configurationArgs.Result == null)
+                    throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName));
+
+                var config = configurationArgs.Result;
+
+                //Run the object construction
+                var objectArgs = new ObjectConstructionArgs(Context, abstractTypeCreationContext, config);
+                _objectConstruction.Run(objectArgs);
+
+                return objectArgs.Result;
+
+            }
+            finally
+            {
+                Profiler.End(profileName);
+            }
+
         }
 
         /// <summary>
@@ -80,9 +93,17 @@ namespace Glass.Mapper
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
         public virtual void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
+            
+            string profilerName = "SaveObject {0}".Formatted(abstractTypeSavingContext.Object.GetType().FullName);
+            
+            Profiler.Start(profilerName);
+
             //Run the object construction
             var savingArgs = new ObjectSavingArgs(Context, abstractTypeSavingContext.Object, abstractTypeSavingContext);
             _objectSaving.Run(savingArgs);
+
+            Profiler.End(profilerName);
+
         }
 
         /// <summary>
