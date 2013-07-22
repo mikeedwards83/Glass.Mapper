@@ -35,7 +35,7 @@ namespace Glass.Mapper
     public abstract class AbstractService : IAbstractService
     {
 
-        private IPerformanceProfiler _profiler;
+      
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -45,14 +45,8 @@ namespace Glass.Mapper
         /// </value>
         public IPerformanceProfiler Profiler
         {
-            get { return _profiler; }
-            set
-            {
-                _configurationResolver.Profiler = value;
-                _objectConstruction.Profiler = value;
-                _objectSaving.Profiler = value;
-                _profiler = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -68,6 +62,9 @@ namespace Glass.Mapper
         private readonly ObjectConstruction _objectConstruction;
 
         private readonly ObjectSaving _objectSaving;
+
+    
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
@@ -100,16 +97,21 @@ namespace Glass.Mapper
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
 
+            Profiler = glassContext.DependencyResolver.Resolve<IPerformanceProfiler>() ?? new NullProfiler();
+            
+
             var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
-            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
+            _objectConstruction = new ObjectConstruction(objectConstructionTasks);
+            _objectConstruction.Profiler = Profiler;
 
             var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
+            _configurationResolver.Profiler = Profiler;
 
             var objectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
             _objectSaving = new ObjectSaving(objectSavingTasks);
+            _objectSaving.Profiler = Profiler;
 
-            Profiler = new NullProfiler();
 
         }
 
@@ -121,6 +123,10 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
+            var step = "Instantiate {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName);
+
+            Profiler.Start(step);
+
             //run the pipeline to get the configuration to load
             var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext);
             _configurationResolver.Run(configurationArgs);
@@ -133,6 +139,8 @@ namespace Glass.Mapper
             //Run the object construction
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, config, this);
             _objectConstruction.Run(objectArgs);
+
+            Profiler.End(step);
 
             return objectArgs.Result;
         }

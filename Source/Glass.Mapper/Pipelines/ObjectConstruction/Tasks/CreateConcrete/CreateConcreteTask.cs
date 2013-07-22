@@ -37,6 +37,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         private static volatile  ProxyGenerator _generator;
         private static volatile  ProxyGenerationOptions _options;
 
+        public IPerformanceProfiler Profiler { get; set; }
+
+        public CreateConcreteTask()
+        {
+            Profiler = new NullProfiler();
+        }
+
         /// <summary>
         /// Initializes static members of the <see cref="CreateConcreteTask"/> class.
         /// </summary>
@@ -45,6 +52,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _generator = new ProxyGenerator();
             var hook = new LazyObjectProxyHook();
             _options = new ProxyGenerationOptions(hook);
+            
         }
 
         /// <summary>
@@ -53,6 +61,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
+            string step = "CreateConcrete {0}".Formatted(args.Configuration.Type.FullName);
+
+            Profiler.Start(step);
+
             if (args.Result != null)
                 return;
 
@@ -68,16 +80,16 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 //here we create a lazy loaded version of the class
                 args.Result = CreateLazyObject(args);
                 args.AbortPipeline();
-
             }
             else
             {
                 //here we create a concrete version of the class
                 args.Result = CreateObject(args);
                 args.AbortPipeline();
-
-                
             }
+
+            Profiler.End(step);
+
         }
 
         /// <summary>
