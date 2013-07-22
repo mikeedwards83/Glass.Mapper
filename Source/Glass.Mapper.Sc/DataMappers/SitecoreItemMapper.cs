@@ -86,7 +86,9 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             else
             {
-                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, targetItem, scConfig.IsLazy,
+                var service = scContext.Service as ISitecoreService;
+
+                return service.CreateType(scConfig.PropertyInfo.PropertyType, targetItem, scConfig.IsLazy,
                                                      scConfig.InferType);
             }
 

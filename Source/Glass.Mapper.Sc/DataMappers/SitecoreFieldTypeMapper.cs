@@ -62,7 +62,10 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             if (target == null) return null;
-            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
+
+            var service = context.Service as ISitecoreService;
+
+            return service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
         }
 
         /// <summary>
@@ -86,7 +89,9 @@ namespace Glass.Mapper.Sc.DataMappers
                 if(typeConfig == null)
                     throw new NullReferenceException("The type {0} has not been loaded into context {1}".Formatted(type.FullName, context.Service.GlassContext.Name));
 
-                var item = typeConfig.ResolveItem(value, context.Service.Database);
+                var service = context.Service as ISitecoreService;
+
+                var item = typeConfig.ResolveItem(value, service.Database);
                 if(item == null)
                     throw new NullReferenceException("Could not find item to save value {0}".Formatted(Configuration));
 

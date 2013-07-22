@@ -35,7 +35,7 @@ namespace Glass.Mapper.Sc
         /// <param name="obj">The obj.</param>
         /// <param name="item">The item.</param>
         /// <param name="service">The service.</param>
-        public SitecoreDataMappingContext(object obj, Item item, ISitecoreService service):base(obj)
+        public SitecoreDataMappingContext(object obj, Item item, ISitecoreService service):base(obj, service)
         {
 
             //TODO: ME - should we assert that these are not null
@@ -48,11 +48,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The item.</value>
         public Item Item { get; private set; }
-        /// <summary>
-        /// Gets the service.
-        /// </summary>
-        /// <value>The service.</value>
-        public ISitecoreService Service { get; private set; }
+      
     }
 }
 

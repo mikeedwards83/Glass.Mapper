@@ -56,8 +56,10 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbConfig = Configuration as UmbracoChildrenConfiguration;
 
             Type genericType = Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
-            
-            Func<IEnumerable<IContent>> getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+
+            var service = umbContext.Service as IUmbracoService;
+
+            Func<IEnumerable<IContent>> getItems = () => service.ContentService.GetChildren(umbContext.Content.Id);
 
             return Utilities.CreateGenericType(
                 typeof(LazyContentEnumerable<>),

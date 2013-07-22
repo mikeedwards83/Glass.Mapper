@@ -22,8 +22,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
+using Glass.Mapper.Sc.Configuration;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -38,15 +41,20 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            //This isn't ideal
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Install(new SitecoreInstaller());
+            var context = Context.Create(resolver);
+        
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
 
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            var service = Substitute.For<AbstractService>();
+            var typeCreationContext = new SitecoreTypeCreationContext();
+            typeCreationContext.Service = new StubAbstractService(
+                resolver.Resolve<AbstractObjectFactory>(context)
+                );
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
             Assert.IsNull(args.Result);
 
@@ -70,7 +78,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(context, null, typeConfig, null);
+            var typeCreationContext = new SitecoreTypeCreationContext();
+
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
             var result = new StubClass2();
             args.Result = result;
 
@@ -99,7 +109,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
 
 
@@ -119,21 +129,27 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            var resolver = DependencyResolver.CreateStandardResolver() as DependencyResolver;
+
+            //This isn't ideal
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Install(new SitecoreInstaller());
             var context = Context.Create(resolver);
-            var service = Substitute.For<AbstractService>();
+
+
+            var typeCreationContext = new SitecoreTypeCreationContext();
+
+            typeCreationContext.Service = new StubAbstractService(
+                resolver.Resolve<AbstractObjectFactory>(context)
+                );
 
             resolver.Container.Register(
                 Component.For<StubServiceInterface>().ImplementedBy<StubService>().LifestyleTransient()
                 );
-            
-            var typeConfig = Substitute.For<AbstractTypeConfiguration>();
+
+            var typeConfig = new SitecoreTypeConfiguration();
             typeConfig.Type = typeof(StubClassWithService);
 
-            var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-
-
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, service );
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig );
 
             Assert.IsNull(args.Result);
 
@@ -171,7 +187,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeCreationContext.ConstructorParameters = new object[]{param1, param2, param3, param4};
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig, null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig);
 
             Assert.IsNull(args.Result);
 
@@ -236,6 +252,16 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
                 Param3 = param3;
                 Param4 = param4;
             }
+        }
+
+        public class StubAbstractService: AbstractService
+        {
+            public StubAbstractService(AbstractObjectFactory objectFactory)
+                : base( objectFactory)
+            {
+                
+            }
+          
         }
 
         #endregion

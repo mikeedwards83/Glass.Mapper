@@ -26,7 +26,7 @@ namespace Glass.Mapper.Umb
     /// <summary>
     /// IUmbracoService
     /// </summary>
-    public interface IUmbracoService: IAbstractService
+    public interface IUmbracoService : IAbstractService
     {
         /// <summary>
         /// Gets or sets the content service.

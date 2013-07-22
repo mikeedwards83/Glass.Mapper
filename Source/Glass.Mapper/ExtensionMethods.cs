@@ -115,9 +115,15 @@ namespace Glass.Mapper
         #endregion
 
 
-      
+    #region IDependencyResolver
 
-        #region Misc
+        public static T Resolve<T>(this IDependencyResolver resolver, Context context)
+        {
+            return resolver.Resolve<T>(new Dictionary<string, object> {{"context", context}});
+        }
+    #endregion
+
+    #region Misc
 
     /// <summary>
     /// Casts to.

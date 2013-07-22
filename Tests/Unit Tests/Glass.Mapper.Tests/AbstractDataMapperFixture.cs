@@ -49,7 +49,7 @@ namespace Glass.Mapper.Tests
             var config = Substitute.For<AbstractPropertyConfiguration>();
             var  dataMapper = new StubMapper();
 
-            AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>(obj);
+            AbstractDataMappingContext context = Substitute.For<AbstractDataMappingContext>(obj, null);
            dataMapper.Setup(new DataMapperResolverArgs(null, config));
             config.PropertyInfo = typeof(StubClass).GetProperties().First(x => x.Name == "AProperty");
 

@@ -70,7 +70,8 @@
     <Compile Include="ContextFixture.cs" />
     <Compile Include="ExtensionMethodFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateLazy\CreateLazyTaskFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateLazy\LazyObjectInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTaskFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
@@ -86,6 +87,10 @@
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
       <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
       <Name>Glass.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration\Glass.Mapper.Sc.Integration.csproj">
+      <Project>{ED059096-C6AC-42AA-B0B2-74104E1AF861}</Project>
+      <Name>Glass.Mapper.Sc.Integration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

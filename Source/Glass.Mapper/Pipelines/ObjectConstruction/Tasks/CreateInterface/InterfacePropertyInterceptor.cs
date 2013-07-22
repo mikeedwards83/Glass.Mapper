@@ -54,7 +54,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             {
                 _values = new Dictionary<string, object>();
                 var config = _args.Configuration;
-                var mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
+                var mappingContext = _args.Service.ObjectFactory.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
                 foreach (var property in config.Properties)
                 {

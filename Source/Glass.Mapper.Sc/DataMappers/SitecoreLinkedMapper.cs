@@ -94,7 +94,10 @@ namespace Glass.Mapper.Sc.DataMappers
                 }
             });
 
-            return scContext.Service.CreateTypes(genericType, getItems, scConfig.IsLazy, scConfig.InferType);
+            var service = scContext.Service as ISitecoreService;
+
+
+            return service.CreateTypes(genericType, getItems, scConfig.IsLazy, scConfig.InferType);
         }
 
         /// <summary>

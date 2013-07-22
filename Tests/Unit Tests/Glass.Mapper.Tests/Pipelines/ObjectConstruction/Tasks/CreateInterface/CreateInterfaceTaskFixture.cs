@@ -47,7 +47,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(StubClass);
-            var service = Substitute.For<IAbstractService>();
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
@@ -57,7 +56,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration);
 
             //Act
             _task.Execute(args);
@@ -73,8 +72,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             //Assign
             Type type = typeof(IStubInterface);
-            var glassConfig = Substitute.For<IGlassConfiguration>();
-            var service = Substitute.For<IAbstractService>();
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
@@ -84,7 +81,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration);
 
             //Act
             _task.Execute(args);
@@ -102,7 +99,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             //Assign
             Type type = typeof(IStubInterface);
             var resolver = Substitute.For<IDependencyResolver>();
-            var service = Substitute.For<IAbstractService>();
 
             Context context = Context.Create(resolver);
 
@@ -112,7 +108,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration);
             args.Result = string.Empty;
 
             //Act

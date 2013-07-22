@@ -65,8 +65,10 @@ namespace Glass.Mapper.Umb.DataMappers
 
                         if (content.Name != value.ToString())
                         {
+                            var service = context.Service as IUmbracoService;
+
                             content.Name = value.ToString();
-                            context.Service.ContentService.Save(content);
+                            service.ContentService.Save(content);
                         }
                     }
                     else

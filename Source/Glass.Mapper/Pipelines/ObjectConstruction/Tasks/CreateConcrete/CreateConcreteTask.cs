@@ -34,73 +34,28 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     {
         private const string ConstructorErrorMessage = "No constructor for class {0} with parameters {1}";
 
-        private static volatile  ProxyGenerator _generator;
-        private static volatile  ProxyGenerationOptions _options;
-
-        public IPerformanceProfiler Profiler { get; set; }
-
-        public CreateConcreteTask()
-        {
-            Profiler = new NullProfiler();
-        }
-
-        /// <summary>
-        /// Initializes static members of the <see cref="CreateConcreteTask"/> class.
-        /// </summary>
-        static CreateConcreteTask()
-        {
-            _generator = new ProxyGenerator();
-            var hook = new LazyObjectProxyHook();
-            _options = new ProxyGenerationOptions(hook);
-            
-        }
-
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            string step = "CreateConcrete {0}".Formatted(args.Configuration.Type.FullName);
-
-            Profiler.Start(step);
-
             if (args.Result != null)
                 return;
 
             var type = args.Configuration.Type;
 
-            if(type.IsInterface)
+            if (type.IsInterface || args.AbstractTypeCreationContext.IsLazy)
             {
                 return;
             }
 
-            if(args.AbstractTypeCreationContext.IsLazy)
-            {
-                //here we create a lazy loaded version of the class
-                args.Result = CreateLazyObject(args);
-                args.AbortPipeline();
-            }
-            else
-            {
-                //here we create a concrete version of the class
-                args.Result = CreateObject(args);
-                args.AbortPipeline();
-            }
-
-            Profiler.End(step);
-
+            //here we create a concrete version of the class
+            args.Result = CreateObject(args);
+            args.AbortPipeline();
         }
 
-        /// <summary>
-        /// Creates the lazy object.
-        /// </summary>
-        /// <param name="args">The args.</param>
-        /// <returns>System.Object.</returns>
-        protected virtual object CreateLazyObject(ObjectConstructionArgs args)
-        {
-            return  _generator.CreateClassProxy(args.Configuration.Type, new LazyObjectInterceptor(args));
-        }
+      
 
         /// <summary>
         /// Creates the object.

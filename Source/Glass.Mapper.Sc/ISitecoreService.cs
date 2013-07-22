@@ -29,7 +29,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// Interface ISitecoreService
     /// </summary>
-    public interface ISitecoreService
+    public interface ISitecoreService : IAbstractService
     {
         /// <summary>
         /// Gets the database.
@@ -823,32 +823,7 @@ namespace Glass.Mapper.Sc
    
 
 
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <param name="obj">The obj.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj);
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="creationContext">The creation context.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
-
-        /// <summary>
-        /// Instantiates the object.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <returns>System.Object.</returns>
-        object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
-        /// <summary>
-        /// Saves the object.
-        /// </summary>
-        /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
-        void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext);
-
+     
         
 
     }

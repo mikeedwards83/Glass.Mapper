@@ -17,6 +17,9 @@
 //-CRE-
 using System;
 using System.Linq;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
@@ -42,8 +45,8 @@ namespace Glass.Mapper.Umb
         /// </summary>
         /// <param name="contentService">The content service.</param>
         /// <param name="contextName">Name of the context.</param>
-        public UmbracoService(IContentService contentService, string contextName = "Default")
-            :base(contextName)
+        public UmbracoService(IContentService contentService, string contextName = "Default"):
+            this(contentService, Context.Contexts[contextName])
         {
             ContentService = contentService;
         }
@@ -53,8 +56,22 @@ namespace Glass.Mapper.Umb
         /// </summary>
         /// <param name="contentService">The content service.</param>
         /// <param name="context">The context.</param>
-        public UmbracoService(IContentService contentService, Context context)
-            : base(context ?? Context.Default)
+        public UmbracoService(IContentService contentService, Context context )
+            : this(
+                contentService,
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context ?? Context.Default)
+            )
+        {
+        }
+
+          /// <summary>
+        /// All constructors must end up here!
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="context"></param>
+        /// <param name="factory"></param>
+        internal UmbracoService(IContentService contentService,  AbstractObjectFactory factory)
+           : base(factory)
         {
             ContentService = contentService;
         }
@@ -145,14 +162,14 @@ namespace Glass.Mapper.Umb
 
             var creationContext = new UmbracoTypeCreationContext
                 {
-                    UmbracoService = this,
+                    Service = this,
                     RequestedType = type,
                     ConstructorParameters = constructorParameters,
                     Content = content,
                     InferType = inferType,
                     IsLazy = isLazy
                 };
-            var obj = InstantiateObject(creationContext);
+            var obj = ObjectFactory.InstantiateObject(creationContext);
 
             return obj;
         }
@@ -320,7 +337,7 @@ namespace Glass.Mapper.Umb
             var typeContext = new UmbracoTypeCreationContext
                 {
                     Content = content, 
-                    UmbracoService = this
+                    Service = this
                 };
 
             newType.MapPropertiesToObject(newItem, this, typeContext);
@@ -344,7 +361,8 @@ namespace Glass.Mapper.Umb
                 {
                     Config = config, 
                     Content = content, 
-                    Object = target
+                    Object = target,
+                    Service = this
                 };
 
             //ME-an item with no versions should be null
@@ -356,34 +374,13 @@ namespace Glass.Mapper.Umb
         /// Saves the object.
         /// </summary>
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
-        public override void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
+        public void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             ContentService.Save(((UmbracoTypeSavingContext) abstractTypeSavingContext).Content);
-            base.SaveObject(abstractTypeSavingContext);
+            ObjectFactory.SaveObject(abstractTypeSavingContext);
         }
 
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <param name="obj">The obj.</param>
-        /// <returns></returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
-        {
-            var umbTypeContext = abstractTypeCreationContext as UmbracoTypeCreationContext;
-            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this);
-        }
-
-        /// <summary>
-        /// Used to create the context used by DataMappers to map data from a class
-        /// </summary>
-        /// <param name="creationContext"></param>
-        /// <returns></returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
-        {
-            var umbContext = creationContext as UmbracoTypeSavingContext;
-            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this);
-        }
+       
     }
 }
 

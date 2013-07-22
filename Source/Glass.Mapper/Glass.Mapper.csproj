@@ -85,8 +85,10 @@
     <Compile Include="FakePropertyInfo.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="ObjectFactory.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateLazy\CreateLazyTask.cs" />
     <Compile Include="Profilers\ChainedProfiler.cs" />
     <Compile Include="Profilers\IPerformanceProfiler.cs" />
     <Compile Include="MapperException.cs" />
@@ -106,8 +108,8 @@
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstruction.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectProxyHook.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptor.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateLazy\LazyObjectProxyHook.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateLazy\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceProxyHook.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />

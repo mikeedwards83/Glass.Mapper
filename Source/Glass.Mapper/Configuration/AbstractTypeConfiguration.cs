@@ -90,7 +90,7 @@ namespace Glass.Mapper.Configuration
         public void MapPropertiesToObject( object obj, IAbstractService service, AbstractTypeCreationContext context)
         {
             //create properties 
-            AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
+            AbstractDataMappingContext dataMappingContext = service.ObjectFactory.CreateDataMappingContext(context, obj);
 
             foreach (var prop in Properties)
             {

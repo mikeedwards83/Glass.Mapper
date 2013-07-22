@@ -49,6 +49,9 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.Object.</returns>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
+
+            
+
             Type type = config.PropertyInfo.PropertyType;
             //Get generic type
             Type pType = Utilities.GetGenericArgument(type);

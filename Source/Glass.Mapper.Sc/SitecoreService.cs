@@ -22,6 +22,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
@@ -69,7 +72,7 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(Database database, string contextName = "Default")
-            :base(contextName)
+            :this(database, Context.Contexts[contextName])
         {
             Database = database;
         }
@@ -80,9 +83,9 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(string databaseName, string contextName = "Default")
-            : base(contextName)
+            : this(Sitecore.Configuration.Factory.GetDatabase(databaseName), Context.Contexts[contextName])
         {
-            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+           
         }
 
         /// <summary>
@@ -91,9 +94,9 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(string databaseName, Context context)
-            : base(context ?? Context.Default )
+            : this(Sitecore.Configuration.Factory.GetDatabase(databaseName), context ?? Context.Default )
         {
-            Database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
+           
         }
 
         /// <summary>
@@ -102,7 +105,22 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(Database database, Context context)
-            : base(context ?? Context.Default)
+            : this(
+                database,
+                context.DependencyResolver.Resolve<AbstractObjectFactory>(context?? Context.Default)
+            )
+        {
+           
+        }
+
+        /// <summary>
+        /// All constructors must end up here!
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="context"></param>
+        /// <param name="factory"></param>
+        internal SitecoreService(Database database, AbstractObjectFactory factory)
+           : base(factory)
         {
             Database = database;
         }
@@ -253,7 +271,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeCreationContext typeContext = new SitecoreTypeCreationContext();
             typeContext.Item = item;
-            typeContext.SitecoreService = this;
+            typeContext.Service = this;
 
             newType.MapPropertiesToObject(newItem, this, typeContext);
 
@@ -372,13 +390,13 @@ namespace Glass.Mapper.Sc
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
-            creationContext.SitecoreService = this;
+            creationContext.Service = this;
             creationContext.RequestedType = type;
             creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;
             creationContext.IsLazy = isLazy;
-            var obj = InstantiateObject(creationContext);
+            var obj = ObjectFactory.InstantiateObject(creationContext);
 
             return obj;
         }
@@ -1179,7 +1197,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeSavingContext savingContext = new SitecoreTypeSavingContext();
             savingContext.Config = config;
-
+            savingContext.Service = this;
             //ME-an item with no versions should be null
 
             savingContext.Item = item;
@@ -1187,7 +1205,7 @@ namespace Glass.Mapper.Sc
 
             item.Editing.BeginEdit();
 
-            SaveObject(savingContext);
+            ObjectFactory.SaveObject(savingContext);
 
             item.Editing.EndEdit(updateStatistics, silent);
         }
@@ -1195,28 +1213,7 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <param name="obj">The obj.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
-        {
-            var scTypeContext =  abstractTypeCreationContext as SitecoreTypeCreationContext;
-            return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
-        }
-
-        /// <summary>
-        /// Used to create the context used by DataMappers to map data from a class
-        /// </summary>
-        /// <param name="creationContext">The Saving Context</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
-        {
-            var scContext = creationContext as SitecoreTypeSavingContext;
-            return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
-        }
+       
 
     } 
 }

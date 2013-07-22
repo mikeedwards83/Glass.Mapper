@@ -42,7 +42,7 @@ namespace Glass.Mapper.Pipelines.ObjectSaving
         /// Gets the service.
         /// </summary>
         /// <value>The service.</value>
-        public IAbstractService Service { get; private set; }
+        public AbstractService Service { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectSavingArgs"/> class.
@@ -54,13 +54,12 @@ namespace Glass.Mapper.Pipelines.ObjectSaving
         public ObjectSavingArgs(
             Context context, 
             object target, 
-            AbstractTypeSavingContext savingContext,
-            IAbstractService service)
+            AbstractTypeSavingContext savingContext)
             : base(context)
         {
             Target = target;
             SavingContext = savingContext;
-            Service = service;
+            Service = savingContext.Service;
         }
     }
 }

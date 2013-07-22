@@ -148,7 +148,9 @@ namespace Glass.Mapper.Sc.DataMappers
                 {
                     result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language);
                 }
-                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType);
+                var service = scContext.Service as ISitecoreService;
+
+                return service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType);
             }
         }
 

@@ -41,8 +41,10 @@ namespace Glass.Mapper.Umb.DataMappers
             if (!int.TryParse(propertyValue.ToString(), out id))
                 return null;
 
-            var item = context.Service.ContentService.GetById(id);
-            return context.Service.CreateType(config.PropertyInfo.PropertyType, item, IsLazy, InferType);
+            var service = context.Service as IUmbracoService;
+
+            var item = service.ContentService.GetById(id);
+            return service.CreateType(config.PropertyInfo.PropertyType, item, IsLazy, InferType);
         }
 
         /// <summary>
@@ -59,8 +61,10 @@ namespace Glass.Mapper.Umb.DataMappers
                 return string.Empty;
             
             var typeConfig = context.Service.GlassContext[value.GetType()] as UmbracoTypeConfiguration;
+            var service = context.Service as IUmbracoService;
 
-            var item = typeConfig.ResolveItem(value, context.Service.ContentService);
+            var item = typeConfig.ResolveItem(value, service.ContentService);
+
             if (item == null)
                 throw new NullReferenceException("Could not find item to save value {0}");
 
