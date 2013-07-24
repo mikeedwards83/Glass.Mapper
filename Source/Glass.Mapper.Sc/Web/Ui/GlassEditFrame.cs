@@ -79,7 +79,20 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         public void Dispose()
         {
-            _frame.RenderLastPart(_writer);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _frame.RenderLastPart(_writer);
+                _frame.Dispose();
+                _frame = null;
+
+                _writer.Dispose();
+                _writer = null;
+            }
         }
     }
 }

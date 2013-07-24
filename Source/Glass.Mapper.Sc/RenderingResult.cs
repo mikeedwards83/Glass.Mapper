@@ -23,7 +23,15 @@ namespace Glass.Mapper.Sc
 
         public void Dispose()
         {
-            _writer.Write(_lastPart);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _writer.Write(_lastPart);
+            }
         }
     }
 }

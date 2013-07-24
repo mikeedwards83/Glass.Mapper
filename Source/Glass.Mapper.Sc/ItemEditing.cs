@@ -30,9 +30,8 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class ItemEditing : IDisposable
     {
-        private readonly Item _item;
+        private Item _item;
         private SecurityDisabler _securityDisabler;
-        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemEditing"/> class.
@@ -53,14 +52,22 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public void Dispose()
         {
-            if (_disposed) return;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _item.Editing.EndEdit();
+                _item = null;
 
-            _item.Editing.EndEdit();
-
-            if(_securityDisabler != null)
-                _securityDisabler.Dispose();
-
-            _disposed = true;
+                if (_securityDisabler != null)
+                {
+                    _securityDisabler.Dispose();
+                    _securityDisabler = null;
+                }
+            }
         }
     }
 }
