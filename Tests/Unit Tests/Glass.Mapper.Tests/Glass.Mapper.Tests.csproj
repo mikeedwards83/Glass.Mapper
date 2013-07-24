@@ -87,6 +87,10 @@
       <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>
       <Name>Glass.Mapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration\Glass.Mapper.Sc.Integration.csproj">
+      <Project>{ED059096-C6AC-42AA-B0B2-74104E1AF861}</Project>
+      <Name>Glass.Mapper.Sc.Integration</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

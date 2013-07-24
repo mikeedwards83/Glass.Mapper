@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
@@ -226,7 +227,7 @@ namespace Glass.Mapper
 
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
-
+            
             return config;
         }
     }

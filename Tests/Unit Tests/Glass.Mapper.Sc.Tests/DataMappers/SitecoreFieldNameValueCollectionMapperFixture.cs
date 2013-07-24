@@ -18,15 +18,12 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Integration.DataMappers
+namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldNameValueCollectionMapperFixture : AbstractMapperFixture
@@ -38,16 +35,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var fieldValue = "Name1=Value1&Name2=Value2";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNameValueCollectionMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldNameValueCollectionMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
+         
             //Act
             var result = mapper.GetField(field, null, null) as NameValueCollection;
 
@@ -62,16 +57,13 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var fieldValue = "";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNameValueCollectionMapper/GetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
 
             var mapper = new SitecoreFieldNameValueCollectionMapper();
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
+            
             //Act
             var result = mapper.GetField(field, null, null) as NameValueCollection;
 
@@ -88,23 +80,22 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var expected = "Name1=Value1&Name2=Value2";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNameValueCollectionMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
+
             var value = new NameValueCollection();
             value.Add("Name1", "Value1");
             value.Add("Name2", "Value2");
             var mapper = new SitecoreFieldNameValueCollectionMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+            item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
+            
                 mapper.SetField(field, value, null, null);
-            }
+            
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
@@ -114,21 +105,20 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var expected = "";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldNameValueCollectionMapper/SetField");
-            var field = item.Fields[FieldName];
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
+
             var value = new NameValueCollection();
             var mapper = new SitecoreFieldNameValueCollectionMapper();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = string.Empty;
-            }
+            item.Editing.BeginEdit();
 
             //Act
-            using (new ItemEditing(item, true))
-            {
+            
                 mapper.SetField(field, value, null, null);
-            }
+            
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
