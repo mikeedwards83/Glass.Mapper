@@ -34,6 +34,11 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The item.</value>
         public Item Item { get; set; }
+
+        public override string NodeIndentifier
+        {
+            get { return Item == null ? "Null Item" : Item.ID.ToString(); }
+        }
     }
     
 }

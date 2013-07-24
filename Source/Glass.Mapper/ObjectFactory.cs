@@ -58,7 +58,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
-            string profileName = "Instantiate object {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName, abstractTypeCreationContext);
+            string profileName = "GM: Instantiate object {0} {1}".Formatted(abstractTypeCreationContext.RequestedType.FullName, abstractTypeCreationContext.NodeIndentifier);
 
             try
             {
@@ -94,7 +94,7 @@ namespace Glass.Mapper
         public virtual void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext)
         {
             
-            string profilerName = "SaveObject {0}".Formatted(abstractTypeSavingContext.Object.GetType().FullName);
+            string profilerName = "GM: SaveObject {0}".Formatted(abstractTypeSavingContext.Object.GetType().FullName);
             
             Profiler.Start(profilerName);
 

@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreFieldConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            string profileName = "MapToCms {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
+            string profileName = "GM: MapToCms {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
 
             try
             {
@@ -91,7 +91,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreFieldConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            string profileName = "MapToProperty {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
+            string profileName = "GM: MapToProperty {0} {1} {2}".Formatted(scContext.Item.ID, scConfig.FieldId, scConfig.FieldName);
 
             try
             {

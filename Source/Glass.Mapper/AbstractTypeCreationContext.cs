@@ -53,6 +53,11 @@ namespace Glass.Mapper
         public object[] ConstructorParameters { get; set; }
 
         public IAbstractService Service { get; set; }
+
+        /// <summary>
+        /// Use to get the unique identifier of the current node being mapped
+        /// </summary>
+        public abstract string NodeIndentifier { get; }
     }
 }
 

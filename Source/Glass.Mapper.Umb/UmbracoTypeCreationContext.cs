@@ -37,7 +37,12 @@ namespace Glass.Mapper.Umb
         /// </value>
         public IContent Content { get; set; }
 
-       
+
+
+        public override string NodeIndentifier
+        {
+            get { return Content == null ? "Content is null" : Content.Id.ToString(); }
+        }
     }
 }
 

@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using Castle.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,6 +39,7 @@ namespace Glass.Mapper.Configuration.Attributes
     {
         private readonly string[] _assemblies;
 
+        public ILogger Logger { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeConfigurationLoader{T, K}"/> class.
@@ -45,6 +47,8 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="assemblies">The assemblies.</param>
         public AttributeConfigurationLoader(params string [] assemblies)
         {
+            Logger = new Castle.Core.Logging.NullLogger();
+
             _assemblies = assemblies;
         }
 
@@ -129,6 +133,8 @@ namespace Glass.Mapper.Configuration.Attributes
 
                         if (attr != null)
                         {
+                            Logger.Debug("GM: Adding type {0}".Formatted( type.FullName));
+
                             var config = new T();
                             attr.Configure(type, config);
                             configs.Add(config);
@@ -215,6 +221,8 @@ namespace Glass.Mapper.Configuration.Attributes
                 {
                    
                     var config = attr.Configure(property);
+                    Logger.Debug("GM: Adding Property {0}".Formatted(property.Name));
+
                     return config;
                 }
 
