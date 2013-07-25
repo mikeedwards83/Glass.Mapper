@@ -71,7 +71,6 @@
 .\Debug\bin\Glass.Mapper.Sc.Razor.xml
 .\Debug\bin\Glass.Mapper.Sc.xml
 .\Debug\bin\Glass.Mapper.Sites.Sc.dll
-.\Debug\bin\Glass.Mapper.Sites.Sc.dll.CodeAnalysisLog.xml
 .\Debug\bin\Glass.Mapper.Sites.Sc.pdb
 .\Debug\bin\Glass.Mapper.xml
 .\Debug\bin\HtmlAgilityPack.dll
