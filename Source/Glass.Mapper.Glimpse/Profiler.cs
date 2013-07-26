@@ -1,4 +1,7 @@
 ﻿using Glass.Mapper.Profilers;
+using Glimpse.Core.Extensibility;
+using Glimpse.Core.Framework;
+using Glimpse.Core.Message;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,59 +13,110 @@ namespace Glass.Mapper.Glimpse
 {
     public class Profiler : IPerformanceProfiler, IDisposable
     {
-        Stopwatch _watch;
-        Stack<Timing> _timingsStack;
-        List<Timing> _timings;
+    //    ExecutionTimer _watch;
+        GlimpseRuntime _runtime;
+        public static TimelineCategoryItem TimerCategory = new TimelineCategoryItem("Glass.Mapper", "#2fa4e7", "#04498c");
 
-        public IEnumerable<Timing> Timings { get { return _timings; } }
+        int _indentCounter = 0;
+
+        Stack<TimingMessage> _messages;
 
         public Profiler()
+            :this(HttpContext.Current.Application["__GlimpseRuntime"] as GlimpseRuntime)
         {
+          
 
-            _watch = new Stopwatch();
-            _watch.Start();
-            _timings = new List<Timing>();
-            _timingsStack = new Stack<Timing>();
+        }
+
+        public Profiler(GlimpseRuntime runtime)
+        {
+            _runtime = runtime;
+            _messages = new Stack<TimingMessage>();
         }
 
         public void Start(string key)
         {
-            _timingsStack.Push(
-                    new Timing { Start = _watch.ElapsedTicks, Key = key }
-                );
-            
+
+            var watch = _runtime.Configuration.FrameworkProvider.HttpRequestStore.Get("__GlimpseTimer") as ExecutionTimer;
+
+            var indent = new string('-', _indentCounter * 1);
+
+            var message = new TimingMessage()
+            {
+                EventName = indent + key,
+                EventCategory = TimerCategory
+
+
+            }.AsTimedMessage(watch.Point());
+
+
+            _messages.Push(message);
+
+            _indentCounter++;
+            _runtime.Configuration.MessageBroker.Publish(message);
+
         }
 
         public void End(string key)
         {
+            _indentCounter--;
 
-            
-            var last = _timingsStack.Pop();
-            
-            if (last == null)
-                return;
+            var watch = _runtime.Configuration.FrameworkProvider.HttpRequestStore.Get("__GlimpseTimer") as ExecutionTimer;
+            var point = watch.Point();
 
-            if(last.Key != key)
-                throw new Exception("Messages in the wrong order");
+            var message = _messages.Pop();
 
-            last.End = _watch.ElapsedTicks;
-            _timings.Add(last);
+            message.Duration = new TimeSpan(point.Offset.Ticks - message.Offset.Ticks);
+          
+
         }
 
-        public class Timing{
-            public string Key { get; set; }
-            public long Start{get;set;}
-            public long End{get;set;}
-            public long Duration { get { return End - Start; } }
-        }
+        public class TimingMessage : ITimelineMessage
+        {
+            public Guid Id
+            {
+                get { throw new NotImplementedException(); }
+            }
 
+            public TimelineCategoryItem EventCategory
+            {
+                get;
+                set;
+            }
+
+            public string EventName
+            {
+                get;
+                set;
+            }
+
+            public string EventSubText
+            {
+                get;
+                set;
+            }
+
+            public TimeSpan Duration
+            {
+                get;
+                set;
+            }
+
+            public TimeSpan Offset
+            {
+                get;
+                set;
+            }
+
+            public DateTime StartTime
+            {
+                get;
+                set;
+            }
+        }
 
         public void Dispose()
         {
-            //_timings = null;
-            //_timingsStack = null;
-            //_watch.Stop();
-            //_watch = null;
         }
     }
 }
