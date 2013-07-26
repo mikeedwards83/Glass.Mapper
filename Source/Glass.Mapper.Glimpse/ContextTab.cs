@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Glass.Mapper.Glimpse
 {
-    public class GlimpsePlugin : ITab
+    public class ContextTab : ITab
     {
         public string Name
         {
-            get { return "Glass.Mapper"; }
+            get { return "Glass.Mapper Context"; }
         }
 
         public object GetData(ITabContext context)
@@ -43,7 +43,7 @@ namespace Glass.Mapper.Glimpse
                             Name = x.Value.Type.FullName,
                             Properties = x.Value.Properties.Select(y=>new {
                                 Name = y.PropertyInfo.Name,
-                                Mapper = y.Mapper.GetType().FullName
+                                Mapper = y.Mapper
                             }),
                             AutoMapped =x.Value.AutoMap
                         })
