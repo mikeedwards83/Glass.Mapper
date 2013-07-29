@@ -15,21 +15,25 @@ namespace Glass.Mapper.Glimpse
     {
     //    ExecutionTimer _watch;
         GlimpseRuntime _runtime;
-        public static TimelineCategoryItem TimerCategory = new TimelineCategoryItem("Glass.Mapper", "#2fa4e7", "#04498c");
+        public TimelineCategoryItem TimerCategory { get; private set; }
 
         int _indentCounter = 0;
 
         Stack<TimingMessage> _messages;
 
         public Profiler()
-            :this(HttpContext.Current.Application["__GlimpseRuntime"] as GlimpseRuntime)
+            :this(new TimelineCategoryItem("Glass.Mapper", "#2fa4e7", "#04498c"))
         {
           
 
         }
 
-        public Profiler(GlimpseRuntime runtime)
+        public Profiler(TimelineCategoryItem category):this(HttpContext.Current.Application["__GlimpseRuntime"] as GlimpseRuntime, category){
+        }
+
+        public Profiler(GlimpseRuntime runtime, TimelineCategoryItem catogory)
         {
+            TimerCategory = catogory;
             _runtime = runtime;
             _messages = new Stack<TimingMessage>();
         }
@@ -71,50 +75,7 @@ namespace Glass.Mapper.Glimpse
 
         }
 
-        public class TimingMessage : ITimelineMessage
-        {
-            public Guid Id
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public TimelineCategoryItem EventCategory
-            {
-                get;
-                set;
-            }
-
-            public string EventName
-            {
-                get;
-                set;
-            }
-
-            public string EventSubText
-            {
-                get;
-                set;
-            }
-
-            public TimeSpan Duration
-            {
-                get;
-                set;
-            }
-
-            public TimeSpan Offset
-            {
-                get;
-                set;
-            }
-
-            public DateTime StartTime
-            {
-                get;
-                set;
-            }
-        }
-
+   
         public void Dispose()
         {
         }

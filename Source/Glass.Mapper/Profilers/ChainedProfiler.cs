@@ -27,7 +27,7 @@ namespace Glass.Mapper.Profilers
         /// Gets or sets the profilers.
         /// </summary>
         /// <value>The profilers.</value>
-        public IEnumerable<IPerformanceProfiler> Profilers { get; set; }
+        public IEnumerable<IPerformanceProfiler> Profilers { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChainedProfiler"/> class.
@@ -38,13 +38,7 @@ namespace Glass.Mapper.Profilers
             Profilers = profilers;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChainedProfiler"/> class.
-        /// </summary>
-        public ChainedProfiler()
-        {
-            Profilers = new IPerformanceProfiler[]{};
-        }
+       
 
         /// <summary>
         /// Starts the specified key.
@@ -53,7 +47,13 @@ namespace Glass.Mapper.Profilers
         public void Start(string key)
         {
             if (Profilers != null)
-                Profilers.ForEach(x => x.Start(key));
+            {
+                foreach (var p in Profilers)
+                {
+                    p.Start(key);
+
+                }
+            }
         }
 
         /// <summary>
@@ -63,7 +63,13 @@ namespace Glass.Mapper.Profilers
         public void End(string key)
         {
             if (Profilers != null)
-                Profilers.ForEach(x => x.End(key));
+            {
+                foreach (var p in Profilers)
+                {
+                    p.End(key);
+
+                }
+            }
         }
     }
 }

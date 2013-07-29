@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="ContextTab.cs" />
     <Compile Include="Profiler.cs" />
-    <Compile Include="TimelineTab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimingMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
