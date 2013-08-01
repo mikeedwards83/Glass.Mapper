@@ -126,7 +126,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     else link.Url = LinkManager.GetItemUrl(linkField.TargetItem);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
-                    link.Text = linkField.TargetItem == null ? string.Empty : linkField.TargetItem.Name;
+                    link.Text =  linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.Name) : linkField.Text;
                     break;
                 default:
                     return null;
