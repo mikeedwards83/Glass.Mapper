@@ -772,6 +772,19 @@ namespace Glass.Mapper.Sc
         /// <returns>Sitecore items as proxy classes of the specified type</returns>
         IEnumerable<T> Query<T>(string query, bool isLazy = false, bool inferType = false) where T : class;
 
+
+        /// <summary>
+        /// Query Sitecore for a set of items. Proxy classes are created.
+        /// </summary>
+        /// <typeparam name="T">The type to return the items as</typeparam>
+        /// <param name="query">The query to execute</param>
+        /// <param name="language">The language of the items to return</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>Sitecore items as proxy classes of the specified type</returns>
+        IEnumerable<T> Query<T>(string query, Language language, bool isLazy = false, bool inferType = false)
+            where T : class;
+
         #endregion
 
         #region QuerySingle

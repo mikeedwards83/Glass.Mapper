@@ -21,8 +21,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
@@ -38,24 +36,6 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreService : AbstractService, ISitecoreService
     {
-        IPerformanceProfiler _profiler = new NullProfiler();
-        /// <summary>
-        /// Gets or sets the profiler.
-        /// </summary>
-        /// <value>
-        /// The profiler.
-        /// </value>
-        public IPerformanceProfiler Profiler
-        {
-            get
-            {
-                return _profiler;
-            }
-            set
-            {
-                _profiler = value;
-            }
-        }
 
         /// <summary>
         /// Gets the database.
@@ -163,9 +143,9 @@ namespace Glass.Mapper.Sc
         /// or
         /// Failed to create item
         /// </exception>
-        public T Create<T, K>(K parent, T newItem, bool updateStatistics = true, bool silent = false)
+        public T Create<T, TK>(TK parent, T newItem, bool updateStatistics = true, bool silent = false)
             where T : class
-            where K : class
+            where TK : class
         {
 
             var newType = (SitecoreTypeConfiguration)null;
@@ -186,7 +166,7 @@ namespace Glass.Mapper.Sc
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(K).FullName), ex);
+                throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(TK).FullName), ex);
             }
 
             Item pItem = parentType.ResolveItem(parent, Database);
@@ -1108,6 +1088,23 @@ namespace Glass.Mapper.Sc
         public IEnumerable<T> Query<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
             return CreateTypes( typeof(T), () => { return Database.SelectItems(query); }, isLazy, inferType) as IEnumerable<T>;
+        }
+
+
+        /// <summary>
+        /// Query Sitecore for a set of items. Proxy classes are created.
+        /// </summary>
+        /// <typeparam name="T">The type to return the items as</typeparam>
+        /// <param name="query">The query to execute</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>Sitecore items as proxy classes of the specified type</returns>
+        public IEnumerable<T> Query<T>(string query, Language language, bool isLazy = false, bool inferType = false) where T : class
+        {
+            var items = Database.SelectItems(query);
+            return items
+                .Select(x => GetItem<T>(x.ID.Guid, language, isLazy, inferType))
+                .Where(x => x != null);
         }
 
         #endregion
