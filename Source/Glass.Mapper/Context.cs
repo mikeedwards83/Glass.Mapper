@@ -23,6 +23,8 @@ using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
+using System.Collections.Concurrent;
+using Castle.Core.Logging;
 
 namespace Glass.Mapper
 {
@@ -110,7 +112,7 @@ namespace Glass.Mapper
         /// List of the type configurations loaded by this context
         /// </summary>
         /// <value>The type configurations.</value>
-        public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
+        public ConcurrentDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
 
         /// <summary>
         /// The dependency resolver used by services using the context
@@ -118,12 +120,16 @@ namespace Glass.Mapper
         /// <value>The dependency resolver.</value>
         public IDependencyResolver DependencyResolver { get; set; }
 
+
+        public ILogger Log { get; set; }
+
         /// <summary>
         /// Prevents a default instance of the <see cref="Context"/> class from being created.
         /// </summary>
         private Context()
         {
-            TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
+            TypeConfigurations = new ConcurrentDictionary<Type, AbstractTypeConfiguration>();
+            Log = new NullLogger();
         }
 
         /// <summary>
@@ -153,16 +159,20 @@ namespace Glass.Mapper
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
-                
-                
-
                 //first we have to add each type config to the collection
                 foreach (var typeConfig in typeConfigurations)
                 {
+                    if(TypeConfigurations.ContainsKey(typeConfig.Type)){
+                        Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
+                        continue;
+                    }
                     
                     typeConfig.PerformAutoMap();
 
-                    TypeConfigurations.Add(typeConfig.Type, typeConfig);
+                    if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
+                    {
+                        Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type)); 
+                    }
                 }
                 //then process the properties.
                 //this stops the problem of types not existing for certain data handlers
@@ -171,7 +181,6 @@ namespace Glass.Mapper
                     ProcessProperties(typeConfig.Properties);
                 }
             }
-
         }
 
         /// <summary>
