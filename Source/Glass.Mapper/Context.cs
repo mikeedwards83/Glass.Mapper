@@ -181,7 +181,6 @@ namespace Glass.Mapper
                     ProcessProperties(typeConfig.Properties);
                 }
             }
-
         }
 
         /// <summary>
