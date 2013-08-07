@@ -150,11 +150,14 @@ namespace Glass.Mapper.Sc
             return MakeEditable<T>(field, null, target, parameters);
         }
 
-       
-        public virtual T RenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T:class
+
+        public virtual T RenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class
         {
             var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
-            
+            return RenderingParameters<T>(nameValueCollection, renderParametersTemplateId);
+        }
+        public T RenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T:class{
+
             var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, SitecoreContext.Database, "renderingParameters");
 
             using (new SecurityDisabler() )
@@ -163,9 +166,9 @@ namespace Glass.Mapper.Sc
                 {
                     item.Editing.BeginEdit();
 
-                    foreach (var key in nameValueCollection.AllKeys)
+                    foreach (var key in parameters.AllKeys)
                     {
-                        item[key] = nameValueCollection[key];
+                        item[key] = parameters[key];
                     }
                     T obj = item.GlassCast<T>();
 
@@ -175,6 +178,7 @@ namespace Glass.Mapper.Sc
             }
 
         }
+
 
         /// <summary>
         /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
@@ -186,6 +190,20 @@ namespace Glass.Mapper.Sc
         public virtual T RenderingParameters<T>(string parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof (T)] as SitecoreTypeConfiguration;
+            return RenderingParameters<T>(parameters, config.TemplateId);
+        }
+
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual T RenderingParameters<T>(NameValueCollection parameters) where T : class
+        {
+            var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
             return RenderingParameters<T>(parameters, config.TemplateId);
         }
 
