@@ -35,6 +35,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
+using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Web;
 using Sitecore.Web.UI.WebControls;
@@ -150,6 +151,29 @@ namespace Glass.Mapper.Sc
         }
 
        
+        public virtual T RenderingParameters<T>(string parameters, Guid renderParametersTemplateId) where T:class
+        {
+            var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
+            var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, SitecoreContext.Database, "renderingParameters");
+
+            using (new SecurityDisabler() )
+            {
+                using (new VersionCountDisabler())
+                {
+                    item.Editing.BeginEdit();
+
+                    foreach (var key in nameValueCollection.AllKeys)
+                    {
+                        item[key] = nameValueCollection[key];
+                    }
+                    T obj = item.GlassCast<T>();
+
+                    item.Editing.CancelEdit();
+                    return obj;
+                }
+            }
+
+        }
 
 
         /// <summary>

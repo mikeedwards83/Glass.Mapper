@@ -17,31 +17,13 @@ namespace Glass.Mapper.Sc.Tests
 {
     public  class Helpers
     {
-        public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name="itemName")
-        {
-            var id = new ID(Guid.NewGuid());
-            var templateId = new ID(Guid.NewGuid());
-            var language = Language.Current;
-            var version = Sitecore.Data.Version.Latest;
-            
-            var itemDefinition = new ItemDefinition(id, name, id, ID.Null);
-            var fieldList = new FieldList();
 
-            foreach (var fieldId in fields.Keys)
-            {
-                fieldList.Add(new ID(fieldId), fields[fieldId]);
-            }
-
-            var itemData = new ItemData(itemDefinition, language, version, fieldList);
-            var item = new Item(id, itemData, new Database("master"));
-            return item;
-        }
 
         public static Item CreateFakeItem(Guid fieldId, string fieldValue, string name = "itemName")
         {
             var dic = new Dictionary<Guid, string>();
             dic.Add(fieldId, fieldValue);
-            return CreateFakeItem(dic, name);
+            return Utilities.CreateFakeItem(dic, name);
         }
     
 

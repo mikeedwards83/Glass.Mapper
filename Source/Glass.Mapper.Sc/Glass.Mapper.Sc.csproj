@@ -165,6 +165,7 @@
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="VersionCountDisabler.cs" />
     <Compile Include="Web\Mvc\GlassView.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
