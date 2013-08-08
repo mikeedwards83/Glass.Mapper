@@ -1,0 +1,164 @@
+---
+layout: BlogLayout
+title: Mixing in IOC containers
+image: http://www.doolwind.com/images/blog/solid/DependencyInversionPrinciple.jpg
+abstract: How can you make Glass use your own IOC container to create objects.
+caption: 08 Aug 2013
+---
+			
+<p class="lead">
+    I had a question yesterday about how to get a different IOC container to create objects that are used by Glass.Mapper rather than the default
+    inbuilt Glass.Mapper method or using Castle Windsor. In this post I will show how this can be achieved and how simple the process is.
+</p>
+<p>
+    I am going to be using SimpleInjector as the other IOC container that should create objects in Glass.Mapper. The first thing to do 
+    is to set it up, after downloading the SimpleInjector Nuget package I need to create an instance of the container in the Global class
+    when the application starts:
+</p>
+<pre class="csharp">
+    public class Global : Sitecore.Web.Application
+    {
+        public static Container Container { get; private set; }
+
+        public void Application_Start()
+        {
+            Global.Container = new Container();
+
+            Global.Container.Register&lt;ISimpleService, SimpleService&gt;();
+        }
+    }
+</pre>
+<p>
+    Notice that the container is assigned to the static Container property, this is important because this allows us to access the container later. I have
+    also registered a single service with the container. It is a very simple service and will be used just to prove that the dependency was injected. The 
+    implementation for the service is:
+</p>
+<pre class="csharp">
+    public class SimpleService : ISimpleService
+    {
+        public string DoWork()
+        {
+            return "Some work was done";
+        }
+    }
+    public interface ISimpleService
+    {
+        string DoWork();
+    }
+</pre>
+<p>
+    Next I need to define my model that will use both the service but also pull data from Sitecore. In the model I want Path, Name and Title to be pulled from
+    Sitecore:
+</p>
+<pre class="csharp">
+    public class SimpleModel
+    {
+        private readonly ISimpleService _service;
+
+        public SimpleModel(ISimpleService service)
+        {
+            _service = service;
+        }
+
+        public virtual string SomeValue { get { return _service.DoWork(); } }
+
+        public virtual string Path { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Title { get; set; }
+
+    }
+</pre>
+<p>
+    I have everything setup now for SimpleInjector, now I need to tell Glass.Mapper how to use it. Glass.Mapper makes uses of pipelines to do certain tasks, 
+    the available pipelines are:
+</p>
+<ul>
+    <li>Configuration Resolver - Used to determine which type configuration to use when loading an object.</li>
+    <li>DataMapper Resolver - Determines which data mapper will be used for a property.</li>
+    <li>Object Construction - Used to build requested objects.</li>
+    <li>Object Saving - Called when an object is saved or created.</li>
+</ul>
+<p>
+    We are obviously trying to override how objects are created so we will need to hook into the Object Construction pipeline. To do this we need to create
+    a task that inherits the <strong>Glass.Mapper.Pipelines.ObjectConstruction.IObjectConstructionTask</strong> interface:
+</p>
+<pre class="csharp">
+    public class SimpleInjectorTask : Glass.Mapper.Pipelines.ObjectConstruction.IObjectConstructionTask
+    {
+        private static object _lock = new object();
+
+        public void Execute(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs args)
+        {
+            //check that no other task has created an object
+            //also check that this is a dynamic object
+            if (args.Result == null && !args.Configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
+            {
+                //check to see if the type is registered with the SimpleInjector container
+                //if it isn't added it
+                if (Global.Container.GetRegistration(args.Configuration.Type) == null)
+                {
+                    lock (_lock)
+                    {
+                        if (Global.Container.GetRegistration(args.Configuration.Type) == null)
+                        {
+                            Global.Container.Register(args.Configuration.Type);
+                        }
+                    }
+                }
+
+                //create instance using SimpleInjector
+                var obj = Global.Container.GetInstance(args.Configuration.Type);
+
+                //map properties from item to model
+                args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+
+                //set the new object as the returned result
+                args.Result = obj;
+            }
+        }
+    }
+</pre>
+<p>
+    Read through the comments to understand exactly what is going on but in summary it checks to see if the type is registered with the SimpleInjector container 
+    and if not it registers it, of course you could register all your types beforehand if you wanted. It the gets the SimpleInjector container to create an 
+    instance before mapping the properties onto the new object.
+</p>
+<p>
+    Finally we need to make the Glass.Mapper aware that we have created this new task. To do this open the class /App_Start/GlassMapperScCustom.cs and 
+    update the CastleConfig method ensuring that you register the custom task before the SitecoreInstaller is added:
+</p>
+<pre class="csharp">
+		    public static void CastleConfig(IWindsorContainer container){
+			    var config = new Config();
+
+                container.Register(
+                   Component.For&lt;IObjectConstructionTask&gt;().ImplementedBy&lt;SimpleInjectorTask&gt;().LifestylePerWebRequest()
+                  );
+		      //  config.EnableCaching = false;
+
+			    container.Install(new SitecoreInstaller(config));
+		    }
+</pre>
+<p>
+    We have now done everything we need to do to get SimpleInjector working with Glass.Mapper, we can now make a request for our model:
+
+</p>
+<pre class="csharp">
+    var service = new SitecoreService("master");
+    var model = service.GetItem&lt;SimpleModel&gt;("/sitecore/content/home/demo");
+    
+    var work = model.SomeValue; //returns Some work was done
+    var path = model.Path; //returns /sitecore/content/home/demo
+</pre>
+<p>
+    Hopefully this post has shown how simple it is to extend Glass.Mapper and how it plays nicely with other IOC containers. If you have any questions
+    please contact me.
+</p>
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a> 
+</p>
+
+<p class="small">
+    Inversion of control image from <a href="http://www.doolwind.com/blog/">http://www.doolwind.com/blog/</a>.
+</p>
