@@ -16,7 +16,7 @@ a:hover, a:focus {
 color: #2fa4e7;
 }
 
-.navbar .brand {
+.navbar .navbar-brand {
 font-family:'Montserrat Subrayada', sans-serif;
 text-indent: -9999px;
 background: url(/images/glass-mapper-logo-sml.png) no-repeat 50% 50%;
