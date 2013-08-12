@@ -280,7 +280,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual T RenderingParameters<T>() where T : class
+        public virtual T GetRenderingParameters<T>() where T : class
         {
             return GlassHtml.RenderingParameters<T>(this.Parameters);
         }
