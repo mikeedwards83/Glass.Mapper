@@ -18,16 +18,12 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Sitecore.Data.Items;
 using System.Dynamic;
-using Sitecore.Web.UI.WebControls;
-using Sitecore.Pipelines.RenderField;
 
 namespace Glass.Mapper.Sc.Dynamic
 {

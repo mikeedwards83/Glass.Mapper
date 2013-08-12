@@ -15,13 +15,9 @@
  
 */ 
 //-CRE-
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.CodeFirst;
-using Sitecore.Data;
-using Sitecore.Data.DataProviders;
 using Sitecore.Pipelines;
 using Sitecore.SecurityModel;
 

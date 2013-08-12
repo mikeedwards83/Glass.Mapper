@@ -16,7 +16,6 @@
 */ 
 //-CRE-
 using System;
-using RazorEngine.Templating;
 
 namespace Glass.Mapper.Sc.Razor
 {

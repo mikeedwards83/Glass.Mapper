@@ -18,10 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Web;
-using RazorEngine.Templating;
 
 namespace Glass.Mapper.Sc.Razor
 {
@@ -51,7 +48,7 @@ namespace Glass.Mapper.Sc.Razor
             }
             catch (Exception ex)
             {
-                global::Sitecore.Diagnostics.Log.Error("Failed to read Razor view", ex, typeof(IRazorControl));
+                Sitecore.Diagnostics.Log.Error("Failed to read Razor view", ex, typeof(IRazorControl));
             }
             return "";
         };
@@ -87,7 +84,7 @@ namespace Glass.Mapper.Sc.Razor
                         }
                         catch (Exception ex)
                         {
-                            global::Sitecore.Diagnostics.Log.Error("Failed to setup Razor file watcher.", ex);
+                            Sitecore.Diagnostics.Log.Error("Failed to setup Razor file watcher.", ex);
                         }
                     }
                 }

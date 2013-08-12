@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc
 {
@@ -11,7 +8,6 @@ namespace Glass.Mapper.Sc
         private readonly TextWriter _writer;
         private readonly string _firstPart;
         private readonly string _lastPart;
-        private readonly string _result;
 
         public RenderingResult(TextWriter writer, string firstPart, string lastPart)
         {
