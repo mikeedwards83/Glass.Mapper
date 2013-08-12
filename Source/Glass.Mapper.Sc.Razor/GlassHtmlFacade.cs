@@ -267,6 +267,32 @@ namespace Glass.Mapper.Sc.Razor
         }
 
 
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual T RenderingParameters<T>(string parameters) where T : class
+        {
+            return GlassHtml.GetRenderingParameters<T>(parameters);
+        }
+
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual T RenderingParameters<T>(NameValueCollection parameters) where T : class
+        {
+            return GlassHtml.GetRenderingParameters<T>(parameters);
+        }
+
+       
         #region Obsolete
 
         /// <summary>

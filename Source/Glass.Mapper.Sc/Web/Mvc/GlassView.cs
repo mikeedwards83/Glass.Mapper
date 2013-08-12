@@ -324,6 +324,16 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return frame;
         }
 
+        public T GetRenderingParameters<T>() where T: class
+        {
+            var parameters = new NameValueCollection();
+            foreach (var pair in Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.Parameters)
+            {
+                parameters[pair.Key] = pair.Value;
+            }
+            return
+                GlassHtml.GetRenderingParameters<T>(parameters);
+        }
       
     }
 }

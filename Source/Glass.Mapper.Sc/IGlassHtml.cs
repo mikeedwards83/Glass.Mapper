@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq.Expressions;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc
 {
@@ -119,6 +120,46 @@ namespace Glass.Mapper.Sc
         string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null,
                              bool isEditable = false, string contents = null);
 
+
+        /// <summary>
+        /// Gets rendering parameters using the specified template.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <param name="renderParametersTemplateId">The template used by the rendering parameters</param>
+        /// <returns></returns>
+        T GetRenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class;
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        T GetRenderingParameters<T>(string parameters) where T : class;
+
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        T GetRenderingParameters<T>(NameValueCollection parameters) where T : class;
+
+
+
+
+        /// <summary>
+        /// Gets rendering parameters using the specified template.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <param name="renderParametersTemplateId">The template used by the rendering parameters</param>
+        /// <returns></returns>
+        T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
         #region Obsolete
 

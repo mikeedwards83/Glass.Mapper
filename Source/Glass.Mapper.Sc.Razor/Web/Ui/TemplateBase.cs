@@ -26,10 +26,10 @@ using System.IO;
 using System.Web.Mvc;
 using Glass.Mapper.Sc.Razor.Web.Mvc;
 using RazorEngine.Text;
+using Sitecore.Web.UI;
 using Sitecore.Web.UI.WebControls;
 using Image = Glass.Mapper.Sc.Fields.Image;
 using System.Web;
-using System.Web.UI.WebControls;
 using Glass.Mapper.Sc.RenderField;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
@@ -105,7 +105,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// Gets the parent control.
         /// </summary>
         /// <value>The parent control.</value>
-        public Control ParentControl { get; private set; }
+        public WebControl ParentControl { get; private set; }
+
+
 
         /// <summary>
         /// Configures the specified service.
@@ -432,6 +434,18 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         }
 
 
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual T GetRenderingParameters<T>() where T : class
+        {
+            return GlassHtml.RenderingParameters<T>(this.ParentControl.Parameters);
+        }
+
 
 
 
@@ -486,5 +500,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
 
         #endregion
+
+       
     }
 }

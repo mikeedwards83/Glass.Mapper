@@ -20,6 +20,8 @@ using System.Collections.Specialized;
 using System.Dynamic;
 using System.Linq.Expressions;
 using Glass.Mapper.Sc.RenderField;
+using System.Web.UI;
+using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
@@ -190,6 +192,26 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
 
             return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
+        }
+
+
+        private string GetRenderingParameters(Control control)
+        {
+            if (control == null) return null;
+
+            if (control is Sublayout)
+            {
+                return ((Sublayout) control).Parameters;
+            }
+
+            return GetRenderingParameters(control.Parent);
+        }
+
+        public virtual string RenderingParameters{get { return GetRenderingParameters(this); }}
+
+        public virtual T GetRenderingParameters<T>() where T: class
+        {
+            return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
         }
     }
 }

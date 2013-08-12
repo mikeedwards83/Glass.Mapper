@@ -55,6 +55,33 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
+        {
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), new Database("master"), name);
+        }
+
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")
+        {
+            var id = new ID(Guid.NewGuid());
+            var language = Language.Current;
+            var version = Sitecore.Data.Version.Latest;
+
+            var itemDefinition = new ItemDefinition(id, name, templateId, ID.Null);
+            var fieldList = new FieldList();
+
+            if (fields != null)
+            {
+                foreach (var fieldId in fields.Keys)
+                {
+                    fieldList.Add(new ID(fieldId), fields[fieldId]);
+                }
+            }
+
+            var itemData = new ItemData(itemDefinition, language, version, fieldList);
+            var item = new Item(id, itemData, database);
+            return item;
+        }
+
         /// <summary>
         /// Creates the URL options.
         /// </summary>

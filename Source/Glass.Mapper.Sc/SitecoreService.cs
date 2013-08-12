@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
+using Sitecore.Common;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -345,7 +346,7 @@ namespace Glass.Mapper.Sc
         /// <exception cref="System.NotSupportedException">Maximum number of constructor parameters is 4</exception>
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
         {
-            if (item == null || item.Versions.Count == 0) return null;
+            if (item == null || (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 4)
