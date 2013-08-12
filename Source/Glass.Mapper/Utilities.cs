@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
-using System.Text;
 using System.Reflection;
 
 namespace Glass.Mapper
@@ -67,7 +66,7 @@ namespace Glass.Mapper
 
                 ilGen.Emit(OpCodes.Ret);
 
-                Type genericType = null;
+                Type genericType;
                 switch (parameters.Count())
                 {
                     case 0:

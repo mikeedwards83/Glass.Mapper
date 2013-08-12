@@ -74,7 +74,7 @@ namespace Glass.Mapper.Configuration
         public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
             if(_properties.Any(x=>x.PropertyInfo.Name == property.PropertyInfo.Name))
-                throw new MapperException("You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(property.PropertyInfo.Name, this.Type.Name));
+                throw new MapperException("You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(property.PropertyInfo.Name, Type.Name));
 
             if(property != null)
                 _properties.Add(property);
@@ -104,7 +104,7 @@ namespace Glass.Mapper.Configuration
         public void PerformAutoMap()
         {
             //we now run the auto-mapping after all the static configuration is loaded
-            if (this.AutoMap)
+            if (AutoMap)
             {
                 //TODO: ME - probably need some binding flags.
                 foreach (var propConfig in AutoMapProperties(Type))

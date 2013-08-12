@@ -17,7 +17,6 @@
 //-CRE-
 
 
-using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction

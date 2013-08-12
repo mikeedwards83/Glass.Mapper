@@ -24,17 +24,17 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
     /// <summary>
     /// Class CreateDynamicRazor
     /// </summary>
-    public class CreateDynamicRazor : global::Sitecore.Shell.Framework.Commands.Command
+    public class CreateDynamicRazor : Sitecore.Shell.Framework.Commands.Command
     {
         /// <summary>
         /// Executes the command in the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public override void Execute(global::Sitecore.Shell.Framework.Commands.CommandContext context)
+        public override void Execute(Sitecore.Shell.Framework.Commands.CommandContext context)
         {
             if (context.Items.Length == 1)
             {
-                global::Sitecore.Data.Items.Item item = context.Items[0];
+                Sitecore.Data.Items.Item item = context.Items[0];
 
                 ClientPipelineArgs args = new ClientPipelineArgs();
 
@@ -46,7 +46,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
 
                 args.Parameters = parameters;
 
-                global::Sitecore.Context.ClientPage.Start(this, "Run", args);
+                Sitecore.Context.ClientPage.Start(this, "Run", args);
             }
         }
 
@@ -62,7 +62,6 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
             {
                 SheerResponse.ShowModalDialog(str.ToString(), true);
                 args.WaitForPostBack();
-                return;
             }
         }
     }
