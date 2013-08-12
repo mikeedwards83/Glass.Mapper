@@ -141,6 +141,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             }
         }
 
+        public IGlassHtml GlassHtml { get;  set; }
 
        
         /// <summary>
@@ -150,6 +151,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             ViewData = new ViewDataDictionary();
             ViewManager = new ViewManager();
+            GlassHtml = new GlassHtml(new SitecoreContext());
         }
 
         /// <summary>
@@ -270,6 +272,19 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             this.Controls.Cast<Control>().Where(x => x is global::Sitecore.Layouts.IExpandable)
                 .Cast<global::Sitecore.Layouts.IExpandable>().ToList().ForEach(x => x.Expand());
         }
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public virtual T RenderingParameters<T>() where T : class
+        {
+            return GlassHtml.RenderingParameters<T>(this.Parameters);
+        }
+
     }
    
 }
