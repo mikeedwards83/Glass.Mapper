@@ -151,12 +151,12 @@ namespace Glass.Mapper.Sc
         }
 
 
-        public virtual T RenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class
+        public virtual T GetRenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class
         {
             var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
-            return RenderingParameters<T>(nameValueCollection, renderParametersTemplateId);
+            return GetRenderingParameters<T>(nameValueCollection, renderParametersTemplateId);
         }
-        public T RenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T:class{
+        public T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T:class{
 
             var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, SitecoreContext.Database, "renderingParameters");
 
@@ -187,10 +187,10 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual T RenderingParameters<T>(string parameters) where T : class
+        public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof (T)] as SitecoreTypeConfiguration;
-            return RenderingParameters<T>(parameters, config.TemplateId);
+            return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
 
@@ -201,10 +201,10 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual T RenderingParameters<T>(NameValueCollection parameters) where T : class
+        public virtual T GetRenderingParameters<T>(NameValueCollection parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
-            return RenderingParameters<T>(parameters, config.TemplateId);
+            return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
         /// <summary>

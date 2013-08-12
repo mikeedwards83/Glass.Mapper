@@ -276,7 +276,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <returns></returns>
         public virtual T RenderingParameters<T>(string parameters) where T : class
         {
-            return GlassHtml.RenderingParameters<T>(parameters);
+            return GlassHtml.GetRenderingParameters<T>(parameters);
         }
 
 
@@ -289,7 +289,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <returns></returns>
         public virtual T RenderingParameters<T>(NameValueCollection parameters) where T : class
         {
-            return GlassHtml.RenderingParameters<T>(parameters);
+            return GlassHtml.GetRenderingParameters<T>(parameters);
         }
 
        

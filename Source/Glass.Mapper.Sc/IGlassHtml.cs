@@ -128,7 +128,7 @@ namespace Glass.Mapper.Sc
         /// <param name="parameters"></param>
         /// <param name="renderParametersTemplateId">The template used by the rendering parameters</param>
         /// <returns></returns>
-        T RenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class;
+        T GetRenderingParameters<T>(string parameters, ID renderParametersTemplateId) where T : class;
 
         /// <summary>
         /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
@@ -137,7 +137,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        T RenderingParameters<T>(string parameters) where T : class;
+        T GetRenderingParameters<T>(string parameters) where T : class;
 
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        T RenderingParameters<T>(NameValueCollection parameters) where T : class;
+        T GetRenderingParameters<T>(NameValueCollection parameters) where T : class;
 
 
 
@@ -159,7 +159,7 @@ namespace Glass.Mapper.Sc
         /// <param name="parameters"></param>
         /// <param name="renderParametersTemplateId">The template used by the rendering parameters</param>
         /// <returns></returns>
-        T RenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
+        T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
         #region Obsolete
 

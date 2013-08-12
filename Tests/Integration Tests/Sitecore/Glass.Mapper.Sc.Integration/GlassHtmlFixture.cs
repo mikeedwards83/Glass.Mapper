@@ -867,7 +867,7 @@ namespace Glass.Mapper.Sc.Integration
             var html = new GlassHtml(service);
 
             //Act
-            var result = html.RenderingParameters<RenderingTest>(parameters, templateId);
+            var result = html.GetRenderingParameters<RenderingTest>(parameters, templateId);
 
             //Assert
             Assert.AreEqual(expectedNumber, result.Number);
@@ -900,7 +900,7 @@ namespace Glass.Mapper.Sc.Integration
             var html = new GlassHtml(service);
 
             //Act
-            var result = html.RenderingParameters<RenderingTestWithAttribute>(parameters);
+            var result = html.GetRenderingParameters<RenderingTestWithAttribute>(parameters);
 
             //Assert
             Assert.AreEqual(expectedNumber, result.Number);

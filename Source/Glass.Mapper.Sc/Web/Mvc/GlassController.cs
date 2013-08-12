@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
                 parameters[pair.Key] = pair.Value;
             }
             return
-                GlassHtml.RenderingParameters<T>(parameters);
+                GlassHtml.GetRenderingParameters<T>(parameters);
         } 
     }
 }
