@@ -17,7 +17,6 @@
 //-CRE-
 using System;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq.Expressions;
 using System.Web.UI;
 using Glass.Mapper.Sc.Fields;
@@ -83,9 +82,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
         /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field)
+        public RawString Editable<T>(T target, Expression<Func<T, object>> field)
         {
-            return _glassHtml.Editable<T>(target, field).RawString();
+            return _glassHtml.Editable(target, field).RawString();
         }
   
         /// <summary>
@@ -96,9 +95,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>RawString.</returns>
-        public  RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field, RenderField.AbstractParameters parameters)
+        public  RawString Editable<T>(T target, Expression<Func<T, object>> field, AbstractParameters parameters)
         {
-            return _glassHtml.Editable<T>(target, field, parameters).RawString();
+            return _glassHtml.Editable(target, field, parameters).RawString();
         }
         /// <summary>
         /// Editables the specified target.
@@ -108,9 +107,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field, string parameters)
+        public RawString Editable<T>(T target, Expression<Func<T, object>> field, string parameters)
         {
-            return _glassHtml.Editable<T>(target, field, parameters).RawString();
+            return _glassHtml.Editable(target, field, parameters).RawString();
         }
 
         /// <summary>
@@ -121,9 +120,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
         /// <returns>RawString.</returns>
-        public  RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field, System.Linq.Expressions.Expression<Func<T, string>> standardOutput)
+        public  RawString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
         {
-            return _glassHtml.Editable<T>(target, field, standardOutput).RawString();
+            return _glassHtml.Editable(target, field, standardOutput).RawString();
         }
         /// <summary>
         /// Editables the specified target.
@@ -134,9 +133,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="standardOutput">The standard output.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, System.Linq.Expressions.Expression<Func<T, object>> field, System.Linq.Expressions.Expression<Func<T, string>> standardOutput, RenderField.AbstractParameters parameters)
+        public RawString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
-            return _glassHtml.Editable<T>(target, field, standardOutput, parameters).RawString();
+            return _glassHtml.Editable(target, field, standardOutput, parameters).RawString();
         }
         
         /// <summary>
@@ -153,10 +152,12 @@ namespace Glass.Mapper.Sc.Razor
                                              ImageParameters parameters = null,
                                              bool isEditable = false)
         {
-            return _glassHtml.RenderImage<T>(model, field, parameters, isEditable).RawString();
+            return _glassHtml.RenderImage(model, field, parameters, isEditable).RawString();
         }
 
-
+        /// <summary>
+        /// Indicates if the current page is in Page Editing mode
+        /// </summary>
         public bool IsInEditingMode
         {
             get { return Sc.GlassHtml.IsInEditingMode; }
@@ -240,14 +241,14 @@ namespace Glass.Mapper.Sc.Razor
 
             Assert.IsNotNull(item, "Could not find rendering item {0}".Formatted(path));
 
-            NameValueCollection parameters = new NameValueCollection();
+            var parameters = new NameValueCollection();
 
             foreach (Field field in item.Fields)
             {
                 parameters.Add(field.Name, field.Value);
             }
 
-            Control  control = null;
+            Control  control;
             
             if (item.TemplateID == SitecoreIds.GlassBehindRazorId)
             {
@@ -312,7 +313,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="attributes">The attributes.</param>
         /// <returns>RawString.</returns>
         [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public RawString RenderImage(Image image, System.Collections.Specialized.NameValueCollection attributes)
+        public RawString RenderImage(Image image, NameValueCollection attributes)
         {
             return _glassHtml.RenderImage(image, attributes).RawString();
         }
@@ -334,7 +335,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="attributes">The attributes.</param>
         /// <returns>RawString.</returns>
         [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
-        public RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes)
+        public RawString RenderLink(Link link, NameValueCollection attributes)
         {
             return _glassHtml.RenderLink(link, attributes).RawString();
         }
@@ -346,7 +347,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="contents">The contents.</param>
         /// <returns>RawString.</returns>
         [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
-        public RawString RenderLink(Link link, System.Collections.Specialized.NameValueCollection attributes, string contents)
+        public RawString RenderLink(Link link, NameValueCollection attributes, string contents)
         {
             return _glassHtml.RenderLink(link, attributes, contents).RawString();
         }
