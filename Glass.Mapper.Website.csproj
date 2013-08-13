@@ -72,6 +72,8 @@
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\GlassFolder.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\Nuget.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\tutorial01.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial23\tutorial23.fields.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial23\tutorial23.html" />
     <Content Include="docs\tutorial\sitecore\tutorial22\tutorial22.html" />
     <Content Include="docs\tutorial\sitecore\tutorial19\Tutorial19.field.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial19\tutorial19.html" />
@@ -94,6 +96,7 @@
     <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
     <Content Include="_posts\2013-06-15-SitecoreCopyImages.html" />
     <Content Include="_posts\2013-08-08-MixingInIoc.html" />
+    <Content Include="_posts\2013-08-12-RenderingParameters.html" />
     <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
