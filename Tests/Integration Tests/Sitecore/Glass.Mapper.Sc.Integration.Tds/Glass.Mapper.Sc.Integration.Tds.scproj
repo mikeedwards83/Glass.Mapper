@@ -32,23 +32,41 @@
     <SitecoreWebUrl>http://sitecore.glass.local/</SitecoreWebUrl>
     <SitecoreAccessGuid>fd21ce01-25b5-4388-a335-6211a7a211b9</SitecoreAccessGuid>
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
-    <PackageAuthor>
-    </PackageAuthor>
-    <PackagePublisher>
-    </PackagePublisher>
+    <PackageAuthor>Michael Edwards</PackageAuthor>
+    <PackagePublisher>www.glass.lu</PackagePublisher>
     <PackageVersion>
     </PackageVersion>
     <PackageReadme>
     </PackageReadme>
     <SitecoreAssemblyPath>E:\Glass\Glass.Mapper\Depends\Sitecore\bin\</SitecoreAssemblyPath>
     <GeneratePackage>True</GeneratePackage>
-    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <SeperateFilesAndItems>True</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
     <OutputPath>.\Release\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'CI' ">
+    <DebugSymbols>true</DebugSymbols>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>
+    </SitecoreDeployFolder>
+    <SitecoreWebUrl>http://sitecore.glass.local/</SitecoreWebUrl>
+    <SitecoreAccessGuid>fd21ce01-25b5-4388-a335-6211a7a211b9</SitecoreAccessGuid>
+    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <PackageAuthor>Michael Edwards</PackageAuthor>
+    <PackagePublisher>www.glass.lu</PackagePublisher>
+    <PackageVersion>
+    </PackageVersion>
+    <PackageReadme>
+    </PackageReadme>
+    <SitecoreAssemblyPath>..\..\..\..\Depends\Sitecore\bin</SitecoreAssemblyPath>
+    <GeneratePackage>True</GeneratePackage>
+    <SeperateFilesAndItems>True</SeperateFilesAndItems>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <OutputPath>bin\CI\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
