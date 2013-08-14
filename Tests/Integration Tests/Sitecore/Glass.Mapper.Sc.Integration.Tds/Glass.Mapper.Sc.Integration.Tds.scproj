@@ -54,8 +54,9 @@
     <SitecoreDeployFolder>
     </SitecoreDeployFolder>
     <SitecoreWebUrl>http://sitecore.glass.local/</SitecoreWebUrl>
-    <SitecoreAccessGuid>fd21ce01-25b5-4388-a335-6211a7a211b9</SitecoreAccessGuid>
-    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <SitecoreAccessGuid>
+    </SitecoreAccessGuid>
+    <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Michael Edwards</PackageAuthor>
     <PackagePublisher>www.glass.lu</PackagePublisher>
     <PackageVersion>
@@ -66,7 +67,7 @@
     <GeneratePackage>True</GeneratePackage>
     <SeperateFilesAndItems>True</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
-    <OutputPath>bin\CI\</OutputPath>
+    <OutputPath>.\CI\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
