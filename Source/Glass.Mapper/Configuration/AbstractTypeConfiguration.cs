@@ -94,7 +94,14 @@ namespace Glass.Mapper.Configuration
 
             foreach (var prop in Properties)
             {
-                prop.Mapper.MapCmsToProperty(dataMappingContext);
+                try
+                {
+                    prop.Mapper.MapCmsToProperty(dataMappingContext);
+                }
+                catch (Exception e)
+                {
+                    throw new MapperException("Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name, prop.PropertyInfo.DeclaringType.FullName), e);
+                }
             }
         }
 
