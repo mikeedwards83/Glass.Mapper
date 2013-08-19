@@ -89,7 +89,6 @@
 .\Debug\bin\Sitecore.Kernel.dll
 .\Debug\bin\Sitecore.Kernel.xml
 .\Debug\bin\Sitecore.Logging.dll
-.\Debug\bin\Sitecore.Mvc.dll
 .\Debug\bin\sitecore.nexus.dll
 .\Debug\bin\Sitecore.NVelocity.dll
 .\Debug\bin\Sitecore.Oracle.dll

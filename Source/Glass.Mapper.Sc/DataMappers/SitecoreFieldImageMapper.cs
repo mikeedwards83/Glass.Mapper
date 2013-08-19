@@ -52,31 +52,35 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.Object.</returns>
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-
             Image img = new Image();
             ImageField scImg = new ImageField(field);
 
-            int height = 0;
-            int.TryParse(scImg.Height, out height);
-            int width = 0;
-            int.TryParse(scImg.Width, out width);
-            int hSpace = 0;
-            int.TryParse(scImg.HSpace, out hSpace);
-            int vSpace = 0;
-            int.TryParse(scImg.VSpace, out vSpace);
-
-            img.Alt = scImg.Alt;
-            img.Border = scImg.Border;
-            img.Class = scImg.Class;
-            img.Height = height;
-            img.HSpace = hSpace;
-            img.MediaId = scImg.MediaID.Guid;
-            if (scImg.MediaItem != null)
-                img.Src = MediaManager.GetMediaUrl(scImg.MediaItem);
-            img.VSpace = vSpace;
-            img.Width = width;
+            MapToImage(img, scImg);
 
             return img;
+        }
+
+        public static void MapToImage(Image img, ImageField field)
+        {
+            int height = 0;
+            int.TryParse(field.Height, out height);
+            int width = 0;
+            int.TryParse(field.Width, out width);
+            int hSpace = 0;
+            int.TryParse(field.HSpace, out hSpace);
+            int vSpace = 0;
+            int.TryParse(field.VSpace, out vSpace);
+
+            img.Alt = field.Alt;
+            img.Border = field.Border;
+            img.Class = field.Class;
+            img.Height = height;
+            img.HSpace = hSpace;
+            img.MediaId = field.MediaID.Guid;
+            if (field.MediaItem != null)
+                img.Src = MediaManager.GetMediaUrl(field.MediaItem);
+            img.VSpace = vSpace;
+            img.Width = width;
         }
 
 
@@ -97,41 +101,46 @@ namespace Glass.Mapper.Sc.DataMappers
 
             ImageField scImg = new ImageField(field);
 
-            if (img == null)
+            MapToField(scImg, img, item);
+        }
+
+        public static void MapToField(ImageField field, Image image, Item item)
+        {
+            if (image == null)
             {
-                scImg.Clear();
+                field.Clear();
                 return;
             }
 
-            if (scImg.MediaID.Guid != img.MediaId)
+            if (field.MediaID.Guid != image.MediaId)
             {
                 //this only handles empty guids, but do we need to remove the link before adding a new one?
-                if (img.MediaId == Guid.Empty)
+                if (image.MediaId == Guid.Empty)
                 {
-                    ItemLink link = new ItemLink(item.Database.Name, item.ID, scImg.InnerField.ID, scImg.MediaItem.Database.Name, scImg.MediaID, scImg.MediaItem.Paths.Path);
-                    scImg.RemoveLink(link);
+                    ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, field.MediaItem.Database.Name, field.MediaID, field.MediaItem.Paths.Path);
+                    field.RemoveLink(link);
                 }
                 else
                 {
-                    ID newId = new ID(img.MediaId);
+                    ID newId = new ID(image.MediaId);
                     Item target = item.Database.GetItem(newId);
                     if (target != null)
                     {
-                        scImg.MediaID = newId;
-                        ItemLink link = new ItemLink(item.Database.Name, item.ID, scImg.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
-                        scImg.UpdateLink(link);
+                        field.MediaID = newId;
+                        ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                        field.UpdateLink(link);
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
             }
 
-            scImg.Height = img.Height.ToString();
-            scImg.Width = img.Width.ToString();
-            scImg.HSpace = img.HSpace.ToString();
-            scImg.VSpace = img.VSpace.ToString();
-            scImg.Alt = img.Alt;
-            scImg.Border = img.Border;
-            scImg.Class = img.Class;
+            field.Height = image.Height.ToString();
+            field.Width = image.Width.ToString();
+            field.HSpace = image.HSpace.ToString();
+            field.VSpace = image.VSpace.ToString();
+            field.Alt = image.Alt;
+            field.Border = image.Border;
+            field.Class = image.Class;
         }
         /// <summary>
         /// Sets the field value.
