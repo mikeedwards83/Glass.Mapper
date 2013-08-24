@@ -19,8 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 
@@ -35,7 +33,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
         /// </summary>
         public SitecoreContext()
-            : base(global::Sitecore.Context.Database, GetContextFromSite())
+            : base(Sitecore.Context.Database, GetContextFromSite())
         {
             
         }
@@ -44,7 +42,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreContext(string contextName)
-            : base(global::Sitecore.Context.Database, contextName)
+            : base(Sitecore.Context.Database, contextName)
         {
             
         }
@@ -53,7 +51,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="context">The context.</param>
         public SitecoreContext(Context context)
-            : base(global::Sitecore.Context.Database, context)
+            : base(Sitecore.Context.Database, context)
         {
 
         }
@@ -92,7 +90,7 @@ namespace Glass.Mapper.Sc
         public T GetHomeItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
 
-            return base.GetItem<T>(global::Sitecore.Context.Site.StartPath, isLazy, inferType);
+            return GetItem<T>(Sitecore.Context.Site.StartPath, isLazy, inferType);
         }
 
         /// <summary>
@@ -105,9 +103,9 @@ namespace Glass.Mapper.Sc
         /// <returns>IEnumerable{``0}.</returns>
         public IEnumerable<T> QueryRelative<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
-            Item item = global::Sitecore.Context.Item;
+            Item item = Sitecore.Context.Item;
             var results = item.Axes.SelectItems(query);
-            return base.CreateTypes(typeof(T), () => { return results; }, isLazy, inferType) as IEnumerable<T>;
+            return CreateTypes(typeof(T), () => { return results; }, isLazy, inferType) as IEnumerable<T>;
 
         }
 
@@ -121,9 +119,9 @@ namespace Glass.Mapper.Sc
         /// <returns>``0.</returns>
         public T QuerySingleRelative<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
-            Item item = global::Sitecore.Context.Item;
+            Item item = Sitecore.Context.Item;
             var result = item.Axes.SelectSingleItem(query);
-            return base.CreateType<T>(result, isLazy, inferType);
+            return CreateType<T>(result, isLazy, inferType);
         }
 
 
@@ -135,7 +133,7 @@ namespace Glass.Mapper.Sc
         /// </returns>
         public dynamic GetCurrentDynamicItem()
         {
-            return base.GetDynamicItem(global::Sitecore.Context.Item);
+            return GetDynamicItem(Sitecore.Context.Item);
         }
 
         /// <summary>
@@ -147,7 +145,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The current item as the specified type</returns>
         public object GetCurrentItem(Type type, bool isLazy = false, bool inferType = false)
         {
-            return base.CreateType(type, global::Sitecore.Context.Item, isLazy, inferType);
+            return CreateType(type, Sitecore.Context.Item, isLazy, inferType);
         }
 
         /// <summary>
@@ -159,22 +157,22 @@ namespace Glass.Mapper.Sc
         /// <returns>The current item as the specified type</returns>
         public T GetCurrentItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return base.CreateType<T>(global::Sitecore.Context.Item, isLazy, inferType);
+            return CreateType<T>(Sitecore.Context.Item, isLazy, inferType);
         }
 
         /// <summary>
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        public T GetCurrentItem<T, K>(K param1, bool isLazy = false, bool inferType = false) where T : class
+        public T GetCurrentItem<T, TK>(TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
 
-            return base.CreateType<T, K>(global::Sitecore.Context.Item, param1, isLazy, inferType);
+            return CreateType<T, TK>(Sitecore.Context.Item, param1, isLazy, inferType);
 
         }
 
@@ -182,16 +180,16 @@ namespace Glass.Mapper.Sc
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        public T GetCurrentItem<T, K, L>(K param1, L param2, bool isLazy = false, bool inferType = false) where T : class
+        public T GetCurrentItem<T, TK, TL>(TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
-            return base.CreateType<T, K, L>(global::Sitecore.Context.Item, param1, param2, isLazy, inferType);
+            return CreateType<T, TK, TL>(Sitecore.Context.Item, param1, param2, isLazy, inferType);
 
         }
 
@@ -199,18 +197,18 @@ namespace Glass.Mapper.Sc
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        public T GetCurrentItem<T, K, L, M>(K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class
+        public T GetCurrentItem<T, TK, TL, TM>(TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
-            return base.CreateType<T, K, L, M>(global::Sitecore.Context.Item, param1, param2, param3, isLazy, inferType);
+            return CreateType<T, TK, TL, TM>(Sitecore.Context.Item, param1, param2, param3, isLazy, inferType);
 
         }
 
@@ -218,10 +216,10 @@ namespace Glass.Mapper.Sc
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TN">The type of the fourth constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
@@ -229,9 +227,9 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        public T GetCurrentItem<T, K, L, M, N>(K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class
+        public T GetCurrentItem<T, TK, TL, TM, TN>(TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
-            return base.CreateType<T, K, L, M, N>(global::Sitecore.Context.Item, param1, param2, param3, param4, isLazy, inferType);
+            return CreateType<T, TK, TL, TM, TN>(Sitecore.Context.Item, param1, param2, param3, param4, isLazy, inferType);
 
         }
 

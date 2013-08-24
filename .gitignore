@@ -98,3 +98,4 @@ Nugets/*
 Source/Glass.Mapper.Sc.Razor.Tds/*.dll
 Source/Glass.Mapper.Sc.Razor.Tds/*.xml
 Source/Glass.Mapper.Sc.Razor.Tds/Package_Debug/Glass.Mapper.Sc.Razor.Tds.update
+Sites/Sitecore/Glass.Mapper.Sites.Sc/data/

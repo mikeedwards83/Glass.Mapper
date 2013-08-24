@@ -19,8 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Web;
 using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Profilers;
 using RazorEngine.Templating;
@@ -35,7 +33,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// Class AbstractRazorControl
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
+    public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, Sitecore.Layouts.IExpandable
     {
         IPerformanceProfiler _profiler = new SitecoreProfiler();
         /// <summary>
@@ -131,8 +129,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                     }
                     else
                     {
-                        _sitecoreContext = new SitecoreContext()
-                        {
+                        _sitecoreContext = new SitecoreContext
+                            {
                             Profiler = Profiler
                         };
                     }
@@ -141,6 +139,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             }
         }
 
+        /// <summary>
+        /// Gives access to the GlassHtml helper class
+        /// </summary>
+        public IGlassHtml GlassHtml { get;  set; }
 
        
         /// <summary>
@@ -150,6 +152,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             ViewData = new ViewDataDictionary();
             ViewManager = new ViewManager();
+            GlassHtml = new GlassHtml(new SitecoreContext());
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <returns>Item.</returns>
         protected Item GetDataSourceOrContextItem()
         {
-            return this.DataSource.IsNullOrEmpty() ? global::Sitecore.Context.Item :
-                global::Sitecore.Context.Database.GetItem(this.DataSource);
+            return DataSource.IsNullOrEmpty() ? Sitecore.Context.Item :
+                Sitecore.Context.Database.GetItem(DataSource);
         }
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>If an empty string is returned, the control will not be cached.</remarks>
         protected override string GetCachingID()
         {
-            return this.View.Name;
+            return View.Name;
         }
 
         /// <summary>
@@ -189,7 +192,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             try
             {
              
-                    Profiler.Start("Razor engine {0}".Formatted(this.View.Name));
+                    Profiler.Start("Razor engine {0}".Formatted(View.Name));
 
                     Profiler.Start("Get Model");
 
@@ -201,7 +204,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
                     Profiler.Start("Create Template");
 
                     var template =
-                        RazorEngine.Razor.GetTemplate<T>(View.ViewContent, Model, View.Name) as ITemplateBase;
+                        RazorEngine.Razor.GetTemplate(View.ViewContent, Model, View.Name) as ITemplateBase;
 
                     Profiler.End("Create Template");
 
@@ -217,9 +220,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
                     Profiler.End("Run Template");
             }
-            catch (RazorEngine.Templating.TemplateCompilationException ex)
+            catch (TemplateCompilationException ex)
             {
-                StringBuilder errors = new StringBuilder();
+                var errors = new StringBuilder();
                 ex.Errors.ForEach(x =>
                                       {
                                           errors.AppendLine("File: {0}".Formatted(View));
@@ -237,18 +240,18 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             }
             finally
             {
-                Profiler.End("Razor engine {0}".Formatted(this.View));
+                Profiler.End("Razor engine {0}".Formatted(View));
             }
         }
 
         private void WriteException(HtmlTextWriter output, Exception ex)
         {
             output.Write("<h1>Glass Razor Rendering Exception</h1>");
-            output.Write("<p>View: {0}</p>".Formatted(this.View.Name));
+            output.Write("<p>View: {0}</p>".Formatted(View.Name));
             output.Write("<p>{0}</p>".Formatted(ex.Message));
             output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
         
-            Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(this.View), ex, this);
+            Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(View), ex, this);
 
         }
 
@@ -261,15 +264,27 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             {
                 foreach (var placeHolderName in Placeholders)
                 {
-                    global::Sitecore.Web.UI.WebControls.Placeholder holder = new global::Sitecore.Web.UI.WebControls.Placeholder();
+                    var holder = new Sitecore.Web.UI.WebControls.Placeholder();
                     holder.Key = placeHolderName.ToLower();
-                    this.Controls.Add(holder);
+                    Controls.Add(holder);
                 }
             }
 
-            this.Controls.Cast<Control>().Where(x => x is global::Sitecore.Layouts.IExpandable)
-                .Cast<global::Sitecore.Layouts.IExpandable>().ToList().ForEach(x => x.Expand());
+            Controls.Cast<Control>().Where(x => x is Sitecore.Layouts.IExpandable)
+                .Cast<Sitecore.Layouts.IExpandable>().ToList().ForEach(x => x.Expand());
         }
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="TK"></typeparam>
+        /// <returns></returns>
+        public virtual TK GetRenderingParameters<TK>() where TK : class
+        {
+            return GlassHtml.GetRenderingParameters<TK>(Parameters);
+        }
+
     }
    
 }

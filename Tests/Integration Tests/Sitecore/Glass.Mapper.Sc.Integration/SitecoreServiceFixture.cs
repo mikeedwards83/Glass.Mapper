@@ -637,6 +637,48 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Method - Query
+
+        [Test]
+        public void Query_ReturnsItemsBeneathFolder_ThreeItemsReturned()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string  query = "/sitecore/content/Tests/SitecoreService/Query/*";
+
+            //Act
+            var result = service.Query<StubClass>(query);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count());
+        }
+
+        [Test]
+        public void Query_ReturnsItemsBeneathFolderBasedOnLanguage_TwoItemsReturned()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string query = "/sitecore/content/Tests/SitecoreService/Query/*";
+            var language = LanguageManager.GetLanguage("af-ZA");
+
+            //Act
+            var result = service.Query<StubClass>(query, language);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count());
+        }
+        #endregion
+
         #region Method - Save
 
         [Test]

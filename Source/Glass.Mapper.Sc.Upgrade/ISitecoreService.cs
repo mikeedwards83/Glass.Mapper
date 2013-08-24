@@ -18,11 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Globalization;
 
 //The namespace is kept the same as the original
 namespace Glass.Sitecore.Mapper

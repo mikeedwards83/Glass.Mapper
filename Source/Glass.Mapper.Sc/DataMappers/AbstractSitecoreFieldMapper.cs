@@ -95,9 +95,16 @@ namespace Glass.Mapper.Sc.DataMappers
         public virtual object GetField(Field field, SitecoreFieldConfiguration config,
                                        SitecoreDataMappingContext context)
         {
-            var fieldValue = field.Value;
-
-            return GetFieldValue(fieldValue, config, context);
+            
+                var fieldValue = field.Value;
+            try
+            {
+                return GetFieldValue(fieldValue, config, context);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted( field.Name, fieldValue), ex);
+            }
         }
         /// <summary>
         /// Sets the field.

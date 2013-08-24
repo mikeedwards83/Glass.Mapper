@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {

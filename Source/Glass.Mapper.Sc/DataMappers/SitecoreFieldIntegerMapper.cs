@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (fieldValue.IsNullOrEmpty()) return 0;
             int dValue = 0;
             if (int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue)) return dValue;
-            else throw new MapperException("Could not convert value to double");
+            else throw new MapperException("Could not convert value to Integer");
         }
 
         /// <summary>

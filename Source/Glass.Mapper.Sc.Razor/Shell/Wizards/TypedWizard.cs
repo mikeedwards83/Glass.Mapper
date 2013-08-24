@@ -15,8 +15,7 @@
  
 */ 
 //-CRE-
-using System;
-using Sitecore.Web.UI.HtmlControls;
+
 using Sitecore.Web.UI.Sheer;
 using Glass.Mapper.Sc.Razor.Model;
 
@@ -48,8 +47,8 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
         /// path through the wizard pages.</remarks>
         protected override bool ActivePageChanging(string page, ref string newpage)
         {
-            this.BackButton.Enabled = true;
-            this.BackButton.Disabled = false;
+            BackButton.Enabled = true;
+            BackButton.Disabled = false;
             
             if (page == "fileNamePage" && newpage == "fileLocationPage")
             {
@@ -86,7 +85,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
         {
             if (page == "finalPage")
             {
-                this.BackButton.Disabled = true;
+                BackButton.Disabled = true;
 
                 var parameters = new System.Collections.Specialized.NameValueCollection();
 
@@ -100,7 +99,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Wizards
                 
                 
 
-                global::Sitecore.Context.ClientPage.SendMessage(this, "item:refreshchildren");
+                Sitecore.Context.ClientPage.SendMessage(this, "item:refreshchildren");
             }
 
             base.ActivePageChanged(page, oldPage);

@@ -17,8 +17,6 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -90,7 +88,7 @@ namespace Glass.Sitecore.Mapper
         /// Creates a class from the specified item with a single constructor parameter
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <param name="item">The item to load data from</param>
@@ -98,17 +96,17 @@ namespace Glass.Sitecore.Mapper
         /// <returns>
         /// The item as the specified type
         /// </returns>
-        public T CreateClass<T, K>(bool isLazy, bool inferType, Item item, K param1)
+        public T CreateClass<T, TK>(bool isLazy, bool inferType, Item item, TK param1)
         {
-            return CreateType<T, K>(item, param1, isLazy, inferType);
+            return CreateType<T, TK>(item, param1, isLazy, inferType);
         }
 
         /// <summary>
         /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <param name="item">The item to load data from</param>
@@ -117,18 +115,18 @@ namespace Glass.Sitecore.Mapper
         /// <returns>
         /// The item as the specified type
         /// </returns>
-        public T CreateClass<T, K, L>(bool isLazy, bool inferType, Item item, K param1, L param2)
+        public T CreateClass<T, TK, TL>(bool isLazy, bool inferType, Item item, TK param1, TL param2)
         {
-            return CreateType<T, K, L>(item, param1, param2, isLazy, inferType);
+            return CreateType<T, TK, TL>(item, param1, param2, isLazy, inferType);
         }
 
         /// <summary>
         /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M"></typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM"></typeparam>
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <param name="item">The item to load data from</param>
@@ -138,19 +136,19 @@ namespace Glass.Sitecore.Mapper
         /// <returns>
         /// The item as the specified type
         /// </returns>
-        public T CreateClass<T, K, L, M>(bool isLazy, bool inferType, Item item, K param1, L param2, M param3)
+        public T CreateClass<T, TK, TL, TM>(bool isLazy, bool inferType, Item item, TK param1, TL param2, TM param3)
         {
-            return CreateType<T, K, L, M>(item, param1, param2, param3, isLazy, inferType);
+            return CreateType<T, TK, TL, TM>(item, param1, param2, param3, isLazy, inferType);
         }
 
         /// <summary>
         /// Creates a class from the specified item with a two constructor parameter
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M"></typeparam>
-        /// <typeparam name="N"></typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM"></typeparam>
+        /// <typeparam name="TN"></typeparam>
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <param name="item">The item to load data from</param>
@@ -161,9 +159,9 @@ namespace Glass.Sitecore.Mapper
         /// <returns>
         /// The item as the specified type
         /// </returns>
-        public T CreateClass<T, K, L, M, N>(bool isLazy, bool inferType, Item item, K param1, L param2, M param3, N param4)
+        public T CreateClass<T, TK, TL, TM, TN>(bool isLazy, bool inferType, Item item, TK param1, TL param2, TM param3, TN param4)
         {
-            return CreateType<T, K, L, M, N>(item, param1, param2, param3, param4, isLazy, inferType);
+            return CreateType<T, TK, TL, TM, TN>(item, param1, param2, param3, param4, isLazy, inferType);
         }
 
         /// <summary>

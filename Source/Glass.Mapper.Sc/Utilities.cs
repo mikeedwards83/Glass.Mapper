@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// Class Utilities
     /// </summary>
-    public class Utilities : Glass.Mapper.Utilities
+    public class Utilities : Mapper.Utilities
     {
         /// <summary>
         /// Converts a NameValueCollection in to HTML attributes
@@ -55,6 +55,33 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
+        {
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), new Database("master"), name);
+        }
+
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")
+        {
+            var id = new ID(Guid.NewGuid());
+            var language = Language.Current;
+            var version = Sitecore.Data.Version.Latest;
+
+            var itemDefinition = new ItemDefinition(id, name, templateId, ID.Null);
+            var fieldList = new FieldList();
+
+            if (fields != null)
+            {
+                foreach (var fieldId in fields.Keys)
+                {
+                    fieldList.Add(new ID(fieldId), fields[fieldId]);
+                }
+            }
+
+            var itemData = new ItemData(itemDefinition, language, version, fieldList);
+            var item = new Item(id, itemData, database);
+            return item;
+        }
+
         /// <summary>
         /// Creates the URL options.
         /// </summary>
@@ -69,7 +96,7 @@ namespace Glass.Mapper.Sc
             var t = (urlOptions & SitecoreInfoUrlOptions.AddAspxExtension);
 
             Func<SitecoreInfoUrlOptions, bool> flagCheck =
-                (SitecoreInfoUrlOptions option) => (urlOptions & option) == option;
+                option => (urlOptions & option) == option;
 
 
             //check for any default overrides
@@ -143,7 +170,7 @@ namespace Glass.Mapper.Sc
         /// <returns>Field.</returns>
         public static Field GetField(Item item, ID fieldId, string fieldName = "")
         {
-            Field field = null;
+            Field field;
             if (ID.IsNullOrEmpty(fieldId))
             {
                 field = item.Fields[fieldName];
@@ -210,7 +237,7 @@ namespace Glass.Mapper.Sc
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => Utilities.GetLanguageItem(x, language)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language)).Where(x => x != null);
         }
     }
 }
