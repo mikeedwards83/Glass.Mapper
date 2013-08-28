@@ -42,7 +42,11 @@ title: Tutorial 24 - TDS Code Generation
 <ul>
     <li>
         <a href="https://raw.github.com/mikeedwards83/tds-codegen/master/Sitecore.Master/Code%20Generation%20Templates/Helpers.tt">Helpers.tt</a>
+    </li>
+    <li>    
         <a href="https://raw.github.com/mikeedwards83/tds-codegen/master/Sitecore.Master/Code%20Generation%20Templates/GlassV3Header.tt">GlassV3Header.tt</a>
+    </li>
+    <li>
         <a href="https://raw.github.com/mikeedwards83/tds-codegen/master/Sitecore.Master/Code%20Generation%20Templates/GlassV3Item.tt">GlassV3Item.tt</a>
     </li>
 </ul>
@@ -59,11 +63,11 @@ title: Tutorial 24 - TDS Code Generation
 </p>
 <img src="tutorial24.templateadded.PNG"/>
 <p>
-    TDS will automatically update and generate a new code file which will contain the generated classes.
+    When you add items to TDS it will automatically update and generate a new code file with the classes based on the templates currently in the project.
 </p>
 <h2>What gets generated?</h2>
 <p>
-    The code generation will generate a class and an interface for each template in Sitecore. The interface generated will contain all the fields
+    The code generation will create a class and an interface for each template in Sitecore. The interface generated will contain all the fields
     for the template:
 </p>
 <pre class="csharp">
@@ -143,7 +147,7 @@ title: Tutorial 24 - TDS Code Generation
 </p>
 <h3>The IGlassBase and GlassBase</h3>
 <p>
-    The IGlassBase and the GlassBase class inherited by all interfaces and classes respectively, it contains the following basic properties:
+    The IGlassBase interface and the GlassBase class are inherited by all interfaces and classes respectively, it contains the following basic properties:
 </p>
 <ul>
     <li>Id - The ID for the item</li>
@@ -174,7 +178,7 @@ title: Tutorial 24 - TDS Code Generation
 <h2>Property Return Types</h2>
 <p>
     By default the return type of a property is determined by a switch statement that can be found in the GlassV3Item.tt file, this will work most of 
-    the time but it might not return the type you want. For example you may have a MultiList field by default the code generation template will return
+    the time but it might not return the type you want. For example you may have a MultiList field, by default the code generation template will return
     this field as an enumerable of guids:
 </p>
 <pre class="csharp">
@@ -211,4 +215,5 @@ title: Tutorial 24 - TDS Code Generation
 		[SitecoreField(Test.DroplinkFieldName)]
 		public virtual Sample_Item Droplink  {get; set;}
 </pre>
+
 
