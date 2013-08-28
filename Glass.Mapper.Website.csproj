@@ -72,6 +72,10 @@
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\GlassFolder.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\Nuget.PNG" />
     <Content Include="docs\tutorial\Glass.Mapper.Sc.Razor\tutorial01\tutorial01.html" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.codegenproperties.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.droplinkcodedata.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.general.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.html" />
     <Content Include="docs\tutorial\sitecore\tutorial23\tutorial23.fields.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial23\tutorial23.html" />
     <Content Include="docs\tutorial\sitecore\tutorial22\tutorial22.html" />
@@ -90,6 +94,13 @@
     <Content Include="docs\tutorial\sitecore\tutorial21\tutorial21.fields.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial21\tutorial21.html" />
     <Content Include="docs\tutorial\sitecore\tutorial21\tutorial21.vsintelli.png" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.multilistcustomdata.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.multilisttds.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.solution.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.tdscodegennode.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.templateadded.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.ttfiles.PNG" />
+    <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.ttfilesconfig.PNG" />
     <Content Include="images\blog\2013-04-28Sitecore7Search.PNG" />
     <Content Include="images\blog\2013-06-15-ImageCopy-Small.PNG" />
     <Content Include="images\blog\2013-06-15-ImageCopy.PNG" />
