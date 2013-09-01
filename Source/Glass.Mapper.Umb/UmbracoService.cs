@@ -146,7 +146,7 @@ namespace Glass.Mapper.Umb
             var creationContext = new UmbracoTypeCreationContext
                 {
                     UmbracoService = this,
-                    RequestedType = type,
+                    RequestedType = new Type[]{type},
                     ConstructorParameters = constructorParameters,
                     Content = content,
                     InferType = inferType,

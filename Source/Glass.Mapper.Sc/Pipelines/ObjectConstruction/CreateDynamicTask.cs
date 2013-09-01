@@ -17,6 +17,7 @@
 //-CRE-
 
 using System.Dynamic;
+using System.Linq;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Dynamic;
 
@@ -35,7 +36,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
         {
             if (args.Result == null)
             {
-                if (args.Configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider))) 
+                if (args.Configurations.First().Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider))) 
                 {
                     SitecoreTypeCreationContext typeContext =
                       args.AbstractTypeCreationContext as SitecoreTypeCreationContext;

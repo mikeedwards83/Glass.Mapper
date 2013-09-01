@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System.Linq;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
@@ -34,9 +35,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         {
             if (args.Result == null)
             {
-                var loader = new OnDemandLoader<T>(args.AbstractTypeCreationContext.RequestedType);
+                var loader = new OnDemandLoader<T>(args.AbstractTypeCreationContext.RequestedType.First());
                 args.Context.Load(loader);
-                args.Result = args.Context[args.AbstractTypeCreationContext.RequestedType];
+                args.Result = args.Context[args.AbstractTypeCreationContext.RequestedType.First()];
             }
 
         }

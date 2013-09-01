@@ -354,7 +354,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
-            creationContext.RequestedType = type;
+            creationContext.RequestedType = new Type[] {type};
             creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;

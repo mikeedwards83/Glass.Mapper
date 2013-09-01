@@ -48,7 +48,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
 
                     var types = configs.Where(x => x.TemplateId == templateId);
-                    args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                    args.Result = types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type));
                 }
             }
         }
