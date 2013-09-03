@@ -743,9 +743,24 @@ namespace Glass.Mapper.Sc
         /// The Sitecore item as the specified type
         /// </returns>
         T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
+         
+
+        #endregion
+
+        #region GetItemInterfaces
+
+        T GetItemInterfaces<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version,
+            bool isLazy = false, bool inferType = false)    where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+
 
 
         #endregion
+
 
         #region Move
 

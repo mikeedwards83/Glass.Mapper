@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Generic;
 
 namespace Glass.Mapper
 {
@@ -40,7 +41,7 @@ namespace Glass.Mapper
         /// Gets or sets the types requested.
         /// </summary>
         /// <value>The types requested.</value>
-        public Type [] RequestedType { get; set; }
+        public IEnumerable<Type> RequestedType { get; set; }
         /// <summary>
         /// Gets or sets the constructor parameters.
         /// </summary>
