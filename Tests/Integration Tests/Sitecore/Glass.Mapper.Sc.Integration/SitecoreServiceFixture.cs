@@ -1105,7 +1105,7 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-          #region Method - Create
+        #region Method - Create
 
         [Test]
         public void Create_CreatesANewItem()
@@ -1280,6 +1280,362 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region GetItemWithInterfaces
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId5Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour, IFive>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+                var objFive = (IFive)result;
+                Assert.AreEqual(expectedDate, objFive.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId4Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015,05,15,15,45,48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId3Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId2Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath5Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour, IFive>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+                var objFive = (IFive)result;
+                Assert.AreEqual(expectedDate, objFive.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath4Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath3Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath2Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+            }
+        }
+        #endregion
+
+    
+
+        #region OnDemand Mapping
+
+        [Test]
+        public void OnDemandMapping_AutomaticallyMapsProperties()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
+            DateTime date = new DateTime(2013,04,03,12,15,10);
+
+            var item = db.GetItem(path);
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var service = new SitecoreService(db, context); 
+
+            //Act
+            var result = service.GetItem<OnDemandMapping>(path);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(text, result.StringField);
+            Assert.AreEqual(date, result.DateField);
+
+
+        }
+
+        #endregion
+
         #region Stubs
 
         [SitecoreType]
@@ -1386,40 +1742,26 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
-        #endregion
-
-        #region OnDemand Mapping
-
-        [Test]
-        public void OnDemandMapping_AutomaticallyMapsProperties()
+        public interface IOne
         {
-            //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            string text = "test text 1";
-            string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
-            DateTime date = new DateTime(2013,04,03,12,15,10);
-
-            var item = db.GetItem(path);
-            using (new ItemEditing(item, true))
-            {
-                item["StringField"] = text;
-                item["DateField"] = date.ToString("yyyyMMddThhmmss");
-            }
-
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            var service = new SitecoreService(db, context); 
-
-            //Act
-            var result = service.GetItem<OnDemandMapping>(path);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(text, result.StringField);
-            Assert.AreEqual(date, result.DateField);
-
-
+            string StringField { get; set; }
         }
-
+        public interface ITwo
+        {
+            DateTime DateField { get; set; }
+        }
+        public interface IThree
+        {
+            string StringField { get; set; }
+        }
+        public interface IFour
+        {
+            string StringField { get; set; }
+        }
+        public interface IFive
+        {
+            DateTime DateField { get; set; }
+        }
         #endregion
     }
 }

@@ -747,17 +747,58 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-        #region GetItemInterfaces
+        #region GetItemWithInterfaces
 
-        T GetItemInterfaces<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version,
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(Guid id, Language language=  null, Sitecore.Data.Version version = null,
             bool isLazy = false, bool inferType = false)    where T : class
             where TK : class
             where TL : class
             where TM : class
             where TN : class;
 
+        T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
 
+        T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
 
+        T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Sitecore.Data.Version version = null,
+    bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
+
+        T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
+
+        T GetItemWithInterfaces<T, TK>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
 
         #endregion
 

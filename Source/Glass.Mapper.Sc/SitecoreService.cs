@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Version = Sitecore.Data.Version;
 
@@ -1060,14 +1061,138 @@ namespace Glass.Mapper.Sc
         #endregion
 
 
-        #region  GetItemInterfaces
+        #region  GetItemWithInterfaces
 
-        public T GetItemInterfaces<T, TK, TL, TM, TN>(Guid id, Language language, Version version, bool isLazy = false,
+        public T GetItemWithInterfaces<T, TK, TL, TM, TN>(Guid id, Language language = null, Version version = null, bool isLazy = false,
           bool inferType = false) where T : class where TK: class where TL:class where TM: class where TN: class
         {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+
             Item item = Database.GetItem(new ID(id), language, version);
             return (T) CreateType(
                 new Type[] {typeof (T), typeof (TK), typeof (TL), typeof (TM), typeof (TN)},
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                                  bool inferType = false) where T : class where TK : class where TL : class where TM : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM)},
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                              bool inferType = false) where T : class where TK : class where TL : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                          bool inferType = false) where T : class where TK : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Version version = null, bool isLazy = false,
+  bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM), typeof(TN) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                                  bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                              bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                          bool inferType = false)
+            where T : class
+            where TK : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK) },
                 item,
                 isLazy,
                 inferType,

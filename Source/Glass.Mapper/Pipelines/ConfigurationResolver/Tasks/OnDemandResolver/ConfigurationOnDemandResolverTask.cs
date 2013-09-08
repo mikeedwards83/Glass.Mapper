@@ -35,9 +35,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         {
             if (args.Result == null)
             {
-                var loader = new OnDemandLoader<T>(args.AbstractTypeCreationContext.RequestedType.First());
+                var loader = new OnDemandLoader<T>(args.RequestedType);
                 args.Context.Load(loader);
-                args.Result = args.Context[args.AbstractTypeCreationContext.RequestedType.First()];
+                args.Result = args.Context[args.RequestedType];
             }
 
         }
