@@ -176,7 +176,7 @@ title: Tutorial 19 - Custom Data Handlers
 			var config = new Config();
 
             container.Register(
-              Component.For &lt; AbstractDataMapper&gt;().ImplementedBy&lt;TweetsDataHandler&gt;()
+              Component.For &lt; AbstractDataMapper&gt;().ImplementedBy&lt;TweetsDataHandler&gt;().LifeStyle.Transient
               );
 
 			container.Install(new SitecoreInstaller(config));
