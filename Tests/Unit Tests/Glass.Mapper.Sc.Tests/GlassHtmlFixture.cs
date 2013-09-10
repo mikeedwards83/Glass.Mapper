@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.RenderField;
@@ -148,6 +149,126 @@ namespace Glass.Mapper.Sc.Tests
             Assert.AreEqual(expected, result);
         }
 
+
+        #endregion
+
+        #region Method - RenderLink
+
+        [Test]
+        public void RenderLink_LinkWithNoAttributes()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+
+            var model = new {Link = link};
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_LinkWithAllSetProperties()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' class='myclass' target='_blank' title='mytitle' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+            link.Anchor = "aAnchor";
+            link.Class = "myclass";
+            link.Query = "temp=fred";
+            link.Target = "_blank";
+            link.Title = "mytitle";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_LinkWithMixedPropertiesAndParameters()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred#anOther' class='myclass' target='_blank' title='mytitle' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+            link.Anchor = "aAnchor";
+            link.Class = "myclass";
+            link.Query = "temp=fred";
+            link.Target = "_blank";
+            link.Title = "mytitle";
+
+            var model = new { Link = link };
+            var parameters = new NameValueCollection {{"anchor", "anOther"}};
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, parameters);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_LinkWithClassAndQuery()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+            link.Query = "temp=fred";
+
+            var model = new { Link = link };
+            var parameters = new NameValueCollection { { "class", "myclass" } };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, parameters);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_LinkWithCustomContent()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >my other content</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+            link.Query = "temp=fred";
+
+            var model = new { Link = link };
+            var parameters = new NameValueCollection { { "class", "myclass" } };
+            var content = "my other content";
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, parameters, contents: content);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
 
         #endregion
 

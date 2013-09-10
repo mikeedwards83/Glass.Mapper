@@ -36,6 +36,7 @@ using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.SecurityModel;
+using Sitecore.Shell.Framework.Commands.TemplateBuilder;
 using Sitecore.Text;
 using Sitecore.Web;
 
@@ -385,22 +386,34 @@ namespace Glass.Mapper.Sc
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new NameValueCollection();
 
-            string format = "<a href='{0}{1}' title='{2}' model='{3}' class='{4}' {5}>{6}";
 
-            string cls = attributes.AllKeys.Any(x => x == "class") ? attributes["class"] : link.Class;
-            string anchor = link.Anchor.IsNullOrEmpty() ? "" : "#" + link.Anchor;
-            string target = attributes.AllKeys.Any(x => x == "model") ? attributes["model"] : link.Target;
-
+            string format = "<a href='{0}{1}' {2}>{3}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
+
+            Func<string, Func<string>, string> getValue = (key, func) =>
+            {
+                var value = attributes.AllKeys.Any(x => x == key) ? attributes[key] : func();
+                attributes.Remove(key);
+                return value;
+            };
+
+            UrlBuilder builder = new UrlBuilder(link.Url);
+
+            var query = getValue("query", () => link.Query);
+            var anchor = getValue("anchor", () => link.Anchor);
+
+
+
+            if(query.IsNotNullOrEmpty())
+                builder.AddQueryString(query);
+            
             AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "model", link.Target);
+            AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            attributes.Remove("href");
-
-            string firstPart = format.Formatted(link.Url, anchor, link.Title, target, cls, Utilities.ConvertAttributes(attributes), contents);
+            string firstPart = format.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#"+anchor, Utilities.ConvertAttributes(attributes), contents);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
