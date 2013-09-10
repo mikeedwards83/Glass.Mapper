@@ -19,13 +19,16 @@
 
 using System;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Web;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data;
@@ -33,6 +36,7 @@ using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.SecurityModel;
+using Sitecore.Shell.Framework.Commands.TemplateBuilder;
 using Sitecore.Text;
 using Sitecore.Web;
 
@@ -214,7 +218,7 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// The image tag format
         /// </summary>
-        public const string ImageTagFormat = "<img src='{0}' {1} />";
+        public const string ImageTagFormat = "<img src='{0}' {1}/>";
      
        /// <summary>
        /// Renders an image allowing simple page editor support
@@ -382,22 +386,34 @@ namespace Glass.Mapper.Sc
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new NameValueCollection();
 
-            string format = "<a href='{0}{1}' title='{2}' model='{3}' class='{4}' {5}>{6}";
 
-            string cls = attributes.AllKeys.Any(x => x == "class") ? attributes["class"] : link.Class;
-            string anchor = link.Anchor.IsNullOrEmpty() ? "" : "#" + link.Anchor;
-            string target = attributes.AllKeys.Any(x => x == "model") ? attributes["model"] : link.Target;
-
+            string format = "<a href='{0}{1}' {2}>{3}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
+
+            Func<string, Func<string>, string> getValue = (key, func) =>
+            {
+                var value = attributes.AllKeys.Any(x => x == key) ? attributes[key] : func();
+                attributes.Remove(key);
+                return value;
+            };
+
+            UrlBuilder builder = new UrlBuilder(link.Url);
+
+            var query = getValue("query", () => link.Query);
+            var anchor = getValue("anchor", () => link.Anchor);
+
+
+
+            if(query.IsNotNullOrEmpty())
+                builder.AddQueryString(query);
+            
             AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "model", link.Target);
+            AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            attributes.Remove("href");
-
-            string firstPart = format.Formatted(link.Url, anchor, link.Title, target, cls, Utilities.ConvertAttributes(attributes), contents);
+            string firstPart = format.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#"+anchor, Utilities.ConvertAttributes(attributes), contents);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
@@ -661,9 +677,14 @@ namespace Glass.Mapper.Sc
         /// <param name="image">The image to render</param>
         /// <param name="attributes">Additional attributes to add. Do not include alt or src</param>
         /// <returns>An img HTML element</returns>
-        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
+        [Obsolete(
+            "Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)"
+            )]
         public virtual string RenderImage(Fields.Image image, NameValueCollection attributes)
         {
+
+            var urlParams = new NameValueCollection();
+            var htmlParams = new NameValueCollection();
 
             /*
              * ME - This method is used to render images rather than going back to the fieldrender
@@ -674,34 +695,88 @@ namespace Glass.Mapper.Sc
 
             if (attributes == null) attributes = new NameValueCollection();
 
-
-            var builder = new UrlBuilder(image.Src);
-
-            //append to url values
-            if (attributes[ImageWidth].IsNotNullOrEmpty())
-                attributes.Add(ImageParameters.WIDTH, attributes[ImageWidth]);
-            else
-                attributes.Add(ImageParameters.WIDTH, image.Width.ToString());
-
-            if (attributes[ImageHeight].IsNotNullOrEmpty())
-                attributes.Add(ImageParameters.HEIGHT, attributes[ImageHeight]);
-            else
-                attributes.Add(ImageParameters.HEIGHT, image.Height.ToString());
+            Action<string> remove = key => attributes.Remove(key);
+            Action<string> url = key =>
+            {
+                urlParams.Add(key, attributes[key]);
+                remove(key);
+            };
+            Action<string> html = key =>
+            {
+                htmlParams.Add(key, attributes[key]);
+                remove(key);
+            };
+            Action<string> both = key =>
+            {
+                htmlParams.Add(key, attributes[key]);
+                urlParams.Add(key, attributes[key]);
+                remove(key);
+            };
 
             foreach (var key in attributes.AllKeys)
             {
-                if (key == "alt" || key == "class" || key == "style")
-                    continue;
+                switch (key)
+                {
+                    case ImageParameters.BORDER:
+                    case ImageParameters.ALT:
+                    case ImageParameters.HSPACE:
+                    case ImageParameters.VSPACE:
+                    case ImageParameters.CLASS:
+                        html(key);
+                        break;
+                    case ImageParameters.OUTPUT_METHOD:
+                    case ImageParameters.ALLOW_STRETCH:
+                    case ImageParameters.IGNORE_ASPECT_RATIO:
+                    case ImageParameters.SCALE:
+                    case ImageParameters.MAX_WIDTH:
+                    case ImageParameters.MAX_HEIGHT:
+                    case ImageParameters.THUMBNAIL:
+                    case ImageParameters.BACKGROUND_COLOR:
+                    case ImageParameters.DATABASE:
+                    case ImageParameters.LANGUAGE:
+                    case ImageParameters.VERSION:
+                    case ImageParameters.DISABLE_MEDIA_CACHE:
+                        url(key);
+                        break;
+                    case ImageParameters.WIDTH:
+                    case ImageParameters.HEIGHT:
+                        both(key);
+                        break;
+                    default:
+                        both(key);
+                        break;
+                }
+            }
 
-                builder[key] = attributes[key];
+            var builder = new UrlBuilder(image.Src);
+
+            foreach (var key in urlParams.AllKeys)
+            {
+                builder[key] = urlParams[key];
             }
 
             //should there be some warning about these removals?
-            AttributeCheck(attributes, "class", image.Class);
-            AttributeCheck(attributes, "alt", image.Alt);
+            AttributeCheck(htmlParams, ImageParameters.CLASS, image.Class);
+            AttributeCheck(htmlParams, ImageParameters.ALT, image.Alt);
+            AttributeCheck(htmlParams, ImageParameters.BORDER, image.Border);
+            if(image.HSpace >0)
+                AttributeCheck(htmlParams, ImageParameters.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
+            if(image.VSpace >0)
+                AttributeCheck(htmlParams, ImageParameters.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
 
+            if (htmlParams.AllKeys.Any(x => x == ImageParameters.HEIGHT))
+            {
+                htmlParams["height"] = htmlParams[ImageParameters.HEIGHT];
+                htmlParams.Remove(ImageParameters.HEIGHT);
+            }
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(attributes));
+            if (htmlParams.AllKeys.Any(x => x == ImageParameters.WIDTH))
+            {
+                htmlParams["width"] = htmlParams[ImageParameters.WIDTH];
+                htmlParams.Remove(ImageParameters.WIDTH);
+            }
+
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
         }
 
         #endregion
