@@ -674,7 +674,6 @@ namespace Glass.Mapper.Sc
 
             if (attributes == null) attributes = new NameValueCollection();
 
-
             var builder = new UrlBuilder(image.Src);
 
             //append to url values
