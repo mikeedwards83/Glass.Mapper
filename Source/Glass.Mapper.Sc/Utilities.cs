@@ -170,6 +170,9 @@ namespace Glass.Mapper.Sc
         /// <returns>Field.</returns>
         public static Field GetField(Item item, ID fieldId, string fieldName = "")
         {
+            if(item == null)
+                throw new NullReferenceException("Item is null");
+
             Field field;
             if (ID.IsNullOrEmpty(fieldId))
             {
