@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Generic;
 
 namespace Glass.Mapper
 {
@@ -37,10 +38,10 @@ namespace Glass.Mapper
         /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy { get; set; }
         /// <summary>
-        /// Gets or sets the type of the requested.
+        /// Gets or sets the types requested.
         /// </summary>
-        /// <value>The type of the requested.</value>
-        public Type RequestedType { get; set; }
+        /// <value>The types requested.</value>
+        public IEnumerable<Type> RequestedType { get; set; }
         /// <summary>
         /// Gets or sets the constructor parameters.
         /// </summary>

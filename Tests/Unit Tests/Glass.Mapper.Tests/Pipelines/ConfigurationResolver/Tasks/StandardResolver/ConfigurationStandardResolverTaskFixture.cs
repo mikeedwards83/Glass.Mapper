@@ -55,8 +55,8 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
 
             var args = new ConfigurationResolverArgs(context, new StubAbstractTypeCreationContext()
                                                                   {
-                                                                      RequestedType = type
-                                                                  } );
+                                                                      RequestedType =new Type[]{ type}
+                                                                  } , type);
 
             var task = new ConfigurationStandardResolverTask();
 

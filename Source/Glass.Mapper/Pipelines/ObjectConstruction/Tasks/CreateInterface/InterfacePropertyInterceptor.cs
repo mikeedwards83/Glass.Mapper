@@ -17,6 +17,7 @@
 //-CRE-
 
 using System.Collections.Generic;
+using System.Linq;
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
@@ -46,11 +47,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         /// <exception cref="Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
         public void Intercept(IInvocation invocation)
         {
+            var config = _args.Configurations.First();
+
             //do initial gets
             if (!_isLoaded)
             {
                 _values = new Dictionary<string, object>();
-                var config = _args.Configuration;
                 var mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
                 foreach (var property in config.Properties)
@@ -79,7 +81,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
                         _values[name] = invocation.Arguments[0];
                     }
                     else
-                        throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(method, name, _args.Configuration.Type.FullName));
+                        throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(
+                            method, name, config.Type.FullName));
                 }
             }
         }

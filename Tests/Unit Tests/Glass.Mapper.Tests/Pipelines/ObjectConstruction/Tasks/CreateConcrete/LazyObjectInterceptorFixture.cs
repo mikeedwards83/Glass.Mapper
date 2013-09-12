@@ -42,7 +42,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var args = new ObjectConstructionArgs(
                 null,
                 typeContext, 
-                config,
+                new []{config},
                 service
                 );
 

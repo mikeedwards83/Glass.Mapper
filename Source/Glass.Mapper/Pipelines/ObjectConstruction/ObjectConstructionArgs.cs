@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
@@ -36,7 +37,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// The configuration to use to load the object
         /// </summary>
         /// <value>The configuration.</value>
-        public AbstractTypeConfiguration Configuration { get; private set; }
+        public IEnumerable<AbstractTypeConfiguration> Configurations { get; private set; }
 
         /// <summary>
         /// Gets the service.
@@ -59,13 +60,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// <param name="service">The service.</param>
         public ObjectConstructionArgs(
             Context context, 
-            AbstractTypeCreationContext abstractTypeCreationContext, 
-            AbstractTypeConfiguration configuration,
+            AbstractTypeCreationContext  abstractTypeCreationContext,
+            IEnumerable<AbstractTypeConfiguration> configurations,
             IAbstractService service)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
-            Configuration = configuration;
+            Configurations = configurations;
             Service = service;
         }
 

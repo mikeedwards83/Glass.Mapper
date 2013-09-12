@@ -26,7 +26,9 @@ using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Globalization;
+using Version = Sitecore.Data.Version;
 
 namespace Glass.Mapper.Sc
 {
@@ -344,7 +346,13 @@ namespace Glass.Mapper.Sc
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
         /// <exception cref="System.NotSupportedException">Maximum number of constructor parameters is 4</exception>
-        public object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
+        public object CreateType(Type type, Item item, bool isLazy, bool inferType,
+            params object[] constructorParameters)
+        {
+            return CreateType(new[] {type}, item, isLazy, inferType, constructorParameters);
+        }
+
+        public object CreateType(IEnumerable<Type> types, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
         {
             if (item == null || (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled)) return null;
 
@@ -354,7 +362,7 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
-            creationContext.RequestedType = type;
+            creationContext.RequestedType = types;
             creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;
@@ -1049,7 +1057,147 @@ namespace Glass.Mapper.Sc
             Item item = Database.GetItem(new ID(id), language, version);
             return CreateType<T, TK, TL, TM, TN>(item, param1, param2, param3, param4, isLazy, inferType);
         }
+        
+        #endregion
 
+
+        #region  GetItemWithInterfaces
+
+        public T GetItemWithInterfaces<T, TK, TL, TM, TN>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+          bool inferType = false) where T : class where TK: class where TL:class where TM: class where TN: class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T) CreateType(
+                new Type[] {typeof (T), typeof (TK), typeof (TL), typeof (TM), typeof (TN)},
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                                  bool inferType = false) where T : class where TK : class where TL : class where TM : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM)},
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                              bool inferType = false) where T : class where TK : class where TL : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Version version = null, bool isLazy = false,
+                                          bool inferType = false) where T : class where TK : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(new ID(id), language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Version version = null, bool isLazy = false,
+  bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM), typeof(TN) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                                  bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                              bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
+
+        public T GetItemWithInterfaces<T, TK>(string path, Language language = null, Version version = null, bool isLazy = false,
+                                          bool inferType = false)
+            where T : class
+            where TK : class
+        {
+            language = language ?? Language.Current;
+            version = version ?? Version.Latest;
+
+            Item item = Database.GetItem(path, language, version);
+            return (T)CreateType(
+                new Type[] { typeof(T), typeof(TK) },
+                item,
+                isLazy,
+                inferType,
+                null);
+        }
 
         #endregion
 

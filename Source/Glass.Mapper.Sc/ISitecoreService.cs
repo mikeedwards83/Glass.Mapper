@@ -743,9 +743,65 @@ namespace Glass.Mapper.Sc
         /// The Sitecore item as the specified type
         /// </returns>
         T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
-
+         
 
         #endregion
+
+        #region GetItemWithInterfaces
+
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(Guid id, Language language=  null, Sitecore.Data.Version version = null,
+            bool isLazy = false, bool inferType = false)    where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
+
+        T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
+
+        T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Sitecore.Data.Version version = null,
+    bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
+
+        T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
+
+        T GetItemWithInterfaces<T, TK>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
+
+        #endregion
+
 
         #region Move
 
