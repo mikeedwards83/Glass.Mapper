@@ -29,7 +29,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// Interface ISitecoreService
     /// </summary>
-    public interface ISitecoreService
+    public interface ISitecoreService : IAbstractService
     {
         /// <summary>
         /// Gets the database.
