@@ -64,7 +64,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             task.Execute(args);
 
             //Assert
-            Assert.AreEqual(configuration, args.Result);
+            Assert.AreEqual(configuration, args.Result.First());
 
 
         }
