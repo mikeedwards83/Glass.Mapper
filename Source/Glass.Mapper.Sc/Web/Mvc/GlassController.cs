@@ -10,7 +10,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
 {
     public class GlassController : SitecoreController
     {
-        
+        private readonly ISitecoreContext _sitecoreContext;
+        private readonly IGlassHtml _glassHtml;
+
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
          
@@ -18,14 +20,19 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             try
             {
-                SitecoreContext =
-                    new SitecoreContext(Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem.Database);
+                SitecoreContext = new SitecoreContext(Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem.Database);
                 GlassHtml = new GlassHtml(SitecoreContext);
             }
             catch (Exception ex)
             {
                 Sitecore.Diagnostics.Log.Error("Failed to create SitecoreContext", ex, this);
             }
+        }
+
+        protected GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml)
+        {
+            _sitecoreContext = sitecoreContext;
+            _glassHtml = glassHtml;
         }
 
         public virtual T GetRenderingParameters<T>() where T:class
