@@ -10,8 +10,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
 {
     public class GlassController : SitecoreController
     {
-        private readonly ISitecoreContext _sitecoreContext;
-        private readonly IGlassHtml _glassHtml;
 
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
@@ -31,8 +29,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         protected GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml)
         {
-            _sitecoreContext = sitecoreContext;
-            _glassHtml = glassHtml;
+            SitecoreContext = sitecoreContext;
+            GlassHtml = glassHtml;
         }
 
         public virtual T GetRenderingParameters<T>() where T:class
