@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using Sitecore.Data.Items;
 using Sitecore.Mvc.Controllers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 {
     public class GlassController : SitecoreController
     {
+        
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
          
@@ -26,7 +28,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
         }
 
-        public T GetRenderingParameters<T>() where T:class
+        public virtual T GetRenderingParameters<T>() where T:class
         {
             var parameters = new NameValueCollection();
             foreach (var pair in Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.Parameters)
@@ -35,6 +37,18 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
-        } 
+        }
+
+        public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+
+            if (Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem == null)
+                return SitecoreContext.GetCurrentItem<T>();
+
+            return SitecoreContext.CreateType<T>(
+                Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem,
+                isLazy,
+                inferType);
+        }
     }
 }
