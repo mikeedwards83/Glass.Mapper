@@ -177,7 +177,10 @@ namespace Glass.Mapper.Sc.Razor
                         cached.ViewContent = finalview;
 
                         var template = RazorEngine.Razor.CreateTemplate(cached.ViewContent);
-                        cached.Type = template.GetType().BaseType.GetGenericArguments()[0];
+                        
+                        cached.Type = template.GetType().BaseType.IsGenericType
+                            ? template.GetType().BaseType.GetGenericArguments()[0]
+                            : template.GetType().BaseType;
                         cached.Name = viewPath;
                         _viewCache[viewPath] = cached;
                     }
