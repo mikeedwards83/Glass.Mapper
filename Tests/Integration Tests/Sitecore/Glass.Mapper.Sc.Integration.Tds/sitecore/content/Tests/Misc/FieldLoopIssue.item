@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {6603A3A7-C1E2-42FE-9DC1-34367D3F6187}
+database: master
+path: /sitecore/content/Tests/Misc/FieldLoopIssue
+parent: {A112E4F1-D0E0-475E-AB8E-92F399989696}
+name: FieldLoopIssue
+master: {00000000-0000-0000-0000-000000000000}
+template: {213C3018-8914-4774-8B01-F7BB20E6F092}
+templatekey: MiscTemplate
+
+----version----
+language: en
+version: 1
+revision: ffed4181-c7d4-439b-b945-fd78f945ff92
+
+----field----
+field: {924EE563-AA04-4EBE-8DE1-57B1E5A49659}
+name: RelatedItems
+key: relateditems
+content-length: 36
+
+6603a3a7-c1e2-42fe-9dc1-34367d3f6187
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130926T140621
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+ffed4181-c7d4-439b-b945-fd78f945ff92
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130927T072001:635158632018712822
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 17
+
+default\Anonymous
