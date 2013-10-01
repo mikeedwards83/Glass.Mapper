@@ -196,6 +196,37 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(expected, value);
         }
 
+        [Test]
+        public void MapToProperty_SitecoreInfoTypeBaseTemplateIds_ReturnsBaseTemplateIds()
+        {
+            //Assign
+            var type = SitecoreInfoType.BaseTemplateIds;
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            config.PropertyInfo = typeof(Stub).GetProperty("BaseTemplateIds");
+
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+            var expected = item.TemplateID;
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+            //Act
+            IEnumerable<ID> results;
+            using (new SecurityDisabler())
+            {
+                results = mapper.MapToProperty(dataContext) as IEnumerable<ID>;
+            }
+
+            //Assert
+            Assert.AreEqual(15, results.Count());
+            Assert.IsTrue(results.All(x=>x!= item.TemplateID));
+        }
+
         #endregion
 
         #region Method - MapToCms
@@ -277,6 +308,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public class Stub
         {
             public ID TemplateId { get; set; }
+            public IEnumerable<ID> BaseTemplateIds { get; set; }
         }
 
         #endregion

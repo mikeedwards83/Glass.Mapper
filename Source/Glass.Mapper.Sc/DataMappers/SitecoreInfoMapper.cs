@@ -22,6 +22,8 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data.Managers;
+using Sitecore.Data.Templates;
 using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.DataMappers
@@ -134,6 +136,12 @@ namespace Glass.Mapper.Sc.DataMappers
                     return item.Version.Number;
                 case SitecoreInfoType.Language:
                     return item.Language;  
+                case SitecoreInfoType.BaseTemplateIds:
+                    Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
+                    if (scConfig.PropertyInfo != null &&
+                        scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<Sitecore.Data.ID>))
+                        return template.GetBaseTemplates().Select(x=>x.ID);
+                    return template.GetBaseTemplates().Select(x => x.ID.Guid);
                 default:
                     throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
             }
