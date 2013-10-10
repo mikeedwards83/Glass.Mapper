@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null)
+            if (args.Result != null || args.AbstractTypeCreationContext.IsLazy)
                 return;
 
             if (args.AbstractTypeCreationContext.ConstructorParameters == null || 
