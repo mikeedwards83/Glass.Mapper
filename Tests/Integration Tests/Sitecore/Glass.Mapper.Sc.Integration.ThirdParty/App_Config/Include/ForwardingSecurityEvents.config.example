@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Purpose:
+
+This include file enables and configures the bridge
+to forward changes to users and roles from CMS server group 
+to CD server group.
+
+Configuration properties in this file:
+
+Domains - the list of security domains configured in Sitecore for which events will be forwarded to
+CD server group.
+
+Targets - the list of Sitecore databases to which the events should be forwarded.
+
+
+Security considerations:
+
+For security reasons it is also recommended to set RemoteEvents.ListenToEvents to false for the databases listed
+in the "Targets" setting.
+
+-->
+<configuration>
+  <sitecore>
+  <pipelines>
+    <initialize>
+        <processor type="Sitecore.Eventing.Remote.ForwardSecurityEvents, Sitecore.Kernel">
+
+          <domains hint="list">
+            <extranet>extranet</extranet>
+          </domains>
+
+
+          <targets hint="list">
+            <web>web</web>
+          </targets>
+
+      </processor>
+      </initialize>  
+    </pipelines>
+
+    <databases>
+      <database id="web">
+        <remoteEvents.listenToEvents>false</remoteEvents.listenToEvents>
+      </database>
+    </databases>
+  </sitecore>
+</configuration>
+
