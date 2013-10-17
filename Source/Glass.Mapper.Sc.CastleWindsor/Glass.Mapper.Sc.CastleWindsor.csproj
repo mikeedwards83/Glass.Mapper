@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +68,8 @@
   <ItemGroup>
     <None Include="App_Start\GlassMapperSc.cs.pp" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\LazyObjectInterceptor.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

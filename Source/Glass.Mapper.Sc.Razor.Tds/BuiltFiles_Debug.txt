@@ -73,6 +73,7 @@
 .\Debug\bin\Glass.Mapper.Sites.Sc.dll
 .\Debug\bin\Glass.Mapper.Sites.Sc.pdb
 .\Debug\bin\Glass.Mapper.xml
+.\Debug\bin\HedgehogDevelopment.SitecoreProject.Service.dll
 .\Debug\bin\HtmlAgilityPack.dll
 .\Debug\bin\ITHit.WebDAV.Server.dll
 .\Debug\bin\Lucene.Net.dll
@@ -89,10 +90,16 @@
 .\Debug\bin\Sitecore.Kernel.dll
 .\Debug\bin\Sitecore.Kernel.xml
 .\Debug\bin\Sitecore.Logging.dll
+.\Debug\bin\Sitecore.Mvc.Analytics.dll
+.\Debug\bin\Sitecore.Mvc.DeviceSimulator.dll
+.\Debug\bin\Sitecore.Mvc.dll
+.\Debug\bin\Sitecore.Mvc.ExperienceEditor.dll
 .\Debug\bin\sitecore.nexus.dll
 .\Debug\bin\Sitecore.NVelocity.dll
 .\Debug\bin\Sitecore.Oracle.dll
 .\Debug\bin\Sitecore.Publishing.WebDeploy.dll
+.\Debug\bin\Sitecore.Rocks.Server.dll
+.\Debug\bin\Sitecore.Rocks.Server.HedgehogDevelopment.Diagrammer.dll
 .\Debug\bin\Sitecore.SegmentBuilder.dll
 .\Debug\bin\Sitecore.Shell.MarketingAutomation.dll
 .\Debug\bin\Sitecore.Update.dll
