@@ -33,7 +33,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
             if (args.Result == null && args.Configurations.Count() == 1)
             {
                 var configuration = args.Configurations.First();
-                if(configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
+                if(!configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
                 {
                     //check to see if the type is registered with the SimpleInjector container
                     //if it isn't added it
