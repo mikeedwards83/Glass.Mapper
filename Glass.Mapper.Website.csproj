@@ -108,6 +108,7 @@
     <Content Include="_posts\2013-06-15-SitecoreCopyImages.html" />
     <Content Include="_posts\2013-08-08-MixingInIoc.html" />
     <Content Include="_posts\2013-08-12-RenderingParameters.html" />
+    <Content Include="_posts\2013-09-12-SitecoreUsersVirtualSummit.html" />
     <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
