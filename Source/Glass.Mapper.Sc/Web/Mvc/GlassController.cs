@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using Sitecore.Data.Items;
 using Sitecore.Mvc.Controllers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 {
     public class GlassController : SitecoreController
     {
+
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
          
@@ -16,8 +18,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             try
             {
-                SitecoreContext =
-                    new SitecoreContext(Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem.Database);
+                SitecoreContext = new SitecoreContext(Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem.Database);
                 GlassHtml = new GlassHtml(SitecoreContext);
             }
             catch (Exception ex)
@@ -26,7 +27,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
         }
 
-        public T GetRenderingParameters<T>() where T:class
+        protected GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml)
+        {
+            SitecoreContext = sitecoreContext;
+            GlassHtml = glassHtml;
+        }
+
+        public virtual T GetRenderingParameters<T>() where T:class
         {
             var parameters = new NameValueCollection();
             foreach (var pair in Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.Parameters)
@@ -35,6 +42,18 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
-        } 
+        }
+
+        public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+
+            if (Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem == null)
+                return SitecoreContext.GetCurrentItem<T>();
+
+            return SitecoreContext.CreateType<T>(
+                Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem,
+                isLazy,
+                inferType);
+        }
     }
 }

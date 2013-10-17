@@ -243,6 +243,72 @@ namespace Glass.Mapper.Sc
             return newItem;
         }
 
+        public T Create<T, TK>(TK parent, string newName, Language language = null, bool updateStatistics = true, bool silent = false)
+            where T : class
+            where TK : class
+        {
+
+            SitecoreTypeConfiguration newType;
+            try
+            {
+                newType = GlassContext.GetTypeConfiguration(typeof(T)) as SitecoreTypeConfiguration;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to find configuration for new item type {0}".Formatted(typeof(T).FullName), ex);
+            }
+
+
+            SitecoreTypeConfiguration parentType;
+            try
+            {
+                parentType = GlassContext.GetTypeConfiguration(parent) as SitecoreTypeConfiguration;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(TK).FullName), ex);
+            }
+
+            Item pItem = parentType.ResolveItem(parent, Database);
+
+
+            if (pItem == null)
+                throw new MapperException("Could not find parent item");
+
+            
+            if (newName.IsNullOrEmpty())
+                throw new MapperException("New class has no name");
+
+            ID templateId = newType.TemplateId;
+            ID branchId = newType.BranchId;
+
+            //check that parent item language is equal to new item language, if not change parent to other language
+            if (language != null && pItem.Language != language)
+            {
+                pItem = Database.GetItem(pItem.ID, language);
+            }
+
+            Item item;
+
+            if (!ID.IsNullOrEmpty(branchId))
+            {
+                item = pItem.Add(newName, new BranchId(branchId));
+            }
+            else if (!ID.IsNullOrEmpty(templateId))
+            {
+                item = pItem.Add(newName, new TemplateID(templateId));
+            }
+            else
+            {
+                throw new MapperException("Type {0} does not have a Template ID or Branch ID".Formatted(typeof(T).FullName));
+            }
+
+            if (item == null) throw new MapperException("Failed to create item");
+
+            
+            return this.CreateType<T>(item, false, false);
+        }
+
 
 
         #endregion

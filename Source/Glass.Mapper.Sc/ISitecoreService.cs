@@ -70,6 +70,20 @@ namespace Glass.Mapper.Sc
             where T : class
             where TK : class;
 
+        /// <summary>
+        /// Creates a new Sitecore item.
+        /// </summary>
+        /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the SitecoreClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="TK">The type of the parent item</typeparam>
+        /// <param name="parent">The parent of the new item to create. Must have the SitecoreIdAttribute or fluent equivalent</param>
+        /// <param name="newName">The name of the new item</param>
+        /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
+        /// <param name="silent">If set to true, no events will be raised due to saving.</param>
+        /// <returns>``0.</returns>
+        T Create<T, TK>(TK parent, string newName, Language language = null, bool updateStatistics = true, bool silent = false)
+            where T : class
+            where TK : class;
+
         #endregion
 
         #region  CreateType

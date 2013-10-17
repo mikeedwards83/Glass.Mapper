@@ -23,6 +23,7 @@ using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using NSubstitute;
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -1149,6 +1150,138 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void Create_UsingInterface_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string fieldValue = Guid.NewGuid().ToString();
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = Substitute.For<StubInterfaceAutoMapped>();
+            child.Name = "newChild";
+            child.StringField = fieldValue;
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            Assert.AreEqual(fieldValue, newItem["StringField"]);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_UsingInterfaceAndName_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string name = "newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+            
+            //Act
+            StubClass child = null;
+            using (new SecurityDisabler())
+            {
+               child= service.Create<StubClass, StubClass>(parent, "newChild");
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_UsingInterfaceAndNameAndLanguage_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string name = "newChild";
+            Language lang = LanguageManager.GetLanguage("af-ZA");
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            //Act
+            StubClass child = null;
+            using (new SecurityDisabler())
+            {
+                child = service.Create<StubClass, StubClass>(parent, name, lang);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath, lang);
+
+            Assert.AreEqual(name, child.Name);
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+            Assert.AreEqual(lang, child.Language);
+            Assert.AreEqual(1, newItem.Versions.Count);
+            Assert.AreEqual(1, newItem.Versions.Count);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+       
+        }
+
+        [Test]
         public void Create_AutoMappedClass_CreatesANewItem()
         {
             //Assign
@@ -1740,6 +1873,22 @@ namespace Glass.Mapper.Sc.Integration
             public virtual int Version { get; set; }
 
             public virtual string Name { get; set; }
+        }
+
+        [SitecoreType(TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}", AutoMap = true)]
+        public interface StubInterfaceAutoMapped
+        {
+            Guid Id { get; set; }
+
+            Language Language { get; set; }
+
+            string Path { get; set; }
+
+            int Version { get; set; }
+
+            string Name { get; set; }
+            
+            string StringField { get; set; }
         }
 
         public interface IOne

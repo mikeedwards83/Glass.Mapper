@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver
@@ -35,7 +36,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
         /// Gets or sets the result.
         /// </summary>
         /// <value>The result.</value>
-        public AbstractTypeConfiguration Result { get; set; }
+        public IEnumerable<AbstractTypeConfiguration> Result { get; set; }
 
         public Type RequestedType { get; set; }
 

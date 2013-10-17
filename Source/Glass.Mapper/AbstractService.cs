@@ -130,7 +130,7 @@ namespace Glass.Mapper
                 if(configurationArgs.Result == null)
                     throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.Select(x=>x.FullName).Aggregate((x,y) => x +"; "+y)));
 
-                configs.Add(configurationArgs.Result);
+                configs.AddRange(configurationArgs.Result);
             }
 
             if (!configs.Any())

@@ -37,7 +37,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
             //Assert
             Assert.AreEqual(1, context.TypeConfigurations.Count);
             Assert.IsNotNull(context.TypeConfigurations[typeof(StubClass)]);
-            Assert.AreEqual(typeof(StubClass), args.Result.Type);
+            Assert.AreEqual(typeof(StubClass), args.Result.First().Type);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
             var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
             typeContext.RequestedType = new Type[] {typeof (StubClass)};
             var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType.First());
-            args.Result = new StubTypeConfiguration();
+            args.Result = new[] {new StubTypeConfiguration()};
 
             var task = new ConfigurationOnDemandResolverTask<StubTypeConfiguration>();
 
@@ -102,7 +102,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
 
             //Assert
             Assert.AreEqual(1, context.TypeConfigurations.Count);
-            Assert.IsTrue(argsList.All(x => x.Result.Type == typeof(StubClass)));
+            Assert.IsTrue(argsList.All(x => x.Result.First().Type == typeof(StubClass)));
         }
         #endregion
 
