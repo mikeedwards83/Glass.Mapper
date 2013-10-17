@@ -184,6 +184,9 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
         }
 
+
+       
+        
         #region Stubs
 
         public class StubClass
