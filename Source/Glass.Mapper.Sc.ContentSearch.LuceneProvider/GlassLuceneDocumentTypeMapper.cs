@@ -1,8 +1,7 @@
 ﻿using Castle.DynamicProxy;
-using Glass.Mapper;
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Lucene.Net.Documents;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Common;
@@ -14,16 +13,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-namespace Glass.Mapper.Sc.V7.ContentSearch.DocumentTypeMapper
+
+namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 {
    public class GlassLuceneDocumentTypeMapper : DefaultLuceneDocumentTypeMapper
   {
     private SitecoreContext _sitecoreContext;
-
-    public GlassLuceneDocumentTypeMapper():base()
-    {
-      
-    }
 
     public virtual TElement MapToType<TElement>(Document document, SelectMethod selectMethod, IEnumerable<IFieldQueryTranslator> virtualFieldProcessors, SearchSecurityOptions securityOptions)
     {
@@ -45,6 +40,7 @@ namespace Glass.Mapper.Sc.V7.ContentSearch.DocumentTypeMapper
         IEnumerable<string> documentFieldNames = GetDocumentFieldNames(document);
         TElement instance = this.CreateInstance<TElement>();
         ReadDocumentFields<TElement>(document, documentFieldNames, typeMap, virtualFieldProcessors, instance);
+
         this.SetupProxy<TElement>(documentFieldNames ?? Enumerable.Select<IFieldable, string>((IEnumerable<IFieldable>) document.GetFields(), (Func<IFieldable, string>) (x => x.Name.ToLower())), (object) instance as IProxyTargetAccessor);
         return instance;
       }
@@ -60,32 +56,33 @@ namespace Glass.Mapper.Sc.V7.ContentSearch.DocumentTypeMapper
         return (T) this._sitecoreContext.InstantiateObject((AbstractTypeCreationContext) typeCreationContext);
     }
 
-    protected void SetupProxy<T>(IEnumerable<string> fieldNames, IProxyTargetAccessor target)
-    {
-      SearchInterceptor searchInterceptor = Enumerable.FirstOrDefault<IInterceptor>((IEnumerable<IInterceptor>) target.GetInterceptors(), (Func<IInterceptor, bool>) (x => x is SearchInterceptor)) as SearchInterceptor;
-      if (searchInterceptor == null)
-        return;
-      AbstractTypeConfiguration typeConfiguration1 = this._sitecoreContext.GlassContext.GetTypeConfiguration(target);
-      SitecoreTypeConfiguration typeConfiguration2 = new SitecoreTypeConfiguration();
-      searchInterceptor.TypeConfiguration = typeConfiguration2;
-      SitecoreIdConfiguration sitecoreIdConfiguration = Enumerable.FirstOrDefault<AbstractPropertyConfiguration>(typeConfiguration1.Properties, (Func<AbstractPropertyConfiguration, bool>) (x => x is SitecoreIdConfiguration)) as SitecoreIdConfiguration;
-      if (sitecoreIdConfiguration == null)
-        return;
-      if (sitecoreIdConfiguration.PropertyInfo.PropertyType == typeof (Guid))
-      {
-        Guid id = (Guid) sitecoreIdConfiguration.PropertyInfo.GetValue((object) target);
-        searchInterceptor.Id = new ID(id);
-      }
-      else if (sitecoreIdConfiguration.PropertyInfo.PropertyType == typeof (ID))
-        searchInterceptor.Id = (ID) sitecoreIdConfiguration.PropertyInfo.GetValue((object) target);
-      foreach (AbstractPropertyConfiguration property in typeConfiguration1.Properties)
-      {
-        string propName = property.PropertyInfo.Name.ToLower();
-        if (!Enumerable.Any<string>(fieldNames, (Func<string, bool>) (x => x == propName)) && !Enumerable.Any<object>((IEnumerable<object>) property.PropertyInfo.GetCustomAttributes(true), (Func<object, bool>) (x => x is IIndexFieldNameFormatterAttribute)) && !(property is SitecoreIdConfiguration))
-          typeConfiguration2.AddProperty(property);
-      }
-      typeConfiguration2.Type = typeConfiguration1.Type;
-      typeConfiguration2.IdConfig = sitecoreIdConfiguration;
-    }
+       protected void SetupProxy<T>(IEnumerable<string> fieldNames, IProxyTargetAccessor target)
+       {
+           SearchInterceptor searchInterceptor =
+               Enumerable.FirstOrDefault<IInterceptor>((IEnumerable<IInterceptor>) target.GetInterceptors(),
+                                                       (Func<IInterceptor, bool>) (x => x is SearchInterceptor)) as
+               SearchInterceptor;
+           if (searchInterceptor == null)
+               return;
+
+           searchInterceptor.TypeConfiguration =
+               (SitecoreTypeConfiguration) _sitecoreContext.GlassContext.GetTypeConfiguration(target);
+           SitecoreIdConfiguration sitecoreIdConfiguration = searchInterceptor.TypeConfiguration.IdConfig;
+           if (sitecoreIdConfiguration == null)
+               return;
+
+           if (sitecoreIdConfiguration.PropertyInfo.PropertyType == typeof (ID))
+           {
+               searchInterceptor.Id = (ID) sitecoreIdConfiguration.PropertyInfo.GetValue(target);
+           }
+           if (sitecoreIdConfiguration.PropertyInfo.PropertyType == typeof (Guid))
+           {
+               Guid id = (Guid) sitecoreIdConfiguration.PropertyInfo.GetValue(target);
+               searchInterceptor.Id = new ID(id);
+           }
+
+           searchInterceptor.IndexFields = fieldNames;
+
+       }
   }
 }
