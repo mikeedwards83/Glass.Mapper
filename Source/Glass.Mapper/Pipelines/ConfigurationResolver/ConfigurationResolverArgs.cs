@@ -27,6 +27,8 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
     /// </summary>
     public class ConfigurationResolverArgs : AbstractPipelineArgs
     {
+        public IAbstractService Service { get; set; }
+
         /// <summary>
         /// Gets the abstract type creation context.
         /// </summary>
@@ -36,7 +38,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
         /// Gets or sets the result.
         /// </summary>
         /// <value>The result.</value>
-        public IEnumerable<AbstractTypeConfiguration> Result { get; set; }
+        public AbstractTypeConfiguration Result { get; set; }
 
         public Type RequestedType { get; set; }
 
@@ -45,8 +47,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        public ConfigurationResolverArgs(Context context, AbstractTypeCreationContext abstractTypeCreationContext, Type requestedType) :base(context)
+        public ConfigurationResolverArgs(Context context,  AbstractTypeCreationContext abstractTypeCreationContext, Type requestedType, IAbstractService service) :base(context)
         {
+            Service = service;
             AbstractTypeCreationContext = abstractTypeCreationContext;
             RequestedType = requestedType;
         }

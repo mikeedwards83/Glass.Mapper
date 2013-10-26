@@ -51,10 +51,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             if (args.Result != null)
                 return;
 
-            if (args.Configurations.First().Type.IsInterface && args.Configurations.Count() == 1)
+            if (args.Configuration.Type.IsInterface) 
             {
                 
-                args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configurations.First().Type, new InterfacePropertyInterceptor(args));
+                args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new InterfacePropertyInterceptor(args));
                 args.AbortPipeline();
             }
         }

@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
             else
             {
                 return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, targetItem, scConfig.IsLazy,
-                                                     scConfig.InferType);
+                                                     scConfig.InferType, null);
             }
 
         }

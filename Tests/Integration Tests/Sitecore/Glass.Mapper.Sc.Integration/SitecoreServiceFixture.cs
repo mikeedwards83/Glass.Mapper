@@ -876,7 +876,7 @@ namespace Glass.Mapper.Sc.Integration
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             //Act
-            var result = (StubClass) service.CreateType(typeof (StubClass), item, false, false);
+            var result = (StubClass) service.CreateType(typeof (StubClass), item, false, false,null);
 
             //Assert
             Assert.IsNotNull(result);
@@ -916,7 +916,7 @@ namespace Glass.Mapper.Sc.Integration
             var param1 = 456;
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -961,7 +961,7 @@ namespace Glass.Mapper.Sc.Integration
             var param2 = "hello world";
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -1011,7 +1011,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2, param3);
 
             //Assert
             Assert.IsNotNull(result);
@@ -1065,7 +1065,7 @@ namespace Glass.Mapper.Sc.Integration
             var param4 = true;
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3, param4);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2, param3, param4);
 
             //Assert
             Assert.IsNotNull(result);

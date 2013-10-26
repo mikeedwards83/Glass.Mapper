@@ -30,9 +30,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
             //also check that this is a dynamic object
 
 
-            if (args.Result == null && args.Configurations.Count() == 1)
+            if (args.Result == null)
             {
-                var configuration = args.Configurations.First();
+                var configuration = args.Configuration;
                 if(!configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
                 {
                     //check to see if the type is registered with the SimpleInjector container

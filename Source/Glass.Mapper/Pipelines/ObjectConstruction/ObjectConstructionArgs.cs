@@ -37,7 +37,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// The configuration to use to load the object
         /// </summary>
         /// <value>The configuration.</value>
-        public IEnumerable<AbstractTypeConfiguration> Configurations { get; private set; }
+        public AbstractTypeConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Gets the service.
@@ -61,12 +61,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         public ObjectConstructionArgs(
             Context context, 
             AbstractTypeCreationContext  abstractTypeCreationContext,
-            IEnumerable<AbstractTypeConfiguration> configurations,
+            AbstractTypeConfiguration configuration,
             IAbstractService service)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
-            Configurations = configurations;
+            Configuration = configuration;
             Service = service;
         }
 

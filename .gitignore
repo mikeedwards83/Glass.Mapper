@@ -100,3 +100,4 @@ Source/Glass.Mapper.Sc.Razor.Tds/*.xml
 Source/Glass.Mapper.Sc.Razor.Tds/Package_Debug/Glass.Mapper.Sc.Razor.Tds.update
 Sites/Sitecore/Glass.Mapper.Sites.Sc/data/
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.ThirdParty/Data/license.xml
+Depends/Sitecore/bin7

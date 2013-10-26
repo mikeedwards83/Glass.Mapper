@@ -47,7 +47,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         /// <exception cref="Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
         public void Intercept(IInvocation invocation)
         {
-            var config = _args.Configurations.First();
+            var config = _args.Configuration;
 
             //do initial gets
             if (!_isLoaded)

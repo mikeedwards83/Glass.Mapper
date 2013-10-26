@@ -34,8 +34,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
         {
             if (args.Result == null)
             {
-                var results =   new[] {args.Context[args.RequestedType]}.Where(x=>x!=null);
-                args.Result = results.Any() ? results : null;
+                args.Result = args.Context[args.RequestedType];
             }
 
         }
