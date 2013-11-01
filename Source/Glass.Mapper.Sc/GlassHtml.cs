@@ -145,7 +145,7 @@ namespace Glass.Mapper.Sc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
         {
-            return MakeEditable(field, null, target, parameters);
+            return MakeEditable(field, standardOutput, target, parameters);
         }
 
 
