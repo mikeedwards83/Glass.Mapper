@@ -220,39 +220,71 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1}/>";
      
-       /// <summary>
-       /// Renders an image allowing simple page editor support
-       /// </summary>
-       /// <typeparam name="T">The model type</typeparam>
-       /// <param name="model">The model that contains the image field</param>
-       /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
-       /// <param name="parameters">Image parameters, e.g. width, height</param>
-       /// <param name="isEditable">Indicates if the field should be editable</param>
-       /// <returns></returns>
+        /// <summary>
+        /// Renders an image allowing simple page editor support
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <returns></returns>
         public virtual string RenderImage<T>(T model,
-                                             Expression<Func<T, object>> field, 
-                                             ImageParameters parameters = null,
+                                             Expression<Func<T, object>> field,
+                                             object parameters = null,
                                              bool isEditable = false)
         {
-            if (IsInEditingMode && isEditable)
+
+            if (parameters is ImageParameters)
             {
-                return Editable(model, field, parameters);
+                var imageParameters = parameters as ImageParameters;
+                if (IsInEditingMode && isEditable)
+                {
+                    return Editable(model, field, imageParameters);
+                }
+                else
+                {
+                    return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters == null ? null : imageParameters.Parameters);
+                }
+
             }
             else
             {
-                return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters==null ? null : parameters.Parameters);
+                var attrs = Utilities.GetPropertiesCollection(parameters, true);
+
+                if (IsInEditingMode && isEditable)
+                {
+                    var url = new UrlString();
+                    url.Parameters.Add(attrs);
+                    return Editable(model, field, url.Query);
+                }
+                else
+                {
+                    return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters == null ? null : attrs);
+                }
             }
         }
 
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, NameValueCollection attributes = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object attributes = null, bool isEditable = false)
         {
+            NameValueCollection attrs;
+
+            if (attributes is NameValueCollection)
+            {
+                attrs = attributes as NameValueCollection;
+            }
+            else
+            {
+                attrs = Utilities.GetPropertiesCollection(attributes, true);
+            }
+
             if (IsInEditingMode && isEditable)
             {
                 return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
             }
             else
             {
-                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attributes, string.Empty, writer);
+                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer);
             }
         }
 
@@ -273,6 +305,7 @@ namespace Glass.Mapper.Sc
         }
 
 
+
         /// <summary>
         /// Render HTML for a link
         /// </summary>
@@ -283,8 +316,20 @@ namespace Glass.Mapper.Sc
         /// <param name="isEditable">Indicate if the link should be editable in the page editor</param>
         /// <param name="contents">Content to go in the link</param>
         /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
+            NameValueCollection attrs = null;
+
+            if (attributes is NameValueCollection)
+            {
+                attrs = attributes as NameValueCollection;
+            }
+            else
+            {
+                attrs = Utilities.GetPropertiesCollection(attributes, true);
+                
+            }
+
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
 
@@ -293,7 +338,7 @@ namespace Glass.Mapper.Sc
             {
                 
                 result = MakeEditable(
-                    field, 
+                    field,
                     null, 
                     model,  
                     contents == null ? string.Empty: "haschildren=true", 
@@ -302,7 +347,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        field.Compile().Invoke(model) as Fields.Link, attributes, contents, writer
+                        field.Compile().Invoke(model) as Fields.Link, attrs, contents, writer
                     );
             }
 

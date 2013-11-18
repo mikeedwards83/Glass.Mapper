@@ -107,17 +107,17 @@ namespace Glass.Mapper.Sc
         /// <param name="parameters"></param>
         /// <param name="isEditable"></param>
         /// <returns></returns>
-        string RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false);
+        string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
-                                      NameValueCollection attributes = null, bool isEditable = false);
+                                      object attributes = null, bool isEditable = false);
 
         /// <summary>
         /// Render HTML for a link
         /// </summary>
         /// <param name="link">The link to render</param>
         /// <returns>An "a" HTML element</returns>
-        string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null,
+        string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
                              bool isEditable = false, string contents = null);
 
 
