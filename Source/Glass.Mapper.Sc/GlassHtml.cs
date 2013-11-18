@@ -550,7 +550,16 @@ namespace Glass.Mapper.Sc
                     {
                         RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
                         renderFieldArgs.Item = scClass;
-                        renderFieldArgs.FieldName = ((SitecoreFieldConfiguration) dataHandler).FieldName;
+
+                        var fieldConfig = (SitecoreFieldConfiguration) dataHandler;
+                        if (fieldConfig.FieldId != (Sitecore.Data.ID)null && fieldConfig.FieldId != ID.Null)
+                        {
+                            renderFieldArgs.FieldName = fieldConfig.FieldId.ToString();
+                        }
+                        else
+                        {
+                            renderFieldArgs.FieldName = fieldConfig.FieldName;
+                        }
 
                         renderFieldArgs.Parameters = WebUtil.ParseQueryString(parameters ?? string.Empty);
                         renderFieldArgs.DisableWebEdit = false;
