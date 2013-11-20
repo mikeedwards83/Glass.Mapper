@@ -161,16 +161,19 @@ namespace Glass.Mapper
 
         public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
         {
-            var type = target.GetType();
-            var properties = GetAllProperties(type);
-            
             NameValueCollection nameValues = new NameValueCollection();
-            foreach (var propertyInfo in properties)
+            if (target != null)
             {
-                var value = propertyInfo.GetValue(target, null);
-                nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name, value == null ? string.Empty : value.ToString());
-            }
+                var type = target.GetType();
+                var properties = GetAllProperties(type);
 
+                foreach (var propertyInfo in properties)
+                {
+                    var value = propertyInfo.GetValue(target, null);
+                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
+                                   value == null ? string.Empty : value.ToString());
+                }
+            }
             return nameValues;
 
         }

@@ -47,6 +47,9 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class GlassHtml : IGlassHtml
     {
+        private static readonly Type ImageType = typeof(Fields.Image);
+        private static readonly Type LinkType = typeof(Fields.Link );
+
         /// <summary>
         /// Gets the sitecore context.
         /// </summary>
@@ -484,7 +487,7 @@ namespace Glass.Mapper.Sc
         ///                         prop.DeclaringType, prop.Name, prop.MemberType)
         /// </exception>
         /// <exception cref="System.NullReferenceException">Context cannot be null</exception>
-        private static RenderingResult MakeEditable<T>(
+        private RenderingResult MakeEditable<T>(
             Expression<Func<T, object>> field, 
             Expression<Func<T, string>> standardOutput, 
             T model, 
@@ -621,7 +624,24 @@ namespace Glass.Mapper.Sc
                     if (standardOutput != null)
                         firstPart = standardOutput.Compile().Invoke(model);
                     else
-                        firstPart = (field.Compile().Invoke(model) ?? string.Empty).ToString();
+                    {
+                        var type = field.Body.Type;
+                        object target = (field.Compile().Invoke(model) ?? string.Empty);
+
+                        if (type == ImageType)
+                        {
+                            var image = target as Image;
+                            RenderImage(image, parameters);
+                        }
+                        else if (type == LinkType)
+                        {
+
+                        }
+                        else
+                        {
+                            firstPart = target.ToString();
+                        }
+                    }
                 }
             }
             catch (Exception ex)
