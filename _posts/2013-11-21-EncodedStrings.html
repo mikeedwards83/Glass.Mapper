@@ -1,0 +1,101 @@
+---
+layout: BlogLayout
+title: Encoded Strings Data Handler
+image: /images/blog/2013-11-21-Blog-EncodedStrings.PNG
+abstract: How to encode strings with Glass.Mapper.
+caption: 02 Feb 2013
+---
+			
+    <p class="lead">
+        I recent question on StackOverflow was how to HTML Encode characters with Glass.Mapper.
+    </p>
+<p>
+    On StackOverflow <a href="http://stackoverflow.com/users/3008001/erwin-raets">Erwin</a> asked a question about Glass not 
+    <a href="http://stackoverflow.com/questions/20067710/editable-does-not-htmlencode">encoding text characters</a>
+    in Single Line Text or Multi Line Text. He is quite right, Glass treats these as pure text values. However this isn't always 
+    ideal and there will be times when you want to add characters such as &lt; and &gt; to your fields and have the encoded to their HTML friendly 
+    equivalent.
+</p>
+<p>
+    This is very simple to achieve with Glass.Mapper, first we need to create a custom type that will represent our encoded string:
+</p>
+<pre class="csharp">
+    public class EncodedString
+    {
+        public string RawValue { get; set; }
+
+        public EncodedString(string value)
+        {
+            RawValue = value;
+        }
+
+        public static implicit operator string(EncodedString encoded)
+        {
+            return encoded.ToString();
+        }
+
+        public static implicit operator EncodedString(string value)
+        {
+            return new EncodedString(value);
+        }
+        public override string ToString()
+        {
+            return HttpUtility.HtmlEncode(RawValue);
+        }
+    }
+</pre>
+<p>
+    Next we need to create a data mapper that will convert the field value to this type:
+</p>
+<pre class="csharp">
+    public class EncodedStringDataMapper : Glass.Mapper.Sc.DataMappers.AbstractSitecoreFieldMapper
+    {
+        public EncodedStringDataMapper() : base(new[] {typeof (EncodedString)})
+        {
+        }
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            EncodedString encoded = value as EncodedString;
+            return value == null ? null : encoded.RawValue;
+        }
+
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            return new EncodedString(fieldValue);
+        }
+    }
+</pre>
+<p>
+    Finally we need to tell the IOC container that this new handlers exists, this is done in the /App_Start/GlassMapperScCustom.cs class.
+</p>
+<pre class="csharp">
+    public static  class GlassMapperScCustom
+    {
+		public static void CastleConfig(IWindsorContainer container){
+			var config = new Config();
+
+            container.Register(Component.For&lt;AbstractDataMapper&gt;().ImplementedBy&lt;EncodedStringDataMapper&gt;().LifestyleTransient());
+			container.Install(new SitecoreInstaller(config));
+		}
+
+</pre>
+
+<p>
+    We can now update our model to use this type instead of a standard string:
+</p>
+<pre class="csharp">
+    public class Home
+    {
+        public virtual Guid Id { get; set; }
+        public virtual EncodedString Title { get; set; }
+        public virtual EncodedString Text { get; set; }
+    }
+</pre>
+<p>
+    Being able to get encoded strings is missing from the Glass.Mapper framework and I will be adding this to the next release.
+</p>
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a> 
+</p>
