@@ -631,10 +631,19 @@ namespace Glass.Mapper.Sc
                         if (type == ImageType)
                         {
                             var image = target as Image;
-                            RenderImage(image, parameters);
+                            firstPart  = RenderImage(image, WebUtil.ParseUrlParameters(parameters));
                         }
                         else if (type == LinkType)
                         {
+                            var link = target as Link;
+                            var sb = new StringBuilder();
+                            var linkWriter = new StringWriter(sb);
+                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parameters),null, linkWriter);
+                            result.Dispose();
+                            linkWriter.Flush();
+                            linkWriter.Close();
+                            
+                            firstPart = sb.ToString();
 
                         }
                         else

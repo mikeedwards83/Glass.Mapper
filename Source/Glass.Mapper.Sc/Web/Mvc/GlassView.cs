@@ -130,7 +130,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
         public virtual HtmlString RenderImage<T>(T target, Expression<Func<T, object>> field,
-                                           ImageParameters parameters = null,
+                                           object parameters = null,
                                            bool isEditable = false)
         {
             return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable));
@@ -162,7 +162,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual HtmlString RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual HtmlString RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
             return new HtmlString(GlassHtml.RenderLink(model, field, attributes, isEditable, contents));
@@ -245,7 +245,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
         public virtual HtmlString RenderImage(Expression<Func<TModel, object>> field,
-                                           ImageParameters parameters = null,
+                                           object parameters = null,
                                            bool isEditable = false)
         {
             return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable));
@@ -277,7 +277,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual HtmlString RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual HtmlString RenderLink(Expression<Func<TModel, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
             return new HtmlString(GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents));

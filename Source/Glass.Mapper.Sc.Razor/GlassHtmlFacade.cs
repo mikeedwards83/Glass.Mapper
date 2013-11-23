@@ -149,7 +149,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <returns></returns>
         public virtual RawString RenderImage<T>(T model,
                                              Expression<Func<T, object>> field,
-                                             ImageParameters parameters = null,
+                                             object parameters = null,
                                              bool isEditable = false)
         {
             return _glassHtml.RenderImage(model, field, parameters, isEditable).RawString();
@@ -199,7 +199,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
             return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
