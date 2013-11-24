@@ -74,18 +74,6 @@ namespace Glass.Mapper.Sc.Razor
             _writer = writer;
             _glassHtml = new GlassHtml(context);
         }
-
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
-        /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, Expression<Func<T, object>> field)
-        {
-            return _glassHtml.Editable(target, field).RawString();
-        }
   
         /// <summary>
         /// Editables the specified target.
@@ -95,19 +83,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>RawString.</returns>
-        public  RawString Editable<T>(T target, Expression<Func<T, object>> field, AbstractParameters parameters)
-        {
-            return _glassHtml.Editable(target, field, parameters).RawString();
-        }
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, Expression<Func<T, object>> field, string parameters)
+        public  RawString Editable<T>(T target, Expression<Func<T, object>> field, object parameters = null)
         {
             return _glassHtml.Editable(target, field, parameters).RawString();
         }
@@ -119,21 +95,9 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
-        /// <returns>RawString.</returns>
-        public  RawString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
-        {
-            return _glassHtml.Editable(target, field, standardOutput).RawString();
-        }
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="standardOutput">The standard output.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>RawString.</returns>
-        public RawString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
+        public RawString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
         {
             return _glassHtml.Editable(target, field, standardOutput, parameters).RawString();
         }
