@@ -130,17 +130,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             }
         }
 
-        /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model">The model.</param>
-        /// <param name="field">The field.</param>
-        /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field)
-        {
-            return GlassHtml.Editable(model, field);
-        }
+
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -150,37 +140,14 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="field">The field.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field, AbstractParameters parameters)
-        {
-            return GlassHtml.Editable(model, field, parameters);
-        }
-
-        /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model">The model.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field, string parameters)
+        public string Editable<T>(T model, Expression<Func<T, object>> field, object parameters = null)
         {
             return GlassHtml.Editable(model, field, parameters);
         }
 
 
-        /// <summary>
-        /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model">The model.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="standardOutput">The standard output.</param>
-        /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)
-        {
-            return GlassHtml.Editable(model, field, standardOutput);
-        }
+
+
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -191,8 +158,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="standardOutput">The standard output.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.String.</returns>
-        public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput,
-                                  AbstractParameters parameters)
+        public string Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
         {
             return GlassHtml.Editable(model, field, standardOutput, parameters);
         }
@@ -209,7 +175,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public virtual string RenderImage<T>(T model,
                                              Expression<Func<T, object>> field,
-                                             ImageParameters parameters = null,
+                                             object parameters = null,
                                              bool isEditable = false)
         {
             return GlassHtml.RenderImage(model, field, parameters, isEditable);
@@ -226,7 +192,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
-                                                     NameValueCollection attributes = null, bool isEditable = false)
+                                                     object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(model, field, this.Response.Output, attributes, isEditable);
 
@@ -242,7 +208,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null,  bool isEditable = false, string contents=null)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,  bool isEditable = false, string contents=null)
         {
 
             return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
