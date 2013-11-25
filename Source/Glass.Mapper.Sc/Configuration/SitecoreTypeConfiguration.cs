@@ -132,7 +132,15 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (VersionConfig != null)
             {
-                versionNumber = (int) VersionConfig.PropertyInfo.GetValue(target, null);
+                var valueInt = VersionConfig.PropertyInfo.GetValue(target, null);
+                if (valueInt is int)
+                {
+                    versionNumber = (int) valueInt;
+                }
+                else if(valueInt is string)
+                {
+                    int.TryParse(valueInt as string, out versionNumber);
+                }
             }
 
             if (language != null && versionNumber > 0)
