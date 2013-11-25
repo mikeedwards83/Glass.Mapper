@@ -1769,8 +1769,57 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Map
+
+        [Test]
+        public void Map_ClassWithId_MapsFieldValues()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            Guid id = new Guid("{346D7364-ECBA-4E7A-9580-58DB4785C20A}");
+            DateTime date = new DateTime(2013, 04, 03, 12, 15, 10);
+            var item = db.GetItem(id.ToString());
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var service = new SitecoreService(db, context);
+
+            var model = new MapStub();
+            model.Id = id;
+
+            //Act
+            service.Map(model);
+
+            //Assert
+            Assert.AreEqual(text, model.StringField);
+            Assert.AreEqual(date,  model.DateField);
+
+        }
+
+        #endregion
+
         #region Stubs
 
+        [SitecoreType]
+        public class MapStub
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual string StringField { get; set; }
+
+            [SitecoreField]
+            public virtual DateTime DateField { get; set; }
+
+        }
         [SitecoreType]
         public class StubSaving
         {
@@ -1912,6 +1961,11 @@ namespace Glass.Mapper.Sc.Integration
             DateTime DateField { get; set; }
         }
         #endregion
+
+        
+
+
+
     }
 }
 
