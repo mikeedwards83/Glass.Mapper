@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     var types = configs.Where(x => x.TemplateId == templateId);
                     if (types.Any())
                     {
-                        args.Result = new[] {types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type))};
+                        args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
                     }
                 }
             }

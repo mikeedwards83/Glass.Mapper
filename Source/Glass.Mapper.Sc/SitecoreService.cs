@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
@@ -325,7 +326,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType);
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null);
         }
 
         /// <summary>
@@ -340,7 +341,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK>(Item item, TK param1, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, param1);
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1);
 
         }
 
@@ -358,7 +359,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL>(Item item, TK param1, TL param2, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, param1, param2);
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2);
         }
 
         /// <summary>
@@ -377,7 +378,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, param1, param2, param3);
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2, param3);
         }
 
         /// <summary>
@@ -398,27 +399,13 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, param1, param2, param3, param4);
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2, param3, param4);
         }
 
 
-        /// <summary>
-        /// Creates the type.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="item">The item.</param>
-        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
-        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
-        /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
-        /// <returns>System.Object.</returns>
-        /// <exception cref="System.NotSupportedException">Maximum number of constructor parameters is 4</exception>
-        public object CreateType(Type type, Item item, bool isLazy, bool inferType,
-            params object[] constructorParameters)
-        {
-            return CreateType(new[] {type}, item, isLazy, inferType, constructorParameters);
-        }
 
-        public object CreateType(IEnumerable<Type> types, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
+
+        public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
             if (item == null || (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled)) return null;
 
@@ -428,11 +415,13 @@ namespace Glass.Mapper.Sc
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
-            creationContext.RequestedType = types;
+            creationContext.RequestedType = type;
             creationContext.ConstructorParameters = constructorParameters;
             creationContext.Item = item;
             creationContext.InferType = inferType;
             creationContext.IsLazy = isLazy;
+            creationContext.Parameters = parameters ?? new Dictionary<string, object>();
+
             var obj = InstantiateObject(creationContext);
 
             return obj;
@@ -529,7 +518,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class
         {
             var item = Database.GetItem(path);
-            return CreateType(typeof(T), item, isLazy, inferType) as T;
+            return CreateType(typeof(T), item, isLazy, inferType, null) as T;
         }
 
         /// <summary>
@@ -836,7 +825,7 @@ namespace Glass.Mapper.Sc
         public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
         {
             var item = Database.GetItem(new ID(id));
-            return CreateType(typeof(T), item, isLazy, inferType) as T;
+            return CreateType(typeof(T), item, isLazy, inferType, null) as T;
         }
 
         /// <summary>
@@ -1135,14 +1124,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] = 
+                new[] {typeof (TK), typeof (TL), typeof (TM), typeof (TN)};
 
             Item item = Database.GetItem(new ID(id), language, version);
             return (T) CreateType(
-                new Type[] {typeof (T), typeof (TK), typeof (TL), typeof (TM), typeof (TN)},
+                typeof (T), 
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Version version = null, bool isLazy = false,
@@ -1151,13 +1143,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK), typeof(TL), typeof(TM) };
+
             Item item = Database.GetItem(new ID(id), language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM)},
+                 typeof(T),// typeof(TK), typeof(TL), typeof(TM)},
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Version version = null, bool isLazy = false,
@@ -1166,13 +1162,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK), typeof(TL) };
+
             Item item = Database.GetItem(new ID(id), language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                 typeof(T),// typeof(TK), typeof(TL) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Version version = null, bool isLazy = false,
@@ -1181,13 +1181,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK) };
+
             Item item = Database.GetItem(new ID(id), language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK) },
+                typeof(T),// typeof(TK) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Version version = null, bool isLazy = false,
@@ -1201,14 +1205,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK), typeof(TL), typeof(TM), typeof(TN) };
 
             Item item = Database.GetItem(path, language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM), typeof(TN) },
+                typeof(T), // typeof(TK), typeof(TL), typeof(TM), typeof(TN) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Version version = null, bool isLazy = false,
@@ -1221,13 +1228,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK), typeof(TL), typeof(TM) };
+
             Item item = Database.GetItem(path, language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK), typeof(TL), typeof(TM) },
+                 typeof(T),// typeof(TK), typeof(TL), typeof(TM) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Version version = null, bool isLazy = false,
@@ -1239,13 +1250,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK), typeof(TL) };
+
             Item item = Database.GetItem(path, language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK), typeof(TL) },
+                 typeof(T), //typeof(TK), typeof(TL) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         public T GetItemWithInterfaces<T, TK>(string path, Language language = null, Version version = null, bool isLazy = false,
@@ -1256,13 +1271,17 @@ namespace Glass.Mapper.Sc
             language = language ?? Language.Current;
             version = version ?? Version.Latest;
 
+            var parameters = new Dictionary<string, object>();
+            parameters[MultiInterfaceResolverTask.MultiInterfaceTypesKey] =
+                new[] { typeof(TK)};
+
             Item item = Database.GetItem(path, language, version);
             return (T)CreateType(
-                new Type[] { typeof(T), typeof(TK) },
+                 typeof(T), //typeof(TK) },
                 item,
                 isLazy,
                 inferType,
-                null);
+                parameters);
         }
 
         #endregion

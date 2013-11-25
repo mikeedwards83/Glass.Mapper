@@ -145,7 +145,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The current item as the specified type</returns>
         public object GetCurrentItem(Type type, bool isLazy = false, bool inferType = false)
         {
-            return CreateType(type, Sitecore.Context.Item, isLazy, inferType);
+            return CreateType(type, Sitecore.Context.Item, isLazy, inferType, null);
         }
 
         /// <summary>

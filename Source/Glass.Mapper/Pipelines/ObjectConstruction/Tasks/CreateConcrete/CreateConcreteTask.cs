@@ -49,10 +49,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null || args.Configurations.Count() > 1)
+            if (args.Result != null || args.Configuration == null)
                 return;
 
-            var type = args.Configurations.First().Type;
+            var type = args.Configuration.Type;
 
 
             if(type.IsInterface)
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <returns>System.Object.</returns>
         protected virtual object CreateLazyObject(ObjectConstructionArgs args)
         {
-            return  _generator.CreateClassProxy(args.Configurations.First().Type, new LazyObjectInterceptor(args));
+            return  _generator.CreateClassProxy(args.Configuration.Type, new LazyObjectInterceptor(args));
         }
 
         /// <summary>
@@ -102,13 +102,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                     ? Type.EmptyTypes
                     : constructorParameters.Select(x => x.GetType()).ToArray();
 
-            var constructorInfo = args.Configurations.First().Type.GetConstructor(parameters);
+            var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
 
-            Delegate conMethod = args.Configurations.First().ConstructorMethods[constructorInfo];
+            Delegate conMethod = args.Configuration.ConstructorMethods[constructorInfo];
 
             var obj = conMethod.DynamicInvoke(constructorParameters);
 
-            args.Configurations.First().MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+            args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
 
             return obj;
         }

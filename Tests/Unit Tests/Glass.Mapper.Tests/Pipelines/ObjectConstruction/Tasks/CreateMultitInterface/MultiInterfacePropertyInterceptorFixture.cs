@@ -51,7 +51,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             mapper1.Value = expected1;
             mapper2.Value = expected2;
 
-            var args = new ObjectConstructionArgs(null, null, new[] {config1, config2}, service);
+            var args = new ObjectConstructionArgs(null, null, config1, service);
+            args.Parameters = new Dictionary<string, object>();
+            args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] {config2};
             var interceptor = new MultiInterfacePropertyInterceptor(args);
 
             var invocation1 = Substitute.For<IInvocation>();
@@ -101,8 +103,10 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             property2.Mapper = mapper2;
             property1.PropertyInfo = info1;
             property2.PropertyInfo = info2;
-            
-            var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, service);
+
+            var args = new ObjectConstructionArgs(null, null,  config1 , service);
+            args.Parameters = new Dictionary<string, object>();
+            args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] { config2 };
             var interceptor = new MultiInterfacePropertyInterceptor(args);
 
 

@@ -42,7 +42,7 @@ namespace Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction
                 var resolver = args.Context.DependencyResolver as DependencyResolver;
                 if (resolver != null)
                 {
-                    var config = args.Configurations.First();
+                    var config = args.Configuration;
                     var type = config.Type;
                     var container = resolver.Container;
 

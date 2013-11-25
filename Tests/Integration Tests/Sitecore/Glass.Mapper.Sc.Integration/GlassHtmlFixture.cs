@@ -758,7 +758,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var fieldValue = "test content field";
 
-            model.StringFieldId = fieldValue;
+            model.StringFieldWithId = fieldValue;
 
             using (new SecurityDisabler())
             {
@@ -783,7 +783,7 @@ namespace Glass.Mapper.Sc.Integration
 
             using (new SecurityDisabler())
             {
-                result = html.Editable(model, x => x.StringFieldId, x => x.StringFieldId);
+                result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
             }
             //Assert
             Assert.IsTrue(result.Contains(fieldValue));
@@ -809,7 +809,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var fieldValue = "test content field";
 
-            model.StringFieldId = fieldValue;
+            model.StringFieldWithId = fieldValue;
 
             using (new SecurityDisabler())
             {
@@ -830,7 +830,7 @@ namespace Glass.Mapper.Sc.Integration
             Sitecore.Context.Site = siteContext;
 
             //Act
-            var result = html.Editable(model, x => x.StringFieldId, x => x.StringFieldId);
+            var result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
 
             //Assert
             Assert.AreEqual(fieldValue, result);
@@ -944,8 +944,11 @@ namespace Glass.Mapper.Sc.Integration
             [SitecoreField]
             public virtual string StringField { get; set; }
 
+            /// <summary>
+            /// Real name StringFieldId
+            /// </summary>
             [SitecoreField(FieldId = "{296D9461-09AA-48EE-ADF3-9E3812B570D2}")]
-            public virtual string StringFieldId { get; set; }
+            public virtual string StringFieldWithId { get; set; }
 
             [SitecoreField]
             public virtual string DateField { get; set; }
