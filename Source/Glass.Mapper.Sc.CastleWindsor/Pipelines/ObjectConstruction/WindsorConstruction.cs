@@ -59,8 +59,8 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
             if (args.AbstractTypeCreationContext.ConstructorParameters == null ||
                 !args.AbstractTypeCreationContext.ConstructorParameters.Any())
             {
-                if (args.Configurations.Count() == 1) { 
-                var configuration = args.Configurations.FirstOrDefault();
+                if (args.Configuration!=null) { 
+                var configuration = args.Configuration;
                 var type = configuration.Type;
                 var container = resolver.Container;
 

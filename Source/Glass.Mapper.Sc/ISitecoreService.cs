@@ -97,7 +97,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
-        object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters);
+        object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters);
 
         /// <summary>
         /// Creates a class from the specified item

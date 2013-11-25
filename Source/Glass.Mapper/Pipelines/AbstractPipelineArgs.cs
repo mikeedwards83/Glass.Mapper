@@ -16,6 +16,8 @@
 */ 
 //-CRE-
 
+using System.Collections.Generic;
+
 namespace Glass.Mapper.Pipelines
 {
     /// <summary>
@@ -23,6 +25,8 @@ namespace Glass.Mapper.Pipelines
     /// </summary>
     public abstract class AbstractPipelineArgs
     {
+        public Dictionary<string, object> Parameters { get; set; }
+
         /// <summary>
         /// Gets the context.
         /// </summary>
@@ -41,6 +45,7 @@ namespace Glass.Mapper.Pipelines
         /// <param name="context">The context.</param>
         protected AbstractPipelineArgs(Context context)
         {
+            Parameters = new Dictionary<string, object>();
             Context = context;
         }
 

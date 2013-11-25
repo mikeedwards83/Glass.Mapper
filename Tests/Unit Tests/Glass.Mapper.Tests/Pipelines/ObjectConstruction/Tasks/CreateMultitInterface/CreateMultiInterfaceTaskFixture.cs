@@ -42,8 +42,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             config1.Type = typeof(IStubTarget);
             config2.Type = typeof(IStubTarget2);
 
-            var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
-
+          //  var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
+            var args = new ObjectConstructionArgs(null, null, config1,  null);
+            args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] {config2};
             var task = new CreateMultiInferaceTask();
 
             //Act
@@ -64,7 +65,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
 
             config1.Type = typeof(IStubTarget);
 
-            var args = new ObjectConstructionArgs(null, null, new[] { config1 }, null);
+            var args = new ObjectConstructionArgs(null, null,  config1 , null);
 
             var task = new CreateMultiInferaceTask();
 
@@ -86,7 +87,8 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             config1.Type = typeof(IStubTarget);
             config2.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
+            var args = new ObjectConstructionArgs(null, null, config2 , null);
+            //var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
 
             var task = new CreateMultiInferaceTask();
 
