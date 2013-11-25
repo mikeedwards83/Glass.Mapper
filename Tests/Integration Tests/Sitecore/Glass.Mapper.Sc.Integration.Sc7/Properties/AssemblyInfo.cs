@@ -1,35 +1,16 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Glass.Mapper.Sc")]
+[assembly: AssemblyTitle("Glass.Mapper.Sc.Integration.Sc7")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Glass.Mapper.Sc")]
-[assembly: AssemblyCopyright("Copyright ?  2012")]
+[assembly: AssemblyProduct("Glass.Mapper.Sc.Integration.Sc7")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -39,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3fa14168-ed01-408a-86cc-11b2fce79bba")]
+[assembly: Guid("8f81a77a-063c-4601-b89f-45a952d23b18")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -53,13 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
-
-[assembly: InternalsVisibleTo("Glass.Mapper.Sc.Tests")]
-[assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration")]
-[assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration.Sc7")]
-[assembly: InternalsVisibleTo("Glass.Mapper.Sc.Explorables")]
-
-
-
-

@@ -112,8 +112,16 @@ namespace Glass.Mapper
         /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetProperty(Type type, string name)
         {
-            var property = type.GetProperty(name, Flags);
-            
+            PropertyInfo property = null;
+            try
+            {
+                property = type.GetProperty(name, Flags);
+            }
+            catch (AmbiguousMatchException ex)
+            {
+                //this is probably caused by an item having two indexers e.g SearchResultItem;
+            }
+
             if(property == null)
             {
                 var interfaces = type.GetInterfaces();

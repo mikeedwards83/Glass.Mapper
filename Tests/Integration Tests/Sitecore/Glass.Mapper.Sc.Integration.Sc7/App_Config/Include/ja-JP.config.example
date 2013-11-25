@@ -1,0 +1,25 @@
+<!--
+
+Purpose: This include switched the website and shell to run in Japanese
+
+-->
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <sites>
+      <site name="website">
+        <patch:attribute name="language">ja-JP</patch:attribute>
+      </site>
+      <site name="login">
+        <patch:attribute name="language">ja-JP</patch:attribute>
+      </site>
+      <site name="shell">
+        <patch:attribute name="contentLanguage">ja-JP</patch:attribute>
+      </site>
+    </sites>
+    <settings>
+      <setting name="ClientLanguage">
+        <patch:attribute name="value">ja-JP</patch:attribute>
+      </setting>
+    </settings>
+  </sitecore>
+</configuration>

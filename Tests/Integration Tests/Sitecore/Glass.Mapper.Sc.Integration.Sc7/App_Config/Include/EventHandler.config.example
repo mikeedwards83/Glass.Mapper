@@ -1,0 +1,20 @@
+<!--
+
+Purpose: This include file shows how to add event handlers 
+
+To enable this, rename this file so that it has a ".config" extension and 
+replace the "type" and "method" attributes below with your own values
+
+-->
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <events>
+      <event name="item:saved">
+        <handler type="Demo.Eventhandlers.SampleEventHandlers, MyDemo" method="OnItemSaved"/>
+      </event>
+      <event name="item:saving">
+        <handler type="Demo.Eventhandlers.SampleEventHandlers, MyDemo" method="OnItemSaving"/>
+      </event>
+    </events>
+  </sitecore>
+</configuration>
