@@ -47,6 +47,9 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\..\..\Depends\Sitecore\bin7\Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="sitecore.nexus">
+      <HintPath>..\..\..\..\Depends\Sitecore\bin7\sitecore.nexus.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -63,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Commands.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\licence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\license.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
