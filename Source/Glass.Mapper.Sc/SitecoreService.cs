@@ -1432,7 +1432,14 @@ namespace Glass.Mapper.Sc
         public void Map<T>(T target)
         {
             var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+
+            if(config == null)
+                throw new MapperException("No configuration for type {0}. Load configuration using Attribute or Fluent configuration.".Formatted(typeof(T).Name));
+
             var item = config.ResolveItem(target, Database);
+
+            if (item == null)
+                return;
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
