@@ -29,12 +29,15 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// <typeparam name="T"></typeparam>
     public class SitecoreInfo<T> : AbstractPropertyBuilder<T, SitecoreInfoConfiguration>
     {
+        private readonly SitecoreTypeConfiguration _owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfo{T}"/> class.
         /// </summary>
         /// <param name="ex">The ex.</param>
-        public SitecoreInfo(Expression<Func<T, object>> ex):base(ex){
+        public SitecoreInfo(Expression<Func<T, object>> ex, SitecoreTypeConfiguration owner):base(ex)
+        {
+            _owner = owner;
         }
 
         /// <summary>
@@ -45,6 +48,14 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreInfo<T> InfoType(SitecoreInfoType type)
         {
             Configuration.Type = type;
+            if (type == SitecoreInfoType.Language)
+            {
+                _owner.LanguageConfig = Configuration;
+            }
+            else if (type == SitecoreInfoType.Version)
+            {
+                _owner.VersionConfig = Configuration;
+            }
             return this;
         }
         /// <summary>

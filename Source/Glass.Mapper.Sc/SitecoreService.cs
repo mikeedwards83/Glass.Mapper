@@ -1427,6 +1427,27 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
+        #region Map
+
+        public void Map<T>(T target)
+        {
+            var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+            var item = config.ResolveItem(target, Database);
+
+            SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
+            creationContext.SitecoreService = this;
+            creationContext.RequestedType = typeof (T);
+            creationContext.ConstructorParameters = new object[0];
+            creationContext.Item = item;
+            creationContext.InferType = false;
+            creationContext.IsLazy = false;
+            creationContext.Parameters = new Dictionary<string, object>();
+
+            config.MapPropertiesToObject(target, this,creationContext);
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates the data mapping context.
         /// </summary>
