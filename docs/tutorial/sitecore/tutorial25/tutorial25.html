@@ -45,12 +45,117 @@ title: Tutorial 25 - Working with Sitecore 7 Search
                 
                 var loader = new SitecoreFluentConfigurationLoader();
                 var config = loader.Add&lt;MySearchItem&gt;();
+    
+                <!-- MUST MAP -->
                 config.Id(x => x.ItemId);
+                config.Info(x => x.Language).InfoType(SitecoreInfoType.Language);
+                config.Info(x => x.Version).InfoType(SitecoreInfoType.Version);            
+                <!-- MUST MAP -->
+
                 config.Field(x => x.RichTextContent);
                 config.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
-                config.Info(x => x.Language).InfoType(SitecoreInfoType.Language);
-                config.Info(x => x.Version).InfoType(SitecoreInfoType.Version);
+                
 
                return new IConfigurationLoader[]{attributes, loader};
     }
 </pre>
+<p>
+    After the standard configuration loader we configure the item Id, Language and Version. I would recommended that you always map these three properties, this will ensure that 
+    Glass.Mapper is able to find the exact item to return.
+</p>
+<p>
+    After this we can map the additional Sitecore properties as we would normally. Without our code we can then call the ISitecoreService.Map method:
+</p>
+<pre class="csharp">
+            var index = ContentSearchManager.GetIndex("sitecore_master_index");
+            var sitecoreService = new SitecoreService("master");
+
+            using (var context = index.CreateSearchContext())
+            {
+                var results = context.GetQueryable&lt;MySearchItem&gt;()
+                        .Where(item =&gt; item.TemplateName == "Sample Item")
+                        .Take(10)
+                        .ToList();
+
+                foreach (var result in results)
+                {
+                    sitecoreService.Map(result);
+                }
+            }
+</pre>
+<p>
+    Notice that we query the index first and then pass it to Glass to do the final mapping, we choose this root because it gives you more 
+    control over when you want items to be passed to Glass.
+</p>
+
+<h2>Using a Custom Result Class</h2>
+<p>
+    The other way to get results from Sitecore 7 search API is just to use your own class that doesn't inherit from SearchResultItem. 
+    Lets take this example class:
+</p>
+<pre class="csharp">
+        [SitecoreType]
+        public class MySearchItem
+        {
+            [SitecoreId]
+            [IndexField("_id")]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Language)]
+            [IndexField("_language")]
+            public virtual string Language { get; set; }
+
+            [TypeConverter(typeof(IndexFieldItemUriValueConverter))]
+            [XmlIgnore]
+            [IndexField("_uniqueid")]
+            public virtual ItemUri Uri { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Version)]
+            public virtual int Version
+            {
+                get
+                {
+                    return Uri == null ? 0 : Uri.Version.Number;
+                }
+            }
+
+            [SitecoreField]
+            public virtual string RichTextContent { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Url, UrlOptions = SitecoreInfoUrlOptions.LanguageEmbeddingNever)]
+            public virtual string Url { get; set; }
+        }
+</pre>
+
+<p>
+    You should setup your class to have the Id, Language, Uri and Version properties as shown above, without all these properties Glass.Mapper won't be able to find
+    the appropriate item when you try and retrieve it from Sitecore. You can then map additional fields as you normally would using IndexFields or Glass.Mapper attributes.
+</p>
+<p>
+    The following code shows how we can pull data from Sitecore by using the ISitecoreService.Map method:
+</p>
+<pre class="csharp">
+            var index = ContentSearchManager.GetIndex("sitecore_master_index");
+            var sitecoreService = new SitecoreService("master");
+
+            using (var context = index.CreateSearchContext())
+            {
+                var results = context.GetQueryable&lt;MySearchItem&gt;()
+                        .Take(10)
+                        .ToList();
+
+                foreach (var result in results)
+                {
+                    sitecoreService.Map(result);
+                }
+            }
+</pre>
+
+<h2>Summary</h2>
+<p>
+    The ISitecoreService.Map method can be used with any object that has been partially populated and defines a property that represents the Sitecore item ID. The ID property must
+    contain the ID of the target item. Adding the Language and Version properties allows Glass.Mapper to better identify the item you want to map to.
+</p>
+<p>
+    You can use the ISitecoreService.Map method to merge objects from other data sources, not just Sitecore 7 Search.
+</p>
