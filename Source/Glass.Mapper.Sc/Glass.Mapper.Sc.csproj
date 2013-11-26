@@ -107,6 +107,7 @@
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Dynamic\DynamicItem.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
+    <Compile Include="Fields\HtmlEncodedString.cs" />
     <Compile Include="Fields\Image.cs" />
     <Compile Include="Fields\Link.cs" />
     <Compile Include="Fields\LinkType.cs" />
