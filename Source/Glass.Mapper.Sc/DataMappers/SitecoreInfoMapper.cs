@@ -131,6 +131,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
+                    urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:
                     if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (string))
