@@ -1,0 +1,56 @@
+---
+layout: DocsLayout
+title: Tutorial 25 - Working with Sitecore 7 Search
+---
+
+{% include pageheader.html %}
+
+<p>
+    In this tutorial we will look at how we can use Glass.Mapper with the new Sitecore 7 search API.
+</p>
+<p class="alert-warning">
+    Supporting Glass.Mapper.Sc 3.1.0 and onwards.
+</p>
+<p>
+    The integration with Sitecore 7 search use the new SitecoreService.Map method that allows you to map Sitecore data to any
+    existing object.
+</p>
+<p>
+    One requirement is that the existing object must have a configuration that has already been loaded by Glass.Mapper, i.e. On Demand mapping won't work
+    with this method. I will look at how we can map both a class that inherits the SearchResultItem class and also a raw class.
+</p>
+
+<h2>Using the SearchResultItem</h2>
+<p>
+    Lets assume we have the following class that represents our search results:
+</p>
+<pre class="csharp">
+        public class MySearchItem : SearchResultItem
+        {
+            public virtual string Url { get; set; }
+
+            public virtual string RichTextContent { get; set; }
+        }
+</pre>
+<p>
+    The class inherits from the Sitecore.ContentSearch.SearchTypes.SearchResultItem and defines two additional properties. The Url is the items Url which we don't want to index
+    and the RichTextContent which points to a Rich Text field. 
+</p>
+<p>
+    First we have to configure it, because we can't add attributes to the SearchResultItem we have to use fluent configuration, add this to your GlassMapperScCustom.GlassLoaders method:
+</p>
+<pre class="csharp">
+    public static IConfigurationLoader[] GlassLoaders(){
+			    var attributes = new SitecoreAttributeConfigurationLoader("glass.sitecore7");
+                
+                var loader = new SitecoreFluentConfigurationLoader();
+                var config = loader.Add&lt;MySearchItem&gt;();
+                config.Id(x => x.ItemId);
+                config.Field(x => x.RichTextContent);
+                config.Info(x => x.Url).InfoType(SitecoreInfoType.Url);
+                config.Info(x => x.Language).InfoType(SitecoreInfoType.Language);
+                config.Info(x => x.Version).InfoType(SitecoreInfoType.Version);
+
+               return new IConfigurationLoader[]{attributes, loader};
+    }
+</pre>
