@@ -2,7 +2,7 @@
 layout: BlogLayout
 title: Glass.Mapper.Sc Release
 image: http://cdn.memegenerator.net/instances/500x/43344545.jpg
-abstract: How to encode strings with Glass.Mapper.
+abstract: What was in todays release?
 caption: 27 Nov 2013
 ---
 			
@@ -20,7 +20,7 @@ caption: 27 Nov 2013
 
 <h2>Anonymous Types</h2>
 <p>
-    In this release we have simplified the syntax for making field editable. You now don't have to use RenderLink or RenderImage you can use the Editable method:
+    In this release we have simplified the syntax for making fields editable. You now don't have to use RenderLink or RenderImage you can use the Editable method:
 </p>
 <pre class="csharp">
     @Editable(x=>x.FeaturedImage)
@@ -35,7 +35,7 @@ caption: 27 Nov 2013
 <h2>Interface Me</h2>
 <p>
     We have added the <strong>GetItemWithInterface</strong> method to the <strong>ISitecoreService</strong> class. This method allows you to throw a whole set of interfaces at Glass.Mapper
-    and it will return a concrete type that represents these interfaces. The following code shows how this might work:
+    and it will return a concrete type that represents these interfaces. The following code shows how this works:
 </p>
 <pre class="csharp">
             var result = SitecoreContext.GetItemWithInterfaces&lt;IPage, IContent, IFeature&gt;("/sitecore/content/home");
@@ -45,7 +45,7 @@ caption: 27 Nov 2013
             var feature = result as IFeature;
 </pre>
 <p>
-    This can be really useful when you don't want to create an type that aggregates the interfaces.
+    This can be really useful when you don't want to create a type that aggregates the interfaces.
 </p>
 
 <h2>And more</h2>
