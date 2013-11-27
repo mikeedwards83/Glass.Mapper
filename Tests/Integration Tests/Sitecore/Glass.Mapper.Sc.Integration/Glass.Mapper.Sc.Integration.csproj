@@ -117,6 +117,7 @@
     <Compile Include="SitecoreContextFixture.cs" />
     <Compile Include="SitecoreServiceFixture.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction\WindsorConstructionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Commands.config">

@@ -136,7 +136,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof (StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -173,7 +173,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -209,7 +209,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -245,7 +245,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -282,7 +282,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -318,7 +318,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -355,7 +355,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 true,
-                false).Returns(expected);
+                false, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 
@@ -392,7 +392,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
                 false,
-                true).Returns(expected);
+                true, null).Returns(expected);
 
             var mappingContext = new SitecoreDataMappingContext(obj, source, service);
 

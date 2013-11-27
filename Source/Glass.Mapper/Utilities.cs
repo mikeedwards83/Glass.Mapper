@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
@@ -112,8 +113,16 @@ namespace Glass.Mapper
         /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetProperty(Type type, string name)
         {
-            var property = type.GetProperty(name, Flags);
-            
+            PropertyInfo property = null;
+            try
+            {
+                property = type.GetProperty(name, Flags);
+            }
+            catch (AmbiguousMatchException ex)
+            {
+                //this is probably caused by an item having two indexers e.g SearchResultItem;
+            }
+
             if(property == null)
             {
                 var interfaces = type.GetInterfaces();
@@ -158,6 +167,25 @@ namespace Glass.Mapper
         }
 
 
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
+        {
+            NameValueCollection nameValues = new NameValueCollection();
+            if (target != null)
+            {
+                var type = target.GetType();
+                var properties = GetAllProperties(type);
+
+                foreach (var propertyInfo in properties)
+                {
+                    var value = propertyInfo.GetValue(target, null);
+                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
+                                   value == null ? string.Empty : value.ToString());
+                }
+            }
+            return nameValues;
+
+        }
+
         /// <summary>
         /// Creates the type of the generic.
         /// </summary>
@@ -176,9 +204,27 @@ namespace Glass.Mapper
             return obj;
         }
 
+        /// <summary>
+        /// Gets the generic argument.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Type.</returns>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// Type {0} has more than one generic argument.Formatted(type.FullName)
+        /// or
+        /// The type {0} does not contain any generic arguments.Formatted(type.FullName)
+        /// </exception>
+        public static Type GetGenericArgument(Type type)
+        {
+            Type[] types = type.GetGenericArguments();
+            if (types.Count() > 1) throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
+            if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
+            return types[0];
+        }
+
         public static string GetPropertyName(Expression expression)
         {
-            string name = string.Empty;
+            string name = String.Empty;
 
             switch (expression.NodeType)
             {
@@ -322,7 +368,7 @@ namespace Glass.Mapper
 			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
 			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
 		}
-   }
+    }
 }
 
 

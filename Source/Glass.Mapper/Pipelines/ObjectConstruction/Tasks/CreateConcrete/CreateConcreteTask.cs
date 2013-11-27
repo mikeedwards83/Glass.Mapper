@@ -49,10 +49,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null)
+            if (args.Result != null || args.Configuration == null)
                 return;
 
             var type = args.Configuration.Type;
+
 
             if(type.IsInterface)
             {

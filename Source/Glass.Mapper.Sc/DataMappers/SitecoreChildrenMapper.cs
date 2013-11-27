@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext = mappingContext as SitecoreDataMappingContext;
             var scConfig = Configuration as SitecoreChildrenConfiguration;
 
-            Type genericType = Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
+            Type genericType = Mapper.Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
 
             Func<IEnumerable<Item>> getItems = () => scContext.Item.Children;
 

@@ -38,7 +38,7 @@ namespace Glass.Mapper.Sc
         /// Gets or sets the sitecore service.
         /// </summary>
         /// <value>The sitecore service.</value>
-        public SitecoreService SitecoreService { get; set; }
+        public ISitecoreService SitecoreService { get; set; }
     }
     
 }

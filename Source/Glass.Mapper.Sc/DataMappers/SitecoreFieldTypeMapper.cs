@@ -62,7 +62,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             if (target == null) return null;
-            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
+            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType, null);
         }
 
         /// <summary>

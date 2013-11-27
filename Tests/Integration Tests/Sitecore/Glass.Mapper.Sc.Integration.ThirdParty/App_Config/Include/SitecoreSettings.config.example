@@ -1,0 +1,27 @@
+<!--
+
+Purpose: This include file shows how to change elements in the <settings> section
+of the web.config file
+
+To enable this, rename this file so that it has a ".config" extension
+
+Notice that when changing simple settings like this, you can typically put in the
+setting directly without using "patch:attribute" like we do in the structure below.
+But you can also use "patch:attribute" for clarity:
+    <setting name="RequireLockBeforeEditing">
+      <patch:attribute name="value">false</patch:attribute>
+    </setting>
+
+-->
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <settings>
+      <!--  REQUIRE LOCK BEFORE EDITING
+            If true, the user must have a lock on a document before
+            he can edit it, otherwise it is always ready for editing
+      -->
+      <setting name="RequireLockBeforeEditing" value="false"/>
+      
+    </settings>
+  </sitecore>
+</configuration>
