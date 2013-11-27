@@ -187,6 +187,8 @@
     <Compile Include="Web\Ui\AbstractGlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Web\Ui\AbstractGlassWebControl.cs" />
+    <Compile Include="Web\Ui\GlassWebControl.cs" />
     <Compile Include="Web\Ui\GlassDynamicPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
