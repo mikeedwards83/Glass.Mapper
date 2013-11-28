@@ -98,9 +98,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                var parent = Parent as WebControl;
-                return parent == null ? string.Empty : parent.DataSource;
+                return !String.IsNullOrEmpty(base.DataSource)
+                           ? base.DataSource
+                           : String.Empty;
             }
+            set { base.DataSource = value ?? String.Empty; }
         }
 
         /// <summary>

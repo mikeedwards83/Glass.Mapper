@@ -24,7 +24,7 @@ using Sitecore.Web.UI.WebControls;
 namespace Glass.Mapper.Sc.Web.Ui
 {
     /// <summary>
-    ///     Class GlassUserControl
+    ///     Class GlassWebControl
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class GlassWebControl<T> : AbstractGlassWebControl where T : class
