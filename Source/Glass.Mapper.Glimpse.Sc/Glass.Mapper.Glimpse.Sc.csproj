@@ -35,6 +35,9 @@
     <Reference Include="Glimpse.Core">
       <HintPath>..\..\packages\Glimpse.1.8.0\lib\net45\Glimpse.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +54,14 @@
     <ProjectReference Include="..\Glass.Mapper.Glimpse\Glass.Mapper.Glimpse.csproj">
       <Project>{733d7eff-5089-4d6d-9073-245a8998c886}</Project>
       <Name>Glass.Mapper.Glimpse</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
