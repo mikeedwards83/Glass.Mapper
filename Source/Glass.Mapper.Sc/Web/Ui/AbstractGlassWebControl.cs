@@ -18,45 +18,36 @@
 
 using System;
 using System.Linq.Expressions;
-using System.Web.UI;
+using System.Web;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
     /// <summary>
-    ///     Class AbstractGlassUserControl
+    ///     Class AbstractGlassWebControl
     /// </summary>
     public abstract class AbstractGlassWebControl : WebControl
     {
-        private readonly ISitecoreContext _sitecoreContext;
+        private string _dataSource;
         private IGlassHtml _glassHtml;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
+        ///     Initializes a new instance of the <see cref="AbstractGlassWebControl" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="glassHtml"></param>
-        public AbstractGlassWebControl(ISitecoreContext context, IGlassHtml glassHtml)
+        protected AbstractGlassWebControl(ISitecoreContext context, IGlassHtml glassHtml)
         {
             _glassHtml = glassHtml;
-            _sitecoreContext = context;
+            SitecoreContext = context;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
+        ///     Initializes a new instance of the <see cref="AbstractGlassWebControl" /> class.
         /// </summary>
-        /// <param name="context"></param>
-        public AbstractGlassWebControl(ISitecoreContext context)
-            : this(context, new GlassHtml(context))
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
-        /// </summary>
-        public AbstractGlassWebControl()
-            : this(new SitecoreContext())
+        protected AbstractGlassWebControl()
+            : this(null, null)
         {
         }
 
@@ -75,10 +66,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         ///     Represents the current Sitecore context
         /// </summary>
         /// <value>The sitecore context.</value>
-        public ISitecoreContext SitecoreContext
-        {
-            get { return _sitecoreContext; }
-        }
+        public ISitecoreContext SitecoreContext { get; private set; }
 
         /// <summary>
         ///     Access to rendering helpers
@@ -98,11 +86,14 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                return !String.IsNullOrEmpty(base.DataSource)
-                           ? base.DataSource
-                           : String.Empty;
+                if (_dataSource == null)
+                {
+                    var parent = Parent as WebControl;
+                    _dataSource = parent == null ? String.Empty : parent.DataSource;
+                }
+                return _dataSource;
             }
-            set { base.DataSource = value ?? String.Empty; }
+            set { _dataSource = value; }
         }
 
         /// <summary>
@@ -115,7 +106,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
         /// <summary>
-        /// The Sitecore Item pulled from either the DataSource or Context.
+        ///     The Sitecore Item pulled from either the DataSource or Context.
         /// </summary>
         public Item DataSourceItem
         {
@@ -125,6 +116,19 @@ namespace Glass.Mapper.Sc.Web.Ui
                            ? null
                            : Sitecore.Context.Database.GetItem(DataSource);
             }
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            //we have to activate it here because of
+            //some weird lifecycle stuff in the page editor
+            if (SitecoreContext == null)
+            {
+                SitecoreContext = new SitecoreContext();
+                _glassHtml = new GlassHtml(SitecoreContext);
+            }
+
+            base.OnInit(e);
         }
 
         /// <summary>
@@ -184,7 +188,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
                                                           object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, System.Web.HttpContext.Current.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(model, field, HttpContext.Current.Response.Output, attributes, isEditable);
         }
 
         /// <summary>

@@ -33,15 +33,16 @@ namespace Glass.Mapper.Sc.Web.Ui
         ///     Initializes a new instance of the <see cref="GlassWebControl{T}" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public GlassWebControl(ISitecoreContext context)
-            : base(context)
+        /// <param name="glassHtml"></param>
+        protected GlassWebControl(ISitecoreContext context, IGlassHtml glassHtml)
+            : base(context, glassHtml)
         {
         }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="GlassWebControl{T}" /> class.
         /// </summary>
-        public GlassWebControl()
+        protected GlassWebControl() : this(null, null)
         {
         }
 
