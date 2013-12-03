@@ -89,19 +89,29 @@ namespace Glass.Mapper.Configuration
         /// <param name="context">The context.</param>
         public void MapPropertiesToObject( object obj, IAbstractService service, AbstractTypeCreationContext context)
         {
-            //create properties 
-            AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
-
-            foreach (var prop in Properties)
+            try
             {
-                try
+                //create properties 
+                AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
+
+                foreach (var prop in Properties)
                 {
-                    prop.Mapper.MapCmsToProperty(dataMappingContext);
+                    try
+                    {
+                        prop.Mapper.MapCmsToProperty(dataMappingContext);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new MapperException(
+                            "Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name,
+                                prop.PropertyInfo.DeclaringType.FullName), e);
+                    }
                 }
-                catch (Exception e)
-                {
-                    throw new MapperException("Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name, prop.PropertyInfo.DeclaringType.FullName), e);
-                }
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException(
+                           "Failed to map properties on {0}.".Formatted(context.DataSummary()), ex);
             }
         }
 

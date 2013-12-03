@@ -39,6 +39,15 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The sitecore service.</value>
         public ISitecoreService SitecoreService { get; set; }
+
+        public override string DataSummary()
+        {
+            if (Item == null)
+            {
+                return "Item is null";
+            }
+            return Item.Paths.FullPath;
+        }
     }
     
 }
