@@ -13,11 +13,38 @@ title: Tutorial 10 - Dynamic items
     I have created a new sublayout called Metadata which will be used to contain the data I want to rendering in the head
     section of the page. The code behind for the sublayout uses the GlassUserControl but takes the keyword dynamic:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial10/tutorial10.metadata.ascx.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using Glass.Mapper.Sc.Web.Ui;
+
+namespace Glass.Mapper.Sites.Sc.layouts.Site.Misc
+{
+    public partial class Metadata : GlassUserControl&lt;dynamic&gt;
+    {
+
+    }
+}
+
+</pre>
 <p>
     My ascx markup looks like this:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial10/tutorial10.metadata.ascx" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+&lt;%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Metadata.ascx.cs" Inherits="Glass.Mapper.Sites.Sc.layouts.Site.Misc.Metadata" %&gt;
+
+&lt;title&gt;&lt;%=Model.Title %&gt;&lt;/title&gt;
+
+&lt;link rel="canonical" href="http://sitecore.glass.com&lt;%=Model.Url %&gt;" /&gt;
+&lt;link rel="prev" href="http://sitecore.glass.com&lt;%=Model.Parent.Url %&gt;" /&gt;
+
+&lt;% foreach (var child in Model.Children)
+   { %&gt;
+&lt;link rel="next" href="http://sitecore.glass.com&lt;%=child.Url %&gt;"/&gt;
+&lt;% } %&gt;
+
+&lt;meta name="updated" content="&lt;%=Model.__updated %&gt;" /&gt;
+
+
+</pre>
 <p>
     In the markup you can see we are pulling the items Title and the Updated fields. To render these fields in the background
     they are sent through the FieldRender control, you don't have to worry about this but it does mean that Rich Text

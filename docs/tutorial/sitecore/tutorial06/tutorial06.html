@@ -13,12 +13,54 @@ title: Tutorial 6 - Using inheritance
     inherit from it. For example in our simple solution most of our models use the "Page Title" field and have the items
     URL and ID. We can extract this into a separate class:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.contentbase.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System;
+using Glass.Mapper.Sc.Configuration.Attributes;
+
+namespace Glass.Mapper.Sites.Sc.Models.Misc
+{
+    [SitecoreType(AutoMap = true)]
+    public class ContentBase
+    {
+        public virtual string Title { get; set; }
+
+        public virtual Guid Id { get; set; }
+
+        public virtual string Url { get; set; }
+    }
+}
+
+</pre>
 <p>
     Now that we have the base type defined we can update the NewsArticle class to inherit from it, and remove the properties 
     that now exist on the base type:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial06/tutorial06.newsarticle.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System;
+using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sites.Sc.Models.Misc;
+
+namespace Glass.Mapper.Sites.Sc.Models.Content
+{
+    [SitecoreType]
+    public class NewsArticle : ContentBase
+    {
+        [SitecoreField]
+        public virtual string Abstract { get; set; }
+
+        [SitecoreField]
+        public virtual string MainBody { get; set; }
+
+        [SitecoreField]
+        public virtual Image FeaturedImage { get; set; }
+
+        [SitecoreField]
+        public virtual DateTime Date { get; set; }
+    }
+}
+</pre>
 <p>
     Notice that we have now simplified the NewsArticle configuration so that it only defines the properties that exist on the
     NewsArticle class itself.

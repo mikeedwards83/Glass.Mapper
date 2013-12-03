@@ -25,12 +25,54 @@ title: Tutorial 12 - Sitecore MVC
     I have specified the NewsLanding model created in <a href="../tutorial07/tutorial07.html">Tutorial 7</a>. 
     The mark-up for the CSHTML page is very simple:
 </p>
-<pre class="github xml" file="docs/tutorial/sitecore/tutorial12/tutorial12.newslandingxml.cshtml" ref="gh-pages"></pre>
+<pre class="github xml"  ref="gh-pages">
+@inherits System.Web.Mvc.WebViewPage&lt;Glass.Mapper.Sites.Sc.Models.Landing.NewsLanding&gt;
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;news&gt;
+    &lt;title&gt;@Model.Title&lt;/title&gt;
+    &lt;articles count="@Model.Articles.Count()"&gt;
+        @foreach (var article in Model.Articles)
+        {
+            &lt;article&gt;
+                &lt;title&gt;@article.Title&lt;/title&gt;
+                &lt;image&gt;@article.FeaturedImage.Src&lt;/image&gt;
+                &lt;content&gt;@article.MainBody&lt;/content&gt;
+                &lt;date&gt;@article.Date&lt;/date&gt;
+            &lt;/article&gt;
+        }
+    &lt;/articles&gt;
+&lt;/news&gt;
+</pre>
 <p>
     If we navigate to the news landing page setting the device to XML we get a very simple XML rendering of our 
     news items:
 </p>
-<pre class="github xml" file="docs/tutorial/sitecore/tutorial12/tutorial12.newslanding.xml" ref="gh-pages"></pre>
+<pre class="github xml" ref="gh-pages">
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;news&gt;
+    &lt;title&gt;News&lt;/title&gt;
+    &lt;articles count="3"&gt;
+            &lt;article&gt;
+                &lt;title&gt;New Features Released&lt;/title&gt;
+                &lt;image&gt;/~/media/Site/boots.ashx&lt;/image&gt;
+                &lt;content&gt;&lt;/content&gt;
+                &lt;date&gt;07/12/2012 00:00:00&lt;/date&gt;
+            &lt;/article&gt;
+            &lt;article&gt;
+                &lt;title&gt;Development time cut to reduce cost&lt;/title&gt;
+                &lt;image&gt;/~/media/Site/catonsofa.ashx&lt;/image&gt;
+                &lt;content&gt;&lt;p&gt;Bacon ipsum dolor sit amet doner shoulder flank, filet mignon tail biltong turkey sausage fatback jerky boudin. Swine beef bresaola ball tip sausage, kielbasa fatback leberkas. Pork drumstick venison short loin jerky andouille frankfurter tail ham rump boudin. Leberkas pig short loin, sausage biltong spare ribs ribeye bresaola salami sirloin ham hock turkey brisket. Corned beef tail ham, beef shank pancetta shoulder prosciutto turkey hamburger. Jowl sirloin venison frankfurter shoulder capicola, tenderloin ribeye cow hamburger pork. Pastrami spare ribs filet mignon rump tongue sausage shank beef ribs pig chuck drumstick pork loin doner beef shankle. Hello world&lt;/p&gt;&lt;/content&gt;
+                &lt;date&gt;18/02/2013 00:00:00&lt;/date&gt;
+            &lt;/article&gt;
+            &lt;article&gt;
+                &lt;title&gt;Glass Mappers Official Release&lt;/title&gt;
+                &lt;image&gt;/~/media/Site/snowboard.ashx&lt;/image&gt;
+                &lt;content&gt;&lt;/content&gt;
+                &lt;date&gt;01/02/2013 00:00:00&lt;/date&gt;
+            &lt;/article&gt;
+    &lt;/articles&gt;
+&lt;/news&gt;
+</pre>
 <p>
     You can see from this tutorial that we don't actually have to do anything to get our Glass.Mapper models
     working with Sitecore MVC.

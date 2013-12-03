@@ -17,21 +17,93 @@ title: Tutorial 5 - Working with the Page Editor
     The property that represents the Sitecore ID is required to allow Glass.Mapper to link your model to the actual Sitecore
     item in Page Edit mode.
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System;
+using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.Fields;
+
+namespace Glass.Mapper.Sites.Sc.Models.Content
+{
+    [SitecoreType]
+    public class NewsArticle 
+    {
+        [SitecoreId]
+        public virtual Guid Id { get; set; }
+        
+        [SitecoreField]
+        public virtual string Title { get; set; }
+
+        [SitecoreField]
+        public virtual string Abstract { get; set; }
+
+        [SitecoreField]
+        public virtual string MainBody { get; set; }
+
+        [SitecoreField]
+        public virtual Image FeaturedImage { get; set; }
+
+        [SitecoreField]
+        public virtual DateTime Date { get; set; }
+
+        [SitecoreInfo(SitecoreInfoType.Url)]
+        public virtual string Url { get; set; }
+    }
+}
+
+</pre>
 <p>
     Our model can now work with the Page Editor, next we need to create a Sublayout in Sitecore called NewsArticleSublayout. In 
     the previous examples we manually retrieved the item from Sitecore in the Page_Load method however we can make this simpler
     by making the Sublayout inherit from the GlassUserControl. This control is generic and takes the type that you want to be 
     loaded:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.ascx.cs" ref="gh-pages"></pre>
+<pre class="github cs" ref="gh-pages">
+using Glass.Mapper.Sc.Web.Ui;
+using Glass.Mapper.Sites.Sc.Models.Content;
+
+namespace Glass.Mapper.Sites.Sc.layouts.Site.Content
+{
+    public partial class NewsArticleSublayout : GlassUserControl&lt;NewsArticle&gt;
+    {
+    }
+}
+
+
+</pre>
 <p>
     The GlassUserControl already has a property called Model and also has some useful methods to make fields editable.
 </p>
 <p>
     The code for the ASCX page is shown below:
 </p>
-<pre class="github html" file="docs/tutorial/sitecore/tutorial05/tutorial05.newsarticle.ascx" ref="gh-pages"></pre>
+<pre class="github html"  ref="gh-pages">
+&lt;%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsArticleSublayout.ascx.cs" Inherits="Glass.Mapper.Sites.Sc.layouts.Site.Content.NewsArticleSublayout" %&gt;
+&lt;div class="page-header"&gt;
+    &lt;h1&gt;&lt;%=Editable(x=&gt; x.Title) %&gt; &lt;small&gt;Date: &lt;%=Editable(x =&gt; x.Date, x =&gt; x.Date.ToString("dd MMM yyyy"))  %&gt;&lt;/small&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;%=Editable(x=&gt; x.MainBody )%&gt;
+
+&lt;% if (IsInEditingMode)
+   { %&gt;
+        &lt;div class="well"&gt;
+            &lt;h3&gt;Additional fields&lt;/h3&gt;
+            &lt;dl&gt;
+                &lt;dt&gt;Abstract&lt;/dt&gt;
+                &lt;dd&gt;
+                    &lt;%=Editable(x=&gt;x.Abstract) %&gt;
+                &lt;/dd&gt;
+                &lt;dt&gt;Featured Image&lt;/dt&gt;
+                &lt;dd&gt;
+                    &lt;%=Editable(x=&gt;x.FeaturedImage) %&gt;
+                &lt;/dd&gt;
+            &lt;/dl&gt;
+
+           
+        &lt;/div&gt;
+
+&lt;% } %&gt;
+</pre>
 <p>
     There are several different examples of using the Page Editor in this page. The simplest form is simply specify this field
     you want to edit in the lambda expression:

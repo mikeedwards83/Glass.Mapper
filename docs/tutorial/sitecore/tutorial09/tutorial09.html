@@ -17,7 +17,31 @@ title: Tutorial 9 - Handling passed in items
     These items are not sorted by Start date, we will create a sub-item sorter to ensure that the items are listed in Start
     date order. Our comparer  logic is very straight forward:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial09/tutorial09.sortorder.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using Glass.Mapper.Sc;
+using Glass.Mapper.Sites.Sc.Models.Content;
+using Sitecore.Data.Comparers;
+
+namespace Glass.Mapper.Sites.Sc.Client.Item
+{
+    public class EventSortOrder : DefaultComparer
+    {
+        protected override int DoCompare(Sitecore.Data.Items.Item item1, Sitecore.Data.Items.Item item2)
+        {
+            if (item1.TemplateName == "Event")
+            {
+                var evnt1 = item1.GlassCast&lt;Event&gt;();
+                var evnt2 = item2.GlassCast&lt;Event&gt;();
+
+                return evnt1.Start.CompareTo(evnt2.Start);
+            }
+
+            return base.DoCompare(item1, item2);
+        }
+    }
+}
+
+</pre>
 <p>
     The GlassCast method allows you to convert a Sitecore item to a specific type loaded by the default Glass.Mapper context. Data is 
     read directly from the item and not by going back to the database first. It also has a matching extension method called GlassRead 

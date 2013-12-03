@@ -18,17 +18,133 @@ title: Tutorial 11 - Sitecore Context and Service classes and Saving Items
     comments will be added to and could represent any item in our solution. The second class is the comment itself that will
     be saved back to Sitecore:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentPage.cs" ref="gh-pages"></pre>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.Comment.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System.Collections.Generic;
+using Sitecore.Data;
+
+namespace Glass.Mapper.Sites.Sc.Models.Content
+{
+    public class CommentPage
+    {
+        public virtual ID Id { get; set; }
+        public virtual IEnumerable&lt;Comment&gt; Children { get; set; }
+    }
+}
+
+
+</pre>
+<pre class="github cs" ref="gh-pages">
+using System;
+using Glass.Mapper.Sc.Configuration.Attributes;
+
+namespace Glass.Mapper.Sites.Sc.Models.Content
+{
+    [SitecoreType(TemplateId = "{B6E1D6BA-EE54-4E71-8003-E6A1AF7119EB}", AutoMap = true)]
+    public class Comment
+    {
+        public virtual string Name { get; set; }
+
+        public string FullName { get; set; }
+        public virtual string Email { get; set; }
+
+        [SitecoreField("Comment")]
+        public virtual string Content { get; set; }
+
+        [SitecoreField("__Created")]
+        public virtual DateTime Date { get; set; }
+    }
+}
+</pre>
 <p>
     Now that we have or model lets layout the page, I have used a mixture of WebControls and inline statements to create
     the forms and comments rendering: 
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentSublayout.ascx" ref="gh-pages"></pre>
+<pre class="github cs" ref="gh-pages">
+&lt;%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommentSublayout.ascx.cs" Inherits="Glass.Mapper.Sites.Sc.layouts.Site.Content.CommentSublayout" %&gt;
+&lt;form&gt;
+    &lt;fieldset&gt;
+        &lt;asp:Label ID="Label1" runat="server" AssociatedControlID="CommentName"&gt;Name:&lt;/asp:Label&gt;
+        &lt;asp:TextBox runat="server" ID="CommentName" CssClass="input-xlarge"&gt;&lt;/asp:TextBox&gt;
+        &lt;asp:Label ID="Label2" runat="server" AssociatedControlID="CommentEmail"&gt;Email:&lt;/asp:Label&gt;
+        &lt;asp:TextBox runat="server" ID="CommentEmail" CssClass="input-xlarge"&gt;&lt;/asp:TextBox&gt;
+        &lt;asp:Label ID="Label3" runat="server" AssociatedControlID="CommentContent"&gt;Comment:&lt;/asp:Label&gt;
+        &lt;asp:TextBox runat="server" ID="CommentContent" TextMode="MultiLine" CssClass="input-xlarge"&gt;&lt;/asp:TextBox&gt;
+        &lt;div&gt;
+            &lt;asp:Button runat="server" ID="CommentSubmit" Text="Submit" CssClass="btn" /&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;
+&lt;div class="alert alert-success" runat="server" id="CommentThankYou" Visible="false"&gt;
+    &lt;strong&gt;Thank You for commenting!&lt;/strong&gt; Please wait while we approve you comment.
+&lt;/div&gt;
+
+&lt;% if (Model.Children.Any())
+   { %&gt;
+&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;% foreach (var comment in Model.Children)
+       { %&gt;
+    &lt;li&gt;
+        &lt;small&gt;&lt;%=comment.Date.ToString("dd MMM yy") %&gt;&lt;/small&gt; &lt;strong&gt;&lt;%=comment.FullName %&gt;&lt;/strong&gt; 
+        &lt;p&gt;
+            &lt;%=comment.Content %&gt;
+        &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;% } %&gt;
+&lt;/ul&gt;
+&lt;% } %&gt;
+
+</pre>
 <p>
     The code behind for our comment sublayout looks like this:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial11/tutorial11.CommentSublayout.ascx.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System;
+using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.Web.Ui;
+using Glass.Mapper.Sites.Sc.Models.Content;
+using Sitecore.SecurityModel;
+
+namespace Glass.Mapper.Sites.Sc.layouts.Site.Content
+{
+    public partial class CommentSublayout : GlassUserControl&lt;CommentPage&gt;
+    {
+        protected override void OnInit(EventArgs e)
+        {
+            CommentSubmit.Click += CommentSubmit_Click;
+            base.OnInit(e);
+        }
+
+        void CommentSubmit_Click(object sender, EventArgs e)
+        {
+            var contextService = new SitecoreContext();
+            var masterService = new SitecoreService("master");
+
+            var page = contextService.GetCurrentItem&lt;CommentPage&gt;();
+            //we could also use the model property instead of the line above:
+            // var page = this.Model;
+
+            var comment = new Comment();
+
+            //This value will be used for the name of the item
+            comment.Name = DateTime.Now.ToString("yy-MM-ddThh-mm-ss");
+            comment.Content = CommentContent.Text;
+            comment.FullName = CommentName.Text;
+            comment.Email = CommentEmail.Text;
+
+            using (new SecurityDisabler())
+            {
+                masterService.Create(page, comment);
+            }
+
+            CommentThankYou.Visible = true;
+            comment.Content = string.Empty;
+            comment.FullName = string.Empty;
+            comment.Email = string.Empty;
+        }
+    }
+}
+</pre>
 <p>
     The UserControl still inherits from the GlassUserControl so we still specify the model type we want loaded, this allows
     the UserControl to do most of the work.
