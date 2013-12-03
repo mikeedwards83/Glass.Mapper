@@ -25,10 +25,10 @@
                         $pre.html(content);
                     });
                 }
-            }
+            }// if ($pre.hasClass("github"))
         });//pre.github.each
 
-    });
+    }); 
 })(jQuery);
 
 //utilities
