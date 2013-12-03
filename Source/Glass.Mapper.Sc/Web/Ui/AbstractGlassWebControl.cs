@@ -29,7 +29,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public abstract class AbstractGlassWebControl : WebControl
     {
-        private readonly ISitecoreContext _sitecoreContext;
+        private ISitecoreContext _sitecoreContext;
         private IGlassHtml _glassHtml;
 
         /// <summary>
@@ -43,21 +43,28 @@ namespace Glass.Mapper.Sc.Web.Ui
             _sitecoreContext = context;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
-        /// </summary>
-        /// <param name="context"></param>
-        public AbstractGlassWebControl(ISitecoreContext context)
-            : this(context, new GlassHtml(context))
-        {
-        }
+       
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
         /// </summary>
         public AbstractGlassWebControl()
-            : this(new SitecoreContext())
+            : this(null, null)
         {
+        }
+
+
+        protected override void OnInit(EventArgs e)
+        {
+            //we have to activate it here because of
+            //some weird lifecycle stuff in the page editor
+            if (_sitecoreContext == null)
+            {
+                _sitecoreContext = new SitecoreContext();
+                _glassHtml = new GlassHtml(_sitecoreContext);
+            }
+           
+            base.OnInit(e);
         }
 
         /// <summary>
@@ -90,6 +97,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             set { _glassHtml = value; }
         }
 
+        private string _dataSource = null;
         /// <summary>
         ///     The custom data source for the sublayout
         /// </summary>
@@ -98,8 +106,16 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                var parent = Parent as WebControl;
-                return parent == null ? string.Empty : parent.DataSource;
+                if (_dataSource == null)
+                {
+                    var parent = Parent as WebControl;
+                    _dataSource = parent == null ? string.Empty : parent.DataSource;
+                }
+                return _dataSource;
+            }
+            set
+            {
+                _dataSource = value;
             }
         }
 
