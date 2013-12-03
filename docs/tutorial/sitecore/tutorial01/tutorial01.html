@@ -52,7 +52,37 @@ title: Tutorial 1 - Background
     This file is used by WebActivator to load Glass.Mapper.Sc when the application starts. I won't go into how WebActivator works but I will discuss how
     the code in the file works. If you open the GlassMapperSc file you should see code similar to that below but with your namespaces:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial01/tutorial01.GlassMapperSc.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System;
+using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.Configuration.Attributes;
+
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Glass.Mapper.Sites.Sc.App_Start.GlassMapperSc), "Start")]
+
+namespace Glass.Mapper.Sites.Sc.App_Start
+{
+    public static class GlassMapperSc
+    {
+        public static void Start()
+        {
+            //create the resolver
+            var resolver = DependencyResolver.CreateStandardResolver();
+
+            //install the custom services
+            GlassMapperScCustom.CastleConfig(resolver.Container);
+
+            //create a context
+            var context = Glass.Mapper.Context.Create(resolver);
+            context.Load(
+                GlassMapperScCustom.GlassLoaders()
+                );
+
+            GlassMapperScCustom.PostLoad();
+        }
+    }
+}
+
+</pre>
 <p>
     This code sets up the dependency resolver we want to use, in this tutorial we are using Castle Windsor. We then create a Glass.Mapper Context, 
     the context stores all the configuration we need for Glass.Mapper to run. 
@@ -61,7 +91,59 @@ title: Tutorial 1 - Background
     The second file GlassMapperScCustom is where you can do most of your configuration, we can see that it configures the DI container in the CastleConfig
     method and tells Glass to use an attribute loader in the GlassLoaders method. The attribute loaded takes the name of the assembly to load classes from.
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial01/tutorial01.GlassMapperScCustom.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System.Collections.Generic;
+using Castle.Windsor;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.Configuration.Attributes;
+using Sitecore.SecurityModel;
+
+namespace Glass.Mapper.Sites.Sc.App_Start
+{
+
+    public static class GlassMapperScCustom
+    {
+        public static void CastleConfig(IWindsorContainer container)
+        {
+            var config = new Config();
+
+            container.Install(new SitecoreInstaller(config));
+        }
+
+        public static IConfigurationLoader[] GlassLoaders()
+        {
+            var attributes = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sites.Sc");
+
+            return new IConfigurationLoader[] { attributes, Models.Config.ContentConfig.Load() };
+        }
+
+        public static void PostLoad()
+        {
+            //Comment this code in to activate CodeFist
+            /* CODE FIRST START
+            var dbs = Sitecore.Configuration.Factory.GetDatabases();
+            foreach (var db in dbs)
+            {
+                var provider = db.GetDataProviders().FirstOrDefault(x =&gt; x is GlassDataProvider) as GlassDataProvider;
+                if (provider != null)
+                {
+                    using (new SecurityDisabler())
+                    {
+                        provider.Initialise(db);
+                    }
+                }
+            }
+             * CODE FIRST END
+             */
+        }
+    }
+}
+
+
+
+
+</pre>
 
 <p>
     Don't worry if this doesn't all make sense straight away, as you go through the tutorials it will all be come clear. With a single click of Nuget 
