@@ -14,7 +14,38 @@ title: Tutorial 13 - Windsor Construction
     feed to specified in Sitecore along with the number of articles I want to display. My model will look like 
     this:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslanding.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel.Syndication;
+using Glass.Mapper.Sites.Sc.Services.BbcNews;
+
+namespace Glass.Mapper.Sites.Sc.Models.Landing
+{
+
+    public class RssLanding
+    {
+        private readonly IRssService _service;
+
+        public virtual string RssUrl { get; set; }
+
+        public virtual int Number { get; set; }
+
+        public virtual string Title { get; set; }
+
+        public RssLanding(IRssService service)
+        {
+            _service = service;
+        }
+
+        public IEnumerable&lt;SyndicationItem&gt; GetArticles()
+        {
+            var result = _service.GetArticles(RssUrl);
+            return result.Take(Number);
+        }
+    }
+}
+</pre>
 <p>
     Notice that the constructor on my model takes an RSS Service, I need to get Castle Windsor to load this service
     and also tell Glass.Mapper to use the Windsor Construction. We need to update the GlassMapperSc class in the 
@@ -36,12 +67,56 @@ title: Tutorial 13 - Windsor Construction
 <p>
     I have created a ServiceInstaller to ensure I keep my code organised:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.serviceinstaller.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor;
+using Glass.Mapper.Sites.Sc.Services.BbcNews;
+
+namespace Glass.Mapper.Sites.Sc.App_Start
+{
+    public class ServiceInstaller : IWindsorInstaller
+    {
+        public void Install(IWindsorContainer container, IConfigurationStore store)
+        {
+            container.Register(
+                    Component.For&lt;IRssService&gt;().ImplementedBy&lt;RssService&gt;().LifestyleTransient()
+                );
+        }
+    }
+}
+</pre>
 <p>
     I now have my container setup and Glass.Mapper ready to use, lets look at the sublayout code:
 </p>
-<pre class="github xml" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslandingsublayout.ascx" ref="gh-pages"></pre>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial13/tutorial13.rsslandingsublayout.ascx.cs" ref="gh-pages"></pre>
+<pre class="github xml"  ref="gh-pages">
+&lt;%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RssLandingSublayout.ascx.cs" Inherits="Glass.Mapper.Sites.Sc.layouts.Site.Landing.RssLandingSublayout" %&gt;
+&lt;h2&gt;&lt;%=Model.Title %&gt;&lt;/h2&gt;
+
+&lt;ul class="thumbnails"&gt;
+    &lt;% foreach (var article in Model.GetArticles())
+       { %&gt;
+    &lt;li class="span4"&gt;
+    &lt;div class="thumbnail"&gt;
+      &lt;h3&gt;&lt;a href="&lt;%=article.Links.First().Uri.ToString() %&gt;"&gt;&lt;%=article.Title.Text %&gt;&lt;/a&gt;&lt;/h3&gt;
+      &lt;p&gt;&lt;%=article.Summary.Text %&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+    &lt;% } %&gt;
+&lt;/ul&gt;
+
+</pre>
+<pre class="github cs" ref="gh-pages">
+using Glass.Mapper.Sc.Web.Ui;
+using Glass.Mapper.Sites.Sc.Models.Landing;
+
+namespace Glass.Mapper.Sites.Sc.layouts.Site.Landing
+{
+    public partial class RssLandingSublayout : GlassUserControl&lt;RssLanding&gt;
+    {
+    }
+}
+</pre>
 <p>
     My sublayout still remains really simple.
 </p>

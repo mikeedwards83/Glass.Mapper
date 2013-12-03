@@ -17,12 +17,41 @@ title: Tutorial 14 - MVC Page Editor Support
     For this solution I have to very simple models to represent the landing page and the blog
     post:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.bloglanding.cs" ref="gh-pages"></pre>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.blogpost.cs" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+public class BlogLanding : ContentBase
+{
+    public virtual string MainBody { get; set; }
+    public virtual IEnumerable&lt;BlogPost&gt; Children { get; set; }
+}
+</pre>
+<pre class="github cs"  ref="gh-pages">
+public class BlogPost : ContentBase
+{
+    public virtual string MainBody { get; set; }
+    public virtual DateTime Date { get; set; }
+    public virtual string Author { get; set; }
+}
+</pre>
 <p>
     The HTML for the MVC rendering looks like this:
 </p>
-<pre class="github cs" file="docs/tutorial/sitecore/tutorial14/tutorial14.bloglanding.cshtml" ref="gh-pages"></pre>
+<pre class="github cs"  ref="gh-pages">
+    @inherits Glass.Mapper.Sc.Web.Mvc.GlassView&lt;Glass.Mapper.Sites.Sc.Models.Landing.BlogLanding&gt;
+	&lt;h2&gt;@Editable(x=&gt;x.Title)&lt;/h2&gt;
+	&lt;ul&gt;
+		@foreach (var post in Model.Children)
+		{
+		&lt;li&gt;
+			@using (BeginEditFrame(post.Path))
+			{
+			&lt;h3&gt;@Editable(post, x =&gt; x.Title)&lt;/h3&gt;
+			@Editable(post, x =&gt; x.MainBody)
+			}
+		&lt;/li&gt;
+		}
+	&lt;/ul&gt;
+
+</pre>
 <p>
     The first thing to note about the above layout is that it inherits from the <strong>Glass.Mapper.Sc.Web.Mvc.GlassView</strong>
     class. This class exposes the additional methods to support editable fields and edit frames. On the page it looks like
