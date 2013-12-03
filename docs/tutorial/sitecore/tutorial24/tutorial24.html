@@ -22,7 +22,7 @@ title: Tutorial 24 - TDS Code Generation
 </p>
 <ul>
     <li>Enable Code Generation - Check</li>
-    <li>Target Project</li>
+    <li>Target Project - Typically your web project.  If you wish to place your models in a different project (such as a class library), please see this <a href='#differentproject'>note</a>.</li> 
     <li>Code Generation Target File - remember to add the .cs to the end of the file name</li>
     <li>Base Namespace - not that this should be the base with out the assembly name. For example if we want the final namespace to be
         GlassTds.Models just enter Models.
@@ -216,4 +216,24 @@ title: Tutorial 24 - TDS Code Generation
 		public virtual Sample_Item Droplink  {get; set;}
 </pre>
 
+<h3 id="differentproject">Generating Models in a Separate Project</h3>
+If you prefer, you can store your generated models in a separte project. To do this, set the Target Project to the project that will receive the models.  You will also need to modify the file App_Start/InitializeGlass.cs to reference the new assembly:
 
+<pre>
+	public static IConfigurationLoader[] GlassLoaders()
+	{
+		var attributes = new SitecoreAttributeConfigurationLoader(<strong>"your.models.assembly.here"</strong>);
+
+		return new IConfigurationLoader[] { attributes };
+	}
+</pre>
+Note that you can specify multiple assemblies if needed, by listing them in the returned array:
+<pre>
+	public static IConfigurationLoader[] GlassLoaders()
+	{		 
+	     var attributes1 = new SitecoreAttributeConfigurationLoader(<strong>"first.assembly.with.models"</strong>);
+	     var attributes2 = new SitecoreAttributeConfigurationLoader(<strong>"second.assembly.with.models"</strong>);
+
+	     return new IConfigurationLoader[] {attributes1, attributes2};
+	}
+</pre>
