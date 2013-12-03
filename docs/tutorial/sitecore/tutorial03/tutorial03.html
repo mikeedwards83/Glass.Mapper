@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sites.Sc.layouts.Site.Misc
     &lt;a class="brand" href="&lt;%=Model.Url %&gt;"&gt;&lt;%=Model.Title %&gt;&lt;/a&gt;
     &lt;ul class="nav"&gt;
         &lt;% foreach (var item in Model.Children)
-           {%&gt;
+           {{%&gt;
                 &lt;li&gt;&lt;a href="&lt;%=item.Url %&gt;"&gt;&lt;%=item.Title %&gt;&lt;/a&gt;&lt;/li&gt;
           &lt;% } %&gt;
     &lt;/ul&gt;
