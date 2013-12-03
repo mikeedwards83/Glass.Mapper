@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Linq;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
 {
@@ -159,7 +160,14 @@ namespace Glass.Mapper.Configuration
                     if(_properties.Any(x=>x.PropertyInfo.Name == property.Name))
                         continue;
 
-                    var propConfig = AutoMapProperty(property);
+                    //check for an attribute
+                    var propConfig = AttributeTypeLoader.ProcessProperty(property);
+                    if (propConfig == null)
+                    {
+                        //no attribute then automap
+                        propConfig = AutoMapProperty(property);
+                    }
+
                     if (propConfig != null)
                         yield return propConfig;
                 }

@@ -56,14 +56,13 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new SitecoreTypeAttribute();
-            var config = new SitecoreTypeConfiguration();
             var type = typeof (StubClass);
 
             var templateIdExpected = Guid.Empty;
             var branchIdExptected = Guid.Empty;
 
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type) as SitecoreTypeConfiguration;
 
             //Assert
             Assert.AreEqual(type, config.Type);
@@ -72,29 +71,10 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationException))]
-        public void Configure_ConfigurationIsIncorrectType_ExceptionThrown()
-        {
-            //Assign
-            var attr = new SitecoreTypeAttribute();
-            var config = Substitute.For<AbstractTypeConfiguration>();
-            var type = typeof(StubClass);
-
-            var templateIdExpected = Guid.Empty;
-            var branchIdExptected = Guid.Empty;
-
-            //Act
-            attr.Configure(type, config);
-
-            //Assert
-        }
-
-        [Test]
         public void Configure_AttributeHasTemplateId_TemplateIdSetOnConfig()
         {
             //Assign
             var attr = new SitecoreTypeAttribute();
-            var config = new SitecoreTypeConfiguration();
             var type = typeof(StubClass);
 
             var templateIdExpected = new Guid();
@@ -103,7 +83,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.TemplateId = templateIdExpected.ToString();
 
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type) as SitecoreTypeConfiguration;
 
             //Assert
             Assert.AreEqual(type, config.Type);
@@ -116,7 +96,6 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new SitecoreTypeAttribute();
-            var config = new SitecoreTypeConfiguration();
             var type = typeof(StubClass);
 
             var templateIdExpected = Guid.Empty;
@@ -125,7 +104,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.BranchId = branchIdExptected.ToString();
 
             //Act
-            attr.Configure(type, config);
+           var config = attr.Configure(type) as SitecoreTypeConfiguration;
 
             //Assert
             Assert.AreEqual(type, config.Type);
@@ -139,7 +118,6 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new SitecoreTypeAttribute();
-            var config = new SitecoreTypeConfiguration();
             var type = typeof(StubClass);
 
             var templateIdExpected = Guid.Empty;
@@ -148,7 +126,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.TemplateId = "not a guid";
 
             //Act
-            attr.Configure(type, config);
+            var config =  attr.Configure(type) as SitecoreTypeConfiguration;
 
             //Assert
   
@@ -160,7 +138,6 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new SitecoreTypeAttribute();
-            var config = new SitecoreTypeConfiguration();
             var type = typeof(StubClass);
 
             var templateIdExpected = Guid.Empty;
@@ -169,7 +146,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.BranchId = "not a guid";
 
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type) as SitecoreTypeConfiguration;
 
             //Assert
           
