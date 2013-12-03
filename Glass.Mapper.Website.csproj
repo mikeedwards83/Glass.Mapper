@@ -112,7 +112,6 @@
     <Content Include="_posts\2013-08-12-RenderingParameters.html" />
     <Content Include="_posts\2013-09-12-SitecoreUsersVirtualSummit.html" />
     <Content Include="_posts\2013-11-21-EncodedStrings.html" />
-    <None Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cshtml" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.html" />
     <Content Include="docs\tutorial\sitecore\tutorial14\tutorial14.webpage.png" />
     <Content Include="images\blog\2012-03-17-VugImage.PNG" />
@@ -132,7 +131,6 @@
     <Content Include="docs\tutorial\sitecore\tutorial12\tutorial12.newslandingxml.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.html" />
     <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.item.PNG" />
-    <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx" />
     <Content Include="docs\tutorial\sitecore\tutorial13\tutorial13.webpage.PNG" />
     <Content Include="download.html" />
     <Content Include="docs\tutorial\sitecore\tutorial01\tutorial01.appstart.PNG" />
@@ -151,13 +149,6 @@
     <Content Include="images\Nuget-SourcesList.PNG" />
     <Content Include="trello.html" />
     <Content Include="docs\tutorial\sitecore\tutorial05\tutorial05.editing.png" />
-    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslanding.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.rsslandingsublayout.ascx.cs">
-      <DependentUpon>tutorial13.rsslandingsublayout.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="docs\tutorial\sitecore\tutorial13\tutorial13.serviceinstaller.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial14\tutorial14.blogpost.cs" />
-    <Compile Include="docs\tutorial\sitecore\tutorial14\tutorial14.bloglanding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="_posts\2013-03-02-Beta-Release.html" />
     <Content Include="_posts\2013-03-18-AutoMapping.html" />
@@ -202,7 +193,6 @@
     <Content Include="images\p2.png" />
     <Content Include="images\p3.png" />
     <Content Include="images\p4.png" />
-    <Content Include="js\git.js" />
     <Content Include="js\site.min.js">
       <DependentUpon>site.js</DependentUpon>
     </Content>
