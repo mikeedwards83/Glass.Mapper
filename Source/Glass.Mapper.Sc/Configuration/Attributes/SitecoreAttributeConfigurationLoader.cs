@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
@@ -24,6 +25,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     /// <summary>
     /// Class SitecoreAttributeConfigurationLoader
     /// </summary>
+    [Obsolete("This class is no longer required, use or Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader or nothing")]
     public class SitecoreAttributeConfigurationLoader : AttributeConfigurationLoader
     {
         /// <summary>
