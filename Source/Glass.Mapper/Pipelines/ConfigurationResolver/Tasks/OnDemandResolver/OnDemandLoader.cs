@@ -17,6 +17,7 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Configuration.Attributes;
 
@@ -49,7 +50,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         {
 
             var loader = new AttributeTypeLoader(_type);
-            var config = loader.Load();
+            var config = loader.Load().FirstOrDefault();
 
             if (config == null)
             {

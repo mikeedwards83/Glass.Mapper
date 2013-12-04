@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
-    public class AttributeTypeLoader
+    public class AttributeTypeLoader : IConfigurationLoader
     {
         private readonly Type _type;
 
@@ -15,9 +15,9 @@ namespace Glass.Mapper.Configuration.Attributes
             _type = type;
         }
 
-        public AbstractTypeConfiguration Load()
+        public IEnumerable<AbstractTypeConfiguration> Load()
         {
-            return LoadType(_type);
+            return new []{LoadType(_type)};
         }
 
         public AbstractTypeConfiguration LoadType(Type type)

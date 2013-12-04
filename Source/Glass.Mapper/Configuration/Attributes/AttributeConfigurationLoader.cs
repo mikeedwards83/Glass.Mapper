@@ -126,7 +126,7 @@ namespace Glass.Mapper.Configuration.Attributes
                     foreach (var type in types)
                     {
                         var loader = new AttributeTypeLoader(type);
-                        var config = loader.Load();
+                        var config = loader.Load().FirstOrDefault();
                         if (config != null)
                         {
                             configs.Add(config);
