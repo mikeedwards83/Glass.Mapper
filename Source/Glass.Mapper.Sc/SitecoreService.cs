@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
@@ -173,10 +174,10 @@ namespace Glass.Mapper.Sc
                 throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(typeof(TK).FullName), ex);
             }
 
-            Item pItem = parentType.ResolveItem(parent, Database);
+            Item parentItem = parentType.ResolveItem(parent, Database);
 
             
-            if (pItem == null)
+            if (parentItem == null)
                 throw new MapperException("Could not find parent item");
 
 
@@ -202,23 +203,27 @@ namespace Glass.Mapper.Sc
                
             ID templateId = newType.TemplateId;
             ID branchId = newType.BranchId;
+            ID itemId = newType.GetId(newItem);
             Language language = newType.GetLanguage(newItem);
 
             //check that parent item language is equal to new item language, if not change parent to other language
-            if (language != null && pItem.Language != language)
+            if (language != null && parentItem.Language != language)
             {
-                pItem = Database.GetItem(pItem.ID, language);
+                parentItem = Database.GetItem(parentItem.ID, language);
             }
 
             Item item;
-
-            if (!ID.IsNullOrEmpty(branchId))
+            if (!ID.IsNullOrEmpty(itemId) && ID.IsNullOrEmpty(branchId) && !ID.IsNullOrEmpty(templateId))
             {
-                item = pItem.Add(name, new BranchId(branchId));
+                item = ItemManager.AddFromTemplate(name, templateId, parentItem, itemId);
+            }
+            else if (!ID.IsNullOrEmpty(branchId))
+            {
+                item = parentItem.Add(name, new BranchId(branchId));
             }
             else if (!ID.IsNullOrEmpty(templateId))
             {
-                item = pItem.Add(name, new TemplateID(templateId));
+                item = parentItem.Add(name, new TemplateID(templateId));
             }
             else
             {
@@ -282,6 +287,7 @@ namespace Glass.Mapper.Sc
 
             ID templateId = newType.TemplateId;
             ID branchId = newType.BranchId;
+            
 
             //check that parent item language is equal to new item language, if not change parent to other language
             if (language != null && pItem.Language != language)
@@ -290,6 +296,9 @@ namespace Glass.Mapper.Sc
             }
 
             Item item;
+
+
+
 
             if (!ID.IsNullOrEmpty(branchId))
             {

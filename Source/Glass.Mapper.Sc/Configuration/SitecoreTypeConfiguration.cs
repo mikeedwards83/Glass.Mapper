@@ -93,6 +93,27 @@ namespace Glass.Mapper.Sc.Configuration
             base.AddProperty(property);
         }
 
+        public ID GetId(object target)
+        {
+            ID id;
+
+            if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
+            {
+                var guidId = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
+                id = new ID(guidId);
+            }
+            else if (IdConfig.PropertyInfo.PropertyType == typeof(ID))
+            {
+                id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
+            }
+            else
+            {
+                throw new NotSupportedException("Cannot get ID for item");
+            }
+            return id;
+        }
+
+
         /// <summary>
         /// Resolves the item.
         /// </summary>
@@ -114,19 +135,7 @@ namespace Glass.Mapper.Sc.Configuration
                 throw new NotSupportedException(
                     "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.");
 
-            if (IdConfig.PropertyInfo.PropertyType == typeof (Guid))
-            {
-                var guidId = (Guid) IdConfig.PropertyInfo.GetValue(target, null);
-                id = new ID(guidId);
-            }
-            else if (IdConfig.PropertyInfo.PropertyType == typeof (ID))
-            {
-                id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
-            }
-            else
-            {
-                throw new NotSupportedException("Cannot get ID for item");
-            }
+            id = GetId(target);
 
             language = GetLanguage(target);
 
