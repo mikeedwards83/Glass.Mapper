@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Glass.Mapper.Configuration.Attributes;
+﻿using Glass.Mapper.Configuration.Attributes;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
