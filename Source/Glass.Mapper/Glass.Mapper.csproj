@@ -68,6 +68,7 @@
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\AbstractPropertyAttribute.cs" />
+    <Compile Include="Configuration\Attributes\AttributeTypeLoader.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\IdAttribute.cs" />

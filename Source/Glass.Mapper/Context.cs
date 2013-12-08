@@ -120,6 +120,7 @@ namespace Glass.Mapper
         public IDependencyResolver DependencyResolver { get; set; }
 
 
+
         public ILogger Log { get; set; }
 
         /// <summary>

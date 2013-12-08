@@ -26,7 +26,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
     /// <summary>
     /// UmbracoAttributeConfigurationLoader
     /// </summary>
-    public class UmbracoAttributeConfigurationLoader : AttributeConfigurationLoader<UmbracoTypeConfiguration, UmbracoPropertyConfiguration>
+    public class UmbracoAttributeConfigurationLoader : AttributeConfigurationLoader
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UmbracoAttributeConfigurationLoader"/> class.
@@ -37,27 +37,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         {
 
         }
-
-        /// <summary>
-        /// Configs the created.
-        /// </summary>
-        /// <param name="config">The config.</param>
-        protected override void ConfigCreated(AbstractTypeConfiguration config)
-        {
-            var umbConfig = config as UmbracoTypeConfiguration;
-
-	        if (umbConfig != null)
-	        {
-		        //find the property configs that will be used to link a umbraco item to a class
-		        umbConfig.IdConfig =
-			        config.Properties.FirstOrDefault(x => x is UmbracoIdConfiguration) as UmbracoIdConfiguration;
-
-		        var umbInfos = config.Properties.Where(x => x is UmbracoInfoConfiguration).Cast<UmbracoInfoConfiguration>();
-		        umbConfig.VersionConfig = umbInfos.FirstOrDefault(x => x.Type == UmbracoInfoType.Version);
-	        }
-
-	        base.ConfigCreated(config);
-        }
+        
     }
 }
 
