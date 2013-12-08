@@ -29,7 +29,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// Interface ISitecoreService
     /// </summary>
-    public interface ISitecoreService
+    public interface ISitecoreService : IAbstractService
     {
         /// <summary>
         /// Gets the database.
@@ -70,6 +70,20 @@ namespace Glass.Mapper.Sc
             where T : class
             where TK : class;
 
+        /// <summary>
+        /// Creates a new Sitecore item.
+        /// </summary>
+        /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the SitecoreClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="TK">The type of the parent item</typeparam>
+        /// <param name="parent">The parent of the new item to create. Must have the SitecoreIdAttribute or fluent equivalent</param>
+        /// <param name="newName">The name of the new item</param>
+        /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
+        /// <param name="silent">If set to true, no events will be raised due to saving.</param>
+        /// <returns>``0.</returns>
+        T Create<T, TK>(TK parent, string newName, Language language = null, bool updateStatistics = true, bool silent = false)
+            where T : class
+            where TK : class;
+
         #endregion
 
         #region  CreateType
@@ -83,7 +97,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
-        object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters);
+        object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters);
 
         /// <summary>
         /// Creates a class from the specified item
@@ -743,9 +757,65 @@ namespace Glass.Mapper.Sc
         /// The Sitecore item as the specified type
         /// </returns>
         T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
-
+         
 
         #endregion
+
+        #region GetItemWithInterfaces
+
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(Guid id, Language language=  null, Sitecore.Data.Version version = null,
+            bool isLazy = false, bool inferType = false)    where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
+
+        T GetItemWithInterfaces<T, TK, TL>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
+
+        T GetItemWithInterfaces<T, TK>(Guid id, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM, TN>(string path, Language language = null, Sitecore.Data.Version version = null,
+    bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class
+            where TN : class;
+
+        T GetItemWithInterfaces<T, TK, TL, TM>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                           bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class
+            where TM : class;
+
+        T GetItemWithInterfaces<T, TK, TL>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                       bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class
+            where TL : class;
+
+        T GetItemWithInterfaces<T, TK>(string path, Language language = null, Sitecore.Data.Version version = null,
+                                   bool isLazy = false, bool inferType = false)
+            where T : class
+            where TK : class;
+
+        #endregion
+
 
         #region Move
 
@@ -829,8 +899,14 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-       
 
+        /// <summary>
+        /// Map data from Sitecore to an existing Sitecore item. The configuration for the item must already be loaded.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        void Map<T>(T target);
+        
        
 
    

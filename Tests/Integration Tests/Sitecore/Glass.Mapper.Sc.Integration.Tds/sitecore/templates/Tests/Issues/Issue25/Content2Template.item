@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {2C0EC3BB-7FB9-482E-9B72-3B90F50E865A}
+database: master
+path: /sitecore/templates/Tests/Issues/Issue25/Content2Template
+parent: {9AC1F20B-2C6A-4051-B096-EA8462D19844}
+name: Content2Template
+master: {00000000-0000-0000-0000-000000000000}
+template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+templatekey: Template
+
+----field----
+field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
+name: __Base template
+key: __base template
+content-length: 38
+
+{26C075DA-A9B6-4843-A834-865BC226795B}
+----version----
+language: en
+version: 1
+revision: bbd5a3a2-3c7e-477c-ad88-10aaeed6017f
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130918T080752
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+bbd5a3a2-3c7e-477c-ad88-10aaeed6017f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130918T080752:635150884726369522
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

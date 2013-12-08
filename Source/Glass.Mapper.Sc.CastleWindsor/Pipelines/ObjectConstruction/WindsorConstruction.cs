@@ -59,55 +59,61 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
             if (args.AbstractTypeCreationContext.ConstructorParameters == null ||
                 !args.AbstractTypeCreationContext.ConstructorParameters.Any())
             {
-                var type = args.Configuration.Type;
+                if (args.Configuration!=null) { 
+                var configuration = args.Configuration;
+                var type = configuration.Type;
                 var container = resolver.Container;
 
-                if (type.IsClass)
-                {
-                    if (!container.Kernel.HasComponent(typeof (LazyObjectInterceptor)))
+                    if (type.IsClass)
                     {
-                        container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleTransient());
-                    }
-                    if (!container.Kernel.HasComponent(type))
-                    {
-                        container.Kernel.Register(
-                            Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient)
-                            );
-                        container.Kernel.Register(
-                            Component.For(type).Named(type.FullName+"lazy").LifeStyle.Is(LifestyleType.Transient)
-                                .Interceptors<LazyObjectInterceptor>()
-                            );
-                    }
-
-                    Action<object> mappingAction = (target) => 
-                        args.Configuration.MapPropertiesToObject(target, args.Service, args.AbstractTypeCreationContext);
-
-
-                    object result = null;
-                    if (args.AbstractTypeCreationContext.IsLazy)
-                    {
-                        using (new UsingLazyInterceptor())
+                        if (!container.Kernel.HasComponent(typeof (LazyObjectInterceptor)))
                         {
-                            result = container.Resolve(type.FullName+"lazy", type);
-                            var proxy = result as IProxyTargetAccessor;
-                            var interceptor = proxy.GetInterceptors().First(x=>x is LazyObjectInterceptor) as LazyObjectInterceptor;
-                            interceptor.MappingAction = mappingAction;
-                            interceptor.Actual = result;
+                            container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleTransient());
                         }
-                    }
-                    else
-                    {
-                        result = container.Resolve(type);
-                        if (result != null)
+                        if (!container.Kernel.HasComponent(type))
                         {
-                            mappingAction(result);
+                            container.Kernel.Register(
+                                Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient)
+                                );
+                            container.Kernel.Register(
+                                Component.For(type).Named(type.FullName + "lazy").LifeStyle.Is(LifestyleType.Transient)
+                                         .Interceptors<LazyObjectInterceptor>()
+                                );
                         }
+
+                        Action<object> mappingAction = (target) =>
+                                                       configuration.MapPropertiesToObject(target, args.Service,
+                                                                                                args
+                                                                                                    .AbstractTypeCreationContext);
+
+
+                        object result = null;
+                        if (args.AbstractTypeCreationContext.IsLazy)
+                        {
+                            using (new UsingLazyInterceptor())
+                            {
+                                result = container.Resolve(type.FullName + "lazy", type);
+                                var proxy = result as IProxyTargetAccessor;
+                                var interceptor =
+                                    proxy.GetInterceptors().First(x => x is LazyObjectInterceptor) as
+                                    LazyObjectInterceptor;
+                                interceptor.MappingAction = mappingAction;
+                                interceptor.Actual = result;
+                            }
+                        }
+                        else
+                        {
+                            result = container.Resolve(type);
+                            if (result != null)
+                            {
+                                mappingAction(result);
+                            }
+                        }
+
+
+
+                        args.Result = result;
                     }
-                    
-                   
-
-                    args.Result = result;
-
                 }//if (type.IsClass)
             }
 

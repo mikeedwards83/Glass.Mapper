@@ -28,43 +28,52 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
         {
             //check that no other task has created an object
             //also check that this is a dynamic object
-            if (args.Result == null && !args.Configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
+
+
+            if (args.Result == null)
             {
-                //check to see if the type is registered with the SimpleInjector container
-                //if it isn't added it
-                if (IsRegistered(args.Configuration.Type))
+                var configuration = args.Configuration;
+                if(!configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider)))
                 {
-                    lock (_lock)
+                    //check to see if the type is registered with the SimpleInjector container
+                    //if it isn't added it
+                    if (IsRegistered(configuration.Type))
                     {
-                        if (IsRegistered(args.Configuration.Type))
+                        lock (_lock)
                         {
-                            Register(args.Configuration.Type);
+                            if (IsRegistered(configuration.Type))
+                            {
+                                Register(configuration.Type);
+                            }
                         }
+
+
                     }
 
+                    Action<object> mappingAction = (target) =>
+                                                   configuration.MapPropertiesToObject(target, args.Service,
+                                                                                            args
+                                                                                                .AbstractTypeCreationContext);
 
-                }
 
-                Action<object> mappingAction = (target) =>
-                       args.Configuration.MapPropertiesToObject(target, args.Service, args.AbstractTypeCreationContext);
+                    if (args.AbstractTypeCreationContext.IsLazy)
+                    {
+                        var resolved = GetConstructorParameters(configuration);
 
+                        var proxy = _generator.CreateClassProxy(configuration.Type, resolved,
+                                                                new LazyObjectInterceptor(mappingAction));
+                        args.Result = proxy;
+                    }
+                    else
+                    {
+                        //create instance using SimpleInjector
+                        var obj = CreateConcreteInstance(configuration);
+                        //map properties from item to model
+                        mappingAction(obj);
 
-                if (args.AbstractTypeCreationContext.IsLazy)
-                {
-                    var resolved = GetConstructorParameters(args.Configuration);
-
-                    var proxy = _generator.CreateClassProxy(args.Configuration.Type, resolved, new LazyObjectInterceptor(mappingAction));
-                    args.Result = proxy;
-                }
-                else
-                {
-                    //create instance using SimpleInjector
-                    var obj = CreateConcreteInstance(args.Configuration);
-                    //map properties from item to model
-                    mappingAction(obj);
-
-                    //set the new object as the returned result
-                    args.Result = obj;
+                        //set the new object as the returned result
+                        args.Result = obj;
+                    }
                 }
             }
         }

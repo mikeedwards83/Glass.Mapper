@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System.Linq;
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
@@ -50,8 +51,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             if (args.Result != null)
                 return;
 
-            if (args.Configuration.Type.IsInterface)
+            if (args.Configuration.Type.IsInterface) 
             {
+                
                 args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new InterfacePropertyInterceptor(args));
                 args.AbortPipeline();
             }

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System;
 using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -48,7 +49,10 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
 
                     var types = configs.Where(x => x.TemplateId == templateId);
-                    args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                    if (types.Any())
+                    {
+                        args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                    }
                 }
             }
         }

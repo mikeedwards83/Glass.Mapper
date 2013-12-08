@@ -142,23 +142,7 @@ namespace Glass.Mapper.Sc
             return obj;
         }
 
-        /// <summary>
-        /// Gets the generic argument.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>Type.</returns>
-        /// <exception cref="Glass.Mapper.MapperException">
-        /// Type {0} has more than one generic argument.Formatted(type.FullName)
-        /// or
-        /// The type {0} does not contain any generic arguments.Formatted(type.FullName)
-        /// </exception>
-        public static Type GetGenericArgument(Type type)
-        {
-            Type[] types = type.GetGenericArguments();
-            if (types.Count() > 1) throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
-            if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
-            return types[0];
-        }
+
 
 
         /// <summary>
@@ -170,6 +154,9 @@ namespace Glass.Mapper.Sc
         /// <returns>Field.</returns>
         public static Field GetField(Item item, ID fieldId, string fieldName = "")
         {
+            if(item == null)
+                throw new NullReferenceException("Item is null");
+
             Field field;
             if (ID.IsNullOrEmpty(fieldId))
             {

@@ -23,8 +23,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
             var resolver = NSubstitute.Substitute.For<IDependencyResolver>();
             var context = Context.Create(resolver);
             var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
-            var args = new ConfigurationResolverArgs(context, typeContext);
-            typeContext.RequestedType = typeof(StubClass);
+            typeContext.RequestedType = typeof (StubClass);
+            var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType, null);
+
 
             var task = new ConfigurationOnDemandResolverTask<StubTypeConfiguration>();
 
@@ -47,8 +48,8 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
             var resolver = NSubstitute.Substitute.For<IDependencyResolver>();
             var context = Context.Create(resolver);
             var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
-            var args = new ConfigurationResolverArgs(context, typeContext);
-            typeContext.RequestedType = typeof(StubClass);
+            typeContext.RequestedType = typeof (StubClass);
+            var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType, null);
             args.Result = new StubTypeConfiguration();
 
             var task = new ConfigurationOnDemandResolverTask<StubTypeConfiguration>();
@@ -75,8 +76,8 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
 
             Action taskFunc = () =>
             {
-                var args = new ConfigurationResolverArgs(context, typeContext);
                 typeContext.RequestedType = typeof(StubClass);
+                var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType, null);
                 
                 argsList.Add(args);
                 

@@ -21,6 +21,7 @@ using System;
 using Glass.Mapper.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Configuration
@@ -131,7 +132,15 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (VersionConfig != null)
             {
-                versionNumber = (int) VersionConfig.PropertyInfo.GetValue(target, null);
+                var valueInt = VersionConfig.PropertyInfo.GetValue(target, null);
+                if (valueInt is int)
+                {
+                    versionNumber = (int) valueInt;
+                }
+                else if(valueInt is string)
+                {
+                    int.TryParse(valueInt as string, out versionNumber);
+                }
             }
 
             if (language != null && versionNumber > 0)
@@ -158,9 +167,20 @@ namespace Glass.Mapper.Sc.Configuration
             Language language = null;
             if (LanguageConfig != null)
             {
-                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
-                if (language == null)
+                object langValue = LanguageConfig.PropertyInfo.GetValue(target, null);
+                
+                if (langValue == null)
+                {
                     language = Language.Current;
+                }
+                else if (langValue is Language)
+                {
+                    language = langValue as Language;
+                }
+                else if (langValue is string)
+                {
+                    language = LanguageManager.GetLanguage(langValue as string);
+                }
             }
             return language;
         }
