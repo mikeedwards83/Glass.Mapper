@@ -1,29 +1,28 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartialViewMacro.ascx.cs" Inherits="Umbraco.Web.UI.Umbraco.Create.PartialViewMacro" %>
 <%@ Import Namespace="umbraco" %>
+<%@ Register TagPrefix="cc1" Namespace="umbraco.uicontrols" Assembly="controls" %>
 <%@ Register TagPrefix="umb" Namespace="ClientDependency.Core.Controls" Assembly="ClientDependency.Core" %>
 
-<umb:CssInclude runat="server" FilePath="Dialogs/CreateDialog.css" PathNameAlias="UmbracoClient" />
+<cc1:Pane runat="server">
+    <cc1:PropertyPanel runat="server" Text="Filename (without .cshtml)">
+        <asp:TextBox ID="FileName" runat="server" CssClass="bigInput input-large-type input-block-level"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ErrorMessage="*" ControlToValidate="FileName" runat="server">*</asp:RequiredFieldValidator>
+    </cc1:PropertyPanel>
 
-Filename (without .cshtml):
-<asp:RequiredFieldValidator ID="RequiredFieldValidator1" ErrorMessage="*" ControlToValidate="FileName" runat="server">*</asp:RequiredFieldValidator>
+    <cc1:PropertyPanel runat="server" Text="Choose a snippet:">
+        <asp:ListBox ID="PartialViewTemplate" runat="server" CssClass="bigInput input-large-type input-block-level" Rows="1" SelectionMode="Single" />
+    </cc1:PropertyPanel>
 
-<%--<input type="hidden" name="nodeType" value="-1">--%>
-<div>
-    <asp:TextBox ID="FileName" runat="server" CssClass="bigInput"></asp:TextBox>
-</div>
-<%--<div>
-    Choose a template:<br />
-    <asp:ListBox ID="PartialViewTemplate" runat="server" Rows="1" SelectionMode="Single">
-        <asp:ListItem Value="clean.xslt">Clean</asp:ListItem>
-    </asp:ListBox>
-</div>--%>
+    <cc1:PropertyPanel runat="server">
+        <asp:CheckBox ID="CreateMacroCheckBox" runat="server" Checked="true" Text="Create Macro"></asp:CheckBox>
+    </cc1:PropertyPanel>
+</cc1:Pane>
 
-<div>
-    <asp:CheckBox ID="CreateMacroCheckBox" runat="server" Checked="true" Text="Create Macro"></asp:CheckBox>
-</div>
+<!-- added to support missing postback on enter in IE -->
+<asp:TextBox runat="server" Style="visibility: hidden; display: none;" ID="Textbox2" />
+<input type="hidden" name="nodeType" value="-1">
 
-<div class="submit-footer">
-    <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_Click" Text='<%#ui.Text("create") %>'></asp:Button>
-    &nbsp; <em><%= umbraco.ui.Text("or") %></em> &nbsp;
-    <a href="#" onclick="UmbClientMgr.closeModalWindow()"><%=umbraco.ui.Text("cancel")%></a>
-</div>
+<cc1:Pane runat="server" CssClass="btn-toolbar umb-btn-toolbar">
+    <a href="#" class="btn btn-link" onclick="UmbClientMgr.closeModalWindow()"><%=umbraco.ui.Text("cancel")%></a>
+    <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" OnClick="SubmitButton_Click" Text='<%#ui.Text("create") %>'></asp:Button>
+</cc1:Pane>

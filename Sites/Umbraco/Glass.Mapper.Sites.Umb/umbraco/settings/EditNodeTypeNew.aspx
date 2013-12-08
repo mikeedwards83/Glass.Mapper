@@ -1,4 +1,4 @@
-<%@ Page Language="c#" CodeBehind="EditNodeTypeNew.aspx.cs" AutoEventWireup="True"
+<%@ Page Language="c#" CodeBehind="EditNodeTypeNew.aspx.cs" AutoEventWireup="True" ValidateRequest="false"
     Async="true" AsyncTimeOut="300" Trace="false" Inherits="Umbraco.Web.UI.Umbraco.Settings.EditNodeTypeNew" MasterPageFile="../masterpages/umbracoPage.Master" %>
 
 <%@ Register TagPrefix="cc1" Namespace="umbraco.uicontrols" Assembly="controls" %>
@@ -39,6 +39,7 @@
 
 <asp:Content ContentPlaceHolderID="body" runat="server">
     <uc1:ContentTypeControlNew ID="ContentTypeControlNew1" runat="server"></uc1:ContentTypeControlNew>
+
     <cc1:Pane ID="tmpPane" runat="server">
         <cc1:PropertyPanel Text="Allowed templates" runat="server">
             <div class="guiInputStandardSize" style="border: #ccc 1px solid; background: #fff;

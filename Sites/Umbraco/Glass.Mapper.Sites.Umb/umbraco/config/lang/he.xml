@@ -35,6 +35,12 @@
     <key alias="toPublish">שלח לפירסום</key>
     <key alias="translate">תרגם</key>
     <key alias="update">עדכן</key>
+    <key alias="DeleteCMSImportAction">מחק</key>
+    <key alias="ExecuteCMSImportWizardAction">בצע</key>
+    <key alias="ScheduleCMSImportWizardAction">תזמן</key>
+    <key alias="StartCMSImportWizardAction">ייבא נתונים</key>
+    <key alias="StartCMSImportChildDefinitionAction">צור הגדרות ילדים</key>
+    <key alias="LastRunInfoAction">יומן משימות מתוזמנות</key>
   </area>
   <area alias="assignDomain">
     <key alias="addNew">הוסף דומיין חדש</key>
@@ -150,7 +156,7 @@
     <key alias="linklocaltip">בעת שימוש בקישוריים פנימיים, הוסף "#" בתחילת הקישור</key>
     <key alias="linknewwindow">לפתוח בחלון חדש?</key>
     <key alias="macroContainerSettings">הגדרות מאקרו</key>
-    <key alias="macroDoesNotHaveProperties">This macro does not contain any properties you can edit</key>
+    <key alias="macroDoesNotHaveProperties">המאקרו לא מכיל מאפיינים שניתן לערוך</key>
     <key alias="paste">הדבק</key>
     <key alias="permissionsEdit">ערוך הרשאות עבור</key>
     <key alias="recycleBinDeleting">הפריטים הנמצאים בסל המיחזור נמחקים כעת, השאר חלון זה פתוח עד לגמר פעולת המחיקה.</key>
@@ -228,7 +234,7 @@
     <key alias="stylesNoStylesOnPage">סגנונות עיצוב פעילים לא זמינים</key>
     <key alias="tableColMergeLeft">יש למקם את הסמן משמאל לשני התאים אותם תרצה למזג</key>
     <key alias="tableSplitNotSplittable">אין אפשרות לפצל תא שלא מוזג לפני כן.</key>
-    <key alias="xsltErrorHeader">שגיאה במקור xslt</key>
+    <key alias="xsltErrorHeader">שגיאה במקור XSLT</key>
     <key alias="xsltErrorText">קובץ ה- XSLT לא נשמר, הקובץ מכיל שגיאות.</key>
   </area>
   <area alias="general">
@@ -498,7 +504,7 @@ To manage your website, simply open the umbraco back office and start adding con
     <key alias="mailBodyHtml"><![CDATA[<p>Hi %0%</p>
 
 		  <p>This is an automated mail to inform you that the task <strong>'%1%'</strong> 
-		  has been performed on the page <a href="%7%"><strong>'%2%'</strong></a>
+		  has been performed on the page <a href="http://%4%/actions/preview.aspx?id=%5%"><strong>'%2%'</strong></a>
 		  by the user <strong>'%3%'</strong>
 	  </p>
 		  <div style="margin: 8px 0; padding: 8px; display: block;">
@@ -695,11 +701,11 @@ To manage your website, simply open the umbraco back office and start adding con
     <key alias="templateErrorText">שים לב שאין 2 תבניות עם אותו השם/כינוי</key>
     <key alias="templateSavedHeader">התבנית נשמרה</key>
     <key alias="templateSavedText">התבנית נשמרה ללא שגיאות!</key>
-    <key alias="xsltErrorHeader">הקובץ Xslt לאנשמר</key>
-    <key alias="xsltErrorText">הקובץ Xslt מכיל שגיאה</key>
-    <key alias="xsltPermissionErrorText">אין אפשרות לשמור את ה- Xslt, בדוק הרשאות קובץ לפני</key>
-    <key alias="xsltSavedHeader">הקובץ Xslt נשמר</key>
-    <key alias="xsltSavedText">אין שגיאות ב- xslt</key>
+    <key alias="xsltErrorHeader">הקובץ XSLT לאנשמר</key>
+    <key alias="xsltErrorText">הקובץ XSLT מכיל שגיאה</key>
+    <key alias="xsltPermissionErrorText">אין אפשרות לשמור את ה- XSLT, בדוק הרשאות קובץ לפני</key>
+    <key alias="xsltSavedHeader">הקובץ XSLT נשמר</key>
+    <key alias="xsltSavedText">אין שגיאות ב- XSLT</key>
   </area>
   <area alias="stylesheet">
     <key alias="aliasHelp">השתמש בסינטקס CSS לדוגמא: h1, .redHeader, .blueTex</key>
@@ -769,7 +775,7 @@ To manage your website, simply open the umbraco back office and start adding con
       לעריכה, לחץ על הלינק הבא: http://%3%/translation/details.aspx?id=%4% .
 
       באפשרותך גם להיכנס למערכת על מנת לראות את כל משימות התירגום
-      http://%3%/umbraco.aspx
+      http://%3%
       
       המשך יום נעים.
 	  
@@ -836,12 +842,11 @@ To manage your website, simply open the umbraco back office and start adding con
     <key alias="changePassword">שנה את הסיסמה שלך</key>
     <key alias="changePasswordDescription">בעמוד זה ניתן לשנות את הסיסמה שלך ולאחר מכן ללחוץ על הכפתור 'שנה סיסמה'	 למטה</key>
     <key alias="contentChannel">ערוץ תוכן</key>
-    <key alias="defaultToLiveEditing">לאחר כניסה למערכת הפנה אוטומטית למצב עריכה "קנבס"</key>
     <key alias="descriptionField">שדה תיאור</key>
     <key alias="disabled">נטרל משתמש</key>
     <key alias="documentType">שדה מסמך</key>
     <key alias="editors">עורך</key>
-    <key alias="excerptField">Excerpt field</key>
+    <key alias="excerptField">שדה תקציר</key>
     <key alias="language">שפה</key>
     <key alias="loginname">שם משתמש</key>
     <key alias="mediastartnode">התחלה בפריט המדיה</key>

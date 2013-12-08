@@ -33,7 +33,7 @@
 
 											<div class="row">
 												<asp:label AssociatedControlID="tb_email" runat="server">Email:</asp:label>
-												<span><asp:TextBox ID="tb_email" CssClass="text" type="text" Text="admin@domain.com" runat="server"  /></span>
+												<span><asp:TextBox ID="tb_email" CssClass="text" type="text" Text="admin@example.com" runat="server"  /></span>
                                                 <asp:RequiredFieldValidator Display="Dynamic" CssClass="invalidaing" ControlToValidate="tb_email" runat="server" ErrorMessage="Email is a mandatory field" />
 											</div>
 
@@ -47,6 +47,7 @@
 	                                            <asp:label AssociatedControlID="tb_password" runat="server">Password:</asp:label>
 												<span><asp:TextBox ID="tb_password" CssClass="text" TextMode="Password" type="text" Text="" runat="server"  /></span>
 												<asp:RequiredFieldValidator Display="Dynamic" CssClass="invalidaing" ControlToValidate="tb_password" runat="server" ErrorMessage="Password is a mandatory field" />
+                                                <asp:CustomValidator ID="PasswordValidator" Display="Dynamic" CssClass="invalidaing" runat="server" />
 											</div>
 
 											<div class="row">
@@ -79,7 +80,8 @@
                      badPass:       "invalidaing",
                      goodPass:      "validaing",
                      strongPass:    "validaing",
-                     baseStyle:     "basevalidaing",
+                     baseStyle: "basevalidaing",
+                     minLength: <%=CurrentProvider.MinRequiredPasswordLength %>,
 					userid:         jQuery("#<%= tb_login.ClientID %>").val(),
 					messageloc:		1
 				});

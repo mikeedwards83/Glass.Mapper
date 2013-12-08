@@ -1,5 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="LoadStarterKits.ascx.cs" Inherits="Umbraco.Web.UI.Install.Steps.Skinning.LoadStarterKits" %>
-<%@ Import Namespace="umbraco.cms.businesslogic.packager.repositories" %>
+<%@ Import Namespace="Umbraco.Web.org.umbraco.our" %>
+
 <%@ Register TagPrefix="umb" Namespace="ClientDependency.Core.Controls" Assembly="ClientDependency.Core" %>
 
 <asp:PlaceHolder ID="pl_loadStarterKits" runat="server">
@@ -23,64 +24,43 @@
         })(jQuery);
     </script>
     <% } %>
-
+        <div id="starter-kit-progress" style="display: none;">
+        <h2>Installation in progress...</h2>
+        <div class="loader">
+            <div class="hold">
+                <div class="progress-bar">
+                </div>
+                <span class="progress-bar-value">0%</span>
+            </div>
+            <strong></strong>
+        </div>
+    </div>
     <asp:Repeater ID="rep_starterKits" runat="server">
-        <HeaderTemplate>
-            <nav class="zoom-list add-nav">
-                <ul>
-        </HeaderTemplate>
-        <ItemTemplate>
-
+        <headertemplate>
+            <ul class="thumbnails">
+        </headertemplate>
+        <itemtemplate>
             <li class="add-<%# ((Package)Container.DataItem).Text.Replace(" ","").ToLower() %>">
-                
-                <a href="#" class="single-tab selectStarterKit" title="<%# ((Package)Container.DataItem).Text %>" data-repoId="<%# ((Package)Container.DataItem).RepoGuid %>">
-                    <img class="zoom-img" src="<%# ((Package)Container.DataItem).Thumbnail %>" alt="<%# ((Package)Container.DataItem).Text %>" width="150" height="204">
-                </a>
+                <div class="image">
 
-                <%--<asp:LinkButton CssClass="single-tab selectStarterKit" ID="bt_selectKit" runat="server" OnClick="SelectStarterKit" ToolTip="<%# ((Package)Container.DataItem).Text %>" CommandArgument="<%# ((Package)Container.DataItem).RepoGuid %>">
-                    <img class="zoom-img" src="<%# ((Package)Container.DataItem).Thumbnail %>" alt="<%# ((Package)Container.DataItem).Text %>" width="150" height="204">
-                </asp:LinkButton>--%>
-                
-                <em>&nbsp;</em>
-                <!-- drop down -->
-                <div class="drop-hold">
-                    <div class="t">&nbsp;</div>
-                    <div class="c">
-                        <div class="title">
-                            <span><strong><%# ((Package)Container.DataItem).Text %></strong> contains the following functionality</span>
-                        </div>
-                        <div class="hold">
-                            <%# ((Package)Container.DataItem).Description %>
-                        </div>
-                    </div>
-                    <div class="b">&nbsp;</div>
+
+                    <div class="overlay"><a href="#" class="single-tab selectStarterKit" data-name="<%# ((Package)Container.DataItem).Text %>" title="Install <%# ((Package)Container.DataItem).Text %>" data-repoid="<%# ((Package)Container.DataItem).RepoGuid %>">Install <%# ((Package)Container.DataItem).Text %></a></div>
+                    <img src="http://our.umbraco.org<%# ((Package)Container.DataItem).Thumbnail %>" alt="<%# ((Package)Container.DataItem).Text %>">
+
+                    <a class="zoom-in" title="Enlarge <%# ((Package)Container.DataItem).Text %>" href="#<%# ((Package)Container.DataItem).Text %>">Open</a>
                 </div>
             </li>
-        </ItemTemplate>
-        <FooterTemplate>
+            <div id="<%# ((Package)Container.DataItem).Text %>" class="lb"><a href="#top"><img src="http://our.umbraco.org<%# ((Package)Container.DataItem).Thumbnail %>" alt="oh man" /></a></div>
 
-            <li class="add-thanks">
-                <asp:LinkButton runat="server" class="single-tab declineStarterKits" ID="declineStarterKits" OnClientClick="return confirm('Are you sure you do not want to install a starter kit?');" OnClick="NextStep">
-            <img class="zoom-img" src="<%# umbraco.GlobalSettings.ClientPath + "/installer/images/btn-no-thanks.png" %>" alt="image description" width="150" height="204">
-                </asp:LinkButton>
-
-                <em>&nbsp;</em>
-                <!-- drop down -->
-                <div class="drop-hold">
-                    <div class="t">&nbsp;</div>
-                    <div class="c">
-                        <div class="title">
-                            <span><strong>Choose not to install a starter kit</strong></span>
-                        </div>
-                    </div>
-                    <div class="b">&nbsp;</div>
-                </div>
-            </li>
-
-            </ul>
-	</nav>    
-        </FooterTemplate>
+        </itemtemplate>
+        <footertemplate>
+                </ul>
+            <asp:LinkButton runat="server" ID="declineStarterKits" CssClass="declineKit" OnClientClick="return confirm('Are you sure you do not want to install a starter kit?');" OnClick="NextStep">
+                    No thanks, do not install a starterkit!
+            </asp:LinkButton>
+        </footertemplate>
     </asp:Repeater>
+
 </asp:PlaceHolder>
 
 <div id="connectionError" style="<%= CannotConnect ? "" : "display:none;" %>">

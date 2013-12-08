@@ -51,21 +51,9 @@ Umbraco.Sys.registerNamespace("Umbraco.Application");
                 /// </summary>
                 /// <returns type="Umbraco.Controls.UmbracoTree" />
 
+                
                 if (this._mainTree == null) {
-                    if (this.mainWindow().jQuery == null
-                        || this.mainWindow().jQuery(".umbTree").length == 0
-                        || this.mainWindow().jQuery(".umbTree").UmbracoTreeAPI() == null) {
-                        //creates a false tree with all the public tree params set to a false method.
-                        var tmpTree = {};
-                        var treeProps = ["init", "setRecycleBinNodeId", "clearTreeCache", "toggleEditMode", "refreshTree", "rebuildTree", "saveTreeState", "syncTree", "childNodeCreated", "moveNode", "copyNode", "findNode", "selectNode", "reloadActionNode", "getActionNode", "setActiveTreeType", "getNodeDef"];
-                        for (var p in treeProps) {
-                            tmpTree[treeProps[p]] = function() { return false; };
-                        }
-                        this._mainTree = tmpTree;
-                    }
-                    else {
-                        this._mainTree = this.mainWindow().jQuery(".umbTree").UmbracoTreeAPI();
-                    }
+                    this._mainTree = top.UmbClientMgr.mainTree();
                 }
                 return this._mainTree;
             },
@@ -94,15 +82,15 @@ Umbraco.Sys.registerNamespace("Umbraco.Application");
             //    windowMgr: function() 
             //        return null;
             //    },
-            contentFrameAndSection: function(app, rightFrameUrl){
+            contentFrameAndSection: function(app, rightFrameUrl) {
                 //this.appActions().shiftApp(app, this.uiKeys()['sections_' + app]);
                 var self = this;
-                self.mainWindow().UmbClientMgr.historyManager().addHistory(app,true);
-                window.setTimeout(function(){
+                self.mainWindow().UmbClientMgr.historyManager().addHistory(app, true);
+                window.setTimeout(function() {
                     self.mainWindow().UmbClientMgr.contentFrame(rightFrameUrl);
-                },200);
+                }, 200);
             },
-            contentFrame: function(strLocation) {
+            contentFrame: function (strLocation) {
                 /// <summary>
                 /// This will return the reference to the right content frame if strLocation is null or empty,
                 /// or set the right content frames location to the one specified by strLocation.
@@ -130,17 +118,45 @@ Umbraco.Sys.registerNamespace("Umbraco.Application");
                     }
 
                     this._debug("contentFrame: parsed location: " + strLocation);
-                    var self = this;
-                    window.setTimeout(function(){
-                        if (typeof self.mainWindow().right != "undefined") {
-                            self.mainWindow().right.location.href = strLocation;
-                        }
-                        else {
-                            self.mainWindow().location.href = strLocation; //set the current windows location if the right frame doesn't exist int he current context
-                        }
-                    },200);
+
+                    if (!this.mainWindow().UmbClientMgr) {
+                        window.setTimeout(function() {
+                            var self = this;
+                            self.mainWindow().location.href = strLocation;
+                        }, 200);
+                    }
+                    else {
+                        this.mainWindow().UmbClientMgr.contentFrame(strLocation);
+                    }
                 }
             },
+            reloadContentFrameUrlIfPathLoaded: function (url) {
+                var contentFrame;
+                if (typeof this.mainWindow().right != "undefined") {
+                    contentFrame = this.mainWindow().right;
+                }
+                else {
+                    contentFrame = this.mainWindow(); 
+                }
+
+                var currentPath = contentFrame.location.pathname + (contentFrame.location.search ? contentFrame.location.search : "");
+                if (currentPath == url) {
+                    contentFrame.location.reload();
+                }
+            },
+            
+            /** This is used to launch an angular based modal window instead of the legacy window */
+            openAngularModalWindow: function (options) {
+                
+                if (!this.mainWindow().UmbClientMgr) {
+                    throw "An angular modal window can only be launched when the modal is running within the main Umbraco application";
+                }
+                else {
+                    this.mainWindow().UmbClientMgr.openAngularModalWindow.apply(this.mainWindow().UmbClientMgr, [options]);
+                }
+
+            },
+
             openModalWindow: function(url, name, showHeader, width, height, top, leftOffset, closeTriggers, onCloseCallback) {
                 //need to create the modal on the top window if the top window has a client manager, if not, create it on the current window                
 
@@ -198,8 +214,8 @@ Umbraco.Sys.registerNamespace("Umbraco.Application");
             set_isDirty: function(value) {
                 this._isDirty = value;
             }
-        }
-    }
+        };
+    };
 })(jQuery);
 
 //define alias for use throughout application
