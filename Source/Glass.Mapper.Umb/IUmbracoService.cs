@@ -53,7 +53,7 @@ namespace Glass.Mapper.Umb
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns></returns>
-        T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class;
+        T GetItem<T>(int? id, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Gets the item.
