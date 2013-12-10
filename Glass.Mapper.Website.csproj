@@ -106,7 +106,12 @@
     <Content Include="images\blog\2013-06-15-ImageCopy-Small.PNG" />
     <Content Include="images\blog\2013-06-15-ImageCopy.PNG" />
     <Content Include="images\blog\2013-11-21-Blog-EncodedStrings.PNG" />
+    <Content Include="images\blog\2013-12-10-Item.PNG" />
+    <Content Include="images\blog\2013-12-10-Render1.PNG" />
+    <Content Include="images\blog\2013-12-10-Render2.PNG" />
+    <Content Include="images\blog\2013-12-10-Render3.PNG" />
     <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
+    <Content Include="_posts\2013-05-22-IntroducingUmbracoMapping.html" />
     <Content Include="_posts\2013-06-15-SitecoreCopyImages.html" />
     <Content Include="_posts\2013-08-08-MixingInIoc.html" />
     <Content Include="_posts\2013-08-12-RenderingParameters.html" />
@@ -117,6 +122,8 @@
     <Content Include="images\blog\2012-03-17-VugImage.PNG" />
     <Content Include="_posts\2013-04-08-SitecoreVirtualUserGroup.html" />
     <Content Include="_posts\2013-04-08-SitecoreVirtualUserGroupFiles.html" />
+    <Content Include="_posts\2013-11-27-TodaysRelease.html" />
+    <Content Include="_posts\2013-12-10-Configuration.html" />
     <None Include="CNAME" />
     <Compile Include="docs\concepts\example-fluent-1.cs" />
     <Content Include="404.html" />

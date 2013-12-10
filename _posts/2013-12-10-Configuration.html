@@ -1,0 +1,129 @@
+---
+layout: BlogLayout
+title: Configuration in Glass.Mapper.Sc 3.1.1
+image: http://cdn.memegenerator.net/instances/500x/43344545.jpg
+abstract: Learn about the new ways to configure your classes in the latest release.
+caption: 27 Nov 2013
+---
+			
+<p class="lead">
+    The latest release made some subtle but important changes to how attribute configuration is handled by Glass.Mapper. In the latest release we have simplified 
+    the process a lot so that you can write event less code.
+</p>
+<h2>No Need To Load</h2>
+<p>
+    In previous versions of Glass.Mapper.Sc you will have seen these lines of code in the GlassMapperScCustom.cs file:
+</p>
+<pre class="cs">
+        public static IConfigurationLoader[] GlassLoaders(){
+			var attributes = new SitecoreAttributeConfigurationLoader("YourAssembly");
+			return new IConfigurationLoader[]{attributes};
+		}
+</pre>
+<p>
+    In the latest version the SitecoreAttributeConfigurationLoader is no longer needed but you can use it to force pre-loading if you wish:
+</p>
+<pre class="cs">
+        public static IConfigurationLoader[] GlassLoaders(){
+			return new IConfigurationLoader[]{};
+		}
+</pre>
+<p>
+     You should still add Fluent Configuration loaders here. With attribute configuration we now load them on demand when a type is requested for mapping.
+</p>
+
+<h2>Demo Setup</h2>
+<p>
+    For this blog post I have setup the following item:
+</p>
+<img src="/images/blog/2013-12-10-Item.PNG"/>
+<p>
+    And I have the following model to represent this item:
+</p>
+<pre class="cs">
+    public class MyModel
+    {
+        public string Title { get; set; }
+       
+        public DateTime Date { get; set; }
+
+        public string MenuTitle { get; set; }
+
+        public string ItemUrl { get; set; }
+    }
+</pre>
+<p>
+    Everything is going to be rendered out on a simple sublayout which at the moment shows nothing:
+</p>
+<img src="/images/blog/2013-12-10-Render1.PNG"/>
+
+<h2>No attributes</h2>
+<p>
+    If we leave the model as it is:
+</p>
+<pre class="cs">
+    public class MyModel
+    {
+        public string Title { get; set; }
+       
+        public DateTime Date { get; set; }
+
+        public string MenuTitle { get; set; }
+
+        public string ItemUrl { get; set; }
+    }
+</pre>
+<p>
+    Only the Title and Date fields are mapped. The MenuTitle property and ItemUrl property don't match a 
+    Sitecore field or auto-mapping property. We can see this in the next screenshot:
+</p>
+<img src="/images/blog/2013-12-10-Render2.PNG"/>
+<h2>Property Attributes</h2>
+<p>
+    We can get MenuTitle and ItemUrl to map by adding attributes to both these properties. Notice that we do NOT need to add
+    the SitecoreType attribute to the class any more:
+</p>
+<pre class="cs">
+    public class MyModel
+    {
+        public string Title { get; set; }
+       
+        public DateTime Date { get; set; }
+
+        [SitecoreField("Menu Title")]
+        public string MenuTitle { get; set; }
+
+        [SitecoreInfo(SitecoreInfoType.Url)]
+        public string ItemUrl { get; set; }
+    }
+</pre>
+<p>
+    Glass.Mapper will automatically map the first two properties and then use the attributes to map the last two properties:
+</p>
+<img src="/images/blog/2013-12-10-Render3.PNG"/>
+<h2>Class Attribute</h2>
+<p>
+    Finally you can still add the SitecoreType attribute class to the class if you need to specifiy the template ID or branch ID for creating items:
+</p>
+<pre class="cs">
+    [SitecoreType(TemplateId = "C62BA978-277D-4010-BC69-43D2E5F7DB5D", AutoMap = true)]
+    public class MyModel
+    {
+        public string Title { get; set; }
+       
+        public DateTime Date { get; set; }
+
+        [SitecoreField("Menu Title")]
+        public string MenuTitle { get; set; }
+
+        [SitecoreInfo(SitecoreInfoType.Url)]
+        public string ItemUrl { get; set; }
+    }
+</pre>
+
+
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
