@@ -8,7 +8,7 @@ caption: 27 Nov 2013
 			
 <p class="lead">
     The latest release made some subtle but important changes to how attribute configuration is handled by Glass.Mapper. In the latest release we have simplified 
-    the process a lot so that you can write event less code.
+    the process a lot so that you can write even less code.
 </p>
 <h2>No Need To Load</h2>
 <p>
@@ -18,15 +18,15 @@ caption: 27 Nov 2013
         public static IConfigurationLoader[] GlassLoaders(){
 			var attributes = new SitecoreAttributeConfigurationLoader("YourAssembly");
 			return new IConfigurationLoader[]{attributes};
-		}
+        }
 </pre>
 <p>
-    In the latest version the SitecoreAttributeConfigurationLoader is no longer needed but you can use it to force pre-loading if you wish:
+    In the latest version the SitecoreAttributeConfigurationLoader is no longer needed but you can use it to force pre-loading if you wish. The template itself no longer adds the attribute loader:
 </p>
 <pre class="cs">
         public static IConfigurationLoader[] GlassLoaders(){
 			return new IConfigurationLoader[]{};
-		}
+        }
 </pre>
 <p>
      You should still add Fluent Configuration loaders here. With attribute configuration we now load them on demand when a type is requested for mapping.
@@ -75,7 +75,7 @@ caption: 27 Nov 2013
 </pre>
 <p>
     Only the Title and Date fields are mapped. The MenuTitle property and ItemUrl property don't match a 
-    Sitecore field or auto-mapping property. We can see this in the next screenshot:
+    Sitecore field or auto-mapping property, we can see this in the next screenshot:
 </p>
 <img src="/images/blog/2013-12-10-Render2.PNG"/>
 <h2>Property Attributes</h2>
