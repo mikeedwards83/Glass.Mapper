@@ -77,7 +77,7 @@ caption:
             </li>
         </ul>
     </dd>
-    <dt>Next Release - 3.1.0</dt>
+    <dt>3.1.0</dt>
     <dd>
         <ul>
             <li>
@@ -92,6 +92,27 @@ caption:
             <li>
                 <a href="https://github.com/mikeedwards83/Glass.Mapper/issues/32">Issue 32</a> Fixed error caused by using classes with two indexers, e.g. SearchResultItem. Also added the Map property 
                 to allow supporting mapping of SC7 search results to items.
+            </li>
+        </ul>
+    </dd>
+    <dt>3.1.1</dt>
+    <dd>
+        <ul>
+            <li>
+                <a href="https://github.com/mikeedwards83/Glass.Mapper/pull/35">Pull 35</a> GlassWebControl contributed by <a href="https://github.com/Refactored">Kyle Heon</a>
+            </li>
+            <li>
+                Separated out URL creation for Glass.Mapper.Sc.Fields.Link so that URLs can be created outside of the RenderLink method.
+            </li>
+            <li>
+                Added more information to property mapping exceptions.
+            </li>
+            <li>
+                Refactored attribute configuration. Glass.Mapper.Sc.Configuration.Attributes.SitecoreAttributeConfigurationLoader is now obsolete. Property attributes are
+                now supported without the need for the class attribute.
+            </li>
+            <li>
+                Added caching layer for inferred to type to speed up type resolution.
             </li>
         </ul>
     </dd>
