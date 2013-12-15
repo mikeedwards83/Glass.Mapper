@@ -2,9 +2,9 @@
 version: 1
 id: {D14070A3-FD00-4A8F-968F-8D760BCDF2F2}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreItemMapper
+path: /sitecore/content/Tests/DataMappers/SitecoreNodeMapper
 parent: {949328F9-AB43-4AA8-9B09-B3FF0C0F1C7B}
-name: SitecoreItemMapper
+name: SitecoreNodeMapper
 master: {00000000-0000-0000-0000-000000000000}
 template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
 templatekey: Folder

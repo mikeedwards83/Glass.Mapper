@@ -2,7 +2,7 @@
 version: 1
 id: {03CDE6B5-B2A2-40D6-A944-53D66DDD2CA4}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreItemMapper/TargetOneLanguage
+path: /sitecore/content/Tests/DataMappers/SitecoreNodeMapper/TargetOneLanguage
 parent: {D14070A3-FD00-4A8F-968F-8D760BCDF2F2}
 name: TargetOneLanguage
 master: {00000000-0000-0000-0000-000000000000}

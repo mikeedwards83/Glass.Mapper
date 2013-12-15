@@ -2,7 +2,7 @@
 version: 1
 id: {EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target
+path: /sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target
 parent: {D14070A3-FD00-4A8F-968F-8D760BCDF2F2}
 name: Target
 master: {00000000-0000-0000-0000-000000000000}

@@ -25,6 +25,7 @@ using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.layouts.testing;
 using Sitecore.SecurityModel;
 
@@ -58,6 +59,43 @@ namespace Glass.Mapper.Sc.Integration
 
             //This method should execute without error
 
+
+        }
+
+        [Test]
+        public void ItemPropertySave_SavesItemOnProperty_SetsField()
+        {
+            /*
+             * Tests that we can save to an item property.
+             */
+
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var scContext = new SitecoreContext(db);
+            string path = "/sitecore/content/Tests/Misc/ItemPropertySave";
+
+            var expected = "some expected value";
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["Field1"] = string.Empty;
+            }
+
+            var instance = scContext.GetItem<ItemPropertySaveStub>(path);
+
+            //Act
+            instance.Field1 = expected;
+
+            using (new SecurityDisabler())
+            {
+                scContext.Save(instance);
+            }
+
+            //Assert
+            Assert.AreEqual(expected, instance.Item["Field1"]);
 
         }
 
@@ -248,6 +286,12 @@ namespace Glass.Mapper.Sc.Integration
             public virtual Guid Id { get; set; }
 
             public virtual IEnumerable<FieldLoop> RelatedItems { get; set; } 
+        }
+
+        public class ItemPropertySaveStub
+        {
+            public virtual Item Item { get; set; }
+            public virtual string Field1 { get; set; }
         }
 
 #endregion

@@ -69,6 +69,7 @@
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldFieldValueAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIgnoreAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreItemAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Configuration\Attributes\SitecoreNodeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreParentAttribute.cs" />
     <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
     <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Configuration\SitecoreInfoConfiguration.cs" />
     <Compile Include="Configuration\SitecoreInfoType.cs" />
     <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
+    <Compile Include="Configuration\SitecoreItemConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
     <Compile Include="Configuration\SitecoreNodeConfiguration.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
+    <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapper.cs" />
