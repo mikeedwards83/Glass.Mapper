@@ -103,7 +103,11 @@ namespace Glass.Mapper.Sc.Configuration
         {
             ID id;
 
-            if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
+            if (IdConfig == null)
+            {
+                id = ID.Null;
+            }
+            else if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
             {
                 var guidId = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
                 id = new ID(guidId);
