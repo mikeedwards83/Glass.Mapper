@@ -42,7 +42,6 @@ namespace Glass.Mapper.Sc.Integration
              * project. When two interfaces have similar names are created as proxies
              * the method GetTypeConfiguration returns the wrong config.
              */
-             
             
             //Assign
             var context = Context.Create(Utilities.CreateStandardResolver());

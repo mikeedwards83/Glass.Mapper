@@ -109,7 +109,9 @@
     <Compile Include="Configuration\SitecoreParentConfiguration.cs" />
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
+    <Compile Include="Custom\ChildrenCast.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
