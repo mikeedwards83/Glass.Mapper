@@ -195,6 +195,18 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Map the item being mapped to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreInfo{`0}.</returns>
+        public SitecoreItem<T> Item(Expression<Func<T, object>> ex)
+        {
+            SitecoreItem<T> builder = new SitecoreItem<T>(ex, _configuration);
+            _configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
+        /// <summary>
         /// Map an item's parent  to a class property
         /// </summary>
         /// <param name="ex">The ex.</param>
