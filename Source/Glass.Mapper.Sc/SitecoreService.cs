@@ -1464,6 +1464,25 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
+        #region ResolveItem
+
+        public Item ResolveItem(object target)
+        {
+            var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+
+            if (config == null)
+            {
+                return null;
+            }
+
+            var item = config.ResolveItem(target, Database);
+
+            return item;
+
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates the data mapping context.
         /// </summary>
@@ -1486,6 +1505,8 @@ namespace Glass.Mapper.Sc
             var scContext = creationContext as SitecoreTypeSavingContext;
             return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }
+
+
 
     } 
 }
