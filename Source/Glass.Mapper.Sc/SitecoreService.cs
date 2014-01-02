@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
@@ -157,6 +158,11 @@ namespace Glass.Mapper.Sc
             try
             {
                 newType = GlassContext.GetTypeConfiguration(newItem) as SitecoreTypeConfiguration;
+                if (newType == null)
+                {
+                    GlassContext.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(T)));
+                    newType = GlassContext.GetTypeConfiguration(newItem) as SitecoreTypeConfiguration;
+                }
             }
             catch (Exception ex)
             {
