@@ -97,6 +97,7 @@
     <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreNodeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryMapperFixture.cs" />

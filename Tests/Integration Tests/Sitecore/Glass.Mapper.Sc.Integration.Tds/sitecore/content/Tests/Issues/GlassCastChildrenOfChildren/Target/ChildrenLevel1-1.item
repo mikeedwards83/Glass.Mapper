@@ -1,33 +1,26 @@
 ----item----
 version: 1
-id: {03CDE6B5-B2A2-40D6-A944-53D66DDD2CA4}
+id: {5CC0539F-9052-4650-960C-69D9C02008AF}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreItemMapper/TargetOneLanguage
-parent: {D14070A3-FD00-4A8F-968F-8D760BCDF2F2}
-name: TargetOneLanguage
+path: /sitecore/content/Tests/Issues/GlassCastChildrenOfChildren/Target/ChildrenLevel1-1
+parent: {E52E5405-8BA6-4374-AE08-A640BD6D87D9}
+name: ChildrenLevel1-1
 master: {00000000-0000-0000-0000-000000000000}
-template: {3A1B89BA-3885-4BD6-8326-67605764676C}
-templatekey: DataMappersSingleField
+template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
+templatekey: Folder
 
 ----version----
 language: en
 version: 1
-revision: 53e2c6c8-690c-48eb-98b6-331867db3662
+revision: 85b30ff7-5dd6-42dd-9afc-a4bc9c87858e
 
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20121230T205419
+20131223T181811
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -41,14 +34,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-53e2c6c8-690c-48eb-98b6-331867db3662
+85b30ff7-5dd6-42dd-9afc-a4bc9c87858e
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20121230T205419:634924976595593276
+20131223T181811:635234194912382754
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
