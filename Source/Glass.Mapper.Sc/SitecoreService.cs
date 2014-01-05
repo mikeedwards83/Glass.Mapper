@@ -1471,7 +1471,7 @@ namespace Glass.Mapper.Sc
 
         public Item ResolveItem(object target)
         {
-            var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+            var config = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(target);
 
             if (config == null)
             {
