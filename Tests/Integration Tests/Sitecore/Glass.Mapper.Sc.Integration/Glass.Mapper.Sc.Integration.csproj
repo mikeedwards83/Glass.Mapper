@@ -110,6 +110,7 @@
     <Compile Include="Dynamic\DynamicExtensions.cs" />
     <Compile Include="Dynamic\DynamicItemFixture.cs" />
     <Compile Include="GlassHtmlFixture.cs" />
+    <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTaskFixture.cs" />
@@ -251,6 +252,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
   </Target>

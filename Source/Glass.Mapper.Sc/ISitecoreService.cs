@@ -938,7 +938,12 @@ namespace Glass.Mapper.Sc
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
         void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext);
 
-        
+        /// <summary>
+        /// Returns the item that the specific object relates to
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        Item ResolveItem(object target);
 
     }
 }

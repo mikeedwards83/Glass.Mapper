@@ -228,6 +228,9 @@ namespace Glass.Mapper
         /// <returns>AbstractTypeConfiguration.</returns>
         public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false) where T: AbstractTypeConfiguration, new()
         {
+
+
+
             var config = TypeConfigurations.ContainsKey(type) ? TypeConfigurations[type] : null;
 
             if (config != null) return config as T;
