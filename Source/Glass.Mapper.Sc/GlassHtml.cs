@@ -475,7 +475,7 @@ namespace Glass.Mapper.Sc
                     if (context == null)
                         throw new NullReferenceException("Context cannot be null");
 
-                    var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
+                    var config = context.GetTypeConfiguration<SitecoreTypeConfiguration>(finalTarget);
 
                   
 

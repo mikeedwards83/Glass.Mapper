@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc.DataMappers
             else
             {
                 var type = value.GetType();
-                var typeConfig = context.Service.GlassContext.GetTypeConfiguration(value) as SitecoreTypeConfiguration;
+                var typeConfig = context.Service.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(value);
 
                 if(typeConfig == null)
                     throw new NullReferenceException("The type {0} has not been loaded into context {1}".Formatted(type.FullName, context.Service.GlassContext.Name));
