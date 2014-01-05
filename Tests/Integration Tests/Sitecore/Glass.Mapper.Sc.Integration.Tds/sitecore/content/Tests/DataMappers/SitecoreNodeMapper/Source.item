@@ -2,7 +2,7 @@
 version: 1
 id: {489ACA19-145A-4935-B352-14C7EDB54697}
 database: master
-path: /sitecore/content/Tests/DataMappers/SitecoreItemMapper/Source
+path: /sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source
 parent: {D14070A3-FD00-4A8F-968F-8D760BCDF2F2}
 name: Source
 master: {00000000-0000-0000-0000-000000000000}

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+    
+    Important: Before enabling this including file or changing any of the settings, read the Sitecore 6.3 Scaling Guide
+    (http://sdn.sitecore.net/Reference/Sitecore 6/Scaling Guide.aspx)
+    
+    -->
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <settings>
+      <!--  ENABLE EVENT QUEUES
+           If enabled, Sitecore sends local events to the event queue available to remote instances, 
+           and handles events in the queue from remote instances.
+      -->
+      <setting name="EnableEventQueues">
+        <patch:attribute name="value">true</patch:attribute>
+      </setting>
+      <!--  INSTANCE NAME
+            Unique name for Sitecore instance.
+            Default value: (machine name and IIS site name)
+      -->
+      <setting name="InstanceName">
+        <patch:attribute name="value"></patch:attribute>
+      </setting>
+      <!--  PUBLISHING INSTANCE
+            Assigns the instance name of dedicated Sitecore installation for publishing operations.
+            When empty, all publishing operations are performed on the local installation of Sitecore.
+            Default vaue: (empty)
+      -->
+      <setting name="Publishing.PublishingInstance">
+        <patch:attribute name="value"></patch:attribute>
+      </setting>
+      <!--  COUNTERS INSTANCE NAME
+            Instance name for performance counters.
+            Default value: (value of InstanceName setting)
+      -->
+      <setting name="Counters.InstanceName">
+        <patch:attribute name="value"></patch:attribute>
+      </setting>
+      <!--  SECURITY CACHE EXPIRATION
+            Sets the absolute expiration on the cached security data.
+            A value of 00:00:00 disables automatic expiration of security caches.
+
+      -->
+      <setting name="Caching.SecurityCacheExpiration">
+        <patch:attribute name="value">00:20:00</patch:attribute>
+      </setting>
+      <!--  MEDIA - DISABLE FILE MEDIA
+            Enables or disables storage of media as files rather than database records. 
+            If true, user interfaces do not present options to store media as files.
+            If true, this setting supersedes the Media.UploadAsFiles setting.
+      -->
+      <setting name="Media.DisableFileMedia">
+        <patch:attribute name="value">false</patch:attribute>
+      </setting>
+      <!--  MEDIA - FILE FOLDER
+            The folder under which media files are stored by the system.
+            It should be different from MediaFolder setting
+      -->
+      <setting name="Media.FileFolder">
+        <patch:attribute name="value">/App_Data/Replicated/MediaFiles</patch:attribute>
+      </setting>
+    </settings>
+  </sitecore>
+</configuration>
+

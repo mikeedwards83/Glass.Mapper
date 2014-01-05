@@ -117,7 +117,7 @@ namespace Glass.Mapper.Umb
             //  UmbracoTypeContext context = new UmbracoTypeContext();
 
             //TODO: ME - this may not work with a proxy
-            var config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+            var config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             if (config == null)
                 throw new NullReferenceException("Can not save class, could not find configuration for {0}".Formatted(typeof(T).FullName));
@@ -281,7 +281,7 @@ namespace Glass.Mapper.Umb
 
             try
             {
-                newType = GlassContext.GetTypeConfiguration(newItem) as UmbracoTypeConfiguration;
+                newType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(newItem);
             }
             catch (Exception ex)
             {
@@ -292,7 +292,7 @@ namespace Glass.Mapper.Umb
 
             try
             {
-                parentType = GlassContext.GetTypeConfiguration(parent) as UmbracoTypeConfiguration;
+                parentType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(parent);
             }
             catch (Exception ex)
             {
@@ -342,7 +342,7 @@ namespace Glass.Mapper.Umb
         public void WriteToItem<T>(T target, IContent content, UmbracoTypeConfiguration config = null)
         {
             if (config == null)
-                config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+                config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             var savingContext = new UmbracoTypeSavingContext
                 {

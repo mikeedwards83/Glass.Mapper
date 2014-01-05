@@ -361,34 +361,15 @@ namespace Glass.Mapper.Sc
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new NameValueCollection();
 
-
-            string format = "<a href='{0}{1}' {2}>{3}";
+            string format = "<a href='{0}' {1}>{2}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
-
-
-            Func<string, Func<string>, string> getValue = (key, func) =>
-            {
-                var value = attributes.AllKeys.Any(x => x == key) ? attributes[key] : func();
-                attributes.Remove(key);
-                return value;
-            };
-
-            UrlBuilder builder = new UrlBuilder(link.Url);
-
-            var query = getValue("query", () => link.Query);
-            var anchor = getValue("anchor", () => link.Anchor);
-
-
-
-            if(query.IsNotNullOrEmpty())
-                builder.AddQueryString(query);
             
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            string firstPart = format.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#"+anchor, Utilities.ConvertAttributes(attributes), contents);
+            string firstPart = format.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes), contents);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
@@ -494,7 +475,7 @@ namespace Glass.Mapper.Sc
                     if (context == null)
                         throw new NullReferenceException("Context cannot be null");
 
-                    var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
+                    var config = context.GetTypeConfiguration<SitecoreTypeConfiguration>(finalTarget);
 
                   
 

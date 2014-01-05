@@ -97,6 +97,7 @@
     <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreNodeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryMapperFixture.cs" />
@@ -109,8 +110,10 @@
     <Compile Include="Dynamic\DynamicExtensions.cs" />
     <Compile Include="Dynamic\DynamicItemFixture.cs" />
     <Compile Include="GlassHtmlFixture.cs" />
+    <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTaskFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\SitecoreTypeFieldHandler.cs" />
     <Compile Include="SetupSitecoreForTesting.cs" />
@@ -249,6 +252,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
   </Target>

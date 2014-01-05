@@ -68,11 +68,13 @@
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\AbstractPropertyAttribute.cs" />
+    <Compile Include="Configuration\Attributes\AttributeTypeLoader.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\IdAttribute.cs" />
     <Compile Include="Configuration\Attributes\IgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
+    <Compile Include="Configuration\Attributes\ItemAttribute.cs" />
     <Compile Include="Configuration\Attributes\LinkedAttribute.cs" />
     <Compile Include="Configuration\Attributes\NodeAttribute.cs" />
     <Compile Include="Configuration\Attributes\ParentAttribute.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Configuration\IdConfiguration.cs" />
     <Compile Include="Configuration\IgnoreConfiguration.cs" />
     <Compile Include="Configuration\InfoConfiguration.cs" />
+    <Compile Include="Configuration\ItemConfiguration.cs" />
     <Compile Include="Configuration\LinkedConfiguration.cs" />
     <Compile Include="Configuration\NodeConfiguration.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />

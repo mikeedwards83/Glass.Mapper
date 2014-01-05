@@ -1108,6 +1108,48 @@ namespace Glass.Mapper.Sc.Integration
 
         #region Method - Create
 
+
+        [Test]
+        public void Create_TypeNotPreloaded_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            Assert.AreEqual(0, context.TypeConfigurations.Count);
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = new StubClassNotPreloaded();
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
         [Test]
         public void Create_CreatesANewItem()
         {
@@ -1147,6 +1189,49 @@ namespace Glass.Mapper.Sc.Integration
 
             Assert.AreEqual(child.Name,newItem.Name);
             Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_CreatesANewItem_WithSpecificId()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+            var id = Guid.NewGuid();
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = new StubClass();
+            child.Id = id;
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(id, newItem.ID.Guid);
         }
 
         [Test]
@@ -1769,8 +1854,57 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Map
+
+        [Test]
+        public void Map_ClassWithId_MapsFieldValues()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            Guid id = new Guid("{346D7364-ECBA-4E7A-9580-58DB4785C20A}");
+            DateTime date = new DateTime(2013, 04, 03, 12, 15, 10);
+            var item = db.GetItem(id.ToString());
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var service = new SitecoreService(db, context);
+
+            var model = new MapStub();
+            model.Id = id;
+
+            //Act
+            service.Map(model);
+
+            //Assert
+            Assert.AreEqual(text, model.StringField);
+            Assert.AreEqual(date,  model.DateField);
+
+        }
+
+        #endregion
+
         #region Stubs
 
+        [SitecoreType]
+        public class MapStub
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual string StringField { get; set; }
+
+            [SitecoreField]
+            public virtual DateTime DateField { get; set; }
+
+        }
         [SitecoreType]
         public class StubSaving
         {
@@ -1843,6 +1977,14 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
+        [SitecoreType(TemplateId = StubClass.TemplateId, AutoMap = true)]
+        public class StubClassNotPreloaded
+        {
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+
+            public virtual Guid Id { get; set; }
+            public virtual string Name { get; set; }
+        }
 
         [SitecoreType]
         public class StubClassWithProperty
@@ -1912,6 +2054,11 @@ namespace Glass.Mapper.Sc.Integration
             DateTime DateField { get; set; }
         }
         #endregion
+
+        
+
+
+
     }
 }
 

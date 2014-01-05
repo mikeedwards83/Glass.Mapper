@@ -55,7 +55,12 @@ namespace Glass.Mapper
         /// <summary>
         /// Parameters that will be passed to the pipelines
         /// </summary>
-        public Dictionary<string, object> Parameters { get; set; } 
+        public Dictionary<string, object> Parameters { get; set; }
+
+        public virtual string DataSummary()
+        {
+            return string.Empty;
+        }
     }
 }
 

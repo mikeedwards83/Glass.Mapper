@@ -62,11 +62,11 @@ namespace Glass.Mapper
         /// </value>
         public  Context GlassContext { get; private set; }
 
-        private readonly ConfigurationResolver _configurationResolver;
+        private ConfigurationResolver _configurationResolver;
 
-        private readonly ObjectConstruction _objectConstruction;
+        private ObjectConstruction _objectConstruction;
 
-        private readonly ObjectSaving _objectSaving;
+        private ObjectSaving _objectSaving;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
@@ -168,12 +168,42 @@ namespace Glass.Mapper
         /// <param name="creationContext">The Saving Context</param>
         /// <returns></returns>
         public abstract AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_configurationResolver != null)
+                {
+                    _configurationResolver.Dispose();
+                }
+                if (_objectConstruction != null)
+                {
+                    _objectConstruction.Dispose();
+                }
+                if (_objectSaving != null)
+                {
+                    _objectSaving.Dispose();
+                }
+
+                _configurationResolver = null;
+                _objectConstruction = null;
+                _objectSaving = null;
+
+            }
+        }
     }
 
     /// <summary>
     /// IAbstractService
     /// </summary>
-    public interface IAbstractService
+    public interface IAbstractService : IDisposable
     {
         /// <summary>
         /// Gets the glass context.

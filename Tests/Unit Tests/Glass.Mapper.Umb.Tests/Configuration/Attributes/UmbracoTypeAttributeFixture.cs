@@ -61,36 +61,20 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new UmbracoTypeAttribute();
-            var config = new UmbracoTypeConfiguration();
             var type = typeof(StubClass);
             
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type);
 
             //Assert
             config.Type.ShouldBeEquivalentTo(type);
         }
-
-        [Test]
-        public void Configure_ConfigurationIsIncorrectType_ExceptionThrown()
-        {
-            //Assign
-            var attr = new UmbracoTypeAttribute();
-            var config = Substitute.For<AbstractTypeConfiguration>();
-            var type = typeof(StubClass);
-            
-            //Act
-
-            //Assert
-            attr.Invoking(a => a.Configure(type, config)).ShouldThrow<ConfigurationException>();
-        }
-
+        
         [Test]
         public void Configure_AttributeHasContentTypeAlias_ContentTypeAliasSetOnConfig()
         {
             //Assign
             var attr = new UmbracoTypeAttribute();
-            var config = new UmbracoTypeConfiguration();
             var type = typeof(StubClass);
 
             var contentTypeAliasExpected = "test";
@@ -98,7 +82,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             attr.ContentTypeAlias = contentTypeAliasExpected;
 
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type) as UmbracoTypeConfiguration;
 
             //Assert
             config.Type.ShouldBeEquivalentTo(type);
@@ -110,7 +94,6 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
         {
             //Assign
             var attr = new UmbracoTypeAttribute();
-            var config = new UmbracoTypeConfiguration();
             var type = typeof(StubClass);
 
             var contentTypeNameExpected = "test";
@@ -118,7 +101,7 @@ namespace Glass.Mapper.Umb.Tests.Configuration.Attributes
             attr.ContentTypeName = contentTypeNameExpected;
 
             //Act
-            attr.Configure(type, config);
+            var config = attr.Configure(type) as UmbracoTypeConfiguration;
 
             //Assert
             config.Type.ShouldBeEquivalentTo(type);

@@ -40,15 +40,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <typeparam name="TModel"></typeparam>
     public class TemplateBase<TModel> : RazorEngine.Templating.TemplateBase<TModel>, ITemplateBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TemplateBase{T}"/> class.
-        /// </summary>
-        public TemplateBase()
-        {
-
-
-        }
-
+     
         /// <summary>
         /// Gets or sets the sitecore context.
         /// </summary>
@@ -72,12 +64,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <value>The glass HTML.</value>
         public GlassHtmlFacade GlassHtml
         {
-            get
-            {
-                if (_glassHtml == null)
-                    _glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(this.CurrentWriter));
-
-                return _glassHtml;
+            get {
+                return _glassHtml ??
+                       (_glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(CurrentWriter)));
             }
         }
 
@@ -96,8 +85,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             get
             {
                 return ParentControl.Controls.Cast<Control>()
-                                    .Where(x => x is global::Sitecore.Web.UI.WebControls.Placeholder)
-                                    .Cast<global::Sitecore.Web.UI.WebControls.Placeholder>();
+                                    .Where(x => x is Placeholder)
+                                    .Cast<Placeholder>();
             }
         }
 
@@ -119,7 +108,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             SitecoreContext = sitecoreContext;
 
-            Html = new HtmlHelper(new ViewContext(), new ViewDataContainer() {ViewData = ViewData});
+            Html = new HtmlHelper(new ViewContext(), new ViewDataContainer {ViewData = ViewData});
             ViewData = viewData;
             ParentControl = parentControl;
             if (parentControl != null && parentControl.Page != null)
@@ -162,7 +151,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             var placeHolder = Placeholders.FirstOrDefault(x => x.Key == key);
 
             if (placeHolder == null)
-                placeHolder = new global::Sitecore.Web.UI.WebControls.Placeholder {Key = key};
+                placeHolder = new Placeholder {Key = key};
             ParentControl.Controls.Add(placeHolder);
 
             var sb = new StringBuilder();
@@ -171,29 +160,15 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         }
 
 
-
-
-
         /// <summary>
         /// Editables the specified target.
         /// </summary>
         /// <typeparam name="T">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
+        /// <param name="parameters">Parameters to control field rendering</param>
         /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field)
-        {
-            return GlassHtml.Editable(target, field);
-        }
-
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T">The type of the t1.</typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
-        /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, AbstractParameters parameters)
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, object parameters = null)
         {
             return GlassHtml.Editable(target, field, parameters);
         }
@@ -204,41 +179,12 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <typeparam name="T">The type of the t1.</typeparam>
         /// <param name="target">The target.</param>
         /// <param name="field">The field.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>IEncodedString.</returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, string parameters)
-        {
-            return GlassHtml.Editable(target, field, parameters);
-        }
-        
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T">The type of the t1.</typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
+        /// <param name="parameters">Parameters to control field rendering</param>
         /// <returns>
         /// IEncodedString.
         /// </returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field,
-                                           Expression<Func<T, string>> standardOutput)
-        {
-            return GlassHtml.Editable(target, field, standardOutput);
-        }
-
-        /// <summary>
-        /// Editables the specified target.
-        /// </summary>
-        /// <typeparam name="T">The type of the t1.</typeparam>
-        /// <param name="target">The target.</param>
-        /// <param name="field">The field.</param>
-        /// <param name="standardOutput">The standard output.</param>
-        /// <returns>
-        /// IEncodedString.
-        /// </returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field,
-                                           Expression<Func<T, string>> standardOutput, AbstractParameters parameters)
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
         {
             return GlassHtml.Editable(target, field, standardOutput,parameters);
         }
@@ -247,7 +193,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// Renders an image allowing simple page editor support
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
+        /// <param name="target">The model with the field</param>
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
@@ -275,131 +221,62 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return Raw(_glassHtml.RenderLink(model, field, attributes, isEditable, contents));
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Editables the specified field.
         /// </summary>
         /// <param name="field">The field.</param>
+        /// <param name="parameters">Parameters to control field rendering</param>
         /// <returns>RawString.</returns>
         /// <exception cref="System.NullReferenceException">
         /// No field set
         /// or
         /// No model set
         /// </exception>
-        public IEncodedString Editable(Expression<Func<TModel, object>> field)
+        public IEncodedString Editable(Expression<Func<TModel, object>> field, object parameters = null)
         {
-                return GlassHtml.Editable(this.Model, field);
+            return GlassHtml.Editable(Model, field, parameters);
         }
-
-        /// <summary>
-        /// Editables the specified field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <returns>RawString.</returns>
-        /// <exception cref="System.NullReferenceException">
-        /// No field set
-        /// or
-        /// No model set
-        /// </exception>
-        public IEncodedString Editable(Expression<Func<TModel, object>> field, AbstractParameters parameters)
-        {
-            return GlassHtml.Editable(this.Model, field, parameters);
-        }
-
-        /// <summary>
-        /// Editables the specified field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <returns>RawString.</returns>
-        /// <exception cref="System.NullReferenceException">
-        /// No field set
-        /// or
-        /// No model set
-        /// </exception>
-        public IEncodedString Editable(Expression<Func<TModel, object>> field, string parameters)
-        {
-            return GlassHtml.Editable(this.Model, field, parameters);
-        }
-
 
         /// <summary>
         /// Editables the specified field.
         /// </summary>
         /// <param name="field">The field.</param>
         /// <param name="standardOutput">The standard output.</param>
+        /// <param name="parameters">Parameters to control field rendering</param>        
         /// <returns>
         /// RawString.
         /// </returns>
         /// <exception cref="System.NullReferenceException">No field set
         /// or
         /// No model set</exception>
-        public RawString Editable(Expression<Func<TModel, object>> field,
-                                  Expression<Func<TModel, string>> standardOutput)
+        public RawString Editable(Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
         {
-            return GlassHtml.Editable(this.Model, field, standardOutput);
-        }
-
-
-        /// <summary>
-        /// Editables the specified field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="standardOutput">The standard output.</param>
-        /// <returns>
-        /// RawString.
-        /// </returns>
-        /// <exception cref="System.NullReferenceException">No field set
-        /// or
-        /// No model set</exception>
-        public RawString Editable(Expression<Func<TModel, object>> field,
-                                  Expression<Func<TModel, string>> standardOutput, AbstractParameters parameters)
-        {
-            return GlassHtml.Editable(this.Model, field, standardOutput, parameters);
+            return GlassHtml.Editable(Model, field, standardOutput, parameters);
         }
 
 
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
-        public virtual IEncodedString RenderImage(Expression<Func<TModel, object>> field,
-                                             ImageParameters parameters = null,
-                                             bool isEditable = false)
+        public virtual IEncodedString RenderImage(Expression<Func<TModel, object>> field, ImageParameters parameters = null, bool isEditable = false)
         {
-            return GlassHtml.RenderImage(this.Model, field, parameters, isEditable);
+            return GlassHtml.RenderImage(Model, field, parameters, isEditable);
         }
 
         /// <summary>
         /// Render HTML for a link with contents
         /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
-        public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field,
-                                                     NameValueCollection attributes = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false)
         {
-            return GlassHtml.GlassHtml.BeginRenderLink(this.Model, field, this.CurrentWriter, attributes, isEditable);
+            return GlassHtml.GlassHtml.BeginRenderLink(Model, field, CurrentWriter, attributes, isEditable);
 
         }
 
@@ -407,8 +284,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Render HTML for a link
         /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
+        /// <typeparam>The model type
+        ///     <name>T</name>
+        /// </typeparam>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
@@ -417,7 +295,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         public virtual IEncodedString RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return this.RenderLink(this.Model, field, attributes, isEditable, contents);
+            return RenderLink(Model, field, attributes, isEditable, contents);
         }
 
 
@@ -439,11 +317,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// model configuration.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="parameters"></param>
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>() where T : class
         {
-            return GlassHtml.RenderingParameters<T>(this.ParentControl.Parameters);
+            return GlassHtml.RenderingParameters<T>(ParentControl.Parameters);
         }
 
 

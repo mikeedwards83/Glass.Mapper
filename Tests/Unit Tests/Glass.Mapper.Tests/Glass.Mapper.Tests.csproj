@@ -67,6 +67,7 @@
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractPropertyAttributeFixture.cs" />
+    <Compile Include="Configuration\Attributes\AttributeTypeLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\FieldAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\IdAttributeFixture.cs" />

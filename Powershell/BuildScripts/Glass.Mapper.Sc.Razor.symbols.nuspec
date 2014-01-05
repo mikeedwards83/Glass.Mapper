@@ -17,7 +17,7 @@
     <tags>Glass Mapper Sitecore Razor Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.0.3" />
+		<dependency id="Glass.Mapper.Sc" version="3.1.0" />
 		<dependency id="RazorEngine" version="3.2.0" />
     </dependencies>
   </metadata>

@@ -70,9 +70,9 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <param name="type">The type.</param>
         /// <param name="config">The config.</param>
         /// <exception cref="Glass.Mapper.Configuration.ConfigurationException">Type configuration is not of type {0}.Formatted(typeof (SitecoreTypeConfiguration).FullName)</exception>
-        public override void Configure(Type type, Mapper.Configuration.AbstractTypeConfiguration config)
+        public override AbstractTypeConfiguration Configure(Type type)
         {
-            var scConfig = config as SitecoreTypeConfiguration;
+            var scConfig = new SitecoreTypeConfiguration();
 
             if (scConfig == null)
                 throw new ConfigurationException(
@@ -92,7 +92,9 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             scConfig.CodeFirst = this.CodeFirst;
             scConfig.TemplateName = this.TemplateName;
 
-            base.Configure(type, config);
+            base.Configure(type, scConfig);
+            
+            return scConfig;
         }
     }
 }
