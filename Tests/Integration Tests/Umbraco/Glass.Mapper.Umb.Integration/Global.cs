@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using SqlCE4Umbraco;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
@@ -68,15 +69,24 @@ namespace Glass.Mapper.Umb.Integration
                 @"\UmbracoPetaPocoTests.sdf";
 
             int count = 0;
-            while (count < 10)
+            while (true)
             {
                 try
                 {
+                    Thread.Sleep(100);
                     File.Delete(path);
                     break;
                 }
+                catch(Exception ex)
+                {
+                    if (count == 10)
+                    {
+                        throw ex;
+                    }   
+                }
                 finally
                 {
+                    
                     count++;
                 }
 

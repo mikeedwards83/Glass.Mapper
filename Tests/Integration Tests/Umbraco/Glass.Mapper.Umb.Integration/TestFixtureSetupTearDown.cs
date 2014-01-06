@@ -36,7 +36,7 @@ namespace Glass.Mapper.Umb.Integration
                 DirectoryCopy(@".\Config", @"..\..\..\..\..\..\_ncrunchreferences\Config", false);
 
 #endif
-                //  Global.CleanPreviousRun();
+                  Global.CleanPreviousRun();
 
                 Global.ConfigureConnectionString();
 
