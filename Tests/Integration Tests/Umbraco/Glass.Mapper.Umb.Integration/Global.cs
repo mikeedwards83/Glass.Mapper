@@ -66,7 +66,21 @@ namespace Glass.Mapper.Umb.Integration
                 ApplicationContext.Current.DatabaseContext.Database.Dispose();
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
                 @"\UmbracoPetaPocoTests.sdf";
-            File.Delete(path);
+
+            int count = 0;
+            while (count < 10)
+            {
+                try
+                {
+                    File.Delete(path);
+                    break;
+                }
+                finally
+                {
+                    count++;
+                }
+
+            }
         }
 
         /// <summary>
