@@ -1,18 +1,25 @@
 ----item----
 version: 1
-id: {996BA89E-5AC7-4F21-A411-62CEE5F7C419}
+id: {9C4E4AB1-4CB7-40BD-9F67-7D445AF0F17A}
 database: master
-path: /sitecore/content/Tests/Issues/CustomAttribute
-parent: {DABE65FA-8642-41BA-A3C7-D4BEA0141A4D}
-name: CustomAttribute
+path: /sitecore/templates/Tests/Pipelines/ObjectConstruction/Windsor/SimpleTemplate
+parent: {0AFB10F5-0D5E-4394-9118-247C26874AB0}
+name: SimpleTemplate
 master: {00000000-0000-0000-0000-000000000000}
-template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
-templatekey: Folder
+template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+templatekey: Template
 
+----field----
+field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
+name: __Base template
+key: __base template
+content-length: 38
+
+{1930BBEB-7805-471A-A3BE-4858AC7CF696}
 ----version----
 language: en
 version: 1
-revision: c016916e-25df-4f65-ad15-1eebd32f1f75
+revision: 4e7a2dfb-a792-4d05-8788-c45ecc37bdaf
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -20,7 +27,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20131017T200334
+20131011T085010
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-c016916e-25df-4f65-ad15-1eebd32f1f75
+4e7a2dfb-a792-4d05-8788-c45ecc37bdaf
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20131017T200334:635176370144925306
+20131011T085010:635170782105295084
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

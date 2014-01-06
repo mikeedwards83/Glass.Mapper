@@ -110,6 +110,7 @@ namespace Glass.Mapper.Umb.Integration
             {
                 UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
                 umbracoDatabase.CreateDatabaseSchema();
+                umbracoDatabase.Dispose();
             }
         }
 
