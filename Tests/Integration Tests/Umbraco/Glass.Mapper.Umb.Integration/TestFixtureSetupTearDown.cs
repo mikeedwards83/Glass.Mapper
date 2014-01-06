@@ -31,7 +31,7 @@ namespace Glass.Mapper.Umb.Integration
         {
             if (!_hasBooted)
             {
-                Global.CleanPreviousRun();
+              //  Global.CleanPreviousRun();
 
                 Global.ConfigureConnectionString();
 
