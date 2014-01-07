@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
 
@@ -147,6 +148,14 @@ namespace Glass.Mapper.Sc.DataMappers
             return configuration is SitecoreFieldConfiguration &&
                    TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);
         }
+
+        public override void Setup(Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs args)
+        {
+            var scArgs = args.PropertyConfiguration as FieldConfiguration;
+            this.ReadOnly = scArgs.ReadOnly;
+            base.Setup(args);
+        }
+        
     }
 }
 

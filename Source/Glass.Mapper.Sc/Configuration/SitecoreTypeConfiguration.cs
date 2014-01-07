@@ -137,6 +137,8 @@ namespace Glass.Mapper.Sc.Configuration
         /// Cannot get ID for item</exception>
         public Item ResolveItem(object target, Database database)
         {
+            if (target == null)
+                return null;
 
             ID id;
             Language language = null;
@@ -151,7 +153,7 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (IdConfig == null)
                 throw new NotSupportedException(
-                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.");
+                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID. Type: {0}".Formatted(target.GetType().FullName));
 
             id = GetId(target);
 
