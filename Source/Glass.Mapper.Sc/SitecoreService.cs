@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Common;
@@ -156,7 +157,9 @@ namespace Glass.Mapper.Sc
             SitecoreTypeConfiguration newType;
             try
             {
-                newType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(newItem);
+                 
+              newType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(newItem);
+               
             }
             catch (Exception ex)
             {
@@ -1464,6 +1467,25 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
+        #region ResolveItem
+
+        public Item ResolveItem(object target)
+        {
+            var config = GlassContext.GetTypeConfiguration(target) as SitecoreTypeConfiguration;
+
+            if (config == null)
+            {
+                return null;
+            }
+
+            var item = config.ResolveItem(target, Database);
+
+            return item;
+
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates the data mapping context.
         /// </summary>
@@ -1486,6 +1508,8 @@ namespace Glass.Mapper.Sc
             var scContext = creationContext as SitecoreTypeSavingContext;
             return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }
+
+
 
     } 
 }
