@@ -125,6 +125,7 @@
     <Content Include="_posts\2013-11-27-TodaysRelease.html" />
     <Content Include="_posts\2013-12-10-Configuration.html" />
     <Content Include="_posts\2014-01-08-ItemsInService.html" />
+    <Content Include="_posts\2014-01-08-UsingGlassToMakeDiamonds.html" />
     <None Include="CNAME" />
     <Content Include="404.html" />
     <Content Include="search.html" />

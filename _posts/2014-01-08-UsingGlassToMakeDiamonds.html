@@ -1,0 +1,152 @@
+---
+layout: BlogLayout
+title: Using Glass to Make Diamonds
+image: https://i.chzbgr.com/maxW500/6106271488/h454DCC5A/
+abstract: In the blog post I look at how other ORMs can be integrated with Glass.Mapper.Sc.
+caption: 08 Jan 2014
+---
+			
+<p class="lead">
+    In this blog post I look at how other Sitecore ORMs can be integrated with Glass.Mapper so that you can request items that work
+    with these frameworks via Glass.Mapper.
+</p>
+<img src="https://i.chzbgr.com/maxW500/6106271488/h454DCC5A/" style="float:right"/>
+<p>
+    For this blog post I will be using the Diamond project as the ORM I will be integrating with Glass.Mapper. The process should 
+    be very similar if you want to integrate it with one of the other Sitecore ORMs.
+</p>
+<p>
+    The technique is useful if you want to migrate between different ORMs or you there are features of another ORM you want to leverage 
+    with a Glass.Mapper solution.
+</p>
+
+<h2>The Configuration Task</h2>
+<p>
+    The first step is making Glass.Mapper aware that a Diamond type has been requested. The first stage of this is to create a Configuration 
+    Resolver Task. The code for this is:
+</p>
+<pre class="csharp">
+
+    public class DiamondConfigurationTask : IConfigurationResolverTask
+    {
+        public void Execute(ConfigurationResolverArgs args)
+        {
+            if (args.Result == null && typeof(Diamond.Items.IStandardTemplate).IsAssignableFrom(args.RequestedType))
+            {
+                args.Result = new SitecoreTypeConfiguration();
+                args.Result.Type = args.RequestedType;
+            }
+        }
+    }
+
+
+</pre>
+<p>
+    We first check that no other result has been set and then we check if the requested type can be casde to the IStandardTemplate. All
+    classes in Diamond inherit the IStandardTemplate. If a Diamond class has been requested we create a very basic SitecoreTypeConfiguration 
+    to represent the requested type. Notice that we aren't looking in Glass.Mapper's cached type list, it is much easier just to create
+    this config on the fly.
+</p>
+
+<h2>The Construction Task</h2>
+<p>
+    The second step on the process is to create the Object Construction Task which will be responsible for creating the Diamond type. This is 
+    again is a very simple class:
+</p>
+<pre class="csharp">
+    public class DiamondConstructionTask : IObjectConstructionTask
+    {
+        public void Execute(ObjectConstructionArgs args)
+        {
+            if (args.Result == null && typeof (IStandardTemplate).IsAssignableFrom(args.Configuration.Type))
+            {
+                var scContext = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
+                args.Result = scContext.Item.AsStronglyTyped();
+            }
+        }
+    }
+</pre>
+<p>
+    Again we ensure that no other task has already set a value and then we check that the type request in the configuration is assignable from
+    IStandardTemplate. This configuration was set by our Configuration Resolver Task. If everything looks of we then get the Sitecore Creation 
+    Context and then uses Diamonds Item extension method AsStronglyType to create the appropriate type for use.
+</p>
+<h2>Register The Tasks</h2>
+<p>
+    The tasks now need to be registered with the Castle IOC container used by Glass.Mapper, you can do this in the GlassMapperScCustom
+    class that is added to your project when you download Glass.Mapper from Nuget:
+</p>
+<pre class="csharp">
+    public static  class GlassMapperScCustom
+    {
+		public static void CastleConfig(IWindsorContainer container){
+			var config = new Config();
+
+		    container.Register(
+                Component.For&lt;IObjectConstructionTask&gt;().ImplementedBy&lt;DiamondConstructionTask&gt;(),
+                Component.For&lt;IConfigurationResolverTask&gt;().ImplementedBy&lt;DiamondConfigurationTask&gt;()
+		        );
+
+			container.Install(new SitecoreInstaller(config));
+		}
+
+</pre>
+
+<h2>Testing It Out</h2>
+<p>
+    Now we have everything setup we can test this out. I have created my Diamond classes using Code Generation in TDS and I have a template called
+    BasicTemplate that looks like this:
+</p>
+<pre class="csharp">
+	[TemplateID("4ae36baf-b618-4cff-aa6f-a9de40fecefc")]
+	public partial class BasicTemplate : StandardTemplate, IBasicTemplate
+	{
+		public static ID SourceTemplateID 
+		{
+			get { return new ID("4ae36baf-b618-4cff-aa6f-a9de40fecefc"); }
+		}
+
+		public BasicTemplate(Item innerItem) : base(innerItem) { }
+
+		private TextProperty _title;
+		public TextProperty Title 
+		{
+			get { return _title ?? (_title = new TextProperty(this.GetField("fcb08f69-4ba3-4331-b582-8bb7c3700d75"))); }
+		}
+
+	} // end class
+</pre>
+
+<p>
+    Within my subkayout I can request this template using the SitecoreContext class: 
+</p>
+<pre class="csharp">
+    Model = context.GetCurrentItem&lt;BasicTemplate&gt;();
+</pre>
+
+<p>
+    Here we are now mixing and matching both Glass.Mapper and Diamond into a single solution. Another great way about how Glass.Mapper has been setup
+    means that I can also use my new Diamond classes on my Glass.Mapper models. For example I can create the following Glass.Mapper model that gets all 
+    the children as Diamond classes:
+</p>
+
+<pre class="csharp">
+   public class MyGlassModel{
+    
+      public virtual IEnumerable&lt;BasicTemplate&gt; Children { get; set; }
+
+   }
+</pre>
+
+
+
+<h2>Sumamry</h2>
+<p>
+    Hopefully this has shown you how easy it is to mix Glass.Mapper with other ORMS and extend the functionality you get from the solution. Allowing
+    you to migrate or mix and match as you see fit.
+</p>
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
