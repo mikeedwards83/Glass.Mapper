@@ -10,7 +10,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
     {
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Configuration == Sc.Pipelines.ConfigurationResolver.SitecoreItemResolverTask.Config)
+            if (args.Result == null && args.Configuration == Sc.Pipelines.ConfigurationResolver.SitecoreItemResolverTask.Config)
             {
                 var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
                 args.Result = scArgs.Item;
