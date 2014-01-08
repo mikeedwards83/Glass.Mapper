@@ -19,7 +19,7 @@
     <tags>Glass Mapper Umbraco Razor Glass.Mapper MVC</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper" version="3.0.0" />
+		<dependency id="Glass.Mapper" version="3.1.3" />
     </dependencies>
   </metadata>
   <files>
