@@ -78,6 +78,26 @@ namespace Glass.Mapper.Sc.Integration
 
         #region Method - GetItem
 
+
+        [Test]
+        public void GetItem_UsingItemIdAsItem_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+
+            //Act
+            var result = service.GetItem<Item>(id);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.ID.Guid);
+        }
+
+
         [Test]
         public void GetItem_UsingItemId_ReturnsItem()
         {
