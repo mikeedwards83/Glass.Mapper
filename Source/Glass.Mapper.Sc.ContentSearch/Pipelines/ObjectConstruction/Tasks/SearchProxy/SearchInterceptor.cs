@@ -51,6 +51,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
                     SitecoreTypeConfiguration typeConfiguration = TypeConfiguration;
                     AbstractDataMappingContext dataMappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
+                    //todo filter fieldnames from FieldConfigs!
                     foreach (AbstractPropertyConfiguration propertyConfiguration in typeConfiguration.Properties.Where(x=> IndexFields.All(y=> y != x.PropertyInfo.Name)))
                     {
                         object obj = propertyConfiguration.Mapper.MapToProperty(dataMappingContext);

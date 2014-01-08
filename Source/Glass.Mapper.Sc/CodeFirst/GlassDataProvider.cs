@@ -35,6 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -366,7 +367,8 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <returns>IDList.</returns>
         private IDList GetChildIDsSection(SectionInfo section, CallContext context)
         {
-            var cls = _typeConfigurations.First(x => x.Value.TemplateId == section.TemplateId).Value;
+            var config = _typeConfigurations.First(x => x.Value.TemplateId == section.TemplateId);
+            var cls = config.Value;
 
             var fields = cls.Properties.OfType<SitecoreFieldConfiguration>();
 
@@ -374,13 +376,13 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             var providers = context.DataManager.Database.GetDataProviders();
             var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
+            var interfaces = cls.Type.GetInterfaces();
 
             foreach (var field in fields)
             {
-                if (field.PropertyInfo.DeclaringType != cls.Type)
+                //fix: added check on interfaces
+                if (field.PropertyInfo.DeclaringType != cls.Type || interfaces.Any(inter => inter.GetProperty(field.PropertyInfo.Name) != null))
                     continue;
-
-
 
                 if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))
                 {
@@ -810,7 +812,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                 if (!_typeConfigurations.ContainsKey(type)) return;
 
                 var baseConfig = _typeConfigurations[type];
-                if (baseConfig != null && baseConfig.CodeFirst)
+                if (baseConfig != null && baseConfig.TemplateId.Guid != Guid.Empty)
                 {
                     if (!baseTemplatesField.Contains(baseConfig.TemplateId.ToString()))
                     {
@@ -821,16 +823,19 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             Type baseType = config.Type.BaseType;
 
-
             while (baseType != null)
             {
-                idCheck(baseType);
+                idCheck(baseType);    
                 baseType = baseType.BaseType;
             }
 
+            config.Type.GetInterfaces().ForEach(idCheck);
 
-
-            config.Type.GetInterfaces().ForEach(x => idCheck(x));
+            //dirty fix for circular template inheritance
+            var baseTemplates = sb.ToString().Split('|').ToList();
+            baseTemplates.Remove(config.TemplateId.ToString());
+            sb.Clear();
+            sb.Append(string.Join("|", baseTemplates));
 
             if (baseTemplatesField != sb.ToString())
             {

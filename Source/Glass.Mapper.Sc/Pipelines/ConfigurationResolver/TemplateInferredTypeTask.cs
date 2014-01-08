@@ -44,14 +44,15 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 
                     var requestedType = scContext.RequestedType;
                     var item = scContext.Item;
-                    var templateId = item.TemplateID;
+                    var templateId = item != null ? item.TemplateID : scContext.TemplateId;
 
                     var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
 
                     var types = configs.Where(x => x.TemplateId == templateId);
                     if (types.Any())
                     {
-                        args.Result = new[] {types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type))};
+                        var type = types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type));
+                        if (type != null) args.Result = new[] { type };
                     }
                 }
             }

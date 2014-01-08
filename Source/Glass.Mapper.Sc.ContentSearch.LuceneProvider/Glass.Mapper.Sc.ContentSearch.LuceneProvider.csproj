@@ -36,19 +36,22 @@
       <HintPath>..\..\packages\Castle.Core.3.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
-      <HintPath>..\..\Depends\Sitecore\bin7\Lucene.Net.dll</HintPath>
+      <HintPath>..\..\Depends\Lucene\Lucene.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.ContentSearch.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Depends\Sitecore\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq">
-      <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.ContentSearch.Linq.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Depends\Sitecore\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
-      <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
+    <Reference Include="Sitecore.ContentSearch.LuceneProvider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Depends\Sitecore\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlassLuceneDocumentTypeMapper.cs" />
+    <Compile Include="GlassLuceneFieldNameTranslator.cs" />
+    <Compile Include="GlassLuceneIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

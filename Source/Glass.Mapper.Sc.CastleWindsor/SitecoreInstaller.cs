@@ -33,6 +33,7 @@ using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
@@ -410,6 +411,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
+                Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient()
