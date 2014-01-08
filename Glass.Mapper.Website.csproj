@@ -125,11 +125,9 @@
     <Content Include="_posts\2013-11-27-TodaysRelease.html" />
     <Content Include="_posts\2013-12-10-Configuration.html" />
     <None Include="CNAME" />
-    <Compile Include="docs\concepts\example-fluent-1.cs" />
     <Content Include="404.html" />
     <Content Include="search.html" />
     <Content Include="docs\api\Glass.Mapper.Sc.Dynamic.DynamicItem.html" />
-    <Content Include="docs\concepts\automapping.html" />
     <Content Include="docs\dependencies.html" />
     <Content Include="docs\FAQ\images\GlassSitecoreDepends.png" />
     <Content Include="docs\FAQ\index.html" />
@@ -165,8 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
-    <Content Include="docs\concepts\fluent.html" />
-    <Content Include="docs\concepts\index.html" />
     <Content Include="docs\glass.sitecore.mapper.html" />
     <Content Include="docs\solutions.html" />
     <Content Include="docs\tutorial\index.html" />
