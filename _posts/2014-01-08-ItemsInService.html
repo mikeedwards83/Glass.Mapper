@@ -1,0 +1,45 @@
+---
+layout: BlogLayout
+title: Getting Sitecore.Data.Items.Item through the Glass services.
+image: http://cdn.memegenerator.net/instances/500x/44679148.jpg
+abstract: In the next release of Glass.Mapper.Sc you will be able to get Sitecore.Data.Items.Item using SitecoreContext and SitecoreService.
+caption: 08 Jan 2014
+---
+			
+<p class="lead">
+    Glass.Mapper.Sc in the next release 3.1.5 you will be able to get items through the SitecoreService and SitecoreContext. Lets see how
+    we can use this.
+</p>
+<img src="http://cdn.memegenerator.net/instances/500x/44679148.jpg" style="float:right"/>
+<h2>Get an Item using a Glass Service</h2>
+<p>
+    First off we can directly get a Sitecore item from the SitecoreService or SitecoreContext just by specifying it as the requested type:
+</p>
+<pre class="csharp">
+    var context = new SitecoreContext();
+    var item  = context.GetItem&lt;Sitecore.Data.Items.Item&gt;("/sitecore/content/home");
+</pre>
+
+<h2>Using Items on Models</h2>
+<p>
+    You can also specify Items to be returned on your models as well, look at the example of getting the parent and children as Items on this
+    model:
+</p>
+<pre class="csharp">
+    public class MyModel{
+        
+        public virtual Item Parent{ get; set; }
+        public virtual IEnumerable&lt;Item&gt; Children{ get; set; }
+    
+    }
+
+</pre>
+
+<p>
+    Hopefully this will allow better integration with underlying Sitecore API and a more fluid transfer from one environment to another.
+</p>
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
