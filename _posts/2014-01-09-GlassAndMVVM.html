@@ -1,0 +1,101 @@
+---
+layout: BlogLayout
+title: Glass and MVVM
+image: /images/blog/2014-01-09-MvvmPageEditor.PNG
+abstract: A quick look at how Glass.Mapper.Sc lets you easily achieve and MVVM solution.
+caption: 09 Jan 2014
+---
+
+
+			
+<p class="lead">
+    I recently had some feedback that mentioned it would be really good if Glass.Mapper.Sc supported <a href=""http://en.wikipedia.org/wiki/Model_View_ViewModel">MVVM</a> and still allowed the 
+    page editor. In this blog post we see how this can be done.
+</p>
+<p>
+    
+    It is important to remember that Glass.Mapper is a true ORM and disconnects the object from the underlying data source which makes for
+    a really flexible solution and opens up many different scenarios. As a result implementing MVVM is really simple.
+</p>
+<p>
+    First we need to create the View Model, now for this I am assuming that in Sitecore the current item has a Title field:
+</p>
+<p>
+    public class MyViewModel
+    {
+
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+
+    }
+</p>
+<p>
+    I will just be using the standard Sitecore Item as my Data Model for this example. So the plan is to go from 
+    the Data Model (Sitecore Item) to my View Model without using any of the Glass.Mapper services (SitecoreService and SitecoreContext)
+    and still enable the page editor. To do this my code behind on my sublayout looks like this:
+</p>
+<pre class="csharp">
+    public partial class MvvmSublayout : AbstractGlassUserControl
+    {
+        public MyViewModel Model { get; set; }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            Model = new MyViewModel();
+            Model.Id = Sitecore.Context.Item.ID.Guid;
+            Model.Title = "Not from sitecore!";
+        }
+    }
+</pre>
+<p>
+    Notice that all we had to was assign the ID to the class, I have also assigned a different title so we can see the difference between
+    Page Editor mode and normal mode. The actual rendering to the page looks like this:
+</p>
+<pre class="csharp">
+        &lt;p&gt;
+            Title: &lt;%=Editable(Model,x=&gt;x.Title) %&gt;
+        &lt;/p&gt;
+</pre>
+
+<p>To see this in action lets load up the Page Editor:</p>
+
+<img src="/images/blog/2014-01-09-MvvmPageEditor.PNG"/>
+
+<p>
+    If we exit the Page Editor we get the value I set in code:
+</p>
+<img src="/images/blog/2014-01-09-MvvmNoPageEditor.PNG"/>
+
+<p>
+    Very quickly we have created a simple MvvM solution and shown how class don't have to be create via the Glass.Mapper services to leverage 
+    Glass.Mappers.Sc page editor capabilities. You can also use the standard fluent and attribute configuration to control which fields
+    the Page Editor shows when using you View Model. This technique can also be used to make field editable if they have been returned
+    by the Sitecore 7 search service.
+</p>
+
+<p>
+    Finally note that if you are working on a multi-lingual site you need to add a language property to the View Model:
+</p>
+<pre class="csharp">
+    public class MyViewModel
+    {
+
+        public Guid Id { get; set; }
+        public Language Language { get; set; }
+        public string Title { get; set; }
+    }
+</pre>
+<p>
+    And then populate it:
+</p>
+<pre class="csharp">
+            Model = new MyViewModel();
+            Model.Id = Sitecore.Context.Item.ID.Guid;
+            Model.Language = Sitecore.Context.Item.Language;
+</pre>
+
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
