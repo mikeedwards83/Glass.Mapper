@@ -22,6 +22,10 @@
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
-		<file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.dll" target="lib\net45\Glass.Mapper.dll" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.pdb" target="lib\net45\Glass.Mapper.pdb" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.xml" target="lib\net45\Glass.Mapper.xml" />
+
+    <file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
 	</files>
 </package>
