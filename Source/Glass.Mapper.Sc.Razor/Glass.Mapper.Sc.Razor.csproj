@@ -83,7 +83,7 @@
     </Reference>
     <Reference Include="Sitecore.Mvc">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   
