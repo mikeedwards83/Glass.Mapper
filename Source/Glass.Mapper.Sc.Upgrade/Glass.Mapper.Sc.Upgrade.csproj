@@ -67,7 +67,7 @@
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
     <Reference Include="Sitecore.Kernel">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore71\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
