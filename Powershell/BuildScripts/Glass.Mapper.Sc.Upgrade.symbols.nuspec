@@ -1,4 +1,4 @@
-a<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package >
   <metadata>
     <id>Glass.Mapper.Sc.Upgrade</id>
@@ -15,7 +15,7 @@ a<?xml version="1.0"?>
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.0.0" />
+		<dependency id="Glass.Mapper.Sc" version="3.1.5" />
     </dependencies>
   </metadata>
   <files>
