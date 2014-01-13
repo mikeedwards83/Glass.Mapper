@@ -247,8 +247,37 @@ namespace Glass.Mapper.Sc.Integration
 
         }
 
+        [Test]
+        public void GetItem_ClassHasItemChildrenCollectionAndParent_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var path = "/sitecore/content/Tests/Misc/ClassWithItemProperties";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            //Act
+            var result = service.GetItem<ItemWithItemProperties>(path);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(item.ParentID, result.Parent.ID);
+            Assert.AreEqual(item.Children.Count, result.Children.Count());
+        }
+
 
 #region Stubs
+
+
+        public class ItemWithItemProperties
+        {
+            public Item Parent { get; set; }
+            public IEnumerable<Item> Children { get; set; } 
+        }
+
         [SitecoreType]
         public interface IBase
         {
