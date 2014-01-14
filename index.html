@@ -62,19 +62,18 @@ title: Welcome
             {% if forloop.index < 4 %}
             <div href="#" class="thumbnail blogitem">
                 <div class="caption">
-                    <h4><a href="{{post.url}}">{{post.title}}</a></h4>
-                    <p class="text-center">
-                        <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
-                    <p>
-                        {{post.abstract}}
-                    </p>
-                    <p class="caption pull-right">
+                    <div class="caption text-right">
                         <strong><small>{{ post.date | date_to_string }} </small></strong>
-                    </p>
-                    <p>
-                        <a href="{{post.url}}" class="btn btn-inverse">Read More</a>
-                    </p>
+                    </div>
                 </div>
+                <h4><a href="{{post.url}}">{{post.title}}</a></h4>
+                <p class="text-center">
+                    <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail">
+                </p>
+                <p>
+                    {{post.abstract}}
+                </p>
+
             </div>
         {% endif %}
             {% endfor %}
