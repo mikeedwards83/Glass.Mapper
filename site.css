@@ -39,6 +39,11 @@ body {
 .forum_embed {
     height: 500px;
 }
+
+.blog-post-listing {
+     border-bottom: 1px #ddd solid;
+    padding-bottom: 20px;
+}
 /*html, body {
     font-family: Droid Sans, sans-serif;
     height: 100%;
