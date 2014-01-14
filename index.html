@@ -18,7 +18,7 @@ title: Welcome
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <h2>Info</h2>
                 <p>
                     Glass.Mapper has been the redevelopment of the very popular <a href="https://github.com/Glass-lu/Glass.Sitecore.Mapper">Glass.Sitecore.Mapper</a> project. This project aims to create a more robust and more flexible solution that not only works with many different CMS's.
@@ -56,14 +56,15 @@ title: Welcome
 
 
     </div>
-<aside class="col-md-4">
-            <h3><a href="/blog/index.html">Lastest Posts</a></h3>
-            {% for post in site.posts %}
+    <aside class="col-md-4 blog-post-listing">
+        <h3><a href="/blog/index.html">Lastest Posts</a></h3>
+        {% for post in site.posts %}
             {% if forloop.index < 4 %}
             <div href="#" class="thumbnail blogitem">
                 <div class="caption">
                     <h4><a href="{{post.url}}">{{post.title}}</a></h4>
-                    <p class="text-center"><img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
+                    <p class="text-center">
+                        <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail"></p>
                     <p>
                         {{post.abstract}}
                     </p>
@@ -75,9 +76,9 @@ title: Welcome
                     </p>
                 </div>
             </div>
-            {% endif %}
+        {% endif %}
             {% endfor %}
-        </aside>
+    </aside>
 </div>
 
 
