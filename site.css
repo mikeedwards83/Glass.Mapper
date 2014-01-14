@@ -10,10 +10,14 @@
 
 body {
     margin-top: 70px;
+    font-family: Verdana;
 }
 
 .blog-post-listing img{
     max-width: 100%;
+}
+.blog-post-listing p {
+    margin-bottom: 0.7em;    
 }
 .footer {
     border-top: 1px #ddd solid;
@@ -29,6 +33,7 @@ body {
     padding-left: 50px;
     background-position-y: 3px;
 }
+
 /*html, body {
     font-family: Droid Sans, sans-serif;
     height: 100%;
