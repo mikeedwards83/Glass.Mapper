@@ -8,6 +8,10 @@
 
 }
 
+body {
+    margin-top: 60px;
+}
+
 /*html, body {
     font-family: Droid Sans, sans-serif;
     height: 100%;
