@@ -50,7 +50,7 @@ caption: 08 Jan 2014
     this config on the fly.
 </p>
 
-<h2>The Construction Task</h2>
+<h3>The Construction Task</h3>
 <p>
     The second step on the process is to create the Object Construction Task which will be responsible for creating the Diamond type. This is 
     again is a very simple class:
@@ -73,7 +73,7 @@ caption: 08 Jan 2014
     IStandardTemplate. This configuration was set by our Configuration Resolver Task. If everything looks of we then get the Sitecore Creation 
     Context and then uses Diamonds Item extension method AsStronglyType to create the appropriate type for use.
 </p>
-<h2>Register The Tasks</h2>
+<h3>Register The Tasks</h3>
 <p>
     The tasks now need to be registered with the Castle IOC container used by Glass.Mapper, you can do this in the GlassMapperScCustom
     class that is added to your project when you download Glass.Mapper from Nuget:
@@ -94,7 +94,7 @@ caption: 08 Jan 2014
 
 </pre>
 
-<h2>Testing It Out</h2>
+<h3>Testing It Out</h3>
 <p>
     Now we have everything setup we can test this out. I have created my Diamond classes using Code Generation in TDS and I have a template called
     BasicTemplate that looks like this:
@@ -142,7 +142,7 @@ caption: 08 Jan 2014
 
 
 
-<h2>Sumamry</h2>
+<h3>Summary</h3>
 <p>
     Hopefully this has shown you how easy it is to mix Glass.Mapper with other ORMS and extend the functionality you get from the solution. Allowing
     you to migrate or mix and match as you see fit.
