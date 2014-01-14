@@ -60,6 +60,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-readable.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="docs\releases\Glass.Mapper.Umb.CastleWindsor.html" />
     <Content Include="docs\releases\Glass.Mapper.Umb.html" />
     <Content Include="docs\releases\Glass.Mapper.html" />
@@ -102,6 +107,7 @@
     <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.templateadded.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.ttfiles.PNG" />
     <Content Include="docs\tutorial\sitecore\tutorial24\tutorial24.ttfilesconfig.PNG" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\blog\2012-04-08-VugLogo.jpg" />
     <Content Include="images\blog\2013-04-28Sitecore7Search.PNG" />
     <Content Include="images\blog\2013-05-22-umbraco.png" />
@@ -114,6 +120,16 @@
     <Content Include="images\blog\2013-12-10-Render3.PNG" />
     <Content Include="images\blog\2014-01-09-MvvmNoPageEditor.PNG" />
     <Content Include="images\blog\2014-01-09-MvvmPageEditor.PNG" />
+    <Content Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="_layouts\BlogLayout.html" />
     <Content Include="_posts\2013-04-28-Sitecore7SearchAndGlassMapper.html" />
     <Content Include="_posts\2013-05-22-IntroducingUmbracoMapping.html" />
     <Content Include="_posts\2013-06-15-SitecoreCopyImages.html" />
@@ -167,6 +183,7 @@
     <Content Include="images\blog\2013-03-18-Image.PNG" />
     <Content Include="_posts\2013-03-24-OnDemandMapping.html" />
     <Content Include="_posts\2013-03-25-Prerelease.html" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog\index.html" />
