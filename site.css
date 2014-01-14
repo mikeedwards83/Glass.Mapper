@@ -36,7 +36,9 @@ body {
 .jumbo-logo {
     width: 20%;
 }
-
+.forum_embed {
+    height: 500px;
+}
 /*html, body {
     font-family: Droid Sans, sans-serif;
     height: 100%;
