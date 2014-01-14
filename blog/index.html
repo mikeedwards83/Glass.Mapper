@@ -4,14 +4,18 @@ title: Blog
 caption: keeping up to date
 ---
 
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
 {% include pageheader.html %}
 
-	{% for post in site.posts %}
-		<h2><a href="{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
-		{{ post.content }}
-		<a href="{{ post.url }}#disqus_thread"></a>
+        {% for post in site.posts %}
+        
+        <div class="blog-post-listing">
+
+            <h2><a href="{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
+            {{ post.content }}
+            <a href="{{ post.url }}#disqus_thread"></a>
+        </div>
 	{% endfor %}
 	 <script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
