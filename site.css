@@ -19,7 +19,7 @@ body {
 .blog-post-listing p {
     margin-bottom: 0.7em;    
 }
-.footer {
+#footer {
     border-top: 1px #ddd solid;
     padding-top: 20px;
 }
@@ -40,7 +40,7 @@ body {
     height: 500px;
 }
 
-.blog-post-listing {
+.blog-post-listing-post {
      border-bottom: 5px #ddd solid;
     padding-bottom: 20px;
 }

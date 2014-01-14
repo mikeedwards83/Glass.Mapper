@@ -10,7 +10,7 @@ caption: keeping up to date
 
         {% for post in site.posts %}
         
-        <div class="blog-post-listing">
+        <div class="blog-post-listing-post">
 
             <h2><a href="{{ post.url }}"><strong>{{post.title}}</strong></a><small> - {{ post.date | date_to_string }}</small></h2>
             {{ post.content }}
