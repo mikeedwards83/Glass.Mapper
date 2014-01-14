@@ -5,17 +5,20 @@ title: Welcome
 
 <div class="row">
     <div class="col-md-8">
+
         <div class="jumbotron">
             <p>
                 We are developing Glass.Mapper to be the best ORM for the most popular .NET CMS so that developers can work the way they think.
             </p>
             <p>Let's get started</p>
-            <p><a href="/docs/tutorial/sitecore/tutorial01/tutorial01.html" class="btn btn-danger btn-large herobtn">Sitecore <i class="icon-play icon-white"></i></a>&nbsp;
-                <a href="/2013/05/22/IntroducingUmbracoMapping.html" class="btn btn-warning btn-large herobtn">Umbraco <i class="icon-play icon-white"></i></a></p>
+            <p>
+                <a href="/docs/tutorial/sitecore/tutorial01/tutorial01.html" class="btn btn-danger btn-large herobtn">Sitecore <i class="icon-play icon-white"></i></a>&nbsp;
+                <a href="/2013/05/22/IntroducingUmbracoMapping.html" class="btn btn-warning btn-large herobtn">Umbraco <i class="icon-play icon-white"></i></a>
+            </p>
         </div>
-		
+
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <h2>Info</h2>
                 <p>
                     Glass.Mapper has been the redevelopment of the very popular <a href="https://github.com/Glass-lu/Glass.Sitecore.Mapper">Glass.Sitecore.Mapper</a> project. This project aims to create a more robust and more flexible solution that not only works with many different CMS's.
@@ -24,6 +27,8 @@ title: Welcome
                     A key feature of the implementation is the introduction of pipelines for most of the tasks carried out by Glass.Mapper allowing you to swap in your preferred solution, for example if you don't like the standard way to create a concrete object then you can implement you own and swap it in.
                 </p>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <h2>Team</h2>
                 <p>
@@ -37,20 +42,21 @@ title: Welcome
                     Please contact us with any questions.
                 </p>
             </div>
-            <div class="col-md-4 hidden-phone">
-                <a class="twitter-timeline" href="https://twitter.com/Glasslu" data-widget-id="324066531833159680">Tweets by @Glasslu</a>
-                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-4">
                 <h2>Support</h2>
                 <p>
                     If you need help or advice with Glass.Mapper then join our <a href="/googlegroup.html">Google Group</a>.
                 </p>
             </div>
+            <div class="col-md-4 hidden-phone">
+                <a class="twitter-timeline" href="https://twitter.com/Glasslu" data-widget-id="324066531833159680">Tweets by @Glasslu</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            </div>
         </div>
-        <aside class="col-md-4">
+
+
+    </div>
+<aside class="col-md-4">
             <h3><a href="/blog/index.html">Lastest Posts</a></h3>
             {% for post in site.posts %}
             {% if forloop.index < 4 %}
@@ -72,8 +78,6 @@ title: Welcome
             {% endif %}
             {% endfor %}
         </aside>
-    </div>
-    
 </div>
 
 
