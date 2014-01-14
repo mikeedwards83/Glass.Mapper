@@ -10,7 +10,7 @@ caption: 27 Nov 2013
     The latest release made some subtle but important changes to how attribute configuration is handled by Glass.Mapper. In the latest release we have simplified 
     the process a lot so that you can write even less code.
 </p>
-<h2>No Need To Load</h2>
+<h3>No Need To Load</h3>
 <p>
     In previous versions of Glass.Mapper.Sc you will have seen these lines of code in the GlassMapperScCustom.cs file:
 </p>
@@ -32,7 +32,7 @@ caption: 27 Nov 2013
      You should still add Fluent Configuration loaders here. With attribute configuration we now load them on demand when a type is requested for mapping.
 </p>
 
-<h2>Demo Setup</h2>
+<h3>Demo Setup</h3>
 <p>
     For this blog post I have setup the following item:
 </p>
@@ -57,7 +57,7 @@ caption: 27 Nov 2013
 </p>
 <img src="/images/blog/2013-12-10-Render1.PNG"/>
 
-<h2>No attributes</h2>
+<h3>No attributes</h3>
 <p>
     If we leave the model as it is:
 </p>
@@ -78,7 +78,7 @@ caption: 27 Nov 2013
     Sitecore field or auto-mapping property, we can see this in the next screenshot:
 </p>
 <img src="/images/blog/2013-12-10-Render2.PNG"/>
-<h2>Property Attributes</h2>
+<h3>Property Attributes</h3>
 <p>
     We can get MenuTitle and ItemUrl to map by adding attributes to both these properties. Notice that we do NOT need to add
     the SitecoreType attribute to the class any more:
@@ -101,7 +101,7 @@ caption: 27 Nov 2013
     Glass.Mapper will automatically map the first two properties and then use the attributes to map the last two properties:
 </p>
 <img src="/images/blog/2013-12-10-Render3.PNG"/>
-<h2>Class Attribute</h2>
+<h3>Class Attribute</h3>
 <p>
     Finally you can still add the SitecoreType attribute class to the class if you need to specifiy the template ID or branch ID for creating items:
 </p>
