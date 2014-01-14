@@ -61,10 +61,8 @@ title: Welcome
         {% for post in site.posts %}
             {% if forloop.index < 4 %}
             <div href="#" class="thumbnail blogitem">
-                <div class="caption">
-                    <div class="caption text-right">
-                        <strong><small>{{ post.date | date_to_string }} </small></strong>
-                    </div>
+                <div class="caption text-right">
+                    <strong><small>{{ post.date | date_to_string }} </small></strong>
                 </div>
                 <h4><a href="{{post.url}}">{{post.title}}</a></h4>
                 <p class="text-center">
