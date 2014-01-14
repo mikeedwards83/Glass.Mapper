@@ -33,6 +33,9 @@ body {
     padding-left: 50px;
     background-position-y: 3px;
 }
+.jumbo-logo {
+    width: 20%;
+}
 
 /*html, body {
     font-family: Droid Sans, sans-serif;
