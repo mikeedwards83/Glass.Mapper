@@ -13,7 +13,7 @@ body {
 }
 
 .blog-post-listing img{
-    width: 100%;
+    max-width: 100%;
 }
 
 /*html, body {
