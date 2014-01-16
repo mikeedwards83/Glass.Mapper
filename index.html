@@ -56,11 +56,11 @@ title: Welcome
 
     </div>
     <aside class="col-md-4 blog-post-listing">
-        <form action="/search.html">
-            <div class="input-append">
-                <input name="q" type="text" class="form-control col-lg-2" placeholder="Search">
+ <form action="/search.html" role="form">
+            <div class="input-append form-group">
+                <input name="q" type="text" class="form-control " placeholder="Search">
             </div>
-        </form>
+</form>
 
         <h3><a href="/blog/index.html">Lastest Posts</a></h3>
         {% for post in site.posts %}
