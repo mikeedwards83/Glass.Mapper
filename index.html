@@ -55,7 +55,8 @@ title: Welcome
             </div>
             <div class="row">
             {% for post in site.posts %}
-                {% if forloop.index < 5 &&  forloop.index > 2 %}
+                {% if forloop.index < 5 %}
+                 {% if forloop.index > 2 %}
                 <div class="col-md-6">
                     <div href="#" class="thumbnail blogitem">
                         <div class="caption">
@@ -72,6 +73,7 @@ title: Welcome
                         </div>
                     </div>
                 </div>
+                        {% endif %}
                         {% endif %}
                 {% endfor %}
             </div>
