@@ -7,13 +7,15 @@ title: Welcome
     <div class="col-md-8">
 
         <div class="jumbotron">
-            <img  src="/images/logo-250.png" class="pull-left jumbo-logo" />
+            <img src="/images/logo-250.png" class="pull-left jumbo-logo" />
             <p>
                 We are developing Glass.Mapper to be the best ORM for the most popular .NET CMS so that developers can work the way they think.
             </p>
-            <p>Let's get started: <a href="/docs/tutorial/sitecore/tutorial01/tutorial01.html" class="btn btn-danger btn-large herobtn">Sitecore <i class="icon-play icon-white"></i></a>&nbsp;
-                <a href="/2013/05/22/IntroducingUmbracoMapping.html" class="btn btn-warning btn-large herobtn">Umbraco <i class="icon-play icon-white"></i></a></p>
-            
+            <p>
+                Let's get started: <a href="/docs/tutorial/sitecore/tutorial01/tutorial01.html" class="btn btn-danger btn-large herobtn">Sitecore <i class="icon-play icon-white"></i></a>&nbsp;
+                <a href="/2013/05/22/IntroducingUmbracoMapping.html" class="btn btn-warning btn-large herobtn">Umbraco <i class="icon-play icon-white"></i></a>
+            </p>
+
         </div>
 
         <div class="row">
@@ -27,43 +29,9 @@ title: Welcome
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Team</h2>
-                <p>
-                    The projects core team are:
-                </p>
-                <ul>
-                    <li><a href="https://twitter.com/mikeedwards83">Michael Edwards</a></li>
-                    <li><a href="https://twitter.com/TomDudfield">Tom Dudfield</a></li>
-                </ul>
-                <p>
-                    Please contact us with any questions.
-                </p>
-            </div>
-            <div class="col-md-4">
-                <h2>Support</h2>
-                <p>
-                    If you need help or advice with Glass.Mapper then join our <a href="/googlegroup.html">Google Group</a>.
-                </p>
-            </div>
-            <div class="col-md-4 hidden-phone">
-                <a class="twitter-timeline" href="https://twitter.com/Glasslu" data-widget-id="324066531833159680">Tweets by @Glasslu</a>
-                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
-            </div>
-        </div>
-
-
-    </div>
-    <aside class="col-md-4 blog-post-listing">
- <form action="/search.html" role="form">
-            <div class="input-append form-group">
-                <input name="q" type="text" class="form-control " placeholder="Search">
-            </div>
-</form>
-
-        <h3><a href="/blog/index.html">Lastest Posts</a></h3>
-        {% for post in site.posts %}
+        <div class="row blog-post-listing">
+            <h3><a href="/blog/index.html">Lastest Posts</a></h3>
+            {% for post in site.posts %}
         {% if forloop.index < 4 %}
         <div href="#" class="thumbnail blogitem">
             <div class="caption">
@@ -79,8 +47,44 @@ title: Welcome
                 </p>
             </div>
         </div>
-        {% endif %}
+            {% endif %}
         {% endfor %}
+        </div>
+
+
+    </div>
+    <aside class="col-md-4 ">
+        <form action="/search.html" role="form">
+            <div class="input-append form-group">
+                <input name="q" type="text" class="form-control " placeholder="Search">
+            </div>
+        </form>
+
+        <div class="col-md-4">
+            <h2>Team</h2>
+            <p>
+                The projects core team are:
+            </p>
+            <ul>
+                <li><a href="https://twitter.com/mikeedwards83">Michael Edwards</a></li>
+                <li><a href="https://twitter.com/TomDudfield">Tom Dudfield</a></li>
+            </ul>
+            <p>
+                Please contact us with any questions.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Support</h2>
+            <p>
+                If you need help or advice with Glass.Mapper then join our <a href="/googlegroup.html">Google Group</a>.
+            </p>
+        </div>
+        <div class="col-md-4 hidden-phone">
+            <a class="twitter-timeline" href="https://twitter.com/Glasslu" data-widget-id="324066531833159680">Tweets by @Glasslu</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+        </div>
+
+
     </aside>
 </div>
 
