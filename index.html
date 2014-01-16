@@ -31,24 +31,50 @@ title: Welcome
         </div>
         <div class="row blog-post-listing">
             <h3><a href="/blog/index.html">Lastest Posts</a></h3>
+            <div class="row">
             {% for post in site.posts %}
-        {% if forloop.index < 4 %}
-        <div href="#" class="thumbnail blogitem">
-            <div class="caption">
-                <div class="text-right">
-                    <strong><small>{{ post.date | date_to_string }} </small></strong>
+                {% if forloop.index < 2 %}
+                <div class="col-md-6">
+                    <div href="#" class="thumbnail blogitem">
+                        <div class="caption">
+                            <div class="text-right">
+                                <strong><small>{{ post.date | date_to_string }} </small></strong>
+                            </div>
+                            <h4><a href="{{post.url}}">{{post.title}}</a></h4>
+                            <p class="text-center">
+                                <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail">
+                            </p>
+                            <p>
+                                {{post.abstract}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <h4><a href="{{post.url}}">{{post.title}}</a></h4>
-                <p class="text-center">
-                    <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail">
-                </p>
-                <p>
-                    {{post.abstract}}
-                </p>
+                {% endif %}
+                {% endfor %}
             </div>
-        </div>
-            {% endif %}
-        {% endfor %}
+            <div class="row">
+            {% for post in site.posts %}
+                {% if forloop.index < 4 &&  forloop.index > 2 %}
+                <div class="col-md-6">
+                    <div href="#" class="thumbnail blogitem">
+                        <div class="caption">
+                            <div class="text-right">
+                                <strong><small>{{ post.date | date_to_string }} </small></strong>
+                            </div>
+                            <h4><a href="{{post.url}}">{{post.title}}</a></h4>
+                            <p class="text-center">
+                                <img src="{{post.image}}" alt="{{post.title}}" class="blogthumbnail">
+                            </p>
+                            <p>
+                                {{post.abstract}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                        {% endif %}
+                {% endfor %}
+            </div>
         </div>
 
 
@@ -60,7 +86,7 @@ title: Welcome
             </div>
         </form>
 
-        <div class="col-md-4">
+        <div>
             <h2>Team</h2>
             <p>
                 The projects core team are:
@@ -73,13 +99,13 @@ title: Welcome
                 Please contact us with any questions.
             </p>
         </div>
-        <div class="col-md-4">
+        <div >
             <h2>Support</h2>
             <p>
                 If you need help or advice with Glass.Mapper then join our <a href="/googlegroup.html">Google Group</a>.
             </p>
         </div>
-        <div class="col-md-4 hidden-phone">
+        <div class=" hidden-phone">
             <a class="twitter-timeline" href="https://twitter.com/Glasslu" data-widget-id="324066531833159680">Tweets by @Glasslu</a>
             <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
         </div>
