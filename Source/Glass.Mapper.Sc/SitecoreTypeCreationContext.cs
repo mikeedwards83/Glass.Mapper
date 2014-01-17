@@ -13,9 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
+using System;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
@@ -25,9 +26,6 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
-
-
-
         /// <summary>
         /// Gets or sets the item.
         /// </summary>
@@ -40,6 +38,13 @@ namespace Glass.Mapper.Sc
         /// <value>The sitecore service.</value>
         public ISitecoreService SitecoreService { get; set; }
 
+        public override string GetUniqueKey()
+        {
+            var revisionId = new Guid(Item["__Revision"]);
+
+            return Item.ID.ToString() + revisionId + RequestedType.FullName + IsLazy.ToString();
+        }
+
         public override string DataSummary()
         {
             if (Item == null)
@@ -49,7 +54,7 @@ namespace Glass.Mapper.Sc
             return Item.Paths.FullPath;
         }
     }
-    
+
 }
 
 

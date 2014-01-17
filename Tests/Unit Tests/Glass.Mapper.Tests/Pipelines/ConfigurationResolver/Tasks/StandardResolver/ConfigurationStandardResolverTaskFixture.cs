@@ -78,7 +78,10 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
 
         public class StubAbstractTypeCreationContext:AbstractTypeCreationContext
         {
-            
+            public override string GetUniqueKey()
+            {
+                throw new NotImplementedException();
+            }
         }
         #endregion
     }

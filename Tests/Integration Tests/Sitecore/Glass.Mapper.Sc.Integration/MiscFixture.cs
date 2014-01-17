@@ -17,8 +17,10 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
@@ -268,9 +270,63 @@ namespace Glass.Mapper.Sc.Integration
             Assert.AreEqual(item.Children.Count, result.Children.Count());
         }
 
+        //TODO:remove this test later
+        [Test]
+        public void QuickCacheTest()
+        {
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var path = "/sitecore/content/Tests/Misc/ClassWithItemProperties";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var watch1 = new Stopwatch();
+            var watch2 = new Stopwatch();
+
+
+         
+
+
+            watch1.Start();
+
+            for(var i = 0; i < 1000; i++){
+
+                var result = service.GetItem<Cachable>(path);   
+                Assert.IsNotNull(result);
+            }
+
+            watch1.Stop();
+            watch2.Start();
+
+            for (var i = 0; i < 1000; i++)
+            {
+
+                var result = service.GetItem<NotCachable>(path);
+                Assert.IsNotNull(result);
+
+            }
+            watch2.Stop();
+          
+            Console.WriteLine("Cached Time: {0}", watch1.ElapsedTicks);
+            Console.WriteLine("Not Cached Time: {0}", watch2.ElapsedTicks);
+
+            
+
+
+        }
 
 #region Stubs
 
+        [SitecoreType(Cachable = true)]
+        public class Cachable
+        {
+            public virtual string Title { get; set; }
+        }
+        [SitecoreType(Cachable = false)]
+        public class NotCachable
+        {
+            public virtual string Title { get; set; }
+        }
 
         public class ItemWithItemProperties
         {

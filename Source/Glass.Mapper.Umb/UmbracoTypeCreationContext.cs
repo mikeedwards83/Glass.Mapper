@@ -44,6 +44,11 @@ namespace Glass.Mapper.Umb
         /// The umbraco service.
         /// </value>
         public IUmbracoService UmbracoService { get; set; }
+
+        public override string GetUniqueKey()
+        {
+            return Content.Id.ToString() + Content.Version + RequestedType.FullName + IsLazy.ToString();
+        }
     }
 }
 

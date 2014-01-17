@@ -57,6 +57,10 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public bool AutoMap { get; set; }
 
+        /// <summary>
+        /// Indicates that the type is cachable
+        /// </summary>
+        public bool Cachable { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.

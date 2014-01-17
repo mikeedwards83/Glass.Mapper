@@ -20,6 +20,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Glass.Mapper.Caching;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -27,6 +28,8 @@ using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
@@ -412,8 +415,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
+                Component.For<ICacheManager>().ImplementedBy<InMemoryCache>().LifestyleSingleton()
+                );
+
+            //dynamic must be first
+            container.Register(
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
                 );
+
+
+            container.Register(
+             Component.For<IObjectConstructionTask>().ImplementedBy<CacheCheckTask>().LifestyleTransient()
+             );
 
             container.Register(
                 Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleTransient()
@@ -431,6 +444,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
+                );
+
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<CacheAddTask>().LifestyleTransient()
                 );
         }
     }
