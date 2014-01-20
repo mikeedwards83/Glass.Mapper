@@ -120,14 +120,16 @@ namespace Glass.Mapper.Sc.Configuration
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         public bool IsRequired { get; set; }
 
-
-
-
         /// <summary>
         /// Gets or sets the field value configs.
         /// </summary>
         /// <value>The field value configs.</value>
         public IEnumerable<SitecoreFieldFieldValueConfiguration> FieldValueConfigs { get; set; }
+
+        /// <summary>
+        /// Use with Glass.Mapper.Sc.Fields.Link type
+        /// </summary>
+        public SitecoreInfoUrlOptions UrlOptions { get; set; }
 
         #endregion
 

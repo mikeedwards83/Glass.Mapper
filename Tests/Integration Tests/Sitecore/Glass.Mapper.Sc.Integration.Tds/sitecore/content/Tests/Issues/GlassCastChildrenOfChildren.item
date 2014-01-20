@@ -3,7 +3,7 @@ version: 1
 id: {6EF374E5-737F-437E-904D-95B1A59A830A}
 database: master
 path: /sitecore/content/Tests/Issues/GlassCastChildrenOfChildren
-parent: {5D9D4057-5411-4258-91B4-8120401FD354}
+parent: {DABE65FA-8642-41BA-A3C7-D4BEA0141A4D}
 name: GlassCastChildrenOfChildren
 master: {00000000-0000-0000-0000-000000000000}
 template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
