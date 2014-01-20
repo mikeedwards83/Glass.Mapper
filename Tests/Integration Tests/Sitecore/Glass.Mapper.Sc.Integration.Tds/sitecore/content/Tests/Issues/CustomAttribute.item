@@ -3,7 +3,7 @@ version: 1
 id: {996BA89E-5AC7-4F21-A411-62CEE5F7C419}
 database: master
 path: /sitecore/content/Tests/Issues/CustomAttribute
-parent: {5D9D4057-5411-4258-91B4-8120401FD354}
+parent: {DABE65FA-8642-41BA-A3C7-D4BEA0141A4D}
 name: CustomAttribute
 master: {00000000-0000-0000-0000-000000000000}
 template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
