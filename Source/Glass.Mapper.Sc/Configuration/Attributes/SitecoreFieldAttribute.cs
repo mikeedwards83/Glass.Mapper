@@ -68,6 +68,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         }
 
         /// <summary>
+        /// Use with the Glass.Mapper.Sc.Fields.Link type
+        /// </summary>
+        /// <value>The URL options.</value>
+        public SitecoreInfoUrlOptions UrlOptions { get; set; }
+
+        /// <summary>
         /// The name of the field  to use if it is different to the property name
         /// </summary>
         /// <value>The name of the field.</value>
@@ -204,6 +210,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.ValidationErrorText = this.ValidationErrorText;
             config.ValidationRegularExpression = this.ValidationRegularExpression;
             config.IsRequired = this.IsRequired;
+            config.UrlOptions = this.UrlOptions;
 
 
             //code first configuration

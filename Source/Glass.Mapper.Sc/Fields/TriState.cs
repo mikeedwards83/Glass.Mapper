@@ -16,11 +16,14 @@
 */ 
 //-CRE-
 
+using System;
+
 namespace Glass.Mapper.Sc.Fields
 {
     /// <summary>
     /// Enum TriState
     /// </summary>
+    [Serializable]
     public enum TriState
     {
         /// <summary>

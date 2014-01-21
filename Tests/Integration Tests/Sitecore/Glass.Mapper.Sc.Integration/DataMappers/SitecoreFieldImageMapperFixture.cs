@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
             var expected =
-                "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" width=\"640\" vspace=\"50\" height=\"480\" hspace=\"30\" border=\"\" class=\"\" alt=\"test alt\" />";
+                "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" width=\"640\" vspace=\"50\" height=\"480\" hspace=\"30\" alt=\"test alt\" />";
 
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
             var field = item.Fields[FieldName];
@@ -90,6 +90,35 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                                 Class =  String.Empty
 
                             };
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = string.Empty;
+            }
+
+            //Act
+            using (new ItemEditing(item, true))
+            {
+                mapper.SetField(field, image, null, null);
+            }
+            //Assert
+            Assert.AreEqual(expected, field.Value);
+        }
+
+        [Test]
+        public void SetField_JustImageId_ReturnsPopulatedField()
+        {
+            //Assign
+            var expected =
+                "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" alt=\"\" />";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
+            var image = new Image()
+            {
+                MediaId = new Guid("{D897833C-1F53-4FAE-B54B-BB5B11B8F851}"),
+            };
 
             using (new ItemEditing(item, true))
             {

@@ -26,6 +26,7 @@ namespace Glass.Mapper.Sc.Fields
     /// <summary>
     /// Class Link
     /// </summary>
+    [Serializable]
     public class Link
     {
         /// <summary>

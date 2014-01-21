@@ -26,6 +26,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.RenderField;
@@ -134,7 +135,7 @@ namespace Glass.Mapper.Sc
                     }
                     T obj = item.GlassCast<T>();
 
-                    item.Editing.CancelEdit();
+                    item.Editing.EndEdit();
                     return obj;
                 }
             }
@@ -166,6 +167,13 @@ namespace Glass.Mapper.Sc
         public virtual T GetRenderingParameters<T>(NameValueCollection parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
+
+            if (config == null)
+            {
+                SitecoreContext.GlassContext.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(T)));
+            }
+            config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
+
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 

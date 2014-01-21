@@ -349,6 +349,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
               Component.For<IConfigurationResolverTask>()
+                       .ImplementedBy<SitecoreItemResolverTask>()
+                       .LifestyleTransient()
+              );
+            container.Register(
+              Component.For<IConfigurationResolverTask>()
                        .ImplementedBy<MultiInterfaceResolverTask>()
                        .LifestyleTransient()
               );
@@ -408,6 +413,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
             //dynamic must be first
             container.Register(
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                );
+
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleTransient()
                 );
 
             if (Config.UseWindsorContructor)
