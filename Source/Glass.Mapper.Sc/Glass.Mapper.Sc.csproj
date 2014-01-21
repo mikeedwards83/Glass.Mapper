@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\SitecoreCache.cs" />
     <Compile Include="CodeFirst\FieldInfo.cs" />
     <Compile Include="CodeFirst\GlassDataProvider.cs" />
     <Compile Include="CodeFirst\SectionInfo.cs" />
