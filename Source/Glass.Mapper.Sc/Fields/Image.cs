@@ -23,6 +23,7 @@ namespace Glass.Mapper.Sc.Fields
     /// <summary>
     /// Class Image
     /// </summary>
+    [Serializable]
     public class Image
     {
         /// <summary>

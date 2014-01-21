@@ -3,7 +3,7 @@ version: 1
 id: {70C6C8D5-4A17-45B1-A4B1-6C851354AF05}
 database: master
 path: /sitecore/content/Tests/Pipelines/ConfigurationResolver
-parent: {CF68501D-ACB3-4DDB-BC60-4A4E842CB84A}
+parent: {0F17317C-D06F-4043-ABD7-6412B35C4452}
 name: ConfigurationResolver
 master: {00000000-0000-0000-0000-000000000000}
 template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}

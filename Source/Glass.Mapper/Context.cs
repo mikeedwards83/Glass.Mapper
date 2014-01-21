@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using System.Collections.Concurrent;
 using Castle.Core.Logging;
@@ -215,9 +216,9 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public AbstractTypeConfiguration GetTypeConfiguration(object obj)
+        public T GetTypeConfiguration<T>(object obj) where T: AbstractTypeConfiguration, new()
         {
-            return GetTypeConfiguration(obj.GetType());
+            return GetTypeConfiguration<T>(obj.GetType());
         }
 
         /// <summary>
@@ -225,19 +226,19 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public AbstractTypeConfiguration GetTypeConfiguration(Type type)
+        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false) where T: AbstractTypeConfiguration, new()
         {
 
 
 
             var config = TypeConfigurations.ContainsKey(type) ? TypeConfigurations[type] : null;
 
-            if (config != null) return config;
+            if (config != null) return config as T;
 
             //check base type encase of proxy
             config = TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
 
-            if (config != null) return config;
+            if (config != null) return config as T;
 
             //check interfaces encase this is an interface proxy
             string name = type.Name;
@@ -249,7 +250,13 @@ namespace Glass.Mapper
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
 
-            return config;
+            if (config == null && !doNotLoad)
+            {
+                Load(new OnDemandLoader<T>(type));
+                return GetTypeConfiguration<T>(type, true);
+            }
+
+            return config as T;
         }
     }
 }

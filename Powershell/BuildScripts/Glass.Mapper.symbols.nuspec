@@ -3,11 +3,11 @@
 	<metadata>
 		<id>Glass.Mapper</id>
 		<version>$version$</version>
-		<authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+		<authors>Michael Edwards, Tom Dudfield</authors>
 		<owners>Michael Edwards</owners>
 		<licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
-		<!--<iconUrl></iconUrl>-->
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>This is the Glass.Mapper core assembly that allows you to build ORMs for any CMS.</description>
 		<releaseNotes>This is a beta version of the package.</releaseNotes>
@@ -22,6 +22,10 @@
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
 		<file src="Source\Glass.Mapper\bin\Release\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
-		<file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.dll" target="lib\net45\Glass.Mapper.dll" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.pdb" target="lib\net45\Glass.Mapper.pdb" />
+    <file src="Source\Glass.Mapper\bin\Net45\Glass.Mapper.xml" target="lib\net45\Glass.Mapper.xml" />
+
+    <file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
 	</files>
 </package>

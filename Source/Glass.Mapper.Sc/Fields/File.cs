@@ -23,6 +23,7 @@ namespace Glass.Mapper.Sc.Fields
     /// <summary>
     /// Class File
     /// </summary>
+    [Serializable]
     public class File
     {
         /// <summary>

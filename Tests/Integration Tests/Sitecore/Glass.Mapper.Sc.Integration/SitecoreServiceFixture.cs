@@ -1128,6 +1128,48 @@ namespace Glass.Mapper.Sc.Integration
 
         #region Method - Create
 
+
+        [Test]
+        public void Create_TypeNotPreloaded_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            Assert.AreEqual(0, context.TypeConfigurations.Count);
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = new StubClassNotPreloaded();
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
         [Test]
         public void Create_CreatesANewItem()
         {
@@ -1955,6 +1997,14 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
+        [SitecoreType(TemplateId = StubClass.TemplateId, AutoMap = true)]
+        public class StubClassNotPreloaded
+        {
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+
+            public virtual Guid Id { get; set; }
+            public virtual string Name { get; set; }
+        }
 
         [SitecoreType]
         public class StubClassWithProperty

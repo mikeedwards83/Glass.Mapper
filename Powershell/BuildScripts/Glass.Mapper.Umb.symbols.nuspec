@@ -3,11 +3,11 @@
   <metadata>
     <id>Glass.Mapper.Umb</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+    <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
-    <!--<iconUrl></iconUrl>-->
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       An ORM for Umbraco. Map item data from Umbraco straight onto objects. Allows you to map properties and
@@ -19,13 +19,16 @@
     <tags>Glass Mapper Umbraco Razor Glass.Mapper MVC</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper" version="3.0.0" />
+		<dependency id="Glass.Mapper" version="3.0.9" />
     </dependencies>
   </metadata>
   <files>
 	  <file src="Source\Glass.Mapper.Umb\bin\Release\Glass.Mapper.Umb.dll" target="lib\net40\Glass.Mapper.Umb.dll" />
 	  <file src="Source\Glass.Mapper.Umb\bin\Release\Glass.Mapper.Umb.pdb" target="lib\net40\Glass.Mapper.Umb.pdb" />
 	  <file src="Source\Glass.Mapper.Umb\bin\Release\Glass.Mapper.Umb.xml" target="lib\net40\Glass.Mapper.Umb.xml" />
-	  <file src="Source\Glass.Mapper.Umb\**.cs" target="src\Source\Glass.Mapper.Umb" />
+    <file src="Source\Glass.Mapper.Umb\bin\Net45\Glass.Mapper.Umb.dll" target="lib\net45\Glass.Mapper.Umb.dll" />
+    <file src="Source\Glass.Mapper.Umb\bin\Net45\Glass.Mapper.Umb.pdb" target="lib\net45\Glass.Mapper.Umb.pdb" />
+    <file src="Source\Glass.Mapper.Umb\bin\Net45\Glass.Mapper.Umb.xml" target="lib\net45\Glass.Mapper.Umb.xml" />
+    <file src="Source\Glass.Mapper.Umb\**.cs" target="src\Source\Glass.Mapper.Umb" />
   </files>
 </package>
