@@ -195,7 +195,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (type == null)
                 return null;
 
-            var context = Context.Contexts[ContextName];
+            var context = Context.Contexts.ContainsKey(ContextName) ? Context.Contexts[ContextName] : null;
             if (context == null) throw new MapperException("Failed to find context {0}".Formatted(ContextName));
 
             //this is really aggressive
