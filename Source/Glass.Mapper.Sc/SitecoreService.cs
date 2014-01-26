@@ -419,8 +419,12 @@ namespace Glass.Mapper.Sc
 
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled)) return null;
-
+            if (!GlassHtml.IsInEditingMode)
+            {
+                if (item == null ||
+                    (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled))
+                    return null;
+            }
 
             if (constructorParameters != null && constructorParameters.Length > 4)
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
