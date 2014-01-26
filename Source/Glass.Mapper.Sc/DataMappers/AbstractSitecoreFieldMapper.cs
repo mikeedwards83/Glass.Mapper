@@ -47,6 +47,30 @@ namespace Glass.Mapper.Sc.DataMappers
             TypesHandled = typesHandled;
         }
 
+        public override void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapCmsToProperty(mappingContext);
+        }
+
+        public override void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapPropertyToCms(mappingContext);
+        }
+
         /// <summary>
         /// Maps data from the .Net property value to the CMS value
         /// </summary>
