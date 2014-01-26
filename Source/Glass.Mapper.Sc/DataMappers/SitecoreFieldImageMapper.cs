@@ -129,18 +129,27 @@ namespace Glass.Mapper.Sc.DataMappers
                         field.MediaID = newId;
                         ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                         field.UpdateLink(link);
+                        
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
             }
 
-            field.Height = image.Height.ToString();
-            field.Width = image.Width.ToString();
-            field.HSpace = image.HSpace.ToString();
-            field.VSpace = image.VSpace.ToString();
-            field.Alt = image.Alt;
-            field.Border = image.Border;
-            field.Class = image.Class;
+            if(image.Height > 0)
+                field.Height = image.Height.ToString();
+            if(image.Width > 0)
+                field.Width = image.Width.ToString();
+            if(image.HSpace > 0)
+                field.HSpace = image.HSpace.ToString();
+            if(image.VSpace > 0)
+                field.VSpace = image.VSpace.ToString();
+            
+            if(field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+                field.Alt = image.Alt ?? string.Empty;
+            if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
+                field.Border = image.Border ?? string.Empty;
+            if (field.Class.IsNotNullOrEmpty() || image.Class.IsNotNullOrEmpty())
+                field.Class = image.Class ?? string.Empty;
         }
         /// <summary>
         /// Sets the field value.
