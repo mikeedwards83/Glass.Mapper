@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\SitecoreCache.cs" />
     <Compile Include="CodeFirst\FieldInfo.cs" />
     <Compile Include="CodeFirst\GlassDataProvider.cs" />
     <Compile Include="CodeFirst\SectionInfo.cs" />
@@ -213,6 +212,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Caching\" />
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\TypeResolver\" />
