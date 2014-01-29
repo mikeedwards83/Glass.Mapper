@@ -13,45 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
-//-CRE-
-/*
-   Copyright 2011 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
+*/
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using Sitecore;
-using Sitecore.Data.DataProviders;
-using System.Xml;
-using Sitecore.Collections;
-using Sitecore.Data;
-using Sitecore.Data.DataProviders.Sql;
-using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
-using Sitecore.Configuration;
-using Sitecore.Caching;
-using Sitecore.Exceptions;
-using Sitecore.Globalization;
-using Sitecore.SecurityModel;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore;
+using Sitecore.Collections;
+using Sitecore.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.DataProviders;
+using Sitecore.Data.DataProviders.Sql;
+using Sitecore.Exceptions;
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.CodeFirst
 {
@@ -65,8 +40,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// Taken from sitecore database
         /// </summary>
         private static readonly ID TemplateFolderId = new ID("{3C1715FE-6A13-4FCF-845F-DE308BA9741D}");
-
-
+        
         #region Templates
 
         /// <summary>
@@ -250,7 +224,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             if (!string.IsNullOrEmpty(info.Title))
                 fields.Add(TemplateFieldIDs.Title, info.Title);
 
-            fields.Add(TemplateFieldIDs.Type, FieldInfo.GetFieldType(info.Type));
+            fields.Add(TemplateFieldIDs.Type, info.GetFieldType());
 
             if (!string.IsNullOrEmpty(info.Source))
                 fields.Add(TemplateFieldIDs.Source, info.Source);
@@ -397,7 +371,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                         string fieldName = field.FieldName.IsNullOrEmpty() ? field.PropertyInfo.Name : field.FieldName;
 
 
-                        record = new FieldInfo(field.FieldId, section.SectionId, fieldName, field.FieldType,
+                        record = new FieldInfo(field.FieldId, section.SectionId, fieldName, field.FieldType, field.CustomFieldType,
                                                field.FieldSource, field.FieldTitle, field.IsShared, field.IsUnversioned,
                                                field.FieldSortOrder, field.ValidationRegularExpression,
                                                field.ValidationErrorText, field.IsRequired);

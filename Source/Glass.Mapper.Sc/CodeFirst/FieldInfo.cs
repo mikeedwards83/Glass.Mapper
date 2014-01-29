@@ -53,6 +53,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <param name="sectionId">The section id.</param>
         /// <param name="name">The name.</param>
         /// <param name="type">The type.</param>
+        /// <param name="customFieldType">The custom field type.</param>
         /// <param name="source">The source.</param>
         /// <param name="title">The title.</param>
         /// <param name="isShared">if set to <c>true</c> [is shared].</param>
@@ -61,12 +62,13 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <param name="validationRegularExpression">The validation regular expression.</param>
         /// <param name="validationErrorText">The validation error text.</param>
         /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public FieldInfo(ID fieldId, ID sectionId, string name, SitecoreFieldType type, string source, string title, bool isShared, bool isUnversioned, int fieldSortOrder, string validationRegularExpression, string validationErrorText, bool isRequired)
+        public FieldInfo(ID fieldId, ID sectionId, string name, SitecoreFieldType type, string customFieldType, string source, string title, bool isShared, bool isUnversioned, int fieldSortOrder, string validationRegularExpression, string validationErrorText, bool isRequired)
         {
             FieldId = fieldId;
             SectionId = sectionId;
             Name = name;
-            Type = type;
+            FieldType = type;
+            CustomFieldType = customFieldType;
             Source = source;
             Title = title;
             IsShared = isShared;
@@ -94,10 +96,15 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <value>The name.</value>
         public string Name { get; set; }
         /// <summary>
-        /// Gets or sets the type.
+        /// Gets or sets the custom field type.
         /// </summary>
-        /// <value>The type.</value>
-        public SitecoreFieldType Type { get; set; }
+        /// <value>The field type.</value>
+        public SitecoreFieldType FieldType { get; set; }
+        /// <summary>
+        /// Gets or sets the field type.
+        /// </summary>
+        /// <value>The custom field type.</value>
+        public string CustomFieldType { get; set; }
         /// <summary>
         /// Gets or sets the source.
         /// </summary>
@@ -149,11 +156,10 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// Gets the type of the field.
         /// </summary>
-        /// <param name="type">The type.</param>
         /// <returns>System.String.</returns>
-        public static string GetFieldType(SitecoreFieldType type)
+        public string GetFieldType()
         {
-            switch (type)
+            switch (FieldType)
             {
                 case SitecoreFieldType.Checkbox:
                     return "Checkbox";
@@ -197,6 +203,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                     return "Droptree";
                 case SitecoreFieldType.GeneralLink:
                     return "General Link";
+                case SitecoreFieldType.Custom:
+                    return CustomFieldType;
                 default:
                     return "Single-Line Text";
             }
