@@ -110,6 +110,12 @@ namespace Glass.Mapper
 
             Profiler = new NullProfiler();
 
+            Initiate(glassContext.DependencyResolver);
+        }
+
+        public virtual void Initiate(IDependencyResolver resolver)
+        {
+            
         }
 
         /// <summary>

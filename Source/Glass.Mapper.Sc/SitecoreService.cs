@@ -42,6 +42,7 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreService : AbstractService, ISitecoreService
     {
+        public Config Config { get; set; }
 
         /// <summary>
         /// Gets the database.
@@ -92,6 +93,13 @@ namespace Glass.Mapper.Sc
         {
             Database = database;
         }
+
+        public override void Initiate(IDependencyResolver resolver)
+        {
+            Config = resolver.Resolve<Config>();
+            base.Initiate(resolver);
+        }
+
 
         #region AddVersion
 
@@ -415,16 +423,20 @@ namespace Glass.Mapper.Sc
         }
 
 
+        private bool DoVersionCheck()
+        {
+            if (Config != null && Config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+                return false;
 
+
+            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
+
+        }
 
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (!GlassHtml.IsInEditingMode)
-            {
-                if (item == null ||
-                    (item.Versions.Count == 0 && Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled))
-                    return null;
-            }
+            if (item == null || (item.Versions.Count == 0 && DoVersionCheck())) return null;
+
 
             if (constructorParameters != null && constructorParameters.Length > 4)
                 throw new NotSupportedException("Maximum number of constructor parameters is 4");
