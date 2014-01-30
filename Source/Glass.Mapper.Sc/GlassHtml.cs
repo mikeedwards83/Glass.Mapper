@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc
                     {
                         item[key] = parameters[key];
                     }
-                    T obj = item.GlassCast<T>();
+                    T obj = item.GlassCast<T>(this.SitecoreContext);
 
                     item.Editing.EndEdit();
                     return obj;
@@ -164,7 +164,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual T GetRenderingParameters<T>(NameValueCollection parameters) where T : class
+        public virtual T    GetRenderingParameters<T>(NameValueCollection parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
 
