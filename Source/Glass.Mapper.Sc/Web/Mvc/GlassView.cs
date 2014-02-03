@@ -106,7 +106,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
-                                                     NameValueCollection attributes = null, bool isEditable = false)
+                                                     object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
 
@@ -177,7 +177,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field,
-                                                     NameValueCollection attributes = null, bool isEditable = false)
+                                                     object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
 
