@@ -240,6 +240,7 @@ namespace Glass.Mapper.Umb
         /// Creates a new Umbraco class.
         /// </summary>
         /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the UmbracoClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="TParent"></typeparam>
         /// <param name="parent">The parent of the new item to create. Must have the UmbracoIdAttribute or fluent equivalent</param>
         /// <param name="newItem">New item to create, must have the attribute UmbracoInfoAttribute of type UmbracoInfoType.Name or the fluent equivalent</param>
         /// <returns></returns>
@@ -254,7 +255,8 @@ namespace Glass.Mapper.Umb
         /// or
         /// Failed to create item
         /// </exception>
-        public T Create<T>(int parent, T newItem) where T : class
+        public T Create<T, TParent>(TParent parent, T newItem) where T : class 
+                                                               where TParent : class
         {
             UmbracoTypeConfiguration newType;
 
