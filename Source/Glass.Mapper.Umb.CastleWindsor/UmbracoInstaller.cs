@@ -30,6 +30,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Umb.CastleWindsor.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.DataMappers;
@@ -237,6 +238,12 @@ namespace Glass.Mapper.Umb.CastleWindsor
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationOnDemandResolverTask<UmbracoTypeConfiguration>>()
                          .LifestyleTransient()
+                );
+
+            container.Register(
+                Component.For<IConfigurationResolverTask>()
+                            .ImplementedBy<ConfigurationInferTypeResolver>()
+                            .LifestyleTransient()
                 );
         }
     }
