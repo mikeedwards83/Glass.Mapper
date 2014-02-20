@@ -11,6 +11,7 @@
     <AssemblyName>Glass.Mapper.Umb.CastleWindsor</AssemblyName>
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -88,10 +89,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Umbraco.Core">
+      <HintPath>..\..\packages\UmbracoCms.Core.6.0.3\lib\Umbraco.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationInferTypeResolver.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UmbracoInstaller.cs" />
