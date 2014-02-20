@@ -165,6 +165,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         public bool IsRequired { get; set; }
 
+        /// <summary>
+        /// Allows for custom types of field to create when using Code First
+        /// </summary>
+        /// <value>The type of the field.</value>
+        public string CustomFieldType { get; set; }
+
         #endregion
 
 
@@ -201,6 +207,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.FieldSource = this.FieldSource;
             config.FieldTitle = this.FieldTitle;
             config.FieldType = this.FieldType;
+            config.CustomFieldType = this.CustomFieldType;
             config.IsShared = this.IsShared;
             config.IsUnversioned = this.IsUnversioned;
             config.SectionName = this.SectionName;
