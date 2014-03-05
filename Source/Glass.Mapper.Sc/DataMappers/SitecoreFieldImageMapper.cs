@@ -78,11 +78,38 @@ namespace Glass.Mapper.Sc.DataMappers
             img.HSpace = hSpace;
             img.MediaId = field.MediaID.Guid;
             if (field.MediaItem != null)
+            {
                 img.Src = MediaManager.GetMediaUrl(field.MediaItem);
+                var fieldTitle = field.MediaItem.Fields["Title"];
+                if (fieldTitle != null)
+                    img.Title = fieldTitle.Value;
+            }
             img.VSpace = vSpace;
             img.Width = width;
         }
+        
+        public static void MapToImage(Image img, MediaItem imageItem)
+        {
+           /* int height = 0;
+            int.TryParse(imageItem..Height, out height);
+            int width = 0;
+            int.TryParse(imageItem.Width, out width);
+            int hSpace = 0;
+            int.TryParse(imageItem.HSpace, out hSpace);
+            int vSpace = 0;
+            int.TryParse(imageItem.VSpace, out vSpace);*/
 
+            img.Alt = imageItem.Alt;
+            img.Title = imageItem.Title;
+           // img.Border = imageItem.Border;
+           // img.Class = imageItem.Class;
+           // img.Height = height;
+           // img.HSpace = hSpace;
+            img.MediaId = imageItem.ID.Guid;
+            img.Src = MediaManager.GetMediaUrl(imageItem);
+           // img.VSpace = vSpace;
+           // img.Width = width;
+        }
 
         /// <summary>
         /// Sets the field.
@@ -173,9 +200,11 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            var imageItem = new MediaItem(context.Service.Database.GetItem(new ID(fieldValue)));
+            var image = new Image();
+            MapToImage(image, imageItem);
+            return image;
         }
-
     }
 }
 
