@@ -21,6 +21,7 @@ using System.Linq;
 using Castle.Core;
 using Castle.DynamicProxy;
 using Castle.MicroKernel.Registration;
+using Castle.Windsor;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
@@ -30,6 +31,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
     /// </summary>
     public class WindsorConstruction : IObjectConstructionTask
     {
+        public static volatile object _key = new object();
         
 
         /// <summary>
@@ -66,20 +68,8 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
 
                     if (type.IsClass)
                     {
-                        if (!container.Kernel.HasComponent(typeof (LazyObjectInterceptor)))
-                        {
-                            container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleTransient());
-                        }
-                        if (!container.Kernel.HasComponent(type))
-                        {
-                            container.Kernel.Register(
-                                Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient)
-                                );
-                            container.Kernel.Register(
-                                Component.For(type).Named(type.FullName + "lazy").LifeStyle.Is(LifestyleType.Transient)
-                                         .Interceptors<LazyObjectInterceptor>()
-                                );
-                        }
+
+                        TypeRegistrationCheck(container, type);
 
                         Action<object> mappingAction = (target) =>
                                                        configuration.MapPropertiesToObject(target, args.Service,
@@ -118,6 +108,36 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
             }
 
 
+        }
+
+        private void TypeRegistrationCheck(IWindsorContainer container, Type type)
+        {
+            if (!container.Kernel.HasComponent(typeof(LazyObjectInterceptor)))
+            {
+                lock (_key)
+                {
+                    if (!container.Kernel.HasComponent(typeof (LazyObjectInterceptor)))
+                    {
+                        container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleTransient());
+                    }
+                }
+            }
+            if (!container.Kernel.HasComponent(type))
+            {
+                lock (_key)
+                {
+                    if (!container.Kernel.HasComponent(type))
+                    {
+                        container.Kernel.Register(
+                            Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient)
+                            );
+                        container.Kernel.Register(
+                            Component.For(type).Named(type.FullName + "lazy").LifeStyle.Is(LifestyleType.Transient)
+                                     .Interceptors<LazyObjectInterceptor>()
+                            );
+                    }
+                }
+            }
         }
     }
 }
