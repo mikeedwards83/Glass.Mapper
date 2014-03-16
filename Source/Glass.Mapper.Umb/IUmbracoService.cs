@@ -167,5 +167,13 @@ namespace Glass.Mapper.Umb
         /// <param name="content">The content.</param>
         /// <param name="config">The config.</param>
         void WriteToItem<T>(T target, IContent content, UmbracoTypeConfiguration config = null);
+
+        /// <summary>
+        /// Deletes an item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="MapperException"></exception>
+        void Delete<T>(T item) where T : class;
     }
 }
