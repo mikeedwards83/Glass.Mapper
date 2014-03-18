@@ -37,19 +37,20 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
             Sitecore.Mvc.Presentation.Rendering rendering, 
             GetRendererArgs args)
         {
-
-            var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
-            if (renderItem.TemplateName == "GlassBehindRazor")
+            if (rendering.Item != null)
             {
-                BehindViewRenderer render = new BehindViewRenderer();
-                render.Path = renderItem["Name"];
-                render.Type = renderItem["Type"];
-                render.Assembly = renderItem["assembly"];
+                var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
+                if (renderItem.TemplateName == "GlassBehindRazor")
+                {
+                    BehindViewRenderer render = new BehindViewRenderer();
+                    render.Path = renderItem["Name"];
+                    render.Type = renderItem["Type"];
+                    render.Assembly = renderItem["assembly"];
 
-                render.DataSource = rendering.DataSource;
-                return render;
+                    render.DataSource = rendering.DataSource;
+                    return render;
+                }
             }
-
             return null;
         }
     }

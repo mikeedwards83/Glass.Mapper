@@ -112,7 +112,7 @@ namespace Glass.Mapper.Sc.DataMappers
                   case SitecoreInfoType.ContentPath:
                     return item.Paths.ContentPath;
                 case SitecoreInfoType.DisplayName:
-                    return item.DisplayName;
+                    return item[Global.Fields.DisplayName];
                 case SitecoreInfoType.FullPath:
                     return item.Paths.FullPath;
                 case SitecoreInfoType.Name:

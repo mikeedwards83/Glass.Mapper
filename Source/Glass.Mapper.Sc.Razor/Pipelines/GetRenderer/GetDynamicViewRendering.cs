@@ -37,16 +37,18 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
             GetRendererArgs args)
         {
 
-            var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
-            if (renderItem.TemplateName == "GlassDynamicRazor")
+            if (rendering.Item != null)
             {
-                var render = new DynamicViewRenderer();
-                render.Path = renderItem["Name"];
-                render.ContextName = renderItem["ContextName"];
-                render.DataSource = rendering.DataSource;
-                return render;
+                var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
+                if (renderItem.TemplateName == "GlassDynamicRazor")
+                {
+                    var render = new DynamicViewRenderer();
+                    render.Path = renderItem["Name"];
+                    render.ContextName = renderItem["ContextName"];
+                    render.DataSource = rendering.DataSource;
+                    return render;
+                }
             }
-
             return null;
         }
     }

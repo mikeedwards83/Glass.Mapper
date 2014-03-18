@@ -111,7 +111,11 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The date time
         /// </summary>
-        DateTime
+        DateTime,
+        /// <summary>
+        /// The custom
+        /// </summary>
+        Custom
     }
 
 }

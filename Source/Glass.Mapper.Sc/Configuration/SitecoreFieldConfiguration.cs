@@ -131,6 +131,12 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         public SitecoreInfoUrlOptions UrlOptions { get; set; }
 
+        /// <summary>
+        /// Allows for custom types of field to create when using Code First
+        /// </summary>
+        /// <value>The type of the field.</value>
+        public string CustomFieldType { get; set; }
+
         #endregion
 
         /// <summary>
@@ -152,7 +158,8 @@ namespace Glass.Mapper.Sc.Configuration
                            PropertyInfo = this.PropertyInfo,
                            ReadOnly = this.ReadOnly,
                            SectionName = this.SectionName,
-                           Setting = this.Setting
+                           Setting = this.Setting,
+                           CustomFieldType = this.CustomFieldType
                        };
         }
 
