@@ -366,7 +366,7 @@ namespace Glass.Mapper.Umb
         /// <exception cref="MapperException"></exception>
         public void Delete<T>(T item) where T : class
         {
-            var type = GlassContext.GetTypeConfiguration(item) as UmbracoTypeConfiguration;
+            var type = GlassContext.GetTypeConfiguration <UmbracoTypeConfiguration>(item) as UmbracoTypeConfiguration;
             var umbItem = type.ResolveItem(item, ContentService);
 
             if (umbItem == null) throw new MapperException("Content not found");
