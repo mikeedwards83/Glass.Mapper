@@ -359,6 +359,22 @@ namespace Glass.Mapper.Umb
         }
 
         /// <summary>
+        /// Deletes an item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="MapperException"></exception>
+        public void Delete<T>(T item) where T : class
+        {
+            var type = GlassContext.GetTypeConfiguration <UmbracoTypeConfiguration>(item) as UmbracoTypeConfiguration;
+            var umbItem = type.ResolveItem(item, ContentService);
+
+            if (umbItem == null) throw new MapperException("Content not found");
+
+            ContentService.Delete(umbItem);
+        }
+
+        /// <summary>
         /// Saves the object.
         /// </summary>
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
