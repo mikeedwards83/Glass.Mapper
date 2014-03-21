@@ -55,7 +55,7 @@ namespace Glass.Mapper.Umb.DataMappers
 
             return umbContext.Service.CreateType(
                 umbConfig.PropertyInfo.PropertyType,
-                umbContext.Service.ContentService.GetById(umbContext.Content.ParentId),
+                umbContext.Service.ContentService.GetPublishedVersion(umbContext.Content.ParentId),
                 umbConfig.IsLazy,
                 umbConfig.InferType);
         }
