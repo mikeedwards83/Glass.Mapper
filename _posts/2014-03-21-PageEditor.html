@@ -1,0 +1,123 @@
+---
+layout: BlogLayout
+title: Page Editor without Glass Mapping
+image: http://troll.me/images/2ez/too-easy.jpg
+abstract: A look at how Glass.Mapper.Sc can be used to enable the Page Editor without mapping.
+caption: 09 Jan 2014
+---
+
+
+			
+<p class="lead">
+    There will be times where you want to enable the Page Editor for a property on your model but the model itself may not have been mapped 
+    by Glass.Mapper. 
+    
+</p>
+<p>
+    The most obvious scenario for this is when using Sitecore search, you get search results back that are populated by Sitecore 7 search. 
+    The properties are filled with data from the Sitecore 7 search service but now you need to make them editable. 
+</p>
+<p>
+    Lets look at the raw search code first, my model contains an ID property and a Title property, they will map the item's ID and 
+    Title field from the index respectively.
+</p>
+
+<pre class="csharp">
+        public class MyResult 
+        {
+            [TypeConverter(typeof(IndexFieldIDValueConverter))]
+            [IndexField("_group")]
+            public ID Id { get; set; }
+            
+            [IndexField("title")]
+            public string Title { get; set; }
+        }
+</pre>
+
+
+<p>
+    The code behind on my search ascx is shown below, notice that the results are coming directly from the search and are not
+    going via Glass.Mapper, the user control also inherits from the AbstractGlassUserControl, this is just for convenience later.
+</p>
+
+<pre class="csharp">
+    public partial class Search : AbstractGlassUserControl
+    {
+
+        public IEnumerable&lt;MyResult&gt;  Results { get; set; }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            var index = ContentSearchManager.GetIndex("sitecore_master_index");
+            using (var context = index.CreateSearchContext())
+            {
+                IQueryable&lt;MyResult&gt; searchItems = context.GetQueryable&lt;MyResult&gt;();
+                Results = searchItems.Where(item => item.Title.Contains("V2")).ToList();
+            }
+        }
+    }
+</pre>
+<p>
+    Finally I render them to screen:
+</p>
+<pre class="html">
+    &lt;ul&gt;
+        &lt;% foreach (var result in Results)
+           { %&gt;
+
+        &lt;li&gt;&lt;%=result.Title %&gt;&lt;/li&gt;
+
+        &lt;% } %&gt;
+    &lt;/ul&gt;
+</pre>
+
+
+<p>
+    Now we need to update the code above to support the Page Editor, since I have called my properties "ID" and "Title" then I can
+    just rely on Glass' auto-mapping abilities, therefore the only change I need to make is to the HTML in my search page is to call 
+    the Editable method:
+</p>
+
+<pre class="html">
+    &lt;ul&gt;
+        &lt;% foreach (var result in Results)
+           { %&gt;
+
+        &lt;li&gt;&lt;%=Editable(result, x=&gt;x.Title) %&gt;&lt;/li&gt;
+
+        &lt;% } %&gt;
+    &lt;/ul&gt;
+</pre>
+
+
+<p>
+    Of course your property names may not always match the file names, in that case you can still use the Glass.Mapper attribute and 
+    fluent configuration:
+</p>
+<img src="http://troll.me/images/2ez/too-easy.jpg" style="float: right"/>
+
+<pre class="csharp">
+        public class MyResult 
+        {
+            [TypeConverter(typeof(IndexFieldIDValueConverter))]
+            [IndexField("_group")]
+            public ID Id { get; set; }
+            
+            [IndexField("title")]
+            public string Title { get; set; }
+    
+            [IndexField("computedvalue")]
+            [SitecoreField("Text")]
+            public string Computed {get;set;}
+        }
+</pre>
+
+<p>
+    Hopefully in this quick blog you have seen how easy it is to get the Page Editor working with any model using Glass.Mapper, even if that 
+    class hasn't been mapped by Glass.Mapper. 
+</p>
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
