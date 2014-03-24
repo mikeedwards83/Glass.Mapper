@@ -108,7 +108,7 @@ namespace Glass.Mapper.Umb.Configuration
             if (IdConfig.PropertyInfo.PropertyType == typeof(int))
             {
                 var id = (int)IdConfig.PropertyInfo.GetValue(target, null);
-                return contentService.GetPublishedVersion(id);
+                return contentService.GetById(id);
             }
             
             if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
