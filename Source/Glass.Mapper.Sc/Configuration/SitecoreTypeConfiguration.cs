@@ -21,6 +21,7 @@ using System;
 using Glass.Mapper.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Configuration
@@ -59,6 +60,11 @@ namespace Glass.Mapper.Sc.Configuration
         public SitecoreInfoConfiguration VersionConfig { get; set; }
 
         /// <summary>
+        /// Gets or sets the item config
+        /// </summary>
+        public SitecoreItemConfiguration ItemConfig { get; set; }
+
+        /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
         /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
@@ -87,10 +93,36 @@ namespace Glass.Mapper.Sc.Configuration
             else if (infoProperty != null && infoProperty.Type == SitecoreInfoType.Version)
                 VersionConfig = infoProperty;
 
-
+            if (property is SitecoreItemConfiguration)
+                ItemConfig = property as SitecoreItemConfiguration;
 
             base.AddProperty(property);
         }
+
+        public ID GetId(object target)
+        {
+            ID id;
+
+            if (IdConfig == null)
+            {
+                id = ID.Null;
+            }
+            else if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
+            {
+                var guidId = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
+                id = new ID(guidId);
+            }
+            else if (IdConfig.PropertyInfo.PropertyType == typeof(ID))
+            {
+                id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
+            }
+            else
+            {
+                throw new NotSupportedException("Cannot get ID for item");
+            }
+            return id;
+        }
+
 
         /// <summary>
         /// Resolves the item.
@@ -105,33 +137,39 @@ namespace Glass.Mapper.Sc.Configuration
         /// Cannot get ID for item</exception>
         public Item ResolveItem(object target, Database database)
         {
+            if (target == null)
+                return null;
+
             ID id;
             Language language = null;
             int versionNumber = -1;
 
+            if (ItemConfig != null)
+            {
+                var item = ItemConfig.PropertyGetter(target) as Item;
+                if (item != null)
+                    return item;
+            }
+
             if (IdConfig == null)
                 throw new NotSupportedException(
-                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID.");
+                    "You can not save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID. Type: {0}".Formatted(target.GetType().FullName));
 
-            if (IdConfig.PropertyInfo.PropertyType == typeof (Guid))
-            {
-                var guidId = (Guid) IdConfig.PropertyInfo.GetValue(target, null);
-                id = new ID(guidId);
-            }
-            else if (IdConfig.PropertyInfo.PropertyType == typeof (ID))
-            {
-                id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
-            }
-            else
-            {
-                throw new NotSupportedException("Cannot get ID for item");
-            }
+            id = GetId(target);
 
             language = GetLanguage(target);
 
             if (VersionConfig != null)
             {
-                versionNumber = (int) VersionConfig.PropertyInfo.GetValue(target, null);
+                var valueInt = VersionConfig.PropertyInfo.GetValue(target, null);
+                if (valueInt is int)
+                {
+                    versionNumber = (int) valueInt;
+                }
+                else if(valueInt is string)
+                {
+                    int.TryParse(valueInt as string, out versionNumber);
+                }
             }
 
             if (language != null && versionNumber > 0)
@@ -158,9 +196,20 @@ namespace Glass.Mapper.Sc.Configuration
             Language language = null;
             if (LanguageConfig != null)
             {
-                language = LanguageConfig.PropertyInfo.GetValue(target, null) as Language;
-                if (language == null)
+                object langValue = LanguageConfig.PropertyInfo.GetValue(target, null);
+                
+                if (langValue == null)
+                {
                     language = Language.Current;
+                }
+                else if (langValue is Language)
+                {
+                    language = langValue as Language;
+                }
+                else if (langValue is string)
+                {
+                    language = LanguageManager.GetLanguage(langValue as string);
+                }
             }
             return language;
         }
@@ -177,22 +226,28 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (name.ToLowerInvariant() == "id")
             {
-                SitecoreIdConfiguration idConfig = new SitecoreIdConfiguration();
+                var idConfig = new SitecoreIdConfiguration();
                 idConfig.PropertyInfo = property;
                 return idConfig;
             }
 
             if (name.ToLowerInvariant() == "parent")
             {
-                SitecoreParentConfiguration parentConfig = new SitecoreParentConfiguration();
+                var parentConfig = new SitecoreParentConfiguration();
                 parentConfig.PropertyInfo = property;
                 return parentConfig;
             }
             if (name.ToLowerInvariant() == "children")
             {
-                SitecoreChildrenConfiguration childrenConfig = new SitecoreChildrenConfiguration();
+                var childrenConfig = new SitecoreChildrenConfiguration();
                 childrenConfig.PropertyInfo = property;
                 return childrenConfig;
+            }
+            if (name.ToLowerInvariant() == "item" && property.PropertyType == typeof(Item))
+            {
+                var itemConfig = new SitecoreItemConfiguration();
+                itemConfig.PropertyInfo = property;
+                return itemConfig;
             }
 
             if (Enum.TryParse(name, true, out infoType))

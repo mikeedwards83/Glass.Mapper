@@ -17,12 +17,14 @@
 //-CRE-
 
 using System;
+using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.Fields
 {
     /// <summary>
     /// Class Image
     /// </summary>
+    [Serializable]
     public class Image
     {
         /// <summary>
@@ -71,6 +73,13 @@ namespace Glass.Mapper.Sc.Fields
         /// <value>The media id.</value>
         public Guid MediaId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        public string Title { get; set; }
     }
 }
 

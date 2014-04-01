@@ -17,9 +17,12 @@
 //-CRE-
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 {
@@ -28,6 +31,10 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
     /// </summary>
     public class TemplateInferredTypeTask : IConfigurationResolverTask
     {
+
+        static ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>
+            _inferredCache = new ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>();
+
         #region IPipelineTask<ConfigurationResolverArgs> Members
 
         /// <summary>
@@ -40,19 +47,37 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
             {
                 if (args.AbstractTypeCreationContext.InferType)
                 {
+
+                    
                     var scContext = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
                     var requestedType = scContext.RequestedType;
                     var item = scContext.Item;
                     var templateId = item != null ? item.TemplateID : scContext.TemplateId;
 
-                    var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
-
-                    var types = configs.Where(x => x.TemplateId == templateId);
-                    if (types.Any())
+                    var key = new Tuple<Context, Type, ID>(args.Context, requestedType, templateId);
+                    if (_inferredCache.ContainsKey(key))
                     {
+<<<<<<< HEAD
                         var type = types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type));
                         if (type != null) args.Result = new[] { type };
+=======
+                        args.Result = _inferredCache[key];
+                    }
+                    else
+                    {
+                        var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
+
+                        var types = configs.Where(x => x.TemplateId == templateId);
+                        if (types.Any())
+                        {
+                            args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                            if (!_inferredCache.TryAdd(key, args.Result as SitecoreTypeConfiguration))
+                            {
+                                //TODO: some logging
+                            }
+                        }
+>>>>>>> remotes/mike/master
                     }
                 }
             }

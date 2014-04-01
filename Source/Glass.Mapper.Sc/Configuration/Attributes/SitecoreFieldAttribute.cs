@@ -68,6 +68,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         }
 
         /// <summary>
+        /// Use with the Glass.Mapper.Sc.Fields.Link type
+        /// </summary>
+        /// <value>The URL options.</value>
+        public SitecoreInfoUrlOptions UrlOptions { get; set; }
+
+        /// <summary>
         /// The name of the field  to use if it is different to the property name
         /// </summary>
         /// <value>The name of the field.</value>
@@ -159,6 +165,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         public bool IsRequired { get; set; }
 
+        /// <summary>
+        /// Allows for custom types of field to create when using Code First
+        /// </summary>
+        /// <value>The type of the field.</value>
+        public string CustomFieldType { get; set; }
+
         #endregion
 
 
@@ -195,6 +207,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.FieldSource = this.FieldSource;
             config.FieldTitle = this.FieldTitle;
             config.FieldType = this.FieldType;
+            config.CustomFieldType = this.CustomFieldType;
             config.IsShared = this.IsShared;
             config.IsUnversioned = this.IsUnversioned;
             config.SectionName = this.SectionName;
@@ -204,6 +217,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.ValidationErrorText = this.ValidationErrorText;
             config.ValidationRegularExpression = this.ValidationRegularExpression;
             config.IsRequired = this.IsRequired;
+            config.UrlOptions = this.UrlOptions;
 
 
             //code first configuration

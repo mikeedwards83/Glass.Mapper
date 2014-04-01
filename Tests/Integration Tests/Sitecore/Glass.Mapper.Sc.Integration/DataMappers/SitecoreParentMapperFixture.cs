@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, false);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, false, null);
 
         }
 
@@ -99,7 +99,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false, null);
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true, null);
         }
 
         #endregion

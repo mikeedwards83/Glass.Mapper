@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Castle.DynamicProxy;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
 {
@@ -9,7 +10,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
         private readonly ObjectConstructionArgs _args;
         Dictionary<string, object> _values;
         bool _isLoaded = false;
-
+        private IEnumerable<AbstractTypeConfiguration> _configs;
+ 
           /// <summary>
         /// Initializes a new instance of the <see cref="MultiInterfacePropertyInterceptor"/> class.
         /// </summary>
@@ -17,11 +19,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
         public MultiInterfacePropertyInterceptor(ObjectConstructionArgs args)
         {
             _args = args;
+              _configs =
+                  new[] {args.Configuration}.Union(args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] as IEnumerable<AbstractTypeConfiguration>);
         }
 
         public void Intercept(IInvocation invocation)
         {
-            var configs = _args.Configurations;
+            
 
             //do initial gets
             if (!_isLoaded)
@@ -29,7 +33,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
                 _values = new Dictionary<string, object>();
                 var mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
-                foreach (var config in configs)
+                foreach (var config in _configs)
                 {
                     foreach (var property in config.Properties)
                     {
@@ -59,7 +63,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
                     }
                     else
                         throw new MapperException("Method with name {0}{1} on types {2} not supported.".Formatted(
-                            method, name, configs.Select(x => x.Type.FullName).Aggregate((x, y) => x + "; " + y)));
+                            method, name, _configs.Select(x => x.Type.FullName).Aggregate((x, y) => x + "; " + y)));
                 }
             }
 

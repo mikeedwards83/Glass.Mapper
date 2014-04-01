@@ -176,7 +176,7 @@ namespace Glass.Sitecore.Mapper
         /// </returns>
         public object CreateClass(bool isLazy, bool inferType, Type type, Item item)
         {
-            return CreateType(type, item, isLazy, inferType);
+            return CreateType(type, item, isLazy, inferType, null);
         }
 
         /// <summary>

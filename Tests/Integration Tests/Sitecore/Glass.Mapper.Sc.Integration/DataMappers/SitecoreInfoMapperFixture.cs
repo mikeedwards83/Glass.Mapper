@@ -72,6 +72,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 "DataMappersEmptyItem", //TemplateName
                 "/en/sitecore/content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem.aspx", //Url
                 1 //version
+            
                 )] object expected
             )
         {
@@ -120,7 +121,34 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
-        public void MapToProperty_SitecoreInfoTypeLanguage_ReturnsEn()
+        public void MapToProperty_SitecoreInfoTypeLanguage_ReturnsEnStringType()
+        {
+
+            //Assign
+            var type = SitecoreInfoType.Language;
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            config.PropertyInfo = new FakePropertyInfo(typeof(string), "StringField", typeof(Stub));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+
+            var expected = item.Language.Name;
+
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext);
+
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
+        [Test]
+        public void MapToProperty_SitecoreInfoTypeLanguage_ReturnsEnLanguageType()
         {
 
             //Assign
@@ -210,8 +238,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-            var expected = item.TemplateID;
-
+          
             Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
             var dataContext = new SitecoreDataMappingContext(null, item, null);
 
@@ -219,11 +246,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             IEnumerable<ID> results;
             using (new SecurityDisabler())
             {
+                
                 results = mapper.MapToProperty(dataContext) as IEnumerable<ID>;
             }
 
             //Assert
-            Assert.AreEqual(15, results.Count());
+            Assert.Greater( results.Count(), 10);
             Assert.IsTrue(results.All(x=>x!= item.TemplateID));
         }
 
@@ -309,6 +337,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             public ID TemplateId { get; set; }
             public IEnumerable<ID> BaseTemplateIds { get; set; }
+            public string StringField { get; set; }
         }
 
         #endregion

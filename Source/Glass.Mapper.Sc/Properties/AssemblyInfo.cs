@@ -57,6 +57,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Tests")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration")]
+[assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration.Sc7")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Explorables")]
 
 

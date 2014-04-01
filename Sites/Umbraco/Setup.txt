@@ -1,4 +1,0 @@
-Hit F5
-
-   Username: admin
-   Password: g!@ss

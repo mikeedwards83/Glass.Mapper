@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
@@ -24,7 +25,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     /// <summary>
     /// Class SitecoreAttributeConfigurationLoader
     /// </summary>
-    public class SitecoreAttributeConfigurationLoader : AttributeConfigurationLoader<SitecoreTypeConfiguration, SitecorePropertyConfiguration>
+    [Obsolete("This class is no longer required, use or Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader or nothing")]
+    public class SitecoreAttributeConfigurationLoader : AttributeConfigurationLoader
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreAttributeConfigurationLoader"/> class.
@@ -33,16 +35,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public SitecoreAttributeConfigurationLoader(params string[] assemblies): base(assemblies)
         {
 
-        }
-
-        /// <summary>
-        /// Configs the created.
-        /// </summary>
-        /// <param name="config">The config.</param>
-        protected override void ConfigCreated(Mapper.Configuration.AbstractTypeConfiguration config)
-        {
-            var scConfig = config as SitecoreTypeConfiguration;
-            base.ConfigCreated(config);
         }
     }
 }

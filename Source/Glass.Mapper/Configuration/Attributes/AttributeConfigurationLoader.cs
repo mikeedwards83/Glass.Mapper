@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace Glass.Mapper.Configuration.Attributes
@@ -32,9 +33,7 @@ namespace Glass.Mapper.Configuration.Attributes
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="K"></typeparam>
-   public class AttributeConfigurationLoader<T, K> : IConfigurationLoader 
-        where T : AbstractTypeConfiguration, new() 
-        where K: AbstractPropertyConfiguration, new ()
+    public class AttributeConfigurationLoader : IConfigurationLoader
     {
         private readonly string[] _assemblies;
 
@@ -43,7 +42,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// Initializes a new instance of the <see cref="AttributeConfigurationLoader{T, K}"/> class.
         /// </summary>
         /// <param name="assemblies">The assemblies.</param>
-        public AttributeConfigurationLoader(params string [] assemblies)
+        public AttributeConfigurationLoader(params string[] assemblies)
         {
             _assemblies = assemblies;
         }
@@ -73,7 +72,7 @@ namespace Glass.Mapper.Configuration.Attributes
                     {
                         if (HttpContext.Current != null)
                         {
-                            path=   HttpContext.Current.Server.MapPath("/bin");
+                            path = HttpContext.Current.Server.MapPath("/bin");
                             path += "/";
                         }
                     }
@@ -81,9 +80,11 @@ namespace Glass.Mapper.Configuration.Attributes
                     {
                     }
 
-                    return Assembly.LoadFrom(path+assemblyName + ".dll") ?? Assembly.LoadFrom(path+assemblyName + ".exe");
+                    return Assembly.LoadFrom(path + assemblyName + ".dll") ??
+                           Assembly.LoadFrom(path + assemblyName + ".exe");
                 }
-            }catch(FileNotFoundException ex)
+            }
+            catch (FileNotFoundException ex)
             {
                 throw new ConfigurationException("Could not find assembly called {0}".Formatted(assemblyName), ex);
             }
@@ -98,12 +99,12 @@ namespace Glass.Mapper.Configuration.Attributes
             //this should mean that things evaluate lazily
             return _assemblies
                 .Select(assemblyName =>
-                            {
-                                var assembly = FindAssembly(assemblyName);
-                                return LoadFromAssembly(assembly);
-                            })
+                {
+                    var assembly = FindAssembly(assemblyName);
+                    return LoadFromAssembly(assembly);
+                })
                 .Aggregate((x, y) => x.Union(y));
-         
+
         }
 
         /// <summary>
@@ -112,9 +113,9 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="assembly">The assembly.</param>
         /// <returns>IEnumerable{`0}.</returns>
         /// <exception cref="Glass.Mapper.Configuration.ConfigurationException">Failed to load types {0}.Formatted(ex.LoaderExceptions.First().Message)</exception>
-        protected IEnumerable<T> LoadFromAssembly(Assembly assembly)
+        protected IEnumerable<AbstractTypeConfiguration> LoadFromAssembly(Assembly assembly)
         {
-            var configs = new List<T>();
+            var configs = new List<AbstractTypeConfiguration>();
 
             if (assembly != null)
             {
@@ -124,23 +125,11 @@ namespace Glass.Mapper.Configuration.Attributes
 
                     foreach (var type in types)
                     {
-                        IEnumerable<object> attrs = type.GetCustomAttributes(true);
-                        var attr = attrs.FirstOrDefault(y => y is AbstractTypeAttribute) as AbstractTypeAttribute;
-
-                        if (attr != null)
+                        var loader = new AttributeTypeLoader(type);
+                        var config = loader.Load().FirstOrDefault();
+                        if (config != null)
                         {
-                            var config = new T();
-                            attr.Configure(type, config);
                             configs.Add(config);
-
-                            //load the properties on the type
-                            foreach(var property in LoadPropertiesFromType(type))
-                            {
-                                if(property != null)
-                                    config.AddProperty(property);
-                            }
-
-                            ConfigCreated(config);
                         }
                     }
                 }
@@ -154,86 +143,8 @@ namespace Glass.Mapper.Configuration.Attributes
             return configs;
         }
 
-        /// <summary>
-        /// This method is called after a configuration has been loaded. Use this method for any specific
-        /// post configuration processing
-        /// </summary>
-        /// <param name="config">The config.</param>
-       protected virtual void ConfigCreated(AbstractTypeConfiguration config)
-       {
-       }
 
-       /// <summary>
-       /// Loads the type of the properties from.
-       /// </summary>
-       /// <param name="type">The type.</param>
-       /// <returns>IEnumerable{AbstractPropertyConfiguration}.</returns>
-       protected IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
-        {
-            //we have to get the property definition from the declaring type so that 
-            //we can set private setters.
-            var properties = Utilities.GetAllProperties(type);
 
-            foreach(var property in properties)
-            {
-                var config = ProcessProperty(property);
-                if (config == null) continue;
-                yield return config;
-            }
-           
-        }
-
-       /// <summary>
-       /// Processes the property.
-       /// </summary>
-       /// <param name="property">The property.</param>
-       /// <returns>AbstractPropertyConfiguration.</returns>
-        protected AbstractPropertyConfiguration ProcessProperty(PropertyInfo property)
-        {
-            if (property != null)
-            {
-                var attr = GetPropertyAttribute(property);
-
-                //if we can't get a umbraco attribute from current property we search down the 
-                // inheritance chain to find the first declared attribute.
-                if (attr == null)
-                {
-                    var interfaces = property.DeclaringType.GetInterfaces();
-
-                    //TODO: put a check in here to check that two interface don't implement an attribute
-                    foreach (var inter in interfaces)
-                    {
-                        var interProperty = inter.GetProperty(property.Name);
-                        if (interProperty != null)
-                            attr = GetPropertyAttribute(interProperty);
-
-                        if (attr != null) break;
-                    }
-                }
-                
-                if (attr != null)
-                {
-                   
-                    var config = attr.Configure(property);
-                    return config;
-                }
-
-            }
-            return null;
-
-        }
-
-        /// <summary>
-        /// Gets the property attribute.
-        /// </summary>
-        /// <param name="info">The info.</param>
-        /// <returns>AbstractPropertyAttribute.</returns>
-        public static AbstractPropertyAttribute GetPropertyAttribute(PropertyInfo info)
-        {
-            var attrs = info.GetCustomAttributes(true);
-            var attr = attrs.FirstOrDefault(y => y is AbstractPropertyAttribute) as AbstractPropertyAttribute;
-            return attr;
-        }
     }
 }
 

@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
@@ -52,7 +53,17 @@ namespace Glass.Mapper
         /// <param name="mappingContext">The mapping context.</param>
         public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-            var result  = MapToProperty(mappingContext);
+            object result;
+
+            try
+            {
+                 result = MapToProperty(mappingContext);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+            }
+           
 
             if (result != null)
 				Configuration.PropertySetter(mappingContext.Object, result);
@@ -66,7 +77,15 @@ namespace Glass.Mapper
         {
             if (ReadOnly) return;
 
-			mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
+            try
+            {
+                mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+            }
+
             MapToCms(mappingContext);
         }
 

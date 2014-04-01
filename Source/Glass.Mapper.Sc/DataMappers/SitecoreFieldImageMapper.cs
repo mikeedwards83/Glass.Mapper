@@ -78,11 +78,38 @@ namespace Glass.Mapper.Sc.DataMappers
             img.HSpace = hSpace;
             img.MediaId = field.MediaID.Guid;
             if (field.MediaItem != null)
+            {
                 img.Src = MediaManager.GetMediaUrl(field.MediaItem);
+                var fieldTitle = field.MediaItem.Fields["Title"];
+                if (fieldTitle != null)
+                    img.Title = fieldTitle.Value;
+            }
             img.VSpace = vSpace;
             img.Width = width;
         }
+        
+        public static void MapToImage(Image img, MediaItem imageItem)
+        {
+           /* int height = 0;
+            int.TryParse(imageItem..Height, out height);
+            int width = 0;
+            int.TryParse(imageItem.Width, out width);
+            int hSpace = 0;
+            int.TryParse(imageItem.HSpace, out hSpace);
+            int vSpace = 0;
+            int.TryParse(imageItem.VSpace, out vSpace);*/
 
+            img.Alt = imageItem.Alt;
+            img.Title = imageItem.Title;
+           // img.Border = imageItem.Border;
+           // img.Class = imageItem.Class;
+           // img.Height = height;
+           // img.HSpace = hSpace;
+            img.MediaId = imageItem.ID.Guid;
+            img.Src = MediaManager.GetMediaUrl(imageItem);
+           // img.VSpace = vSpace;
+           // img.Width = width;
+        }
 
         /// <summary>
         /// Sets the field.
@@ -129,18 +156,27 @@ namespace Glass.Mapper.Sc.DataMappers
                         field.MediaID = newId;
                         ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                         field.UpdateLink(link);
+                        
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
             }
 
-            field.Height = image.Height.ToString();
-            field.Width = image.Width.ToString();
-            field.HSpace = image.HSpace.ToString();
-            field.VSpace = image.VSpace.ToString();
-            field.Alt = image.Alt;
-            field.Border = image.Border;
-            field.Class = image.Class;
+            if(image.Height > 0)
+                field.Height = image.Height.ToString();
+            if(image.Width > 0)
+                field.Width = image.Width.ToString();
+            if(image.HSpace > 0)
+                field.HSpace = image.HSpace.ToString();
+            if(image.VSpace > 0)
+                field.VSpace = image.VSpace.ToString();
+            
+            if(field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+                field.Alt = image.Alt ?? string.Empty;
+            if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
+                field.Border = image.Border ?? string.Empty;
+            if (field.Class.IsNotNullOrEmpty() || image.Class.IsNotNullOrEmpty())
+                field.Class = image.Class ?? string.Empty;
         }
         /// <summary>
         /// Sets the field value.
@@ -164,9 +200,11 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            var imageItem = new MediaItem(context.Service.Database.GetItem(new ID(fieldValue)));
+            var image = new Image();
+            MapToImage(image, imageItem);
+            return image;
         }
-
     }
 }
 

@@ -3,11 +3,11 @@
   <metadata>
     <id>Glass.Mapper.Sc.Razor</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+    <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
-    <!--<iconUrl></iconUrl>-->
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
 		Add support for the Razor syntax in Sitecore as web controls.
@@ -17,7 +17,7 @@
     <tags>Glass Mapper Sitecore Razor Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.0.3" />
+		<dependency id="Glass.Mapper.Sc" version="3.1.5" />
 		<dependency id="RazorEngine" version="3.2.0" />
     </dependencies>
   </metadata>
@@ -25,7 +25,11 @@
 	  <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.dll" />
 	  <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.pdb" />
 	  <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.xml" />
-	  <file src="Source\Glass.Mapper.Sc.Razor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\Net45\Glass.Mapper.Sc.Razor.dll" target="lib\net45\Glass.Mapper.Sc.Razor.dll" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\Net45\Glass.Mapper.Sc.Razor.pdb" target="lib\net45\Glass.Mapper.Sc.Razor.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\Net45\Glass.Mapper.Sc.Razor.xml" target="lib\net45\Glass.Mapper.Sc.Razor.xml" />
+
+    <file src="Source\Glass.Mapper.Sc.Razor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.Website\App_Config\**.*" target="content\App_Config" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.Website\Sitecore Modules\**.*" target="content\Sitecore Modules" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.Website\Data\**.*" target="content\Data" />

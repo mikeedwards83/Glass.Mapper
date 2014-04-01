@@ -224,7 +224,7 @@
     <key alias="stylesNoStylesOnPage">Nenhum estilo ativo disponível</key>
     <key alias="tableColMergeLeft">Favor colocar o cursos à esquerda das duas células que deseja mesclar</key>
     <key alias="tableSplitNotSplittable">Você não pode dividir uma célula que não foi mesclada.</key>
-    <key alias="xsltErrorHeader">Erro na fonta xslt</key>
+    <key alias="xsltErrorHeader">Erro na fonta XSLT</key>
     <key alias="xsltErrorText">O XSLT não foi salvo porque contém erro(s)</key>
   </area>
   <area alias="general">
@@ -475,7 +475,7 @@ Vá até http://%4%/actions/editContent.aspx?id=%5% para editar.
     <key alias="mailBodyHtml"><![CDATA[<p>Olá %0%</p>
 
 		  <p>Esta é uma mensagem automatizada para informar que a tarefa <strong>'%1%'</strong> 
-		  foi completada na página <a href="%7%"><strong>'%2%'</strong></a>
+		  foi completada na página <a href="http://%4%/actions/preview.aspx?id=%5%"><strong>'%2%'</strong></a>
 		  pelo usuário <strong>'%3%'</strong>
 	  </p>
 		  <div style="margin: 8px 0; padding: 8px; display: block;">
@@ -666,11 +666,11 @@ Você pode publicar esta página e todas suas sub-páginas ao selecionar <em>pub
     <key alias="templateErrorText">Favor confirmar que não existem 2 modelos com o mesmo apelido</key>
     <key alias="templateSavedHeader">Modelo salvo</key>
     <key alias="templateSavedText">Modelo salvo sem nenhum erro!</key>
-    <key alias="xsltErrorHeader">Xslt não salvo</key>
-    <key alias="xsltErrorText">Xslt continha um erro</key>
-    <key alias="xsltPermissionErrorText">Xslt não pode ser salvo, cheque as permissões do arquivo</key>
-    <key alias="xsltSavedHeader">Xslt salvo</key>
-    <key alias="xsltSavedText">Nenhum erro no xslt</key>
+    <key alias="xsltErrorHeader">XSLT não salvo</key>
+    <key alias="xsltErrorText">XSLT continha um erro</key>
+    <key alias="xsltPermissionErrorText">XSLT não pode ser salvo, cheque as permissões do arquivo</key>
+    <key alias="xsltSavedHeader">XSLT salvo</key>
+    <key alias="xsltSavedText">Nenhum erro no XSLT</key>
   </area>
   <area alias="stylesheet">
     <key alias="aliasHelp">Use sintaxe CSS ex: h1, .redHeader, .blueTex</key>
@@ -737,7 +737,7 @@ Para fechar a tarefa de tradução vá até os detalhes e clique no botão "Fech
       Vá para http://%3%/translation/details.aspx?id=%4% para editar.
 
       Ou visite o umbraco para ter uma visão geral das tarefas de tradução
-      http://%3%/umbraco.aspx
+      http://%3%
 
       Tenha um bom dia!
 
@@ -803,7 +803,6 @@ Para fechar a tarefa de tradução vá até os detalhes e clique no botão "Fech
     <key alias="changePassword">Alterar Sua Senha</key>
     <key alias="changePasswordDescription">você pode alterar sua senha para acessar a área administrativa do Umbraco preenchendo o formulário abaixo e clicando no botão 'Alterar Senha'</key>
     <key alias="contentChannel">Canal de Conteúdo</key>
-    <key alias="defaultToLiveEditing">Redirecionar à Tela de Edição após login</key>
     <key alias="descriptionField">Campo de descrição</key>
     <key alias="disabled">Desabilitar Usuário</key>
     <key alias="documentType">Tipo de Documento</key>

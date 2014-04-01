@@ -1,4 +1,4 @@
-/*
+    /*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,16 @@
 //-CRE-
 
 using System;
+using System.Collections.Specialized;
+using System.Linq;
+using Sitecore.Text;
 
 namespace Glass.Mapper.Sc.Fields
 {
     /// <summary>
     /// Class Link
     /// </summary>
+    [Serializable]
     public class Link
     {
         /// <summary>
@@ -70,6 +74,30 @@ namespace Glass.Mapper.Sc.Fields
         /// </summary>
         /// <value>The type.</value>
         public LinkType Type { get; set; }
+
+
+        public const string UrlFormat = "{0}{1}";
+
+        public string BuildUrl(NameValueCollection attributes = null)
+        {
+
+            Func<string, Func<string>, string> getValue = (key, func) =>
+            {
+                var value = attributes.AllKeys.Any(x => x == key) ? attributes[key] : func();
+                attributes.Remove(key);
+                return value;
+            };
+
+            UrlBuilder builder = new UrlBuilder(Url);
+
+            var query = getValue("query", () => Query);
+            var anchor = getValue("anchor", () => Anchor);
+            
+            if (query.IsNotNullOrEmpty())
+                builder.AddQueryString(query);
+
+            return UrlFormat.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#" + anchor);
+        }
     }
 }
 
