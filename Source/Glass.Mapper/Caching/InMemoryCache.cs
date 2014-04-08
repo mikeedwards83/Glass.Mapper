@@ -1,47 +1,46 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Glass.Mapper.Caching
 {
     public class InMemoryCache : ICacheManager
     {
-        readonly ConcurrentDictionary<string, object> _innerCache = new ConcurrentDictionary<string, object>();
+        private readonly ConcurrentDictionary<string, object> _innerCache = new ConcurrentDictionary<string, object>();
+
+		protected ConcurrentDictionary<string, object> Cache { get { return _innerCache; }} 
 
         public object this[string key]
         {
             get
             {
-                if (_innerCache.ContainsKey(key))
-                {
-                    return _innerCache[key];
-                }
-                return null;
+	            return Get<object>(key);
             }
             set
             {
-                Add(key, value);
+                AddOrUpdate(key, value);
             }
         }
 
         public void ClearCache()
         {
-            lock (_innerCache)
-            {
-                _innerCache.Clear();
-            }
+            Cache.Clear();
         }
 
-        public void Add(string key, object value)
+        public void AddOrUpdate<T>(string key, T value) where T : class
         {
-            lock (_innerCache)
-            {
-                _innerCache.TryAdd(key, value);
-            }
+            Cache.AddOrUpdate(key, value, (s, o) => value);
         }
 
-        public bool Contains(string key)
+	    public T Get<T>(string key) where T : class
+	    {
+			object retVal;
+			return Cache.TryGetValue(key, out retVal)
+				? retVal as T
+				: null;
+	    }
+
+	    public bool Contains(string key)
         {
-            return _innerCache.ContainsKey(key);
+            return Cache.ContainsKey(key);
         }
     }
 }

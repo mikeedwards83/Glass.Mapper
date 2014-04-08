@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Concurrent;
+using System.Threading;
 using System.Web;
 using System.Web.Caching;
 
@@ -9,67 +8,73 @@ namespace Glass.Mapper.Caching
 {
     public class HttpCache : ICacheManager
     {
-        List<string> _keys = new List<string>();
-
+        private ConcurrentBag<string> _keys = new ConcurrentBag<string>(); 
+		
         public int AbsoluteExpiry { get; set; }
         public int SlidingExpiry { get; set; }
 
-        public object this[string key]
+		protected ConcurrentBag<string> Keys {get { return _keys; }} 
+
+	    protected Cache Cache
+	    {
+		    get
+		    {
+			    return HttpContext.Current != null
+				    ? HttpContext.Current.Cache
+				    : null;
+		    }
+	    }
+
+	    public object this[string key]
         {
-            get
-            {
-                if (HttpContext.Current != null && HttpContext.Current.Cache != null)
-                {
-                    return HttpContext.Current.Cache[key];
-                }
-                return null;
-            }
-            set { Add(key, value); }
+            get { return Get<object>(key); }
+            set { AddOrUpdate(key, value); }
         }
 
         public void ClearCache()
         {
-            lock (_keys)
+	        var cache = Cache;
+	        if (cache == null) return;
+
+	        var keys = Interlocked.Exchange(ref _keys, new ConcurrentBag<string>());
+
+            foreach (var key in keys)
             {
-                if (HttpContext.Current != null && HttpContext.Current.Cache != null)
-                {
-                    foreach (var key in _keys)
-                    {
-                        HttpContext.Current.Cache.Remove(key);
-                    }
-                }
+	            cache.Remove(key);
             }
         }
 
-        public void Add(string key, object value)
+        public void AddOrUpdate<T>(string key, T value) where T : class
         {
-            lock (_keys)
-            {
-                if (HttpContext.Current != null && HttpContext.Current.Cache != null)
-                {
-                    if (AbsoluteExpiry > 0)
-                    {
-                        HttpContext.Current.Cache.Add(key, value, null, DateTime.Now.AddSeconds(AbsoluteExpiry),
-                            Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-                    }
-                    else
-                    {
-                        HttpContext.Current.Cache.Add(key, value, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 0, SlidingExpiry),
-                            CacheItemPriority.Normal, null);
-                    }
+	        var cache = Cache;
+	        if (cache == null) return;
 
-                    _keys.Add(key);
-                }
+			if (AbsoluteExpiry > 0)
+            {
+                cache.Insert(key, value, null, DateTime.Now.AddSeconds(AbsoluteExpiry),
+                    Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
             }
+            else
+            {
+                cache.Insert(key, value, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 0, SlidingExpiry),
+                    CacheItemPriority.Normal, null);
+            }
+
+			// duplicate keys here don't matter
+            Keys.Add(key);
         }
 
-        public bool Contains(string key)
+	    public T Get<T>(string key) where T : class
+	    {
+		    var cache = Cache;
+		    return cache != null
+			    ? cache[key] as T
+			    : null;
+	    }
+
+	    public bool Contains(string key)
         {
-            if (HttpContext.Current != null && HttpContext.Current.Cache != null)
-            {
-                return HttpContext.Current.Cache[key] != null;
-            }
-            return false;
+            return Get<object>(key) != null;
         }
     }
 }

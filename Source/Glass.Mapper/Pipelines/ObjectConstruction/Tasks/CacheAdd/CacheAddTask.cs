@@ -1,5 +1,4 @@
 ﻿using Glass.Mapper.Caching;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
 {
@@ -18,7 +17,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
             {
                 var key = args.AbstractTypeCreationContext.GetUniqueKey();
 
-                _cacheManager.Add(key, args.Result);
+				// This will also OVERRIDE any existing item that may already be cached (to be consistent across different cache impls)
+				// Will allow for multiple threads to update the cached object on first load, when they are all racing to cache the item for the first time
+                _cacheManager.AddOrUpdate(key, args.Result);
             }
         }
     }

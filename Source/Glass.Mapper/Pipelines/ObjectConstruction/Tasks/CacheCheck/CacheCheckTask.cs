@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Glass.Mapper.Caching;
+﻿using Glass.Mapper.Caching;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
@@ -13,19 +11,20 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
             _cacheManager = cacheManager;
         }
 
-   
-        public void Execute(ObjectConstructionArgs args)
-        {
-            if (args.Result == null && args.Configuration.Cachable)
-            {
-                var key = args.AbstractTypeCreationContext.GetUniqueKey();
 
-                if (_cacheManager.Contains(key))
-                {
-                    args.Result = _cacheManager[key];
-                    args.AbortPipeline();
-                }
-            }
-        }
+	    public void Execute(ObjectConstructionArgs args)
+	    {
+		    if (args.Result == null && args.Configuration.Cachable)
+		    {
+			    var key = args.AbstractTypeCreationContext.GetUniqueKey();
+				
+			    var cacheItem = _cacheManager.Get<object>(key);
+			    if (cacheItem != null)
+			    {
+				    args.Result = cacheItem;
+				    args.AbortPipeline();
+			    }
+		    }
+	    }
     }
 }
