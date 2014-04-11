@@ -58,10 +58,6 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     var key = new Tuple<Context, Type, ID>(args.Context, requestedType, templateId);
                     if (_inferredCache.ContainsKey(key))
                     {
-<<<<<<< HEAD
-                        var type = types.FirstOrDefault(x => requestedType.First().IsAssignableFrom(x.Type));
-                        if (type != null) args.Result = new[] { type };
-=======
                         args.Result = _inferredCache[key];
                     }
                     else
@@ -77,7 +73,6 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                                 //TODO: some logging
                             }
                         }
->>>>>>> remotes/mike/master
                     }
                 }
             }

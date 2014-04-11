@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (config.Setting == SitecoreFieldSettings.RichTextRaw)
                 return field.Value;
 
-            if (field.Type.StartsWith("Rich Text") || Sitecore.Context.PageMode.IsPageEditor)
+            if (field.Type.StartsWith("Rich Text"))
             {
                 FieldRenderer renderer = new FieldRenderer();
                 renderer.Item = field.Item;

@@ -16,13 +16,10 @@
 */
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
-=======
 using System.Globalization;
->>>>>>> remotes/mike/master
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
@@ -43,7 +40,7 @@ namespace Glass.Mapper.Sc.CodeFirst
     /// </summary>
     public class GlassDataProvider : DataProvider
     {
-        private readonly object _setupLock = new object();
+        private static readonly object _setupLock = new object();
         private bool _setupComplete;
         private bool _setupProcessing;
 
@@ -366,8 +363,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </returns>
         private IDList GetChildIDsSection(SectionInfo section, CallContext context, DataProvider sqlProvider)
         {
-<<<<<<< HEAD
-            var config = _typeConfigurations.First(x => x.Value.TemplateId == section.TemplateId);
+            var config = TypeConfigurations.First(x => x.Value.TemplateId == section.TemplateId);
             var cls = config.Value;
 
             var fields = cls.Properties.OfType<SitecoreFieldConfiguration>();
@@ -375,13 +371,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             IDList fieldIds = new IDList();
 
             var providers = context.DataManager.Database.GetDataProviders();
-            var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
+            //var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
             var interfaces = cls.Type.GetInterfaces();
-=======
-            var cls = TypeConfigurations.First(x => x.Value.TemplateId == section.TemplateId).Value;
-            var fields = cls.Properties.OfType<SitecoreFieldConfiguration>();
-            var fieldIds = new IDList();
->>>>>>> remotes/mike/master
 
             foreach (var field in fields)
             {
@@ -780,13 +771,8 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (!TypeConfigurations.ContainsKey(type)) return;
 
-<<<<<<< HEAD
-                var baseConfig = _typeConfigurations[type];
-                if (baseConfig != null && baseConfig.TemplateId.Guid != Guid.Empty)
-=======
                 var baseConfig = TypeConfigurations[type];
-                if (baseConfig != null && baseConfig.CodeFirst)
->>>>>>> remotes/mike/master
+                if (baseConfig != null && baseConfig.TemplateId.Guid != Guid.Empty)
                 {
                     if (!baseTemplatesField.Contains(baseConfig.TemplateId.ToString()))
                     {
@@ -804,15 +790,12 @@ namespace Glass.Mapper.Sc.CodeFirst
             }
 
             config.Type.GetInterfaces().ForEach(idCheck);
-<<<<<<< HEAD
 
             //dirty fix for circular template inheritance
             var baseTemplates = sb.ToString().Split('|').ToList();
             baseTemplates.Remove(config.TemplateId.ToString());
             sb.Clear();
             sb.Append(string.Join("|", baseTemplates));
-=======
->>>>>>> remotes/mike/master
 
             if (baseTemplatesField != sb.ToString())
             {

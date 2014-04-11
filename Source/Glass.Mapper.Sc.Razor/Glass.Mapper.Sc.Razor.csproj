@@ -15,6 +15,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,18 +60,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Reference Include="RazorEngine">
       <HintPath>..\..\lib\RazorEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.4549.26863, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
@@ -86,9 +78,13 @@
       <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
   <ItemGroup>
-   
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -159,6 +155,7 @@
     <Content Include="Items.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

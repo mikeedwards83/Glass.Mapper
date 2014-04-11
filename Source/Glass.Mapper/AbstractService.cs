@@ -127,29 +127,10 @@ namespace Glass.Mapper
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
             //run the pipeline to get the configuration to load
-<<<<<<< HEAD
-            var configs = new List<AbstractTypeConfiguration>();
-            foreach (var type in abstractTypeCreationContext.RequestedType)
-            {
-                var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, type);
-                _configurationResolver.Run(configurationArgs);
-
-                if (configurationArgs.Result == null)
-                    throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.Select(x=>x.FullName).Aggregate((x,y) => x +"; "+y)));
-
-                configs.AddRange(configurationArgs.Result);
-            }
-
-            if (!configs.Any())
-                throw new NullReferenceException("Configuration Resolver pipeline did not resolve any config. Have the types been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType.Select(x=>x.FullName).Aggregate((x,y) => x +"; "+y)));
-
-
-=======
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
                 throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType));
-            
->>>>>>> remotes/mike/master
+
             //Run the object construction
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
             objectArgs.Parameters = configurationArgs.Parameters;

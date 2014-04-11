@@ -435,11 +435,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-<<<<<<< HEAD
                 Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
-=======
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
->>>>>>> remotes/mike/master
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
