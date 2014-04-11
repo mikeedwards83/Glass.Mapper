@@ -254,7 +254,7 @@ namespace Glass.Mapper.Sc
             {
                 attrs["haschildren"] = "true";
 
-                return MakeEditable(field, null, model, attrs, _context, SitecoreContext.Database, writer);
+                return MakeEditable(field, null, model, Utilities.ConstructQueryString(attrs), _context, SitecoreContext.Database, writer);
             }
             else
             {
@@ -298,6 +298,10 @@ namespace Glass.Mapper.Sc
             {
                 attrs = attributes as NameValueCollection;
             }
+            else if (attributes is AbstractParameters)
+            {
+                attrs = ((AbstractParameters) attributes).Parameters;
+            }
             else
             {
                 attrs = Utilities.GetPropertiesCollection(attributes, true);
@@ -315,8 +319,8 @@ namespace Glass.Mapper.Sc
                 result = MakeEditable(
                     field,
                     null, 
-                    model,  
-                    attrs, 
+                    model,
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
             }
             else
