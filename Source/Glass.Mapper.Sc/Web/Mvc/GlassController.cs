@@ -47,13 +47,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
 
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem == null)
+            if (Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
                 return SitecoreContext.GetCurrentItem<T>();
 
-            return SitecoreContext.CreateType<T>(
-                Sitecore.Mvc.Presentation.RenderingContext.Current.ContextItem,
-                isLazy,
-                inferType);
+
+
+            return SitecoreContext.GetItem<T>(
+                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource, isLazy, inferType
+                );
         }
     }
 }
