@@ -183,58 +183,58 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
            
             container.Register(
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
-                         .LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
-                         .LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDoubleMapper>()
-                         .LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDecimalMapper>()
-                         .LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableFloatMapper>()
-                         .LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableGuidMapper>()
-                         .LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestylePerWebRequest(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestylePerWebRequest(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
                          {
                              d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
                          })
-                         .LifestylePerWebRequest()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -269,11 +269,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestylePerWebRequest(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestylePerWebRequest(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestylePerWebRequest(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestylePerWebRequest(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestylePerWebRequest()
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }

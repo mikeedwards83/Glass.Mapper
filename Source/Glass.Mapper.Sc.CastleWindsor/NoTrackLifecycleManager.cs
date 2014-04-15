@@ -17,7 +17,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// <summary>
     /// This manager deliberately does not track
     /// </summary>
-    public class ForgetLifecycleManager : AbstractLifestyleManager
+    public class NoTrackLifestyleManager : AbstractLifestyleManager
     {
         public override void Dispose()
         {
