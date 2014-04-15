@@ -183,58 +183,58 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
            
             container.Register(
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
-                         .LifestyleTransient(),
+                         .LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
-                         .LifestyleTransient(),
+                         .LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDoubleMapper>()
-                         .LifestyleTransient(),
+                         .LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDecimalMapper>()
-                         .LifestyleTransient(),
+                         .LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableFloatMapper>()
-                         .LifestyleTransient(),
+                         .LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableGuidMapper>()
-                         .LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleTransient(),
+                         .LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestylePerWebRequest(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestylePerWebRequest(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
                          {
                              d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
                          })
-                         .LifestyleTransient()
+                         .LifestylePerWebRequest()
                 );
         }
     }
@@ -269,11 +269,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestyleTransient()
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestylePerWebRequest(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestylePerWebRequest(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestylePerWebRequest(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestylePerWebRequest(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestylePerWebRequest()
                 );
         }
     }
@@ -311,7 +311,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
-                         .LifestyleTransient()
+                         .LifestylePerWebRequest()
                 );
         }
     }
@@ -356,29 +356,29 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
               Component.For<IConfigurationResolverTask>()
                        .ImplementedBy<SitecoreItemResolverTask>()
-                       .LifestyleTransient()
+                       .LifestylePerWebRequest()
               );
             container.Register(
               Component.For<IConfigurationResolverTask>()
                        .ImplementedBy<MultiInterfaceResolverTask>()
-                       .LifestyleTransient()
+                       .LifestylePerWebRequest()
               );
             container.Register(
                Component.For<IConfigurationResolverTask>()
                         .ImplementedBy<TemplateInferredTypeTask>()
-                        .LifestyleTransient()
+                        .LifestylePerWebRequest()
                );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationStandardResolverTask>()
-                         .LifestyleTransient()
+                         .LifestylePerWebRequest()
                 );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
-                         .LifestyleTransient()
+                         .LifestylePerWebRequest()
                 );
 
            
@@ -418,25 +418,25 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestylePerWebRequest()
                 );
 
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestylePerWebRequest()
                 );
 
             if (Config.UseWindsorContructor)
             {
                 container.Register(
-                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleTransient() 
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestylePerWebRequest() 
                     );
             }
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestylePerWebRequest(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestylePerWebRequest(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestylePerWebRequest()
                 );
         }
     }
@@ -471,7 +471,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             // Tasks are called in the order they are specified below.
             container.Register(
-                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleTransient()
+                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestylePerWebRequest()
                 );
         }
     }
