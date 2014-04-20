@@ -311,7 +311,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
-                         .LifestylePerWebRequest()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -356,29 +356,29 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
               Component.For<IConfigurationResolverTask>()
                        .ImplementedBy<SitecoreItemResolverTask>()
-                       .LifestylePerWebRequest()
+                       .LifestyleCustom<NoTrackLifestyleManager>()
               );
             container.Register(
               Component.For<IConfigurationResolverTask>()
                        .ImplementedBy<MultiInterfaceResolverTask>()
-                       .LifestylePerWebRequest()
+                       .LifestyleCustom<NoTrackLifestyleManager>()
               );
             container.Register(
                Component.For<IConfigurationResolverTask>()
                         .ImplementedBy<TemplateInferredTypeTask>()
-                        .LifestylePerWebRequest()
+                        .LifestyleCustom<NoTrackLifestyleManager>()
                );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationStandardResolverTask>()
-                         .LifestylePerWebRequest()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
-                         .LifestylePerWebRequest()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
            
@@ -418,25 +418,25 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestylePerWebRequest()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestylePerWebRequest()
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             if (Config.UseWindsorContructor)
             {
                 container.Register(
-                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestylePerWebRequest() 
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleCustom<NoTrackLifestyleManager>() 
                     );
             }
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestylePerWebRequest(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestylePerWebRequest(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestylePerWebRequest()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -471,7 +471,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             // Tasks are called in the order they are specified below.
             container.Register(
-                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestylePerWebRequest()
+                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }

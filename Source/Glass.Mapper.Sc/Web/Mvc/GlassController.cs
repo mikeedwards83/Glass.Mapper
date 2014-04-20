@@ -46,15 +46,29 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
+            try
+            {
+                //The call to Sitecore.Mvc.Presentation.RenderingContext.Current cause the exception
+                //      attempt to retrieve context object of type 'Sitecore.Mvc.Presentation.RenderingContext' from empty stack.
+                //when used in a controller that is targeted by a route and not a rendering.
 
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                    return SitecoreContext.GetCurrentItem<T>();
+
+
+
+                return SitecoreContext.GetItem<T>(
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource, isLazy, inferType
+                    );
+            }
+            catch (InvalidOperationException ex)
+            {
                 return SitecoreContext.GetCurrentItem<T>();
 
+            }
 
-
-            return SitecoreContext.GetItem<T>(
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource, isLazy, inferType
-                );
         }
     }
 }
