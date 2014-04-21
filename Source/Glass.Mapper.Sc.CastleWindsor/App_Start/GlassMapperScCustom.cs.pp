@@ -3,7 +3,7 @@ using Castle.Windsor;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
-using Sitecore.SecurityModel;
+
 
 namespace $rootnamespace$.App_Start
 {
