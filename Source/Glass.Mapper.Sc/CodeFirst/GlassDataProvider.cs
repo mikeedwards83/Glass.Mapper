@@ -339,9 +339,10 @@ namespace Glass.Mapper.Sc.CodeFirst
                 if (record == null)
                 {
                     var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
+                    var newId = GetUniqueGuid(itemDefinition.ID + section.SectionName);
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
-                        new SectionInfo(section.SectionName, new ID(GetUniqueGuid(itemDefinition.ID + section.SectionName)), itemDefinition.ID, section.SectionSortOrder);
+                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, section.SectionSortOrder);
 
                     SectionTable.Add(record);
                 }
@@ -821,7 +822,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             using (MD5 md5 = MD5.Create())
             {
                 byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(input));
-                return new Guid(hash);
+                var guid = new Guid(hash);
+                return guid == Guid.Empty ? Guid.NewGuid() : guid;
             }
 
         }
