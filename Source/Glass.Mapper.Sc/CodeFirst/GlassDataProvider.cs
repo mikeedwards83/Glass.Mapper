@@ -21,6 +21,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore;
@@ -31,7 +32,9 @@ using Sitecore.Data.DataProviders;
 using Sitecore.Data.DataProviders.Sql;
 using Sitecore.Data.Items;
 using Sitecore.Exceptions;
+using Sitecore.Mvc.Extensions;
 using Sitecore.SecurityModel;
+using Sitecore.Shell.Feeds.Sections;
 
 namespace Glass.Mapper.Sc.CodeFirst
 {
@@ -335,10 +338,10 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (record == null)
                 {
-                    var exists = existing.FirstOrDefault(def => def.Name.Equals(section));
+                    var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
-                        new SectionInfo(section.SectionName, new ID(Guid.NewGuid()), itemDefinition.ID, section.SectionSortOrder);
+                        new SectionInfo(section.SectionName, new ID(GetUniqueGuid(itemDefinition.ID + section.SectionName)), itemDefinition.ID, section.SectionSortOrder);
 
                     SectionTable.Add(record);
                 }
@@ -347,6 +350,12 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (!record.Existing)
                     fields.Add(record.SectionId);
+            }
+
+            //we need to add sections already in the db, 'cause we have to 
+            foreach (var sqlOne in existing.Where(ex => SectionTable.All(s => s.SectionId != ex.ID)))
+            {
+                SectionTable.Add(new SectionInfo(sqlOne.Name, sqlOne.ID, itemDefinition.ID, 0) { Existing = true } );
             }
 
             return fields;
@@ -803,6 +812,18 @@ namespace Glass.Mapper.Sc.CodeFirst
                 templateItem[FieldIDs.BaseTemplate] = sb.ToString();
                 templateItem.Editing.EndEdit();
             }
+        }
+
+        public static Guid GetUniqueGuid(string input)
+        {
+            //this code will generate a unique Guid for a string (unique with a 2^20.96 probability of a collision) 
+            //http://stackoverflow.com/questions/2190890/how-can-i-generate-guid-for-a-string-values
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(input));
+                return new Guid(hash);
+            }
+
         }
     }
 }
