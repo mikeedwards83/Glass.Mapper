@@ -327,7 +327,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                 .Select(x => new { x.SectionName, x.SectionSortOrder });
 
             //If sitecore contains a section with the same name in the database, use that one instead of creating a new one
-            var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context)).ToList();
+            var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context))
+                .Where(item => item.TemplateID == SectionTemplateId).ToList();
 
             foreach (var section in sections)
             {
