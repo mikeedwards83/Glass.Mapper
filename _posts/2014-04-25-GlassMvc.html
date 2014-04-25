@@ -1,0 +1,43 @@
+---
+layout: BlogLayout
+title: Glass and MVC Feedback Please
+image: http://www.troll.me/images/happy-vanilla-cat/i-can-has-feedback.jpg
+abstract: Looking at we can better handle MVC versions in Glass.Mapper.Sc
+caption: 09 Jan 2014
+---
+
+
+			
+<p class="lead">
+    Sitecore is now keeping pace with the .NET MVC versions being released. This is great because if you are building 
+    on the latest version of Sitecore you get to play with all the MVC5 goodness. However this has created a problem 
+    for Glass.Mapper.Sc.
+</p>
+<p>
+    The MVC implementation for Glass.Mapper.Sc at the moment is contained in the same assembly as the standard Web Forms implementation.
+    This creates a problem because this MVC implementation needs to be compiled against MVC3, MVC4, MVC5 as well as .Net4 and .Net4.5 but only 
+    distributed in a single Nuget package.
+</p>
+<p>
+    My proposed solution is to separate the MVC solution into a separate Nuget package that would need to be downloaded separately, this means we would have
+    the following MVC Nuget packages:
+</p>
+<ul>
+    <li>MVC3</li>
+    <li>MVC4</li>
+    <li>MVC5</li>
+</ul>
+
+<p>
+    When starting a new Glass.Mapper.Sc project that uses MVC a developer would need to download both the Glass.Mapper.Sc.CastleWindsor project as well
+    as their desired MVC package.
+</p>
+
+<p>
+    What do you think about this? Is this a good idea? Is there a better solution?
+</p>
+
+{% include share.html %}
+<p class="muted">
+    Mike - <a href="https://twitter.com/mikeedwards83">@mikeedwards83</a>
+</p>
