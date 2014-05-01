@@ -86,7 +86,7 @@ namespace Glass.Mapper.Umb
             {
                 return null;
             }
-            var item = ContentService.GetById(id.Value);
+            var item = ContentService.GetPublishedVersion(id.Value);
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
