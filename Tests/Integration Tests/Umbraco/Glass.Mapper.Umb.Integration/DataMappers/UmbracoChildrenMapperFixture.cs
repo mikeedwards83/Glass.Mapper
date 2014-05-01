@@ -62,7 +62,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
                                                                                       Id =  info.Arg<IContent>().Id
                                                                                   });
 
-            var context = new UmbracoDataMappingContext(null, content, service);
+            var context = new UmbracoDataMappingContext(null, content, service, false);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act
@@ -100,7 +100,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
                 Id = info.Arg<IContent>().Id
             });
 
-            var context = new UmbracoDataMappingContext(null, content, service);
+            var context = new UmbracoDataMappingContext(null, content, service, false);
             mapper.Setup(new DataMapperResolverArgs(null, config));
 
             //Act

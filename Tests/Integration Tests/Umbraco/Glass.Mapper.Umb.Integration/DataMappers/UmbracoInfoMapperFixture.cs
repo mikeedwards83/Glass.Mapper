@@ -67,7 +67,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -93,7 +93,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var content = contentService.GetById(new Guid("{FB6A8073-48B4-4B85-B80C-09CBDECC27C9}"));
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -118,7 +118,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var expected = content.Version;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -143,7 +143,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var expected = content.Path;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -168,7 +168,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var expected = content.CreateDate;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -193,7 +193,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             var expected = content.UpdateDate;
 
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
-            var dataContext = new UmbracoDataMappingContext(null, content, null);
+            var dataContext = new UmbracoDataMappingContext(null, content, null, false);
 
             //Act
             var value = mapper.MapToProperty(dataContext);
@@ -225,7 +225,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             Assert.IsNotNull(content, "Content is null, check in Umbraco that item exists");
 
             var context = Context.Create(DependencyResolver.CreateStandardResolver());
-            var dataContext = new UmbracoDataMappingContext(null, content, new UmbracoService(contentService, context));
+            var dataContext = new UmbracoDataMappingContext(null, content, new UmbracoService(contentService, context), false);
             dataContext.PropertyValue = expected;
 
             string actual = string.Empty;
