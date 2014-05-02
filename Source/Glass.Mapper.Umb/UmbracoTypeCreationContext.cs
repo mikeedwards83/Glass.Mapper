@@ -44,6 +44,8 @@ namespace Glass.Mapper.Umb
         /// The umbraco service.
         /// </value>
         public IUmbracoService UmbracoService { get; set; }
+
+        public bool PublishedOnly { get; set; }
     }
 }
 
