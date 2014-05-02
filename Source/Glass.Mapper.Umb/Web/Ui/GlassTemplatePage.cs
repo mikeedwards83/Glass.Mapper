@@ -54,7 +54,7 @@ namespace Glass.Mapper.Umb.Web.Ui
         /// Initializes a new instance of the <see cref="GlassTemplatePage{T}"/> class.
         /// </summary>
         public GlassTemplatePage()
-            : this(new UmbracoService(new ContentService()))
+            : this(new UmbracoPublishedService(new ContentService()))
         {
         }
 
