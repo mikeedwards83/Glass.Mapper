@@ -17,6 +17,7 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
 
@@ -56,8 +57,17 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbConfig = Configuration as UmbracoChildrenConfiguration;
 
             Type genericType = Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
-            
-            Func<IEnumerable<IContent>> getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+
+            Func<IEnumerable<IContent>> getItems = null;
+            if (umbContext.PublishedOnly)
+            {
+                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id)
+                                     .Select(c => umbContext.Service.ContentService.GetPublishedVersion(c.Id));
+            }
+            else
+            {
+                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+            }
 
             return Utilities.CreateGenericType(
                 typeof(LazyContentEnumerable<>),
