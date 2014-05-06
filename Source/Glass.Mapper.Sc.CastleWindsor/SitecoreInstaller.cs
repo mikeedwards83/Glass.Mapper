@@ -21,6 +21,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -117,6 +118,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             Config = config;
 
+
+
             DataMapperInstaller = new DataMapperInstaller(config);
             QueryParameterInstaller = new QueryParameterInstaller(config);
             DataMapperTaskInstaller = new DataMapperTaskInstaller(config);
@@ -141,6 +144,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 ConfigurationResolverTaskInstaller,
                 ObjectionConstructionTaskInstaller,
                 ObjectSavingTaskInstaller
+                );
+
+            container.Register(
+                Component.For<Glass.Mapper.Sc.Config>().Instance(Config)
                 );
         }
     }
@@ -178,6 +185,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
            
             container.Register(
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestyleTransient(),
@@ -187,6 +195,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleTransient(),
@@ -216,8 +225,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleTransient(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
@@ -345,6 +355,16 @@ namespace Glass.Mapper.Sc.CastleWindsor
             // Tasks are called in the order they are specified below.
 
             container.Register(
+              Component.For<IConfigurationResolverTask>()
+                       .ImplementedBy<SitecoreItemResolverTask>()
+                       .LifestyleTransient()
+              );
+            container.Register(
+              Component.For<IConfigurationResolverTask>()
+                       .ImplementedBy<MultiInterfaceResolverTask>()
+                       .LifestyleTransient()
+              );
+            container.Register(
                Component.For<IConfigurationResolverTask>()
                         .ImplementedBy<TemplateInferredTypeTask>()
                         .LifestyleTransient()
@@ -402,6 +422,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
                 );
 
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleTransient()
+                );
+
             if (Config.UseWindsorContructor)
             {
                 container.Register(
@@ -412,9 +436,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                 // Tasks are called in the order they are specified below.
                 Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
         }
     }

@@ -113,8 +113,16 @@ namespace Glass.Mapper
         /// <returns>PropertyInfo.</returns>
         public static PropertyInfo GetProperty(Type type, string name)
         {
-            var property = type.GetProperty(name, Flags);
-            
+            PropertyInfo property = null;
+            try
+            {
+                property = type.GetProperty(name, Flags);
+            }
+            catch (AmbiguousMatchException ex)
+            {
+                //this is probably caused by an item having two indexers e.g SearchResultItem;
+            }
+
             if(property == null)
             {
                 var interfaces = type.GetInterfaces();
@@ -158,6 +166,25 @@ namespace Glass.Mapper
             return propertyList;
         }
 
+
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
+        {
+            NameValueCollection nameValues = new NameValueCollection();
+            if (target != null)
+            {
+                var type = target.GetType();
+                var properties = GetAllProperties(type);
+
+                foreach (var propertyInfo in properties)
+                {
+                    var value = propertyInfo.GetValue(target, null);
+                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
+                                   value == null ? string.Empty : value.ToString());
+                }
+            }
+            return nameValues;
+
+        }
 
         /// <summary>
         /// Creates the type of the generic.
@@ -341,25 +368,6 @@ namespace Glass.Mapper
 			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
 			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
 		}
-
-        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
-        {
-            NameValueCollection nameValues = new NameValueCollection();
-            if (target != null)
-            {
-                var type = target.GetType();
-                var properties = GetAllProperties(type);
-
-                foreach (var propertyInfo in properties)
-                {
-                    var value = propertyInfo.GetValue(target, null);
-                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
-                                   value == null ? string.Empty : value.ToString());
-                }
-            }
-            return nameValues;
-
-        }
     }
 }
 

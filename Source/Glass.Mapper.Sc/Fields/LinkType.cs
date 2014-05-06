@@ -16,11 +16,14 @@
 */ 
 //-CRE-
 
+using System;
+
 namespace Glass.Mapper.Sc.Fields
 {
     /// <summary>
     /// Enum LinkType
     /// </summary>
+    [Serializable]
     public enum LinkType
     {
         /// <summary>

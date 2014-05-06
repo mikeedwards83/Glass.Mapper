@@ -158,8 +158,6 @@ namespace Glass.Mapper.Sc.DataMappers
                                                                                        property.ReflectedType.FullName));
 
             Mapper.Setup(new DataMapperResolverArgs(args.Context, configCopy));
-
-
         }
     }
 }

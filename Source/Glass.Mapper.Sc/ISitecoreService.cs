@@ -97,7 +97,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
-        object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters);
+        object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters);
 
         /// <summary>
         /// Creates a class from the specified item
@@ -899,8 +899,14 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-       
 
+        /// <summary>
+        /// Map data from Sitecore to an existing Sitecore item. The configuration for the item must already be loaded.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        void Map<T>(T target);
+        
        
 
    
@@ -932,7 +938,12 @@ namespace Glass.Mapper.Sc
         /// <param name="abstractTypeSavingContext">The abstract type saving context.</param>
         void SaveObject(AbstractTypeSavingContext abstractTypeSavingContext);
 
-        
+        /// <summary>
+        /// Returns the item that the specific object relates to
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        Item ResolveItem(object target);
 
     }
 }

@@ -3,11 +3,11 @@
   <metadata>
     <id>Glass.Mapper.Sc.Razor.CastleWindsor</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+    <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
-    <!--<iconUrl></iconUrl>-->
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
 		Use the Glass Razor solution using the Castle Windsor DI container.
@@ -17,7 +17,7 @@
     <tags>Glass Mapper Sitecore Razor Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc.Razor" version="3.0.0" />
+		<dependency id="Glass.Mapper.Sc.Razor" version="3.0.7" />
 		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 
@@ -27,7 +27,11 @@
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.dll" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
-	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor.CastleWindsor" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Net45\Glass.Mapper.Sc.Razor.CastleWindsor.dll" target="lib\net45\Glass.Mapper.Sc.Razor.CastleWindsor.dll" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Net45\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" target="lib\net45\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Net45\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net45\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
+
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor.CastleWindsor" />
 	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\App_Start\**" target="content\App_Start" />
   </files>
 </package>

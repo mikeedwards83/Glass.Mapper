@@ -23,6 +23,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -57,7 +58,7 @@ namespace Glass.Mapper.Sc
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
         {
-            return CreateFakeItem(fields, new ID(Guid.NewGuid()), Database.GetDatabase("master"), name);
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), Factory.GetDatabase("master"), name);
         }
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")

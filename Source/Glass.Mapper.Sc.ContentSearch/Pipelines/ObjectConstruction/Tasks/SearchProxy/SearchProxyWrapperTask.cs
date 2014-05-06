@@ -14,16 +14,16 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
 
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null || !SearchSwitcher.IsSearchContext || args.Configurations.First().Type.IsSealed)
+            if (args.Result != null || !SearchSwitcher.IsSearchContext || args.Configuration.Type.IsSealed)
                 return;
-            if (args.Configurations.First().Type.IsInterface)
+            if (args.Configuration.Type.IsInterface)
             {
-                args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configurations.First().Type, new SearchInterceptor(args));
+                args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new SearchInterceptor(args));
                 args.AbortPipeline();
             }
             else
             {
-                args.Result = _generator.CreateClassProxy(args.Configurations.First().Type,new SearchInterceptor(args));
+                args.Result = _generator.CreateClassProxy(args.Configuration.Type,new SearchInterceptor(args));
                 args.AbortPipeline();
             }
         }

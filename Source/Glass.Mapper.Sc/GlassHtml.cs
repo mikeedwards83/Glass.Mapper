@@ -24,7 +24,6 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Web;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -37,7 +36,6 @@ using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.SecurityModel;
-using Sitecore.Shell.Framework.Commands.TemplateBuilder;
 using Sitecore.Text;
 using Sitecore.Web;
 
@@ -49,7 +47,7 @@ namespace Glass.Mapper.Sc
     public class GlassHtml : IGlassHtml
     {
         private static readonly Type ImageType = typeof(Fields.Image);
-        private static readonly Type LinkType = typeof(Fields.Link);
+        private static readonly Type LinkType = typeof(Fields.Link );
 
         /// <summary>
         /// Gets the sitecore context.
@@ -57,7 +55,7 @@ namespace Glass.Mapper.Sc
         /// <value>
         /// The sitecore context.
         /// </value>
-        public ISitecoreContext SitecoreContext { get; private set; }
+        public  ISitecoreContext SitecoreContext { get; private set; }
         private readonly Context _context;
 
         /// <summary>
@@ -111,7 +109,7 @@ namespace Glass.Mapper.Sc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
         {
-
+            
             return MakeEditable(field, standardOutput, target, parameters);
         }
 
@@ -121,12 +119,11 @@ namespace Glass.Mapper.Sc
             var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
             return GetRenderingParameters<T>(nameValueCollection, renderParametersTemplateId);
         }
-        public T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class
-        {
+        public T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T:class{
 
             var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, SitecoreContext.Database, "renderingParameters");
 
-            using (new SecurityDisabler())
+            using (new SecurityDisabler() )
             {
                 using (new VersionCountDisabler())
                 {
@@ -155,7 +152,7 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
+            var config = SitecoreContext.GlassContext[typeof (T)] as SitecoreTypeConfiguration;
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
@@ -167,7 +164,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual T GetRenderingParameters<T>(NameValueCollection parameters) where T : class
+        public virtual T    GetRenderingParameters<T>(NameValueCollection parameters) where T : class
         {
             var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
 
@@ -188,13 +185,13 @@ namespace Glass.Mapper.Sc
         /// The image height
         /// </summary>
         public const string ImageHeight = "height";
-
-
+     
+    
         /// <summary>
         /// The image tag format
         /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1}/>";
-
+     
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
@@ -255,7 +252,9 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
-                return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
+                attrs["haschildren"] = "true";
+
+                return MakeEditable(field, null, model, Utilities.ConstructQueryString(attrs), _context, SitecoreContext.Database, writer);
             }
             else
             {
@@ -263,7 +262,7 @@ namespace Glass.Mapper.Sc
             }
         }
 
-
+        
 
 
         /// <summary>
@@ -299,10 +298,14 @@ namespace Glass.Mapper.Sc
             {
                 attrs = attributes as NameValueCollection;
             }
+            else if (attributes is AbstractParameters)
+            {
+                attrs = ((AbstractParameters) attributes).Parameters;
+            }
             else
             {
                 attrs = Utilities.GetPropertiesCollection(attributes, true);
-
+                
             }
 
             var sb = new StringBuilder();
@@ -311,12 +314,13 @@ namespace Glass.Mapper.Sc
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
             {
-
+                if (!string.IsNullOrEmpty(contents))
+                    attrs["haschildren"] = "true";
                 result = MakeEditable(
                     field,
-                    null,
+                    null, 
                     model,
-                    contents == null ? string.Empty : "haschildren=true",
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
             }
             else
@@ -333,7 +337,7 @@ namespace Glass.Mapper.Sc
 
         }
 
-
+   
         /// <summary>
         /// Indicates if the site is in editing mode
         /// </summary>
@@ -375,7 +379,7 @@ namespace Glass.Mapper.Sc
             string format = "<a href='{0}' {1}>{2}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
-
+            
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
@@ -407,10 +411,10 @@ namespace Glass.Mapper.Sc
         /// </exception>
         /// <exception cref="System.NullReferenceException">Context cannot be null</exception>
         private RenderingResult MakeEditable<T>(
-            Expression<Func<T, object>> field,
-            Expression<Func<T, string>> standardOutput,
-            T model,
-            object parameters,
+            Expression<Func<T, object>> field, 
+            Expression<Func<T, string>> standardOutput, 
+            T model, 
+            object parameters, 
             Context context, Database database,
             TextWriter writer)
         {
@@ -457,7 +461,7 @@ namespace Glass.Mapper.Sc
 
                     if (field.Body is UnaryExpression)
                     {
-                        memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
+                        memberExpression = ((UnaryExpression) field.Body).Operand as MemberExpression;
                     }
                     else if (!(field.Body is MemberExpression))
                     {
@@ -465,7 +469,7 @@ namespace Glass.Mapper.Sc
                     }
                     else
                     {
-                        memberExpression = (MemberExpression)field.Body;
+                        memberExpression = (MemberExpression) field.Body;
                     }
 
 
@@ -486,9 +490,9 @@ namespace Glass.Mapper.Sc
                     if (context == null)
                         throw new NullReferenceException("Context cannot be null");
 
-                    var config = context.GetTypeConfiguration(finalTarget) as SitecoreTypeConfiguration;
+                    var config = context.GetTypeConfiguration<SitecoreTypeConfiguration>(finalTarget);
 
-
+                  
 
                     var scClass = config.ResolveItem(finalTarget, database);
 
@@ -501,15 +505,15 @@ namespace Glass.Mapper.Sc
                     {
                         Func<Type, PropertyInfo> interfaceCheck = null;
                         interfaceCheck = (inter) =>
-                        {
-                            var interfaces = inter.GetInterfaces();
-                            var properties =
-                                interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
-                                    x => x != null);
-                            if (properties.Any()) return properties.First();
-                            else
-                                return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
-                        };
+                            {
+                                var interfaces = inter.GetInterfaces();
+                                var properties =
+                                    interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
+                                        x => x != null);
+                                if (properties.Any()) return properties.First();
+                                else
+                                    return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
+                            };
                         prop = interfaceCheck(config.Type);
                     }
 
@@ -540,7 +544,7 @@ namespace Glass.Mapper.Sc
                         RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
                         renderFieldArgs.Item = scClass;
 
-                        var fieldConfig = (SitecoreFieldConfiguration)dataHandler;
+                        var fieldConfig = (SitecoreFieldConfiguration) dataHandler;
                         if (fieldConfig.FieldId != (Sitecore.Data.ID)null && fieldConfig.FieldId != ID.Null)
                         {
                             renderFieldArgs.FieldName = fieldConfig.FieldId.ToString();
@@ -553,7 +557,7 @@ namespace Glass.Mapper.Sc
                         renderFieldArgs.Parameters = WebUtil.ParseQueryString(parametersString ?? string.Empty);
                         renderFieldArgs.DisableWebEdit = false;
 
-                        CorePipeline.Run("renderField", (PipelineArgs)renderFieldArgs);
+                        CorePipeline.Run("renderField", (PipelineArgs) renderFieldArgs);
 
                         firstPart = renderFieldArgs.Result.FirstPart;
                         lastPart = renderFieldArgs.Result.LastPart;
@@ -572,18 +576,18 @@ namespace Glass.Mapper.Sc
                         if (type == ImageType)
                         {
                             var image = target as Image;
-                            firstPart = RenderImage(image, WebUtil.ParseUrlParameters(parametersString));
+                            firstPart  = RenderImage(image, WebUtil.ParseUrlParameters(parametersString));
                         }
                         else if (type == LinkType)
                         {
                             var link = target as Link;
                             var sb = new StringBuilder();
                             var linkWriter = new StringWriter(sb);
-                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parametersString), null, linkWriter);
+                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parametersString),null, linkWriter);
                             result.Dispose();
                             linkWriter.Flush();
                             linkWriter.Close();
-
+                            
                             firstPart = sb.ToString();
 
                         }
@@ -783,9 +787,9 @@ namespace Glass.Mapper.Sc
             AttributeCheck(htmlParams, ImageParameters.CLASS, image.Class);
             AttributeCheck(htmlParams, ImageParameters.ALT, image.Alt);
             AttributeCheck(htmlParams, ImageParameters.BORDER, image.Border);
-            if (image.HSpace > 0)
+            if(image.HSpace >0)
                 AttributeCheck(htmlParams, ImageParameters.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
-            if (image.VSpace > 0)
+            if(image.VSpace >0)
                 AttributeCheck(htmlParams, ImageParameters.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
 
             if (htmlParams.AllKeys.Any(x => x == ImageParameters.HEIGHT))

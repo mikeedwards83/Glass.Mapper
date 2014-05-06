@@ -1,4 +1,4 @@
-/*
+    /*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +16,14 @@
 */ 
 //-CRE-
 
+using System;
+
 namespace Glass.Mapper.Sc.Fields
 {
     /// <summary>
     /// Enum TriState
     /// </summary>
+    [Serializable]
     public enum TriState
     {
         /// <summary>

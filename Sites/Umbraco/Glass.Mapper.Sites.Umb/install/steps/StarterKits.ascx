@@ -53,7 +53,7 @@
 
 			if (data.percentage > 0) {
 				updateProgressBar(data.percentage);
-				updateStatusMessage(data.message)
+			    updateStatusMessage(data.message);
 			}
 
 			if (data.error != "") {
@@ -78,8 +78,7 @@
 <div class="tab main-tabinfo">
 <div class="container">
 	<h1>Starter kits</h1>
-	<p>To help you get started here are some basic starter kits. They have been tailored to suit common site configurations and install useful functionality such as blogs or image galleries.<br />
-	Mouse over the icons to learn more about what the starter kits will install.</p>
+	<p>To help you get started here are some basic starter kits. They have been tailored to suit common site configurations and install useful functionality.</p>
 </div>
 <!-- menu -->
 <asp:PlaceHolder ID="ph_starterKits" runat="server" />
@@ -119,22 +118,5 @@
 			<strong>Starting installation...</strong>
 		</div>
 	</div>
-</div>
-
-
-<!-- itstall skin -->
-<div class="tab install-tab" id="installingSkin" style="display: none">
-	<div class="container">
-		<h1>Installing Skin</h1>
-		<h2>The <strong id="skinname"></strong> skin is installing. </h2>
-
-		<div class="loader alt">
-			<div class="hold">
-				<div class="progress-bar"></div>
-				<span class="progress-bar-value">56%</span>
-			</div>
-			<strong>Starting installation...</strong>
-		</div>
-	</div>	
 </div>
 

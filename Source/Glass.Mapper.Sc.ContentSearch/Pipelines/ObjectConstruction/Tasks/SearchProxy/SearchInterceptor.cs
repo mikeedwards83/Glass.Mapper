@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
                 else if (str == "set_")
                     _values[name] = invocation.Arguments[0];
                 else
-                    throw new MapperException(Glass.Mapper.ExtensionMethods.Formatted("Method with name {0}{1} on type {2} not supported.", (object)str, (object)name, (object)this._args.Configurations.FirstOrDefault().Type.FullName));
+                    throw new MapperException(Glass.Mapper.ExtensionMethods.Formatted("Method with name {0}{1} on type {2} not supported.", (object)str, (object)name, (object)this._args.Configuration.Type.FullName));
             }
         }
     }

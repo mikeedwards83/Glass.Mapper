@@ -2,9 +2,7 @@
 
 <%@ Register TagPrefix="umb" Namespace="ClientDependency.Core.Controls" Assembly="ClientDependency.Core" %>
 
-<%@ Register Src="~/install/Title.ascx" TagPrefix="umb1" TagName="PageTitle" %>
-
-<!DOCTYPE html>
+<%@ Register Src="~/install/Title.ascx" TagPrefix="umb1" TagName="PageTitle" %><!DOCTYPE html>
 <html>
 <head runat="server">
 
@@ -12,7 +10,7 @@
 
     <umb1:PageTitle runat="server" />
 
-    <link rel="icon" type="image/png" href="<%=umbraco.GlobalSettings.Path + "/images/pinnedIcons/umb.ico" %>" />
+    <link rel="icon" type="image/png" href="<%=umbraco.GlobalSettings.Path + "/Images/PinnedIcons/umb.ico" %>" />
 
     <link media="all" rel="stylesheet" href="../umbraco_client/installer/css/jquery-ui-1.8.6.custom.css" />
     <link media="all" type="text/css" rel="stylesheet" href="../umbraco_client/installer/css/reset.css" />
@@ -97,7 +95,7 @@
 
 
 
-        <!-- bg page -->
+        <!-- bg page 
         <div class="bg-main">
             <div class="color2">
 
@@ -125,7 +123,7 @@
             </div>
 
         </div>
-
+-->
 
         <!-- lightbox -->
         <div class="lightbox" id="lightbox">

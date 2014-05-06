@@ -1,4 +1,4 @@
-/*
+    /*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,6 +26,7 @@ namespace Glass.Mapper.Sc.Fields
     /// <summary>
     /// Class Link
     /// </summary>
+    [Serializable]
     public class Link
     {
         /// <summary>
@@ -74,6 +75,7 @@ namespace Glass.Mapper.Sc.Fields
         /// <value>The type.</value>
         public LinkType Type { get; set; }
 
+
         public const string UrlFormat = "{0}{1}";
 
         public string BuildUrl(NameValueCollection attributes = null)
@@ -90,7 +92,7 @@ namespace Glass.Mapper.Sc.Fields
 
             var query = getValue("query", () => Query);
             var anchor = getValue("anchor", () => Anchor);
-
+            
             if (query.IsNotNullOrEmpty())
                 builder.AddQueryString(query);
 

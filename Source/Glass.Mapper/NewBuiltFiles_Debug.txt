@@ -1,0 +1,59 @@
+.\Debug\App_Browsers\Form.browser
+.\Debug\App_Browsers\XamlPage.browser
+.\Debug\App_Config\Commands.config
+.\Debug\App_Config\ConnectionStrings.config
+.\Debug\App_Config\ConnectionStringsOracle.config
+.\Debug\App_Config\FieldTypes.config
+.\Debug\App_Config\Icons.config
+.\Debug\App_Config\Include\Glass.Config
+.\Debug\App_Config\Include\Glass.Mapper.Sc.Mvc.config
+.\Debug\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude
+.\Debug\App_Config\Include\Sitecore.WebDAV.config
+.\Debug\App_Config\Include\Sitecore.Mvc.config
+.\Debug\App_Config\Include\Sitecore.MvcAnalytics.config
+.\Debug\App_Config\Include\Sitecore.MvcExperienceEditor.config
+.\Debug\App_Config\Include\Sitecore.MvcSimulator.config
+.\Debug\App_Config\LanguageDefinitions.config
+.\Debug\App_Config\MimeTypes.config
+.\Debug\App_Config\Portraits.config
+.\Debug\App_Config\Prefetch\Common.config
+.\Debug\App_Config\Prefetch\Core.config
+.\Debug\App_Config\Prefetch\Master.config
+.\Debug\App_Config\Prefetch\Web.config
+.\Debug\App_Config\Prototypes.config
+.\Debug\App_Config\Security\Domains.config
+.\Debug\App_Config\Security\GlobalRoles.config
+.\Debug\App_Config\XamlSharp.config
+.\Debug\Design.config
+.\Debug\layouts\Site\Content\CommentSublayout.ascx
+.\Debug\layouts\Site\Content\EventSublayout.ascx
+.\Debug\layouts\Site\Content\NewsArticleSublayout.ascx
+.\Debug\layouts\Site\Landing\BbcNewsSublayout.ascx
+.\Debug\layouts\Site\Landing\RssLandingSublayout.ascx
+.\Debug\layouts\Site\Landing\EventsLandingSublayout.ascx
+.\Debug\layouts\Site\Landing\HomePageSublayout.ascx
+.\Debug\layouts\Site\Landing\NewsLandingSublayout.ascx
+.\Debug\layouts\Site\MainLayout.aspx
+.\Debug\layouts\Site\Misc\Metadata.ascx
+.\Debug\layouts\Site\Misc\TopNavigationSublayout.ascx
+.\Debug\layouts\Testing\AdvancedDynamics.ascx
+.\Debug\sitecore_files\Web.config
+.\Debug\layouts\Site\Landing\BlogLandingXml.cshtml
+.\Debug\layouts\Testing\D2.cshtml
+.\Debug\layouts\Testing\T1.cshtml
+.\Debug\layouts\Testing\B1.cshtml
+.\Debug\packages.config
+.\Debug\layouts\Site\MvcXmlLayout.cshtml
+.\Debug\layouts\Site\Landing\NewsLandingXml.cshtml
+.\Debug\Default.aspx
+.\Debug\default.css
+.\Debug\default.js
+.\Debug\Global.asax
+.\Debug\layouts\Sample Inner Sublayout.ascx
+.\Debug\layouts\Sample layout.aspx
+.\Debug\layouts\Sample Sublayout.ascx
+.\Debug\layouts\system\VisitorIdentification.aspx
+.\Debug\layouts\xmlcontrol.aspx
+.\Debug\webedit.css
+.\Debug\xsl\sample rendering.xslt
+.\Debug\xsl\system\WebEdit\Hidden Rendering.xslt

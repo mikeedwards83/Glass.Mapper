@@ -26,6 +26,10 @@ namespace Glass.Mapper
     /// </summary>
     public abstract class AbstractTypeCreationContext
     {
+        public AbstractTypeCreationContext()
+        {
+            Parameters = new Dictionary<string, object>();
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [infer type].
@@ -41,12 +45,22 @@ namespace Glass.Mapper
         /// Gets or sets the types requested.
         /// </summary>
         /// <value>The types requested.</value>
-        public IEnumerable<Type> RequestedType { get; set; }
+        public Type RequestedType { get; set; }
         /// <summary>
         /// Gets or sets the constructor parameters.
         /// </summary>
         /// <value>The constructor parameters.</value>
         public object[] ConstructorParameters { get; set; }
+
+        /// <summary>
+        /// Parameters that will be passed to the pipelines
+        /// </summary>
+        public Dictionary<string, object> Parameters { get; set; }
+
+        public virtual string DataSummary()
+        {
+            return string.Empty;
+        }
     }
 }
 

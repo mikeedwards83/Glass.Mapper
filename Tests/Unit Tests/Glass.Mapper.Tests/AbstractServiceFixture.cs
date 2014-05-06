@@ -66,7 +66,7 @@ namespace Glass.Mapper.Tests
             resolver.ResolveAll<IObjectConstructionTask>().Returns(new[] { objTask });
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
-                .Do(x => x.Arg<ConfigurationResolverArgs>().Result = new[] {Substitute.For<AbstractTypeConfiguration>()});
+                .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());
 
             var expected = new object();
 
@@ -76,7 +76,7 @@ namespace Glass.Mapper.Tests
             var service = new StubAbstractService(context);
 
             var typeContext = Substitute.For<AbstractTypeCreationContext>();
-            typeContext.RequestedType = new Type[]{typeof(object)};
+            typeContext.RequestedType = typeof(object);
 
             //Act
             var result = service.InstantiateObject(typeContext);

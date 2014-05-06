@@ -52,9 +52,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             context.Load(loader);
 
             var args = new ConfigurationResolverArgs(context, new StubAbstractTypeCreationContext()
-                                                                  {
-                                                                      RequestedType =new Type[]{ type}
-                                                                  } , type);
+                {
+                    RequestedType = type
+                }, type, null);
 
             var task = new ConfigurationStandardResolverTask();
 
@@ -62,7 +62,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             task.Execute(args);
 
             //Assert
-            Assert.AreEqual(configuration, args.Result.First());
+            Assert.AreEqual(configuration, args.Result);
 
 
         }

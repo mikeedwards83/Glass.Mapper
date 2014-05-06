@@ -57,7 +57,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
             var typeCreationContext = new SitecoreTypeCreationContext
                 {
                     SitecoreService = _sitecoreContext,
-                    RequestedType = new[] { typeof(T) },
+                    RequestedType = typeof(T),
                     InferType = true,
                     IsLazy = true,
                     TemplateId = new ID(templateId)
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
             if (searchInterceptor == null) return;
 
             searchInterceptor.Id = new ID(id);
-            searchInterceptor.TypeConfiguration = (SitecoreTypeConfiguration)_sitecoreContext.GlassContext.GetTypeConfiguration(target);
+            searchInterceptor.TypeConfiguration = _sitecoreContext.GlassContext.GetTypeConfiguration <SitecoreTypeConfiguration>(target);
             searchInterceptor.IndexFields = fieldNames;
         }
     }

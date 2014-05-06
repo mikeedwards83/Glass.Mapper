@@ -112,7 +112,7 @@ namespace Glass.Mapper.Sc.DataMappers
                   case SitecoreInfoType.ContentPath:
                     return item.Paths.ContentPath;
                 case SitecoreInfoType.DisplayName:
-                    return item.DisplayName;
+                    return item[Global.Fields.DisplayName];
                 case SitecoreInfoType.FullPath:
                     return item.Paths.FullPath;
                 case SitecoreInfoType.Name:
@@ -131,10 +131,19 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
+                    urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:
+                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (string))
+                    {
+                        return item.Version.Number.ToString();
+                    }
                     return item.Version.Number;
                 case SitecoreInfoType.Language:
+                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (string))
+                    {
+                        return item.Language.Name;
+                    }
                     return item.Language;  
                 case SitecoreInfoType.BaseTemplateIds:
                     Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
 
@@ -44,6 +45,30 @@ namespace Glass.Mapper.Sc.DataMappers
         public AbstractSitecoreFieldMapper(params Type [] typesHandled)
         {
             TypesHandled = typesHandled;
+        }
+
+        public override void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapCmsToProperty(mappingContext);
+        }
+
+        public override void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapPropertyToCms(mappingContext);
         }
 
         /// <summary>
@@ -147,6 +172,14 @@ namespace Glass.Mapper.Sc.DataMappers
             return configuration is SitecoreFieldConfiguration &&
                    TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);
         }
+
+        public override void Setup(Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs args)
+        {
+            var scArgs = args.PropertyConfiguration as FieldConfiguration;
+            this.ReadOnly = scArgs.ReadOnly;
+            base.Setup(args);
+        }
+        
     }
 }
 

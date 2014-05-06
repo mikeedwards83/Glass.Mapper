@@ -18,6 +18,7 @@
 
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {
@@ -33,11 +34,12 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
+
             if (args.Result == null)
             {
                 var loader = new OnDemandLoader<T>(args.RequestedType);
                 args.Context.Load(loader);
-                args.Result = new[] {args.Context[args.RequestedType]};
+                args.Result = args.Context[args.RequestedType];
             }
 
         }
