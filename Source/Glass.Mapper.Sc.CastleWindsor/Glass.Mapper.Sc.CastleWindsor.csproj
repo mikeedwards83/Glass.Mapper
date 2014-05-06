@@ -89,6 +89,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <None Include="App_Start\GlassMapperSc.cs.pp" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="NoTrackLifecycleManager.cs" />
     <Compile Include="Pipelines\ObjectConstruction\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />

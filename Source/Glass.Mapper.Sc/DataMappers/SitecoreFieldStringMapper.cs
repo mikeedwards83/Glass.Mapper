@@ -59,6 +59,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 renderer.Item = field.Item;
                 renderer.FieldName = field.Name;
                 renderer.Parameters = string.Empty;
+                renderer.DisableWebEditing = true;
                 return renderer.Render();
             }
             else return field.Value;

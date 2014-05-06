@@ -118,7 +118,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
                 {
                     if (!container.Kernel.HasComponent(typeof (LazyObjectInterceptor)))
                     {
-                        container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleTransient());
+                        container.Kernel.Register(Component.For<LazyObjectInterceptor>().LifestyleCustom<NoTrackLifestyleManager>());
                     }
                 }
             }
@@ -129,10 +129,10 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
                     if (!container.Kernel.HasComponent(type))
                     {
                         container.Kernel.Register(
-                            Component.For(type).Named(type.FullName).LifeStyle.Is(LifestyleType.Transient)
+                            Component.For(type).Named(type.FullName).LifeStyle.Custom<NoTrackLifestyleManager>()
                             );
                         container.Kernel.Register(
-                            Component.For(type).Named(type.FullName + "lazy").LifeStyle.Is(LifestyleType.Transient)
+                            Component.For(type).Named(type.FullName + "lazy").LifeStyle.Custom<NoTrackLifestyleManager>()
                                      .Interceptors<LazyObjectInterceptor>()
                             );
                     }
