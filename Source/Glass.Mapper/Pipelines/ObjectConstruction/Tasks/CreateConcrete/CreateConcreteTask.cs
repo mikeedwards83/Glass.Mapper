@@ -49,7 +49,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null || args.Configurations.Count() > 1)
+            if (args.Result != null || args.Configurations.Count() > 1 || args.Configurations.First().Type.IsSealed)
                 return;
 
             var type = args.Configurations.First().Type;

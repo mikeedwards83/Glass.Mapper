@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -230,9 +231,18 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <returns>AbstractPropertyAttribute.</returns>
         public static AbstractPropertyAttribute GetPropertyAttribute(PropertyInfo info)
         {
-            var attrs = info.GetCustomAttributes(true);
-            var attr = attrs.FirstOrDefault(y => y is AbstractPropertyAttribute) as AbstractPropertyAttribute;
-            return attr;
+            try
+            {
+                var attrs = info.GetCustomAttributes(true);
+                var attr = attrs.FirstOrDefault(y => y is AbstractPropertyAttribute) as AbstractPropertyAttribute;
+                return attr;
+            }
+            catch (Exception)
+            {
+                Debugger.Launch();
+            }
+
+            return null;
         }
     }
 }

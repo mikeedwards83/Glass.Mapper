@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
@@ -340,6 +341,25 @@ namespace Glass.Mapper
 			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
 			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
 		}
+
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
+        {
+            NameValueCollection nameValues = new NameValueCollection();
+            if (target != null)
+            {
+                var type = target.GetType();
+                var properties = GetAllProperties(type);
+
+                foreach (var propertyInfo in properties)
+                {
+                    var value = propertyInfo.GetValue(target, null);
+                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
+                                   value == null ? string.Empty : value.ToString());
+                }
+            }
+            return nameValues;
+
+        }
     }
 }
 

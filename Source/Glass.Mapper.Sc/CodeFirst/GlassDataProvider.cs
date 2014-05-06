@@ -39,6 +39,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Glass.Mapper.Sc.Configuration.Attributes;
 using Sitecore;
 using Sitecore.Data.DataProviders;
 using System.Xml;
@@ -61,6 +62,7 @@ namespace Glass.Mapper.Sc.CodeFirst
     /// </summary>
     public class GlassDataProvider : DataProvider
     {
+
         #region  IDs
         /// <summary>
         /// Taken from sitecore database
@@ -167,20 +169,16 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <returns>Sitecore.Data.ItemDefinition.</returns>
         public override global::Sitecore.Data.ItemDefinition GetItemDefinition(global::Sitecore.Data.ID itemId, CallContext context)
         {
-           // Setup(context);
-
             var section = SectionTable.FirstOrDefault(x => x.SectionId == itemId);
             if (section != null)
             {
-                return  new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
+                return new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
             }
             var field = FieldTable.FirstOrDefault(x => x.FieldId == itemId);
             if (field != null)
             {
                 return new ItemDefinition(itemId, field.Name, FieldTemplateId, ID.Null);
             }
-
-
             return null;
         }
 
@@ -206,14 +204,15 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <returns>Sitecore.Data.FieldList.</returns>
         public override global::Sitecore.Data.FieldList GetItemFields(global::Sitecore.Data.ItemDefinition itemDefinition, global::Sitecore.Data.VersionUri versionUri, CallContext context)
         {
-            // Setup(context);
-
             FieldList fields = new FieldList();
 
             var sectionInfo = SectionTable.FirstOrDefault(x => x.SectionId == itemDefinition.ID);
             if (sectionInfo != null)
             {
-                GetStandardFields(fields, sectionInfo.SectionSortOrder >= 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
+                GetStandardFields(fields,
+                    sectionInfo.SectionSortOrder >= 0
+                        ? sectionInfo.SectionSortOrder
+                        : (SectionTable.IndexOf(sectionInfo) + 100));
 
                 return fields;
             }
@@ -221,7 +220,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fieldInfo = FieldTable.FirstOrDefault(x => x.FieldId == itemDefinition.ID);
             if (fieldInfo != null)
             {
-                GetStandardFields(fields, fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
+                GetStandardFields(fields,
+                    fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
                 GetFieldFields(fieldInfo, fields);
                 return fields;
             }
@@ -380,8 +380,10 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             foreach (var field in fields)
             {
-                //fix: added check on interfaces
-                if (field.PropertyInfo.DeclaringType != cls.Type || interfaces.Any(inter => inter.GetProperty(field.PropertyInfo.Name) != null))
+                //fix: added check on interfaces, if field resides on interface then skip here
+                var propertyFromInterface = interfaces.FirstOrDefault(inter => inter.GetProperty(field.PropertyInfo.Name) != null 
+                                                                            && inter.GetProperty(field.PropertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldAttribute), false).Any());
+                if (field.PropertyInfo.DeclaringType != cls.Type || propertyFromInterface != null)
                     continue;
 
                 if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))

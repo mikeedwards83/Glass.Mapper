@@ -57,7 +57,7 @@ namespace Glass.Mapper.Sc
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
         {
-            return CreateFakeItem(fields, new ID(Guid.NewGuid()), new Database("master"), name);
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), Database.GetDatabase("master"), name);
         }
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")

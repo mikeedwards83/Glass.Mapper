@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.Fields
         /// Gets the SRC.
         /// </summary>
         /// <value>The SRC.</value>
-        public string Src { get; internal set; }
+        public string Src { get; set; }
         /// <summary>
         /// Gets or sets the V space.
         /// </summary>
