@@ -16,10 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Configuration
 {
@@ -35,6 +31,7 @@ namespace Glass.Mapper.Configuration
         public bool ReadOnly { get; set; }
     }
 }
+
 
 
 

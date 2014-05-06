@@ -1,11 +1,11 @@
 <%@ Page Language="c#" MasterPageFile="../../../masterpages/umbracoPage.Master" CodeBehind="EditStyleSheetProperty.aspx.cs"
-  AutoEventWireup="True" Inherits="umbraco.cms.presentation.settings.stylesheet.EditStyleSheetProperty"
+  AutoEventWireup="True" Inherits="Umbraco.Web.UI.Umbraco.Settings.Stylesheet.Property.EditStyleSheetProperty"
   ValidateRequest="False" %>
 
 <%@ Register TagPrefix="cc1" Namespace="umbraco.uicontrols" Assembly="controls" %>
+
 <asp:Content ContentPlaceHolderID="body" runat="server">
-  <cc1:UmbracoPanel ID="Panel1" runat="server" Text="Edit stylesheet property" Width="432px"
-    Height="176px" hasMenu="true">
+  <cc1:UmbracoPanel ID="Panel1" runat="server" Text="Edit stylesheet property" Width="432px" Height="176px" hasMenu="true">
     <cc1:Pane ID="Pane7" CssClass="pane" runat="server">
       <table cellspacing="0" cellpadding="4" border="0">
         <tr>
@@ -57,9 +57,11 @@
       </table>
     </cc1:Pane>
   </cc1:UmbracoPanel>
-          <script type="text/javascript">
-              jQuery(document).ready(function () {
-                  UmbClientMgr.appActions().bindSaveShortCut();
-              });
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            UmbClientMgr.appActions().bindSaveShortCut();
+        });
     </script>
+
 </asp:Content>

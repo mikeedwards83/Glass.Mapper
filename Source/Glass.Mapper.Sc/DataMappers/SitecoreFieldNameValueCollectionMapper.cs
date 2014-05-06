@@ -54,8 +54,9 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return Utilities.ConstructQueryString(collection);
             }
-            else return string.Empty;
-
+            
+            
+            return null;
         }
 
         /// <summary>
@@ -72,6 +73,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 }
+
 
 
 

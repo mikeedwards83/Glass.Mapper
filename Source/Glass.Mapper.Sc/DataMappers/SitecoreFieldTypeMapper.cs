@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             if (target == null) return null;
-            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType);
+            return context.Service.CreateType(config.PropertyInfo.PropertyType, target, IsLazy, InferType, null);
         }
 
         /// <summary>
@@ -79,7 +80,11 @@ namespace Glass.Mapper.Sc.DataMappers
                 return string.Empty;
             else
             {
-                var typeConfig = context.Service.GlassContext[value.GetType()] as SitecoreTypeConfiguration;
+                var type = value.GetType();
+                var typeConfig = context.Service.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(value);
+
+                if(typeConfig == null)
+                    throw new NullReferenceException("The type {0} has not been loaded into context {1}".Formatted(type.FullName, context.Service.GlassContext.Name));
 
                 var item = typeConfig.ResolveItem(value, context.Service.Database);
                 if(item == null)
@@ -127,6 +132,7 @@ namespace Glass.Mapper.Sc.DataMappers
         protected bool IsLazy { get; set; }
     }
 }
+
 
 
 

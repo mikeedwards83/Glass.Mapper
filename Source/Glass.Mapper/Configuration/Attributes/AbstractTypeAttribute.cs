@@ -16,10 +16,8 @@
 */ 
 //-CRE-
 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -27,14 +25,16 @@ namespace Glass.Mapper.Configuration.Attributes
     /// Class AbstractTypeAttribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public abstract class AbstractTypeAttribute : Attribute 
+    public abstract class AbstractTypeAttribute : Attribute
     {
+
+        public abstract AbstractTypeConfiguration Configure(Type type);
         /// <summary>
         /// Configures the specified type.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="config">The config.</param>
-        public virtual void Configure(Type type, AbstractTypeConfiguration config)
+        protected virtual void Configure(Type type, AbstractTypeConfiguration config)
         {
             config.Type = type;
             config.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
@@ -55,6 +55,7 @@ namespace Glass.Mapper.Configuration.Attributes
         public bool CodeFirst { get; set; }
     }
 }
+
 
 
 

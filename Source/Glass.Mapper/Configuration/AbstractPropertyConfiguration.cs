@@ -16,12 +16,9 @@
 */ 
 //-CRE-
 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
-using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
 {
@@ -30,11 +27,33 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public abstract class AbstractPropertyConfiguration
     {
-        /// <summary>
-        /// Gets or sets the property info.
-        /// </summary>
-        /// <value>The property info.</value>
-        public PropertyInfo PropertyInfo { get;  set; }
+		private PropertyInfo _propertyInfo;
+		
+		/// <summary>
+		/// Gets or sets the property info.
+		/// </summary>
+		/// <value>The property info.</value>
+		public PropertyInfo PropertyInfo
+		{
+			get { return _propertyInfo; }
+			set
+			{
+				_propertyInfo = value;
+
+				PropertyGetter = Utilities.GetPropertyFunc(value);
+				PropertySetter = Utilities.SetPropertyAction(value);
+			}
+		}
+
+		/// <summary>
+		/// Function to get the underlying property value
+		/// </summary>
+		public Func<object, object> PropertyGetter { get; private set; }
+		
+		/// <summary>
+		/// Action to set the underyling property value
+		/// </summary>
+		public Action<object, object> PropertySetter { get; private set; }
 
         /// <summary>
         /// Gets the mapper.
@@ -57,6 +76,7 @@ namespace Glass.Mapper.Configuration
         }
     }
 }
+
 
 
 

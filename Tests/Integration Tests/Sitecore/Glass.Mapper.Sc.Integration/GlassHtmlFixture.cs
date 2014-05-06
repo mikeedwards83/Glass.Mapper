@@ -16,16 +16,18 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
+using Sitecore.Data;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
+using System.Collections.Specialized;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -756,7 +758,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var fieldValue = "test content field";
 
-            model.StringFieldId = fieldValue;
+            model.StringFieldWithId = fieldValue;
 
             using (new SecurityDisabler())
             {
@@ -781,7 +783,7 @@ namespace Glass.Mapper.Sc.Integration
 
             using (new SecurityDisabler())
             {
-                result = html.Editable(model, x => x.StringFieldId, x => x.StringFieldId);
+                result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
             }
             //Assert
             Assert.IsTrue(result.Contains(fieldValue));
@@ -807,7 +809,7 @@ namespace Glass.Mapper.Sc.Integration
 
             var fieldValue = "test content field";
 
-            model.StringFieldId = fieldValue;
+            model.StringFieldWithId = fieldValue;
 
             using (new SecurityDisabler())
             {
@@ -828,7 +830,7 @@ namespace Glass.Mapper.Sc.Integration
             Sitecore.Context.Site = siteContext;
 
             //Act
-            var result = html.Editable(model, x => x.StringFieldId, x => x.StringFieldId);
+            var result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
 
             //Assert
             Assert.AreEqual(fieldValue, result);
@@ -839,7 +841,99 @@ namespace Glass.Mapper.Sc.Integration
         #endregion
 
 
+        #region RenderingParameters
+
+        [Test]
+        public void RenderingParameters_StringPassedInWithParameters_ReturnsModelWithValues()
+        {
+            //Arrange
+            var templateId = new ID("{6C815B38-4D88-4F01-916D-8D7C6548005E}");
+            var expectedNumber = 234;
+            var expectedId1 = new Guid("{032B690F-5113-44C4-AEC7-A16B44382D4C}");
+            var expectedId2 = new Guid("{6CF01319-0234-42C8-AEC1-FE757169F7A0}");
+            var expectedFieldValue = "hello world";
+
+            var parameters = "StringField={0}&Number={1}&Items={2}"
+                .Formatted(
+                    WebUtil.UrlEncode(expectedFieldValue), 
+                    WebUtil.UrlEncode(expectedNumber.ToString()),
+                    WebUtil.UrlEncode("{0}|{1}".Formatted(expectedId1, expectedId2)));
+            
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            //Act
+            var result = html.GetRenderingParameters<RenderingTest>(parameters, templateId);
+
+            //Assert
+            Assert.AreEqual(expectedNumber, result.Number);
+            Assert.AreEqual(expectedFieldValue, result.StringField);
+            Assert.IsTrue(result.Items.Any(x=>x.Id == expectedId1));
+            Assert.IsTrue(result.Items.Any(x=>x.Id == expectedId2));
+            Assert.AreEqual(2, result.Items.Count());
+        }
+
+        [Test]
+        public void RenderingParameters_StringPassedInWithParametersUsingIdOnType_ReturnsModelWithValues()
+        {
+            //Arrange
+            var expectedNumber = 234;
+            var expectedId1 = new Guid("{032B690F-5113-44C4-AEC7-A16B44382D4C}");
+            var expectedId2 = new Guid("{6CF01319-0234-42C8-AEC1-FE757169F7A0}");
+            var expectedFieldValue = "hello world";
+
+            var parameters = "StringField={0}&Number={1}&Items={2}"
+                .Formatted(
+                    WebUtil.UrlEncode(expectedFieldValue),
+                    WebUtil.UrlEncode(expectedNumber.ToString()),
+                    WebUtil.UrlEncode("{0}|{1}".Formatted(expectedId1, expectedId2)));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            //Act
+            var result = html.GetRenderingParameters<RenderingTestWithAttribute>(parameters);
+
+            //Assert
+            Assert.AreEqual(expectedNumber, result.Number);
+            Assert.AreEqual(expectedFieldValue, result.StringField);
+            Assert.IsTrue(result.Items.Any(x => x.Id == expectedId1));
+            Assert.IsTrue(result.Items.Any(x => x.Id == expectedId2));
+            Assert.AreEqual(2, result.Items.Count());
+        }
+
+        #endregion
+
+
         #region Stubs
+
+        public class RenderingTest
+        {
+            public virtual int Number { get; set; }
+            public virtual string StringField { get; set; }
+            public virtual IEnumerable<QuickInfo> Items { get; set; } 
+        }
+        //The template ID is the ID of the rendering parameters template
+        [SitecoreType(TemplateId = "{6C815B38-4D88-4F01-916D-8D7C6548005E}", AutoMap = true)]
+        public class RenderingTestWithAttribute
+        {
+            public virtual int Number { get; set; }
+            public virtual string StringField { get; set; }
+            public virtual IEnumerable<QuickInfo> Items { get; set; }
+        }
+        public class QuickInfo
+        {
+            public virtual string Name { get; set; }
+            public virtual Guid Id { get; set; }
+        }
 
         [SitecoreType]
         public class StubClass
@@ -850,8 +944,11 @@ namespace Glass.Mapper.Sc.Integration
             [SitecoreField]
             public virtual string StringField { get; set; }
 
+            /// <summary>
+            /// Real name StringFieldId
+            /// </summary>
             [SitecoreField(FieldId = "{296D9461-09AA-48EE-ADF3-9E3812B570D2}")]
-            public virtual string StringFieldId { get; set; }
+            public virtual string StringFieldWithId { get; set; }
 
             [SitecoreField]
             public virtual string DateField { get; set; }
@@ -915,6 +1012,7 @@ namespace Glass.Mapper.Sc.Integration
 
     }
 }
+
 
 
 

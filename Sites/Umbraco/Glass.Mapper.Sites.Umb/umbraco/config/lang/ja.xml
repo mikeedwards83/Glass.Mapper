@@ -504,7 +504,7 @@ Runwayをインストールして作られた新しいウェブサイトがど�
     ]]></key>
     <key alias="mailBodyHtml"><![CDATA[<p>前略 %0% さま</p>
 
-			<p>ユーザー <strong>'%3%'</strong> によりページ <a href="%7%"><strong>'%2%'</strong></a> 上のタスク <strong>'%1%'</strong> から自動的にメールします。</p>
+			<p>ユーザー <strong>'%3%'</strong> によりページ <a href="http://%4%/actions/preview.aspx?id=%5%"><strong>'%2%'</strong></a> 上のタスク <strong>'%1%'</strong> から自動的にメールします。</p>
 			<div style="margin: 8px 0; padding: 8px; display: block;">
 				<br />
 				<a style="color: white; font-weight: bold; background-color: #66cc66; text-decoration : none; margin-right: 20px; border: 8px solid #66cc66; width: 150px;" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;公開&nbsp;&nbsp;</a> &nbsp; 
@@ -787,7 +787,7 @@ Runwayをインストールして作られた新しいウェブサイトがど�
 
       編集はこちらから: http://%3%/translation/details.aspx?id=%4%
 
-      また、翻訳タスクの概況はこちらから: http://%3%/umbraco.aspx
+      また、翻訳タスクの概況はこちらから: http://%3%
 
       早々
 
@@ -857,7 +857,6 @@ Runwayをインストールして作られた新しいウェブサイトがど�
     <key alias="confirmNewPassword">新パスワードの確認</key>
     <key alias="changePasswordDescription">Umbracoの管理画面にアクセスするためのパスワードを変更するには、以下のフォームに新しいパスワード入力して「パスワードの変更」ボタンをクリックしてください。</key>
     <key alias="contentChannel">コンテントチャンネル</key>
-    <key alias="defaultToLiveEditing">ログオン後ライブ編集にリダイレクト</key>
     <key alias="descriptionField">概要フィールド</key>
     <key alias="disabled">ユーザーを無効にする</key>
     <key alias="documentType">ドキュメントタイプ</key>

@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc
                     _type,
                     child,
                     _isLazy,
-                    _inferType) as T;
+                    _inferType, null) as T;
 
                 if (obj == null)
                     continue;
@@ -101,6 +101,7 @@ namespace Glass.Mapper.Sc
     }
     
 }
+
 
 
 

@@ -16,17 +16,14 @@
 */ 
 //-CRE-
 
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Sitecore.Data.Items;
 using System.Dynamic;
-using Sitecore.Web.UI.WebControls;
-using Sitecore.Pipelines.RenderField;
 
 namespace Glass.Mapper.Sc.Dynamic
 {
@@ -116,9 +113,17 @@ namespace Glass.Mapper.Sc.Dynamic
                     result = new DynamicCollection<DynamicItem>(_item.Children.Select(x => CreateNew(x)).ToArray());
                     break;
             }
-            if (result != null) return true;
-            
-            throw new NotSupportedException("No field of Sitecore info matches the name {0} for item {1}".Formatted(name, _item.Paths.FullPath));
+
+
+
+            if (result == null)
+            {
+                result = string.Empty;
+            }
+
+            return result != null;
+
+            //throw new NotSupportedException("No field of Sitecore info matches the name {0} for item {1}".Formatted(name, _item.Paths.FullPath));
 
         }
 
@@ -128,6 +133,7 @@ namespace Glass.Mapper.Sc.Dynamic
     }
 
 }
+
 
 
 

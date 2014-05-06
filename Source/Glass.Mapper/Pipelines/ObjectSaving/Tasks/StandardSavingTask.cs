@@ -16,11 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Glass.Mapper.Pipelines.ObjectSaving.Tasks
 {
     /// <summary>
@@ -45,6 +40,7 @@ namespace Glass.Mapper.Pipelines.ObjectSaving.Tasks
         }
     }
 }
+
 
 
 

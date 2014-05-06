@@ -1,21 +1,37 @@
-<%@ Page language="c#" Codebehind="logout.aspx.cs" AutoEventWireup="True" Inherits="umbraco.logout" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+﻿<%@ Page Language="C#" %>
+<%@ Import Namespace="Umbraco.Core" %>
+<%@ Import Namespace="Umbraco.Core.IO" %>
+<%@ Import Namespace="Umbraco.Web" %>
 
-<html>
-  <head>
-    <title>logout</title>
-    <meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
-    <meta name="CODE_LANGUAGE" Content="C#">
-    <meta name=vs_defaultClientScript content="JavaScript">
-    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
-  </head>
-  <body MS_POSITIONING="GridLayout">
-	
-    <form id="Form1" method="post" runat="server">
-		<script>
-			window.top.location.href='login.aspx?redir=<%=Server.UrlEncode(Request["redir"]) %>';
-		</script>
-     </form>
-	
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<script runat="server">
+    // This page is here purely to deal with legacy logout redirects.
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="e"></param>
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+        //ensure the person is definitely logged out
+        UmbracoContext.Current.Security.ClearCurrentLogin();
+    }
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>Logout</title>
+        <script type="text/javascript">
+            //if this is not the top window, we'll assume we're in an iframe
+            // so we actually won't do anything. Otherwise if this is the top window
+            // we'll redirect to the login dialog
+            if (window == top) {
+                document.location.href = '<%= IOHelper.ResolveUrl(SystemDirectories.Umbraco).EnsureEndsWith('/') + "#/login" %>';
+            }
+        </script>
+    </head>
+    <body>        
+    </body>
 </html>

@@ -16,11 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Glass.Mapper.Configuration
 {
     /// <summary>
@@ -41,6 +36,7 @@ namespace Glass.Mapper.Configuration
         public bool InferType { get; set; }
     }
 }
+
 
 
 

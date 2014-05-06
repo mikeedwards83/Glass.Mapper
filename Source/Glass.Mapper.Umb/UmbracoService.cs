@@ -1,4 +1,21 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using System;
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
@@ -63,9 +80,13 @@ namespace Glass.Mapper.Umb
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns></returns>
-        public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
+        public T GetItem<T>(int? id, bool isLazy = false, bool inferType = false) where T : class
         {
-            var item = ContentService.GetById(id);
+            if (id == null)
+            {
+                return null;
+            }
+            var item = ContentService.GetById(id.Value);
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
@@ -96,7 +117,7 @@ namespace Glass.Mapper.Umb
             //  UmbracoTypeContext context = new UmbracoTypeContext();
 
             //TODO: ME - this may not work with a proxy
-            var config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+            var config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             if (config == null)
                 throw new NullReferenceException("Can not save class, could not find configuration for {0}".Formatted(typeof(T).FullName));
@@ -262,7 +283,7 @@ namespace Glass.Mapper.Umb
 
             try
             {
-                newType = GlassContext.GetTypeConfiguration(newItem) as UmbracoTypeConfiguration;
+                newType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(newItem);
             }
             catch (Exception ex)
             {
@@ -273,7 +294,7 @@ namespace Glass.Mapper.Umb
 
             try
             {
-                parentType = GlassContext.GetTypeConfiguration(parent) as UmbracoTypeConfiguration;
+                parentType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(parent);
             }
             catch (Exception ex)
             {
@@ -323,7 +344,7 @@ namespace Glass.Mapper.Umb
         public void WriteToItem<T>(T target, IContent content, UmbracoTypeConfiguration config = null)
         {
             if (config == null)
-                config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+                config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             var savingContext = new UmbracoTypeSavingContext
                 {
@@ -345,7 +366,7 @@ namespace Glass.Mapper.Umb
         /// <exception cref="MapperException"></exception>
         public void Delete<T>(T item) where T : class
         {
-            var type = GlassContext.GetTypeConfiguration(item) as UmbracoTypeConfiguration;
+            var type = GlassContext.GetTypeConfiguration <UmbracoTypeConfiguration>(item) as UmbracoTypeConfiguration;
             var umbItem = type.ResolveItem(item, ContentService);
 
             if (umbItem == null) throw new MapperException("Content not found");
@@ -387,3 +408,4 @@ namespace Glass.Mapper.Umb
         }
     }
 }
+

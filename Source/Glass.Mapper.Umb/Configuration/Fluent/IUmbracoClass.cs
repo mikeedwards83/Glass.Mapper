@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 namespace Glass.Mapper.Umb.Configuration.Fluent
 {
     /// <summary>
@@ -32,6 +33,7 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         UmbracoTypeConfiguration Config { get; }
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,15 +33,19 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public class GlassEditFrame : IDisposable
     {
+        /// <summary>
+        /// The default edit buttons
+        /// </summary>
         public const string DefaultEditButtons = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/Default";
 
         EditFrame _frame;
         HtmlTextWriter _writer;
         /// <summary>
-        /// Initializes a new instance of the <see cref="GlassEditFrame"/> class.
+        /// Initializes a new instance of the <see cref="GlassEditFrame" /> class.
         /// </summary>
         /// <param name="buttons">The buttons.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="writer">The writer.</param>
+        /// <param name="dataSource">The data source.</param>
         public GlassEditFrame(string buttons, TextWriter writer, string dataSource = "")
         {
             _frame = new EditFrame();
@@ -50,6 +55,10 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassEditFrame"/> class.
+        /// </summary>
+        /// <param name="frame">The frame.</param>
         public GlassEditFrame(EditFrame frame)
         {
             _frame = frame;
@@ -74,6 +83,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
     }
 }
+
 
 
 

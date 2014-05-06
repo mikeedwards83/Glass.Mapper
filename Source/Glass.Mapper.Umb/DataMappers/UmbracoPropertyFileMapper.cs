@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Persistence;
@@ -157,3 +158,4 @@ namespace Glass.Mapper.Umb.DataMappers
         }
     }
 }
+

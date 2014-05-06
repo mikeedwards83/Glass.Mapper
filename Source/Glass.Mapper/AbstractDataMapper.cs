@@ -16,10 +16,8 @@
 */ 
 //-CRE-
 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
@@ -53,25 +51,41 @@ namespace Glass.Mapper
         /// Takes CMS data and writes it to the property
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-            var result  = MapToProperty(mappingContext);
+            object result;
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
+            try
+            {
+                 result = MapToProperty(mappingContext);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+            }
+           
+
             if (result != null)
-               Configuration.PropertyInfo.SetValue(mappingContext.Object, result, null);
+				Configuration.PropertySetter(mappingContext.Object, result);
         }
 
         /// <summary>
         /// Takes a Property value and writes it to a CMS value
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
-        public void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        public virtual  void MapPropertyToCms(AbstractDataMappingContext mappingContext)
         {
             if (ReadOnly) return;
 
-            //TODO: see if this can be sped up, I suspect dynamic IL would be quicker
-            mappingContext.PropertyValue = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+            try
+            {
+                mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+            }
+
             MapToCms(mappingContext);
         }
 
@@ -113,6 +127,7 @@ namespace Glass.Mapper
         
     }
 }
+
 
 
 

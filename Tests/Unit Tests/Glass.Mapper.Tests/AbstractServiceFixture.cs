@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,8 +75,11 @@ namespace Glass.Mapper.Tests
 
             var service = new StubAbstractService(context);
 
+            var typeContext = Substitute.For<AbstractTypeCreationContext>();
+            typeContext.RequestedType = typeof(object);
+
             //Act
-            var result = service.InstantiateObject(Substitute.For<AbstractTypeCreationContext>());
+            var result = service.InstantiateObject(typeContext);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -123,6 +127,7 @@ namespace Glass.Mapper.Tests
         #endregion
     }
 }
+
 
 
 

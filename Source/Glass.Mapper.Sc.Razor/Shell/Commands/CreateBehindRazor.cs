@@ -1,4 +1,21 @@
-﻿using Sitecore.Text;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using Sitecore.Text;
 using Sitecore;
 using Sitecore.Web.UI.Sheer;
 
@@ -7,17 +24,17 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
     /// <summary>
     /// Class CreateBehindRazor
     /// </summary>
-    public class CreateBehindRazor : global::Sitecore.Shell.Framework.Commands.Command
+    public class CreateBehindRazor : Sitecore.Shell.Framework.Commands.Command
     {
         /// <summary>
         /// Executes the command in the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public override void Execute(global::Sitecore.Shell.Framework.Commands.CommandContext context)
+        public override void Execute(Sitecore.Shell.Framework.Commands.CommandContext context)
         {
             if (context.Items.Length == 1)
             {
-                global::Sitecore.Data.Items.Item item = context.Items[0];
+                Sitecore.Data.Items.Item item = context.Items[0];
 
                 ClientPipelineArgs args = new ClientPipelineArgs();
 
@@ -29,7 +46,7 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
 
                 args.Parameters = parameters;
 
-                global::Sitecore.Context.ClientPage.Start(this, "Run", args);
+                Sitecore.Context.ClientPage.Start(this, "Run", args);
             }
         }
 
@@ -45,8 +62,8 @@ namespace Glass.Mapper.Sc.Razor.Shell.Commands
             {
                 SheerResponse.ShowModalDialog(str.ToString(), true);
                 args.WaitForPostBack();
-                return;
             }
         }
     }
 }
+

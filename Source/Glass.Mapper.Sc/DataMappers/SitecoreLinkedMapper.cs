@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreLinkedConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            Type genericType = Utilities.GetGenericArgument(scConfig.PropertyInfo.PropertyType);
+            Type genericType = Mapper.Utilities.GetGenericArgument(scConfig.PropertyInfo.PropertyType);
 
             var item = scContext.Item;
 
@@ -83,14 +84,11 @@ namespace Glass.Mapper.Sc.DataMappers
                         var itemLinks1 = references();
                         var itemLinks2 = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferrers(item);
                         return itemLinks1.Union(itemLinks2.Select(x => x.GetSourceItem()));
-                        break;
                     case SitecoreLinkedOptions.References:
                         return references();
-                        break;
                     case SitecoreLinkedOptions.Referrers:
                         var itemLinks4 = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferrers(item);
                         return itemLinks4.Select(x => x.GetSourceItem());
-                        break;
                     default:
                         return new List<Item>();
                 }
@@ -113,12 +111,13 @@ namespace Glass.Mapper.Sc.DataMappers
             if (!configuration.PropertyInfo.PropertyType.IsGenericType) return false;
 
             Type outerType = Utilities.GetGenericOuter(configuration.PropertyInfo.PropertyType);
-            Type innerType = Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
+            Type innerType = Mapper.Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
 
             return typeof (IEnumerable<>) == outerType;// && context.TypeConfigurations.ContainsKey(innerType);
         }
     }
 }
+
 
 
 

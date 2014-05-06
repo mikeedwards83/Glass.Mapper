@@ -232,7 +232,7 @@
 ]]></key>
     <key alias="tableSplitNotSplittable"><![CDATA[Usted no puede dividir una celda que no ha sido combinada.
 ]]></key>
-    <key alias="xsltErrorHeader"><![CDATA[Error en la fuente xslt
+    <key alias="xsltErrorHeader"><![CDATA[Error en la fuente XSLT
 ]]></key>
     <key alias="xsltErrorText">El XSLT no se ha guardado, porque contenía un error (s)</key>
   </area>
@@ -434,7 +434,7 @@ However, Runway offers an easy foundation based on best practices to get you sta
   <area alias="notifications">
     <key alias="editNotifications">Edite su notificación para %0%</key>
     <key alias="mailBody">Hola %0% Esto es un e-mail automático para informarle que la tarea '%1%' ha sido realizada sobre la página '%2%' por el usuario '%3%' Vaya a http://%4%/actions/editContent.aspx?id=%5% para editarla. ¡Espero que tenga un buen día! Saludos del robot de umbraco</key>
-    <key alias="mailBodyHtml"><![CDATA[<p>Hola %0%</p> <p>Esto es un e-mail generado automáticamente para informarle que la tarea <strong>'%1%'</strong> ha sido realizada sobre la página <a href="%7%"><strong>'%2%'</strong></a> por el usuario <strong>'%3%'</strong> </p> <div style="margin: 8px 0; padding: 8px; display: block;"> <br /> <a style="color: white; font-weight: bold; background-color: #66cc66; text-decoration : none; margin-right: 20px; border: 8px solid #66cc66; width: 150px;" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #5372c3; text-decoration : none; margin-right: 20px; border: 8px solid #5372c3; width: 150px;" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #ca4a4a; text-decoration : none; margin-right: 20px; border: 8px solid #ca4a4a; width: 150px;" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a> <br /> </div> <p> <h3>Resumen de actualización:</h3> <table style="width: 100%;"> %6% </table> </p> <div style="margin: 8px 0; padding: 8px; display: block;"> <br /> <a style="color: white; font-weight: bold; background-color: #66cc66; text-decoration : none; margin-right: 20px; border: 8px solid #66cc66; width: 150px;" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #5372c3; text-decoration : none; margin-right: 20px; border: 8px solid #5372c3; width: 150px;" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #ca4a4a; text-decoration : none; margin-right: 20px; border: 8px solid #ca4a4a; width: 150px;" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a> <br /> </div> <p>¡Espero que tenga un buen día!<br /><br /> Saludos del robot umbraco. </p>]]></key>
+    <key alias="mailBodyHtml"><![CDATA[<p>Hola %0%</p> <p>Esto es un e-mail generado automáticamente para informarle que la tarea <strong>'%1%'</strong> ha sido realizada sobre la página <a href="http://%4%/actions/preview.aspx?id=%5%"><strong>'%2%'</strong></a> por el usuario <strong>'%3%'</strong> </p> <div style="margin: 8px 0; padding: 8px; display: block;"> <br /> <a style="color: white; font-weight: bold; background-color: #66cc66; text-decoration : none; margin-right: 20px; border: 8px solid #66cc66; width: 150px;" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #5372c3; text-decoration : none; margin-right: 20px; border: 8px solid #5372c3; width: 150px;" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #ca4a4a; text-decoration : none; margin-right: 20px; border: 8px solid #ca4a4a; width: 150px;" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a> <br /> </div> <p> <h3>Resumen de actualización:</h3> <table style="width: 100%;"> %6% </table> </p> <div style="margin: 8px 0; padding: 8px; display: block;"> <br /> <a style="color: white; font-weight: bold; background-color: #66cc66; text-decoration : none; margin-right: 20px; border: 8px solid #66cc66; width: 150px;" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #5372c3; text-decoration : none; margin-right: 20px; border: 8px solid #5372c3; width: 150px;" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a style="color: white; font-weight: bold; background-color: #ca4a4a; text-decoration : none; margin-right: 20px; border: 8px solid #ca4a4a; width: 150px;" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a> <br /> </div> <p>¡Espero que tenga un buen día!<br /><br /> Saludos del robot umbraco. </p>]]></key>
     <key alias="mailSubject">[%0%] Notificación acerca de %1% realizado en %2%</key>
     <key alias="notifications">Notificaciones</key>
   </area>
@@ -596,11 +596,11 @@ However, Runway offers an easy foundation based on best practices to get you sta
     <key alias="templateErrorText">Por favor, asegúrate de que no hay 2 plantillas con el mismo alias</key>
     <key alias="templateSavedHeader">Plantilla guardada</key>
     <key alias="templateSavedText">Plantilla guardada sin errores</key>
-    <key alias="xsltErrorHeader">El Xslt no se ha guardado</key>
-    <key alias="xsltErrorText">El Xslt tenía un error</key>
-    <key alias="xsltPermissionErrorText">El Xslt no se ha podido guardar, comprueba los permisos de los ficheros</key>
-    <key alias="xsltSavedHeader">Xslt guardado</key>
-    <key alias="xsltSavedText">No hay errores en el Xslt</key>
+    <key alias="xsltErrorHeader">El XSLT no se ha guardado</key>
+    <key alias="xsltErrorText">El XSLT tenía un error</key>
+    <key alias="xsltPermissionErrorText">El XSLT no se ha podido guardar, comprueba los permisos de los ficheros</key>
+    <key alias="xsltSavedHeader">XSLT guardado</key>
+    <key alias="xsltSavedText">No hay errores en el XSLT</key>
   </area>
   <area alias="stylesheet">
     <key alias="aliasHelp">Usa sintaxis CSS, p.ej.: h1, .redHeader, .blueTex</key>
@@ -658,7 +658,7 @@ However, Runway offers an easy foundation based on best practices to get you sta
     <key alias="DownloadXmlDTD">Descargar xml DTD</key>
     <key alias="fields">Campos</key>
     <key alias="includeSubpages">Incluir subpáginas</key>
-    <key alias="mailBody">Hola %0%. Este email se ha generado automáticamente para informale que %2% ha solicitado que el documento '%1%' sea traducido en '%5%'. Para editarlo, vaya a la dirección http://%3%/umbraco/translation/details.aspx?id=%4% o inicie la sesión en umbraco y vaya a http://%3%/umbraco/umbraco.aspx para ver las tareas pendientes de traducir. Espero que tenga un buen dia. Saludos de parte de el robot de umbraco</key>
+    <key alias="mailBody">Hola %0%. Este email se ha generado automáticamente para informale que %2% ha solicitado que el documento '%1%' sea traducido en '%5%'. Para editarlo, vaya a la dirección http://%3%/umbraco/translation/details.aspx?id=%4% o inicie la sesión en umbraco y vaya a http://%3%/umbraco para ver las tareas pendientes de traducir. Espero que tenga un buen dia. Saludos de parte de el robot de umbraco</key>
     <key alias="mailSubject">Tarea para tradudir [%0%] por %1%</key>
     <key alias="noTranslators">No se encontraron usuarios traductores. Por favor, crea un usuario traductor antes de empezar a mandar contenido para su traducción</key>
     <key alias="ownedTasks">Tareas creadas por ti</key>
@@ -718,7 +718,6 @@ However, Runway offers an easy foundation based on best practices to get you sta
     <key alias="changePassword">TRANSLATE ME: 'Change Your Password'</key>
     <key alias="changePasswordDescription">TRANSLATE ME: 'You can change your password for accessing the Umbraco Back Office by filling out the form below and click the 'Change Password' button'</key>
     <key alias="contentChannel">Canal de contenido</key>
-    <key alias="defaultToLiveEditing">Redirigir al canvas al entrar</key>
     <key alias="descriptionField">Campo descriptivo</key>
     <key alias="disabled">Deshabilitar usuario</key>
     <key alias="documentType">Tipo de documento</key>

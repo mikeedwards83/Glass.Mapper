@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/
+*/ 
 //-CRE-
+
 
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -27,10 +29,12 @@ using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
@@ -43,27 +47,78 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class SitecoreInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the data mapper installer.
+        /// </summary>
+        /// <value>
+        /// The data mapper installer.
+        /// </value>
         public IWindsorInstaller DataMapperInstaller { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the query parameter installer.
+        /// </summary>
+        /// <value>
+        /// The query parameter installer.
+        /// </value>
         public IWindsorInstaller QueryParameterInstaller { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the data mapper task installer.
+        /// </summary>
+        /// <value>
+        /// The data mapper task installer.
+        /// </value>
         public IWindsorInstaller DataMapperTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the configuration resolver task installer.
+        /// </summary>
+        /// <value>
+        /// The configuration resolver task installer.
+        /// </value>
         public IWindsorInstaller ConfigurationResolverTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the objection construction task installer.
+        /// </summary>
+        /// <value>
+        /// The objection construction task installer.
+        /// </value>
         public IWindsorInstaller ObjectionConstructionTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Gets or sets the object saving task installer.
+        /// </summary>
+        /// <value>
+        /// The object saving task installer.
+        /// </value>
         public IWindsorInstaller ObjectSavingTaskInstaller { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
+        /// </summary>
         public SitecoreInstaller():this(new Config())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public SitecoreInstaller(Config config)
         {
             Config = config;
+
+
 
             DataMapperInstaller = new DataMapperInstaller(config);
             QueryParameterInstaller = new QueryParameterInstaller(config);
@@ -90,6 +145,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 ObjectionConstructionTaskInstaller,
                 ObjectSavingTaskInstaller
                 );
+
+            container.Register(
+                Component.For<Glass.Mapper.Sc.Config>().Instance(Config)
+                );
         }
     }
 
@@ -99,8 +158,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataMapperInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public DataMapperInstaller(Config config)
         {
             Config = config;
@@ -115,54 +184,58 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
            
             container.Register(
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestyleTransient(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIgnoreMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenCastMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreChildrenMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldBooleanMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDateTimeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDecimalMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDoubleMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldEnumMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFileMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldFloatMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldGuidMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldHtmlEncodingMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIEnumerableMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldImageMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
-                         .LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
-                         .LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDoubleMapper>()
-                         .LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDecimalMapper>()
-                         .LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableFloatMapper>()
-                         .LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableGuidMapper>()
-                         .LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleTransient(),
-                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleTransient(),
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStringMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldTypeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreIdMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreItemMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreInfoMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
                          {
                              d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
                          })
-                         .LifestyleTransient()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -172,8 +245,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class QueryParameterInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
         public Config Config { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryParameterInstaller"/> class.
+        /// </summary>
+        /// <param name="config">The config.</param>
         public QueryParameterInstaller(Config config)
         {
             Config = config;
@@ -187,11 +270,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestyleTransient(),
-                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestyleTransient()
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemDateNowParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemEscapedPathParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdNoBracketsParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemIdParameter>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<ISitecoreQueryParameter>().ImplementedBy<ItemPathParameter>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -202,8 +285,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class DataMapperTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="DataMapperTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public DataMapperTaskInstaller(Config config)
         {
             Config = config;
@@ -219,7 +312,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                 Component.For<IDataMapperResolverTask>()
                          .ImplementedBy<DataMapperStandardResolverTask>()
-                         .LifestyleTransient()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
@@ -230,8 +323,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     public class ConfigurationResolverTaskInstaller : IWindsorInstaller
     {
 
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ConfigurationResolverTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ConfigurationResolverTaskInstaller(Config config)
         {
             Config = config;
@@ -252,21 +355,31 @@ namespace Glass.Mapper.Sc.CastleWindsor
             // Tasks are called in the order they are specified below.
 
             container.Register(
+              Component.For<IConfigurationResolverTask>()
+                       .ImplementedBy<SitecoreItemResolverTask>()
+                       .LifestyleCustom<NoTrackLifestyleManager>()
+              );
+            container.Register(
+              Component.For<IConfigurationResolverTask>()
+                       .ImplementedBy<MultiInterfaceResolverTask>()
+                       .LifestyleCustom<NoTrackLifestyleManager>()
+              );
+            container.Register(
                Component.For<IConfigurationResolverTask>()
                         .ImplementedBy<TemplateInferredTypeTask>()
-                        .LifestyleTransient()
+                        .LifestyleCustom<NoTrackLifestyleManager>()
                );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationStandardResolverTask>()
-                         .LifestyleTransient()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             container.Register(
                 Component.For<IConfigurationResolverTask>()
                          .ImplementedBy<ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>()
-                         .LifestyleTransient()
+                         .LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
            
@@ -279,8 +392,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     public class ObjectionConstructionTaskInstaller : IWindsorInstaller
     {
 
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ObjectionConstructionTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ObjectionConstructionTaskInstaller(Config config)
         {
             Config = config;
@@ -296,18 +419,24 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>()
+                );
+
+            container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             if (Config.UseWindsorContructor)
             {
                 container.Register(
-                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleTransient() 
+                    Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleCustom<NoTrackLifestyleManager>() 
                     );
             }
 
             container.Register(
                 // Tasks are called in the order they are specified below.
+                Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
@@ -319,8 +448,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// </summary>
     public class ObjectSavingTaskInstaller : IWindsorInstaller
     {
+        /// <summary>
+        /// Gets the config.
+        /// </summary>
+        /// <value>
+        /// The config.
+        /// </value>
          public Config Config { get; private set; }
 
+         /// <summary>
+         /// Initializes a new instance of the <see cref="ObjectSavingTaskInstaller"/> class.
+         /// </summary>
+         /// <param name="config">The config.</param>
         public ObjectSavingTaskInstaller(Config config)
         {
             Config = config;
@@ -334,13 +473,14 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             // Tasks are called in the order they are specified below.
             container.Register(
-                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleTransient()
+                Component.For<IObjectSavingTask>().ImplementedBy<StandardSavingTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
         }
     }
 
 
 }
+
 
 
 

@@ -1,0 +1,23 @@
+﻿<form name="loginForm" ng-submit="loginSubmit(login, password)" ng-controller="Umbraco.Dialogs.LoginController">
+    <div id="login" class="umb-modalcolumn" ng-class="{'show-validation': loginForm.$invalid}">
+
+        <div class="form">
+            <h1>Happy {{today}}!</h1>
+            <p><span ng-show="dialogData.isTimedOut">Session timed out. </span>Log in below</p>
+
+            <div class="control-group" ng-class="{error: loginForm.username.$invalid}">
+                <input type="text" autofocus ng-model="login" name="username" class="input-xlarge" placeholder="Enter your username" />
+            </div>
+
+            <div class="control-group" ng-class="{error: loginForm.password.$invalid}">
+                <input type="password" ng-model="password" name="password" class="input-xlarge" placeholder="Enter your password" />
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+            
+            <div class="control-group" ng-show="loginForm.$invalid">
+                <div class="alert alert-error">{{errorMsg}}</div>
+            </div>
+        </div>
+    </div>
+</form>

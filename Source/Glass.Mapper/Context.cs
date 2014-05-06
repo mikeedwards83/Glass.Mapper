@@ -16,11 +16,15 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
+using System.Collections.Concurrent;
+using Castle.Core.Logging;
 
 namespace Glass.Mapper
 {
@@ -81,6 +85,7 @@ namespace Glass.Mapper
 
             var context = new Context();
             context.DependencyResolver = resolver;
+            context.Name = contextName;
             Contexts[contextName] = context;
 
             if (isDefault)
@@ -101,11 +106,13 @@ namespace Glass.Mapper
 
         #endregion
 
+        public string Name { get; private set; }
+
         /// <summary>
         /// List of the type configurations loaded by this context
         /// </summary>
         /// <value>The type configurations.</value>
-        public IDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
+        public ConcurrentDictionary<Type, AbstractTypeConfiguration> TypeConfigurations { get; private set; }
 
         /// <summary>
         /// The dependency resolver used by services using the context
@@ -113,12 +120,17 @@ namespace Glass.Mapper
         /// <value>The dependency resolver.</value>
         public IDependencyResolver DependencyResolver { get; set; }
 
+
+
+        public ILogger Log { get; set; }
+
         /// <summary>
         /// Prevents a default instance of the <see cref="Context"/> class from being created.
         /// </summary>
         private Context()
         {
-            TypeConfigurations = new Dictionary<Type, AbstractTypeConfiguration>();
+            TypeConfigurations = new ConcurrentDictionary<Type, AbstractTypeConfiguration>();
+            Log = new NullLogger();
         }
 
         /// <summary>
@@ -148,16 +160,20 @@ namespace Glass.Mapper
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
-                
-                
-
                 //first we have to add each type config to the collection
                 foreach (var typeConfig in typeConfigurations)
                 {
+                    if(TypeConfigurations.ContainsKey(typeConfig.Type)){
+                        Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
+                        continue;
+                    }
                     
                     typeConfig.PerformAutoMap();
 
-                    TypeConfigurations.Add(typeConfig.Type, typeConfig);
+                    if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
+                    {
+                        Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type)); 
+                    }
                 }
                 //then process the properties.
                 //this stops the problem of types not existing for certain data handlers
@@ -166,7 +182,6 @@ namespace Glass.Mapper
                     ProcessProperties(typeConfig.Properties);
                 }
             }
-
         }
 
         /// <summary>
@@ -201,29 +216,51 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public AbstractTypeConfiguration GetTypeConfiguration(object obj)
+        public T GetTypeConfiguration<T>(object obj) where T: AbstractTypeConfiguration, new()
         {
-            var type = obj.GetType();
+            return GetTypeConfiguration<T>(obj.GetType());
+        }
+
+        /// <summary>
+        /// Gets the type configuration.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns>AbstractTypeConfiguration.</returns>
+        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false) where T: AbstractTypeConfiguration, new()
+        {
+
+
+
             var config = TypeConfigurations.ContainsKey(type) ? TypeConfigurations[type] : null;
 
-            if (config != null) return config;
+            if (config != null) return config as T;
 
             //check base type encase of proxy
             config = TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
 
-            if (config != null) return config;
+            if (config != null) return config as T;
 
             //check interfaces encase this is an interface proxy
             string name = type.Name;
-            var interfaceType = type.GetInterfaces().FirstOrDefault(x => name.Contains(x.Name));
+            //ME - I added the OrderByDescending in response to issue 53
+            // raised on the Glass.Sitecore.Mapper project. Longest name should be compared first
+            // to get the most specific interface
+            var interfaceType = type.GetInterfaces().OrderByDescending(x => x.Name.Length).FirstOrDefault(x => name.Contains(x.Name));
 
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
 
-            return config;
+            if (config == null && !doNotLoad)
+            {
+                Load(new OnDemandLoader<T>(type));
+                return GetTypeConfiguration<T>(type, true);
+            }
+
+            return config as T;
         }
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System.Reflection;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Configuration.Attributes;
@@ -50,6 +51,7 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         }
     }
 }
+
 
 
 

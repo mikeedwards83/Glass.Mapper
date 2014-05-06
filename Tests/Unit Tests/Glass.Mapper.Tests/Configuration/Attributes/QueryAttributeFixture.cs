@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +82,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubQueryAttribute(string.Empty);
             var config = new QueryConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -101,7 +102,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             var query = "some query";
             var attr = new StubQueryAttribute(query);
             var config = new QueryConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -120,7 +121,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubQueryAttribute(string.Empty);
             var config = new QueryConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
             
             attr.InferType = true;
 
@@ -141,7 +142,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubQueryAttribute(string.Empty);
             var config = new QueryConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             attr.IsRelative = true;
 
@@ -162,7 +163,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubQueryAttribute(string.Empty);
             var config = new QueryConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
+			var propertyInfo = typeof(StubItem).GetProperty("X");
 
             attr.IsLazy = false;
 
@@ -192,9 +193,15 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             }
         }
 
+		public class StubItem
+		{
+			public object X { get; set; }
+		}
+
         #endregion
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
@@ -64,6 +65,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
     }
 }
+
 
 
 

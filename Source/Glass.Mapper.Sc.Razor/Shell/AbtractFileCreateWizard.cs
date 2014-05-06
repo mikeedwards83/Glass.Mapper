@@ -1,4 +1,21 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Sitecore.Web.UI.Pages;
@@ -85,7 +102,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
             {
                 Master = new SitecoreService(Database, GlassRazorSettings.ContextName);
             }
-            catch (KeyNotFoundException ex)
+            catch (KeyNotFoundException)
             {
                 throw new RazorException(
                     "Exception creating Sitecore Service, have you called the method GlassRazorModuleLoader.Load()?");
@@ -111,7 +128,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
             ItemDataContext.Filter = "@@templateId = '{A4F60160-BD14-4471-B362-CB56905E9564}'";
 
             string locationId = WebUtil.GetQueryString("locationId");
-            var master = global::Sitecore.Configuration.Factory.GetDatabase("master");
+            var master = Sitecore.Configuration.Factory.GetDatabase("master");
             Item location = master.GetItem(ID.Parse(locationId));
             ItemUri folderUri = new ItemUri(location);
             ItemDataContext.SetFolder(folderUri);
@@ -128,9 +145,9 @@ namespace Glass.Mapper.Sc.Razor.Shell
             Assert.ArgumentNotNull(message, "message");
             base.HandleMessage(message);
 
-            Item item = null ;
             if (!(message.Name == "newfile:refresh"))
             {
+                Item item;
                 if (!string.IsNullOrEmpty(message["id"]))
                 {
                     item = ItemDataContext.GetItem(message["id"]);
@@ -140,7 +157,6 @@ namespace Glass.Mapper.Sc.Razor.Shell
                     item = ItemDataContext.GetFolder();
                 }
                 Dispatcher.Dispatch(message, item);
-                return;
             }
 
         }
@@ -152,11 +168,11 @@ namespace Glass.Mapper.Sc.Razor.Shell
         /// <exception cref="System.NullReferenceException">File location item was null</exception>
         public string GetRelativeFilePath()
         {
-            Item fileLocationItem = this.FileLocationTreeview.GetSelectionItem();
+            Item fileLocationItem = FileLocationTreeview.GetSelectionItem();
             if (fileLocationItem != null)
             {
 
-                string directory = StringUtil.GetString(new string[]
+                string directory = StringUtil.GetString(new[]
 						{
 							fileLocationItem["Path"]
 						});
@@ -169,8 +185,8 @@ namespace Glass.Mapper.Sc.Razor.Shell
                 return FileUtil.MakePath(directory, "{0}.{1}".Formatted(fileName, ext));
 
             }
-            else throw new NullReferenceException("File location item was null");
             
+            throw new NullReferenceException("File location item was null");
         }
 
         /// <summary>
@@ -195,7 +211,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         protected bool ItemCanWrite()
         {
-            Item item = this.ItemTreeView.GetSelectionItem();
+            Item item = ItemTreeView.GetSelectionItem();
             if (item != null && !item.Access.CanCreate())
             {
                 SheerResponse.Alert("You don't have permissions to write to {0}".Formatted(item.Paths.FullPath));
@@ -245,7 +261,7 @@ namespace Glass.Mapper.Sc.Razor.Shell
         public void CreateItem(T item)
         {
            Item parent =  ItemTreeView.GetSelectionItem();
-           GlassRazorFolder folder = Master.CreateType<GlassRazorFolder>(parent, false, false);
+           var folder = Master.CreateType<GlassRazorFolder>(parent);
 
             Master.Create(folder, item);
         }
@@ -254,4 +270,5 @@ namespace Glass.Mapper.Sc.Razor.Shell
 
     }
 }
+
 

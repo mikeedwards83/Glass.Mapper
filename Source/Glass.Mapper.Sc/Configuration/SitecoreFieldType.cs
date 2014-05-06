@@ -16,10 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc.Configuration
 {
@@ -115,10 +111,15 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The date time
         /// </summary>
-        DateTime
+        DateTime,
+        /// <summary>
+        /// The custom
+        /// </summary>
+        Custom
     }
 
 }
+
 
 
 

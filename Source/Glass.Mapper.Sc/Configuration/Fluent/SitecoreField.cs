@@ -16,11 +16,8 @@
 */ 
 //-CRE-
 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using System.Linq.Expressions;
 using Sitecore.Data;
 
@@ -146,6 +143,17 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// The Sitecore custom field type for a code first field
+        /// </summary>
+        /// <param name="fieldType">Type of the field.</param>
+        /// <returns>SitecoreField{`0}.</returns>
+        public SitecoreField<T> CustomFieldType(string fieldType)
+        {
+            Configuration.CustomFieldType = fieldType;
+            return this;
+        }
+
 
 
         /// <summary>
@@ -234,6 +242,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
     }
 }
+
 
 
 

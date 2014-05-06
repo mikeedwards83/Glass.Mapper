@@ -35,6 +35,18 @@
     <OutputPath>.\Release\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
   </PropertyGroup>
+<<<<<<< HEAD
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45' ">
+    <DebugSymbols>true</DebugSymbols>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>F:\Glass\Glass.Mapper\Sites\Sitecore\Glass.Mapper.Sites.Sc</SitecoreDeployFolder>
+    <SitecoreWebUrl>http://sitecore.glass.com</SitecoreWebUrl>
+    <SitecoreAccessGuid>fd21ce01-25b5-4388-a335-6211a7a211b9</SitecoreAccessGuid>
+    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <OutputPath>bin\Net45\</OutputPath>
+  </PropertyGroup>
+=======
+>>>>>>> 367542eeb28de40c90e792f5f814175c9f9e5c9b
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
       <Value>$(AssemblyFileVersion)</Value>

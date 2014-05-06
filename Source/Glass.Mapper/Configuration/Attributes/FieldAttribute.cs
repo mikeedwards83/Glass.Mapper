@@ -16,11 +16,8 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
-using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -48,11 +45,12 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, FieldConfiguration config)
         {
-            config.ReadOnly = this.ReadOnly;
+            config.ReadOnly = ReadOnly;
             base.Configure(propertyInfo, config);
         }
     }
 }
+
 
 
 

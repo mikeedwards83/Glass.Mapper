@@ -84,6 +84,13 @@ namespace Glass.Mapper.Sc.DataMappers
             Link link = new Link();
             LinkField linkField = new LinkField(field);
 
+            link.Anchor = linkField.Anchor;
+            link.Class = linkField.Class;
+            link.Text = linkField.Text;
+            link.Title = linkField.Title;
+            link.Target = linkField.Target;
+            link.Query = linkField.QueryString;
+
             switch (linkField.LinkType)
             {
                 case "anchor":
@@ -115,25 +122,19 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
+                    var urlOptions = Utilities.CreateUrlOptions(config.UrlOptions);
                     if (linkField.TargetItem == null) link.Url = string.Empty;
-                    else link.Url = LinkManager.GetItemUrl(linkField.TargetItem);
+                    else link.Url = LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
-
+                    link.Text =  linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.Name) : linkField.Text;
                     break;
                 default:
                     return null;
-                    break;
-
             }
 
 
-            link.Anchor = linkField.Anchor;
-            link.Class = linkField.Class;
-            link.Text = linkField.Text;
-            link.Title = linkField.Title;
-            link.Target = linkField.Target;
-            link.Query = linkField.QueryString;
+         
 
             return link;
         }
@@ -259,6 +260,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 }
+
 
 
 

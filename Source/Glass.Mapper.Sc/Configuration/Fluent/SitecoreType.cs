@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Linq.Expressions;
 using Sitecore.Data;
@@ -155,6 +156,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return builder;
         }
 
+        /// <summary>
+        /// Ignore a specific property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreIgnore{`0}.</returns>
+        public SitecoreIgnore<T> Ignore(Expression<Func<T, object>> ex)
+        {
+            SitecoreIgnore<T> builder = new SitecoreIgnore<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
+        }
+
 
         /// <summary>
         /// Map the item ID to a class property
@@ -175,7 +189,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreInfo{`0}.</returns>
         public SitecoreInfo<T> Info(Expression<Func<T, object>> ex)
         {
-            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex);
+            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex, _configuration);
+            _configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
+        /// <summary>
+        /// Map the item being mapped to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreInfo{`0}.</returns>
+        public SitecoreItem<T> Item(Expression<Func<T, object>> ex)
+        {
+            SitecoreItem<T> builder = new SitecoreItem<T>(ex, _configuration);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }
@@ -311,6 +337,10 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Autoes the map.
+        /// </summary>
+        /// <returns></returns>
         public SitecoreType<T> AutoMap()
         {
             Config.AutoMap = true;
@@ -431,5 +461,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     #endregion
 }
  
+
 
 

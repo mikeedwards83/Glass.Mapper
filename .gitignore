@@ -1,16 +1,17 @@
 IconCache/
 Tutorials/Depends/*
 
-#ignore thumbnails created by windows
-Thumbs.db
-#Ignore files built by Visual Studio
-*.obj
-*.exe
-*.pdb
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Visual Studio files
+*.[Oo]bj
 *.user
 *.aps
 *.pch
 *.vspscc
+*.vssscc
 *_i.c
 *_p.c
 *.ncb
@@ -18,17 +19,56 @@ Thumbs.db
 *.tlb
 *.tlh
 *.bak
-*.cache
+*.[Cc]ache
 *.ilk
 *.log
-[Bb]in
-[Dd]ebug*/
 *.lib
 *.sbr
+*.sdf
+*.opensdf
+*.unsuccessfulbuild
+*.lib
+ipch/
 obj/
-[Rr]elease/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+Ankh.NoLoad
+_UpgradeReport_Files/
+UpgradeLog*
+
+#MonoDevelop
+*.pidb
+*.userprefs
+
+#Tooling
 _ReSharper*/
+*.resharper
 [Tt]est[Rr]esult*
+*.sass-cache
+
+#Project files
+[Bb]uild/
+
+#Subversion files
+.svn
+
+# Office Temp Files
+~$*
+
+#NuGet
+packages/
+
+#ncrunch
+*ncrunch*
+*crunch*.local.xml
+
+# visual studio database projects
+*.dbmdl
+
+#Test files
+*.testsettings
+
 temp/
 indexes/
 aspnet_client/
@@ -39,20 +79,32 @@ Docs/
 App_Data/
 !*/[Cc]onfiguration/[Dd]ebug/
 !*/[Cc]onfiguration/[Rr]elease/
-*.DS_Store
 temp/
 upload/
 Builds/
 !*.textile
-Source/Glass.Sitecore.Mapper.Demo/data/
-*.suo
 packages/Sitecore/*
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/Data/license.xml
-Glass.Mapper.ncrunchsolution.user
-*ncrunch*
 Sites/Sitecore/Glass.Mapper.Sites.Sc/data/*
-Releases/
 Depends/Sitecore/bin/*
 Depends/Sitecore/bin_Net4/*
 
 Depends/Sitecore7/
+packages/
+
+Nugets/*
+
+!lib/*
+Source/Glass.Mapper.Sc.Razor.Tds/*.dll
+Source/Glass.Mapper.Sc.Razor.Tds/*.xml
+Source/Glass.Mapper.Sc.Razor.Tds/Package_Debug/Glass.Mapper.Sc.Razor.Tds.update
+Sites/Sitecore/Glass.Mapper.Sites.Sc/data/
+Depends/Sitecore/bin7/
+Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.ThirdParty/Data/license.xml
+Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Sc7/Data/license.xml
+
+Depends/Sitecore/bin7/
+Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Sc7/Data/license.xml
+Depends/Sitecore71/
+
+Depends/Sitecore/bin - Copy/

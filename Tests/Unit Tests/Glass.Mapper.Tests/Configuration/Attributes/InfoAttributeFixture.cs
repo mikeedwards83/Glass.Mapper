@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,8 +46,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             var attr = new StubInfoAttribute();
             var config = new InfoConfiguration();
-            var propertyInfo = Substitute.For<PropertyInfo>();
-            
+            var propertyInfo = typeof(StubItem).GetProperty("X");
 
             //Act
             attr.Configure(propertyInfo, config);
@@ -67,9 +67,15 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             }
         }
 
+		public class StubItem
+		{
+			public object X { get; set; }
+		}
+
         #endregion
     }
 }
+
 
 
 

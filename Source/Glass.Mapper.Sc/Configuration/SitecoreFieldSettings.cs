@@ -17,9 +17,6 @@
 //-CRE-
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc.Configuration
 {
@@ -45,9 +42,14 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
-        InferType = 0x4
+        InferType = 0x4,
+        /// <summary>
+        /// The field will only be used to enable the page editor but values will not be read or written to it.
+        /// </summary>
+        PageEditorOnly = 0x8
     }
 }
+
 
 
 

@@ -1,9 +1,24 @@
-﻿using System;
+/*
+   Copyright 2012 Michael Edwards
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+*/ 
+//-CRE-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Web;
 using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Profilers;
 using RazorEngine.Templating;
@@ -18,26 +33,35 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// Class AbstractRazorControl
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
+    public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, Sitecore.Layouts.IExpandable
     {
-
-      //  private static volatile FileSystemWatcher _fileWatcher = null;
-        private static readonly object _fileWatcherKey = new object();
-
-        private readonly object _key = new object();
-        private static readonly object _viewKey = new object();
-
-        private static volatile Dictionary<string, string> _viewCache;
-        private static volatile FileSystemWatcher _fileSystemWatcher;
-
-        private ISitecoreContext _sitecoreContext;
-
-
+        IPerformanceProfiler _profiler = new SitecoreProfiler();
         /// <summary>
         /// Gets or sets the profiler.
         /// </summary>
-        /// <value>The profiler.</value>
-        public IPerformanceProfiler Profiler { get; set; }
+        /// <value>
+        /// The profiler.
+        /// </value>
+        public IPerformanceProfiler Profiler
+        {
+            get{
+                return _profiler;
+            }
+            set
+            {
+                _profiler = value;
+            }
+        }
+
+        private ISitecoreContext _sitecoreContext;
+
+        /// <summary>
+        /// Gets the view manager.
+        /// </summary>
+        /// <value>
+        /// The view manager.
+        /// </value>
+        public ViewManager ViewManager { get; private set; }
 
         /// <summary>
         /// A list of placeholders to render on the page.
@@ -59,7 +83,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// The path to the Razor view
         /// </summary>
         /// <value>The view.</value>
-        public string View
+        public CachedView View
         {
             get;
             set;
@@ -93,102 +117,43 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get
             {
+                
                 if (_sitecoreContext == null)
                 {
                     if (ContextName.IsNotNullOrEmpty())
-                        _sitecoreContext = new SitecoreContext(ContextName);
+                    {
+                        _sitecoreContext = new SitecoreContext(ContextName)
+                            {
+                                Profiler = Profiler
+                            };
+                    }
                     else
-                        _sitecoreContext = new SitecoreContext();
+                    {
+                        _sitecoreContext = new SitecoreContext
+                            {
+                            Profiler = Profiler
+                        };
+                    }
                 }
                 return _sitecoreContext;
             }
         }
 
         /// <summary>
-        /// The view loader
+        /// Gives access to the GlassHtml helper class
         /// </summary>
-        Func<string, string> ViewLoader = viewPath =>
-        {
-            try
-            {    
-                //TODO: more error catching
-                return File.ReadAllText(viewPath);
-            }
-            catch (Exception ex)
-            {
-                global::Sitecore.Diagnostics.Log.Error("Failed to read Razor view", ex, typeof(IRazorControl));
-            }
-            return "";
-        };
+        public IGlassHtml GlassHtml { get;  set; }
 
-
-        /// <summary>
-        /// Gets the full path.
-        /// </summary>
-        /// <param name="viewPath">The view path.</param>
-        /// <returns>System.String.</returns>
-        public static string GetFullPath(string viewPath)
-        {
-             viewPath = viewPath.Replace("/",@"\");
-            if (viewPath.StartsWith(@"\")) viewPath = viewPath.Substring(1);
-            var path = HttpRuntime.AppDomainAppPath + viewPath; 
-            return path;
-        }
-
+       
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractRazorControl{T}"/> class.
         /// </summary>
         public AbstractRazorControl()
         {
-            Profiler = new SitecoreProfiler();
-
-            if (_viewCache == null)
-            {
-                lock (_key)
-                {
-                    if (_viewCache == null)
-                    {
-                        _viewCache = new Dictionary<string, string>();
-                    }
-                }
-            }
-            if (_fileSystemWatcher == null)
-            {
-                lock (_fileWatcherKey)
-                {
-                    if (_fileSystemWatcher == null)
-                    {
-                        try
-                        {
-                            _fileSystemWatcher = new FileSystemWatcher(HttpRuntime.AppDomainAppPath, "*.cshtml");
-                            _fileSystemWatcher.Changed += new FileSystemEventHandler(OnChanged);
-                            _fileSystemWatcher.EnableRaisingEvents = true;
-                            _fileSystemWatcher.IncludeSubdirectories = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            global::Sitecore.Diagnostics.Log.Error("Failed to setup Razor file watcher.",ex);
-                        }
-                    }
-                }
-            }
-  
             ViewData = new ViewDataDictionary();
+            ViewManager = new ViewManager();
+            GlassHtml = new GlassHtml(new SitecoreContext());
         }
-
-        /// <summary>
-        /// Called when [changed].
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="e">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
-        private void OnChanged(object source, FileSystemEventArgs e)
-        {
-            string path = e.FullPath.ToLower();
-            if(_viewCache.ContainsKey(path))
-                UpdateCache(path, ViewLoader);
-        }
-
-
 
         /// <summary>
         /// Put your logic to create your model here
@@ -202,8 +167,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <returns>Item.</returns>
         protected Item GetDataSourceOrContextItem()
         {
-            return this.DataSource.IsNullOrEmpty() ? global::Sitecore.Context.Item :
-                global::Sitecore.Context.Database.GetItem(this.DataSource);
+            return DataSource.IsNullOrEmpty() ? Sitecore.Context.Item :
+                Sitecore.Context.Database.GetItem(DataSource);
         }
 
         /// <summary>
@@ -213,7 +178,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>If an empty string is returned, the control will not be cached.</remarks>
         protected override string GetCachingID()
         {
-            return this.View;
+            return View.Name;
         }
 
         /// <summary>
@@ -224,81 +189,70 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <remarks>When developing custom server controls, you can override this method to generate content for an ASP.NET page.</remarks>
         protected override void DoRender(HtmlTextWriter output)
         {
-            Model = GetModel();
-
-            var viewContents = GetRazorView(View);
-
             try
             {
-                Profiler.Start("Razor engine {0}".Formatted(this.View));
+             
+                    Profiler.Start("Razor engine {0}".Formatted(View.Name));
 
-                var template = RazorEngine.Razor.CreateTemplate(viewContents, Model) as TemplateBase<T>;
+                    Profiler.Start("Get Model");
 
-                template.Configure(SitecoreContext, ViewData, this);
+                    Model = GetModel();
 
-                output.Write( template.CastTo<ITemplate<T>>().Run(new ExecuteContext()));
+                    Profiler.End("Get Model");
 
-                Profiler.Start("Razor engine {0}".Formatted(this.View));
 
+                    Profiler.Start("Create Template");
+
+                    var template =
+                        RazorEngine.Razor.GetTemplate(View.ViewContent, Model, View.Name) as ITemplateBase;
+
+                    Profiler.End("Create Template");
+
+                    Profiler.Start("Configure Template");
+
+                    template.Configure(SitecoreContext, ViewData, this);
+
+                    Profiler.End("Configure Template");
+
+                    Profiler.Start("Run Template");
+
+                    output.Write(((RazorEngine.Templating.ITemplate)template).Run(new ExecuteContext()));
+
+                    Profiler.End("Run Template");
             }
-            catch (RazorEngine.Templating.TemplateCompilationException ex)
+            catch (TemplateCompilationException ex)
             {
-                StringBuilder errors = new StringBuilder();
+                var errors = new StringBuilder();
                 ex.Errors.ForEach(x =>
                                       {
                                           errors.AppendLine("File: {0}".Formatted(View));
-                                          errors.AppendLine( x.ErrorText);
+                                          errors.AppendLine(x.ErrorText);
                                       });
-                 
-                 
-                throw new RazorException(errors.ToString());
-                 
-                 
+
+
+                //   throw new RazorException(errors.ToString());
+
+                WriteException(output, ex);
+            }
+            catch (Exception ex)
+            {
+                WriteException(output, ex);
+            }
+            finally
+            {
+                Profiler.End("Razor engine {0}".Formatted(View));
             }
         }
 
-        /// <summary>
-        /// Gets the razor view.
-        /// </summary>
-        /// <param name="viewPath">The view path.</param>
-        /// <returns>System.String.</returns>
-        public virtual string GetRazorView(string viewPath)
+        private void WriteException(HtmlTextWriter output, Exception ex)
         {
-            string finalview = null;
+            output.Write("<h1>Glass Razor Rendering Exception</h1>");
+            output.Write("<p>View: {0}</p>".Formatted(View.Name));
+            output.Write("<p>{0}</p>".Formatted(ex.Message));
+            output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
+        
+            Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(View), ex, this);
 
-            viewPath = GetFullPath(viewPath);
-
-            viewPath = viewPath.ToLower();
-
-            if (!_viewCache.ContainsKey(viewPath))
-            {
-                UpdateCache(viewPath, ViewLoader);
-            }
-            finalview = _viewCache[viewPath];
-
-            return finalview;
-        }
-
-        /// <summary>
-        /// Updates the cache.
-        /// </summary>
-        /// <param name="viewPath">The view path.</param>
-        /// <param name="viewLoader">The view loader.</param>
-        /// <returns>System.String.</returns>
-        /// <exception cref="System.NullReferenceException">Could not find file {0}..Formatted(viewPath)</exception>
-        private static string UpdateCache(string viewPath, Func<string, string> viewLoader)
-        {
-            viewPath = viewPath.ToLower();
-
-            string finalview = viewLoader(viewPath);
-            if (finalview == null) throw new NullReferenceException("Could not find file {0}.".Formatted(viewPath));
-
-            lock (_viewKey)
-            {
-                _viewCache[viewPath] = finalview;
-            }
-
-            return finalview;
         }
 
         /// <summary>
@@ -310,15 +264,28 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             {
                 foreach (var placeHolderName in Placeholders)
                 {
-                    global::Sitecore.Web.UI.WebControls.Placeholder holder = new global::Sitecore.Web.UI.WebControls.Placeholder();
+                    var holder = new Sitecore.Web.UI.WebControls.Placeholder();
                     holder.Key = placeHolderName.ToLower();
-                    this.Controls.Add(holder);
+                    Controls.Add(holder);
                 }
             }
 
-            this.Controls.Cast<Control>().Where(x => x is global::Sitecore.Layouts.IExpandable)
-                .Cast<global::Sitecore.Layouts.IExpandable>().ToList().ForEach(x => x.Expand());
+            Controls.Cast<Control>().Where(x => x is Sitecore.Layouts.IExpandable)
+                .Cast<Sitecore.Layouts.IExpandable>().ToList().ForEach(x => x.Expand());
         }
+
+        /// <summary>
+        /// Converts rendering parameters to a concrete type. Use this method if you have defined the template ID on the 
+        /// model configuration.
+        /// </summary>
+        /// <typeparam name="TK"></typeparam>
+        /// <returns></returns>
+        public virtual TK GetRenderingParameters<TK>() where TK : class
+        {
+            return GlassHtml.GetRenderingParameters<TK>(Parameters);
+        }
+
     }
    
 }
+

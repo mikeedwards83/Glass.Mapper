@@ -18,8 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper
 {
@@ -52,6 +50,19 @@ namespace Glass.Mapper
         public static bool IsNullOrEmpty(this string target)
         {
             return string.IsNullOrEmpty(target);
+        }
+
+       
+        /// <summary>
+        /// Indicates whether a specified string is null, empty, or consists only of
+        ///     white-space characters.
+        /// </summary>
+        /// <param name="target">The string to test.</param>
+        /// <returns> true if the value parameter is null or System.String.Empty, or if value consists
+        ///     exclusively of white-space characters.</returns>
+        public static bool IsNullOrWhiteSpace(this string target)
+        {
+            return string.IsNullOrWhiteSpace(target);
         }
 
         /// <summary>
@@ -118,6 +129,7 @@ namespace Glass.Mapper
         #endregion
     }
 }
+
 
 
 

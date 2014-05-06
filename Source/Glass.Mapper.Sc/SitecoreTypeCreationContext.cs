@@ -16,11 +16,8 @@
 */ 
 //-CRE-
 
+using Sitecore.Data;
 using Sitecore.Data.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc
 {
@@ -30,7 +27,10 @@ namespace Glass.Mapper.Sc
     public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
 
-
+        /// <summary>
+        /// Gets or sets the templateid.
+        /// </summary>
+        public ID TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the item.
@@ -42,10 +42,20 @@ namespace Glass.Mapper.Sc
         /// Gets or sets the sitecore service.
         /// </summary>
         /// <value>The sitecore service.</value>
-        public SitecoreService SitecoreService { get; set; }
+        public ISitecoreService SitecoreService { get; set; }
+
+        public override string DataSummary()
+        {
+            if (Item == null)
+            {
+                return "Item is null";
+            }
+            return Item.Paths.FullPath;
+        }
     }
     
 }
+
 
 
 

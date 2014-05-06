@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,11 +60,17 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.String.</returns>
         public override string SetFieldValue( object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            bool actual = (bool) value;
-            return actual ? "1" : "0";
+            if (value is bool)
+            {
+                bool actual = (bool)value;
+                return actual ? "1" : "0";
+            }
+            else
+                throw new NotSupportedException("The value is not of type System.Boolean");
         }
     }
 }
+
 
 
 
