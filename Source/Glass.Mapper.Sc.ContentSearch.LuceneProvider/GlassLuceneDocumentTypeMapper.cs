@@ -1,18 +1,16 @@
 ﻿using Castle.DynamicProxy;
-using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Lucene.Net.Documents;
-using Sitecore.Common;
 using Sitecore.ContentSearch.Linq.Common;
 using Sitecore.ContentSearch.Linq.Methods;
 using Sitecore.ContentSearch.LuceneProvider;
+using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 {
@@ -22,6 +20,9 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public override TElement MapToType<TElement>(Document document, SelectMethod selectMethod, IEnumerable<IFieldQueryTranslator> virtualFieldProcessors, SearchSecurityOptions securityOptions)
         {
+            if (typeof (TElement) == typeof (SitecoreUISearchResultItem))
+                return base.MapToType<TElement>(document, selectMethod, virtualFieldProcessors, securityOptions);
+
             _sitecoreContext = new SitecoreContext();
             if (selectMethod != null)
             {
@@ -37,7 +38,8 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
             else
             {
                 var documentFieldNames = GetDocumentFieldNames(document);
-                var instance = CreateInstance<TElement>(document.Get("_template"));
+                var templateId = document.Get("_template");
+                var instance = CreateInstance<TElement>(templateId);
                 var typeMap = GetTypeMap(instance.GetType());
 
                 //TODO: use ID.Parse on document.Get("_id") ?

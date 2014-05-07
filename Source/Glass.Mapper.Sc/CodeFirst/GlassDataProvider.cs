@@ -24,6 +24,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.Configuration;
@@ -214,7 +215,10 @@ namespace Glass.Mapper.Sc.CodeFirst
             var sectionInfo = SectionTable.FirstOrDefault(x => x.SectionId == itemDefinition.ID);
             if (sectionInfo != null)
             {
-                GetStandardFields(fields, sectionInfo.SectionSortOrder >= 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
+                GetStandardFields(fields,
+                    sectionInfo.SectionSortOrder >= 0
+                        ? sectionInfo.SectionSortOrder
+                        : (SectionTable.IndexOf(sectionInfo) + 100));
 
                 return fields;
             }
@@ -222,7 +226,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fieldInfo = FieldTable.FirstOrDefault(x => x.FieldId == itemDefinition.ID);
             if (fieldInfo != null)
             {
-                GetStandardFields(fields, fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
+                GetStandardFields(fields,
+                    fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
                 GetFieldFields(fieldInfo, fields);
                 return fields;
             }
@@ -385,8 +390,10 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             foreach (var field in fields)
             {
-                //fix: added check on interfaces
-                if (field.PropertyInfo.DeclaringType != cls.Type || interfaces.Any(inter => inter.GetProperty(field.PropertyInfo.Name) != null))
+                //fix: added check on interfaces, if field resides on interface then skip here
+                var propertyFromInterface = interfaces.FirstOrDefault(inter => inter.GetProperty(field.PropertyInfo.Name) != null 
+                                                                            && inter.GetProperty(field.PropertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldAttribute), false).Any());
+                if (field.PropertyInfo.DeclaringType != cls.Type || propertyFromInterface != null)
                     continue;
 
                 if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))

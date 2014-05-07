@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
 
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null || !SearchSwitcher.IsSearchContext)
+            if (args.Result != null || !SearchSwitcher.IsSearchContext || args.Configuration.Type.IsSealed)
                 return;
             if (args.Configuration.Type.IsInterface)
             {

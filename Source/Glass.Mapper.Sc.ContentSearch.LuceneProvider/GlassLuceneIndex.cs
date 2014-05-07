@@ -9,6 +9,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
     {
         public GlassLuceneIndex(string name, string folder, IIndexPropertyStore propertyStore) : base(name, folder, propertyStore)
         {
+
         }
 
         public override void Initialize()
@@ -17,7 +18,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
             var fieldNameTranslatorField = typeof (LuceneIndex).GetField("fieldNameTranslator", BindingFlags.Instance | BindingFlags.NonPublic);
             if (fieldNameTranslatorField == null) throw new Exception("Unable to set custom fieldNameTranslator");
-
+            
             fieldNameTranslatorField.SetValue(this, new GlassLuceneFieldNameTranslator(this));
         }
     }
