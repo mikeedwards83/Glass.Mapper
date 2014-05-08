@@ -184,9 +184,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <returns>
         /// IEncodedString.
         /// </returns>
-        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
+        public IEncodedString Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object attributes = null)
         {
-            return GlassHtml.Editable(target, field, standardOutput,parameters);
+            return GlassHtml.Editable(target, field, standardOutput, attributes);
         }
 
         /// <summary>
@@ -199,10 +199,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
         public virtual IEncodedString RenderImage<T>(T target, Expression<Func<T, object>> field,
-                                             ImageParameters parameters = null,
+                                             object attributes = null,
                                              bool isEditable = false)
         {
-            return GlassHtml.RenderImage(target, field, parameters, isEditable);
+            return GlassHtml.RenderImage(target, field, attributes, isEditable);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual IEncodedString RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual IEncodedString RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
             return Raw(_glassHtml.RenderLink(model, field, attributes, isEditable, contents));
@@ -262,9 +262,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
-        public virtual IEncodedString RenderImage(Expression<Func<TModel, object>> field, ImageParameters parameters = null, bool isEditable = false)
+        public virtual IEncodedString RenderImage(Expression<Func<TModel, object>> field, object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.RenderImage(Model, field, parameters, isEditable);
+            return GlassHtml.RenderImage(Model, field, attributes, isEditable);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
-        public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field, object attributes = null, bool isEditable = false)
         {
             return GlassHtml.GlassHtml.BeginRenderLink(Model, field, CurrentWriter, attributes, isEditable);
 
@@ -292,7 +292,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="isEditable">Make the link editable</param>
         /// <param name="contents">Content to override the default decription or item name</param>
         /// <returns></returns>
-        public virtual IEncodedString RenderLink(Expression<Func<TModel, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)
+        public virtual IEncodedString RenderLink(Expression<Func<TModel, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
             return RenderLink(Model, field, attributes, isEditable, contents);
