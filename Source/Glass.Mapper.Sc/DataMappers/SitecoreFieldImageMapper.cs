@@ -28,6 +28,12 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
+using Sitecore.Diagnostics;
+using Sitecore.Resources;
+using Sitecore.Configuration;
+using Sitecore;
+using Sitecore.IO;
+using Sitecore.Web;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -79,7 +85,7 @@ namespace Glass.Mapper.Sc.DataMappers
             img.MediaId = field.MediaID.Guid;
             if (field.MediaItem != null)
             {
-                img.Src = MediaManager.GetMediaUrl(field.MediaItem);
+                img.Src = GetMediaUrlWithoutContentCheck(field.MediaItem, MediaUrlOptions.Empty);
                 var fieldTitle = field.MediaItem.Fields["Title"];
                 if (fieldTitle != null)
                     img.Title = fieldTitle.Value;
@@ -106,7 +112,7 @@ namespace Glass.Mapper.Sc.DataMappers
            // img.Height = height;
            // img.HSpace = hSpace;
             img.MediaId = imageItem.ID.Guid;
-            img.Src = MediaManager.GetMediaUrl(imageItem);
+            img.Src = GetMediaUrlWithoutContentCheck(imageItem, MediaUrlOptions.Empty);
            // img.VSpace = vSpace;
            // img.Width = width;
         }
@@ -204,6 +210,58 @@ namespace Glass.Mapper.Sc.DataMappers
             var image = new Image();
             MapToImage(image, imageItem);
             return image;
+        }
+
+        /// <summary>
+        /// Gets a media URL.
+        /// 
+        /// </summary>
+        /// <param name="item">The media item.</param><param name="options">The query string.</param>
+        /// <returns>
+        /// The media URL.
+        /// </returns>
+        private static string GetMediaUrlWithoutContentCheck(MediaItem item, MediaUrlOptions options)
+        {
+            Assert.ArgumentNotNull((object)item, "item");
+            Assert.ArgumentNotNull((object)options, "options");
+            if (item.InnerItem["path"].Length > 0)
+            {
+                if (!options.LowercaseUrls)
+                    return item.InnerItem["path"];
+                else
+                    return item.InnerItem["path"].ToLowerInvariant();
+            }
+            else if (options.UseDefaultIcon)
+            {
+                if (!options.LowercaseUrls)
+                    return Themes.MapTheme(Settings.DefaultIcon);
+                else
+                    return Themes.MapTheme(Settings.DefaultIcon).ToLowerInvariant();
+            }
+            else
+            {
+                var mediaProvider = MediaManager.Provider;
+                Assert.IsTrue(mediaProvider.Config.MediaPrefixes[0].Length > 0, "media prefixes are not configured properly.");
+                string str1 = mediaProvider.MediaLinkPrefix;
+                if (options.AbsolutePath)
+                    str1 = options.VirtualFolder + str1;
+                else if (str1.StartsWith("/", StringComparison.InvariantCulture))
+                    str1 = StringUtil.Mid(str1, 1);
+                if (options.AlwaysIncludeServerUrl)
+                    str1 = FileUtil.MakePath(WebUtil.GetServerUrl(), str1, '/');
+                string str2 = StringUtil.EnsurePrefix('.', StringUtil.GetString(options.RequestExtension, item.Extension, "ashx"));
+                string str3 = options.ToString();
+                if (str3.Length > 0)
+                    str2 = str2 + "?" + str3;
+                string str4 = "/sitecore/media library/";
+                string path = item.InnerItem.Paths.Path;
+                string str5 = !options.UseItemPath || !path.StartsWith(str4, StringComparison.OrdinalIgnoreCase) ? item.ID.ToShortID().ToString() : StringUtil.Mid(path, str4.Length);
+                string str6 = str1 + str5 + (options.IncludeExtension ? str2 : string.Empty);
+                if (!options.LowercaseUrls)
+                    return str6;
+                else
+                    return str6.ToLowerInvariant();
+            }
         }
     }
 }
