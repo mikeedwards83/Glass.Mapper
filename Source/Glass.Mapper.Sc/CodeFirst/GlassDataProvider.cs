@@ -386,8 +386,6 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             IDList fieldIds = new IDList();
 
-            var providers = context.DataManager.Database.GetDataProviders();
-            //var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
             var interfaces = cls.Type.GetInterfaces();
 
             foreach (var field in fields)

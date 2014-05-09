@@ -101,8 +101,14 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             Item obj = ObjectExtensions.ValueOrDefault<RenderingItem, Item>(rendering.RenderingItem, (Func<RenderingItem, Item>)(i => i.InnerItem));
             if (obj == null)
                 return (object)null;
+            else if (rendering.Item == null)
+            {
+                return null;
+            }
             else
+            {
                 return GetObject(obj[ModelField], rendering.Item.Database, rendering);
+            }
         }
 
         /// <summary>
