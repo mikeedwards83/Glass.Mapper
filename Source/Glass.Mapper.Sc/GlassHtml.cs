@@ -245,6 +245,10 @@ namespace Glass.Mapper.Sc
             {
                 attrs = parameters as NameValueCollection;
             }
+            else if (parameters is AbstractParameters)
+            {
+                attrs = ((AbstractParameters) parameters).Parameters;
+            }
             else
             {
                 attrs = Utilities.GetPropertiesCollection(parameters, true);
