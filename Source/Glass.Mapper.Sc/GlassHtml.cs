@@ -48,6 +48,8 @@ namespace Glass.Mapper.Sc
     {
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
+        public const string Parameters = "Parameters";
+
 
         /// <summary>
         /// Gets the sitecore context.
