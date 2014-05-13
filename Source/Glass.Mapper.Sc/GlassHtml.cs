@@ -152,7 +152,7 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext[typeof (T)] as SitecoreTypeConfiguration;
+            var config = SitecoreContext.GlassContext.GetTypeConfiguration < SitecoreTypeConfiguration>(typeof(T));
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
