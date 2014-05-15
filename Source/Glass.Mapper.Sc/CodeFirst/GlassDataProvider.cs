@@ -44,6 +44,7 @@ namespace Glass.Mapper.Sc.CodeFirst
     /// </summary>
     public class GlassDataProvider : DataProvider
     {
+        public static bool DisableItemHandlerWhenDeletingFields = false;
         private static readonly object _setupLock = new object();
         private bool _setupComplete;
         private bool _setupProcessing;
@@ -404,7 +405,17 @@ namespace Glass.Mapper.Sc.CodeFirst
                     if (existing != null)
                     {
                         using (new SecurityDisabler())
-                            sqlProvider.DeleteItem(existing, context);
+                        {
+                            if (DisableItemHandlerWhenDeletingFields)
+                            {
+                                using (new DisableItemHandler())
+                                    sqlProvider.DeleteItem(existing, context);
+                            }
+                            else
+                            {
+                                sqlProvider.DeleteItem(existing, context);
+                            }
+                        }
                     }
 
                     if (record == null)

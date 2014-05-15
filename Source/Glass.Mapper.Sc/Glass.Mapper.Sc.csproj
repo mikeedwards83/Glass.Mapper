@@ -86,12 +86,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-	</Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -227,6 +221,7 @@
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
+    <Compile Include="DisableItemHandler.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
