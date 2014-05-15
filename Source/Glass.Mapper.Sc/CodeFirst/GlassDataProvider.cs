@@ -347,9 +347,11 @@ namespace Glass.Mapper.Sc.CodeFirst
                 {
                     var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
                     var newId = GetUniqueGuid(itemDefinition.ID + section.SectionName);
+                    const int newSortOrder = 100;
+                    
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
-                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, section.SectionSortOrder);
+                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, newSortOrder);
 
                     SectionTable.Add(record);
                 }

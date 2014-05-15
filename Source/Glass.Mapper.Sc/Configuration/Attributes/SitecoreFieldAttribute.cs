@@ -64,7 +64,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             CodeFirst = codeFirst;
             FieldType = fieldType;
             FieldSortOrder = -1;
-            SectionSortOrder = -1;
+            SectionSortOrder = 100;
         }
 
         /// <summary>
