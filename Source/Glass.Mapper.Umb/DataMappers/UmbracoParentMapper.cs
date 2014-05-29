@@ -17,6 +17,7 @@
 //-CRE-
 using System;
 using Glass.Mapper.Umb.Configuration;
+using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -53,9 +54,15 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbContext = mappingContext as UmbracoDataMappingContext;
             var umbConfig = Configuration as UmbracoParentConfiguration;
 
+            IContent content = umbContext.PublishedOnly
+                                   ? umbContext.Service.ContentService.GetPublishedVersion(umbContext.Content.ParentId)
+                                   : umbContext.Service.ContentService.GetById(umbContext.Content.ParentId);
+
+
+
             return umbContext.Service.CreateType(
                 umbConfig.PropertyInfo.PropertyType,
-                umbContext.Service.ContentService.GetById(umbContext.Content.ParentId),
+                content,
                 umbConfig.IsLazy,
                 umbConfig.InferType);
         }
