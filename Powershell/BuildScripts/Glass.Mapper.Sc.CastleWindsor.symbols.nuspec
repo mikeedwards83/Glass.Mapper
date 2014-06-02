@@ -19,7 +19,7 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.1.5" />
+		<dependency id="Glass.Mapper.Sc" version="3.1.8" />
 		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 	</dependencies>
