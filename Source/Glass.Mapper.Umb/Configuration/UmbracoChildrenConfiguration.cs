@@ -26,6 +26,10 @@ namespace Glass.Mapper.Umb.Configuration
     /// </summary>
     public class UmbracoChildrenConfiguration : ChildrenConfiguration
     {
+        /// <summary>
+        /// Which Document Type this property should map to
+        /// </summary>
+        public virtual string DocumentTypeAlias { get; set; }
     }
 }
 
