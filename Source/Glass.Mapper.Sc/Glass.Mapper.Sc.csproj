@@ -71,9 +71,6 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeFirst\FieldInfo.cs" />
@@ -186,7 +183,6 @@
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
-    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />

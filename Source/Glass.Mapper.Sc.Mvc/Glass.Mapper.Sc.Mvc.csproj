@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Mvc Condition=" '$(MVC)' == '' ">4</Mvc>
+    <Mvc Condition=" '$(MVC)' == '' ">3</Mvc>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}</ProjectGuid>
@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Mvc\GlassController.cs" />
     <Compile Include="Web\Mvc\GlassView.cs" />
@@ -115,6 +116,10 @@
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
       <Name>Glass.Mapper.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
+      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
+      <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

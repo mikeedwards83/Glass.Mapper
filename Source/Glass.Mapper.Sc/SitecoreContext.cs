@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc
         /// Used for unit tests only
         /// </summary>
         /// <param name="database"></param>
-        internal SitecoreContext(Database database):
+        public SitecoreContext(Database database):
             base(database, GetContextFromSite())
         {
             
