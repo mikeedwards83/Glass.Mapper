@@ -143,7 +143,7 @@ namespace Glass.Mapper.Sc.Configuration
         /// Makes a copy of the SitecoreFieldConfiguration
         /// </summary>
         /// <returns>SitecoreFieldConfiguration.</returns>
-        public SitecoreFieldConfiguration Copy()
+        public virtual SitecoreFieldConfiguration Copy()
         {
             return new SitecoreFieldConfiguration()
                        {
