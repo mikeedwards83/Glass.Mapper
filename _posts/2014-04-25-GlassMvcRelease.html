@@ -8,12 +8,12 @@ caption: 08 June 2014
 			
 <p class="lead">
     Following my last blog post about <a href="2014-04-25-GlassMvc.html">Glass.Mapper.Sc and Sitecore MVC</a> I have reorganised the 
-    Glass.Mapper.Sc assembly to createa  MVC specific assembly. 
+    Glass.Mapper.Sc assembly to create a MVC specific assembly. 
 </p>
 
 <p>
-    Firstly a bit of background. Sitecore are now keeping up with release of ASP.NET MVC and this now means that Sitecore works with
-    3 different versions of MVC depending on the Sitecore version you are using, roughly the versioning is as follows:
+    Firstly a bit of background. Sitecore now supports
+    3 different versions of MVC depending on the Sitecore version you are using with this being a rough guide:
 </p>
 <ol>
     <li>Sitecore 6.x + MVC 3</li>
@@ -24,7 +24,7 @@ caption: 08 June 2014
 <p>
     I have been packaging the MVC support for Sitecore within the Glass.Mapper.Sc assembly but this creates a problem. Glass.Mapper.Sc needs to be 
     compiled against all three MVC versions but I only have one Nuget package to distribute the assemblies in. This creates a problem because
-    this just isn't possible.
+    it isn't possible to correctly distribute the assemblies.
 </p>
 
 <p>
@@ -37,17 +37,17 @@ caption: 08 June 2014
     <li>Glass.Mapper.Sc.Mvc-5</li>
 </ol>
 <p>
-    When setting you Sitecore projects up or updating and existing Sitecore project you will need to download one of these Nuget packages separately 
-    after installing Glass.Mapper.Sc v3.2+ or Glass.Mapper.Sc.CastleWindsor. No matter what version of the Nuget package you download the assembly 
+    When setting up your Sitecore project or updating an existing project you will need to download one of these Nuget packages 
+    after installing Glass.Mapper.Sc v3.2+. No matter what version of the Nuget package you download the assembly 
     added to your project will be called Glass.Mapper.Sc.Mvc. I have also kept the namespaces within the assembly the same so you shouldn't need to 
     update any of your code.
 </p>
 <p>
     Although this is an extra step in the setup of a Glass/Sitecore solution it gives the project more flexibility and allows for 
-    easier support of future MVC solutions.
+    easier support of future MVC releases.
 </p>
 <p>
-    This update will be released next week but for those who want to get early access and start using Glass.Mapper.Sc with MVC and Sitecore 7.2 you 
+    This update will be released next week but for those who want to get early access and start using Glass.Mapper.Sc with MVC 5 and Sitecore 7.2 you 
     can download the packages from the Glass build server. See the download page for more information.    
 </p>
 <p>
