@@ -7,6 +7,8 @@ caption:
 {% include pageheader.html %}
 
 
+
+
 <p>
     Changes for the Glass.Mapper.Sc project:
 </p>
@@ -59,7 +61,7 @@ caption:
             <li>SitecoreService query with language support.</li>
         </ul>
     </dd>
-     <dt>3.0.5.14 - HotFix</dt>
+    <dt>3.0.5.14 - HotFix</dt>
     <dd>
         <ul>
             <li>
@@ -67,11 +69,10 @@ caption:
             </li>
         </ul>
     </dd>
-    <dt>
-        3.0.5.15 - Hotfix
+    <dt>3.0.5.15 - Hotfix
     </dt>
     <dd>
-         <ul>
+        <ul>
             <li>
                 <a href="https://github.com/mikeedwards83/Glass.Mapper/issue/31">Issue 31</a> Fix to Page Editor mode where the ID of a field set on a property was being ignored.
             </li>
@@ -101,23 +102,19 @@ caption:
             <li>
                 <a href="https://github.com/mikeedwards83/Glass.Mapper/pull/35">Pull 35</a> GlassWebControl contributed by <a href="https://github.com/Refactored">Kyle Heon</a>
             </li>
-            <li>
-                Separated out URL creation for Glass.Mapper.Sc.Fields.Link so that URLs can be created outside of the RenderLink method.
+            <li>Separated out URL creation for Glass.Mapper.Sc.Fields.Link so that URLs can be created outside of the RenderLink method.
             </li>
-            <li>
-                Added more information to property mapping exceptions.
+            <li>Added more information to property mapping exceptions.
             </li>
-            <li>
-                Refactored attribute configuration. Glass.Mapper.Sc.Configuration.Attributes.SitecoreAttributeConfigurationLoader is now obsolete. Property attributes are
+            <li>Refactored attribute configuration. Glass.Mapper.Sc.Configuration.Attributes.SitecoreAttributeConfigurationLoader is now obsolete. Property attributes are
                 now supported without the need for the class attribute.
             </li>
-            <li>
-                Added caching layer for inferred to type to speed up type resolution.
+            <li>Added caching layer for inferred to type to speed up type resolution.
             </li>
         </ul>
     </dd>
-    
-     <dt>3.1.2</dt>
+
+    <dt>3.1.2</dt>
     <dd>
         <ul>
             <li>Added support for SitecoreItem attribute, this allows the item being mapped to itself mapped to a property.</li>
@@ -130,34 +127,34 @@ caption:
         <ul>
             <li>Changes to how Context.GetTypeConfiguration is called. Fixes issue of type not being present when trying to create a new
             item from a class that hasn't been loaded by Glass.Mapper.</li>
-        </ul> 
+        </ul>
     </dd>
     <dt>3.1.4</dt>
     <dd>
         <ul>
             <li>Fix for ReadOnly SitecoreField issue where the ReadOnly flag was being ignored. Thanks to Nick Wesselman for spotting this.</li>
-        </ul> 
+        </ul>
     </dd>
-     <dt>3.1.5</dt>
+    <dt>3.1.5</dt>
     <dd>
         <ul>
             <li>Now compiles .Net 4 and .Net 4.5 assemblies.</li>
             <li>Loading Sitecore Items through the Glass.Mapper services.</li>
             <li>Marked the field types under Glass.Mapper.Sc.Fields as serializable.</li>
-        </ul> 
+        </ul>
     </dd>
     <dt>3.1.6</dt>
     <dd>
         <ul>
             <li>UrlOptions added to SitecoreField attribute</li>
-        </ul> 
+        </ul>
     </dd>
     <dt>3.1.7</dt>
-	<dd>
-		<ul>
-			<li>Fixes to saving Glass.Mapper.Sc.Fields.Images which was throwing a null object exception on save.</li>
-		</ul>
- 	</dd>
+    <dd>
+        <ul>
+            <li>Fixes to saving Glass.Mapper.Sc.Fields.Images which was throwing a null object exception on save.</li>
+        </ul>
+    </dd>
 
     <dt>3.1.8</dt>
     <dd>
@@ -165,39 +162,42 @@ caption:
             <li>Fixed bug where the Page Editor functionality when dealing with multi-lingual sites
                 was different to Sitecore
             </li>
-            <li>
-                Added features to allow properties to be marked for usage in the Page Editor only
+            <li>Added features to allow properties to be marked for usage in the Page Editor only
                 without any mapping to them. This is intended to be used with the SC7 search to 
                 allow search results to be Page Editable.
             </li>
-            
-        </ul> 
+
+        </ul>
     </dd>
     <dt>3.1.9</dt>
     <dd>
         <ul>
-            <li>
-                Code first fix for Sitecore 7.1
+            <li>Code first fix for Sitecore 7.1
             </li>
-            <li>
-                Allow anonymous type support for BeginRenderLink.
+            <li>Allow anonymous type support for BeginRenderLink.
             </li>
-            <li>
-                Support for basic image collection population.
+            <li>Support for basic image collection population.
             </li>
-            <li>
-                Changed how the display name of an item is pulled to avoid a blank display name still returning a value.
+            <li>Changed how the display name of an item is pulled to avoid a blank display name still returning a value.
             </li>
         </ul>
     </dd>
+    <dt>3.1.10</dt>
     <dd>
-        <dt>3.1.10</dt>
         <ul>
             <li>Fix to the GlassController to stop NullPointerExceptions being thrown when the data source points at a null item.</li>
             <li>Update to GetModel class (used by MVC View Renderings) to stop exception being throw in the data source point to a null item.</li>
             <li>Updated GlassHtml to pass attributes in RenderLink to the field render in page edit mode.</li>
             <li><a href="https://github.com/mikeedwards83/Glass.Mapper/pull/52">Issue 52</a> - Fixed race condition in interface property interceptor by <a href="https://github.com/smithc">Smithc</a>.</li>
             <li>Stopped Rich Text fields being editable if they are not marked for editting.</li>
+        </ul>
+    </dd>
+    <dt>3.2.0 - Next</dt>
+    <dd>
+        <ul>
+            <li>Restructure of Glass.Mapper.Sc to support the Glass.Mapper.Sc.Mvc assembly, see this <a href="http://glass.lu/2014/06/08/GlassMvcRelease.html">blog post</a></li>
+            <li>Fix to LazyItemEnumerable to support null values returned by Sitecore query.</li>
+            <li>Fix to BeginRenderLinks to support AbstractParameters</li>
         </ul>
     </dd>
 </dl>
