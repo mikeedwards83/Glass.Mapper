@@ -23,6 +23,7 @@ using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
 
@@ -232,6 +233,32 @@ namespace Glass.Mapper.Sc.Integration
             Assert.IsTrue(results.Any(x => x.Id == target1.ID));
             Assert.IsTrue(results.Any(x => x.Id == Sitecore.Context.Item.ID));
 
+        }
+
+        [Test]
+        public void QueryRelative_NoResultsReturnsEmptyResult()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var path = "/sitecore/content/Tests/SitecoreContext/QueryRelative/Source";
+            var scContext = new SitecoreContext();
+
+            Sitecore.Context.Item = db.GetItem(path);
+
+            var target1 = db.GetItem("/sitecore/content/Tests/SitecoreContext/QueryRelative/Target1");
+            var target2 = db.GetItem("/sitecore/content/Tests/SitecoreContext/QueryRelative/Target2");
+
+            using (new SecurityDisabler())
+            {
+                //Act
+                var results = scContext.QueryRelative<StubClass>("/*[@@templatename='notthere']");
+
+                //Assert
+                Assert.AreEqual(0, results.Count());
+            }
         }
 
         #endregion

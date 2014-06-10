@@ -47,6 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
 		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-3.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-3.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-4.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-4.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-5.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-5.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec
@@ -66,6 +69,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Umb.CastleWindsor", "Source\Glass.Mapper.Umb.CastleWindsor\Glass.Mapper.Umb.CastleWindsor.csproj", "{53C429E4-2583-4EB9-8226-554C70834E26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Razor.CastleWindsor", "Source\Glass.Mapper.Sc.Razor.CastleWindsor\Glass.Mapper.Sc.Razor.CastleWindsor.csproj", "{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Mvc", "Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj", "{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,6 +191,14 @@ Global
 		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Net45|Any CPU.Build.0 = Net45|Any CPU
 		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.CI|Any CPU.ActiveCfg = Release|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.CI|Any CPU.Build.0 = Release|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Net45|Any CPU.ActiveCfg = Net45|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Net45|Any CPU.Build.0 = Net45|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +213,7 @@ Global
 		{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{53C429E4-2583-4EB9-8226-554C70834E26} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
+		{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE} = {169BE730-8C91-4A4D-BB74-46E2FA4ADAC6}
 		{43520702-B92E-4A67-8CE5-1B3246DC9D75} = {2CDDAA46-B9F4-4965-AA06-57F2457BF785}
 		{184BB116-635E-470B-8343-7605D4BA684E} = {2CDDAA46-B9F4-4965-AA06-57F2457BF785}
 		{728CF1A7-0F06-4464-B434-33A982D97C82} = {43520702-B92E-4A67-8CE5-1B3246DC9D75}

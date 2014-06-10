@@ -144,7 +144,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             mapper.Setup(new DataMapperResolverArgs(null,config));
             mapper.Value = propertyValue;
 
-            var context = new UmbracoDataMappingContext(null, content, null);
+            var context = new UmbracoDataMappingContext(null, content, null, false);
 
             content.Properties[propertyAlias].Value = propertyValue;
 
@@ -175,7 +175,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
             mapper.Setup(new DataMapperResolverArgs(null, config));
             mapper.Value = propertyValue;
 
-            var context = new UmbracoDataMappingContext(new Stub(), content, null);
+            var context = new UmbracoDataMappingContext(new Stub(), content, null, false);
 
             content.Properties[propertyAlias].Value = string.Empty;
 

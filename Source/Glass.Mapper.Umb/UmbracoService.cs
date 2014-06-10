@@ -37,6 +37,8 @@ namespace Glass.Mapper.Umb
         /// </value>
         public IContentService ContentService { get; private set; }
 
+        public bool PublishedOnly { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UmbracoService"/> class.
         /// </summary>
@@ -86,7 +88,10 @@ namespace Glass.Mapper.Umb
             {
                 return null;
             }
-            var item = ContentService.GetById(id.Value);
+            var item = PublishedOnly
+                           ? ContentService.GetPublishedVersion(id.Value)
+                           : ContentService.GetById(id.Value);
+
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
@@ -101,6 +106,10 @@ namespace Glass.Mapper.Umb
         public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
         {
             var item = ContentService.GetById(id);
+
+            if (PublishedOnly)
+                item = ContentService.GetPublishedVersion(item.Id);
+
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
@@ -154,7 +163,8 @@ namespace Glass.Mapper.Umb
                     ConstructorParameters = constructorParameters,
                     Content = content,
                     InferType = inferType,
-                    IsLazy = isLazy
+                    IsLazy = isLazy,
+                    PublishedOnly =  PublishedOnly
                 };
             var obj = InstantiateObject(creationContext);
 
@@ -393,7 +403,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var umbTypeContext = abstractTypeCreationContext as UmbracoTypeCreationContext;
-            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this);
+            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this, umbTypeContext.PublishedOnly);
         }
 
         /// <summary>
@@ -404,7 +414,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
         {
             var umbContext = creationContext as UmbracoTypeSavingContext;
-            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this);
+            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this, umbContext.PublishedOnly);
         }
     }
 }
