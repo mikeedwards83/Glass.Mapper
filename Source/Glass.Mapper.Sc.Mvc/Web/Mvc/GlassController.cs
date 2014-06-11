@@ -35,13 +35,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public virtual T GetRenderingParameters<T>() where T:class
         {
-            var parameters = new NameValueCollection();
-            foreach (var pair in Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.Parameters)
-            {
-                parameters[pair.Key] = pair.Value;
-            }
             return
-                GlassHtml.GetRenderingParameters<T>(parameters);
+                GlassHtml.GetRenderingParameters<T>(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters]);
         }
 
         public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class

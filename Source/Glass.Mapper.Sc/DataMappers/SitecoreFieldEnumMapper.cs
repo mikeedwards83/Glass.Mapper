@@ -56,9 +56,10 @@ namespace Glass.Mapper.Sc.DataMappers
                 if (Enum.IsDefined(enumType, fieldValue))
                     return Enum.Parse(enumType, fieldValue, true);
                 else if (!fieldValue.IsNullOrEmpty())
-                    throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(fieldValue, enumType.FullName));
+                    throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(fieldValue,
+                                                                                                     enumType.FullName));
                 else
-                    throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(fieldValue, enumType.FullName));
+                   return Enum.GetValues(enumType).GetValue(0);
 
             }
         }

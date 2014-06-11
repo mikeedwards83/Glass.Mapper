@@ -31,6 +31,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// <typeparam name="TModel"></typeparam>
     public abstract class GlassView<TModel> : WebViewPage<TModel>
     {
+
         /// <summary>
         /// 
         /// </summary>
@@ -242,11 +243,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public T GetRenderingParameters<T>() where T: class
         {
-            var parameters = new NameValueCollection();
-            foreach (var pair in Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.Parameters)
-            {
-                parameters[pair.Key] = pair.Value;
-            }
+            var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
         }

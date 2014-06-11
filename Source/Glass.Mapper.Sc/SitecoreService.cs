@@ -245,9 +245,7 @@ namespace Glass.Mapper.Sc
 
             //write new data to the item
 
-            item.Editing.BeginEdit();
             WriteToItem(newItem, item, updateStatistics, silent);
-            item.Editing.EndEdit(updateStatistics, silent);
 
             //then read it back
 

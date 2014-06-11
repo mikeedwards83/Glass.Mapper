@@ -61,12 +61,28 @@ namespace Glass.Mapper.Umb.DataMappers
             Func<IEnumerable<IContent>> getItems = null;
             if (umbContext.PublishedOnly)
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id)
+                if (String.IsNullOrWhiteSpace(umbConfig.DocumentTypeAlias))
+                {
+                    getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id)
                                      .Select(c => umbContext.Service.ContentService.GetPublishedVersion(c.Id));
+                }
+                else
+                {
+                    getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id)
+                        .Where(c => c.ContentType.Alias == umbConfig.DocumentTypeAlias)
+                        .Select(c => umbContext.Service.ContentService.GetPublishedVersion(c.Id));
+                }
             }
             else
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+                if (String.IsNullOrWhiteSpace(umbConfig.DocumentTypeAlias))
+                {
+                    getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+                }
+                else
+                {
+                    getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.ContentType.Alias == umbConfig.DocumentTypeAlias);
+                }
             }
 
             return Utilities.CreateGenericType(

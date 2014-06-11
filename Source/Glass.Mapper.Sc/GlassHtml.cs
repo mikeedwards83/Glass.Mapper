@@ -48,6 +48,8 @@ namespace Glass.Mapper.Sc
     {
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
+        public const string Parameters = "Parameters";
+
 
         /// <summary>
         /// Gets the sitecore context.
@@ -152,7 +154,7 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext[typeof (T)] as SitecoreTypeConfiguration;
+            var config = SitecoreContext.GlassContext.GetTypeConfiguration < SitecoreTypeConfiguration>(typeof(T));
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 

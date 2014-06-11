@@ -35,10 +35,15 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// <returns></returns>
         public override AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
-            var config = new UmbracoChildrenConfiguration();
+            var config = new UmbracoChildrenConfiguration {DocumentTypeAlias = DocumentTypeAlias};
             base.Configure(propertyInfo, config);
             return config;
         }
+
+        /// <summary>
+        /// Indicates which Document Type this property should map to
+        /// </summary>
+        public virtual string DocumentTypeAlias { get; set; }
     }
 }
 
