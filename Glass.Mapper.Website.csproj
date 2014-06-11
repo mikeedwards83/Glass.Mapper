@@ -126,7 +126,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="_posts\2014-03-21-PageEditor.html" />
     <Content Include="_posts\2014-04-25-GlassMvc.html" />
-    <Content Include="_posts\2014-04-25-GlassMvcRelease.html" />
+    <Content Include="_posts\2014-06-08-GlassMvcRelease.html" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
