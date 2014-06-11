@@ -17,12 +17,8 @@
 //-CRE-
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Sc.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {

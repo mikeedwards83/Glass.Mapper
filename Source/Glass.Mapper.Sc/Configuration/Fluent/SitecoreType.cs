@@ -189,7 +189,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreInfo{`0}.</returns>
         public SitecoreInfo<T> Info(Expression<Func<T, object>> ex)
         {
-            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex);
+            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex, _configuration);
+            _configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
+        /// <summary>
+        /// Map the item being mapped to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreInfo{`0}.</returns>
+        public SitecoreItem<T> Item(Expression<Func<T, object>> ex)
+        {
+            SitecoreItem<T> builder = new SitecoreItem<T>(ex, _configuration);
             _configuration.AddProperty(builder.Configuration);
             return builder;
         }

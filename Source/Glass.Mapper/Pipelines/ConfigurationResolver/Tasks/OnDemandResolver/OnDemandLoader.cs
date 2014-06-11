@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {
@@ -48,14 +48,23 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         /// </returns>
         public IEnumerable<AbstractTypeConfiguration> Load()
         {
-            var config = new T();
 
-            config.Type = _type;
-            config.ConstructorMethods = Utilities.CreateConstructorDelegates(config.Type);
-            config.AutoMap = true;
+            var loader = new AttributeTypeLoader(_type);
+            var config = loader.Load().FirstOrDefault();
+
+            if (config == null)
+            {
+                config = new T();
+                config.Type = _type;
+                config.ConstructorMethods = Utilities.CreateConstructorDelegates(config.Type);
+                config.AutoMap = true;
+            }
 
             return new[] {config};
+
         }
+
+
     }
 }
 

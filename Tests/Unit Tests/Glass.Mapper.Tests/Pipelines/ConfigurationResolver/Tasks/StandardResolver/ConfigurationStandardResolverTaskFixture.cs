@@ -18,9 +18,7 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
@@ -39,7 +37,7 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
         {
             //Assign
 
-            var glassConfig = Substitute.For<IGlassConfiguration>();
+            Substitute.For<IGlassConfiguration>();
 
             var type = typeof (StubClass);
             
@@ -54,9 +52,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             context.Load(loader);
 
             var args = new ConfigurationResolverArgs(context, new StubAbstractTypeCreationContext()
-                                                                  {
-                                                                      RequestedType = type
-                                                                  } );
+                {
+                    RequestedType = type
+                }, type, null);
 
             var task = new ConfigurationStandardResolverTask();
 

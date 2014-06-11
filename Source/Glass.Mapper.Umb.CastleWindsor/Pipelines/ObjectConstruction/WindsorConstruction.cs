@@ -42,7 +42,8 @@ namespace Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction
                 var resolver = args.Context.DependencyResolver as DependencyResolver;
                 if (resolver != null)
                 {
-                    var type = args.Configuration.Type;
+                    var config = args.Configuration;
+                    var type = config.Type;
                     var container = resolver.Container;
 
                     if (type.IsClass)
@@ -53,7 +54,7 @@ namespace Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction
                         args.Result = container.Resolve(type);
                         
                         if(args.Result != null)
-                            args.Configuration.MapPropertiesToObject(args.Result, args.Service, args.AbstractTypeCreationContext);
+                            config.MapPropertiesToObject(args.Result, args.Service, args.AbstractTypeCreationContext);
                     }
                 }
             }

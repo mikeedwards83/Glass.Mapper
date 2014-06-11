@@ -16,6 +16,9 @@
 */ 
 //-CRE-
 using System;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
+using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;
@@ -98,8 +101,14 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             Item obj = ObjectExtensions.ValueOrDefault<RenderingItem, Item>(rendering.RenderingItem, (Func<RenderingItem, Item>)(i => i.InnerItem));
             if (obj == null)
                 return (object)null;
+            else if (rendering.Item == null)
+            {
+                return null;
+            }
             else
-                return GetObject(obj[ModelField], rendering.Item.Database);
+            {
+                return GetObject(obj[ModelField], rendering.Item.Database, rendering);
+            }
         }
 
         /// <summary>
@@ -114,7 +123,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object)null;
             else
-                return GetObject(model, rendering.Item.Database);
+                return GetObject(model, rendering.Item.Database, rendering);
         }
 
         /// <summary>
@@ -132,7 +141,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object) null;
             else
-                return GetObject(model, rendering.Item.Database);
+                return GetObject(model, rendering.Item.Database, rendering);
         }
 
         /// <summary>
@@ -147,7 +156,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (StringExtensions.IsWhiteSpaceOrNull(model))
                 return (object) null;
             else
-                return GetObject(model, rendering.Item.Database);
+                return GetObject(model, rendering.Item.Database, rendering);
         }
 
 
@@ -158,7 +167,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="db">The db.</param>
         /// <returns></returns>
         /// <exception cref="Glass.Mapper.MapperException">Failed to find context {0}.Formatted(ContextName)</exception>
-        public object GetObject(string model, Database db)
+        public object GetObject(string model, Database db, Rendering renderingItem)
         {
 
             if (model.IsNullOrEmpty())
@@ -172,7 +181,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                     return null;
 
                 string newModel = target[ModelTypeField];
-                return GetObject(newModel, db);
+                return GetObject(newModel, db, renderingItem);
             }
             //if guid must be that to Model item
             Guid targetId;
@@ -183,28 +192,42 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                     return null;
 
                 string newModel = target[ModelTypeField];
-                return GetObject(newModel, db);
+                return GetObject(newModel, db, renderingItem);
             }
 
-            var type = Type.GetType(model, true);
+
+            var type = Type.GetType(model, false);
 
             if (type == null)
                 return null;
 
-            var context = Context.Contexts[ContextName];
+            var context = Context.Contexts.ContainsKey(ContextName) ? Context.Contexts[ContextName] : null;
             if (context == null) throw new MapperException("Failed to find context {0}".Formatted(ContextName));
 
-            if (context.TypeConfigurations.ContainsKey(type))
+            //this is really aggressive
+            if (!context.TypeConfigurations.ContainsKey(type))
             {
-                ISitecoreContext scContext = new SitecoreContext(context);
-                var result = scContext.GetCurrentItem(type);
-               return result;
+                //if the config is null then it is probably an ondemand mapping so we have to load the ondemand part
+
+                IConfigurationLoader loader =
+                    new OnDemandLoader<SitecoreTypeConfiguration>(type);
+                context.Load(loader);
+
             }
-            return null;
+            ISitecoreContext scContext = new SitecoreContext(context);
+
+            if (renderingItem.DataSource.IsNotNullOrEmpty())
+            {
+                var item = scContext.Database.GetItem(renderingItem.DataSource);
+                return scContext.CreateType(type, item, false, false, null);
+            }
+
+            return scContext.GetCurrentItem(type);
+
         }
 
-        
-      
+
+
     }
 }
 

@@ -32,21 +32,23 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns>Sitecore.Mvc.Presentation.Renderer.</returns>
-        protected override global::Sitecore.Mvc.Presentation.Renderer GetRenderer(
-            global::Sitecore.Mvc.Presentation.Rendering rendering, 
+        protected override Sitecore.Mvc.Presentation.Renderer GetRenderer(
+            Sitecore.Mvc.Presentation.Rendering rendering, 
             GetRendererArgs args)
         {
 
-            var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
-            if (renderItem.TemplateName == "GlassDynamicRazor")
+            if (rendering.Item != null)
             {
-                DynamicViewRenderer render = new DynamicViewRenderer();
-                render.Path = renderItem["Name"];
-                render.ContextName = renderItem["ContextName"];
-                render.DataSource = rendering.DataSource;
-                return render;
+                var renderItem = rendering.Item.Database.GetItem(new ID(rendering.RenderingItemPath));
+                if (renderItem.TemplateName == "GlassDynamicRazor")
+                {
+                    var render = new DynamicViewRenderer();
+                    render.Path = renderItem["Name"];
+                    render.ContextName = renderItem["ContextName"];
+                    render.DataSource = rendering.DataSource;
+                    return render;
+                }
             }
-
             return null;
         }
     }

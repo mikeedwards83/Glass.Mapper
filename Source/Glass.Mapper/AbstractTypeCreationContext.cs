@@ -18,10 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper
 {
@@ -30,6 +26,10 @@ namespace Glass.Mapper
     /// </summary>
     public abstract class AbstractTypeCreationContext
     {
+        public AbstractTypeCreationContext()
+        {
+            Parameters = new Dictionary<string, object>();
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [infer type].
@@ -42,15 +42,25 @@ namespace Glass.Mapper
         /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
         public bool IsLazy { get; set; }
         /// <summary>
-        /// Gets or sets the type of the requested.
+        /// Gets or sets the types requested.
         /// </summary>
-        /// <value>The type of the requested.</value>
+        /// <value>The types requested.</value>
         public Type RequestedType { get; set; }
         /// <summary>
         /// Gets or sets the constructor parameters.
         /// </summary>
         /// <value>The constructor parameters.</value>
         public object[] ConstructorParameters { get; set; }
+
+        /// <summary>
+        /// Parameters that will be passed to the pipelines
+        /// </summary>
+        public Dictionary<string, object> Parameters { get; set; }
+
+        public virtual string DataSummary()
+        {
+            return string.Empty;
+        }
     }
 }
 

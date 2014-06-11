@@ -1,15 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <dashBoard>
+
   <section alias="StartupSettingsDashboardSection">
     <areas>
       <area>settings</area>
     </areas>
-    <tab caption="Get Started">
+    <tab caption="Welcome">
       <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/settingsdashboardintro.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/settingsdashboardvideos.ascx
+        views/dashboard/settings/settingsdashboardintro.html
       </control>
     </tab>
   </section>
@@ -20,11 +18,11 @@
     </areas>
     <tab caption="Get Started">
       <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/developerdashboardintro.ascx
+        views/dashboard/developer/developerdashboardvideos.html
       </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/developerdashboardvideos.ascx
-      </control>
+    </tab>
+    <tab caption="Examine Management">
+      <control>/umbraco/dashboard/ExamineManagement.ascx</control>
     </tab>
   </section>
 
@@ -34,20 +32,10 @@
     </areas>
     <tab caption="Content">
       <control showOnce="false" addPanel="false" panelCaption="">
-        /umbraco/dashboard/mediadashboardfolderbrowser.ascx
-      </control>
-    </tab>	
-    <tab caption="Get Started">
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/mediadashboardintro.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/desktopmediauploader.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/mediadashboardvideos.ascx
+        views/dashboard/media/mediafolderbrowser.html
       </control>
     </tab>
+    
   </section>
 
   <section alias="StartupDashboardSection">
@@ -58,22 +46,15 @@
       <area>content</area>
     </areas>
     <tab caption="Get Started">
+      <access>
+        <grant>admin</grant>
+      </access>
       <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/startupdashboardintro.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/startupdashboardkits.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/startupdashboardvideos.ascx
-      </control>
+        views/dashboard/default/startupdashboardintro.html
+      </control>      
+      
     </tab>
-    <tab caption="Last Edits">
-      <control addPanel="true" MaxRecords="30">/umbraco/dashboard/latestEdits.ascx</control>
-    </tab>
-    <tab caption="Change Password">
-      <control addPanel="true">/umbraco/dashboard/changepassword.ascx</control>
-    </tab>
+    
   </section>
 
   <section alias="StartupMemberDashboardSection">
@@ -82,31 +63,8 @@
     </areas>
     <tab caption="Get Started">
       <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/membersdashboardintro.ascx
+        views/dashboard/members/membersdashboardvideos.html
       </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/members/membersearch.ascx
-      </control>
-      <control showOnce="true" addPanel="true" panelCaption="">
-        /umbraco/dashboard/membersdashboardvideos.ascx
-      </control>
-    </tab>
-  </section>
-
-  <section alias="uGoLiveDashboardSection">
-    <areas>
-      <area>developer</area>
-    </areas>
-    <tab caption="uGoLive Checklist">
-      <control>/umbraco/plugins/uGoLive/Dashboard.ascx</control>
-    </tab>
-  </section>
-  <section alias="ExamineManagement">
-    <areas>
-      <area>developer</area>
-    </areas>
-    <tab caption="Examine Management">
-      <control>/umbraco/dashboard/ExamineManagement.ascx</control>
     </tab>
   </section>
 </dashBoard>

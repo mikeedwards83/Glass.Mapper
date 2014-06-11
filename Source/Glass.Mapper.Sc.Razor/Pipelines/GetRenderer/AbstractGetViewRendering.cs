@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
         {
             if (args.Result != null)
                 return;
-            args.Result = this.GetRenderer(args.Rendering, args);
+            args.Result = GetRenderer(args.Rendering, args);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Glass.Mapper.Sc.Razor.Pipelines.GetRenderer
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns>Sitecore.Mvc.Presentation.Renderer.</returns>
-        protected abstract global::Sitecore.Mvc.Presentation.Renderer GetRenderer(global::Sitecore.Mvc.Presentation.Rendering rendering, GetRendererArgs args);
+        protected abstract Sitecore.Mvc.Presentation.Renderer GetRenderer(Sitecore.Mvc.Presentation.Rendering rendering, GetRendererArgs args);
 
     }
 }

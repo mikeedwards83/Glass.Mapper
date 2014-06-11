@@ -17,10 +17,7 @@
 //-CRE-
 
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
 {
@@ -37,7 +34,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
         {
             if (args.Result == null)
             {
-                args.Result = args.Context[args.AbstractTypeCreationContext.RequestedType];
+                args.Result = args.Context[args.RequestedType];
             }
 
         }

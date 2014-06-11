@@ -226,8 +226,8 @@
     <key alias="stylesNoStylesOnPage">Geen actieve stijlen beschikbaar</key>
     <key alias="tableColMergeLeft">Plaats de cursor links van de twee cellen die je wilt samenvoegen</key>
     <key alias="tableSplitNotSplittable">Je kunt een cel die is samengevoegd niet delen</key>
-    <key alias="xsltErrorHeader">Fout in de xslt bron</key>
-    <key alias="xsltErrorText">De xslt is niet opgeslagen omdat deze fout(en) bevat</key>
+    <key alias="xsltErrorHeader">Fout in de XSLT bron</key>
+    <key alias="xsltErrorText">De XSLT is niet opgeslagen omdat deze fout(en) bevat</key>
   </area>
   <area alias="general">
     <key alias="about">Over</key>
@@ -447,14 +447,14 @@ Echter, Runway biedt een gemakkelijke basis om je snel op weg te helpen. Als je 
     <key alias="mailBodyHtml"><![CDATA[<p>Hi %0%</p>
 
 		  <p>Dit is een geautomatiseerde mail om u op de hoogte te brengen dat de taak <strong>'%1%'</strong> 
-		  is uitgevoerd op pagina <strong>'%2%'</strong> 
+		  is uitgevoerd op pagina <a href="http://%4%/actions/preview.aspx?id=%5%"><strong>'%2%'</strong></a> 
 		  door gebruiker <strong>'%3%'</strong>
 	  </p>
 		  <div class="buttons">
 				<br />
-				<a class="buttonPublish" href="http://%4%/umbraco/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; 
-				<a class="buttonEdit" href="http://%4%/umbraco/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; 
-				<a class="buttonDelete" href="http://%4%/umbraco/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				<a class="buttonPublish" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; 
+				<a class="buttonEdit" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; 
+				<a class="buttonDelete" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a>
 				<br />
 		  </div>
 		  <p>
@@ -466,9 +466,9 @@ Echter, Runway biedt een gemakkelijke basis om je snel op weg te helpen. Als je 
 
 		  <div class="buttons">
 				<br />
-				<a class="buttonPublish" href="http://%4%/umbraco/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; 
-				<a class="buttonEdit" href="http://%4%/umbraco/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; 
-				<a class="buttonDelete" href="http://%4%/umbraco/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				<a class="buttonPublish" href="http://%4%/actions/publish.aspx?id=%5%">&nbsp;&nbsp;PUBLISH&nbsp;&nbsp;</a> &nbsp; 
+				<a class="buttonEdit" href="http://%4%/actions/editContent.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; 
+				<a class="buttonDelete" href="http://%4%/actions/delete.aspx?id=%5%">&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;&nbsp;&nbsp;&nbsp;</a>
 				<br />
 		  </div>
 
@@ -645,11 +645,11 @@ Echter, Runway biedt een gemakkelijke basis om je snel op weg te helpen. Als je 
     <key alias="templateErrorText">Controleer dat je geen 2 tamplates met dezelfde naam hebt</key>
     <key alias="templateSavedHeader">Template opgeslagen</key>
     <key alias="templateSavedText">Template opgeslagen zonder fouten!</key>
-    <key alias="xsltErrorHeader">Xslt niet opgeslagen</key>
-    <key alias="xsltErrorText">Xslt bevat een fout</key>
-    <key alias="xsltPermissionErrorText">Xslt kon niet worden opgeslagen, controleer de bestandsbeveiliging</key>
-    <key alias="xsltSavedHeader">Xslt opgeslagen</key>
-    <key alias="xsltSavedText">Geen fouten in de xslt!</key>
+    <key alias="xsltErrorHeader">XSLT niet opgeslagen</key>
+    <key alias="xsltErrorText">XSLT bevat een fout</key>
+    <key alias="xsltPermissionErrorText">XSLT kon niet worden opgeslagen, controleer de bestandsbeveiliging</key>
+    <key alias="xsltSavedHeader">XSLT opgeslagen</key>
+    <key alias="xsltSavedText">Geen fouten in de XSLT!</key>
   </area>
   <area alias="stylesheet">
     <key alias="aliasHelp">Gebruik CSS syntax bijv: h1, .redHeader, .blueTex</key>
@@ -781,7 +781,6 @@ Om een vertalingstaak te sluiten, ga aub naar het detailoverzicht en klik op de 
     <key alias="changePassword">Verander je wachtwoord</key>
     <key alias="changePasswordDescription">Je kunt je wachtwoord veranderen door onderstaan formulier in te vullen en op de knop 'Verander wachtwoord' te klikken </key>
     <key alias="contentChannel">Content Channel</key>
-    <key alias="defaultToLiveEditing">Doorlinken naar Canvas bij inloggen</key>
     <key alias="descriptionField">Omschrijving</key>
     <key alias="disabled">Geblokkeerde gebruiker</key>
     <key alias="documentType">Documenttype</key>

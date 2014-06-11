@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
 
@@ -44,6 +45,30 @@ namespace Glass.Mapper.Sc.DataMappers
         public AbstractSitecoreFieldMapper(params Type [] typesHandled)
         {
             TypesHandled = typesHandled;
+        }
+
+        public override void MapCmsToProperty(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapCmsToProperty(mappingContext);
+        }
+
+        public override void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            base.MapPropertyToCms(mappingContext);
         }
 
         /// <summary>
@@ -95,9 +120,16 @@ namespace Glass.Mapper.Sc.DataMappers
         public virtual object GetField(Field field, SitecoreFieldConfiguration config,
                                        SitecoreDataMappingContext context)
         {
-            var fieldValue = field.Value;
-
-            return GetFieldValue(fieldValue, config, context);
+            
+                var fieldValue = field.Value;
+            try
+            {
+                return GetFieldValue(fieldValue, config, context);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted( field.Name, fieldValue), ex);
+            }
         }
         /// <summary>
         /// Sets the field.
@@ -140,6 +172,14 @@ namespace Glass.Mapper.Sc.DataMappers
             return configuration is SitecoreFieldConfiguration &&
                    TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);
         }
+
+        public override void Setup(Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs args)
+        {
+            var scArgs = args.PropertyConfiguration as FieldConfiguration;
+            this.ReadOnly = scArgs.ReadOnly;
+            base.Setup(args);
+        }
+        
     }
 }
 

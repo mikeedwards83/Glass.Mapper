@@ -28,8 +28,8 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
     /// </summary>
     public abstract class AbstractCachingRenderingType : RenderingType
     {
-        private static readonly object _key = new object();
-        private static readonly object _typeKey = new object();
+        private static readonly object Key = new object();
+        private static readonly object TypeKey = new object();
 
         /// <summary>
         /// Gets the loaded types.
@@ -44,7 +44,7 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
         {
             if (LoadedTypes == null)
             {
-                lock (_key)
+                lock (Key)
                 {
                     if (LoadedTypes == null)
                     {
@@ -75,7 +75,7 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
                 //we added to the collection making sure no one else added it before
                 if (!LoadedTypes.ContainsKey(typeName))
                 {
-                    lock (_typeKey)
+                    lock (TypeKey)
                     {
                         if (!LoadedTypes.ContainsKey(typeName))
                         {

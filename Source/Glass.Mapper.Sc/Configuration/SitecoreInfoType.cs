@@ -17,11 +17,6 @@
 //-CRE-
 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Glass.Mapper.Sc.Configuration
 {
     /// <summary>
@@ -80,7 +75,12 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The items language. The property type must be Sitecore.Globalization.Language
         /// </summary>
-        Language
+        Language,
+        
+        /// <summary>
+        /// Gets the Base Template IDs - does not return the template is. The property type must be IEnumerable&lt;Guid&gt;
+        /// </summary>
+        BaseTemplateIds
     }
 }
 

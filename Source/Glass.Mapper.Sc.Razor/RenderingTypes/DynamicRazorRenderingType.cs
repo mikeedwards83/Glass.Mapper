@@ -67,7 +67,7 @@ namespace Glass.Mapper.Sc.Razor.RenderingTypes
                 return AbstractCachingRenderingType.ErrorControl(view);
             }
 
-            IRazorControl control = global::Sitecore.Reflection.ReflectionUtil.CreateObject(typeof(DynamicControl)) as IRazorControl;
+            IRazorControl control = Sitecore.Reflection.ReflectionUtil.CreateObject(typeof(DynamicControl)) as IRazorControl;
             control.View = razorView;
             control.ContextName = contextName;
             return control as System.Web.UI.WebControls.WebControl;
