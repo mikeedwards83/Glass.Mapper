@@ -31,6 +31,9 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldIntegerMapper : AbstractSitecoreFieldMapper
     {
+
+        protected override object DefaultValue { get { return 0; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldIntegerMapper"/> class.
         /// </summary>

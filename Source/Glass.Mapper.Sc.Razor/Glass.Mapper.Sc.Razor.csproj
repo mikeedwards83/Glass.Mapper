@@ -72,9 +72,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
-	<Reference Include="System.Web.Mvc">
-		<HintPath>..\..\Depends\System.Web.Mvc\v3\System.Web.Mvc.dll</HintPath>
-	</Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Depends\System.Web.Mvc\v3\System.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
     <Reference Include="RazorEngine">
@@ -88,9 +88,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Depends\Sitecore\bin_Net4\Sitecore.Mvc.dll</HintPath>
     </Reference>
-	<Reference Include="System.Web.Mvc">
-		<HintPath>..\..\Depends\System.Web.Mvc\v4\System.Web.Mvc.dll</HintPath>
-	</Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Depends\System.Web.Mvc\v4\System.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
@@ -103,7 +103,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
@@ -149,6 +148,7 @@
     <Compile Include="Shell\Wizards\TypedWizard.cs" />
     <Compile Include="SitecoreIds.cs" />
     <Compile Include="ViewManager.cs" />
+    <Compile Include="Web\HtmlHelpers.cs" />
     <Compile Include="Web\Mvc\AbstractViewRendering.cs" />
     <Compile Include="Web\Mvc\BehindViewRenderer.cs" />
     <Compile Include="Web\Mvc\DynamicViewRenderer.cs" />

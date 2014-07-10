@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using RazorEngine.Text;
 using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
@@ -37,6 +38,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <param name="viewData">The view data.</param>
         /// <param name="parentControl">The parent control.</param>
         void Configure(ISitecoreContext sitecoreContext, ViewDataDictionary viewData, WebControl parentControl);
+        IEncodedString Placeholder(string placeholderName);
+        IEncodedString Raw(string rawString);
     }
 }
 

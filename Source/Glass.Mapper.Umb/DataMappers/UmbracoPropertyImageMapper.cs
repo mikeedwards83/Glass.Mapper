@@ -48,7 +48,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetProperty(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            if (property == null)
+            if (property == null || property.Value == null)
                 return null;
 
             var mediaService = new MediaService(new RepositoryFactory());
