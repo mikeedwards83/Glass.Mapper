@@ -383,7 +383,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             var providers = context.DataManager.Database.GetDataProviders();
             //var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
-            var interfaces = cls.Type.GetInterfaces();
+            var interfaces = cls.Type.GetInterfaces().Where(i => System.Attribute.IsDefined(i,typeof (Glass.Mapper.Sc.Configuration.Attributes.SitecoreTypeAttribute)));
 
             foreach (var field in fields)
             {
