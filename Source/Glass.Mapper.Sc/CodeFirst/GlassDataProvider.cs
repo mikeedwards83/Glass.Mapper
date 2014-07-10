@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </summary>
         /// <value>The name of the database.</value>
         public string DatabaseName { get; private set; }
-        
+
         /// <summary>
         /// The name of the GlassContext to load
         /// </summary>
@@ -147,7 +147,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             SectionTable = new List<SectionInfo>();
             FieldTable = new List<FieldInfo>();
         }
-           
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassDataProvider"/> class.
         /// </summary>
@@ -354,7 +354,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                         new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, newSortOrder);
 
                     SectionTable.Add(record);
-                    }
+                }
 
                 processed.Add(section.SectionName);
 
@@ -389,7 +389,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             IDList fieldIds = new IDList();
 
-            var interfaces = cls.Type.GetInterfaces();
+            var interfaces = cls.Type.GetInterfaces().Where(i => System.Attribute.IsDefined(i,typeof (Glass.Mapper.Sc.Configuration.Attributes.SitecoreTypeAttribute)));
 
             foreach (var field in fields)
             {
@@ -415,8 +415,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                     }
                             else
                             {
-                                sqlProvider.DeleteItem(existing, context);
-                            }
+                            sqlProvider.DeleteItem(existing, context);
+                    }
                         }
                     }
 
@@ -520,7 +520,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         {
             if (_setupComplete || _setupProcessing)
                 return;
-            
+
             lock (_setupLock)
             {
                 try
@@ -562,7 +562,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                         ClearCaches(db);
                     }
-                    
+
                     Sitecore.Diagnostics.Log.Info("Finished CodeFirst setup " + db.Name, this);
                 }
                 catch (Exception ex)
@@ -570,7 +570,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                     Sitecore.Diagnostics.Log.Error("CodeFirst error " + ex.Message, ex, this);
                     throw;
                 }
-                finally 
+                finally
                 {
                     _setupComplete = true;
                 }
@@ -590,9 +590,9 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <exception cref="Sitecore.Exceptions.RequiredObjectIsNullException">TemplateItem is null for ID {0}.Formatted(templateDefinition.ID)</exception>
         private ItemDefinition CreateTemplateItem(
             Database db,
-            SitecoreTypeConfiguration config, 
-            Type type, 
-            DataProvider sqlDataProvider, 
+            SitecoreTypeConfiguration config,
+            Type type,
+            DataProvider sqlDataProvider,
             ItemDefinition containingFolder,
             CallContext context)
         {
@@ -773,8 +773,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                 return true;
             }
 
-                return false;
-            }
+            return false;
+        }
 
         /// <summary>
         /// Bases the template checks.
@@ -783,7 +783,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <param name="config">The config.</param>
         /// <param name="db">The database.</param>
         private void BaseTemplateChecks(
-            ItemDefinition template, 
+            ItemDefinition template,
             SitecoreTypeConfiguration config,
             Database db)
         {
@@ -814,7 +814,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             while (baseType != null)
             {
-                idCheck(baseType);
+                idCheck(baseType);    
                 baseType = baseType.BaseType;
             }
 

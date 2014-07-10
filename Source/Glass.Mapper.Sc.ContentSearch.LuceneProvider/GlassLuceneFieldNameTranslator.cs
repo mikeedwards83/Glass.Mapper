@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.LuceneProvider;
+using Sitecore.ContentSearch.Utilities;
 
 namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 {
@@ -21,7 +23,9 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
             var fieldConfig = member.GetCustomAttribute<SitecoreFieldAttribute>(true);
             if (fieldConfig == null && member.DeclaringType != null)
             {
-                var interfaceFromProperty = member.DeclaringType.GetInterfaces().FirstOrDefault(inter => inter.GetProperty(member.Name) != null);
+                var interfaces = member.DeclaringType.GetInterfaces();
+                var interfaceFromProperty = interfaces.FirstOrDefault(@interface => @interface.GetProperties().Any(p => p.Name == member.Name));
+                
                 if (interfaceFromProperty != null)
                 {
                     fieldConfig = interfaceFromProperty.GetMember(member.Name).First().GetCustomAttribute<SitecoreFieldAttribute>(true);
@@ -37,7 +41,9 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
                 if (infoConfig == null && member.DeclaringType != null)
                 {
-                    var interfaceFromProperty = member.DeclaringType.GetInterfaces().FirstOrDefault(inter => inter.GetProperty(member.Name) != null);
+                    var interfaces = member.DeclaringType.GetInterfaces();
+                    var interfaceFromProperty = interfaces.FirstOrDefault(@interface => @interface.GetProperties().Any(p => p.Name == member.Name));
+                    
                     if (interfaceFromProperty != null)
                     {
                         infoConfig = interfaceFromProperty.GetMember(member.Name).First().GetCustomAttribute<SitecoreInfoAttribute>(true);
