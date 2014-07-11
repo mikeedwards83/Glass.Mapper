@@ -15,11 +15,7 @@
  
 */ 
 //-CRE-
-using Glass.Mapper.Umb;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Umbraco.Core.Models;
 
 namespace Glass.Mapper.Umb
@@ -44,8 +40,6 @@ namespace Glass.Mapper.Umb
         /// The umbraco service.
         /// </value>
         public IUmbracoService UmbracoService { get; set; }
-
-        public bool PublishedOnly { get; set; }
     }
 }
 

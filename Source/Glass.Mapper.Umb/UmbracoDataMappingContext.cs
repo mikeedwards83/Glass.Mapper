@@ -30,12 +30,11 @@ namespace Glass.Mapper.Umb
         /// <param name="obj">The obj.</param>
         /// <param name="content">The content.</param>
         /// <param name="service">The service.</param>
-        public UmbracoDataMappingContext(object obj, IContent content, IUmbracoService service, bool publishedOnly)
+        public UmbracoDataMappingContext(object obj, IContent content, IUmbracoService service)
             : base(obj)
         {
             Content = content;
             Service = service;
-            PublishedOnly = publishedOnly;
         }
 
         /// <summary>
@@ -53,9 +52,6 @@ namespace Glass.Mapper.Umb
         /// The service.
         /// </value>
         public IUmbracoService Service { get; set; }
-
-
-        public bool PublishedOnly { get; set; }
     }
 }
 

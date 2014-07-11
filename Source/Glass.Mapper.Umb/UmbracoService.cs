@@ -163,8 +163,7 @@ namespace Glass.Mapper.Umb
                     ConstructorParameters = constructorParameters,
                     Content = content,
                     InferType = inferType,
-                    IsLazy = isLazy,
-                    PublishedOnly =  PublishedOnly
+                    IsLazy = isLazy
                 };
             var obj = InstantiateObject(creationContext);
 
@@ -403,7 +402,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var umbTypeContext = abstractTypeCreationContext as UmbracoTypeCreationContext;
-            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this, umbTypeContext.PublishedOnly);
+            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this);
         }
 
         /// <summary>
@@ -414,7 +413,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
         {
             var umbContext = creationContext as UmbracoTypeSavingContext;
-            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this, umbContext.PublishedOnly);
+            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this);
         }
     }
 }

@@ -38,12 +38,11 @@ namespace Glass.Mapper.Umb.DataMappers
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             int id;
+
             if (propertyValue == null || !int.TryParse(propertyValue.ToString(), out id))
                 return null;
 
-            var item = context.PublishedOnly
-                           ? context.Service.ContentService.GetPublishedVersion(id)
-                           : context.Service.ContentService.GetById(id);
+            var item = context.Service.ContentService.GetById(id);
 
             return context.Service.CreateType(config.PropertyInfo.PropertyType, item, IsLazy, InferType);
         }
