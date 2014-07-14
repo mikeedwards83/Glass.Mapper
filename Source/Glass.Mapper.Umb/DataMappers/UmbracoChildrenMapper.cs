@@ -62,11 +62,11 @@ namespace Glass.Mapper.Umb.DataMappers
 
             if (String.IsNullOrWhiteSpace(umbConfig.DocumentTypeAlias))
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id);
+                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.Published);
             }
             else
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.ContentType.Alias == umbConfig.DocumentTypeAlias);
+                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.Published && c.ContentType.Alias == umbConfig.DocumentTypeAlias);
             }
 
             return Utilities.CreateGenericType(
