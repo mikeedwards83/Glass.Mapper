@@ -41,18 +41,18 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
 
                 if (!invocation.Method.IsSpecialName || !invocation.Method.Name.StartsWith("get_") && !invocation.Method.Name.StartsWith("set_"))
                     return;
-                string str = invocation.Method.Name.Substring(0, 4);
-                string name = invocation.Method.Name.Substring(4);
+                var str = invocation.Method.Name.Substring(0, 4);
+                var name = invocation.Method.Name.Substring(4);
 
                 if (!_isLoaded)
                 {
-                    SitecoreTypeCreationContext typeCreationContext = _args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
+                    var typeCreationContext = _args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
                     typeCreationContext.Item = typeCreationContext.SitecoreService.Database.GetItem(Id);
-                    SitecoreTypeConfiguration typeConfiguration = TypeConfiguration;
-                    AbstractDataMappingContext dataMappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
+                    var typeConfiguration = TypeConfiguration;
+                    var dataMappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
                     //todo filter fieldnames from FieldConfigs!
-                    foreach (AbstractPropertyConfiguration propertyConfiguration in typeConfiguration.Properties.Where(x=> IndexFields.All(y=> y != x.PropertyInfo.Name)))
+                    foreach (var propertyConfiguration in typeConfiguration.Properties.Where(x=> IndexFields.All(y=> y != x.PropertyInfo.Name)))
                     {
                         object obj = propertyConfiguration.Mapper.MapToProperty(dataMappingContext);
                         _values[propertyConfiguration.PropertyInfo.Name] = obj;

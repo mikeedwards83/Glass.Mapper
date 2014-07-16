@@ -2,11 +2,13 @@
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Lucene.Net.Documents;
+using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Common;
 using Sitecore.ContentSearch.Linq.Methods;
 using Sitecore.ContentSearch.LuceneProvider;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.ContentSearch.Security;
+using Sitecore.ContentSearch.Utilities;
 using Sitecore.Data;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,13 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
     {
         private SitecoreContext _sitecoreContext;
 
-        public override TElement MapToType<TElement>(Document document, SelectMethod selectMethod, IEnumerable<IFieldQueryTranslator> virtualFieldProcessors, SearchSecurityOptions securityOptions)
+        public override TElement MapToType<TElement>(Document document, SelectMethod selectMethod,
+            IEnumerable<IFieldQueryTranslator> virtualFieldProcessors, SearchSecurityOptions securityOptions)
+        {
+            return MapToType<TElement>(document, selectMethod, virtualFieldProcessors, null, securityOptions);
+        }
+
+        public override TElement MapToType<TElement>(Document document, SelectMethod selectMethod, IEnumerable<IFieldQueryTranslator> virtualFieldProcessors, IEnumerable<IExecutionContext> executionContexts, SearchSecurityOptions securityOptions)
         {
             if (typeof (TElement) == typeof (SitecoreUISearchResultItem))
                 return base.MapToType<TElement>(document, selectMethod, virtualFieldProcessors, securityOptions);
@@ -32,7 +40,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
                 var instance = Activator.CreateInstance(underlyingSystemType);
                 var strArray = selectMethod.FieldNames == null || selectMethod.FieldNames.Length <= 0 ? null : selectMethod.FieldNames;
 
-                ReadDocumentFields(document, strArray, GetTypeMap(underlyingSystemType), virtualFieldProcessors, instance);
+                ReadDocumentFields(document, strArray, virtualFieldProcessors);
                 return (TElement)selectMethod.Delegate.DynamicInvoke(instance);
             }
             else
@@ -40,16 +48,25 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
                 var documentFieldNames = GetDocumentFieldNames(document);
                 var templateId = document.Get("_template");
                 var instance = CreateInstance<TElement>(templateId);
-                var typeMap = GetTypeMap(instance.GetType());
 
                 //TODO: use ID.Parse on document.Get("_id") ?
                 Guid id;
                 if (Guid.TryParse(document.Get("_group"), out id)) SetupProxy(id, document.GetFields().Select(x => x.Name.ToLower()), (object)instance as IProxyTargetAccessor);
 
-                ReadDocumentFields(document, documentFieldNames, typeMap, virtualFieldProcessors, instance);
+                ReadDocumentFields(document, documentFieldNames, virtualFieldProcessors);
 
                 return instance;
             }
+        }
+
+        protected override object CreateElementInstance(System.Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
+        {
+            IIndexDocumentPropertyMapperObjectFactory objectFactory = this.GetObjectFactory(executionContexts);
+            if (objectFactory != null)
+            {
+                return objectFactory.CreateElementInstance(baseType, fieldValues, executionContexts);
+            }
+            return ReflectionUtility.CreateInstance(baseType);
         }
 
         protected virtual T CreateInstance<T>(string templateId)

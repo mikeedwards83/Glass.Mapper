@@ -28,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Glass.Mapper.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
