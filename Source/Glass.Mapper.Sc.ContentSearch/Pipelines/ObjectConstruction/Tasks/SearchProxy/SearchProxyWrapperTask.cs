@@ -8,10 +8,6 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
     {
         private static volatile ProxyGenerator _generator = new ProxyGenerator();
 
-        static SearchProxyWrapperTask()
-        {
-        }
-
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null || !SearchSwitcher.IsSearchContext || args.Configuration.Type.IsSealed)
