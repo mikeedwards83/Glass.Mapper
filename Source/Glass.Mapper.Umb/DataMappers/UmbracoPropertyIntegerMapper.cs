@@ -56,7 +56,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue is int ? (int)propertyValue : 0;
+            return propertyValue == null ? 0 : Convert.ToInt32(propertyValue);
         }
     }
 }
