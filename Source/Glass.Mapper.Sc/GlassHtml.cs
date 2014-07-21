@@ -258,6 +258,12 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
+
+                if (attrs != null)
+                {
+                    attrs.Add("haschildren", "true");
+                    return MakeEditable(field, null, model, attrs, _context, SitecoreContext.Database, writer);
+                }
                 return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
             }
             else
