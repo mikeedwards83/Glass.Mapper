@@ -23,6 +23,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -34,7 +35,7 @@ namespace Glass.Mapper.Sc
     /// <summary>
     /// Class Utilities
     /// </summary>
-    public class Utilities : Glass.Mapper.Utilities
+    public class Utilities : Mapper.Utilities
     {
         /// <summary>
         /// Converts a NameValueCollection in to HTML attributes
@@ -55,6 +56,33 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
+        {
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), Factory.GetDatabase("master"), name);
+        }
+
+        public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")
+        {
+            var id = new ID(Guid.NewGuid());
+            var language = Language.Current;
+            var version = Sitecore.Data.Version.Latest;
+
+            var itemDefinition = new ItemDefinition(id, name, templateId, ID.Null);
+            var fieldList = new FieldList();
+
+            if (fields != null)
+            {
+                foreach (var fieldId in fields.Keys)
+                {
+                    fieldList.Add(new ID(fieldId), fields[fieldId]);
+                }
+            }
+
+            var itemData = new ItemData(itemDefinition, language, version, fieldList);
+            var item = new Item(id, itemData, database);
+            return item;
+        }
+
         /// <summary>
         /// Creates the URL options.
         /// </summary>
@@ -69,7 +97,7 @@ namespace Glass.Mapper.Sc
             var t = (urlOptions & SitecoreInfoUrlOptions.AddAspxExtension);
 
             Func<SitecoreInfoUrlOptions, bool> flagCheck =
-                (SitecoreInfoUrlOptions option) => (urlOptions & option) == option;
+                option => (urlOptions & option) == option;
 
 
             //check for any default overrides
@@ -115,23 +143,7 @@ namespace Glass.Mapper.Sc
             return obj;
         }
 
-        /// <summary>
-        /// Gets the generic argument.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>Type.</returns>
-        /// <exception cref="Glass.Mapper.MapperException">
-        /// Type {0} has more than one generic argument.Formatted(type.FullName)
-        /// or
-        /// The type {0} does not contain any generic arguments.Formatted(type.FullName)
-        /// </exception>
-        public static Type GetGenericArgument(Type type)
-        {
-            Type[] types = type.GetGenericArguments();
-            if (types.Count() > 1) throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
-            if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
-            return types[0];
-        }
+
 
 
         /// <summary>
@@ -143,7 +155,10 @@ namespace Glass.Mapper.Sc
         /// <returns>Field.</returns>
         public static Field GetField(Item item, ID fieldId, string fieldName = "")
         {
-            Field field = null;
+            if(item == null)
+                throw new NullReferenceException("Item is null");
+
+            Field field;
             if (ID.IsNullOrEmpty(fieldId))
             {
                 field = item.Fields[fieldName];
@@ -210,7 +225,7 @@ namespace Glass.Mapper.Sc
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => Utilities.GetLanguageItem(x, language)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language)).Where(x => x != null);
         }
     }
 }

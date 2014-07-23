@@ -46,9 +46,9 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public override object GetProperty(Umbraco.Core.Models.Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
+        public override object GetProperty(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            if (property == null)
+            if (property == null || property.Value == null)
                 return null;
 
             var mediaService = new MediaService(new RepositoryFactory());
@@ -91,7 +91,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <param name="value">The value.</param>
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
-        public override void SetProperty(Umbraco.Core.Models.Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
+        public override void SetProperty(Property property, object value, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             throw new NotImplementedException();
            /* Image img = value as Image;

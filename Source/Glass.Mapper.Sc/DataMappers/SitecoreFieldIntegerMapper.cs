@@ -31,6 +31,9 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldIntegerMapper : AbstractSitecoreFieldMapper
     {
+
+        protected override object DefaultValue { get { return 0; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldIntegerMapper"/> class.
         /// </summary>
@@ -54,7 +57,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (fieldValue.IsNullOrEmpty()) return 0;
             int dValue = 0;
             if (int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue)) return dValue;
-            else throw new MapperException("Could not convert value to double");
+            else throw new MapperException("Could not convert value to Integer");
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Linq;
+using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
 {
@@ -73,11 +74,18 @@ namespace Glass.Mapper.Configuration
         /// <param name="property">The property.</param>
         public virtual void AddProperty(AbstractPropertyConfiguration property)
         {
-            if(_properties.Any(x=>x.PropertyInfo.Name == property.PropertyInfo.Name))
-                throw new MapperException("You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(property.PropertyInfo.Name, this.Type.Name));
-
-            if(property != null)
-                _properties.Add(property);
+            if (property != null)
+            {
+                if (_properties.Any(x => x.PropertyInfo.Name == property.PropertyInfo.Name))
+                {
+                    throw new MapperException(
+                        "You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(
+                            property.PropertyInfo.Name, Type.Name));
+                }
+                
+              
+                    _properties.Add(property);
+            }
         }
 
 
@@ -89,12 +97,29 @@ namespace Glass.Mapper.Configuration
         /// <param name="context">The context.</param>
         public void MapPropertiesToObject( object obj, IAbstractService service, AbstractTypeCreationContext context)
         {
-            //create properties 
-            AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
-
-            foreach (var prop in Properties)
+            try
             {
-                prop.Mapper.MapCmsToProperty(dataMappingContext);
+                //create properties 
+                AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
+
+                foreach (var prop in Properties)
+                {
+                    try
+                    {
+                        prop.Mapper.MapCmsToProperty(dataMappingContext);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new MapperException(
+                            "Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name,
+                                prop.PropertyInfo.DeclaringType.FullName), e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException(
+                           "Failed to map properties on {0}.".Formatted(context.DataSummary()), ex);
             }
         }
 
@@ -104,7 +129,7 @@ namespace Glass.Mapper.Configuration
         public void PerformAutoMap()
         {
             //we now run the auto-mapping after all the static configuration is loaded
-            if (this.AutoMap)
+            if (AutoMap)
             {
                 //TODO: ME - probably need some binding flags.
                 foreach (var propConfig in AutoMapProperties(Type))
@@ -142,7 +167,20 @@ namespace Glass.Mapper.Configuration
                     if(_properties.Any(x=>x.PropertyInfo.Name == property.Name))
                         continue;
 
-                    var propConfig = AutoMapProperty(property);
+                      //skip properties that are actually indexers
+                    if (property.GetIndexParameters().Length > 0)
+                    {
+                        continue;
+                    }
+
+                    //check for an attribute
+                    var propConfig = AttributeTypeLoader.ProcessProperty(property);
+                    if (propConfig == null)
+                    {
+                        //no attribute then automap
+                        propConfig = AutoMapProperty(property);
+                    }
+
                     if (propConfig != null)
                         yield return propConfig;
                 }

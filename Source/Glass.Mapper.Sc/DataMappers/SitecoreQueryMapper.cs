@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
                 if (typeof(IEnumerable<>) == outerType)
                 {
-                    Type genericType = Utilities.GetGenericArgument(scConfig.PropertyInfo.PropertyType);
+                    Type genericType = Mapper.Utilities.GetGenericArgument(scConfig.PropertyInfo.PropertyType);
 
                     Func<IEnumerable<Item>> getItems = null;
                     if (scConfig.IsRelative)
@@ -148,7 +148,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 {
                     result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language);
                 }
-                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType);
+                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType, null);
             }
         }
 
@@ -169,7 +169,7 @@ namespace Glass.Mapper.Sc.DataMappers
             {
 
                 Type outerType = Utilities.GetGenericOuter(configuration.PropertyInfo.PropertyType);
-                Type innerType = Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
+                Type innerType = Mapper.Utilities.GetGenericArgument(configuration.PropertyInfo.PropertyType);
 
                 return typeof (IEnumerable<>) == outerType;// && context.TypeConfigurations.ContainsKey(innerType);
             }

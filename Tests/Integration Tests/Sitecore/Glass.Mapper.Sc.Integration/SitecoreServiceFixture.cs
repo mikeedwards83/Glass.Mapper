@@ -23,6 +23,7 @@ using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using NSubstitute;
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -76,6 +77,26 @@ namespace Glass.Mapper.Sc.Integration
         #endregion
 
         #region Method - GetItem
+
+
+        [Test]
+        public void GetItem_UsingItemIdAsItem_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
+
+            //Act
+            var result = service.GetItem<Item>(id);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(id, result.ID.Guid);
+        }
+
 
         [Test]
         public void GetItem_UsingItemId_ReturnsItem()
@@ -637,6 +658,48 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region Method - Query
+
+        [Test]
+        public void Query_ReturnsItemsBeneathFolder_ThreeItemsReturned()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string  query = "/sitecore/content/Tests/SitecoreService/Query/*";
+
+            //Act
+            var result = service.Query<StubClass>(query);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count());
+        }
+
+        [Test]
+        public void Query_ReturnsItemsBeneathFolderBasedOnLanguage_TwoItemsReturned()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            string query = "/sitecore/content/Tests/SitecoreService/Query/*";
+            var language = LanguageManager.GetLanguage("af-ZA");
+
+            //Act
+            var result = service.Query<StubClass>(query, language);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count());
+        }
+        #endregion
+
         #region Method - Save
 
         [Test]
@@ -833,7 +896,7 @@ namespace Glass.Mapper.Sc.Integration
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             //Act
-            var result = (StubClass) service.CreateType(typeof (StubClass), item, false, false);
+            var result = (StubClass) service.CreateType(typeof (StubClass), item, false, false,null);
 
             //Assert
             Assert.IsNotNull(result);
@@ -873,7 +936,7 @@ namespace Glass.Mapper.Sc.Integration
             var param1 = 456;
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1);
 
             //Assert
             Assert.IsNotNull(result);
@@ -918,7 +981,7 @@ namespace Glass.Mapper.Sc.Integration
             var param2 = "hello world";
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2);
 
             //Assert
             Assert.IsNotNull(result);
@@ -968,7 +1031,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2, param3);
 
             //Assert
             Assert.IsNotNull(result);
@@ -1022,7 +1085,7 @@ namespace Glass.Mapper.Sc.Integration
             var param4 = true;
 
             //Act
-            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, param1, param2, param3, param4);
+            var result = (StubClass)service.CreateType(typeof(StubClass), item, false, false, null, param1, param2, param3, param4);
 
             //Assert
             Assert.IsNotNull(result);
@@ -1063,7 +1126,49 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-          #region Method - Create
+        #region Method - Create
+
+
+        [Test]
+        public void Create_TypeNotPreloaded_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            Assert.AreEqual(0, context.TypeConfigurations.Count);
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = new StubClassNotPreloaded();
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
 
         [Test]
         public void Create_CreatesANewItem()
@@ -1104,6 +1209,181 @@ namespace Glass.Mapper.Sc.Integration
 
             Assert.AreEqual(child.Name,newItem.Name);
             Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_CreatesANewItem_WithSpecificId()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+            var id = Guid.NewGuid();
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = new StubClass();
+            child.Id = id;
+            child.Name = "newChild";
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_UsingInterface_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string fieldValue = Guid.NewGuid().ToString();
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            var child = Substitute.For<StubInterfaceAutoMapped>();
+            child.Name = "newChild";
+            child.StringField = fieldValue;
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                service.Create(parent, child);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            Assert.AreEqual(fieldValue, newItem["StringField"]);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_UsingInterfaceAndName_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string name = "newChild";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+            
+            //Act
+            StubClass child = null;
+            using (new SecurityDisabler())
+            {
+               child= service.Create<StubClass, StubClass>(parent, "newChild");
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+        }
+
+        [Test]
+        public void Create_UsingInterfaceAndNameAndLanguage_CreatesANewItem()
+        {
+            //Assign
+            string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
+            string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
+            string name = "newChild";
+            Language lang = LanguageManager.GetLanguage("af-ZA");
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(db);
+
+            using (new SecurityDisabler())
+            {
+                var parentItem = db.GetItem(parentPath);
+                parentItem.DeleteChildren();
+            }
+
+            var parent = service.GetItem<StubClass>(parentPath);
+
+            //Act
+            StubClass child = null;
+            using (new SecurityDisabler())
+            {
+                child = service.Create<StubClass, StubClass>(parent, name, lang);
+            }
+
+            //Assert
+            var newItem = db.GetItem(childPath, lang);
+
+            Assert.AreEqual(name, child.Name);
+            Assert.AreEqual(child.Name, newItem.Name);
+            Assert.AreEqual(child.Id, newItem.ID.Guid);
+            Assert.AreEqual(lang, child.Language);
+            Assert.AreEqual(1, newItem.Versions.Count);
+            Assert.AreEqual(1, newItem.Versions.Count);
+
+            using (new SecurityDisabler())
+            {
+                newItem.Delete();
+            }
+
+       
         }
 
         [Test]
@@ -1238,8 +1518,413 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
+        #region GetItemWithInterfaces
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId5Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour, IFive>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+                var objFive = (IFive)result;
+                Assert.AreEqual(expectedDate, objFive.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId4Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015,05,15,15,45,48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId3Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingId2Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(guidId);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath5Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour, IFive>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+                var objFive = (IFive)result;
+                Assert.AreEqual(expectedDate, objFive.DateField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath4Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree, IFour>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+                var objFour = (IFour)result;
+                Assert.AreEqual(expectedString, objFour.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath3Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+                var objThree = (IThree)result;
+                Assert.AreEqual(expectedString, objThree.StringField);
+            }
+        }
+
+        [Test]
+        public void GetItemWithInterfaces_UsingPath2Types_ReturnsProxy()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            string id = "{0D5534BA-12E8-4C0C-AB17-587392906BBB}";
+            string expectedString = "some test string";
+            DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
+            string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = expectedString;
+                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+            }
+
+            Guid guidId = new Guid(id);
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                var result = service.GetItemWithInterfaces<IOne, ITwo, IThree>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result is IOne);
+                Assert.AreEqual(expectedString, result.StringField);
+                var objTwo = (ITwo)result;
+                Assert.AreEqual(expectedDate, objTwo.DateField);
+            }
+        }
+        #endregion
+
+    
+
+        #region OnDemand Mapping
+
+        [Test]
+        public void OnDemandMapping_AutomaticallyMapsProperties()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
+            DateTime date = new DateTime(2013,04,03,12,15,10);
+
+            var item = db.GetItem(path);
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            var service = new SitecoreService(db, context); 
+
+            //Act
+            var result = service.GetItem<OnDemandMapping>(path);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(text, result.StringField);
+            Assert.AreEqual(date, result.DateField);
+
+
+        }
+
+        #endregion
+
+        #region Map
+
+        [Test]
+        public void Map_ClassWithId_MapsFieldValues()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            string text = "test text 1";
+            Guid id = new Guid("{346D7364-ECBA-4E7A-9580-58DB4785C20A}");
+            DateTime date = new DateTime(2013, 04, 03, 12, 15, 10);
+            var item = db.GetItem(id.ToString());
+            using (new ItemEditing(item, true))
+            {
+                item["StringField"] = text;
+                item["DateField"] = date.ToString("yyyyMMddThhmmss");
+            }
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var service = new SitecoreService(db, context);
+
+            var model = new MapStub();
+            model.Id = id;
+
+            //Act
+            service.Map(model);
+
+            //Assert
+            Assert.AreEqual(text, model.StringField);
+            Assert.AreEqual(date,  model.DateField);
+
+        }
+
+        #endregion
+
         #region Stubs
 
+        [SitecoreType]
+        public class MapStub
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual string StringField { get; set; }
+
+            [SitecoreField]
+            public virtual DateTime DateField { get; set; }
+
+        }
         [SitecoreType]
         public class StubSaving
         {
@@ -1312,6 +1997,14 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
+        [SitecoreType(TemplateId = StubClass.TemplateId, AutoMap = true)]
+        public class StubClassNotPreloaded
+        {
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+
+            public virtual Guid Id { get; set; }
+            public virtual string Name { get; set; }
+        }
 
         [SitecoreType]
         public class StubClassWithProperty
@@ -1344,41 +2037,48 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Name { get; set; }
         }
 
-        #endregion
-
-        #region OnDemand Mapping
-
-        [Test]
-        public void OnDemandMapping_AutomaticallyMapsProperties()
+        [SitecoreType(TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}", AutoMap = true)]
+        public interface StubInterfaceAutoMapped
         {
-            //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            string text = "test text 1";
-            string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
-            DateTime date = new DateTime(2013,04,03,12,15,10);
+            Guid Id { get; set; }
 
-            var item = db.GetItem(path);
-            using (new ItemEditing(item, true))
-            {
-                item["StringField"] = text;
-                item["DateField"] = date.ToString("yyyyMMddThhmmss");
-            }
+            Language Language { get; set; }
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            var service = new SitecoreService(db, context); 
+            string Path { get; set; }
 
-            //Act
-            var result = service.GetItem<OnDemandMapping>(path);
+            int Version { get; set; }
 
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(text, result.StringField);
-            Assert.AreEqual(date, result.DateField);
-
-
+            string Name { get; set; }
+            
+            string StringField { get; set; }
         }
 
+        public interface IOne
+        {
+            string StringField { get; set; }
+        }
+        public interface ITwo
+        {
+            DateTime DateField { get; set; }
+        }
+        public interface IThree
+        {
+            string StringField { get; set; }
+        }
+        public interface IFour
+        {
+            string StringField { get; set; }
+        }
+        public interface IFive
+        {
+            DateTime DateField { get; set; }
+        }
         #endregion
+
+        
+
+
+
     }
 }
 

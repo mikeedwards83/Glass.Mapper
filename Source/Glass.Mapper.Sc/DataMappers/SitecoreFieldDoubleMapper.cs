@@ -31,6 +31,9 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldDoubleMapper : AbstractSitecoreFieldMapper
     {
+
+        protected override object DefaultValue { get { return 0d; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldDoubleMapper"/> class.
         /// </summary>

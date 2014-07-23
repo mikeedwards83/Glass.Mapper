@@ -60,7 +60,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// <param name="service">The service.</param>
         public ObjectConstructionArgs(
             Context context, 
-            AbstractTypeCreationContext abstractTypeCreationContext, 
+            AbstractTypeCreationContext  abstractTypeCreationContext,
             AbstractTypeConfiguration configuration,
             IAbstractService service)
             : base(context)

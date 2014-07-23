@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using SqlCE4Umbraco;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
@@ -66,7 +67,30 @@ namespace Glass.Mapper.Umb.Integration
                 ApplicationContext.Current.DatabaseContext.Database.Dispose();
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
                 @"\UmbracoPetaPocoTests.sdf";
-            File.Delete(path);
+
+            int count = 0;
+            while (true)
+            {
+                try
+                {
+                    Thread.Sleep(100);
+                    File.Delete(path);
+                    break;
+                }
+                catch(Exception ex)
+                {
+                    if (count == 10)
+                    {
+                        throw ex;
+                    }   
+                }
+                finally
+                {
+                    
+                    count++;
+                }
+
+            }
         }
 
         /// <summary>
@@ -110,6 +134,7 @@ namespace Glass.Mapper.Umb.Integration
             {
                 UmbracoDatabase umbracoDatabase = new UmbracoDatabase(ConnectionString, ProviderName);
                 umbracoDatabase.CreateDatabaseSchema();
+                umbracoDatabase.Dispose();
             }
         }
 

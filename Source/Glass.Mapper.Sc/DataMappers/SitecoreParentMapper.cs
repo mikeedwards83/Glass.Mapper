@@ -64,7 +64,8 @@ namespace Glass.Mapper.Sc.DataMappers
                 scConfig.PropertyInfo.PropertyType,
                 scContext.Item.Parent,
                 scConfig.IsLazy,
-                scConfig.InferType);
+                scConfig.InferType,
+                null);
         }
 
         /// <summary>

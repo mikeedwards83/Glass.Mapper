@@ -3,11 +3,11 @@
   <metadata>
     <id>Glass.Mapper.Sc.Upgrade</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Tom Dudfield, Aaron Job, Charlie Turano</authors>
+    <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
-    <!--<iconUrl></iconUrl>-->
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This assembly allows you to upgrade from Glass.Sitecore.Mapper to Glass.Mapper.Sc.</description>
     <releaseNotes>This is a pre-release version of the package.</releaseNotes>
@@ -15,13 +15,16 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.0.0" />
+		<dependency id="Glass.Mapper.Sc" version="3.1.5" />
     </dependencies>
   </metadata>
   <files>
 	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.dll" target="lib\net40\Glass.Mapper.Sc.Upgrade.dll" />
 	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.pdb" target="lib\net40\Glass.Mapper.Sc.Upgrade.pdb" />
 	  <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Release\Glass.Mapper.Sc.Upgrade.xml" target="lib\net40\Glass.Mapper.Sc.Upgrade.xml" />
+    <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Net45\Glass.Mapper.Sc.Upgrade.dll" target="lib\net45\Glass.Mapper.Sc.Upgrade.dll" />
+    <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Net45\Glass.Mapper.Sc.Upgrade.pdb" target="lib\net45\Glass.Mapper.Sc.Upgrade.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Upgrade\bin\Net45\Glass.Mapper.Sc.Upgrade.xml" target="lib\net45\Glass.Mapper.Sc.Upgrade.xml" />
 	  <file src="Source\Glass.Mapper.Sc.Upgrade\**.cs" target="src\Source\Glass.Mapper.Sc.Upgrade" />
   </files>
 </package>

@@ -16,11 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Glass.Mapper
 {
     /// <summary>
@@ -34,7 +29,7 @@ namespace Glass.Mapper
         /// <param name="obj">The obj.</param>
         public AbstractDataMappingContext(object obj)
         {
-            this.Object = obj;
+            Object = obj;
         }
 
         /// <summary>

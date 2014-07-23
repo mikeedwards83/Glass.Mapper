@@ -28,6 +28,12 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
+using Sitecore.Diagnostics;
+using Sitecore.Resources;
+using Sitecore.Configuration;
+using Sitecore;
+using Sitecore.IO;
+using Sitecore.Web;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -52,33 +58,64 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.Object.</returns>
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-
             Image img = new Image();
             ImageField scImg = new ImageField(field);
 
-            int height = 0;
-            int.TryParse(scImg.Height, out height);
-            int width = 0;
-            int.TryParse(scImg.Width, out width);
-            int hSpace = 0;
-            int.TryParse(scImg.HSpace, out hSpace);
-            int vSpace = 0;
-            int.TryParse(scImg.VSpace, out vSpace);
-
-            img.Alt = scImg.Alt;
-            img.Border = scImg.Border;
-            img.Class = scImg.Class;
-            img.Height = height;
-            img.HSpace = hSpace;
-            img.MediaId = scImg.MediaID.Guid;
-            if (scImg.MediaItem != null)
-                img.Src = MediaManager.GetMediaUrl(scImg.MediaItem);
-            img.VSpace = vSpace;
-            img.Width = width;
+            MapToImage(img, scImg);
 
             return img;
         }
 
+        public static void MapToImage(Image img, ImageField field)
+        {
+            int height = 0;
+            int.TryParse(field.Height, out height);
+            int width = 0;
+            int.TryParse(field.Width, out width);
+            int hSpace = 0;
+            int.TryParse(field.HSpace, out hSpace);
+            int vSpace = 0;
+            int.TryParse(field.VSpace, out vSpace);
+
+            img.Alt = field.Alt;
+            img.Border = field.Border;
+            img.Class = field.Class;
+            img.Height = height;
+            img.HSpace = hSpace;
+            img.MediaId = field.MediaID.Guid;
+            if (field.MediaItem != null)
+            {
+                img.Src = GetMediaUrlWithoutContentCheck(field.MediaItem, MediaUrlOptions.Empty);
+                var fieldTitle = field.MediaItem.Fields["Title"];
+                if (fieldTitle != null)
+                    img.Title = fieldTitle.Value;
+            }
+            img.VSpace = vSpace;
+            img.Width = width;
+        }
+        
+        public static void MapToImage(Image img, MediaItem imageItem)
+        {
+           /* int height = 0;
+            int.TryParse(imageItem..Height, out height);
+            int width = 0;
+            int.TryParse(imageItem.Width, out width);
+            int hSpace = 0;
+            int.TryParse(imageItem.HSpace, out hSpace);
+            int vSpace = 0;
+            int.TryParse(imageItem.VSpace, out vSpace);*/
+
+            img.Alt = imageItem.Alt;
+            img.Title = imageItem.Title;
+           // img.Border = imageItem.Border;
+           // img.Class = imageItem.Class;
+           // img.Height = height;
+           // img.HSpace = hSpace;
+            img.MediaId = imageItem.ID.Guid;
+            img.Src = GetMediaUrlWithoutContentCheck(imageItem, MediaUrlOptions.Empty);
+           // img.VSpace = vSpace;
+           // img.Width = width;
+        }
 
         /// <summary>
         /// Sets the field.
@@ -97,41 +134,55 @@ namespace Glass.Mapper.Sc.DataMappers
 
             ImageField scImg = new ImageField(field);
 
-            if (img == null)
+            MapToField(scImg, img, item);
+        }
+
+        public static void MapToField(ImageField field, Image image, Item item)
+        {
+            if (image == null)
             {
-                scImg.Clear();
+                field.Clear();
                 return;
             }
 
-            if (scImg.MediaID.Guid != img.MediaId)
+            if (field.MediaID.Guid != image.MediaId)
             {
                 //this only handles empty guids, but do we need to remove the link before adding a new one?
-                if (img.MediaId == Guid.Empty)
+                if (image.MediaId == Guid.Empty)
                 {
-                    ItemLink link = new ItemLink(item.Database.Name, item.ID, scImg.InnerField.ID, scImg.MediaItem.Database.Name, scImg.MediaID, scImg.MediaItem.Paths.Path);
-                    scImg.RemoveLink(link);
+                    ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, field.MediaItem.Database.Name, field.MediaID, field.MediaItem.Paths.Path);
+                    field.RemoveLink(link);
                 }
                 else
                 {
-                    ID newId = new ID(img.MediaId);
+                    ID newId = new ID(image.MediaId);
                     Item target = item.Database.GetItem(newId);
                     if (target != null)
                     {
-                        scImg.MediaID = newId;
-                        ItemLink link = new ItemLink(item.Database.Name, item.ID, scImg.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
-                        scImg.UpdateLink(link);
+                        field.MediaID = newId;
+                        ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                        field.UpdateLink(link);
+                        
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
             }
 
-            scImg.Height = img.Height.ToString();
-            scImg.Width = img.Width.ToString();
-            scImg.HSpace = img.HSpace.ToString();
-            scImg.VSpace = img.VSpace.ToString();
-            scImg.Alt = img.Alt;
-            scImg.Border = img.Border;
-            scImg.Class = img.Class;
+            if(image.Height > 0)
+                field.Height = image.Height.ToString();
+            if(image.Width > 0)
+                field.Width = image.Width.ToString();
+            if(image.HSpace > 0)
+                field.HSpace = image.HSpace.ToString();
+            if(image.VSpace > 0)
+                field.VSpace = image.VSpace.ToString();
+            
+            if(field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+                field.Alt = image.Alt ?? string.Empty;
+            if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
+                field.Border = image.Border ?? string.Empty;
+            if (field.Class.IsNotNullOrEmpty() || image.Class.IsNotNullOrEmpty())
+                field.Class = image.Class ?? string.Empty;
         }
         /// <summary>
         /// Sets the field value.
@@ -155,9 +206,63 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            throw new NotImplementedException();
+            var imageItem = new MediaItem(context.Service.Database.GetItem(new ID(fieldValue)));
+            var image = new Image();
+            MapToImage(image, imageItem);
+            return image;
         }
 
+        /// <summary>
+        /// Gets a media URL.
+        /// 
+        /// </summary>
+        /// <param name="item">The media item.</param><param name="options">The query string.</param>
+        /// <returns>
+        /// The media URL.
+        /// </returns>
+        private static string GetMediaUrlWithoutContentCheck(MediaItem item, MediaUrlOptions options)
+        {
+            Assert.ArgumentNotNull((object)item, "item");
+            Assert.ArgumentNotNull((object)options, "options");
+            if (item.InnerItem["path"].Length > 0)
+            {
+                if (!options.LowercaseUrls)
+                    return item.InnerItem["path"];
+                else
+                    return item.InnerItem["path"].ToLowerInvariant();
+            }
+            else if (options.UseDefaultIcon)
+            {
+                if (!options.LowercaseUrls)
+                    return Themes.MapTheme(Settings.DefaultIcon);
+                else
+                    return Themes.MapTheme(Settings.DefaultIcon).ToLowerInvariant();
+            }
+            else
+            {
+                var mediaProvider = MediaManager.Provider;
+                Assert.IsTrue(mediaProvider.Config.MediaPrefixes[0].Length > 0, "media prefixes are not configured properly.");
+                string str1 = mediaProvider.MediaLinkPrefix;
+                if (options.AbsolutePath)
+                    str1 = options.VirtualFolder + str1;
+                else if (str1.StartsWith("/", StringComparison.InvariantCulture))
+                    str1 = StringUtil.Mid(str1, 1);
+                if (options.AlwaysIncludeServerUrl)
+                    str1 = FileUtil.MakePath(WebUtil.GetServerUrl(), str1, '/');
+                string str2 = StringUtil.EnsurePrefix('.', StringUtil.GetString(options.RequestExtension, item.Extension, "ashx"));
+                string str3 = options.ToString();
+                if (str3.Length > 0)
+                    str2 = str2 + "?" + str3;
+                string str4 = "/sitecore/media library/";
+                string path = item.InnerItem.Paths.Path;
+                string str5 = !options.UseItemPath || !path.StartsWith(str4, StringComparison.OrdinalIgnoreCase) ? item.ID.ToShortID().ToString() : StringUtil.Mid(path, str4.Length);
+                string str6 = str1 + str5 + (options.IncludeExtension ? str2 : string.Empty);
+                if (!options.LowercaseUrls)
+                    return str6;
+                else
+                    return str6.ToLowerInvariant();
+            }
+        }
     }
 }
 

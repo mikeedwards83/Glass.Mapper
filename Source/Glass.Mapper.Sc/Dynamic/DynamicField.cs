@@ -16,10 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI.WebControls;
 

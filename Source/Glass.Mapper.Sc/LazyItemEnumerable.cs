@@ -67,13 +67,20 @@ namespace Glass.Mapper.Sc
         /// <returns>IEnumerable{`0}.</returns>
         public IEnumerable<T> ProcessItems()
         {
-            foreach (Item child in _getItems())
+            var items = _getItems();
+
+            if (items == null)
+            {
+                items = new Item[] {};
+            }
+
+            foreach (Item child in items)
             {
                 var obj = _service.CreateType(
                     _type,
                     child,
                     _isLazy,
-                    _inferType) as T;
+                    _inferType, null) as T;
 
                 if (obj == null)
                     continue;

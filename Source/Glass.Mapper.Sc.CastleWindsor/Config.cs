@@ -15,17 +15,13 @@
  
 */ 
 //-CRE-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
     /// <summary>
     /// Config
     /// </summary>
-    public class Config
+    public class Config :Glass.Mapper.Sc.Config
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Config"/> class.
@@ -41,6 +37,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <c>true</c> if [use windsor contructor]; otherwise, <c>false</c>.
         /// </value>
         public bool UseWindsorContructor { get; set; }
+
     }
 }
 

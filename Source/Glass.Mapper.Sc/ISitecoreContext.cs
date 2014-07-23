@@ -19,8 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc
 {
@@ -42,49 +40,49 @@ namespace Glass.Mapper.Sc
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        T GetCurrentItem<T, K>(K param1, bool isLazy = false, bool inferType = false) where T : class;
+        T GetCurrentItem<T, TK>(TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        T GetCurrentItem<T, K, L>(K param1, L param2, bool isLazy = false, bool inferType = false) where T : class;
+        T GetCurrentItem<T, TK, TL>(TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        T GetCurrentItem<T, K, L, M>(K param1, L param2, M param3, bool isLazy = false, bool inferType = false) where T : class;
+        T GetCurrentItem<T, TK, TL, TM>(TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Retrieves the current item as the specified type
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
-        /// <typeparam name="K">The type of the first constructor parameter</typeparam>
-        /// <typeparam name="L">The type of the second constructor parameter</typeparam>
-        /// <typeparam name="M">The type of the third constructor parameter</typeparam>
-        /// <typeparam name="N">The type of the fourth constructor parameter</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TN">The type of the fourth constructor parameter</typeparam>
         /// <param name="param1">The value of the first parameter of the constructor</param>
         /// <param name="param2">The value of the second parameter of the constructor</param>
         /// <param name="param3">The value of the third parameter of the constructor</param>
@@ -92,7 +90,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        T GetCurrentItem<T, K, L, M, N>(K param1, L param2, M param3, N param4, bool isLazy = false, bool inferType = false) where T : class;
+        T GetCurrentItem<T, TK, TL, TM, TN>(TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Retrieves the current item as the specified type

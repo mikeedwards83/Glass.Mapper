@@ -17,8 +17,6 @@
 //-CRE-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Sitecore.Data.Items;
 
 //The namespace is kept the same as the original
@@ -136,7 +134,7 @@ namespace Glass.Sitecore.Mapper
         /// </returns>
         public object CreateClass(bool isLazy, bool inferType, Type type, Item item)
         {
-            return CreateType(type, item, isLazy, inferType);
+            return CreateType(type, item, isLazy, inferType, null);
         }
 
         /// <summary>

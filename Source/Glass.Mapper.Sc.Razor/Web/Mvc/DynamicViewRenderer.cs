@@ -36,6 +36,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Mvc
             DynamicControl control = DynamicRazorRenderingType.CreateControl(Path, ContextName) as DynamicControl;
             if (control != null)
             {
+                control.Parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters] ?? string.Empty;
+
                 HtmlTextWriter htmlWriter = new HtmlTextWriter(writer);
 
                 control.DataSource = this.DataSource;

@@ -50,7 +50,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             _db = Sitecore.Configuration.Factory.GetDatabase("master");
             _dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
             _context = Context.Create(Utilities.CreateStandardResolver());
-            GlassDataProvider._setupComplete = false;
+            //GlassDataProvider._setupComplete = false;
             InjectionDataProvider(_db, _dataProvider);
 
         }

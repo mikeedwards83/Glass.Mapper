@@ -1,6 +1,6 @@
-﻿<%@ Control Language="c#" AutoEventWireup="True" CodeBehind="database.ascx.cs" Inherits="Umbraco.Web.UI.Install.Steps.Database"
-    TargetSchema="http://schemas.microsoft.com/intellisense/ie5" %>
+﻿<%@ Control Language="c#" AutoEventWireup="True" CodeBehind="database.ascx.cs" Inherits="Umbraco.Web.UI.Install.Steps.Database" %>
 <%@ Import Namespace="Umbraco.Core.Configuration" %>
+
 <asp:PlaceHolder ID="settings" runat="server" Visible="true">
     <!-- database box -->
     <div class="tab main-tabinfo">
@@ -17,7 +17,6 @@
         </div>
         <!-- database -->
         <div class="database-hold">
-            <form action="#">
                 <fieldset>
                     <div class="step">
                         <div class="container">
@@ -27,13 +26,13 @@
 
                             <ul>
                                 <li>
-                                    <input type="radio" id="databaseOptionBlank" name="database" value="blank" />
-                                    <label for="databaseOptionBlank">I already have a blank SQL Server, SQL Azure or MySQL database</label>
+                                    <input type="radio" id="databaseOptionEmbedded" name="database" value="embedded" />
+                                    <label for="databaseOptionEmbedded">I want to use SQL CE 4, a free, quick-and-simple embedded database</label>
 
                                 </li>
                                 <li>
-                                    <input type="radio" id="databaseOptionEmbedded" name="database" value="embedded" />
-                                    <label for="databaseOptionEmbedded">I want to use SQL CE 4, a free, quick-and-simple embedded database</label>
+                                    <input type="radio" id="databaseOptionBlank" name="database" value="blank" />
+                                    <label for="databaseOptionBlank">I already have a blank SQL Server, SQL Azure or MySQL database</label>
 
                                 </li>
                                 <li>
@@ -56,6 +55,46 @@
 
                         <!-- blank option -->
                         <div id="database-blank" class="database-option">
+                            <script type="text/javascript">
+                                (function($) {
+                                    $(document).ready(function() {
+                                        // Make database username and password dependent on the integrated security option
+                                        var databaseTypeSelect = $("#<%= DatabaseType.ClientID %>");
+                                        var integratedSecurityCheckBox = $("#<%= DatabaseIntegratedSecurity.ClientID %>");
+                                        var databaseUserNamePasswordInputs = $("#<%= DatabaseUsername.ClientID %>, #<%= DatabasePassword.ClientID %>");
+
+                                        toggle();
+
+                                        databaseTypeSelect.change(toggle);
+                                        integratedSecurityCheckBox.change(toggle);
+
+                                        function toggle() {
+                                            var databaseType = databaseTypeSelect.val();
+                                            
+                                            if (databaseType == "SqlServer") {
+                                                // Only show and enable the integrated security option when it's supported
+                                                integratedSecurityCheckBox
+                                                    .removeAttr("disabled")
+                                                    .closest("div").show();
+                                                
+                                            } else {
+                                                integratedSecurityCheckBox
+                                                    .attr("disabled", "disabled")
+                                                    .closest("div").hide();
+                                            }
+
+                                            if (integratedSecurityCheckBox.is(":checked")) {
+                                                // Hide username and password when integrated security is checked
+                                                databaseUserNamePasswordInputs.attr("disabled", "disabled");
+                                                databaseUserNamePasswordInputs.closest("div").hide();
+                                            } else {
+                                                databaseUserNamePasswordInputs.removeAttr("disabled");
+                                                databaseUserNamePasswordInputs.closest("div").show();
+                                            }
+                                        }
+                                    });
+                                })(jQuery);
+                            </script>
 
                             <div class="step">
                                 <div class="container">
@@ -104,6 +143,12 @@
                                             <span>
                                                 <asp:TextBox runat="server" CssClass="text" ID="DatabaseName" /></span>
                                         </div>
+                                        
+                                        <div class="row sql">
+                                            <asp:Label runat="server" AssociatedControlID="DatabaseIntegratedSecurity">Integrated security:</asp:Label>
+                                            <asp:CheckBox runat="server" ID="DatabaseIntegratedSecurity" />
+                                        </div>
+
                                         <div class="row sql" runat="server" id="DatabaseUsernameItem">
                                             <asp:Label runat="server" AssociatedControlID="DatabaseUsername" ID="DatabaseUsernameLabel">Username:</asp:Label>
                                             <span>
@@ -156,7 +201,7 @@
                             <div class="step">
                                 <div class="container">
                                     <p>
-                                        <strong>2. Connection details:</strong> Please fill out the connection information for your database.</strong>
+                                        <strong>2. Connection details:</strong> Please fill out the connection information for your database.
                                     </p>
 
                                     <div class="instruction-hold">
@@ -205,11 +250,9 @@
 
 
                 </fieldset>
-            </form>
         </div>
     </div>
     <script type="text/javascript">
-        var hasEmbeddedDlls = <%= HasEmbeddedDatabaseFiles.ToString().ToLower() %>;
         var currentVersion = '<%=UmbracoVersion.Current.ToString(3)%> <%=UmbracoVersion.CurrentComment%> ';
         var configured = <%= IsConfigured.ToString().ToLower() %>;
 
@@ -234,15 +277,9 @@
                     $(".database-option").hide();
                     $("#database-embedded").show();
 
-                    if (!hasEmbeddedDlls) {
-                        $('.embeddedError').show();
-                        $(".installbtn").hide();
-                    }
-                    else {
-                        $('.embedded').show();
-                        $(".installbtn").show();
-                    }
-	                    
+                    $('.embedded').show();
+                    $(".installbtn").show();
+                    
                     break;
                 case "advanced":
                     $(".database-option").hide();

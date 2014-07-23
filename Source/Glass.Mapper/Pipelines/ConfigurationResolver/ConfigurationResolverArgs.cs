@@ -18,8 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver
@@ -29,6 +27,8 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
     /// </summary>
     public class ConfigurationResolverArgs : AbstractPipelineArgs
     {
+        public IAbstractService Service { get; set; }
+
         /// <summary>
         /// Gets the abstract type creation context.
         /// </summary>
@@ -40,14 +40,18 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
         /// <value>The result.</value>
         public AbstractTypeConfiguration Result { get; set; }
 
+        public Type RequestedType { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationResolverArgs"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        public ConfigurationResolverArgs(Context context, AbstractTypeCreationContext abstractTypeCreationContext) :base(context)
+        public ConfigurationResolverArgs(Context context,  AbstractTypeCreationContext abstractTypeCreationContext, Type requestedType, IAbstractService service) :base(context)
         {
+            Service = service;
             AbstractTypeCreationContext = abstractTypeCreationContext;
+            RequestedType = requestedType;
         }
     }
 }

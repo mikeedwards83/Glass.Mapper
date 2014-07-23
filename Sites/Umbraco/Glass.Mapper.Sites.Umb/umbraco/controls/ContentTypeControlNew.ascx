@@ -3,6 +3,8 @@
 <%@ Register TagPrefix="cc1" Namespace="umbraco.uicontrols" Assembly="controls" %>
 <%@ Register TagPrefix="cc2" Namespace="umbraco.uicontrols" Assembly="controls" %>
 
+
+
 <cc1:TabView ID="TabView1" Height="392px" Width="552px" runat="server"></cc1:TabView>
 
 <asp:Panel ID="pnlGeneral" runat="server"></asp:Panel>
@@ -15,26 +17,21 @@
   
   <cc2:Pane ID="Pane2" runat="server">
     <cc2:PropertyPanel runat="server" id="pp_newTab" Text="New tab">
-      <asp:TextBox ID="txtNewTab" runat="server"/> &nbsp; <asp:Button ID="btnNewTab" runat="server" Text="New tab" OnClick="btnNewTab_Click"/>
+      <asp:TextBox ID="txtNewTab" runat="server"/> &nbsp; <asp:Button ID="btnNewTab" CssClass="btn" runat="server" Text="New tab" OnClick="btnNewTab_Click"/>
     </cc2:PropertyPanel>
   </cc2:Pane>
     
   <cc2:Pane ID="Pane1" runat="server" Width="216" Height="80">
     <asp:DataGrid ID="dgTabs" Width="100%" runat="server" CellPadding="2" HeaderStyle-CssClass="propertyHeader"
       ItemStyle-CssClass="propertyContent" GridLines="None" OnItemCommand="dgTabs_ItemCommand"
-      HeaderStyle-Font-Bold="True" AutoGenerateColumns="False">
+      HeaderStyle-Font-Bold="True" AutoGenerateColumns="False" CssClass="tabs-table">
       <Columns>
         <asp:BoundColumn DataField="id" Visible="False"></asp:BoundColumn>
         <asp:TemplateColumn HeaderText="Name">
           <ItemTemplate>
-            <asp:TextBox ID="txtTab" runat="server" Value='<%#DataBinder.Eval(Container.DataItem,"name")%>'>
-            </asp:TextBox>
-          </ItemTemplate>
-        </asp:TemplateColumn>
-        <asp:TemplateColumn HeaderText="Sort order">
-          <ItemTemplate>
-            <asp:TextBox ID="txtSortOrder" runat="server" Value='<%#DataBinder.Eval(Container.DataItem,"order") %>'>
-            </asp:TextBox>
+            <i class="icon-navigation handle"></i>
+            <asp:TextBox ID="txtTab" runat="server" Value='<%#DataBinder.Eval(Container.DataItem,"name")%>'></asp:TextBox>
+            <asp:TextBox ID="txtSortOrder" runat="server" CssClass="sort-order" Value='<%#DataBinder.Eval(Container.DataItem,"order") %>'></asp:TextBox>
           </ItemTemplate>
         </asp:TemplateColumn>
         <asp:ButtonColumn ButtonType="PushButton" Text="Delete" CommandName="Delete"></asp:ButtonColumn>
@@ -62,12 +59,8 @@
   <cc2:Pane runat="server">  
     <cc2:PropertyPanel ID="pp_icon" runat="server" Text="Icon">
         <div class="umbIconDropdownList">
-          <asp:DropDownList ID="ddlIcons"  CssClass="guiInputText guiInputStandardSize" runat="server"/>
-        </div>
-    </cc2:PropertyPanel>
-    <cc2:PropertyPanel ID="pp_thumbnail" runat="server" Text="Thumbnail">
-        <div class="umbThumbnailDropdownList">
-          <asp:DropDownList ID="ddlThumbnails" CssClass="guiInputText guiInputStandardSize" runat="server"/>
+          <a href="#" class="btn btn-link picker-icons"> <i class="<asp:Literal runat="server" ID="lt_icon" />"></i> Choose...</a>
+          <asp:HiddenField ID="tb_icon" runat="server" />
         </div>
     </cc2:PropertyPanel>
     <cc2:PropertyPanel ID="pp_description" runat="server" Text="Description">
@@ -79,10 +72,13 @@
 
 <asp:Panel ID="pnlStructure" runat="server">
     <cc2:Pane ID="Pane6" runat="server">
-        <cc2:PropertyPanel ID="pp_Root" runat="server" Text="Allow at root">
-            <asp:CheckBox runat="server" ID="allowAtRoot" Text="Yes" /><br />
-            Only Content Types with this checked can be created at the root level of Content and Media trees
-        </cc2:PropertyPanel>     
+        <cc2:PropertyPanel ID="pp_Root" runat="server" Text="Allow at root <br/><small>Only Content Types with this checked can be created at the root level of Content and Media trees</small>">
+            <asp:CheckBox runat="server" ID="allowAtRoot" Text="Yes" /><br />            
+        </cc2:PropertyPanel>
+        
+        <cc2:PropertyPanel ID="pp_isContainer" runat="server" Text="Container<br/><small>A container type doesn't display children in the tree, but as a grid instead</small>">
+            <asp:CheckBox runat="server" ID="cb_isContainer" Text="Yes" /><br />            
+        </cc2:PropertyPanel>   
     </cc2:Pane>
   <cc2:Pane ID="Pane5" runat="server">
  
@@ -110,5 +106,43 @@
 <script type="text/javascript">
     $(function () {
         <asp:Literal runat="server" ID="checkTxtAliasJs" />
+    });
+
+
+    jQuery(document).ready(function () {
+
+        checkAlias('.prop-alias');
+   
+        duplicatePropertyNameAsSafeAlias('ul.addNewProperty .prop-name', 'ul.addNewProperty .prop-alias');
+   
+        jQuery(".picker-icons").click(function(){
+            var that = this;
+            UmbClientMgr.openAngularModalWindow({
+                template: 'views/common/dialogs/iconpicker.html', 
+                callback: function(data){
+                    jQuery(that).next().val(data);
+                    jQuery(that).find("i").attr("class", data);
+                }}); 
+            
+            return false;
+        });
+
+        // Make each tr of the tabs table sortable (prevent dragging of header row, and set up a callback for when row dragged)
+        jQuery("table.tabs-table tbody").sortable({
+            containment: 'parent',
+            cancel: '.propertyHeader, input',
+            tolerance: 'pointer',
+            update: function (event, ui) {
+                saveOrder();
+            }
+        });
+
+        // Fired after row dragged; go through each tr and save position to the hidden sort order field
+        function saveOrder() {
+            jQuery("table.tabs-table tbody tr.propertyContent").each(function (index) {
+                jQuery("input.sort-order", this).val(index + 1);
+            });
+        }
+
     });
 </script>

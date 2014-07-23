@@ -20,11 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Dynamic;
 using System.Collections;
-using System.Linq.Expressions;
-using System.ComponentModel;
 using System.Reflection;
 
 namespace Glass.Mapper.Sc.Dynamic

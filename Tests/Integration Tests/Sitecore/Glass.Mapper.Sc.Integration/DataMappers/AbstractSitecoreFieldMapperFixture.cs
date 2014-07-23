@@ -234,7 +234,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             }
             //Assert
-            Assert.AreEqual(fieldValue, mapper.Value);
+            var itemAfter = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+            Assert.AreEqual(mapper.Value, itemAfter[fieldId]);
 
         }
 
@@ -273,7 +274,153 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             }
             //Assert
-            Assert.AreEqual(fieldValue, mapper.Value);
+            var itemAfter = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+            Assert.AreEqual( mapper.Value, itemAfter[fieldName]);
+
+        }
+
+        
+
+        #endregion
+
+        #region Method - MapPropertyToCms
+      
+        [Test]
+        public void MapPropertyToCms_FieldReadOnly_FieldNotUpdated()
+        {
+            //Assign
+            var fieldValue = "test value set";
+            var fieldName = "Field";
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+
+            var config = new SitecoreFieldConfiguration();
+            config.FieldName = fieldName;
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.ReadOnly = true;
+
+            var mapper = new StubMapper(null);
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+            mapper.Value = fieldValue;
+
+            Assert.IsTrue(mapper.ReadOnly);
+
+            var context = new SitecoreDataMappingContext(new Stub(), item, null);
+
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                item[fieldName] = string.Empty;
+                item.Editing.EndEdit();
+            }
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                mapper.MapPropertyToCms(context);
+                item.Editing.EndEdit();
+
+            }
+            //Assert
+            var itemAfter = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+            Assert.AreNotEqual(mapper.Value, itemAfter[fieldName]);
+            Assert.AreEqual(item[fieldName], itemAfter[fieldName]);
+
+        }
+
+        [Test]
+        public void MapPropertyToCms_PageEditorOnly_FieldNotUpdated()
+        {
+            //Assign
+            var fieldValue = "test value set";
+            var fieldName = "Field";
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+
+            var config = new SitecoreFieldConfiguration();
+            config.FieldName = fieldName;
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.ReadOnly = false;
+            config.Setting = SitecoreFieldSettings.PageEditorOnly;
+
+            var mapper = new StubMapper(null);
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+            mapper.Value = fieldValue;
+
+            Assert.IsFalse(mapper.ReadOnly);
+
+            var context = new SitecoreDataMappingContext(new Stub(), item, null);
+
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                item[fieldName] = string.Empty;
+                item.Editing.EndEdit();
+            }
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                mapper.MapPropertyToCms(context);
+                item.Editing.EndEdit();
+
+            }
+            //Assert
+            var itemAfter = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+            Assert.AreNotEqual(mapper.Value, itemAfter[fieldName]);
+            Assert.AreEqual(item[fieldName], itemAfter[fieldName]);
+
+        }
+
+        #endregion
+
+        #region Method - MapCmsToProperty
+
+        [Test]
+        public void MapCmsToProperty_PageEditorOnly_FieldNotUpdated()
+        {
+            //Assign
+            var fieldValue = "test value set";
+            var preValue = "some other value";
+            var fieldName = "Field";
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var item = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+
+            var config = new SitecoreFieldConfiguration();
+            config.FieldName = fieldName;
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.ReadOnly = false;
+            config.Setting = SitecoreFieldSettings.PageEditorOnly;
+
+            var mapper = new StubMapper(null);
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+            mapper.Value = preValue;
+
+            Assert.IsFalse(mapper.ReadOnly);
+
+            var context = new SitecoreDataMappingContext(new Stub(), item, null);
+
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                item[fieldName] = fieldValue;
+                item.Editing.EndEdit();
+            }
+
+            //Act
+            using (new SecurityDisabler())
+            {
+                item.Editing.BeginEdit();
+                mapper.MapCmsToProperty(context);
+                item.Editing.EndEdit();
+
+            }
+            //Assert
+            var itemAfter = database.GetItem("/sitecore/content/Tests/DataMappers/AbstractSitecoreFieldMapper/MapToCms");
+            Assert.AreEqual(mapper.Value, preValue);
+            Assert.AreEqual(fieldValue, itemAfter[fieldName]);
 
         }
 

@@ -18,8 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines
@@ -29,17 +27,16 @@ namespace Glass.Mapper.Pipelines
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="K"></typeparam>
-    public abstract class AbstractPipelineRunner<T, K> 
+    public abstract class AbstractPipelineRunner<T, K> : IDisposable
         where T:AbstractPipelineArgs
         where K:IPipelineTask<T>
     {
-        IEnumerable<K> _tasks;
 
         /// <summary>
         /// Gets the tasks.
         /// </summary>
         /// <value>The tasks.</value>
-        public IEnumerable<K> Tasks { get { return _tasks; } }
+        public IEnumerable<K> Tasks { get; private set; }
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -53,7 +50,7 @@ namespace Glass.Mapper.Pipelines
         /// <param name="tasks">The tasks.</param>
         public AbstractPipelineRunner(IEnumerable<K> tasks)
         {
-            _tasks = tasks;
+            Tasks = tasks;
             Profiler = new NullProfiler();
         }
 
@@ -64,9 +61,9 @@ namespace Glass.Mapper.Pipelines
         /// <returns>`0.</returns>
         public virtual T Run(T args)
         {
-            if (_tasks != null)
+            if (Tasks != null)
             {
-                foreach (var task in _tasks)
+                foreach (var task in Tasks)
                 {
 #if DEBUG
                     Profiler.Start(task.GetType().FullName);
@@ -83,10 +80,30 @@ namespace Glass.Mapper.Pipelines
             return args;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-
-
-
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (Tasks != null)
+                {
+                    foreach (var task in Tasks)
+                    {
+                        var disposableTask = task as IDisposable;
+                        if (disposableTask != null)
+                        {
+                            disposableTask.Dispose();
+                        }
+                    }
+                }
+                Tasks = null;
+            }
+        }
     }
 }
 

@@ -17,11 +17,8 @@
 //-CRE-
 
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Configuration.Attributes;
 using Sitecore.Data;
@@ -67,8 +64,14 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             CodeFirst = codeFirst;
             FieldType = fieldType;
             FieldSortOrder = -1;
-            SectionSortOrder = -1;
+            SectionSortOrder = 100;
         }
+
+        /// <summary>
+        /// Use with the Glass.Mapper.Sc.Fields.Link type
+        /// </summary>
+        /// <value>The URL options.</value>
+        public SitecoreInfoUrlOptions UrlOptions { get; set; }
 
         /// <summary>
         /// The name of the field  to use if it is different to the property name
@@ -162,6 +165,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         public bool IsRequired { get; set; }
 
+        /// <summary>
+        /// Allows for custom types of field to create when using Code First
+        /// </summary>
+        /// <value>The type of the field.</value>
+        public string CustomFieldType { get; set; }
+
         #endregion
 
 
@@ -198,6 +207,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.FieldSource = this.FieldSource;
             config.FieldTitle = this.FieldTitle;
             config.FieldType = this.FieldType;
+            config.CustomFieldType = this.CustomFieldType;
             config.IsShared = this.IsShared;
             config.IsUnversioned = this.IsUnversioned;
             config.SectionName = this.SectionName;
@@ -207,22 +217,22 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             config.ValidationErrorText = this.ValidationErrorText;
             config.ValidationRegularExpression = this.ValidationRegularExpression;
             config.IsRequired = this.IsRequired;
+            config.UrlOptions = this.UrlOptions;
 
 
             //code first configuration
             
             var fieldFieldValues = propertyInfo.GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>();
-
+ 
             ////fix: fieldfieldvalues are not passed
             var interfaceFromProperty = propertyInfo.DeclaringType.GetInterfaces().FirstOrDefault(inter => inter.GetProperty(propertyInfo.Name) != null);
             if (interfaceFromProperty != null)
             {
                 fieldFieldValues = interfaceFromProperty.GetProperty(propertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>(); ;
             }
-                
+                 
             var ffvConfigs = fieldFieldValues.Select(x => x.Configure(propertyInfo, config));
             config.FieldValueConfigs = ffvConfigs.ToList();
-
             base.Configure(propertyInfo, config);
 
         }

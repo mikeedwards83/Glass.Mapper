@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Glass.Mapper.Sc.Mvc-3</id>
+    <version>$version$</version>
+    <authors>Michael Edwards</authors>
+    <owners>Michael Edwards</owners>
+    <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+		This package contains support for Sitecore MVC using ASP.NET MVC 3. Other packages for other versions of ASP.NET MVC are 
+		available.
+	</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore Glass.Mapper MVC</tags>
+    <language>en-GB</language>
+    <dependencies>
+		<dependency id="Glass.Mapper.Sc" version="3.2" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="Source\Glass.Mapper.Sc.Mvc\bin\Release\Glass.Mapper.Sc.Mvc.dll" target="lib\net40\Glass.Mapper.Sc.Mvc.dll" />
+	<file src="Source\Glass.Mapper.Sc.Mvc\bin\Release\Glass.Mapper.Sc.Mvc.pdb" target="lib\net40\Glass.Mapper.Sc.Mvc.pdb" />
+	<file src="Source\Glass.Mapper.Sc.Mvc\bin\Release\Glass.Mapper.Sc.Mvc.xml" target="lib\net40\Glass.Mapper.Sc.Mvc.xml" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.dll" target="lib\net45\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.pdb" target="lib\net45\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.xml" target="lib\net45\Glass.Mapper.Sc.Mvc.xml" />
+    <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.Mvc.Config" target="content\App_Config\Include\Glass.Mapper.Sc.Mvc.Config" />
+    
+    
+    <file src="Source\Glass.Mapper.Sc.Mvc\**.cs" target="src\Source\Glass.Mapper.Sc.Mvc" />
+  </files>
+</package>

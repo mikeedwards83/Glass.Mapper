@@ -31,13 +31,13 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
     [TestFixture]
     public class AttributeConfigurationLoaderFixture
     {
-        private StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration> _loader;
+        private StubAttributeConfigurationLoader _loader;
 
 
         [SetUp]
         public void Setup()
         {
-            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>();
+            _loader = new StubAttributeConfigurationLoader();
 
         }
 
@@ -50,7 +50,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             string assemblyName = "Glass.Mapper.Tests.dll";
 
-            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+            _loader = new StubAttributeConfigurationLoader(assemblyName);
 
             //Act
             var results = _loader.Load();
@@ -69,7 +69,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             string assemblyName = "Glass.Mapper.Tests";
 
-            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+            _loader = new StubAttributeConfigurationLoader(assemblyName);
 
             //Act
             var results = _loader.Load();
@@ -89,7 +89,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assign
             string assemblyName = "DoesNotExist";
 
-            _loader = new StubAttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>(assemblyName);
+            _loader = new StubAttributeConfigurationLoader(assemblyName);
 
             //Act
             var results = _loader.Load();
@@ -135,153 +135,13 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         #endregion
 
-        #region Method - GetPropertyAttribute
-
-        [Test]
-        public void GetPropertyAttribute_PropertyHasAttribute_ReturnsAttribute()
-        {
-            //Assign
-            PropertyInfo propertyInfo = typeof (StubClassWithProperties).GetProperty("PropertyWithAttribute");
-
-            //Act
-            var result = AttributeConfigurationLoader<StubTypeConfiguration,StubPropertyConfiguration>.GetPropertyAttribute(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubAbstractPropertyAttribute);
-        }
-
-        [Test]
-        public void GetPropertyAttribute_PropertyHasNoAttribute_ReturnsNull()
-        {
-            //Assign
-            PropertyInfo propertyInfo = typeof(StubClassWithProperties).GetProperty("PropertyWithoutAttribute");
-
-            //Act
-            var result = AttributeConfigurationLoader<StubTypeConfiguration, StubPropertyConfiguration>.GetPropertyAttribute(propertyInfo);
-
-            //Assert
-            Assert.IsNull(result);
-        }
+      
         
 
-        #endregion
 
-        #region Method - ProcessProperty
-
-        [Test]
-        public void ProcessProperty_PropertyOnClassWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof (StubClassWithProperties),"PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        [Test]
-        public void ProcessProperty_PropertyOnSubClassWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof(StubSubClassWithProperties),"PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        [Test]
-        public void ProcessProperty_PropertyOnInterfaceWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof(StubInterfaceWithProperties),"PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        [Test]
-        public void ProcessProperty_PropertyOnSubInterfaceWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof(StubSubInterfaceWithProperties), "PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        [Test]
-        public void ProcessProperty_PropertyOnClassFromInterfaceWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof(StubClassFromInterface), "PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
-
-           
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        [Test]
-        public void ProcessProperty_PropertyOnClassFromTwoInterfacesOneWithAttribute_ReturnsConfigurationItem()
-        {
-            //Assign
-            var propertyInfo = Utilities.GetProperty(typeof(StubClassFromTwoInterfaces), "PropertyWithAttribute");
-
-            //Act
-            var result = _loader.ProcessProperty(propertyInfo);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is StubPropertyConfiguration);
+       
 
 
-            Assert.AreEqual(propertyInfo, result.PropertyInfo);
-        }
-
-        #endregion
-
-        #region Method - LoadPropertiesFromType
-
-        [Test]
-        public void LoadPropertiesFromType_LoadsTypeWithProperty_ReturnsTypeConfigAndPropertyConfig()
-        {
-            //Assign
-            var type = typeof (StubClassWithProperties);
-
-            //Act
-            var result = _loader.LoadPropertiesFromType(type);
-
-            //Assert
-            Assert.AreEqual(1, result.Count());
-
-        }
-
-        #endregion
 
         #region Stubs
 
@@ -295,33 +155,27 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
            
         }
 
-        public class StubAttributeConfigurationLoader<T,K> : AttributeConfigurationLoader<T, K>
-            where T : AbstractTypeConfiguration, new() 
-            where K : AbstractPropertyConfiguration, new ()
-        
+        public class StubAttributeConfigurationLoader : AttributeConfigurationLoader
         {
 
             public StubAttributeConfigurationLoader(params string [] assemblies):base(assemblies)
             {
             }
 
-            public IEnumerable<T> LoadFromAssembly(Assembly assembly)
+            public IEnumerable<AbstractTypeConfiguration> LoadFromAssembly(Assembly assembly)
             {
                 return base.LoadFromAssembly(assembly);
-            }
-            public AbstractPropertyConfiguration ProcessProperty(PropertyInfo property)
-            {
-                return base.ProcessProperty(property);
-            }
-
-            public IEnumerable<AbstractPropertyConfiguration> LoadPropertiesFromType(Type type)
-            {
-                return base.LoadPropertiesFromType(type);
             }
         }
 
         public class StubAbstractTypeAttribute : AbstractTypeAttribute
         {
+            public override AbstractTypeConfiguration Configure(Type type)
+            {
+                var config =  new StubTypeConfiguration();
+                base.Configure(type, config);
+                return config;
+            }
         }
 
         public class StubAbstractPropertyAttribute : AbstractPropertyAttribute

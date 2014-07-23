@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -34,7 +33,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="acceptedTypes">The accepted types.</param>
         public IdAttribute(IEnumerable<Type> acceptedTypes)
         {
-            this.AcceptedTypes= acceptedTypes;
+            AcceptedTypes= acceptedTypes;
         }
 
         /// <summary>

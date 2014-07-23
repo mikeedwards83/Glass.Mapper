@@ -37,6 +37,8 @@ namespace Glass.Mapper.Umb
         /// </value>
         public IContentService ContentService { get; private set; }
 
+        public bool PublishedOnly { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UmbracoService"/> class.
         /// </summary>
@@ -80,9 +82,16 @@ namespace Glass.Mapper.Umb
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns></returns>
-        public T GetItem<T>(int id, bool isLazy = false, bool inferType = false) where T : class
+        public T GetItem<T>(int? id, bool isLazy = false, bool inferType = false) where T : class
         {
-            var item = ContentService.GetById(id);
+            if (id == null)
+            {
+                return null;
+            }
+            var item = PublishedOnly
+                           ? ContentService.GetPublishedVersion(id.Value)
+                           : ContentService.GetById(id.Value);
+
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
@@ -97,6 +106,10 @@ namespace Glass.Mapper.Umb
         public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
         {
             var item = ContentService.GetById(id);
+
+            if (PublishedOnly)
+                item = ContentService.GetPublishedVersion(item.Id);
+
             return CreateType(typeof(T), item, isLazy, inferType) as T;
         }
 
@@ -113,7 +126,7 @@ namespace Glass.Mapper.Umb
             //  UmbracoTypeContext context = new UmbracoTypeContext();
 
             //TODO: ME - this may not work with a proxy
-            var config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+            var config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             if (config == null)
                 throw new NullReferenceException("Can not save class, could not find configuration for {0}".Formatted(typeof(T).FullName));
@@ -150,7 +163,8 @@ namespace Glass.Mapper.Umb
                     ConstructorParameters = constructorParameters,
                     Content = content,
                     InferType = inferType,
-                    IsLazy = isLazy
+                    IsLazy = isLazy,
+                    PublishedOnly =  PublishedOnly
                 };
             var obj = InstantiateObject(creationContext);
 
@@ -257,6 +271,7 @@ namespace Glass.Mapper.Umb
         /// Creates a new Umbraco class.
         /// </summary>
         /// <typeparam name="T">The type of the new item to create. This type must have either a TemplateId or BranchId defined on the UmbracoClassAttribute or fluent equivalent</typeparam>
+        /// <typeparam name="TParent"></typeparam>
         /// <param name="parent">The parent of the new item to create. Must have the UmbracoIdAttribute or fluent equivalent</param>
         /// <param name="newItem">New item to create, must have the attribute UmbracoInfoAttribute of type UmbracoInfoType.Name or the fluent equivalent</param>
         /// <returns></returns>
@@ -271,13 +286,14 @@ namespace Glass.Mapper.Umb
         /// or
         /// Failed to create item
         /// </exception>
-        public T Create<T>(int parent, T newItem) where T : class
+        public T Create<T, TParent>(TParent parent, T newItem) where T : class 
+                                                               where TParent : class
         {
             UmbracoTypeConfiguration newType;
 
             try
             {
-                newType = GlassContext.GetTypeConfiguration(newItem) as UmbracoTypeConfiguration;
+                newType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(newItem);
             }
             catch (Exception ex)
             {
@@ -288,7 +304,7 @@ namespace Glass.Mapper.Umb
 
             try
             {
-                parentType = GlassContext.GetTypeConfiguration(parent) as UmbracoTypeConfiguration;
+                parentType = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(parent);
             }
             catch (Exception ex)
             {
@@ -338,7 +354,7 @@ namespace Glass.Mapper.Umb
         public void WriteToItem<T>(T target, IContent content, UmbracoTypeConfiguration config = null)
         {
             if (config == null)
-                config = GlassContext.GetTypeConfiguration(target) as UmbracoTypeConfiguration;
+                config = GlassContext.GetTypeConfiguration<UmbracoTypeConfiguration>(target);
 
             var savingContext = new UmbracoTypeSavingContext
                 {
@@ -350,6 +366,22 @@ namespace Glass.Mapper.Umb
             //ME-an item with no versions should be null
 
             SaveObject(savingContext);
+        }
+
+        /// <summary>
+        /// Deletes an item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="MapperException"></exception>
+        public void Delete<T>(T item) where T : class
+        {
+            var type = GlassContext.GetTypeConfiguration <UmbracoTypeConfiguration>(item) as UmbracoTypeConfiguration;
+            var umbItem = type.ResolveItem(item, ContentService);
+
+            if (umbItem == null) throw new MapperException("Content not found");
+
+            ContentService.Delete(umbItem);
         }
 
         /// <summary>
@@ -371,7 +403,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj)
         {
             var umbTypeContext = abstractTypeCreationContext as UmbracoTypeCreationContext;
-            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this);
+            return new UmbracoDataMappingContext(obj, umbTypeContext.Content, this, umbTypeContext.PublishedOnly);
         }
 
         /// <summary>
@@ -382,7 +414,7 @@ namespace Glass.Mapper.Umb
         public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
         {
             var umbContext = creationContext as UmbracoTypeSavingContext;
-            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this);
+            return new UmbracoDataMappingContext(umbContext.Object, umbContext.Content, this, umbContext.PublishedOnly);
         }
     }
 }

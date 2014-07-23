@@ -50,9 +50,9 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
         /// <param name="type">The type.</param>
         /// <param name="config">The config.</param>
         /// <exception cref="ConfigurationException">Type configuration is not of type {0}.Formatted(typeof(UmbracoTypeConfiguration).FullName)</exception>
-        public override void Configure(Type type, AbstractTypeConfiguration config)
+        public override AbstractTypeConfiguration Configure(Type type)
         {
-            var umbConfig = config as UmbracoTypeConfiguration;
+            var umbConfig = new UmbracoTypeConfiguration();
 
             if (umbConfig == null)
                 throw new ConfigurationException(
@@ -62,7 +62,9 @@ namespace Glass.Mapper.Umb.Configuration.Attributes
             umbConfig.CodeFirst = CodeFirst;
             umbConfig.ContentTypeName = ContentTypeName;
 
-            base.Configure(type, config);
+            base.Configure(type, umbConfig);
+
+            return umbConfig;
         }
     }
 }

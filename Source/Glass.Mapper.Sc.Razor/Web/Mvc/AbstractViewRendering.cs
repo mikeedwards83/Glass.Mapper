@@ -42,14 +42,14 @@ namespace Glass.Mapper.Sc.Razor.Web.Mvc
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            HtmlTextWriter htmlWriter = new HtmlTextWriter(new StringWriter(sb));
+        //public override string ToString()
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    HtmlTextWriter htmlWriter = new HtmlTextWriter(new StringWriter(sb));
 
-            Render(htmlWriter);
-            return sb.ToString();
-        }
+        //    Render(htmlWriter);
+        //    return sb.ToString();
+        //}
 
         /// <summary>
         /// Gets or sets the data source.

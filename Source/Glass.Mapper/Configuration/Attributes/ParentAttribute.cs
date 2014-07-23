@@ -61,8 +61,8 @@ namespace Glass.Mapper.Configuration.Attributes
         public void Configure(PropertyInfo propertyInfo, ParentConfiguration config)
         {
 
-            config.IsLazy = this.IsLazy;
-            config.InferType = this.InferType;
+            config.IsLazy = IsLazy;
+            config.InferType = InferType;
 
             base.Configure(propertyInfo, config);
         }

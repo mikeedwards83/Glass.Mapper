@@ -35,6 +35,8 @@ namespace Glass.Mapper.Umb
         /// The content.
         /// </value>
         public IContent Content { get; set; }
+
+        public bool PublishedOnly { get; set; }
     }
 }
 

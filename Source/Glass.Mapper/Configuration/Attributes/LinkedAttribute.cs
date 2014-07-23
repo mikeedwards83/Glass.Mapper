@@ -16,11 +16,7 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Glass.Mapper.Configuration.Attributes
 {
@@ -58,8 +54,8 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="config">The config.</param>
         public void Configure(PropertyInfo info, LinkedConfiguration config)
         {
-            config.IsLazy = this.IsLazy;
-            config.InferType = this.InferType;
+            config.IsLazy = IsLazy;
+            config.InferType = InferType;
 
             base.Configure(info, config);
         }

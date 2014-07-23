@@ -16,7 +16,7 @@
 */ 
 //-CRE-
 using System;
-using RazorEngine.Templating;
+using System.Collections.Generic;
 
 namespace Glass.Mapper.Sc.Razor
 {
@@ -49,6 +49,8 @@ namespace Glass.Mapper.Sc.Razor
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        public IEnumerable<string> Placeholders { get; set; }
     }
 }
 
