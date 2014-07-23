@@ -37,7 +37,7 @@ namespace Glass.Mapper.Umb.DataMappers
         /// Initializes a new instance of the <see cref="UmbracoPropertyNullableMapper{T, TMapper}" /> class.
         /// </summary>
         public UmbracoPropertyNullableMapper()
-            : base(typeof(Nullable<T>))
+            : base(typeof(T?))
         {
             _baseMapper = new TMapper();
         }
@@ -53,7 +53,10 @@ namespace Glass.Mapper.Umb.DataMappers
         /// </returns>
         public override object GetProperty(Property property, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            if (property.Value != null)
+            if (property.Value == null)
+                return null;
+
+            if (property.Value.ToString().Equals(string.Empty))
                 return null;
 
             return _baseMapper.GetProperty(property, config, context);
