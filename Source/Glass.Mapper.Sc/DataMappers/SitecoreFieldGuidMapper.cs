@@ -26,11 +26,19 @@ using Sitecore.Data.Fields;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+
+    
+
     /// <summary>
     /// Class SitecoreFieldGuidMapper
     /// </summary>
     public class SitecoreFieldGuidMapper : AbstractSitecoreFieldMapper
     {
+        protected override object DefaultValue
+        {
+            get { return Guid.Empty; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldGuidMapper"/> class.
         /// </summary>

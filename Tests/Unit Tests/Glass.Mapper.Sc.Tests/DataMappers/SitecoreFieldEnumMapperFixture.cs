@@ -77,7 +77,6 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof(MapperException))]
         public void GetField_FieldContainsEmptyString_ThowsMapperException()
         {
             //Assign
@@ -96,6 +95,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var result = (StubEnum)mapper.GetField(field, config, null);
 
             //Assert
+            Assert.AreEqual(StubEnum.Value1, result);
         }
 
         [Test]

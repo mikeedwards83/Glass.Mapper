@@ -24,6 +24,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.Configuration;
@@ -43,6 +44,7 @@ namespace Glass.Mapper.Sc.CodeFirst
     /// </summary>
     public class GlassDataProvider : DataProvider
     {
+        public static bool DisableItemHandlerWhenDeletingFields = false;
         private static readonly object _setupLock = new object();
         private bool _setupComplete;
         private bool _setupProcessing;
@@ -172,7 +174,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var section = SectionTable.FirstOrDefault(x => x.SectionId == itemId);
             if (section != null)
             {
-                return new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
+                return  new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
             }
 
             var field = FieldTable.FirstOrDefault(x => x.FieldId == itemId);
@@ -214,7 +216,10 @@ namespace Glass.Mapper.Sc.CodeFirst
             var sectionInfo = SectionTable.FirstOrDefault(x => x.SectionId == itemDefinition.ID);
             if (sectionInfo != null)
             {
-                GetStandardFields(fields, sectionInfo.SectionSortOrder >= 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
+                GetStandardFields(fields,
+                    sectionInfo.SectionSortOrder >= 0
+                        ? sectionInfo.SectionSortOrder
+                        : (SectionTable.IndexOf(sectionInfo) + 100));
 
                 return fields;
             }
@@ -222,7 +227,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fieldInfo = FieldTable.FirstOrDefault(x => x.FieldId == itemDefinition.ID);
             if (fieldInfo != null)
             {
-                GetStandardFields(fields, fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
+                GetStandardFields(fields,
+                    fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
                 GetFieldFields(fieldInfo, fields);
                 return fields;
             }
@@ -341,9 +347,11 @@ namespace Glass.Mapper.Sc.CodeFirst
                 {
                     var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
                     var newId = GetUniqueGuid(itemDefinition.ID + section.SectionName);
+                    const int newSortOrder = 100;
+
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
-                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, section.SectionSortOrder);
+                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, newSortOrder);
 
                     SectionTable.Add(record);
                 }
@@ -381,14 +389,14 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             IDList fieldIds = new IDList();
 
-            var providers = context.DataManager.Database.GetDataProviders();
-            //var otherProvider = providers.FirstOrDefault(x => !(x is GlassDataProvider));
             var interfaces = cls.Type.GetInterfaces().Where(i => System.Attribute.IsDefined(i,typeof (Glass.Mapper.Sc.Configuration.Attributes.SitecoreTypeAttribute)));
 
             foreach (var field in fields)
             {
-                //fix: added check on interfaces
-                if (field.PropertyInfo.DeclaringType != cls.Type || interfaces.Any(inter => inter.GetProperty(field.PropertyInfo.Name) != null))
+                //fix: added check on interfaces, if field resides on interface then skip here
+                var propertyFromInterface = interfaces.FirstOrDefault(inter => inter.GetProperty(field.PropertyInfo.Name) != null 
+                                                                            && inter.GetProperty(field.PropertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldAttribute), false).Any());
+                if (field.PropertyInfo.DeclaringType != cls.Type || propertyFromInterface != null)
                     continue;
 
                 if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))
@@ -399,7 +407,17 @@ namespace Glass.Mapper.Sc.CodeFirst
                     if (existing != null)
                     {
                         using (new SecurityDisabler())
+                        {
+                            if (DisableItemHandlerWhenDeletingFields)
+                            {
+                                using (new DisableItemHandler())
+                                    sqlProvider.DeleteItem(existing, context);
+                    }
+                            else
+                            {
                             sqlProvider.DeleteItem(existing, context);
+                    }
+                        }
                     }
 
                     if (record == null)
@@ -498,7 +516,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// Setups the specified context.
         /// </summary>
         /// <param name="db">The db.</param>
-        public void Initialise(Database db)
+        public  void Initialise(Database db)
         {
             if (_setupComplete || _setupProcessing)
                 return;

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Dynamic;
+using System.IO;
 using System.Linq.Expressions;
 using Glass.Mapper.Sc.RenderField;
 using System.Web.UI;
@@ -31,6 +32,12 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// <typeparam name="T"></typeparam>
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
+        private TextWriter _writer;
+
+        protected TextWriter Output
+        {
+            get { return _writer ?? this.Response.Output; }
+        }
 
         /// <summary>
         /// Model to render on the sublayout
@@ -138,7 +145,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink(Expression<Func<T, object>> field,
                                                      object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(this.Model, field, this.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
 
         }
 
@@ -176,6 +183,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual T GetRenderingParameters<T>() where T: class
         {
             return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
+        }
+
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            this._writer = writer;
+            base.RenderControl(writer);
         }
     }
 }

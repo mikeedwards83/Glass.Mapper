@@ -19,7 +19,7 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.1.8" />
+		<dependency id="Glass.Mapper.Sc" version="3.2.0" />
 		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 	</dependencies>
@@ -32,9 +32,9 @@
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Net45\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\net45\Glass.Mapper.Sc.CastleWindsor.pdb" />
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\Net45\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\net45\Glass.Mapper.Sc.CastleWindsor.xml" />
 
-    <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
+      <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
 	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Start\**" target="content\App_Start" />
-	  <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
+	  
 
   </files>
 </package>

@@ -108,3 +108,6 @@ Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Sc7/Data/license.xm
 Depends/Sitecore71/
 
 Depends/Sitecore/bin - Copy/
+Depends/Sitecore/bin6/
+Depends/Sitecore/bin7.2/
+Depends/Sitecore72/

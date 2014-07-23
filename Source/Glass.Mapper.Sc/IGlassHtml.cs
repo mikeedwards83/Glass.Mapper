@@ -200,6 +200,6 @@ namespace Glass.Mapper.Sc
         string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target);
 
         #endregion
-       
+
     }
 }

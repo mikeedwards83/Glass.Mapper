@@ -63,16 +63,19 @@ namespace Glass.Mapper.Sc.Razor
             set { _glassHtml = value; }
         }
 
+        public ITemplateBase TemplateBase { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtmlFacade" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="writer">The writer.</param>
-        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase)
 
         {
             _writer = writer;
             _glassHtml = new GlassHtml(context);
+            TemplateBase = templateBase;
         }
   
         /// <summary>
@@ -147,7 +150,7 @@ namespace Glass.Mapper.Sc.Razor
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
-                                                     NameValueCollection attributes = null, bool isEditable = false)
+                                                     object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(model, field, _writer, attributes, isEditable);
 

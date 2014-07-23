@@ -64,10 +64,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
-
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -289,6 +287,8 @@
     <Compile Include="LazyContentEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UmbracoContext.cs" />
+    <Compile Include="UmbracoPublishedContext.cs" />
+    <Compile Include="UmbracoPublishedService.cs" />
     <Compile Include="UmbracoTypeSavingContext.cs" />
     <Compile Include="UmbracoTypeCreationContext.cs" />
     <Compile Include="UmbracoService.cs" />

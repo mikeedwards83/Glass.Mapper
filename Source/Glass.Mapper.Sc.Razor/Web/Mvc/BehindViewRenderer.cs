@@ -44,8 +44,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Mvc
         public override void Render(System.IO.TextWriter writer)
         {
             WebControl control = BehindRazorRenderingType.CreateControl(Path, Type, Assembly, ContextName) as WebControl;
+
             if (control != null)
             {
+                control.Parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters] ?? string.Empty;
+
                 HtmlTextWriter htmlWriter = new HtmlTextWriter(writer);
 
                 control.DataSource = this.DataSource;

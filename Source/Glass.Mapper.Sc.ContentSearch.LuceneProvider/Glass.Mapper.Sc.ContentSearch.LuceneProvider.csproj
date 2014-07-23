@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlassLuceneDocumentTypeMapper.cs" />
+    <Compile Include="GlassDocumentMapperObjectFactory.cs" />
     <Compile Include="GlassLuceneFieldNameTranslator.cs" />
     <Compile Include="GlassLuceneIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

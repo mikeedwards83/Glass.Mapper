@@ -17,7 +17,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public override string GetIndexFieldName(MemberInfo member)
         {
-            var memberAttribute = GetMemberAttribute(member);
+            var memberAttribute = GetIndexFieldNameFormatterAttribute(member);
             if (memberAttribute != null) return base.GetIndexFieldName(member);
 
             var fieldConfig = member.GetCustomAttribute<SitecoreFieldAttribute>(true);

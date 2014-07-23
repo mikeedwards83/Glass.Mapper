@@ -30,6 +30,7 @@
     <file src="Source\Glass.Mapper.Sc\bin\Net45\Glass.Mapper.Sc.dll" target="lib\net45\Glass.Mapper.Sc.dll" />
     <file src="Source\Glass.Mapper.Sc\bin\Net45\Glass.Mapper.Sc.pdb" target="lib\net45\Glass.Mapper.Sc.pdb" />
     <file src="Source\Glass.Mapper.Sc\bin\Net45\Glass.Mapper.Sc.xml" target="lib\net45\Glass.Mapper.Sc.xml" />
+	<file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" target="content\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
 
     <file src="Source\Glass.Mapper.Sc\**.cs" target="src\Source\Glass.Mapper.Sc" />
   </files>
