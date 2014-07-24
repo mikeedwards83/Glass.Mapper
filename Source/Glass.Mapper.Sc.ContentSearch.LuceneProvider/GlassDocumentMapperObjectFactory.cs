@@ -10,6 +10,8 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Common;
+using Sitecore.ContentSearch.SearchTypes;
+using Sitecore.ContentSearch.Utilities;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
@@ -35,6 +37,10 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public object CreateElementInstance(Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
         {
+            if (baseType.Namespace == typeof (UISearchResult).Namespace)
+            {
+                return ReflectionUtility.CreateInstance(baseType);
+            }
             var sitecoreService = new SitecoreContext();
             var typeCreationContext = new SitecoreTypeCreationContext
             {
