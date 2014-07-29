@@ -216,9 +216,9 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(object obj) where T: AbstractTypeConfiguration, new()
+        public T GetTypeConfiguration<T>(object obj, bool doNotLoad = false, bool checkBase = true) where T: AbstractTypeConfiguration, new()
         {
-            return GetTypeConfiguration<T>(obj.GetType());
+            return GetTypeConfiguration<T>(obj.GetType(), doNotLoad, checkBase);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false) where T: AbstractTypeConfiguration, new()
+        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false, bool checkBase = true) where T : AbstractTypeConfiguration, new()
         {
 
 
@@ -235,10 +235,12 @@ namespace Glass.Mapper
 
             if (config != null) return config as T;
 
+            if (checkBase)
+            {
             //check base type encase of proxy
             if (type.BaseType != null)
             {
-                config = TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
+            config = TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
             }
 
             if (config != null) return config as T;
@@ -248,10 +250,15 @@ namespace Glass.Mapper
             //ME - I added the OrderByDescending in response to issue 53
             // raised on the Glass.Sitecore.Mapper project. Longest name should be compared first
             // to get the most specific interface
-            var interfaceType = type.GetInterfaces().OrderByDescending(x => x.Name.Length).FirstOrDefault(x => name.Contains(x.Name));
+                var interfaceType =
+                    type.GetInterfaces()
+                        .OrderByDescending(x => x.Name.Length)
+                        .FirstOrDefault(x => name.Contains(x.Name));
 
             if (interfaceType != null)
                 config = TypeConfigurations.ContainsKey(interfaceType) ? TypeConfigurations[interfaceType] : null;
+
+            }
 
             if (config == null && !doNotLoad)
             {
