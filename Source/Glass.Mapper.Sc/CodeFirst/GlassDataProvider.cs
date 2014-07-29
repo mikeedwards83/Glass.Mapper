@@ -196,7 +196,12 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <returns>LanguageCollection.</returns>
         public override LanguageCollection GetLanguages(CallContext context)
         {
-            return new LanguageCollection();
+            return GetSqlProvider(this.Database).GetLanguages(context);
+        }
+
+        public override VersionUriList GetItemVersions(ItemDefinition itemDefinition, CallContext context)
+        {
+            return base.GetItemVersions(itemDefinition, context);
         }
 
         #region GetItemFields
