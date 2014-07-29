@@ -25,7 +25,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     /// <summary>
     /// Class SitecoreAttributeConfigurationLoader
     /// </summary>
-    [Obsolete("This class is no longer required, use Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader")]
+    //[Obsolete("This class is no longer required, use Glass.Mapper.Configuration.Attributes.AttributeConfigurationLoader")]
     public class SitecoreAttributeConfigurationLoader : AttributeConfigurationLoader
     {
         /// <summary> 

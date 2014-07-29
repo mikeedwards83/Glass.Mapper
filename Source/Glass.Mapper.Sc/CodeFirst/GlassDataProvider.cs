@@ -821,7 +821,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             while (baseType != null)
             {
-                idCheck(baseType);    
+                idCheck(baseType);
                 baseType = baseType.BaseType;
             }
 
