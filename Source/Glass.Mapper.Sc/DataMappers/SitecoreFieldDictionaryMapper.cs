@@ -103,8 +103,8 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             var parameters = new NameValueCollection();
-            
-            foreach (KeyValuePair<object, object> obj in dictionary)
+
+            foreach (DictionaryEntry obj in dictionary)
             {
                 string dictionaryKey = this.KeyMapper.SetFieldValue(obj.Key, config, context);
 

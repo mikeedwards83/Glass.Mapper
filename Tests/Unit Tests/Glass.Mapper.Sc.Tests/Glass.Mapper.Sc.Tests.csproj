@@ -100,7 +100,6 @@
     <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldDictionaryMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDecimalMapperFixture.cs" />
