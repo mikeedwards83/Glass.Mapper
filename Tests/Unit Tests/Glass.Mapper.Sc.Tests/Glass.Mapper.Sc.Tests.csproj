@@ -51,9 +51,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-
-
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Reference Include="NSubstitute, Version=1.6.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,7 +78,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -104,6 +100,7 @@
     <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldDictionaryMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDecimalMapperFixture.cs" />
