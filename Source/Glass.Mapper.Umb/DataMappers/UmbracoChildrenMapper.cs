@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Umb.Configuration;
 using Umbraco.Core.Models;
+using umbraco.NodeFactory;
 
 namespace Glass.Mapper.Umb.DataMappers
 {
@@ -59,14 +60,23 @@ namespace Glass.Mapper.Umb.DataMappers
             Type genericType = Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
 
             Func<IEnumerable<IContent>> getItems = null;
+            var node = new Node(umbContext.Content.Id, true);
 
             if (String.IsNullOrWhiteSpace(umbConfig.DocumentTypeAlias))
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.Published);
+                getItems = () =>
+                {
+                    var ids = node.ChildrenAsList.Select(x => x.Id);
+                    return ids.Select(x => umbContext.Service.ContentService.GetById(x)).Where(c => c != null && c.Published);
+                };
             }
             else
             {
-                getItems = () => umbContext.Service.ContentService.GetChildren(umbContext.Content.Id).Where(c => c.Published && c.ContentType.Alias == umbConfig.DocumentTypeAlias);
+                getItems = () =>
+                {
+                    var ids = node.ChildrenAsList.Select(x => x.Id);
+                    return ids.Select(x => umbContext.Service.ContentService.GetById(x)).Where(c => c != null && c.Published && c.ContentType.Alias == umbConfig.DocumentTypeAlias);
+                };
             }
 
             return Utilities.CreateGenericType(
