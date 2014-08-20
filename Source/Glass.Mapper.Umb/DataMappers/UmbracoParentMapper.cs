@@ -54,7 +54,11 @@ namespace Glass.Mapper.Umb.DataMappers
             var umbContext = mappingContext as UmbracoDataMappingContext;
             var umbConfig = Configuration as UmbracoParentConfiguration;
 
-            IContent content = umbContext.Service.ContentService.GetById(umbContext.Content.ParentId);
+            IContent content = null;
+            if (umbContext.Content.ParentId != -1)
+            {
+                content = umbContext.Service.ContentService.GetById(umbContext.Content.ParentId);
+            }
 
             return umbContext.Service.CreateType(
                 umbConfig.PropertyInfo.PropertyType,
