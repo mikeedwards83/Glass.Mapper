@@ -18,6 +18,7 @@
 
 
 using System;
+using AutoMapper;
 using Glass.Mapper.Umb.Configuration;
 
 namespace Glass.Mapper.Umb.DataMappers
@@ -56,7 +57,16 @@ namespace Glass.Mapper.Umb.DataMappers
         /// <returns></returns>
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
-            return propertyValue is int ? (int)propertyValue : 0;
+            if (propertyValue == null)
+                return 0;
+
+            var type = propertyValue.GetType();
+
+            if (type != typeof (String))
+                return Convert.ToInt32(propertyValue);
+
+            var stringValue = propertyValue.ToString();
+            return String.IsNullOrWhiteSpace(stringValue) ? 0 : Convert.ToInt32(stringValue);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Glass.Mapper.Umb.Web.Ui
         /// Initializes a new instance of the <see cref="GlassTemplatePage{T}"/> class.
         /// </summary>
         public GlassTemplatePage()
-            : this(new UmbracoPublishedService(new ContentService()))
+            : this(new UmbracoService(new ContentService()))
         {
         }
 
@@ -106,7 +106,7 @@ namespace Glass.Mapper.Umb.Web.Ui
         protected override void InitializePage()
         {
             base.InitializePage();
-            Model = UmbracoService.CreateType<T>(UmbracoService.ContentService.GetPublishedVersion(base.Umbraco.AssignedContentItem.Id));
+            Model = UmbracoService.CreateType<T>(UmbracoService.ContentService.GetById(base.Umbraco.AssignedContentItem.Id));
         }
 
         /// <summary>
