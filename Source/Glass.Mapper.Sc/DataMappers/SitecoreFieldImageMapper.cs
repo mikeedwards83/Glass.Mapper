@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.DataMappers
             img.MediaId = field.MediaID.Guid;
             if (field.MediaItem != null)
             {
-                img.Src = GetMediaUrlWithoutContentCheck(field.MediaItem, MediaUrlOptions.Empty);
+                img.Src = MediaManager.GetMediaUrl(field.MediaItem);
                 var fieldTitle = field.MediaItem.Fields["Title"];
                 if (fieldTitle != null)
                     img.Title = fieldTitle.Value;
@@ -112,7 +112,7 @@ namespace Glass.Mapper.Sc.DataMappers
            // img.Height = height;
            // img.HSpace = hSpace;
             img.MediaId = imageItem.ID.Guid;
-            img.Src = GetMediaUrlWithoutContentCheck(imageItem, MediaUrlOptions.Empty);
+            img.Src = MediaManager.GetMediaUrl(imageItem);
            // img.VSpace = vSpace;
            // img.Width = width;
         }
