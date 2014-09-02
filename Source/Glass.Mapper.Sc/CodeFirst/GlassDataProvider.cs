@@ -175,14 +175,14 @@ namespace Glass.Mapper.Sc.CodeFirst
             var section = sectiontable.FirstOrDefault(x => x.SectionId == itemId);
             if (section != null)
             {
-                return  new ItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
+                return  new GlassItemDefinition(itemId, section.Name, SectionTemplateId, ID.Null);
             }
 
             var fieldtable = FieldTable.ToList();//prevent "Collection was modified"
             var field = fieldtable.FirstOrDefault(x => x.FieldId == itemId);
             if (field != null)
             {
-                return new ItemDefinition(itemId, field.Name, FieldTemplateId, ID.Null);
+                return new GlassItemDefinition(itemId, field.Name, FieldTemplateId, ID.Null);
             }
 
             return base.GetItemDefinition(itemId, context);
@@ -201,7 +201,9 @@ namespace Glass.Mapper.Sc.CodeFirst
 
         public override VersionUriList GetItemVersions(ItemDefinition itemDefinition, CallContext context)
         {
-            return base.GetItemVersions(itemDefinition, context);
+            if (itemDefinition is GlassItemDefinition)
+                return base.GetItemVersions(itemDefinition, context);
+            return null;
         }
 
         #region GetItemFields
