@@ -316,6 +316,7 @@ namespace Glass.Mapper.Sc
 
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
+            var linkField = field.Compile().Invoke(model) as Fields.Link;
 
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
@@ -325,6 +326,12 @@ namespace Glass.Mapper.Sc
                 if (contents.IsNotNullOrEmpty())
                 {
                     attrs.Add("haschildren", "true");
+                }
+
+                if (linkField != null)
+                {
+                    AttributeCheck(attrs, "class", linkField.Class);
+                    AttributeCheck(attrs, "title", linkField.Title);
                 }
 
                 result = MakeEditable(
@@ -570,7 +577,7 @@ namespace Glass.Mapper.Sc
                             renderFieldArgs.FieldName = fieldConfig.FieldName;
                         }
 
-                        renderFieldArgs.Parameters = WebUtil.ParseQueryString(parametersString ?? string.Empty);
+                        renderFieldArgs.Parameters = WebUtil.ParseQueryString(parametersString ?? string.Empty, true);
                         renderFieldArgs.DisableWebEdit = false;
 
                         CorePipeline.Run("renderField", (PipelineArgs) renderFieldArgs);
