@@ -69,7 +69,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\bin6\Sitecore.Kernel.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

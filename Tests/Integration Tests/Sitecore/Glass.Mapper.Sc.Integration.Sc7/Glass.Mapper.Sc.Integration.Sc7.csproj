@@ -71,13 +71,13 @@
       <HintPath>..\..\..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\..\..\Depends\Sitecore71\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\Depends\Sitecore71\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="sitecore.nexus">
-      <HintPath>..\..\..\..\Depends\Sitecore71\sitecore.nexus.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\sitecore.nexus.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
