@@ -1,0 +1,17 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <pipelines>      
+      <httpRequestBegin>
+        <processor type="Sitecore.Mvc.DeviceSimulator.Pipelines.HttpRequest.HandleSimulationRequest, Sitecore.Mvc.DeviceSimulator" patch:before="processor[@type='Sitecore.Mvc.Pipelines.HttpRequest.TransferRoutedRequest, Sitecore.Mvc']" />
+      </httpRequestBegin>
+
+      <mvc.createController>
+        <processor type="Sitecore.Mvc.DeviceSimulator.Pipelines.CreateController.CreateSimulatorController, Sitecore.Mvc.DeviceSimulator" patch:before="processor[@type='Sitecore.Mvc.Pipelines.Request.CreateController.CreateItemController, Sitecore.Mvc']" />       
+      </mvc.createController>
+
+      <mvc.renderPageExtenders>                     
+        <processor type="Sitecore.Mvc.DeviceSimulator.Pipelines.Presentation.RenderPageExtenders.RenderDeviceSimulationExtender, Sitecore.Mvc.DeviceSimulator" patch:before="processor[@type='Sitecore.Mvc.ExperienceEditor.Pipelines.RenderPageExtenders.RenderPreviewExtender, Sitecore.Mvc.ExperienceEditor']"/>
+      </mvc.renderPageExtenders>
+    </pipelines>
+  </sitecore>
+</configuration>
