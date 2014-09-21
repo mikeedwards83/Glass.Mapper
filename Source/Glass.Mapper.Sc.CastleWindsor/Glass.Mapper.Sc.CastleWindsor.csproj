@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Sc.CastleWindsor</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.CastleWindsor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
+    <!--<TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>-->
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -68,10 +69,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
     <Reference Include="Sitecore.Kernel">
@@ -87,6 +84,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -110,6 +110,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass.Mapper.Sc.ContentSearch\Glass.Mapper.Sc.ContentSearch.csproj">
+      <Project>{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}</Project>
+      <Name>Glass.Mapper.Sc.ContentSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
       <Name>Glass.Mapper.Sc</Name>
@@ -119,7 +123,6 @@
       <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

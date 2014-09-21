@@ -14,6 +14,13 @@
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <!--<TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>-->
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,10 +66,55 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\Depends\Sitecore\Sitecore.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.1.1\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.1.1\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -177,12 +229,14 @@
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
+    <Compile Include="DisableItemHandler.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
+    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />
@@ -197,6 +251,9 @@
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
+    <Compile Include="Web\Mvc\GlassController.cs" />
+    <Compile Include="Web\Mvc\GlassView.cs" />
+    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -235,6 +292,17 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

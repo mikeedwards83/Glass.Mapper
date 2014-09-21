@@ -258,7 +258,9 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
-                return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
+                attrs["haschildren"] = "true";
+
+                return MakeEditable(field, null, model, Utilities.ConstructQueryString(attrs), _context, SitecoreContext.Database, writer);
             }
             else
             {
@@ -302,6 +304,10 @@ namespace Glass.Mapper.Sc
             {
                 attrs = attributes as NameValueCollection;
             }
+            else if (attributes is AbstractParameters)
+            {
+                attrs = ((AbstractParameters) attributes).Parameters;
+            }
             else
             {
                 attrs = Utilities.GetPropertiesCollection(attributes, true);
@@ -314,7 +320,8 @@ namespace Glass.Mapper.Sc
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
             {
-
+                if (!string.IsNullOrEmpty(contents))
+                    attrs["haschildren"] = "true";
                 if (contents.IsNotNullOrEmpty())
                 {
                     attrs.Add("haschildren", "true");
@@ -323,14 +330,14 @@ namespace Glass.Mapper.Sc
                 result = MakeEditable(
                     field,
                     null, 
-                    model,  
-                    attrs,
+                    model,
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
 
                 if (contents.IsNotNullOrEmpty())
                 {
                     sb.Append(contents);
-                }
+            }
             }
             else
             {

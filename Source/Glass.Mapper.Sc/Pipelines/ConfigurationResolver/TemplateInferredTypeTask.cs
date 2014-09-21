@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 
                     var requestedType = scContext.RequestedType;
                     var item = scContext.Item;
-                    var templateId = item.TemplateID;
+                    var templateId = item != null ? item.TemplateID : scContext.TemplateId;
 
                     var key = new Tuple<Context, Type, ID>(args.Context, requestedType, templateId);
                     if (_inferredCache.ContainsKey(key))
