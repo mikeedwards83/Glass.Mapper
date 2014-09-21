@@ -165,8 +165,7 @@ namespace Glass.Mapper.Sc
             SitecoreTypeConfiguration newType;
             try
             {
-                 
-              newType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(newItem);
+              newType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(newItem, checkBase:false);
                
             }
             catch (Exception ex)
