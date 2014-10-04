@@ -222,12 +222,18 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return scContext.CreateType(type, item, false, false, null);
             }
 
+            /**
+             * Issues #82:
+             * Check Item before defaulting to the current item.
+             */
+            if (renderingItem.Item != null)
+            {
+                return scContext.CreateType(type, renderingItem.Item, false, false, null);
+            }
+
             return scContext.GetCurrentItem(type);
 
         }
-
-
-
     }
 }
 

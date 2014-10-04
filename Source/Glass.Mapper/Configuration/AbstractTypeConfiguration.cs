@@ -79,7 +79,7 @@ namespace Glass.Mapper.Configuration
                 if (_properties.Any(x => x.PropertyInfo.Name == property.PropertyInfo.Name))
                 {
                     throw new MapperException(
-                        "You can not have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(
+                        "You can not have duplicate mappings for properties. Property Name: {0}  Type: {1}".Formatted(
                             property.PropertyInfo.Name, Type.Name));
                 }
                 

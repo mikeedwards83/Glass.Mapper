@@ -135,7 +135,14 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to map field {0} with value {1}".Formatted( field.Name, fieldValue), ex);
+#if NCRUNCH
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted(field.ID, fieldValue), ex);
+
+#else
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted(field.Name, fieldValue), ex);
+
+#endif
+
             }
         }
         /// <summary>
