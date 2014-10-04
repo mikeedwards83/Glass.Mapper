@@ -33,7 +33,6 @@ using Sitecore.Data.DataProviders;
 using Sitecore.Data.DataProviders.Sql;
 using Sitecore.Data.Items;
 using Sitecore.Exceptions;
-using Sitecore.Mvc.Extensions;
 using Sitecore.SecurityModel;
 using Sitecore.Shell.Feeds.Sections;
 

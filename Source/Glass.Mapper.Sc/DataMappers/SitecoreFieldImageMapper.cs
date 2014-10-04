@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -28,12 +28,6 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
-using Sitecore.Diagnostics;
-using Sitecore.Resources;
-using Sitecore.Configuration;
-using Sitecore;
-using Sitecore.IO;
-using Sitecore.Web;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -45,7 +39,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldImageMapper"/> class.
         /// </summary>
-        public SitecoreFieldImageMapper() : base(typeof (Image))
+        public SitecoreFieldImageMapper()
+            : base(typeof(Image))
         {
         }
 
@@ -85,7 +80,7 @@ namespace Glass.Mapper.Sc.DataMappers
             img.MediaId = field.MediaID.Guid;
             if (field.MediaItem != null)
             {
-                img.Src = GetMediaUrlWithoutContentCheck(field.MediaItem, MediaUrlOptions.Empty);
+                img.Src = MediaManager.GetMediaUrl(field.MediaItem);
                 var fieldTitle = field.MediaItem.Fields["Title"];
                 if (fieldTitle != null)
                     img.Title = fieldTitle.Value;
@@ -93,28 +88,28 @@ namespace Glass.Mapper.Sc.DataMappers
             img.VSpace = vSpace;
             img.Width = width;
         }
-        
+
         public static void MapToImage(Image img, MediaItem imageItem)
         {
-           /* int height = 0;
-            int.TryParse(imageItem..Height, out height);
-            int width = 0;
-            int.TryParse(imageItem.Width, out width);
-            int hSpace = 0;
-            int.TryParse(imageItem.HSpace, out hSpace);
-            int vSpace = 0;
-            int.TryParse(imageItem.VSpace, out vSpace);*/
+            /* int height = 0;
+             int.TryParse(imageItem..Height, out height);
+             int width = 0;
+             int.TryParse(imageItem.Width, out width);
+             int hSpace = 0;
+             int.TryParse(imageItem.HSpace, out hSpace);
+             int vSpace = 0;
+             int.TryParse(imageItem.VSpace, out vSpace);*/
 
             img.Alt = imageItem.Alt;
             img.Title = imageItem.Title;
-           // img.Border = imageItem.Border;
-           // img.Class = imageItem.Class;
-           // img.Height = height;
-           // img.HSpace = hSpace;
+            // img.Border = imageItem.Border;
+            // img.Class = imageItem.Class;
+            // img.Height = height;
+            // img.HSpace = hSpace;
             img.MediaId = imageItem.ID.Guid;
-            img.Src = GetMediaUrlWithoutContentCheck(imageItem, MediaUrlOptions.Empty);
-           // img.VSpace = vSpace;
-           // img.Width = width;
+            img.Src = MediaManager.GetMediaUrl(imageItem);
+            // img.VSpace = vSpace;
+            // img.Width = width;
         }
 
         /// <summary>
@@ -162,22 +157,22 @@ namespace Glass.Mapper.Sc.DataMappers
                         field.MediaID = newId;
                         ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                         field.UpdateLink(link);
-                        
+
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
             }
 
-            if(image.Height > 0)
+            if (image.Height > 0)
                 field.Height = image.Height.ToString();
-            if(image.Width > 0)
+            if (image.Width > 0)
                 field.Width = image.Width.ToString();
-            if(image.HSpace > 0)
+            if (image.HSpace > 0)
                 field.HSpace = image.HSpace.ToString();
-            if(image.VSpace > 0)
+            if (image.VSpace > 0)
                 field.VSpace = image.VSpace.ToString();
-            
-            if(field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+
+            if (field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
                 field.Alt = image.Alt ?? string.Empty;
             if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
                 field.Border = image.Border ?? string.Empty;
@@ -210,58 +205,6 @@ namespace Glass.Mapper.Sc.DataMappers
             var image = new Image();
             MapToImage(image, imageItem);
             return image;
-        }
-
-        /// <summary>
-        /// Gets a media URL.
-        /// 
-        /// </summary>
-        /// <param name="item">The media item.</param><param name="options">The query string.</param>
-        /// <returns>
-        /// The media URL.
-        /// </returns>
-        private static string GetMediaUrlWithoutContentCheck(MediaItem item, MediaUrlOptions options)
-        {
-            Assert.ArgumentNotNull((object)item, "item");
-            Assert.ArgumentNotNull((object)options, "options");
-            if (item.InnerItem["path"].Length > 0)
-            {
-                if (!options.LowercaseUrls)
-                    return item.InnerItem["path"];
-                else
-                    return item.InnerItem["path"].ToLowerInvariant();
-            }
-            else if (options.UseDefaultIcon)
-            {
-                if (!options.LowercaseUrls)
-                    return Themes.MapTheme(Settings.DefaultIcon);
-                else
-                    return Themes.MapTheme(Settings.DefaultIcon).ToLowerInvariant();
-            }
-            else
-            {
-                var mediaProvider = MediaManager.Provider;
-                Assert.IsTrue(mediaProvider.Config.MediaPrefixes[0].Length > 0, "media prefixes are not configured properly.");
-                string str1 = mediaProvider.MediaLinkPrefix;
-                if (options.AbsolutePath)
-                    str1 = options.VirtualFolder + str1;
-                else if (str1.StartsWith("/", StringComparison.InvariantCulture))
-                    str1 = StringUtil.Mid(str1, 1);
-                if (options.AlwaysIncludeServerUrl)
-                    str1 = FileUtil.MakePath(WebUtil.GetServerUrl(), str1, '/');
-                string str2 = StringUtil.EnsurePrefix('.', StringUtil.GetString(options.RequestExtension, item.Extension, "ashx"));
-                string str3 = options.ToString();
-                if (str3.Length > 0)
-                    str2 = str2 + "?" + str3;
-                string str4 = "/sitecore/media library/";
-                string path = item.InnerItem.Paths.Path;
-                string str5 = !options.UseItemPath || !path.StartsWith(str4, StringComparison.OrdinalIgnoreCase) ? item.ID.ToShortID().ToString() : StringUtil.Mid(path, str4.Length);
-                string str6 = str1 + str5 + (options.IncludeExtension ? str2 : string.Empty);
-                if (!options.LowercaseUrls)
-                    return str6;
-                else
-                    return str6.ToLowerInvariant();
-            }
         }
     }
 }

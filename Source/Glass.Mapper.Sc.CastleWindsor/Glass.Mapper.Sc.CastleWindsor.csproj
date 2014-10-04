@@ -110,10 +110,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper.Sc.ContentSearch\Glass.Mapper.Sc.ContentSearch.csproj">
-      <Project>{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}</Project>
-      <Name>Glass.Mapper.Sc.ContentSearch</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
       <Name>Glass.Mapper.Sc</Name>
