@@ -10,6 +10,7 @@ using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Razor;
 using Glass.Mapper.Configuration.Attributes;
+// using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 
 [assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperScRazor), "Start")]
 
@@ -24,6 +25,8 @@ namespace $rootnamespace$.App_Start
 
 			//create the resolver
 			var resolver = DependencyResolver.CreateStandardResolver();
+
+            //Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
 
 			resolver.Container.Install(new SitecoreInstaller(config));
 
