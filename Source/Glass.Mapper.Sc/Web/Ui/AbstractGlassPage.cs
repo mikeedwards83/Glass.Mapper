@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -34,6 +35,18 @@ namespace Glass.Mapper.Sc.Web.Ui
     {
         ISitecoreContext _sitecoreContext;
         IGlassHtml _glassHtml;
+
+
+        private TextWriter _writer;
+
+        protected TextWriter Output
+        {
+            get { return _writer ?? this.Response.Output; }
+        }
+
+
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
@@ -151,7 +164,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
                                                      object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, this.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
 
         }
 
@@ -169,6 +182,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
 
             return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
+        }
+
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            this._writer = writer;
+            base.RenderControl(writer);
         }
     }
 }
