@@ -208,7 +208,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var sectionInfo = SectionTable.FirstOrDefault(x => x.SectionId == itemDefinition.ID);
             if (sectionInfo != null)
             {
-                GetStandardFields(fields, sectionInfo.SectionSortOrder >= 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
+                GetStandardFields(fields, sectionInfo.SectionSortOrder > 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
 
                 return fields;
             }
@@ -216,7 +216,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fieldInfo = FieldTable.FirstOrDefault(x => x.FieldId == itemDefinition.ID);
             if (fieldInfo != null)
             {
-                GetStandardFields(fields, fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
+                GetStandardFields(fields, fieldInfo.FieldSortOrder > 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
                 GetFieldFields(fieldInfo, fields);
                 return fields;
             }

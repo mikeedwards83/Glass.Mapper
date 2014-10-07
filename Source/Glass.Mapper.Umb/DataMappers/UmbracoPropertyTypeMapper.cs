@@ -38,7 +38,7 @@ namespace Glass.Mapper.Umb.DataMappers
         public override object GetPropertyValue(object propertyValue, UmbracoPropertyConfiguration config, UmbracoDataMappingContext context)
         {
             int id;
-            if (!int.TryParse(propertyValue.ToString(), out id))
+            if (propertyValue == null || !int.TryParse(propertyValue.ToString(), out id))
                 return null;
 
             var item = context.PublishedOnly

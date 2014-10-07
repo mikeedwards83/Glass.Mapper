@@ -63,16 +63,19 @@ namespace Glass.Mapper.Sc.Razor
             set { _glassHtml = value; }
         }
 
+        public ITemplateBase TemplateBase { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtmlFacade" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="writer">The writer.</param>
-        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase)
 
         {
             _writer = writer;
             _glassHtml = new GlassHtml(context);
+            TemplateBase = templateBase;
         }
   
         /// <summary>

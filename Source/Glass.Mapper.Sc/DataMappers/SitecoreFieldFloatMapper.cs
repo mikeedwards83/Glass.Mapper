@@ -31,6 +31,8 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldFloatMapper : AbstractSitecoreFieldMapper
     {
+        protected override object DefaultValue { get { return (float)0; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldFloatMapper"/> class.
         /// </summary>
