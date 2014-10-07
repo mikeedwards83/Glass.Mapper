@@ -4,6 +4,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
 using NUnit.Framework;
+using System;
 
 namespace Glass.Mapper.Sc.Integration.Pipelines.ConfigurationResolver
 {
@@ -49,30 +50,43 @@ namespace Glass.Mapper.Sc.Integration.Pipelines.ConfigurationResolver
         public void Execute_CreatesInferredType()
         {
             //Arrange  
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            var path = "/sitecore/content/Tests/Pipelines/ConfigurationResolver/TemplateInferredTypeTask/Target";
 
-            context.Load(new AttributeTypeLoader(typeof(StubInferred)));
-            
+            string itemName = Guid.NewGuid().ToString();
+            string templateName = Guid.NewGuid().ToString();
+             var templateId = new Sitecore.Data.TemplateID(new Sitecore.Data.ID(StubInferred.TemplateId));
 
-            var typeContext = new SitecoreTypeCreationContext();
-            var args = new ConfigurationResolverArgs(context, typeContext, null, null);
-            var task = new TemplateInferredTypeTask();
-            typeContext.InferType = true;
-            typeContext.Item = db.GetItem(path);
-            typeContext.RequestedType = typeof (IBase);
-            args.RequestedType = typeof (IBase);
-
-            
-
-            //Act
-            task.Execute(args);
+            using (Sitecore.FakeDb.Db fakeDb = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbTemplate(templateName, templateId),
+                new Sitecore.FakeDb.DbItem(itemName, templateId) { }
+            })
+            {
 
 
-            //Assert
-            Assert.IsNotNull(args.Result);
-            Assert.AreEqual(typeof(StubInferred), args.Result.Type);
+                var db = Sitecore.Configuration.Factory.GetDatabase("master");
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var path = "/sitecore/content/{0}".Formatted(itemName);
+
+                context.Load(new AttributeTypeLoader(typeof(StubInferred)));
+
+
+                var typeContext = new SitecoreTypeCreationContext();
+                var args = new ConfigurationResolverArgs(context, typeContext, null, null);
+                var task = new TemplateInferredTypeTask();
+                typeContext.InferType = true;
+                typeContext.Item = db.GetItem(path);
+                typeContext.RequestedType = typeof(IBase);
+                args.RequestedType = typeof(IBase);
+
+
+
+                //Act
+                task.Execute(args);
+
+
+                //Assert
+                Assert.IsNotNull(args.Result);
+                Assert.AreEqual(typeof(StubInferred), args.Result.Type);
+            }
         }
 
         [Test]
@@ -122,9 +136,10 @@ namespace Glass.Mapper.Sc.Integration.Pipelines.ConfigurationResolver
              
         }
 
-        [SitecoreType(TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}")]
+        [SitecoreType(TemplateId = StubInferred.TemplateId)]
         public class StubInferred : IBase
         {
+            public const string TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}";
             
         }
 

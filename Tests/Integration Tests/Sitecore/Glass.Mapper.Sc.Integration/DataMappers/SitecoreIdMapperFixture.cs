@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -55,7 +55,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
 
             //Assert
-            Assert.AreEqual(expected,value);
+            Assert.AreEqual(expected, value);
 
         }
 
@@ -71,23 +71,32 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreIdMapper();
             var config = new SitecoreIdConfiguration();
-            var property = typeof (Stub).GetProperty("GuidId");
-            var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
+            var property = typeof(Stub).GetProperty("GuidId");
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+            string itemName = Guid.NewGuid().ToString();
 
-            config.PropertyInfo = property;
-            
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) { }
+            })
+            {
+                var item = _db.GetItem("/sitecore/content/"+itemName);
 
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-            var expected = item.ID.Guid;
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                config.PropertyInfo = property;
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var expected = item.ID.Guid;
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
+
         }
 
         [Test]
@@ -96,23 +105,31 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var mapper = new SitecoreIdMapper();
             var config = new SitecoreIdConfiguration();
-            var property = typeof(Stub).GetProperty("IDId"); 
+            var property = typeof(Stub).GetProperty("IDId");
 
             config.PropertyInfo = property;
 
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
+            string itemName = Guid.NewGuid().ToString();
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-            var expected = item.ID;
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) { }
+            })
+            {
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                var item = _db.GetItem("/sitecore/content/"+itemName);
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var expected = item.ID;
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
         }
 
         [Test]
@@ -126,17 +143,24 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             config.PropertyInfo = property;
 
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            var item = _db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIdMapper/EmptyItem");
+            string itemName = Guid.NewGuid().ToString();
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-            var expected = item.ID;
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) { }
+            })
+            {
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                var item = _db.GetItem("/sitecore/content/{0}".Formatted(itemName));
 
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var expected = item.ID;
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+            }
             //Assert
             //Exception, not asserts
         }

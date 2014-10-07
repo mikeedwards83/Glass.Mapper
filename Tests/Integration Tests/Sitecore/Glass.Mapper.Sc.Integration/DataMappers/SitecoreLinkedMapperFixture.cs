@@ -232,47 +232,58 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void MapToProperty_GetAll_ReferrersListReturned()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Target");
-            var language = LanguageManager.GetLanguage("af-ZA");
 
-            var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Source",
-                                             language);
+            var targetItem = new Sitecore.FakeDb.DbItem(Guid.NewGuid().ToString());
+            var sourceItem = new Sitecore.FakeDb.DbItem(Guid.NewGuid().ToString());
 
-            using (new ItemEditing(source, true))
-            {
-                source[FieldName] = "<a href=\"~/link.aspx?_id=216C0015-8626-4951-9730-85BCA34EC2A3&amp;_z=z\">Source</a>";
-            }
-        
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                targetItem, sourceItem
+            })
+              {
 
-        //ME - when getting templates you have to disable the role manager
-            using (new SecurityDisabler())
-            {
 
-                var template = Database.GetItem("/sitecore/templates/Tests/DataMappers/DataMappersSingleField");
-               
+                  var item = Database.GetItem("/sitecore/content/{0}".Formatted(targetItem.Name));
+                  var language = LanguageManager.GetLanguage("af-ZA");
 
-                var config = new SitecoreLinkedConfiguration();
-                config.PropertyInfo = typeof (StubClass).GetProperty("StubMappeds");
-                config.Option = SitecoreLinkedOptions.All;
+                  var source = Database.GetItem("/sitecore/content/{0}".Formatted(sourceItem.Name),
+                                                   language);
 
-                var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                  using (new ItemEditing(source, true))
+                  {
+                      source[FieldName] = "<a href=\"~/link.aspx?_id={0}&amp;_z=z\">Source</a>".Formatted(targetItem.ID.Guid.ToString("N"));
+                  }
 
-                var mapper = new SitecoreLinkedMapper();
-                mapper.Setup(new DataMapperResolverArgs(context, config));
 
-                var service = new SitecoreService(Database, context);
+                  //ME - when getting templates you have to disable the role manager
+                  using (new SecurityDisabler())
+                  {
 
-                //Act
-                var result =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, item, service)) as IEnumerable<StubMapped>;
+                      var template = Database.GetItem("/sitecore/templates/Tests/DataMappers/DataMappersSingleField");
 
-                //Assert
-                Assert.AreEqual(2, result.Count());
-                Assert.AreEqual(template.ID.Guid, result.First().Id);
-                Assert.AreEqual(source.ID.Guid, result.Skip(1).First().Id);
-                Assert.AreEqual(source.Language, result.Skip(1).First().Language);
-            }
+
+                      var config = new SitecoreLinkedConfiguration();
+                      config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
+                      config.Option = SitecoreLinkedOptions.All;
+
+                      var context = Context.Create(Utilities.CreateStandardResolver());
+                      context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+                      var mapper = new SitecoreLinkedMapper();
+                      mapper.Setup(new DataMapperResolverArgs(context, config));
+
+                      var service = new SitecoreService(Database, context);
+
+                      //Act
+                      var result =
+                          mapper.MapToProperty(new SitecoreDataMappingContext(null, item, service)) as IEnumerable<StubMapped>;
+
+                      //Assert
+                      Assert.AreEqual(2, result.Count());
+                      Assert.AreEqual(template.ID.Guid, result.First().Id);
+                      Assert.AreEqual(source.ID.Guid, result.Skip(1).First().Id);
+                      Assert.AreEqual(source.Language, result.Skip(1).First().Language);
+                  }
+              }
         }
         #endregion
 

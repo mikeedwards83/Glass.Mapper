@@ -36,6 +36,8 @@ namespace Glass.Mapper.Sc.Razor
 
         private static volatile Dictionary<string, CachedView> _viewCache;
 
+        public static bool ThrowErrors { get; set; }
+
         /// <summary>
         /// The view loader
         /// </summary>

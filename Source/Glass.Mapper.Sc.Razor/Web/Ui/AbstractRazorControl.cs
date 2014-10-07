@@ -248,11 +248,17 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             output.Write("<h1>Glass Razor Rendering Exception</h1>");
             output.Write("<p>View: {0}</p>".Formatted(View.Name));
-            output.Write("<p>{0}</p>".Formatted(ex.Message));
-            output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
-        
+
+            for (Exception exception = ex; exception != null; exception = exception.InnerException)
+            {
+                output.Write(Glass.Mapper.ExtensionMethods.Formatted("<p>{0}</p>", exception.Message));
+                output.Write(Glass.Mapper.ExtensionMethods.Formatted("<pre>{0}</pre>", exception.StackTrace));
+            }
+
             Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(View), ex, this);
 
+            if (ViewManager.ThrowErrors)
+                throw ex;
         }
 
         /// <summary>

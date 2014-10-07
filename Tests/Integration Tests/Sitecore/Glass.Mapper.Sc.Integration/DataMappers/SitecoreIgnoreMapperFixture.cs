@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using System;
@@ -58,27 +58,33 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue = "hello world";
             var propertyValue = "goodbye world";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIgnoreMapper/Target");
-            var field = item.Fields["Field"];
 
-            var mapper = new SitecoreIgnoreMapper();
-            var config = new SitecoreIgnoreMapper();
+             string itemName = Guid.NewGuid().ToString();
 
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
+             using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) {{"Field", fieldValue} }
+            })
+             {
 
-            var stub = new StubClass();
-            stub.Field = propertyValue;
-            var context = new SitecoreDataMappingContext(stub, item, null);
+                 var item = Database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                 var field = item.Fields["Field"];
 
-            //Act
-            mapper.MapCmsToProperty(context);
+                 var mapper = new SitecoreIgnoreMapper();
+                 var config = new SitecoreIgnoreMapper();
+
+               
+
+                 var stub = new StubClass();
+                 stub.Field = propertyValue;
+                 var context = new SitecoreDataMappingContext(stub, item, null);
+
+                 //Act
+                 mapper.MapCmsToProperty(context);
 
 
-            //Assert
-            Assert.AreEqual(stub.Field, propertyValue);
+                 //Assert
+                 Assert.AreEqual(stub.Field, propertyValue);
+             }
         }
 
         [Test]
@@ -88,30 +94,29 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue = "hello world";
             var propertyValue = "goodbye world";
 
-            var path = "/sitecore/content/Tests/DataMappers/SitecoreIgnoreMapper/Target";
+            string itemName = Guid.NewGuid().ToString();
 
-            var item = Database.GetItem(path);
-            var field = item.Fields["Field"];
-
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(item.Database, context);
-
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) {{"Field", fieldValue} }
+            })
             {
-                field.Value = fieldValue;
+                var path = "/sitecore/content/{0}".Formatted(itemName);
+
+                var item = Database.GetItem(path);
+                var field = item.Fields["Field"];
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(item.Database, context);
+
+                //Act
+                var notIgnored = service.GetItem<StubClassNotIgnored>(path);
+                var ignored = service.GetItem<StubClassIgnored>(path);
+
+                //Assert
+                Assert.AreEqual(fieldValue, notIgnored.Field);
+                Assert.AreEqual(null, ignored.Field);
             }
-
-          
-
-            //Act
-            var notIgnored = service.GetItem<StubClassNotIgnored>(path);
-            var ignored = service.GetItem<StubClassIgnored>(path);
-
-            //Assert
-            Assert.AreEqual(fieldValue, notIgnored.Field);
-            Assert.AreEqual(null, ignored.Field);
         }
 
         #endregion
@@ -125,27 +130,30 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue = "hello world";
             var propertyValue = "goodbye world";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreIgnoreMapper/Target");
-            var field = item.Fields["Field"];
+            string itemName = Guid.NewGuid().ToString();
 
-            var mapper = new SitecoreIgnoreMapper();
-            var config = new SitecoreIgnoreMapper();
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) {{"Field", fieldValue} }
+            })
             {
-                field.Value = fieldValue;
+
+                var item = Database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                var field = item.Fields["Field"];
+
+                var mapper = new SitecoreIgnoreMapper();
+                var config = new SitecoreIgnoreMapper();
+
+                var stub = new StubClass();
+                stub.Field = propertyValue;
+                var context = new SitecoreDataMappingContext(stub, item, null);
+
+                //Act
+                mapper.MapPropertyToCms(context);
+
+
+                //Assert
+                Assert.AreEqual(fieldValue, item.Fields["Field"].Value);
             }
-
-            var stub = new StubClass();
-            stub.Field = propertyValue;
-            var context = new SitecoreDataMappingContext(stub, item, null);
-
-            //Act
-            mapper.MapPropertyToCms(context);
-
-
-            //Assert
-            Assert.AreEqual(fieldValue, item.Fields["Field"].Value);
         }
 
         #endregion

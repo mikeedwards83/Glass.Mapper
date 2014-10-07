@@ -1,3 +1,5 @@
+
+
 /*
    Copyright 2012 Michael Edwards
  
@@ -29,16 +31,36 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
     [TestFixture]
     public class DynamicItemFixture
     {
-        private const string TargetPath = "/sitecore/content/Tests/Dynamic/DynamicItem/Target";
+        private const string TargetPath = "/sitecore/content/Target";
 
         Database _db;
+        Sitecore.FakeDb.Db _fakeDb;
+
 
         [SetUp]
         public void Setup()
         {
+
+            _fakeDb = new Sitecore.FakeDb.Db
+            {
+                new Sitecore.FakeDb.DbItem("Target") {
+                    new Sitecore.FakeDb.DbField("DateTime"),
+                    new Sitecore.FakeDb.DbField("SingleLineText"),
+                    new Sitecore.FakeDb.DbItem("Child1"),
+                    new Sitecore.FakeDb.DbItem("Child2"),
+                    new Sitecore.FakeDb.DbItem("Child3")
+                }
+            };
+
             _db = global::Sitecore.Configuration.Factory.GetDatabase("master");
 
             global::Sitecore.Context.Site = global::Sitecore.Sites.SiteContext.GetSite("website");
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            _fakeDb.Dispose();
         }
 
         #region
@@ -61,7 +83,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
 
             string text = d.SingleLineText;
 
-
+            //TODO: issues with render field
             //Assert
             Assert.AreEqual("some awesome dynamic content", text);
             Assert.AreEqual("04/02/2012 15:00:15", dateTime);

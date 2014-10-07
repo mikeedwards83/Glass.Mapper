@@ -18,19 +18,27 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void MapToProperty_MapsItemToProperty()
         {
             //Arrange
-            var database = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreItemMapper/Target");
-            var mapper = new SitecoreItemMapper();
-            var obj = new StubClass();
+            string itemName = Guid.NewGuid().ToString();
 
-            var mappingContext = new SitecoreDataMappingContext(obj, item, null);
-            
-            //Act
-           var result = mapper.MapToProperty(mappingContext);
-            
-            //Assign
-            Assert.AreEqual(item, result);
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem(itemName) { }
+            })
+            {
 
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                var mapper = new SitecoreItemMapper();
+                var obj = new StubClass();
+
+                var mappingContext = new SitecoreDataMappingContext(obj, item, null);
+
+                //Act
+                var result = mapper.MapToProperty(mappingContext);
+
+                //Assign
+                Assert.AreEqual(item, result);
+            }
         }
 
 

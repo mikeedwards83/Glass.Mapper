@@ -66,7 +66,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get {
                 return _glassHtml ??
-                       (_glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(CurrentWriter)));
+                       (_glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(CurrentWriter), this));
             }
         }
 
@@ -347,7 +347,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         }
 
-
+        
 
         #region Obsolete
 

@@ -77,6 +77,9 @@ namespace Glass.Mapper.Sc.Dynamic
         /// <returns>System.String.</returns>
         private string GetFieldContent(bool editable = true)
         {
+#if NCRUNCH
+            return _item[_fieldName];
+#endif
             FieldRenderer render = new FieldRenderer();
             render.FieldName = _fieldName;
             render.Item = _item;

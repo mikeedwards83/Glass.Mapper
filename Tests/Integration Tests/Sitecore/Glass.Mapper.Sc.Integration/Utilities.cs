@@ -31,6 +31,7 @@ namespace Glass.Mapper.Sc.Integration
             resolver.Container.Install(new SitecoreInstaller(new Glass.Mapper.Sc.CastleWindsor.Config() { UseWindsorContructor = useWindsorContainer }));
             return resolver;
         }
+
     }
 }
 

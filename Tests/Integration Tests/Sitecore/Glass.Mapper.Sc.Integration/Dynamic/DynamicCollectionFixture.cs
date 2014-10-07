@@ -23,22 +23,41 @@ using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
 using NUnit.Framework;
 using Sitecore.Data.Items;
+using NSubstitute;
 
 namespace Glass.Mapper.Sc.Integration.Dynamic
 {
     public class DynamicCollectionFixture
     {
         Database _db;
-        private const string TargetPath = "/sitecore/content/Tests/Dynamic/DynamicCollection/Target";
+        private const string TargetPath = "/sitecore/content/DynamicTest";
+        Sitecore.FakeDb.Db _fakeDb;
 
         [SetUp]
         public void Setup()
         {
+
+            _fakeDb = new Sitecore.FakeDb.Db    {
+                new Sitecore.FakeDb.DbItem("DynamicTest") { 
+                    new Sitecore.FakeDb.DbItem("Child1"),
+                    new Sitecore.FakeDb.DbItem("Child2"),
+                    new Sitecore.FakeDb.DbItem("Child3")
+                }
+            };
+
+
+
             _db = global::Sitecore.Configuration.Factory.GetDatabase("master");
 
             global::Sitecore.Context.Site = global::Sitecore.Sites.SiteContext.GetSite("website");
         }
 
+
+        [TearDown]
+        public void Dispose()
+        {
+            _fakeDb.Dispose();
+        }
         #region METHOD - SELECT
 
         [Test]
@@ -53,7 +72,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             var child = d.Children.First();
            
             //Assert
-            Assert.AreEqual(TargetPath+"/Child1", child.Path);
+            Assert.AreEqual(TargetPath + "/Child1", child.Path);
         }
 
         [Test]
