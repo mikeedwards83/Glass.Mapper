@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
+using Lucene.Net.Documents;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Common;
 using Sitecore.ContentSearch.SearchTypes;
@@ -19,28 +20,35 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
     public class GlassDocumentMapperObjectFactory : IIndexDocumentPropertyMapperObjectFactory, ISearchIndexInitializable
     {
         private ISearchIndex _searchIndex;
+        private DefaultDocumentMapperObjectFactory _defaultDocumentMapper = new DefaultDocumentMapperObjectFactory();
 
         public List<string> GetTypeIdentifyingFields(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {
+            var typeConfig = Context.Default.GetTypeConfiguration<SitecoreTypeConfiguration>(baseType);
+            if (typeConfig == null || typeConfig.TemplateId == (ID)null)
+                return _defaultDocumentMapper.GetTypeIdentifyingFields(baseType, executionContexts);
+
             //TODO: is this what should be returned??
-            var result = Context.Default.GetTypeConfiguration<SitecoreTypeConfiguration>(baseType).
-                Properties.Select(p => _searchIndex.FieldNameTranslator.GetIndexFieldName((MemberInfo) p.PropertyInfo));
+            var result = typeConfig.Properties.Select(p => _searchIndex.FieldNameTranslator.GetIndexFieldName((MemberInfo) p.PropertyInfo));
             return result.ToList();
         }
 
         public List<Type> GetPotentialCreatedTypes(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {
+            var typeConfig = Context.Default.TypeConfigurations.Where(tc => baseType.IsAssignableFrom(tc.Value.Type) && ((SitecoreTypeConfiguration)tc.Value).TemplateId != (ID)null);
+            if (!typeConfig.Any())
+                return _defaultDocumentMapper.GetPotentialCreatedTypes(baseType, executionContexts);
+
             //TODO: is this what should be returned??
-            var result = Context.Default.TypeConfigurations.Where(tc => baseType.IsAssignableFrom(tc.Value.Type)).Select(tc => tc.Value.Type);
-            return result.ToList();
+            return typeConfig.Select(tc => tc.Value.Type).ToList();
         }
 
         public object CreateElementInstance(Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
         {
-            if (baseType.Namespace == typeof (UISearchResult).Namespace)
-            {
-                return ReflectionUtility.CreateInstance(baseType);
-            }
+            var typeConfig = Context.Default.GetTypeConfiguration<SitecoreTypeConfiguration>(baseType);
+            if (typeConfig == null || typeConfig.TemplateId == (ID)null)
+                return _defaultDocumentMapper.CreateElementInstance(baseType, fieldValues, executionContexts);
+
             var sitecoreService = new SitecoreContext();
             var typeCreationContext = new SitecoreTypeCreationContext
             {
@@ -71,6 +79,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public void Initialize(ISearchIndex searchIndex)
         {
+            _defaultDocumentMapper.Initialize(searchIndex);
             _searchIndex = searchIndex;
         }
     }
