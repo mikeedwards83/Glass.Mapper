@@ -16,6 +16,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
@@ -104,13 +105,13 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// Gets or sets the section table.
         /// </summary>
         /// <value>The section table.</value>
-        private List<SectionInfo> SectionTable { get; set; }
+        private ImmutableList<SectionInfo> SectionTable { get; set; }
 
         /// <summary>
         /// Gets or sets the field table.
         /// </summary>
         /// <value>The field table.</value>
-        private List<FieldInfo> FieldTable { get; set; }
+        private ImmutableList<FieldInfo> FieldTable { get; set; }
 
         /// <summary>
         /// Gets the current context.
@@ -144,8 +145,8 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </summary>
         public GlassDataProvider()
         {
-            SectionTable = new List<SectionInfo>();
-            FieldTable = new List<FieldInfo>();
+            SectionTable = ImmutableList<SectionInfo>.Empty;
+            FieldTable = ImmutableList<FieldInfo>.Empty;
         }
 
         /// <summary>
@@ -359,7 +360,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
                         new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, 100);
 
-                    SectionTable.Add(record);
+                    SectionTable = SectionTable.Add(record);
                 }
 
                 processed.Add(section.SectionName);
@@ -371,7 +372,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             //we need to add sections already in the db, 'cause we have to 
             foreach (var sqlOne in existing.Where(ex => SectionTable.All(s => s.SectionId != ex.ID)))
             {
-                SectionTable.Add(new SectionInfo(sqlOne.Name, sqlOne.ID, itemDefinition.ID, 0) { Existing = true } );
+                SectionTable = SectionTable.Add(new SectionInfo(sqlOne.Name, sqlOne.ID, itemDefinition.ID, 0) { Existing = true });
             }
 
             return fields;
@@ -446,7 +447,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                     }
 
                     fieldIds.Add(record.FieldId);
-                    FieldTable.Add(record);
+                    FieldTable = FieldTable.Add(record);
                 }
             }
 
