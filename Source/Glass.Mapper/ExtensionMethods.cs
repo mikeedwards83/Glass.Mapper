@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using System;
@@ -52,7 +52,7 @@ namespace Glass.Mapper
             return string.IsNullOrEmpty(target);
         }
 
-       
+
         /// <summary>
         /// Indicates whether a specified string is null, empty, or consists only of
         ///     white-space characters.
@@ -87,7 +87,7 @@ namespace Glass.Mapper
         /// <param name="list">The list.</param>
         /// <param name="action">The action.</param>
         /// <returns>IEnumerable{``0}.</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action )
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action)
         {
             foreach (var item in list)
             {
@@ -101,30 +101,30 @@ namespace Glass.Mapper
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The obj.</param>
         /// <returns>IEnumerable{``0}.</returns>
-    public static IEnumerable<T> MakeEnumerable<T>(this T obj)
+        public static IEnumerable<T> MakeEnumerable<T>(this T obj)
         {
-            return new T[] {obj};
+            return new T[] { obj };
         }
 
         #endregion
 
-
       
+
 
         #region Misc
 
-    /// <summary>
-    /// Casts to.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="target">The target.</param>
-    /// <returns>``0.</returns>
+        /// <summary>
+        /// Casts to.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target">The target.</param>
+        /// <returns>``0.</returns>
         public static T CastTo<T>(this object target)
         {
             return (T)target;
         }
 
-      
+
 
         #endregion
     }

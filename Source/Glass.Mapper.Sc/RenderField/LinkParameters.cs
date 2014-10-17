@@ -21,7 +21,7 @@ namespace Glass.Mapper.Sc.RenderField
     /// <summary>
     /// Used for specifying rendering parameters for a General Link field when outputting through a field renderer.
     /// </summary>
-    public class LinkParameters : AbstractParameters
+    public class LinkParameters 
     {
         /// <summary>
         /// The TARGET
@@ -39,46 +39,6 @@ namespace Glass.Mapper.Sc.RenderField
         /// The TEXT
         /// </summary>
         public const string TEXT = "text";
-
-        /// <summary>
-        /// Gets or sets the target.
-        /// </summary>
-        /// <value>The target.</value>
-        public string Target
-        {
-            get { return Parameters[TARGET]; }
-            set { Parameters[TARGET] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the title.
-        /// </summary>
-        /// <value>The title.</value>
-        public string Title
-        {
-            get { return Parameters[TITLE]; }
-            set { Parameters[TITLE] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the class.
-        /// </summary>
-        /// <value>The class.</value>
-        public string Class
-        {
-            get { return Parameters[CLASS]; }
-            set { Parameters[CLASS] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the text.
-        /// </summary>
-        /// <value>The text.</value>
-        public string Text
-        {
-            get { return Parameters[TEXT]; }
-            set { Parameters[TEXT] = value; }
-        }
     }
 }
 

@@ -23,6 +23,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -37,13 +38,12 @@ namespace Glass.Mapper.Sc
     public class Utilities : Mapper.Utilities
     {
         /// <summary>
-        /// Converts a NameValueCollection in to HTML attributes
+        /// Converts a NameValueCollection into HTML attributes
         /// </summary>
         /// <param name="attributes">A list of attributes to convert</param>
         /// <returns>System.String.</returns>
         public static string ConvertAttributes(NameValueCollection attributes)
         {
-
             if (attributes == null || attributes.Count == 0) return "";
 
             StringBuilder sb = new StringBuilder();
@@ -54,6 +54,25 @@ namespace Glass.Mapper.Sc
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Converts a SafeDictionary into HTML attributes
+        /// </summary>
+        /// <param name="attributes">A list of attributes to convert</param>
+        /// <returns>System.String.</returns>
+        public static string ConvertAttributes(SafeDictionary<string> attributes)
+        {
+            if (attributes == null || attributes.Count == 0) return "";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var pair in attributes)
+            {
+                sb.AppendFormat("{0}='{1}' ".Formatted(pair.Key, pair.Value ??""));
+            }
+
+            return sb.ToString();
+        }
+
+
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
         {

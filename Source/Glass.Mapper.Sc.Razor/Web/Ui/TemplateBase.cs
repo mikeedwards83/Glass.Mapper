@@ -332,17 +332,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return GlassHtml.RenderingParameters<T>(ParentControl.Parameters);
         }
 
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
         /// </summary>
@@ -355,38 +344,5 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             private set;
 
         }
-
-
-
-        #region Obsolete
-
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <returns>IEncodedString.</returns>
-        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public IEncodedString RenderImage(Image image)
-        {
-            return GlassHtml.RenderImage(image);
-        }
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>IEncodedString.</returns>
-        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public IEncodedString RenderImage(Image image, NameValueCollection attributes)
-        {
-            return GlassHtml.RenderImage(image, attributes);
-        }
-
-
-        #endregion
-
-       
     }
 }
