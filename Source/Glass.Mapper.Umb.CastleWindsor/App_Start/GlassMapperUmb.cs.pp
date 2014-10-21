@@ -2,7 +2,7 @@
 using Glass.Mapper.Umb.CastleWindsor;
 using Glass.Mapper.Umb.Configuration.Attributes;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperUmb), "Start")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperUmb), "Start")]
 
 namespace $rootnamespace$.App_Start
 {

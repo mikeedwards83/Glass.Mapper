@@ -35,6 +35,8 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
     /// <typeparam name="T"></typeparam>
     public abstract class AbstractRazorControl<T> : WebControl, IRazorControl, Sitecore.Layouts.IExpandable
     {
+
+        
         IPerformanceProfiler _profiler = new SitecoreProfiler();
         /// <summary>
         /// Gets or sets the profiler.
@@ -63,15 +65,15 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// </value>
         public ViewManager ViewManager { get; private set; }
 
-        /// <summary>
-        /// A list of placeholders to render on the page.
-        /// </summary>
-        /// <value>The placeholders.</value>
-        public IEnumerable<string> Placeholders
-        {
-            get;
-            set;
-        }
+        ///// <summary>
+        ///// A list of placeholders to render on the page.
+        ///// </summary>
+        ///// <value>The placeholders.</value>
+        //public IEnumerable<string> Placeholders
+        //{
+        //    get;
+        //    set;
+        //}
 
         /// <summary>
         /// View data
@@ -246,11 +248,21 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
         private void WriteException(HtmlTextWriter output, Exception ex)
         {
+
+            
+
             output.Write("<h1>Glass Razor Rendering Exception</h1>");
             output.Write("<p>View: {0}</p>".Formatted(View.Name));
-            output.Write("<p>{0}</p>".Formatted(ex.Message));
-            output.Write("<pre>{0}</pre>".Formatted(ex.StackTrace));
-        
+            
+            Exception subEx = ex;
+            while (subEx != null)
+            {
+                output.Write("<p>{0}</p>".Formatted(subEx.Message));
+                output.Write("<pre>{0}</pre>".Formatted(subEx.StackTrace));
+
+                subEx = subEx.InnerException;
+            }
+
             Sitecore.Diagnostics.Log.Error("Glass Razor Rendering Error {0}".Formatted(View), ex, this);
 
         }
@@ -260,9 +272,9 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// </summary>
         public void Expand()
         {
-            if (Placeholders != null)
+            if (View.Placeholders != null)
             {
-                foreach (var placeHolderName in Placeholders)
+                foreach (var placeHolderName in View.Placeholders)
                 {
                     var holder = new Sitecore.Web.UI.WebControls.Placeholder();
                     holder.Key = placeHolderName.ToLower();

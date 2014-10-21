@@ -238,7 +238,10 @@ namespace Glass.Mapper
             if (checkBase)
             {
                 //check base type encase of proxy
+                 if (type.BaseType != null)
+            {
                 config = TypeConfigurations.ContainsKey(type.BaseType) ? TypeConfigurations[type.BaseType] : null;
+            }
 
                 if (config != null) return config as T;
 

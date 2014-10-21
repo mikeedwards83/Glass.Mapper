@@ -166,7 +166,33 @@ namespace Glass.Mapper.Tests
 
         #endregion
 
+        #region GetTypeConfiguration
+
+        [Test]
+        public void GetTypeConfiguration_BaseTypeNullForInterface_AutoLoadsConfig()
+        {
+            //Arrange
+            string contextName = "testContext";
+            bool isDefault = true;
+            var type = typeof (IStubInterface1);
+            Context.Create(Substitute.For<IDependencyResolver>(), contextName, isDefault);
+            var context = Context.Contexts[contextName];
+
+            //Act
+            var config = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(type);
+
+            //Assert
+            Assert.IsNotNull(config);
+
+        }
+        #endregion
+
         #region Stubs
+
+        public interface IStubInterface1
+        {
+            
+        }
 
         public class StubClass1
         {
@@ -202,6 +228,11 @@ namespace Glass.Mapper.Tests
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public class StubAbstractTypeConfiguration : AbstractTypeConfiguration
+        {
+            
         }
 
         #endregion

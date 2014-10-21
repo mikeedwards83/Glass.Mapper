@@ -31,6 +31,8 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldLongMapper : AbstractSitecoreFieldMapper
     {
+        protected override object DefaultValue { get { return (long)0; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldLongMapper"/> class.
         /// </summary>
