@@ -147,6 +147,8 @@ namespace Glass.Mapper.Sc.DataMappers
                     return item.Language;  
                 case SitecoreInfoType.BaseTemplateIds:
                     Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
+			        if( template == null ) return null;
+
                     if (scConfig.PropertyInfo != null &&
                         scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<Sitecore.Data.ID>))
                         return template.GetBaseTemplates().Select(x=>x.ID);
