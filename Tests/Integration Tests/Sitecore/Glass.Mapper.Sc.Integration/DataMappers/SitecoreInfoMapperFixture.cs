@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -21,13 +21,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using Glass.Mapper.Sc.DataMappers;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
+using Sitecore.FakeDb;
+using Sitecore.FakeDb.Resources.Media;
 using Sitecore.Globalization;
+using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
@@ -62,62 +66,114 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 SitecoreInfoType.Version
                 )] SitecoreInfoType type,
             [Values(
-                "/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem", //content path
+                "/SitecoreInfoMapper", //content path
                 "DataMappersEmptyItem DisplayName", //DisplayName
-                "/sitecore/content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem", //FullPath
-                "datamappersemptyitem", //Key
-                "/~/media/031501A9C7F24596BD659276DA3A627A.ashx", //MediaUrl
-                "DataMappersEmptyItem", //Name
-                "/sitecore/content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem", //Path
+                "/sitecore/content/SitecoreInfoMapper", //FullPath
+                "sitecoreinfomapper", //Key
+                "{3C09BE13-40D2-436D-B8F0-6EB6033B7F41}media", //MediaUrl
+                "SitecoreInfoMapper", //Name
+                "/sitecore/content/SitecoreInfoMapper", //Path
                 "DataMappersEmptyItem", //TemplateName
-                "/en/sitecore/content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem.aspx", //Url
+                "/en/sitecore/content/SitecoreInfoMapper.aspx", //Url
                 1 //version
-            
                 )] object expected
             )
         {
-            //Assign
+            //Arrange
             var mapper = new SitecoreInfoMapper();
             var config = new SitecoreInfoConfiguration();
             config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            Sitecore.Context.Site = null;
+            string itemName = "SitecoreInfoMapper";
+            var templateId = new ID(Guid.NewGuid());
+            var itemId = new ID("3C09BE13-40D2-436D-B8F0-6EB6033B7F41");
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+            //we have to setup a custom media provider for fake db
+            var provider = global::Sitecore.Resources.Media.MediaManager.Provider as FakeMediaProvider;
+            if (provider != null)
+            {
+                provider.LocalProvider.Value = new GlassMediaProvider();
+            }
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem", templateId)
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                new Sitecore.FakeDb.DbItem(itemName, itemId, templateId)
+                {
+                    
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
+
+
         }
 
         [Test]
-        [ExpectedException(typeof (MapperException))]
+        [ExpectedException(typeof(MapperException))]
         public void MapToProperty_SitecoreInfoTypeNotSet_ThrowsException()
         {
             //Assign
-            SitecoreInfoType type = SitecoreInfoType.NotSet;
+            string itemName = "SitecoreInfoMapper";
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                SitecoreInfoType type = SitecoreInfoType.NotSet;
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            //Assert
-            //No asserts expect exception
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                //No asserts expect exception
+            }
         }
 
         [Test]
@@ -125,134 +181,248 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
 
             //Assign
-            var type = SitecoreInfoType.Language;
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            config.PropertyInfo = new FakePropertyInfo(typeof(string), "StringField", typeof(Stub));
-            mapper.Setup(new DataMapperResolverArgs(null, config));
+            string itemName = "SitecoreInfoMapper";
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            var expected = item.Language.Name;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+
+                var type = SitecoreInfoType.Language;
+
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                config.PropertyInfo = new FakePropertyInfo(typeof(string), "StringField", typeof(Stub));
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var expected = item.Language.Name;
 
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                //Act
+                var value = mapper.MapToProperty(dataContext);
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
         }
         [Test]
         public void MapToProperty_SitecoreInfoTypeLanguage_ReturnsEnLanguageType()
         {
-
             //Assign
-            var type = SitecoreInfoType.Language;
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            string itemName = "SitecoreInfoMapper";
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            var expected = item.Language;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var type = SitecoreInfoType.Language;
 
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                var expected = item.Language;
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
         }
 
         [Test]
         public void MapToProperty_SitecoreInfoTypeTemplateId_ReturnsTemplateIdAsGuid()
         {
             //Assign
-            var type = SitecoreInfoType.TemplateId;
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-            var expected = item.TemplateID.Guid;
+            string itemName = "SitecoreInfoMapper";
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var type = SitecoreInfoType.TemplateId;
 
-            //Assert
-            Assert.AreEqual(expected, value);
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var expected = item.TemplateID.Guid;
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
         }
 
         [Test]
         public void MapToProperty_SitecoreInfoTypeTemplateId_ReturnsTemplateIdAsID()
         {
             //Assign
-            var type = SitecoreInfoType.TemplateId;
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            config.PropertyInfo = typeof (Stub).GetProperty("TemplateId");
+            string itemName = "SitecoreInfoMapper";
 
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            {
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-            var expected = item.TemplateID;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var type = SitecoreInfoType.TemplateId;
 
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                config.PropertyInfo = typeof(Stub).GetProperty("TemplateId");
 
-            //Act
-            var value = mapper.MapToProperty(dataContext);
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            //Assert
-            Assert.AreEqual(expected, value);
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var expected = item.TemplateID;
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
         }
 
         [Test]
         public void MapToProperty_SitecoreInfoTypeBaseTemplateIds_ReturnsBaseTemplateIds()
         {
             //Assign
-            var type = SitecoreInfoType.BaseTemplateIds;
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            config.PropertyInfo = typeof(Stub).GetProperty("BaseTemplateIds");
+            string itemName = "SitecoreInfoMapper";
+            var templateId = Sitecore.Data.ID.NewID;
+              var baseTemplateIdOne = Sitecore.Data.ID.NewID;
+  var baseTemplateIdTwo = Sitecore.Data.ID.NewID;
 
-            mapper.Setup(new DataMapperResolverArgs(null, config));
-
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-          
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-
-            //Act
-            IEnumerable<ID> results;
-            using (new SecurityDisabler())
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                
-                results = mapper.MapToProperty(dataContext) as IEnumerable<ID>;
-            }
+                new Sitecore.FakeDb.DbTemplate("base one", baseTemplateIdOne),
+                new Sitecore.FakeDb.DbTemplate("base two", baseTemplateIdTwo),
+                new DbTemplate("DataMappersEmptyItem",templateId)
+                {
+                     BaseIDs = new[] { baseTemplateIdOne, baseTemplateIdTwo },
+                },
 
-            //Assert
-            Assert.Greater( results.Count(), 10);
-            Assert.IsTrue(results.All(x=>x!= item.TemplateID));
+                new Sitecore.FakeDb.DbItem(itemName, Sitecore.Data.ID.NewID, templateId)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var type = SitecoreInfoType.BaseTemplateIds;
+
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                config.PropertyInfo = typeof(Stub).GetProperty("BaseTemplateIds");
+
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                IEnumerable<ID> results;
+                using (new SecurityDisabler())
+                {
+
+                    results = mapper.MapToProperty(dataContext) as IEnumerable<ID>;
+                }
+
+                //Assert
+                Assert.AreEqual(results.Count(), 2);
+                Assert.IsTrue(results.All(x => x != item.TemplateID));
+            }
         }
 
         #endregion
@@ -263,70 +433,115 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void MapToCms_SavingDisplayName_UpdatesTheDisplayNameField()
         {
             //Assign
-            var type = SitecoreInfoType.DisplayName;
-            var expected = "new display name";
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+            string itemName = "SitecoreInfoMapper";
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-
-
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-            dataContext.PropertyValue = expected;
-
-            string actual = string.Empty;
-
-            //Act
-            using (new SecurityDisabler())
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                item.Editing.BeginEdit();
-                mapper.MapToCms(dataContext);
-                actual = item[Global.Fields.DisplayName];
-                item.Editing.CancelEdit();
-            }
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            //Assert
-            Assert.AreEqual(expected, actual);
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+                var type = SitecoreInfoType.DisplayName;
+                var expected = "new display name";
+
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+
+
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                dataContext.PropertyValue = expected;
+
+                string actual = string.Empty;
+
+                //Act
+                using (new SecurityDisabler())
+                {
+                    item.Editing.BeginEdit();
+                    mapper.MapToCms(dataContext);
+                    actual = item[Global.Fields.DisplayName];
+                    item.Editing.CancelEdit();
+                }
+
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            
         }
 
         [Test]
         public void MapToCms_SavingName_UpdatesTheItemName()
         {
             //Assign
-            var type = SitecoreInfoType.Name;
-            var expected = "new  name";
 
-            var mapper = new SitecoreInfoMapper();
-            var config = new SitecoreInfoConfiguration();
-            config.Type = type;
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+             string itemName = "SitecoreInfoMapper";
 
-            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
-
-            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-
-
-            var dataContext = new SitecoreDataMappingContext(null, item, null);
-            dataContext.PropertyValue = expected;
-
-            string actual = string.Empty;
-
-            //Act
-            using (new SecurityDisabler())
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                item.Editing.BeginEdit();
-                mapper.MapToCms(dataContext);
-                actual = item.Name;
-                item.Editing.CancelEdit();
-            }
+                new DbTemplate("DataMappersEmptyItem")
+                {
+                    Glass.Mapper.Sc.Global.Fields.DisplayName
+                },
 
-            //Assert
-            Assert.AreEqual(expected, actual);
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(Glass.Mapper.Sc.Global.Fields.DisplayName)
+                    {
+                        Value = "DataMappersEmptyItem DisplayName"
+                    }
+                }
+            })
+            {
+
+                var type = SitecoreInfoType.Name;
+                var expected = "new  name";
+
+                var mapper = new SitecoreInfoMapper();
+                var config = new SitecoreInfoConfiguration();
+                config.Type = type;
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+
+
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                dataContext.PropertyValue = expected;
+
+                string actual = string.Empty;
+
+                //Act
+                using (new SecurityDisabler())
+                {
+                    item.Editing.BeginEdit();
+                    mapper.MapToCms(dataContext);
+                    actual = item.Name;
+                    item.Editing.CancelEdit();
+                }
+
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
         }
 
         #endregion

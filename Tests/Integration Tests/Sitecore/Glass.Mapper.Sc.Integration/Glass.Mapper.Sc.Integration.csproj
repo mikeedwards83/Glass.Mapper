@@ -149,6 +149,7 @@
     <Compile Include="Dynamic\DynamicExtensions.cs" />
     <Compile Include="Dynamic\DynamicItemFixture.cs" />
     <Compile Include="GlassHtmlFixture.cs" />
+    <Compile Include="GlassMediaProvider.cs" />
     <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />
