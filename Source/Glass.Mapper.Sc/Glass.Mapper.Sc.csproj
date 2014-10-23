@@ -184,7 +184,6 @@
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
-    <Compile Include="RenderField\AbstractParameters.cs" />
     <Compile Include="RenderField\DateParameters.cs" />
     <Compile Include="RenderField\ImageParameters.cs" />
     <Compile Include="RenderField\LinkParameters.cs" />
