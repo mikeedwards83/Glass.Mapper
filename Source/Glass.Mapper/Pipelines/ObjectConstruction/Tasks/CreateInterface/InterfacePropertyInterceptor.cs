@@ -60,10 +60,20 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 					string method = invocation.Method.Name.Substring(0, 4);
 					string name = invocation.Method.Name.Substring(4);
 
-					if (method == "get_")
+                    
+
+					if (method == "get_" )//&& Values.ContainsKey(name))
 					{
-						var result = Values[name];
-						invocation.ReturnValue = result;
+					    if (Values.ContainsKey(name))
+					    {
+					        var result = Values[name] ?? Utilities.GetDefault(invocation.Method.ReturnType);
+					        invocation.ReturnValue = result;
+					    }
+					    else
+					    {
+                            invocation.ReturnValue = Utilities.GetDefault(invocation.Method.ReturnType);
+					    }
+
 					}
 					else if (method == "set_")
 					{

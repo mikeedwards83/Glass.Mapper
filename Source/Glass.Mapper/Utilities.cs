@@ -36,6 +36,16 @@ namespace Glass.Mapper
 		private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators = 
 			new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
+
+        public static object GetDefault(Type type)
+        {
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
+        }
+
         /// <summary>
         /// Returns a delegate method that will load a class based on its constuctor
         /// </summary>
