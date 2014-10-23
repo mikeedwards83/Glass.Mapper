@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -23,6 +23,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.FakeDb;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
@@ -75,31 +76,42 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [Test]
         public void GetField_FieldContainsId_ReturnsConcreteType()
         {
-            //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
-            var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof (StubContaining).GetProperty("PropertyTrue");
+             //Assign
+            string itemName = "SitecoreFieldTypeMapper";
+            var targetId = Sitecore.Data.ID.NewID;
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
-
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = targetId.ToString();
+                new DbItem("some name", targetId ),
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Value = targetId.ToString()
+                    }
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof (StubContaining).GetProperty("PropertyTrue");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                var result = mapper.GetField(field, config, scContext) as Stub;
+
+                //Assert
+                Assert.AreEqual(targetId.Guid, result.Id);
             }
-
-            //Act
-            var result = mapper.GetField(field, config, scContext) as Stub;
-
-            //Assert
-            Assert.AreEqual(targetId, result.Id);
 
         }
 
@@ -107,30 +119,36 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void GetField_FieldEmpty_ReturnsNull()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
-            var targetId = string.Empty;
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+            string itemName = "SitecoreFieldTypeMapper";
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
-
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = targetId.ToString();
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof (StubContaining).GetProperty("PropertyTrue");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                var result = mapper.GetField(field, config, scContext) as Stub;
+
+                //Assert
+                Assert.IsNull(result);
             }
-
-            //Act
-            var result = mapper.GetField(field, config, scContext) as Stub;
-
-            //Assert
-            Assert.IsNull(result);
 
         }
 
@@ -138,30 +156,40 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void GetField_FieldRandomText_ReturnsNull()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/GetField");
-            var targetId = "some random text";
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
+            string itemName = "SitecoreFieldTypeMapper";
 
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = targetId.ToString();
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Value = "some random text"
+                    }
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                var result = mapper.GetField(field, config, scContext) as Stub;
+
+                //Assert
+                Assert.IsNull(result);
             }
-
-            //Act
-            var result = mapper.GetField(field, config, scContext) as Stub;
-
-            //Assert
-            Assert.IsNull(result);
 
         }
 
@@ -173,35 +201,48 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [Test]
         public void SetField_ClassContainsId_IdSetInField()
         {
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
-            var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
 
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+            //Arrange
+            string itemName = "SitecoreFieldTypeMapper";
+            var targetId = Sitecore.Data.ID.NewID;
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
 
-            var propertyValue = new Stub();
-            propertyValue.Id = targetId;
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = string.Empty;
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                },
+                new DbItem("target item", targetId)
+            })
             {
-                mapper.SetField(field, propertyValue, config, scContext);
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var propertyValue = new Stub();
+                propertyValue.Id = targetId.Guid;
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, propertyValue, config, scContext);
+                }
+                //Assert
+                Assert.AreEqual(targetId.Guid, Guid.Parse(item[FieldName]));
             }
-            //Assert
-            Assert.AreEqual(targetId, Guid.Parse(item[FieldName]));   
         }
 
 
@@ -210,35 +251,43 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetField_ClassContainsNoIdProperty_ThrowsException()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
-            var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
 
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
+            string itemName = "SitecoreFieldTypeMapper";
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
-
-            var propertyValue = new StubNoId();
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = string.Empty;
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+               new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                }
+            })
             {
-                mapper.SetField(field, propertyValue, config, scContext);
-            }
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
 
-            //Assert
-            Assert.AreEqual(string.Empty, item[FieldName]);
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var propertyValue = new StubNoId();
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, propertyValue, config, scContext);
+                }
+
+                //Assert
+                Assert.AreEqual(string.Empty, item[FieldName]);
+            }
         }
 
 
@@ -247,32 +296,41 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetField_ClassContainsIdButItemMissing_ThrowsException()
         {
             //Assign
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
-            var targetId = Guid.Parse("{11111111-A3F0-410E-8A6D-07FF3A1E78C3}");
-            var mapper = new SitecoreFieldTypeMapper();
-            var field = item.Fields[FieldName];
 
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+            string itemName = "SitecoreFieldTypeMapper";
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
-            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
-            var service = new SitecoreService(Database, context);
-
-            var propertyValue = new Stub();
-            propertyValue.Id = targetId;
-
-            var scContext = new SitecoreDataMappingContext(null, item, service);
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = string.Empty;
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                }
+            })
             {
-                mapper.SetField(field, propertyValue, config, scContext);
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var targetId = Guid.Parse("{11111111-A3F0-410E-8A6D-07FF3A1E78C3}");
+                var mapper = new SitecoreFieldTypeMapper();
+                var field = item.Fields[FieldName];
+
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+                var service = new SitecoreService(Database, context);
+
+                var propertyValue = new Stub();
+                propertyValue.Id = targetId;
+
+                var scContext = new SitecoreDataMappingContext(null, item, service);
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, propertyValue, config, scContext);
+                }
             }
 
         }
