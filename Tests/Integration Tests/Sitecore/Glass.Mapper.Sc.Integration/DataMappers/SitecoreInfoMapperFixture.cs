@@ -40,14 +40,6 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
     [TestFixture]
     public class SitecoreInfoMapperFixture
     {
-        private Database _db;
-
-        [SetUp]
-        public void Setup()
-        {
-            _db = Sitecore.Configuration.Factory.GetDatabase("master");
-        }
-
         #region Method - MapToProperty
 
         [Test]
