@@ -29,6 +29,8 @@ using NSubstitute;
 using NUnit.Framework;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.FakeDb;
+using Sitecore.FakeDb.Links;
 using Sitecore.Globalization;
 using Sitecore.SecurityModel;
 
@@ -163,6 +165,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void MapToProperty_GetAllReferrers_ReferrersListReturned()
         {
             //Assign
+
+
             var language = LanguageManager.GetLanguage("af-ZA");
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Target");
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreLinkedMapper/Source",
@@ -233,34 +237,38 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
 
-            var targetItem = new Sitecore.FakeDb.DbItem(Guid.NewGuid().ToString());
-            var sourceItem = new Sitecore.FakeDb.DbItem(Guid.NewGuid().ToString());
 
-            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db    {
+
+            var template = new Sitecore.FakeDb.DbTemplate("base one")
+            {
+                FieldName
+            };
+
+            var targetItem = new Sitecore.FakeDb.DbItem("item1", Sitecore.Data.ID.NewID, template.ID)
+            {
+
+            };
+            var sourceItem = new Sitecore.FakeDb.DbItem("item2",Sitecore.Data.ID.NewID, template.ID)
+            {
+                new DbField(FieldName)
+                {
+                    Value =  "<a href=\"~/link.aspx?_id={0}&amp;_z=z\">Source</a>".Formatted(targetItem.ID.Guid.ToString("N"))
+                }
+            };
+
+            using (var db = new Db    {
                 targetItem, sourceItem
             })
               {
-
-
-                  var item = Database.GetItem("/sitecore/content/{0}".Formatted(targetItem.Name));
+                  var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                  var item = database.GetItem("/sitecore/content/{0}".Formatted(targetItem.Name));
                   var language = LanguageManager.GetLanguage("af-ZA");
 
-                  var source = Database.GetItem("/sitecore/content/{0}".Formatted(sourceItem.Name),
-                                                   language);
-
-                  using (new ItemEditing(source, true))
-                  {
-                      source[FieldName] = "<a href=\"~/link.aspx?_id={0}&amp;_z=z\">Source</a>".Formatted(targetItem.ID.Guid.ToString("N"));
-                  }
-
+                  var source = database.GetItem("/sitecore/content/{0}".Formatted(sourceItem.Name), language);
 
                   //ME - when getting templates you have to disable the role manager
                   using (new SecurityDisabler())
                   {
-
-                      var template = Database.GetItem("/sitecore/templates/Tests/DataMappers/DataMappersSingleField");
-
-
                       var config = new SitecoreLinkedConfiguration();
                       config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
                       config.Option = SitecoreLinkedOptions.All;

@@ -134,9 +134,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var fieldValue =
                    "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
 
-            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
+            using (var db = new Db
             {
-                new Sitecore.FakeDb.DbItem(itemName)
+                new DbItem(itemName)
                 {
                     new DbField(FieldName)
                     {

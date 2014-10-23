@@ -367,8 +367,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             string itemName = "SitecoreInfoMapper";
             var templateId = Sitecore.Data.ID.NewID;
-              var baseTemplateIdOne = Sitecore.Data.ID.NewID;
-  var baseTemplateIdTwo = Sitecore.Data.ID.NewID;
+            var baseTemplateIdOne = Sitecore.Data.ID.NewID;
+            var baseTemplateIdTwo = Sitecore.Data.ID.NewID;
 
             using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
@@ -475,7 +475,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 //Assert
                 Assert.AreEqual(expected, actual);
             }
-            
+
         }
 
         [Test]
@@ -483,7 +483,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         {
             //Assign
 
-             string itemName = "SitecoreInfoMapper";
+            string itemName = "SitecoreInfoMapper";
 
             using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {

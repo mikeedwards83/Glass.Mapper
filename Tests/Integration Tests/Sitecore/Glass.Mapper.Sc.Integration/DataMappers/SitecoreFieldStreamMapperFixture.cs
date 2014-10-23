@@ -25,6 +25,7 @@ using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
+using Sitecore.FakeDb;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -69,31 +70,51 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetField_StreamPassed_FieldContainsStream()
         {
             //Assign
+
+              string itemName = "SitecoreFieldStreamMapperFixture";
             var fieldValue = "";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStreamMapper/SetField");
-            var field = item.Fields[FieldName];
-            string expected = "hello world";
-
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(expected));
-            var mapper = new SitecoreFieldStreamMapper();
-
-            using (new ItemEditing(item, true))
+            using (var db = new Db
             {
-                field.SetBlobStream(new MemoryStream());
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+                new DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Type = "Rich Text",
+                        Value = fieldValue
+                    }
+                }
+            })
             {
-              mapper.SetField(field, stream, null, null);
+
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+
+                var field = item.Fields[FieldName];
+                string expected = "hello world";
+
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(expected));
+                var mapper = new SitecoreFieldStreamMapper();
+
+                using (new ItemEditing(item, true))
+                {
+                    field.SetBlobStream(new MemoryStream());
+                }
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, stream, null, null);
+                }
+
+                //Assert
+                var reader = new StreamReader(field.GetBlobStream());
+
+                var resultStr = reader.ReadToEnd();
+                Assert.AreEqual(expected, resultStr);
             }
-
-            //Assert
-            var reader = new StreamReader(field.GetBlobStream());
-
-            var resultStr = reader.ReadToEnd();
-            Assert.AreEqual(expected, resultStr);
         }
 
         #endregion

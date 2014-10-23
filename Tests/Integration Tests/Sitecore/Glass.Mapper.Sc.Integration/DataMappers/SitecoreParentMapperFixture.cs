@@ -27,6 +27,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Items;
+using Sitecore.FakeDb;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -56,75 +57,108 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void MapToProperty_ConfigurationSetupCorrectly_CallsCreateClassOnService()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreParentMapperFixture/EmptyItem");
-            var service = Substitute.For<ISitecoreService>();
-            var scContext = new SitecoreDataMappingContext(null, item, service);
+            using (var db = new Db
+            {
+                new DbItem("parent")
+                {
+                    new DbItem("child")
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/parent/child");
+                var service = Substitute.For<ISitecoreService>();
+                var scContext = new SitecoreDataMappingContext(null, item, service);
 
-            var config = new SitecoreParentConfiguration();
-            config.PropertyInfo = typeof (Stub).GetProperty("Property");
-            
-            var mapper = new SitecoreParentMapper();
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+                var config = new SitecoreParentConfiguration();
+                config.PropertyInfo = typeof (Stub).GetProperty("Property");
 
-            //Act
-            var result = mapper.MapToProperty(scContext);
+                var mapper = new SitecoreParentMapper();
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            //Assert
+                //Act
+                var result = mapper.MapToProperty(scContext);
 
-            //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, false, null);
+                //Assert
 
+                //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
+                service.Received()
+                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false,
+                        false, null);
+            }
         }
 
         [Test]
         public void MapToProperty_ConfigurationIsLazy_CallsCreateClassOnServiceWithIsLazy()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreParentMapperFixture/EmptyItem");
-            var service = Substitute.For<ISitecoreService>();
-            var scContext = new SitecoreDataMappingContext(null, item, service);
 
-            var config = new SitecoreParentConfiguration();
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
-            config.IsLazy = true;
+            using (var db = new Db
+            {
+                new DbItem("parent")
+                {
+                    new DbItem("child")
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/parent/child");
+                var service = Substitute.For<ISitecoreService>();
+                var scContext = new SitecoreDataMappingContext(null, item, service);
 
-            var mapper = new SitecoreParentMapper();
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+                var config = new SitecoreParentConfiguration();
+                config.PropertyInfo = typeof (Stub).GetProperty("Property");
+                config.IsLazy = true;
 
-            //Act
-            var result = mapper.MapToProperty(scContext);
+                var mapper = new SitecoreParentMapper();
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            //Assert
+                //Act
+                var result = mapper.MapToProperty(scContext);
 
-            //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false, null);
+                //Assert
+
+                //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
+                service.Received()
+                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false,
+                        null);
+            }
         }
 
         [Test]
         public void MapToProperty_ConfigurationInferType_CallsCreateClassOnServiceWithInferType()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var item = db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreParentMapperFixture/EmptyItem");
-            var service = Substitute.For<ISitecoreService>();
-            var scContext = new SitecoreDataMappingContext(null, item, service);
+            using (var db = new Db
+            {
+                new DbItem("parent")
+                {
+                    new DbItem("child")
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/parent/child");
+                var service = Substitute.For<ISitecoreService>();
+                var scContext = new SitecoreDataMappingContext(null, item, service);
 
-            var config = new SitecoreParentConfiguration();
-            config.PropertyInfo = typeof(Stub).GetProperty("Property");
-            config.InferType = true;
+                var config = new SitecoreParentConfiguration();
+                config.PropertyInfo = typeof (Stub).GetProperty("Property");
+                config.InferType = true;
 
-            var mapper = new SitecoreParentMapper();
-            mapper.Setup(new DataMapperResolverArgs(null,config));
+                var mapper = new SitecoreParentMapper();
+                mapper.Setup(new DataMapperResolverArgs(null, config));
 
-            //Act
-            var result = mapper.MapToProperty(scContext);
+                //Act
+                var result = mapper.MapToProperty(scContext);
 
-            //Assert
+                //Assert
 
-            //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true, null);
+                //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
+                service.Received()
+                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), false, true,
+                        null);
+            }
         }
 
         #endregion
