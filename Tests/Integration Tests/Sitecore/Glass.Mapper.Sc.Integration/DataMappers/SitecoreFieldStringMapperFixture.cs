@@ -25,8 +25,12 @@ using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
+using NSubstitute;
 using NUnit.Framework;
+using Sitecore.FakeDb;
+using Sitecore.Pipelines.RenderField;
 using Sitecore.Sites;
+using Sitecore.Xml.Xsl;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -42,22 +46,33 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assign
             var fieldValue = "hello world";
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetField");
-            var field = item.Fields[FieldName];
+            string itemName = "SitecoreFieldStringMapperFixture";
 
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = fieldValue;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Value = fieldValue
+                    }
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                var field = item.Fields[FieldName];
+
+                var mapper = new SitecoreFieldStringMapper();
+                var config = new SitecoreFieldConfiguration();
+
+
+                //Act
+                var result = mapper.GetField(field, config, null) as string;
+
+                //Assert
+                Assert.AreEqual(fieldValue, result);
             }
-
-            //Act
-            var result = mapper.GetField(field, config, null) as string;
-
-            //Assert
-            Assert.AreEqual(fieldValue, result);
         }
 
 
@@ -65,61 +80,92 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void GetField_RichText_StringIsReturnedWithScapedUrl()
         {
             //Assign
-            var fieldValue = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var expected = "<p>Test with <a href=\"/en/Tests/DataMappers/SitecoreFieldStringMapper/GetField.aspx\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetFieldRichText");
-            var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
+            var fieldValue =
+                  "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
 
-            Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
-            Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
-            
-            using (new ItemEditing(item, true))
+            string itemName = "SitecoreFieldStringMapperFixture";
+
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = fieldValue;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Type = "Rich Text",
+                        Value = fieldValue
+                    }
+                }
+            })
+            {
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+              
+                var expected =
+                    "<p>Test with <a href=\"/en/Tests/DataMappers/SitecoreFieldStringMapper/GetField.aspx\">link</a></p>";
+
+                db.PipelineWatcher.WhenCall("renderField").Then(x => (x as RenderFieldArgs).Result = new RenderFieldResult( expected));
+             
+                var field = item.Fields[FieldName];
+
+                var mapper = new SitecoreFieldStringMapper();
+                var config = new SitecoreFieldConfiguration();
+
+                Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
+                Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
+                
+                //Act
+                var result = mapper.GetField(field, config, null) as string;
+
+                Sitecore.Context.Site = null;
+
+                //Assert
+                Assert.AreEqual(expected, result);
             }
 
-
-
-            //Act
-            var result = mapper.GetField(field, config, null) as string;
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(expected, result);
         }
 
         [Test]
         public void GetField_RichTextSettingsIsRaw_StringIsReturnedWithoutEscaping()
         {
             //Assign
-            var fieldValue = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetFieldRichText");
-            var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-            config.Setting = SitecoreFieldSettings.RichTextRaw;
+            string itemName = "SitecoreFieldStringMapperFixture";
+            var fieldValue =
+                   "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
 
-            Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = fieldValue;
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Type = "Rich Text",
+                        Value = fieldValue
+                    }
+                }
+            })
+            {
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                
+                var field = item.Fields[FieldName];
+
+                var mapper = new SitecoreFieldStringMapper();
+                var config = new SitecoreFieldConfiguration();
+                config.Setting = SitecoreFieldSettings.RichTextRaw;
+
+                Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
+
+                //Act
+                var result = mapper.GetField(field, config, null) as string;
+
+                Sitecore.Context.Site = null;
+
+                //Assert
+                Assert.AreEqual(fieldValue, result);
             }
-
-
-
-            //Act
-            var result = mapper.GetField(field, config, null) as string;
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(fieldValue, result);
         }
 
         #endregion
@@ -131,63 +177,90 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void SetField_RichText_ThrowsException()
         {
             //Assign
-            var expected = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/SetFieldRichText");
-            var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(StubClass).GetProperty("String");
+            string itemName = "SitecoreFieldStringMapperFixture";
 
-
-            Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
-
-            using (new ItemEditing(item, true))
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = string.Empty;
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Type = "Rich Text"
+                    }
+                }
+            })
             {
-                mapper.SetField(field, expected, config, null);
+                var expected =
+                    "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
+               
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+                
+                var field = item.Fields[FieldName];
+
+                var mapper = new SitecoreFieldStringMapper();
+                var config = new SitecoreFieldConfiguration();
+                config.PropertyInfo = typeof (StubClass).GetProperty("String");
+
+
+                Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
+                
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, expected, config, null);
+                }
+
+                Sitecore.Context.Site = null;
+
+                //Assert
+                Assert.AreEqual(expected, field.Value);
             }
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(expected, field.Value);
         }
 
         [Test]
-        public void SetField_FielNonRichText_ValueWrittenToField()
+        public void SetField_FieldRichTextRaw_ValueWrittenToField()
         {
             //Assign
-            var expected = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/SetField");
-            var field = item.Fields[FieldName];
 
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-            config.Setting = SitecoreFieldSettings.RichTextRaw;
-            
-            Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
+            //Assign
 
-            using (new ItemEditing(item, true))
+            string itemName = "SitecoreFieldStringMapperFixture";
+
+            using (Sitecore.FakeDb.Db db = new Sitecore.FakeDb.Db
             {
-                field.Value = string.Empty;
-            }
-
-            //Act
-            using (new ItemEditing(item, true))
+                new Sitecore.FakeDb.DbItem(itemName)
+                {
+                    new DbField(FieldName)
+                    {
+                        Type = "Rich Text"
+                    }
+                }
+            })
             {
-                mapper.SetField(field, expected, config, null);
+
+                var expected =
+                    "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
+
+                var database = Sitecore.Configuration.Factory.GetDatabase("master");
+                var item = database.GetItem("/sitecore/content/{0}".Formatted(itemName));
+
+                var field = item.Fields[FieldName];
+
+                var mapper = new SitecoreFieldStringMapper();
+                var config = new SitecoreFieldConfiguration();
+                config.Setting = SitecoreFieldSettings.RichTextRaw;
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, expected, config, null);
+                }
+
+                //Assert
+                Assert.AreEqual(expected, field.Value);
             }
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(expected, field.Value);
         }
 
         #endregion
