@@ -28,6 +28,7 @@ using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
 using Sitecore.FakeDb;
+using Sitecore.FakeDb.Sites;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.Sites;
 using Sitecore.Xml.Xsl;
@@ -111,16 +112,18 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 var mapper = new SitecoreFieldStringMapper();
                 var config = new SitecoreFieldConfiguration();
 
-                Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
-                Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
-                
-                //Act
-                var result = mapper.GetField(field, config, null) as string;
+                using (new SiteContextSwitcher(new FakeSiteContext("website")))
+                {
+                    Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
 
-                Sitecore.Context.Site = null;
+                    //Act
+                    var result = mapper.GetField(field, config, null) as string;
 
-                //Assert
-                Assert.AreEqual(expected, result);
+                    Sitecore.Context.Site = null;
+
+                    //Assert
+                    Assert.AreEqual(expected, result);
+                }
             }
 
         }
