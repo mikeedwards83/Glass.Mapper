@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sc.RenderField
     /// <summary>
     /// Used for specifying rendering parameters for an Image field when outputting through a field renderer.
     /// </summary>
-    public class ImageParameters
+    public class ImageParameterKeys
     {
         /// <summary>
         /// The OUTPU t_ METHOD

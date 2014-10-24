@@ -21,7 +21,7 @@ namespace Glass.Mapper.Sc.RenderField
     /// <summary>
     /// Used for specifying rendering parameters for a General Link field when outputting through a field renderer.
     /// </summary>
-    public class LinkParameters 
+    public class LinkParameterKeys 
     {
         /// <summary>
         /// The TARGET

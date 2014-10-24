@@ -177,7 +177,7 @@ namespace Glass.Mapper
         }
 
 
-        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false)
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false, bool underscoreForHyphens = true)
         {
             NameValueCollection nameValues = new NameValueCollection();
             if (target != null)
@@ -188,8 +188,15 @@ namespace Glass.Mapper
                 foreach (var propertyInfo in properties)
                 {
                     var value = propertyInfo.GetValue(target, null);
-                    nameValues.Add(lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name,
-                                   value == null ? string.Empty : value.ToString());
+
+                    var key = lowerCaseName ? propertyInfo.Name.ToLower() : propertyInfo.Name;
+
+                    if (underscoreForHyphens)
+                    {
+                        key = key.Replace("_", "-");
+                    }
+
+                    nameValues.Add(key, value == null ? string.Empty : value.ToString());
                 }
             }
             return nameValues;

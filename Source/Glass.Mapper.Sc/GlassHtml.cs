@@ -757,31 +757,31 @@ namespace Glass.Mapper.Sc
             {
                 switch (key)
                 {
-                    case ImageParameters.BORDER:
-                    case ImageParameters.ALT:
-                    case ImageParameters.HSPACE:
-                    case ImageParameters.VSPACE:
-                    case ImageParameters.CLASS:
-                    case ImageParameters.WIDTHHTML:
-                    case ImageParameters.HEIGHTHTML:
+                    case ImageParameterKeys.BORDER:
+                    case ImageParameterKeys.ALT:
+                    case ImageParameterKeys.HSPACE:
+                    case ImageParameterKeys.VSPACE:
+                    case ImageParameterKeys.CLASS:
+                    case ImageParameterKeys.WIDTHHTML:
+                    case ImageParameterKeys.HEIGHTHTML:
                         html(key);
                         break;
-                    case ImageParameters.OUTPUT_METHOD:
-                    case ImageParameters.ALLOW_STRETCH:
-                    case ImageParameters.IGNORE_ASPECT_RATIO:
-                    case ImageParameters.SCALE:
-                    case ImageParameters.MAX_WIDTH:
-                    case ImageParameters.MAX_HEIGHT:
-                    case ImageParameters.THUMBNAIL:
-                    case ImageParameters.BACKGROUND_COLOR:
-                    case ImageParameters.DATABASE:
-                    case ImageParameters.LANGUAGE:
-                    case ImageParameters.VERSION:
-                    case ImageParameters.DISABLE_MEDIA_CACHE:
+                    case ImageParameterKeys.OUTPUT_METHOD:
+                    case ImageParameterKeys.ALLOW_STRETCH:
+                    case ImageParameterKeys.IGNORE_ASPECT_RATIO:
+                    case ImageParameterKeys.SCALE:
+                    case ImageParameterKeys.MAX_WIDTH:
+                    case ImageParameterKeys.MAX_HEIGHT:
+                    case ImageParameterKeys.THUMBNAIL:
+                    case ImageParameterKeys.BACKGROUND_COLOR:
+                    case ImageParameterKeys.DATABASE:
+                    case ImageParameterKeys.LANGUAGE:
+                    case ImageParameterKeys.VERSION:
+                    case ImageParameterKeys.DISABLE_MEDIA_CACHE:
                         url(key);
                         break;
-                    case ImageParameters.WIDTH:
-                    case ImageParameters.HEIGHT:
+                    case ImageParameterKeys.WIDTH:
+                    case ImageParameterKeys.HEIGHT:
                         both(key);
                         break;
                     default:
@@ -798,25 +798,25 @@ namespace Glass.Mapper.Sc
             }
 
             //should there be some warning about these removals?
-            AttributeCheck(htmlParams, ImageParameters.CLASS, image.Class);
-            AttributeCheck(htmlParams, ImageParameters.ALT, image.Alt);
-            AttributeCheck(htmlParams, ImageParameters.BORDER, image.Border);
+            AttributeCheck(htmlParams, ImageParameterKeys.CLASS, image.Class);
+            AttributeCheck(htmlParams, ImageParameterKeys.ALT, image.Alt);
+            AttributeCheck(htmlParams, ImageParameterKeys.BORDER, image.Border);
             if(image.HSpace >0)
-                AttributeCheck(htmlParams, ImageParameters.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
+                AttributeCheck(htmlParams, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
             if(image.VSpace >0)
-                AttributeCheck(htmlParams, ImageParameters.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
+                AttributeCheck(htmlParams, ImageParameterKeys.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
 
-            if (htmlParams.Keys.Any(x => x == ImageParameters.HEIGHT) && htmlParams["height"] == null)
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams["height"] == null)
             {
-                htmlParams["height"] = htmlParams[ImageParameters.HEIGHT];
+                htmlParams["height"] = htmlParams[ImageParameterKeys.HEIGHT];
             }
-            htmlParams.Remove(ImageParameters.HEIGHT);
+            htmlParams.Remove(ImageParameterKeys.HEIGHT);
 
-            if (htmlParams.Keys.Any(x => x == ImageParameters.WIDTH) && htmlParams["width"] == null)
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.WIDTH) && htmlParams["width"] == null)
             {
-                htmlParams["width"] = htmlParams[ImageParameters.WIDTH];
+                htmlParams["width"] = htmlParams[ImageParameterKeys.WIDTH];
             }
-            htmlParams.Remove(ImageParameters.WIDTH);
+            htmlParams.Remove(ImageParameterKeys.WIDTH);
 
             return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
         }
