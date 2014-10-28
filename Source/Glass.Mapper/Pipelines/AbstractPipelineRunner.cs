@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines
@@ -36,7 +37,7 @@ namespace Glass.Mapper.Pipelines
         /// Gets the tasks.
         /// </summary>
         /// <value>The tasks.</value>
-        public IEnumerable<K> Tasks { get; private set; }
+        public K[] Tasks { get; private set; }
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -50,7 +51,7 @@ namespace Glass.Mapper.Pipelines
         /// <param name="tasks">The tasks.</param>
         public AbstractPipelineRunner(IEnumerable<K> tasks)
         {
-            Tasks = tasks;
+            Tasks = tasks.Reverse().ToArray();
             Profiler = new NullProfiler();
         }
 
@@ -63,15 +64,16 @@ namespace Glass.Mapper.Pipelines
         {
             if (Tasks != null)
             {
-                foreach (var task in Tasks)
+                for (int i = Tasks.Length-1; i >= 0; i--)
                 {
+                    var task = Tasks[i];
 #if DEBUG
                     Profiler.Start(task.GetType().FullName);
 #endif
                     task.Execute(args);
 #if DEBUG
                     Profiler.End(task.GetType().FullName);
-#endif 
+#endif
                     if (args.IsAborted)
                         break;
                 }
