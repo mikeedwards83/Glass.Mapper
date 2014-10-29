@@ -125,6 +125,7 @@
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldScMultilistMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
+    <Compile Include="DataMappers\SitecoreQueryParameters\SitecoreFieldScFieldBaseMapper.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />
