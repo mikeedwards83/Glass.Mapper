@@ -65,6 +65,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public string TemplateName { get; set; }
 
         /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID or inherits a template with the templateId
+        /// </summary>
+        public SitecoreEnforceTemplate EnforceTemplate { get; set; }
+
+        /// <summary>
         /// Configures the specified type.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -88,6 +94,17 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                 scConfig.TemplateId = new ID(this.TemplateId);
             else
                 scConfig.TemplateId = ID.Null;
+
+
+            if (TemplateId.IsNullOrEmpty() && this.EnforceTemplate != SitecoreEnforceTemplate.No)
+            {
+                throw new ConfigurationException(
+                    "The type {0} has EnforceTemplate set to true but no TemplateId".Formatted(type.FullName));
+            }
+            scConfig.EnforceTemplate = this.EnforceTemplate;
+
+            
+
 
             scConfig.CodeFirst = this.CodeFirst;
             scConfig.TemplateName = this.TemplateName;

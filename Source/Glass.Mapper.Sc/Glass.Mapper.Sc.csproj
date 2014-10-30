@@ -129,6 +129,7 @@
     <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
+    <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
     <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
     <Compile Include="Configuration\Fluent\ISitecoreType.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
+    <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />
@@ -219,13 +221,13 @@
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
-    <Compile Include="RenderField\AbstractParameters.cs" />
-    <Compile Include="RenderField\DateParameters.cs" />
-    <Compile Include="RenderField\ImageParameters.cs" />
-    <Compile Include="RenderField\LinkParameters.cs" />
+    <Compile Include="RenderField\DateParameterKeys.cs" />
+    <Compile Include="RenderField\ImageParameterKeys.cs" />
+    <Compile Include="RenderField\LinkParameterKeys.cs" />
     <Compile Include="RenderingResult.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
