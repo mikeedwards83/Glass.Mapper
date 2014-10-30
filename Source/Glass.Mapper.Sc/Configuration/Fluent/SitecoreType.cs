@@ -76,6 +76,26 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID.
+        /// </summary>
+        public SitecoreType<T> EnforceTemplate()
+        {
+            _configuration.EnforceTemplate = SitecoreEnforceTemplate.Template;
+            return this;
+        }
+
+        /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID or inherits a template with the templateId
+        /// </summary>
+        public SitecoreType<T> EnforceTemplateAndBase()
+        {
+            _configuration.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+            return this;
+        }
+
+        /// <summary>
         /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
         /// </summary>
         /// <param name="id">The id.</param>

@@ -418,13 +418,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>()
-                );
-
-            container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>()
-                );
-
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<EnforcedTemplateCheck>().LifestyleCustom<NoTrackLifestyleManager>()
+            );
+            
             if (Config.UseWindsorContructor)
             {
                 container.Register(

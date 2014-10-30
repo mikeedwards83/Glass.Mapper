@@ -93,6 +93,7 @@
     <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
+    <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
     <Compile Include="Configuration\Fluent\SitecoreFluentConfigurationLoader.cs" />
     <Compile Include="Configuration\Fluent\ISitecoreType.cs" />
@@ -125,7 +126,6 @@
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
-    <Compile Include="DataMappers\SitecoreFieldScMultilistMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
@@ -160,7 +160,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\SitecoreFieldScFieldBaseMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />
@@ -184,6 +184,7 @@
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\AbstractParameters.cs" />

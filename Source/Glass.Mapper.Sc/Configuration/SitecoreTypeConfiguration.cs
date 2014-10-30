@@ -78,6 +78,12 @@ namespace Glass.Mapper.Sc.Configuration
 
 
         /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID or inherits a template with the templateId
+        /// </summary>
+        public SitecoreEnforceTemplate EnforceTemplate { get; set; }
+
+        /// <summary>
         /// Adds the property.
         /// </summary>
         /// <param name="property">The property.</param>
