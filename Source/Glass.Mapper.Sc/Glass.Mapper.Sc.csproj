@@ -14,7 +14,6 @@
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-  
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -62,13 +61,13 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-<Reference Include="Sitecore.Kernel">
+    <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin6\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -223,7 +222,6 @@
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
-    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\DateParameterKeys.cs" />
     <Compile Include="RenderField\ImageParameterKeys.cs" />
@@ -237,9 +235,6 @@
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
-    <Compile Include="Web\Mvc\GlassController.cs" />
-    <Compile Include="Web\Mvc\GlassView.cs" />
-    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
