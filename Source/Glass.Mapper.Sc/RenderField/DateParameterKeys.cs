@@ -21,22 +21,12 @@ namespace Glass.Mapper.Sc.RenderField
     /// <summary>
     /// Used for specifying rendering parameters for a Date or Datetime field when outputting through a field renderer.
     /// </summary>
-    public class DateParameters : AbstractParameters
+    public class DateParameterKeys 
     {
         /// <summary>
         /// The FORMAT
         /// </summary>
         public const string FORMAT = "format";
-
-        /// <summary>
-        /// Gets or sets the format.
-        /// </summary>
-        /// <value>The format.</value>
-        public string Format
-        {
-            get { return Parameters[FORMAT]; }
-            set { Parameters[FORMAT] = value; }
-        }
     }
 }
 
