@@ -18,6 +18,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace Glass.Mapper
 {
@@ -59,7 +61,7 @@ namespace Glass.Mapper
 
         public virtual string DataSummary()
         {
-            return string.Empty;
+            return string.Join(",", Parameters.Select(x => string.Format("{0}={1}", x.Key, x.Value)));
         }
     }
 }
