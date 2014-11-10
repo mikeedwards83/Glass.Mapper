@@ -182,6 +182,19 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             Config.AutoMap = true;
             return this;
         }
+
+        /// <summary>
+        /// Delegates the mapping responsibility to the calling code.
+        /// </summary>
+        /// <typeparam name="TK">The property type</typeparam>
+        /// <param name="fieldExpression">The expression</param>
+        /// <returns>The sitecore type</returns>
+        public UmbracoDelegate<T> Delegate(Expression<Func<T, object>> fieldExpression)
+        {
+            UmbracoDelegate<T> umbracoDelegate = new UmbracoDelegate<T>(fieldExpression);
+            Config.AddProperty(umbracoDelegate.Configuration);
+            return umbracoDelegate;
+        }
         
         #region IUmbracoClass Members
 

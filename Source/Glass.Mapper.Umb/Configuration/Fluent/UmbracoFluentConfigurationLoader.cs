@@ -31,6 +31,16 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         readonly List<IUmbracoClass> _types = new List<IUmbracoClass>();
 
         /// <summary>
+        /// Adds this instance
+        /// </summary>
+        /// <param name="config"></param>
+        /// <typeparam name="T"></typeparam>
+        public void Add<T>(UmbracoType<T> config)
+        {
+            _types.Add(config);
+        }
+
+        /// <summary>
         /// Adds this instance.
         /// </summary>
         /// <typeparam name="T"></typeparam>

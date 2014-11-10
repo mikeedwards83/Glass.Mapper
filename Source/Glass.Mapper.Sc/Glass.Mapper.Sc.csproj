@@ -162,6 +162,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
     <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreDelegate.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />

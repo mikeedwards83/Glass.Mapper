@@ -240,6 +240,7 @@
     <Compile Include="Configuration\Attributes\UmbracoIdAttribute.cs" />
     <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
     <Compile Include="Configuration\Fluent\IUmbracoClass.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoDelegate.cs" />
     <Compile Include="Configuration\Fluent\UmbracoChildren.cs" />
     <Compile Include="Configuration\Fluent\UmbracoProperty.cs" />
     <Compile Include="Configuration\Fluent\UmbracoFluentConfigurationLoader.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="DataMappers\UmbracoChildrenMapper.cs" />
     <Compile Include="DataMappers\UmbracoParentMapper.cs" />
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
+    <Compile Include="Delegate.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IUmbracoContext.cs" />
     <Compile Include="PropertyTypes\File.cs" />

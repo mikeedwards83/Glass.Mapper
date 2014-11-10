@@ -370,6 +370,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Delegates the mapping responsibility to the calling code.
+        /// </summary>
+        /// <typeparam name="TK">The property type</typeparam>
+        /// <param name="fieldExpression">The expression</param>
+        /// <returns>The sitecore type</returns>
+        public SitecoreDelegate<T> Delegate(Expression<Func<T, object>> fieldExpression)
+        {
+            SitecoreDelegate<T> sitecoreDelegate = new SitecoreDelegate<T>(fieldExpression);
+            Config.AddProperty(sitecoreDelegate.Configuration);
+            return sitecoreDelegate;
+        }
+
 
     #region ISitecoreClass Members
 

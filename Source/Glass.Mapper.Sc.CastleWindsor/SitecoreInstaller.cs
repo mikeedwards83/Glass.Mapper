@@ -232,6 +232,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<DelegateMapper<SitecoreDataMappingContext>>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
                          {
