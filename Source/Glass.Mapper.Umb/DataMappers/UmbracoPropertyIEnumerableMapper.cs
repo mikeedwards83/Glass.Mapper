@@ -50,11 +50,16 @@ namespace Glass.Mapper.Umb.DataMappers
             //Get generic type
             Type pType = Utilities.GetGenericArgument(type);
 
+            var list = Glass.Mapper.Utilities.CreateGenericType(typeof(List<>), new[] { pType }) as IList;
+
+            if (propertyValue == null)
+                return list;
+
             //The enumerator only works with piped lists
             IEnumerable<string> parts = propertyValue.ToString().Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             IEnumerable<object> items = parts.Select(x => Mapper.GetPropertyValue(x, Mapper.Configuration as UmbracoPropertyConfiguration, context)).ToArray();
-            var list = Glass.Mapper.Utilities.CreateGenericType(typeof(List<>), new [] { pType }) as IList;
+
 
             foreach (var item in items)
             {
