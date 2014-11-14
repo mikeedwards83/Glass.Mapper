@@ -7,7 +7,6 @@ using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Dynamic
 {
-    [__DynamicallyInvokable]
     public interface IDynamicItem: IDynamicMetaObjectProvider
     {
         string ContentPath { get; }
