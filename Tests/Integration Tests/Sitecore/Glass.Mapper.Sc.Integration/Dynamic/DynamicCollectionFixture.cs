@@ -23,6 +23,7 @@ using Glass.Mapper.Sc.Dynamic;
 using Sitecore.Data;
 using NUnit.Framework;
 using Sitecore.Data.Items;
+using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.Integration.Dynamic
 {
@@ -38,6 +39,10 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
 
             global::Sitecore.Context.Site = global::Sitecore.Sites.SiteContext.GetSite("website");
         }
+
+
+     
+        
 
         #region METHOD - SELECT
 
