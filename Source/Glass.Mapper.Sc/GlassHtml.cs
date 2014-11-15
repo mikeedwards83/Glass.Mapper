@@ -155,8 +155,8 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext.GetTypeConfiguration < SitecoreTypeConfiguration>(typeof(T));
-            return GetRenderingParameters<T>(parameters, config.TemplateId);
+            var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
+            return GetRenderingParameters<T>(nameValueCollection);
         }
 
 
