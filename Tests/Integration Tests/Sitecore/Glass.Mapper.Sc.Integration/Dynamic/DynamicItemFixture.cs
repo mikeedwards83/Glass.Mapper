@@ -70,32 +70,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             Assert.AreEqual(item.Paths.Path, path);
         }
 
-        [Test]
-        public void InterfaceTest_WithCustomInterface()
-        {
-            //Assign
-            Item item = _db.GetItem(TargetPath);
-
-            using (new ItemEditing(item, true))
-            {
-                item["DateTime"] = "20120204T150015";
-                item["SingleLineText"] = "some awesome dynamic content";
-            }
-
-            IDynamicTitle d = new DynamicItem(item);
-            IDynamicItem i = d as IDynamicItem;
-
-
-
-
-            //Act
-            string result = d.DateTime;
-            string path = i.Path;
-
-            //Assert
-            Assert.AreEqual("04/02/2012 15:00:15", result);
-            Assert.AreEqual(item.Paths.Path, path);
-        }
+      
 
         #endregion
 
