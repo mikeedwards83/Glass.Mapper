@@ -33,7 +33,7 @@
 
       <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Start\**" target="content\App_Start" />
-    <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Config\**" target="content\App_Cnfig" />
+    <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Config\**" target="content\App_Config" />
 	  
 
   </files>

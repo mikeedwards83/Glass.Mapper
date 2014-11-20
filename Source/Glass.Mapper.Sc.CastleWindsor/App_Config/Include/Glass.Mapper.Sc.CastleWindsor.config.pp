@@ -19,8 +19,8 @@ limitations under the License.
 	<sitecore>
 		<pipelines>
 			<initialize>
-				<processor type="$rootnamespace$.App_Start.GlassMapperSc, $assemblyname$">
-			<initialize>
-		<pipelines>
+				<processor type="$rootnamespace$.App_Start.GlassMapperSc, $assemblyname$" />
+			</initialize>
+		</pipelines>
 	</sitecore>
 </configuration>
