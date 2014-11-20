@@ -22,6 +22,7 @@ using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
+using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.Fields;
 using NUnit.Framework;
 using Sitecore.Data;
@@ -140,6 +141,73 @@ namespace Glass.Mapper.Sc.Integration
             Assert.IsNotNull(instance.ImageSpace);
 
         }
+
+        [Test]
+        public void LazyLoadTest_LazyIsFalseAndServiceIsDisposed_NoException()
+        {
+            //Assign
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var fluentConfig = new SitecoreFluentConfigurationLoader();
+
+            var typeConfig = fluentConfig.Add<LazyLoadParent>();
+            typeConfig.AutoMap();
+            typeConfig.Children(x => x.Children).IsNotLazy();
+
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(fluentConfig);
+
+            var service = new SitecoreService(database, context);
+
+            //Act
+            var result = service.GetItem <LazyLoadParent>("/sitecore/content/Tests/DataMappers/SitecoreChildrenMapper/Parent");
+            service.Dispose();
+
+            //Assert
+
+            Assert.AreEqual(3, result.Children.Count());
+
+            foreach (var child in result.Children)
+            {
+                Assert.AreNotEqual(Guid.Empty, child.Id);
+            }
+
+        }
+
+        [Test]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void LazyLoadTest_LazyIsTrueAndServiceIsDisposed_ThrowsException()
+        {
+            //Assign
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            var fluentConfig = new SitecoreFluentConfigurationLoader();
+
+            var typeConfig = fluentConfig.Add<LazyLoadParent>();
+            typeConfig.AutoMap();
+            typeConfig.Children(x => x.Children);
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(fluentConfig);
+
+            var service = new SitecoreService(database, context);
+
+            //Act
+            var result = service.GetItem<LazyLoadParent>("/sitecore/content/Tests/DataMappers/SitecoreChildrenMapper/Parent");
+            service.Dispose();
+
+            //Assert
+
+            Assert.AreEqual(3, result.Children.Count());
+
+            foreach (var child in result.Children)
+            {
+                Assert.AreNotEqual(Guid.Empty, child.Id);
+            }
+
+        }
+
 
         [Test]
         public void OrderOfIgnoreIssue1_ConfiguredShouldBeSet_TitleShouldBeIgnored()
@@ -270,6 +338,18 @@ namespace Glass.Mapper.Sc.Integration
 
 
 #region Stubs
+
+
+        public class LazyLoadParent
+        {
+            public virtual IEnumerable<LazyLoadChild> Children { get; set; }
+        }
+
+        public class LazyLoadChild
+        {
+            public virtual Guid Id { get; set; }
+        }
+
 
 
         public class ItemWithItemProperties
