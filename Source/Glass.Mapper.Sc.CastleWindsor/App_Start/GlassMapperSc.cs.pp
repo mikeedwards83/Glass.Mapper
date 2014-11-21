@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Sitecore.Pipelines;
 
 // WebActivator has been removed. If you wish to continue using WebActivator uncomment the line below
 // and delete the Glass.Mapper.Sc.CastleWindsor.config file from the Sitecore Config Include folder.
@@ -15,8 +16,12 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace $rootnamespace$.App_Start
 {
-	public static class  GlassMapperSc
+	public class  GlassMapperSc
 	{
+		public void Process(PipelineArgs args){
+			GlassMapperSc.Start();
+		}
+
 		public static void Start()
 		{
 			//create the resolver
