@@ -167,7 +167,6 @@
     <Compile Include="Dynamic\DynamicField.cs" />
     <Compile Include="Dynamic\DynamicItem.cs" />
     <Compile Include="Dynamic\IDynamicItem.cs" />
-    <Compile Include="Dynamic\__DynamicallyInvokable.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\HtmlEncodedString.cs" />

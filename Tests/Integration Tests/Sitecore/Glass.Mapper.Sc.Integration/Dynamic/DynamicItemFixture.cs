@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
             Assert.AreEqual(item.Paths.Path, path);
         }
 
-       
+      
 
         #endregion
 
