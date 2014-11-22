@@ -923,6 +923,27 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void CastToType_NoConstructorArgsTyped_ReturnsItem()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
+
+            //Act
+            var result1 = service.Cast<StubClass>(item, false, false);
+            var result2 = service.CreateType<StubClass>(item, false, false);
+
+            //Assert
+            Assert.IsNotNull(result1);
+            Assert.AreEqual(result2.Id, result1.Id);
+            Assert.AreEqual(result2.Name, result1.Name);
+        }
+
+        [Test]
         public void CreateType_OneConstructorArgs_ReturnsItem()
         {
             //Assign
