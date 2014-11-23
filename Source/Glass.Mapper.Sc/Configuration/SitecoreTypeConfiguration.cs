@@ -65,6 +65,11 @@ namespace Glass.Mapper.Sc.Configuration
         public SitecoreItemConfiguration ItemConfig { get; set; }
 
         /// <summary>
+        /// Gets or sets the ItemUri config
+        /// </summary>
+        public SitecoreInfoConfiguration ItemUriConfig { get; set; }
+
+        /// <summary>
         /// Indicates that the class is used in a code first scenario.
         /// </summary>
         /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
@@ -94,10 +99,21 @@ namespace Glass.Mapper.Sc.Configuration
 
             var infoProperty = property as SitecoreInfoConfiguration;
 
-            if (infoProperty != null && infoProperty.Type == SitecoreInfoType.Language)
-                LanguageConfig = infoProperty;
-            else if (infoProperty != null && infoProperty.Type == SitecoreInfoType.Version)
-                VersionConfig = infoProperty;
+            if (infoProperty != null)
+            {
+                switch (infoProperty.Type)
+                {
+                    case SitecoreInfoType.Language:
+                        LanguageConfig = infoProperty;
+                        break;
+                    case SitecoreInfoType.Version:
+                        VersionConfig = infoProperty;
+                        break;
+                    case SitecoreInfoType.ItemUri:
+                        ItemUriConfig = infoProperty;
+                        break;
+                }
+            }
 
             if (property is SitecoreItemConfiguration)
                 ItemConfig = property as SitecoreItemConfiguration;
@@ -107,25 +123,33 @@ namespace Glass.Mapper.Sc.Configuration
 
         public ID GetId(object target)
         {
-            ID id;
+            ID id = ID.Null;
 
-            if (IdConfig == null)
+            if (IdConfig != null)
             {
-                id = ID.Null;
+                if (IdConfig.PropertyInfo.PropertyType == typeof (Guid))
+                {
+                    var guidId = (Guid) IdConfig.PropertyInfo.GetValue(target, null);
+                    id = new ID(guidId);
+                }
+                else if (IdConfig.PropertyInfo.PropertyType == typeof (ID))
+                {
+                    id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
+                }
+                else
+                {
+                    throw new NotSupportedException("Cannot get ID for item");
+                }
             }
-            else if (IdConfig.PropertyInfo.PropertyType == typeof(Guid))
+            else if (ItemUriConfig != null)
             {
-                var guidId = (Guid)IdConfig.PropertyInfo.GetValue(target, null);
-                id = new ID(guidId);
+                var itemUri = (ItemUri)ItemUriConfig.PropertyInfo.GetValue(target, null);
+                if (itemUri != null)
+                {
+                    id = itemUri.ItemID;
+                }
             }
-            else if (IdConfig.PropertyInfo.PropertyType == typeof(ID))
-            {
-                id = IdConfig.PropertyInfo.GetValue(target, null) as ID;
-            }
-            else
-            {
-                throw new NotSupportedException("Cannot get ID for item");
-            }
+            
             return id;
         }
 
@@ -157,26 +181,13 @@ namespace Glass.Mapper.Sc.Configuration
                     return item;
             }
 
-            if (IdConfig == null)
+            if (IdConfig == null && ItemUriConfig == null)
                 throw new NotSupportedException(
                     "You cannot save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID. Type: {0}".Formatted(target.GetType().FullName));
 
             id = GetId(target);
-
             language = GetLanguage(target);
-
-            if (VersionConfig != null)
-            {
-                var valueInt = VersionConfig.PropertyInfo.GetValue(target, null);
-                if (valueInt is int)
-                {
-                    versionNumber = (int) valueInt;
-                }
-                else if(valueInt is string)
-                {
-                    int.TryParse(valueInt as string, out versionNumber);
-                }
-            }
+            versionNumber = GetVersion(target);
 
             if (language != null && versionNumber > 0)
             {
@@ -190,6 +201,35 @@ namespace Glass.Mapper.Sc.Configuration
             {
                 return database.GetItem(id);
             }
+        }
+
+
+        public int GetVersion(object target)
+        {
+            int versionNumber = -1;
+            
+            if (VersionConfig != null)
+            {
+                var valueInt = VersionConfig.PropertyInfo.GetValue(target, null);
+                if (valueInt is int)
+                {
+                    versionNumber = (int)valueInt;
+                }
+                else if (valueInt is string)
+                {
+                    int.TryParse(valueInt as string, out versionNumber);
+                }
+            }
+            else if (ItemUriConfig != null)
+            {
+                var itemUri = (ItemUri)ItemUriConfig.PropertyInfo.GetValue(target, null);
+                if (itemUri != null)
+                {
+                    versionNumber = itemUri.Version.Number;
+                }
+            }
+
+            return versionNumber;
         }
 
         /// <summary>
@@ -217,6 +257,15 @@ namespace Glass.Mapper.Sc.Configuration
                     language = LanguageManager.GetLanguage(langValue as string);
                 }
             }
+            else if (ItemUriConfig != null)
+            {
+                var itemUri = (ItemUri)ItemUriConfig.PropertyInfo.GetValue(target, null);
+                if (itemUri != null)
+                {
+                    language = itemUri.Language;
+                }
+            }
+
             return language;
         }
 
