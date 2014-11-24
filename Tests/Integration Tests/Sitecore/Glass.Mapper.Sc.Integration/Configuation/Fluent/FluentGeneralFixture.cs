@@ -50,6 +50,7 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
                                          x.Id(y => y.Id);
                                          x.Field(y => y.Field);
                                          x.Info(y => y.Name).InfoType(SitecoreInfoType.Name);
+                                         x.Delegate(y => y.Delegated).GetValue(GetDelegatedValue);
                                      });
 
             context.Load(loader);
@@ -70,9 +71,14 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
             Assert.AreEqual(fieldValue, result.Field);
             Assert.AreEqual(id, result.Id);
             Assert.AreEqual(name, result.Name);
+            Assert.AreEqual("happy", result.Delegated);
 
         }
 
+        private string GetDelegatedValue(SitecoreDataMappingContext arg)
+        {
+            return "happy";
+        }
 
         #region Stub
 
@@ -81,6 +87,7 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
             public virtual Guid Id { get; set; }
             public virtual string Field { get; set; }
             public virtual string Name { get; set; }
+            public virtual string Delegated { get; set; }
 
         }
 

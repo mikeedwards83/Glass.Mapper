@@ -182,6 +182,19 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
             Config.AutoMap = true;
             return this;
         }
+
+        /// <summary>
+        /// Delegate the mapping of the property to client code.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
+        public UmbracoDelegate<T> Delegate(Expression<Func<T, object>> ex)
+        {
+            var builder = new UmbracoDelegate<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
+        }
         
         #region IUmbracoClass Members
 
@@ -208,7 +221,8 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
     public interface IUmbracoClass<T> : 
         IUmbracoClassFields<T>,
         IUmbracoClassInfos<T>,
-        IUmbracoClassId<T>
+        IUmbracoClassId<T>,
+        IUmbracoTypeDelegate<T>
     {
     }
 
@@ -252,6 +266,20 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         /// <returns></returns>
         UmbracoInfo<T> Info(Expression<Func<T, object>> ex);
+    }
+
+    /// <summary>
+    /// IUmbracoTypeDelegate
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IUmbracoTypeDelegate<T>
+    {
+        /// <summary>
+        /// Delegates the mapping of the property to client code.
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        UmbracoDelegate<T> Delegate(Expression<Func<T, object>> ex);
     }
 
     #endregion
