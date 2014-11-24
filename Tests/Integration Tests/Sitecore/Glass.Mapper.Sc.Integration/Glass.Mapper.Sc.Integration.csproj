@@ -144,6 +144,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameterFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameterFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="Dynamic\DynamicCollectionFixture.cs" />
     <Compile Include="Dynamic\DynamicExtensions.cs" />
     <Compile Include="Dynamic\DynamicItemFixture.cs" />
