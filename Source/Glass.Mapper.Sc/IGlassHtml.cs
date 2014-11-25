@@ -131,6 +131,6 @@ namespace Glass.Mapper.Sc
         /// <param name="renderParametersTemplateId">The template used by the rendering parameters</param>
         /// <returns></returns>
         T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
-       
+
     }
 }

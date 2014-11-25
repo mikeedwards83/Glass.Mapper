@@ -304,7 +304,8 @@ namespace Glass.Mapper.Sc
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
             {
-
+                if (!string.IsNullOrEmpty(contents))
+                    attrs["haschildren"] = "true";
                 if (contents.IsNotNullOrEmpty())
                 {
                     attrs.Add("haschildren", "true");
@@ -313,14 +314,14 @@ namespace Glass.Mapper.Sc
                 result = MakeEditable(
                     field,
                     null, 
-                    model,  
-                    attrs,
+                    model,
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
 
                 if (contents.IsNotNullOrEmpty())
                 {
                     sb.Append(contents);
-                }
+            }
             }
             else
             {

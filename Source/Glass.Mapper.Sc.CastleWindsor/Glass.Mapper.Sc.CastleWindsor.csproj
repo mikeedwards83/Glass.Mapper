@@ -10,7 +10,7 @@
     <RootNamespace>Glass.Mapper.Sc.CastleWindsor</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.CastleWindsor</AssemblyName>
     <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
+    <!--<TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>-->
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -67,7 +67,7 @@
     <Reference Include="Castle.Windsor, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
+    </Reference>   
     <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Depends\Sitecore\bin6\Sitecore.Kernel.dll</HintPath>
@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -120,7 +121,6 @@
       <Name>Glass.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
