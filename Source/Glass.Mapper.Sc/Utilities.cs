@@ -23,6 +23,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Common;
 using Sitecore.Configuration;
 using Sitecore.Collections;
 using Sitecore.Data;
@@ -224,27 +225,43 @@ namespace Glass.Mapper.Sc
         /// <param name="foundItem">The found item.</param>
         /// <param name="language">The language.</param>
         /// <returns>Item.</returns>
-        public static Item GetLanguageItem(Item foundItem, Language language)
+        public static Item GetLanguageItem(Item foundItem, Language language, Config config)
         {
             if (foundItem == null) return null;
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
-            if (item.Versions.Count > 0)
-                return item;
-            else
+
+            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(config)))
+            {
                 return null;
+            }
+
+            return item;
         }
+
+        public static bool DoVersionCheck(Config config)
+        {
+            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+                return false;
+
+
+            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
+
+        }
+
+
+
         /// <summary>
         /// Gets the language items.
         /// </summary>
         /// <param name="foundItems">The found items.</param>
         /// <param name="language">The language.</param>
         /// <returns>IEnumerable{Item}.</returns>
-        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => GetLanguageItem(x, language)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
         }
     }
 }

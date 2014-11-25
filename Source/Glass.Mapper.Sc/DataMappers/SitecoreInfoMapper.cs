@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Links;
@@ -108,8 +109,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
             switch (scConfig.Type)
             {
-               
-                  case SitecoreInfoType.ContentPath:
+
+                case SitecoreInfoType.ContentPath:
                     return item.Paths.ContentPath;
                 case SitecoreInfoType.DisplayName:
                     return item[Global.Fields.DisplayName];
@@ -125,7 +126,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
-                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(Sitecore.Data.ID))
+                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (Sitecore.Data.ID))
                         return item.TemplateID;
                     return item.TemplateID.Guid;
                 case SitecoreInfoType.TemplateName:
@@ -144,13 +145,15 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         return item.Language.Name;
                     }
-                    return item.Language;  
+                    return item.Language;
                 case SitecoreInfoType.BaseTemplateIds:
                     Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
                     if (scConfig.PropertyInfo != null &&
                         scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<Sitecore.Data.ID>))
-                        return template.GetBaseTemplates().Select(x=>x.ID);
+                        return template.GetBaseTemplates().Select(x => x.ID);
                     return template.GetBaseTemplates().Select(x => x.ID.Guid);
+                case SitecoreInfoType.ItemUri:
+                    return new ItemUri(item.ID, item.Language, item.Version, item.Database);
                 default:
                     throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
             }

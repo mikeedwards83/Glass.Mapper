@@ -147,6 +147,39 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             //Assert
             Assert.AreEqual(expected, value);
         }
+
+        [Test]
+        public void MapToProperty_SitecoreInfoTypeItemuri_ReturnsFullItemUri()
+        {
+
+            //Assign
+            var type = SitecoreInfoType.ItemUri;
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            config.PropertyInfo = new FakePropertyInfo(typeof(string), "StringField", typeof(Stub));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+
+            var expected = item.Language.Name;
+
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext) as ItemUri;
+
+            //Assert
+            Assert.AreEqual(item.ID, value.ItemID);
+            Assert.AreEqual(item.Language, value.Language);
+            Assert.AreEqual(item.Database.Name, value.DatabaseName);
+            Assert.AreEqual(item.Version, value.Version);
+        }
+
+
         [Test]
         public void MapToProperty_SitecoreInfoTypeLanguage_ReturnsEnLanguageType()
         {

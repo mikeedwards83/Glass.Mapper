@@ -204,6 +204,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
                          .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
+                         .ImplementedBy<SitecoreFieldDictionaryMapper>()
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
                          .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()

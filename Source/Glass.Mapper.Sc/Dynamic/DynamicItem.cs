@@ -18,19 +18,22 @@
 
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Sitecore.Data.Items;
 using System.Dynamic;
+using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Dynamic
 {
     /// <summary>
     /// Class DynamicItem
     /// </summary>
-    public class DynamicItem : DynamicObject
+    public class DynamicItem : DynamicObject, IDynamicItem
     {
         Item _item;
 
@@ -107,10 +110,10 @@ namespace Glass.Mapper.Sc.Dynamic
             switch (name)
             {
                 case "Parent":
-                    result = CreateNew(_item.Parent);
+                    result = Parent;
                     break;
                 case "Children":
-                    result = new DynamicCollection<DynamicItem>(_item.Children.Select(x => CreateNew(x)).ToArray());
+                    result = Children;
                     break;
             }
 
@@ -127,9 +130,90 @@ namespace Glass.Mapper.Sc.Dynamic
 
         }
 
-       
+        private T GetInfo<T>(SitecoreInfoType infoType)
+        {
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = infoType;
+          //  config.PropertyInfo = new FakePropertyInfo(typeof(T),typeof(DynamicItem));
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+            return (T) mapper.MapToProperty(new SitecoreDataMappingContext(null, _item, null));
+        }
 
-      
+
+
+        public IDynamicItem Parent
+        {
+            get { return CreateNew(_item.Parent); }
+        }
+
+        public IEnumerable<IDynamicItem> Children
+        {
+            get
+            {
+               return new DynamicCollection<DynamicItem>(_item.Children.Select(x => CreateNew(x)).ToArray());
+            }
+        }
+
+        public string ContentPath
+        {
+            get { return GetInfo<string>(SitecoreInfoType.ContentPath); }
+        }
+        public string DisplayName
+        {
+            get { return GetInfo<string>(SitecoreInfoType.DisplayName); }
+        }
+        public string FullPath
+        {
+            get { return GetInfo<string>(SitecoreInfoType.FullPath); }
+        }
+        public string Key
+        {
+            get { return GetInfo<string>(SitecoreInfoType.Key); }
+        }
+        public string MediaUrl
+        {
+            get { return GetInfo<string>(SitecoreInfoType.MediaUrl); }
+        }
+        public string Path
+        {
+            get { return GetInfo<string>(SitecoreInfoType.Path); }
+        }
+        public Guid TemplateId
+        {
+            get { return GetInfo<Guid>(SitecoreInfoType.TemplateId); }
+        }
+        public string TemplateName
+        {
+            get { return GetInfo<string>(SitecoreInfoType.TemplateName); }
+        }
+        public string Url
+        {
+            get { return GetInfo<string>(SitecoreInfoType.Url); }
+        }
+
+        public int Version
+        {
+            get { return GetInfo<int>(SitecoreInfoType.Version); }
+        }
+        public string Name
+        {
+            get { return GetInfo<string>(SitecoreInfoType.Name); }
+        }
+
+        public Language Language
+        {
+            get { return GetInfo<Language>(SitecoreInfoType.Language); }
+        }
+
+        public IEnumerable<Guid> BaseTemplateIds
+        {
+            get { return GetInfo<IEnumerable<Guid>>(SitecoreInfoType.BaseTemplateIds); }
+        }
+
+
+
+
     }
 
 }

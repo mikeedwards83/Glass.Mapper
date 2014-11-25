@@ -42,6 +42,8 @@ namespace Glass.Mapper.Sc
         /// <value>The glass context.</value>
         Context GlassContext { get; }
 
+        Config Config { get; set; }
+
         #region  AddVersion
 
         /// <summary>

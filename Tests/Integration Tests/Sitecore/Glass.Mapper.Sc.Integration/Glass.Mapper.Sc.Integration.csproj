@@ -114,6 +114,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
+    <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameterFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameterFixture.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameterFixture.cs" />
+    <Compile Include="DataMappers\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="Dynamic\DynamicCollectionFixture.cs" />
     <Compile Include="Dynamic\DynamicExtensions.cs" />
     <Compile Include="Dynamic\DynamicItemFixture.cs" />

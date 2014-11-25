@@ -27,11 +27,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 	/// </summary>
 	public class InterfacePropertyInterceptor : IInterceptor
 	{
-		private readonly ObjectConstructionArgs _args;
+		private ObjectConstructionArgs _args;
 
 		private readonly Lazy<IDictionary<string, object>> _lazyValues;
 
 		protected IDictionary<string, object> Values { get { return _lazyValues.Value; } }
+
+	    private readonly string _fullName;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InterfacePropertyInterceptor"/> class.
@@ -40,6 +42,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 		public InterfacePropertyInterceptor(ObjectConstructionArgs args)
 		{
 			_args = args;
+		    _fullName = _args.Configuration.Type.FullName;
 			_lazyValues = new Lazy<IDictionary<string, object>>(LoadValues);
 		}
 
@@ -50,7 +53,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 		/// <exception cref="Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
 		public void Intercept(IInvocation invocation)
 		{
-			var config = _args.Configuration;
 
 			if (invocation.Method.IsSpecialName)
 			{
@@ -75,13 +77,16 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 					    }
 
 					}
-					else if (method == "set_")
-					{
-						Values[name] = invocation.Arguments[0];
-					}
-					else
-						throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(
-							method, name, config.Type.FullName));
+                    else if (method == "set_")
+                    {
+                        Values[name] = invocation.Arguments[0];
+                    }
+                    else
+                    {
+
+                        throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(
+                            method, name, _fullName));
+                    }
 				}
 			}
 		}
@@ -98,6 +103,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 				var result = property.Mapper.MapToProperty(mappingContext);
 				values[property.PropertyInfo.Name] = result;
 			}
+
+            //release the context
+		    _args = null;
 
 			return values;
 		}

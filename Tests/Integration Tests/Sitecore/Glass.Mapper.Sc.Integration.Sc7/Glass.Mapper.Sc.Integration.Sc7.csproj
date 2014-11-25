@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
      <Reference Include="Castle.Core">
-      <HintPath>..\..\..\..\packages\Castle.Core.3.2.1\lib\net40\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Castle.Core.3.2.1\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\..\..\..\packages\Castle.Windsor.3.2.1\lib\net40-client\Castle.Windsor.dll</HintPath>
