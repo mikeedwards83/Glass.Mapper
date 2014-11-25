@@ -33,8 +33,6 @@ namespace $rootnamespace$.App_Start
 			//create the resolver
 			var resolver = DependencyResolver.CreateStandardResolver();
 
-            //Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
-
 			resolver.Container.Install(new SitecoreInstaller(config));
 
 			//create a context
