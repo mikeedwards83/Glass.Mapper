@@ -1,4 +1,5 @@
-﻿using Sitecore.Common;
+﻿
+using Sitecore.Common;
 
 namespace Glass.Mapper.Sc
 {

@@ -12,6 +12,10 @@ namespace $rootnamespace$.App_Start
 		public static void CastleConfig(IWindsorContainer container){
 			var config = new Config();
 
+			container.Register(
+				//Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
+			);
+			
 			container.Install(new SitecoreInstaller(config));
 		}
 

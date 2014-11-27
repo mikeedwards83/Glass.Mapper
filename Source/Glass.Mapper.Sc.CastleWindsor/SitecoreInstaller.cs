@@ -436,9 +436,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleCustom<NoTrackLifestyleManager>()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
                 );
         }
     }
