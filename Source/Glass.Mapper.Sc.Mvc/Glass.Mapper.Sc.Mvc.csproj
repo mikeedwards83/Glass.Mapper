@@ -70,7 +70,7 @@
       <HintPath>..\..\Depends\System.Web.WebPages\v2\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Depends\Sitecore\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc">
       <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.Mvc.dll</HintPath>
