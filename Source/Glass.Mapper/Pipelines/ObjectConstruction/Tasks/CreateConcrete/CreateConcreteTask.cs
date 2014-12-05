@@ -90,19 +90,20 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
             Delegate conMethod = null;
+            object obj;
 
             if (constructorParameters == null || constructorParameters.Length == 0)
             {
-                conMethod = args.Configuration.DefaultConstructor;
+                //conMethod = args.Configuration.DefaultConstructor;
+                obj = Activator.CreateInstance(args.Configuration.Type);
             }
             else
             {
                 var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
                 var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
                 conMethod = args.Configuration.ConstructorMethods[constructorInfo];
+                obj = conMethod.DynamicInvoke(constructorParameters);
             }
-
-            var obj = conMethod.DynamicInvoke(constructorParameters);
 
             args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
 

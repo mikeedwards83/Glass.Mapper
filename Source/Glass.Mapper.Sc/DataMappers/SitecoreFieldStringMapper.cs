@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
+using Sitecore.Pipelines;
+using Sitecore.Pipelines.RenderField;
 using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.DataMappers
@@ -38,6 +41,11 @@ namespace Glass.Mapper.Sc.DataMappers
         {
         }
 
+        private const string _richTextKey = "rich text";
+
+
+        private static HashSet<Guid> _notRichTextSet = new HashSet<Guid>();
+         
         /// <summary>
         /// Gets the field.
         /// </summary>
@@ -53,16 +61,32 @@ namespace Glass.Mapper.Sc.DataMappers
             if (config.Setting == SitecoreFieldSettings.RichTextRaw)
                 return field.Value;
 
-            if (field.Type.StartsWith("Rich Text"))
+            if (_notRichTextSet.Contains(field.ID.Guid))
             {
-                FieldRenderer renderer = new FieldRenderer();
-                renderer.Item = field.Item;
-                renderer.FieldName = field.Name;
-                renderer.Parameters = string.Empty;
-                renderer.DisableWebEditing = true;
-                return renderer.Render();
+                return field.Value;
             }
-            else return field.Value;
+
+            if (field.TypeKey == _richTextKey)
+            {
+                RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
+                renderFieldArgs.Item = field.Item;
+                renderFieldArgs.FieldName = field.Name;
+                renderFieldArgs.DisableWebEdit = true;
+                CorePipeline.Run("renderField", renderFieldArgs);
+
+                return renderFieldArgs.Result.FirstPart+renderFieldArgs.Result.LastPart;
+
+                //FieldRenderer renderer = new FieldRenderer();
+                //renderer.Item = field.Item;
+                //renderer.FieldName = field.Name;
+                //renderer.Parameters = string.Empty;
+                //renderer.DisableWebEditing = true;
+                //return renderer.Render();
+            }
+
+            _notRichTextSet.Add(field.ID.Guid);
+
+            return field.Value;
         }
 
 

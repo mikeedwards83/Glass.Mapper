@@ -18,6 +18,8 @@
 
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
@@ -48,7 +50,35 @@ namespace Glass.Mapper.Sc
     {
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
+        private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
         public const string Parameters = "Parameters";
+
+
+        protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
+        {
+            var key = typeof(T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, string>)_compileCache[key];
+            }
+            var compiled = expression.Compile();
+            _compileCache.TryAdd(key, compiled);
+            return compiled;
+        }
+
+        protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
+        {
+            var key = typeof (T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, object>) _compileCache[key];
+            }
+            var compiled = expression.Compile();
+            _compileCache.TryAdd(key, compiled);
+            return compiled;
+        }
 
 
         /// <summary>
@@ -234,7 +264,7 @@ namespace Glass.Mapper.Sc
                 }
                 else
                 {
-                    return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters == null ? null : attrs);
+                    return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs);
                 }
             }
         }
@@ -341,7 +371,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        field.Compile().Invoke(model) as Fields.Link, attrs, contents, writer
+                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer
                     );
             }
 
@@ -582,27 +612,30 @@ namespace Glass.Mapper.Sc
                 else
                 {
                     if (standardOutput != null)
-                        firstPart = standardOutput.Compile().Invoke(model);
+                    {
+                        firstPart = GetCompiled<T>(standardOutput)(model).ToString();
+                    }
                     else
                     {
                         var type = field.Body.Type;
-                        object target = (field.Compile().Invoke(model) ?? string.Empty);
+                        object target = (GetCompiled<T>(field)(model) ?? string.Empty);
 
                         if (type == ImageType)
                         {
                             var image = target as Image;
-                            firstPart  = RenderImage(image, WebUtil.ParseUrlParameters(parametersString));
+                            firstPart = RenderImage(image, WebUtil.ParseUrlParameters(parametersString));
                         }
                         else if (type == LinkType)
                         {
                             var link = target as Link;
                             var sb = new StringBuilder();
                             var linkWriter = new StringWriter(sb);
-                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parametersString),null, linkWriter);
+                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parametersString), null,
+                                linkWriter);
                             result.Dispose();
                             linkWriter.Flush();
                             linkWriter.Close();
-                            
+
                             firstPart = sb.ToString();
 
                         }
