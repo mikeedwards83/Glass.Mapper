@@ -175,9 +175,9 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GetRenderingParameters(control.Parent);
         }
 
-        public virtual T GetRenderingParameters<T>() where T : class
+        public virtual K GetRenderingParameters<K>() where K : class
         {
-            return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
+            return GlassHtml.GetRenderingParameters<K>(RenderingParameters);
         }
     }
 }
