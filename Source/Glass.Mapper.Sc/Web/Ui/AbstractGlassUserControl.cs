@@ -50,7 +50,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
         public AbstractGlassUserControl()
-            : this(new SitecoreContext())
+            : this(Sc.SitecoreContext.GetFromHttpContext())
         {
 
         }
