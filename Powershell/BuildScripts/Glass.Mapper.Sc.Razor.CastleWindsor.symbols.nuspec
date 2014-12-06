@@ -18,7 +18,6 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper.Sc.Razor" version="3.0.7" />
-		<dependency id="WebActivatorEx" version="1.0.0.0" />
 		<dependency id="Castle.Windsor" version="3.2.0" />
 
 	</dependencies>
@@ -32,6 +31,7 @@
     <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Net45\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net45\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
 
     <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor.CastleWindsor" />
-	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\App_Start\**" target="content\App_Start" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\App_Start\**" target="content\App_Start" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\App_Config\**" target="content\App_Config" />
   </files>
 </package>

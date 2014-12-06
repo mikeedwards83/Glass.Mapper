@@ -59,6 +59,12 @@ namespace Glass.Mapper.Sc
             _service = service;
             
             _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems().ToList());
+
+            if (isLazy == false)
+            {
+                // Force the loading of the items into the list so this occurs in the current security scope.
+                var dummy = _lazyItemList.Value;
+            }
         }
 
         /// <summary>
