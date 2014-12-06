@@ -76,7 +76,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             //Assert
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<IContent>(x => x.Id == content.ParentId), false, false);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<IContent>(x => x.Id == content.ParentId), true, false);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Glass.Mapper.Umb.Integration.DataMappers
 
             //Assert
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<IContent>(x => x.Id == content.ParentId), false, true);
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<IContent>(x => x.Id == content.ParentId), true, true);
         }
 
         #endregion

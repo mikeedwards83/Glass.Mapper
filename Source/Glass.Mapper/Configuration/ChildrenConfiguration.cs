@@ -24,6 +24,11 @@ namespace Glass.Mapper.Configuration
     public class ChildrenConfiguration : AbstractPropertyConfiguration
     {
 
+        public ChildrenConfiguration()
+        {
+            IsLazy = true;
+        }
+
         /// <summary>
         /// Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
         /// </summary>

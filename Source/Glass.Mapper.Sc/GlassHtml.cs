@@ -185,8 +185,8 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext.GetTypeConfiguration < SitecoreTypeConfiguration>(typeof(T));
-            return GetRenderingParameters<T>(parameters, config.TemplateId);
+            var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
+            return GetRenderingParameters<T>(nameValueCollection);
         }
 
 
@@ -334,7 +334,8 @@ namespace Glass.Mapper.Sc
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
             {
-
+                if (!string.IsNullOrEmpty(contents))
+                    attrs["haschildren"] = "true";
                 if (contents.IsNotNullOrEmpty())
                 {
                     attrs.Add("haschildren", "true");
@@ -343,14 +344,14 @@ namespace Glass.Mapper.Sc
                 result = MakeEditable(
                     field,
                     null, 
-                    model,  
-                    attrs,
+                    model,
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
 
                 if (contents.IsNotNullOrEmpty())
                 {
                     sb.Append(contents);
-                }
+            }
             }
             else
             {

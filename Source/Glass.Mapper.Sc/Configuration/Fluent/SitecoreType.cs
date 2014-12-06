@@ -370,6 +370,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Map an item field to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreField{`0}.</returns>
+        public SitecoreDelegate<T> Delegate(Expression<Func<T, object>> ex)
+        {
+            SitecoreDelegate<T> builder = new SitecoreDelegate<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
+        }
+
 
     #region ISitecoreClass Members
 
@@ -398,7 +411,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         ISitecoreClassQueries<T>,
         ISitecoreClassNodes<T>,
         ISitecoreLinkedItems<T>,
-        ISitecoreClassId<T>
+        ISitecoreClassId<T>,
+        ISitecoreDelegate<T>
     {
     }
 
@@ -479,6 +493,20 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         /// <returns>SitecoreLinked{`0}.</returns>
         SitecoreLinked<T> Linked(Expression<Func<T, object>> ex);
+    }
+
+    /// <summary>
+    /// Interface ISitecoreDelegate
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface ISitecoreDelegate<T>
+    {
+        /// <summary>
+        /// Delegates the responsibility for fulfilment to client code
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreDelegate{'0}</returns>
+        SitecoreDelegate<T> Delegate(Expression<Func<T, object>> ex);
     }
 
     #endregion

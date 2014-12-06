@@ -16,10 +16,15 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.Configuration;
@@ -29,6 +34,7 @@ using Sitecore.Data.DataProviders.Sql;
 using Sitecore.Data.Items;
 using Sitecore.Exceptions;
 using Sitecore.SecurityModel;
+using Sitecore.Shell.Feeds.Sections;
 
 namespace Glass.Mapper.Sc.CodeFirst
 {
@@ -37,7 +43,8 @@ namespace Glass.Mapper.Sc.CodeFirst
     /// </summary>
     public class GlassDataProvider : DataProvider
     {
-        private readonly object _setupLock = new object();
+        public static bool DisableItemHandlerWhenDeletingFields = false;
+        private static readonly object _setupLock = new object();
         private bool _setupComplete;
         private bool _setupProcessing;
 
@@ -208,7 +215,10 @@ namespace Glass.Mapper.Sc.CodeFirst
             var sectionInfo = SectionTable.FirstOrDefault(x => x.SectionId == itemDefinition.ID);
             if (sectionInfo != null)
             {
-                GetStandardFields(fields, sectionInfo.SectionSortOrder > 0 ? sectionInfo.SectionSortOrder : (SectionTable.IndexOf(sectionInfo) + 100));
+                GetStandardFields(fields,
+                    sectionInfo.SectionSortOrder >= 0
+                        ? sectionInfo.SectionSortOrder
+                        : (SectionTable.IndexOf(sectionInfo) + 100));
 
                 return fields;
             }
@@ -216,7 +226,8 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fieldInfo = FieldTable.FirstOrDefault(x => x.FieldId == itemDefinition.ID);
             if (fieldInfo != null)
             {
-                GetStandardFields(fields, fieldInfo.FieldSortOrder > 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
+                GetStandardFields(fields,
+                    fieldInfo.FieldSortOrder >= 0 ? fieldInfo.FieldSortOrder : (FieldTable.IndexOf(fieldInfo) + 100));
                 GetFieldFields(fieldInfo, fields);
                 return fields;
             }
@@ -321,7 +332,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                 .Select(x => new { x.SectionName, x.SectionSortOrder });
 
             //If sitecore contains a section with the same name in the database, use that one instead of creating a new one
-            var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context)).ToList();
+            var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context))
+                .Where(item => item.TemplateID == SectionTemplateId).ToList();
 
             foreach (var section in sections)
             {
@@ -332,10 +344,13 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (record == null)
                 {
-                    var exists = existing.FirstOrDefault(def => def.Name.Equals(section));
+                    var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
+                    var newId = GetUniqueGuid(itemDefinition.ID + section.SectionName);
+                    const int newSortOrder = 100;
+                    
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
-                        new SectionInfo(section.SectionName, new ID(Guid.NewGuid()), itemDefinition.ID, section.SectionSortOrder);
+                        new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, newSortOrder);
 
                     SectionTable.Add(record);
                 }
@@ -344,6 +359,12 @@ namespace Glass.Mapper.Sc.CodeFirst
 
                 if (!record.Existing)
                     fields.Add(record.SectionId);
+            }
+
+            //we need to add sections already in the db, 'cause we have to 
+            foreach (var sqlOne in existing.Where(ex => SectionTable.All(s => s.SectionId != ex.ID)))
+            {
+                SectionTable.Add(new SectionInfo(sqlOne.Name, sqlOne.ID, itemDefinition.ID, 0) { Existing = true } );
             }
 
             return fields;
@@ -360,13 +381,21 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// </returns>
         private IDList GetChildIDsSection(SectionInfo section, CallContext context, DataProvider sqlProvider)
         {
-            var cls = TypeConfigurations.First(x => x.Value.TemplateId == section.TemplateId).Value;
+            var config = TypeConfigurations.First(x => x.Value.TemplateId == section.TemplateId);
+            var cls = config.Value;
+
             var fields = cls.Properties.OfType<SitecoreFieldConfiguration>();
-            var fieldIds = new IDList();
+
+            IDList fieldIds = new IDList();
+
+            var interfaces = cls.Type.GetInterfaces();
 
             foreach (var field in fields)
             {
-                if (field.PropertyInfo.DeclaringType != cls.Type)
+                //fix: added check on interfaces, if field resides on interface then skip here
+                var propertyFromInterface = interfaces.FirstOrDefault(inter => inter.GetProperty(field.PropertyInfo.Name) != null 
+                                                                            && inter.GetProperty(field.PropertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldAttribute), false).Any());
+                if (field.PropertyInfo.DeclaringType != cls.Type || propertyFromInterface != null)
                     continue;
 
                 if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))
@@ -377,7 +406,17 @@ namespace Glass.Mapper.Sc.CodeFirst
                     if (existing != null)
                     {
                         using (new SecurityDisabler())
-                            sqlProvider.DeleteItem(existing, context);
+                        {
+                            if (DisableItemHandlerWhenDeletingFields)
+                            {
+                                using (new DisableItemHandler())
+                                    sqlProvider.DeleteItem(existing, context);
+                            }
+                            else
+                            {
+                                sqlProvider.DeleteItem(existing, context);
+                            }
+                        }
                     }
 
                     if (record == null)
@@ -761,7 +800,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                 if (!TypeConfigurations.ContainsKey(type)) return;
 
                 var baseConfig = TypeConfigurations[type];
-                if (baseConfig != null && baseConfig.CodeFirst)
+                if (baseConfig != null && baseConfig.TemplateId.Guid != Guid.Empty)
                 {
                     if (!baseTemplatesField.Contains(baseConfig.TemplateId.ToString()))
                     {
@@ -774,11 +813,17 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             while (baseType != null)
             {
-                idCheck(baseType);
+                idCheck(baseType);    
                 baseType = baseType.BaseType;
             }
 
             config.Type.GetInterfaces().ForEach(idCheck);
+
+            //dirty fix for circular template inheritance
+            var baseTemplates = sb.ToString().Split('|').ToList();
+            baseTemplates.Remove(config.TemplateId.ToString());
+            sb.Clear();
+            sb.Append(string.Join("|", baseTemplates));
 
             if (baseTemplatesField != sb.ToString())
             {
@@ -786,6 +831,19 @@ namespace Glass.Mapper.Sc.CodeFirst
                 templateItem[FieldIDs.BaseTemplate] = sb.ToString();
                 templateItem.Editing.EndEdit();
             }
+        }
+
+        public static Guid GetUniqueGuid(string input)
+        {
+            //this code will generate a unique Guid for a string (unique with a 2^20.96 probability of a collision) 
+            //http://stackoverflow.com/questions/2190890/how-can-i-generate-guid-for-a-string-values
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(input));
+                var guid = new Guid(hash);
+                return guid == Guid.Empty ? Guid.NewGuid() : guid;
+            }
+
         }
     }
 }

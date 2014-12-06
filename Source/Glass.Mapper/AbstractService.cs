@@ -130,7 +130,7 @@ namespace Glass.Mapper
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
                 throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType));
-            
+
             //Run the object construction
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
             objectArgs.Parameters = configurationArgs.Parameters;

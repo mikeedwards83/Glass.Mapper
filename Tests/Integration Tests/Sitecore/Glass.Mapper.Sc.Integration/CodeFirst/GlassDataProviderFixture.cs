@@ -254,7 +254,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             var fieldTitle = "TestTitle";
             var fieldSource = "/source";
             var fieldType = SitecoreFieldType.Date;
-            var sectionSortOrder = 456;
+            var sectionSortOrder = 100;
             var validationErrorText = "TextValidation";
             var validationRegEx = "testregex";
 

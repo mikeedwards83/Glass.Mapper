@@ -66,6 +66,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
                 x.Info(y => y.CreateDate).InfoType(UmbracoInfoType.CreateDate);
                 x.Info(y => y.UpdateDate).InfoType(UmbracoInfoType.UpdateDate);
                 x.Info(y => y.Creator).InfoType(UmbracoInfoType.Creator);
+                x.Delegate(y => y.Delegated).GetValue(GetDelegatedValue);
             });
 
             context.Load(loader);
@@ -107,6 +108,12 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             Assert.AreEqual(content.CreateDate, result.CreateDate);
             Assert.AreEqual(content.UpdateDate, result.UpdateDate);
             Assert.AreEqual("admin", result.Creator);
+            Assert.AreEqual("happy", result.Delegated);
+        }
+
+        private string GetDelegatedValue(UmbracoDataMappingContext arg)
+        {
+            return "happy";
         }
 
         #region Stub
@@ -124,6 +131,7 @@ namespace Glass.Mapper.Umb.Integration.Configuration.Fluent
             public virtual DateTime CreateDate { get; set; }
             public virtual DateTime UpdateDate { get; set; }
             public virtual string Creator { get; set; }
+            public virtual string Delegated { get; set; }
         }
 
         #endregion
