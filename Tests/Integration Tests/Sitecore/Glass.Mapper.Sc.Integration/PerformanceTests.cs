@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.Integration
         [Timeout(120000)]
         [Repeat(10000)]
         public void GetItems(
-            [Values(1000, 10000, 50000)] int count
+            [Values(1, 1000, 10000, 50000)] int count
             )
         {
 

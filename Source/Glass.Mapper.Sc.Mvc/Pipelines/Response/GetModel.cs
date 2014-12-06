@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 using System;
+using System.Web;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -40,6 +41,9 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// </summary>
         public const string ModelTypeField = "Model Type";
 
+
+        private readonly Type IRenderingModelType = typeof (IRenderingModel);
+
         /// <summary>
         /// The model field
         /// </summary>
@@ -61,6 +65,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// The name of the context.
         /// </value>
         public string ContextName { get; set; }
+
 
         /// <summary>
         /// Processes the specified args.
@@ -87,7 +92,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 {
                     args.Result = GetFromField(rendering, args);
                 }
+                if (args.Result != null)
+                {
+                    args.AbortPipeline();
+                }
             }
+
         }
 
         /// <summary>
@@ -198,23 +208,22 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             var type = Type.GetType(model, false);
 
-            if (type == null)
+            if (type == null || IRenderingModelType.IsAssignableFrom(type))
                 return null;
+           
+            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
 
-            var context = Context.Contexts.ContainsKey(ContextName) ? Context.Contexts[ContextName] : null;
-            if (context == null) throw new MapperException("Failed to find context {0}".Formatted(ContextName));
 
             //this is really aggressive
-            if (!context.TypeConfigurations.ContainsKey(type))
+            if (!scContext.GlassContext.TypeConfigurations.ContainsKey(type))
             {
                 //if the config is null then it is probably an ondemand mapping so we have to load the ondemand part
 
                 IConfigurationLoader loader =
                     new OnDemandLoader<SitecoreTypeConfiguration>(type);
-                context.Load(loader);
+                scContext.GlassContext.Load(loader);
 
             }
-            ISitecoreContext scContext = new SitecoreContext(context);
 
             if (renderingItem.DataSource.IsNotNullOrEmpty())
             {

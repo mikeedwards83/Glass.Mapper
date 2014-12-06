@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Linq;
+using System.Threading.Tasks;
 using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Configuration
@@ -32,7 +33,9 @@ namespace Glass.Mapper.Configuration
     [DebuggerDisplay("Type: {Type}")]
     public abstract class AbstractTypeConfiguration
     {
-        private List<AbstractPropertyConfiguration> _properties;
+        private IDictionary<ConstructorInfo, Delegate> _constructorMethods;
+
+        private AbstractPropertyConfiguration[] _properties;
 
         /// <summary>
         /// The type this configuration represents
@@ -44,13 +47,20 @@ namespace Glass.Mapper.Configuration
         /// A list of the properties configured on a type
         /// </summary>
         /// <value>The properties.</value>
-        public IEnumerable<AbstractPropertyConfiguration> Properties { get { return _properties; } }
+        public AbstractPropertyConfiguration[] Properties { get { return _properties; } }
 
         /// <summary>
         /// A list of the constructors on a type
         /// </summary>
         /// <value>The constructor methods.</value>
-        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get; set; }
+        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get { return _constructorMethods; } set { _constructorMethods = value;
+            DefaultConstructor = _constructorMethods.Where(x=>x.Key.GetParameters().Length == 0).Select(x=>x.Value).FirstOrDefault();
+        } }
+
+        /// <summary>
+        /// This is the classes default constructor
+        /// </summary>
+        public Delegate DefaultConstructor { get; private set; }
 
         /// <summary>
         /// Indicates properties should be automatically mapped
@@ -63,7 +73,7 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public AbstractTypeConfiguration()
         {
-            _properties = new List<AbstractPropertyConfiguration>();
+            _properties = new AbstractPropertyConfiguration[]{};
         }
 
 
@@ -82,10 +92,35 @@ namespace Glass.Mapper.Configuration
                         "You cannot have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(
                             property.PropertyInfo.Name, Type.Name));
                 }
-                
-              
-                    _properties.Add(property);
+
+
+                _properties = _properties.Concat(new[] {property}).ToArray();
+                _propertMappingExpression = CreatePropertyExpression(property);
             }
+        }
+
+        private Action<object, AbstractDataMappingContext> _propertMappingExpression = (obj, context) => { };
+
+
+        protected virtual Action<object, AbstractDataMappingContext> CreatePropertyExpression(
+            AbstractPropertyConfiguration property)
+        {
+            var next = _propertMappingExpression;
+
+            return (obj, context) =>
+                {
+                    try
+                    {
+                        property.Mapper.MapCmsToProperty(context);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new MapperException(
+                            "Failed to map property {0} on {1}".Formatted(property.PropertyInfo.Name,
+                                property.PropertyInfo.DeclaringType.FullName), e);
+                    }
+                    next(obj, context);
+                };
         }
 
 
@@ -101,20 +136,33 @@ namespace Glass.Mapper.Configuration
             {
                 //create properties 
                 AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
+                _propertMappingExpression(obj, dataMappingContext);
 
-                foreach (var prop in Properties)
-                {
-                    try
-                    {
-                        prop.Mapper.MapCmsToProperty(dataMappingContext);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new MapperException(
-                            "Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name,
-                                prop.PropertyInfo.DeclaringType.FullName), e);
-                    }
-                }
+                //var tasks = Properties.Select(x =>
+                //    {
+                //        var t = new Task(() => x.Mapper.MapCmsToProperty(dataMappingContext));
+                //        t.Start();
+                //        return t;
+                //    });
+
+                //Task.WaitAll(tasks.ToArray());
+
+                //for(int i  = Properties.Length-1; i >= 0; i--)
+                //{
+                //    var prop = Properties[i];
+
+                //    try
+                //    {
+                //        prop.Mapper.MapCmsToProperty(context);
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        throw new MapperException(
+                //            "Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name,
+                //                prop.PropertyInfo.DeclaringType.FullName), e);
+                //    }
+
+                //}
             }
             catch (Exception ex)
             {

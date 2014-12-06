@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             try
             {
-                SitecoreContext = new SitecoreContext(Sitecore.Context.Database);
+                SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
                 GlassHtml = new GlassHtml(SitecoreContext);
             }
             catch (Exception ex)
