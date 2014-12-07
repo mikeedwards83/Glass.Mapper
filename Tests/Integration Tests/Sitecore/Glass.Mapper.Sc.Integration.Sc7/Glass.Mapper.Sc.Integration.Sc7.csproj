@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
      <Reference Include="Castle.Core">
-      <HintPath>..\..\..\..\packages\Castle.Core.3.2.1\lib\net40\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Castle.Core.3.2.1\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\..\..\..\packages\Castle.Windsor.3.2.1\lib\net40-client\Castle.Windsor.dll</HintPath>
@@ -71,13 +71,13 @@
       <HintPath>..\..\..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\..\..\Depends\Sitecore71\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\Depends\Sitecore71\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="sitecore.nexus">
-      <HintPath>..\..\..\..\Depends\Sitecore71\sitecore.nexus.dll</HintPath>
+      <HintPath>..\..\..\..\Depends\Sitecore\bin71\sitecore.nexus.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,9 @@
 */ 
 //-CRE-
 
+using System.Collections.Specialized;
+using Sitecore.Collections;
+
 namespace Glass.Mapper.Sc
 {
     /// <summary>
@@ -23,7 +26,24 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public static class ExtensionMethods
     {
-     
+       #region NameValueCollection
+
+        public static SafeDictionary<string> ToSafeDictionary(this NameValueCollection collection)
+        {
+            var safeDictionary = new SafeDictionary<string>();
+            
+            if (collection != null)
+            {
+                foreach (var key in collection.AllKeys)
+                {
+                    safeDictionary.Add(key, collection[key]);
+                }
+            }
+
+            return safeDictionary;
+        }
+
+        #endregion
     }
 }
 

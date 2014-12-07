@@ -18,6 +18,8 @@
 
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
@@ -31,6 +33,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
@@ -48,7 +51,35 @@ namespace Glass.Mapper.Sc
     {
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
+        private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
         public const string Parameters = "Parameters";
+
+
+        protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
+        {
+            var key = typeof(T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, string>)_compileCache[key];
+            }
+            var compiled = expression.Compile();
+            _compileCache.TryAdd(key, compiled);
+            return compiled;
+        }
+
+        protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
+        {
+            var key = typeof (T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, object>) _compileCache[key];
+            }
+            var compiled = expression.Compile();
+            _compileCache.TryAdd(key, compiled);
+            return compiled;
+        }
 
 
         /// <summary>
@@ -154,8 +185,8 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
-            var config = SitecoreContext.GlassContext.GetTypeConfiguration < SitecoreTypeConfiguration>(typeof(T));
-            return GetRenderingParameters<T>(parameters, config.TemplateId);
+            var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
+            return GetRenderingParameters<T>(nameValueCollection);
         }
 
 
@@ -193,7 +224,7 @@ namespace Glass.Mapper.Sc
         /// The image tag format
         /// </summary>
         public const string ImageTagFormat = "<img src='{0}' {1}/>";
-     
+
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
@@ -204,38 +235,25 @@ namespace Glass.Mapper.Sc
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <returns></returns>
         public virtual string RenderImage<T>(T model,
-                                             Expression<Func<T, object>> field,
-                                             object parameters = null,
-                                             bool isEditable = false)
+            Expression<Func<T, object>> field,
+            object parameters = null,
+            bool isEditable = false)
         {
 
-            if (parameters is ImageParameters)
-            {
-                var imageParameters = parameters as ImageParameters;
-                if (IsInEditingMode && isEditable)
-                {
-                    return Editable(model, field, imageParameters);
-                }
-                else
-                {
-                    return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters == null ? null : imageParameters.Parameters);
-                }
+            var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
 
+            if (IsInEditingMode && isEditable)
+            {
+                var url = new UrlString();
+                foreach (var pair in attrs)
+                {
+                    url.Parameters.Add(pair.Key, pair.Value);
+                }
+                return Editable(model, field, url.Query);
             }
             else
             {
-                var attrs = Utilities.GetPropertiesCollection(parameters, true);
-
-                if (IsInEditingMode && isEditable)
-                {
-                    var url = new UrlString();
-                    url.Parameters.Add(attrs);
-                    return Editable(model, field, url.Query);
-                }
-                else
-                {
-                    return RenderImage(field.Compile().Invoke(model) as Fields.Image, parameters == null ? null : attrs);
-                }
+                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs);
             }
         }
 
@@ -247,10 +265,6 @@ namespace Glass.Mapper.Sc
             {
                 attrs = parameters as NameValueCollection;
             }
-            else if (parameters is AbstractParameters)
-            {
-                attrs = ((AbstractParameters) parameters).Parameters;
-            }
             else
             {
                 attrs = Utilities.GetPropertiesCollection(parameters, true);
@@ -258,6 +272,12 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
+
+                if (attrs != null)
+                {
+                    attrs.Add("haschildren", "true");
+                    return MakeEditable(field, null, model, attrs, _context, SitecoreContext.Database, writer);
+                }
                 return MakeEditable(field, null, model, "haschildren=true", _context, SitecoreContext.Database, writer);
             }
             else
@@ -276,7 +296,7 @@ namespace Glass.Mapper.Sc
         /// <param name="collection">The collection of parameters</param>
         /// <param name="name">The name of the attribute in the collection</param>
         /// <param name="defaultValue">The default value for the attribute</param>
-        public static void AttributeCheck(NameValueCollection collection, string name, string defaultValue)
+        public static void AttributeCheck(SafeDictionary<string> collection, string name, string defaultValue)
         {
             if (collection[name].IsNullOrEmpty() && !defaultValue.IsNullOrEmpty())
                 collection[name] = defaultValue;
@@ -314,7 +334,8 @@ namespace Glass.Mapper.Sc
             RenderingResult result = null;
             if (IsInEditingMode && isEditable)
             {
-
+                if (!string.IsNullOrEmpty(contents))
+                    attrs["haschildren"] = "true";
                 if (contents.IsNotNullOrEmpty())
                 {
                     attrs.Add("haschildren", "true");
@@ -323,19 +344,19 @@ namespace Glass.Mapper.Sc
                 result = MakeEditable(
                     field,
                     null, 
-                    model,  
-                    attrs,
+                    model,
+                    Utilities.ConstructQueryString(attrs), 
                     _context, SitecoreContext.Database, writer);
 
                 if (contents.IsNotNullOrEmpty())
                 {
                     sb.Append(contents);
-                }
+            }
             }
             else
             {
                 result = BeginRenderLink(
-                        field.Compile().Invoke(model) as Fields.Link, attrs, contents, writer
+                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer
                     );
             }
 
@@ -380,15 +401,29 @@ namespace Glass.Mapper.Sc
         /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
+        [Obsolete("Use the SafeDictionary Overload")]
         public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer)
         {
+            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer);
+        }
+
+        /// <summary>
+        /// Render HTML for a link
+        /// </summary>
+        /// <param name="link">The link to render</param>
+        /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
+        /// <param name="contents">Content to go in the link instead of the standard text</param>
+        /// <returns>An "a" HTML element</returns>
+        public static RenderingResult BeginRenderLink(Fields.Link link, SafeDictionary<string> attributes, string contents,
+            TextWriter writer)
+        {
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
-            if (attributes == null) attributes = new NameValueCollection();
+            if (attributes == null) attributes = new SafeDictionary<string>();
 
             string format = "<a href='{0}' {1}>{2}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
-            
+
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
@@ -397,7 +432,6 @@ namespace Glass.Mapper.Sc
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
-
 
         /// <summary>
         /// Makes the editable.
@@ -436,28 +470,34 @@ namespace Glass.Mapper.Sc
                 if (field == null) throw new NullReferenceException("No field set");
                 if (model == null) throw new NullReferenceException("No model set");
 
-                string parametersString = string.Empty;
+                string parametersStringTemp = string.Empty;
+
+                SafeDictionary<string> dictionary = new SafeDictionary< string>();
 
                 if (parameters == null)
                 {
-                    parametersString = string.Empty;
+                    parametersStringTemp = string.Empty;
                 }
                 else if (parameters is string)
                 {
-                    parametersString = parameters as string;
-                }
-                else if (parameters is AbstractParameters)
-                {
-                    parametersString = ((AbstractParameters)parameters).ToString();
+                    parametersStringTemp = parameters as string;
+                    dictionary = WebUtil.ParseQueryString(parametersStringTemp ?? string.Empty);
                 }
                 else if (parameters is NameValueCollection)
                 {
-                    parametersString = Utilities.ConstructQueryString(parameters as NameValueCollection);
+                    var collection = (NameValueCollection)parameters;
+                    foreach (var key in collection.AllKeys)
+                    {
+                        dictionary.Add(key, collection[key]);
+                    }
                 }
                 else
                 {
-                    NameValueCollection attrs = Utilities.GetPropertiesCollection(parameters, true);
-                    parametersString = Utilities.ConstructQueryString(attrs);
+                    var collection = Utilities.GetPropertiesCollection(parameters, true);
+                    foreach (var key in collection.AllKeys)
+                    {
+                        dictionary.Add(key, collection[key]);
+                    }
                 }
 
 
@@ -542,7 +582,7 @@ namespace Glass.Mapper.Sc
                     if (dataHandler == null)
                     {
                         throw new MapperException(
-                            "Page editting error. Could not find data handler for property {2} {0}.{1}".Formatted(
+                            "Page editing error. Could not find data handler for property {2} {0}.{1}".Formatted(
                                 prop.DeclaringType, prop.Name, prop.MemberType));
                     }
 
@@ -563,7 +603,7 @@ namespace Glass.Mapper.Sc
                             renderFieldArgs.FieldName = fieldConfig.FieldName;
                         }
 
-                        renderFieldArgs.Parameters = WebUtil.ParseQueryString(parametersString ?? string.Empty);
+                        renderFieldArgs.Parameters = dictionary;
                         renderFieldArgs.DisableWebEdit = false;
 
                         CorePipeline.Run("renderField", (PipelineArgs) renderFieldArgs);
@@ -576,27 +616,29 @@ namespace Glass.Mapper.Sc
                 else
                 {
                     if (standardOutput != null)
-                        firstPart = standardOutput.Compile().Invoke(model);
+                    {
+                        firstPart = GetCompiled<T>(standardOutput)(model).ToString();
+                    }
                     else
                     {
                         var type = field.Body.Type;
-                        object target = (field.Compile().Invoke(model) ?? string.Empty);
+                        object target = (GetCompiled<T>(field)(model) ?? string.Empty);
 
                         if (type == ImageType)
                         {
                             var image = target as Image;
-                            firstPart  = RenderImage(image, WebUtil.ParseUrlParameters(parametersString));
+                            firstPart  = RenderImage(image, dictionary);
                         }
                         else if (type == LinkType)
                         {
                             var link = target as Link;
                             var sb = new StringBuilder();
                             var linkWriter = new StringWriter(sb);
-                            var result = BeginRenderLink(link, WebUtil.ParseUrlParameters(parametersString),null, linkWriter);
+                            var result = BeginRenderLink(link, dictionary,null, linkWriter);
                             result.Dispose();
                             linkWriter.Flush();
                             linkWriter.Close();
-                            
+
                             firstPart = sb.ToString();
 
                         }
@@ -714,14 +756,13 @@ namespace Glass.Mapper.Sc
         /// <param name="image">The image to render</param>
         /// <param name="attributes">Additional parameters to add. Do not include alt or src</param>
         /// <returns>An img HTML element</returns>
-        [Obsolete(
-            "Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)"
-            )]
-        public virtual string RenderImage(Fields.Image image, NameValueCollection attributes)
+        public virtual string RenderImage(Fields.Image image, SafeDictionary<string> attributes)
         {
 
+
+
             var urlParams = new NameValueCollection();
-            var htmlParams = new NameValueCollection();
+            var htmlParams = new SafeDictionary<string>();
 
             /*
              * ME - This method is used to render images rather than going back to the fieldrender
@@ -730,7 +771,7 @@ namespace Glass.Mapper.Sc
 
             if (image == null || image.Src.IsNullOrWhiteSpace()) return "";
 
-            if (attributes == null) attributes = new NameValueCollection();
+            if (attributes == null) attributes = new SafeDictionary<string>();
 
             Action<string> remove = key => attributes.Remove(key);
             Action<string> url = key =>
@@ -750,33 +791,36 @@ namespace Glass.Mapper.Sc
                 remove(key);
             };
 
-            foreach (var key in attributes.AllKeys)
+            var keys = attributes.Keys.ToList();
+            foreach (var key in keys)
             {
                 switch (key)
                 {
-                    case ImageParameters.BORDER:
-                    case ImageParameters.ALT:
-                    case ImageParameters.HSPACE:
-                    case ImageParameters.VSPACE:
-                    case ImageParameters.CLASS:
+                    case ImageParameterKeys.BORDER:
+                    case ImageParameterKeys.ALT:
+                    case ImageParameterKeys.HSPACE:
+                    case ImageParameterKeys.VSPACE:
+                    case ImageParameterKeys.CLASS:
+                    case ImageParameterKeys.WIDTHHTML:
+                    case ImageParameterKeys.HEIGHTHTML:
                         html(key);
                         break;
-                    case ImageParameters.OUTPUT_METHOD:
-                    case ImageParameters.ALLOW_STRETCH:
-                    case ImageParameters.IGNORE_ASPECT_RATIO:
-                    case ImageParameters.SCALE:
-                    case ImageParameters.MAX_WIDTH:
-                    case ImageParameters.MAX_HEIGHT:
-                    case ImageParameters.THUMBNAIL:
-                    case ImageParameters.BACKGROUND_COLOR:
-                    case ImageParameters.DATABASE:
-                    case ImageParameters.LANGUAGE:
-                    case ImageParameters.VERSION:
-                    case ImageParameters.DISABLE_MEDIA_CACHE:
+                    case ImageParameterKeys.OUTPUT_METHOD:
+                    case ImageParameterKeys.ALLOW_STRETCH:
+                    case ImageParameterKeys.IGNORE_ASPECT_RATIO:
+                    case ImageParameterKeys.SCALE:
+                    case ImageParameterKeys.MAX_WIDTH:
+                    case ImageParameterKeys.MAX_HEIGHT:
+                    case ImageParameterKeys.THUMBNAIL:
+                    case ImageParameterKeys.BACKGROUND_COLOR:
+                    case ImageParameterKeys.DATABASE:
+                    case ImageParameterKeys.LANGUAGE:
+                    case ImageParameterKeys.VERSION:
+                    case ImageParameterKeys.DISABLE_MEDIA_CACHE:
                         url(key);
                         break;
-                    case ImageParameters.WIDTH:
-                    case ImageParameters.HEIGHT:
+                    case ImageParameterKeys.WIDTH:
+                    case ImageParameterKeys.HEIGHT:
                         both(key);
                         break;
                     default:
@@ -793,25 +837,25 @@ namespace Glass.Mapper.Sc
             }
 
             //should there be some warning about these removals?
-            AttributeCheck(htmlParams, ImageParameters.CLASS, image.Class);
-            AttributeCheck(htmlParams, ImageParameters.ALT, image.Alt);
-            AttributeCheck(htmlParams, ImageParameters.BORDER, image.Border);
+            AttributeCheck(htmlParams, ImageParameterKeys.CLASS, image.Class);
+            AttributeCheck(htmlParams, ImageParameterKeys.ALT, image.Alt);
+            AttributeCheck(htmlParams, ImageParameterKeys.BORDER, image.Border);
             if(image.HSpace >0)
-                AttributeCheck(htmlParams, ImageParameters.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
+                AttributeCheck(htmlParams, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
             if(image.VSpace >0)
-                AttributeCheck(htmlParams, ImageParameters.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
+                AttributeCheck(htmlParams, ImageParameterKeys.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
 
-            if (htmlParams.AllKeys.Any(x => x == ImageParameters.HEIGHT))
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams["height"] == null)
             {
-                htmlParams["height"] = htmlParams[ImageParameters.HEIGHT];
-                htmlParams.Remove(ImageParameters.HEIGHT);
+                htmlParams["height"] = htmlParams[ImageParameterKeys.HEIGHT];
             }
+            htmlParams.Remove(ImageParameterKeys.HEIGHT);
 
-            if (htmlParams.AllKeys.Any(x => x == ImageParameters.WIDTH))
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.WIDTH) && htmlParams["width"] == null)
             {
-                htmlParams["width"] = htmlParams[ImageParameters.WIDTH];
-                htmlParams.Remove(ImageParameters.WIDTH);
+                htmlParams["width"] = htmlParams[ImageParameterKeys.WIDTH];
             }
+            htmlParams.Remove(ImageParameterKeys.WIDTH);
 
             return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
         }

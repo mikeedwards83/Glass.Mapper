@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             //some weird lifecycle stuff in the page editor
             if (_sitecoreContext == null)
             {
-                _sitecoreContext = new SitecoreContext();
+                _sitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
                 _glassHtml = new GlassHtml(_sitecoreContext);
             }
            

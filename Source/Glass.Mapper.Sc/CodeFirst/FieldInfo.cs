@@ -37,7 +37,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
-using Sitecore.Data;
+using global::Sitecore.Data;
 
 namespace Glass.Mapper.Sc.CodeFirst
 {

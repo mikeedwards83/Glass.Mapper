@@ -63,16 +63,19 @@ namespace Glass.Mapper.Sc.Razor
             set { _glassHtml = value; }
         }
 
+        public ITemplateBase TemplateBase { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtmlFacade" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="writer">The writer.</param>
-        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase)
 
         {
             _writer = writer;
             _glassHtml = new GlassHtml(context);
+            TemplateBase = templateBase;
         }
   
         /// <summary>
@@ -256,66 +259,6 @@ namespace Glass.Mapper.Sc.Razor
         {
             return GlassHtml.GetRenderingParameters<T>(parameters);
         }
-
-       
-        #region Obsolete
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <returns>RawString.</returns>
-        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public RawString RenderImage(Image image)
-        {
-            return _glassHtml.RenderImage(image).RawString();
-        }
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>RawString.</returns>
-        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public RawString RenderImage(Image image, NameValueCollection attributes)
-        {
-            return _glassHtml.RenderImage(image, attributes).RawString();
-        }
-
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <returns>RawString.</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
-        public RawString RenderLink(Link link)
-        {
-            return _glassHtml.RenderLink(link).RawString();
-        }
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>RawString.</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
-        public RawString RenderLink(Link link, NameValueCollection attributes)
-        {
-            return _glassHtml.RenderLink(link, attributes).RawString();
-        }
-        /// <summary>
-        /// Renders the link.
-        /// </summary>
-        /// <param name="link">The link.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <param name="contents">The contents.</param>
-        /// <returns>RawString.</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection attributes = null, bool isEditable = false, string contents = null)")]
-        public RawString RenderLink(Link link, NameValueCollection attributes, string contents)
-        {
-            return _glassHtml.RenderLink(link, attributes, contents).RawString();
-        }
-        #endregion
     }
 }
 

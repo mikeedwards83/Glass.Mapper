@@ -24,13 +24,18 @@ using System.Text;
 using System.Web.UI;
 using System.IO;
 using System.Web.Mvc;
-using Glass.Mapper.Sc.Razor.Web.Mvc;
 using RazorEngine.Text;
+using Sitecore.Diagnostics;
+using Sitecore.Mvc.Common;
+using Sitecore.Mvc.Pipelines;
+using Sitecore.Mvc.Pipelines.Response.RenderPlaceholder;
+using Sitecore.Mvc.Presentation;
 using Sitecore.Web.UI;
 using Sitecore.Web.UI.WebControls;
 using Image = Glass.Mapper.Sc.Fields.Image;
 using System.Web;
 using Glass.Mapper.Sc.RenderField;
+using ViewDataContainer = Glass.Mapper.Sc.Razor.Web.Mvc.ViewDataContainer;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
@@ -66,7 +71,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             get {
                 return _glassHtml ??
-                       (_glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(CurrentWriter)));
+                       (_glassHtml = new GlassHtmlFacade(SitecoreContext, new HtmlTextWriter(CurrentWriter), this));
             }
         }
 
@@ -145,18 +150,22 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>IEncodedString.</returns>
-        public IEncodedString Placeholder(string key)
+        public IEncodedString Placeholder(string placeholderName)
         {
-            key = key.ToLower();
-            var placeHolder = Placeholders.FirstOrDefault(x => x.Key == key);
+
+            Assert.ArgumentNotNull((object) placeholderName, "placeholderName");
+            
+            placeholderName = placeholderName.ToLower();
+            var placeHolder = Placeholders.FirstOrDefault(x => x.Key == placeholderName);
 
             if (placeHolder == null)
-                placeHolder = new Placeholder {Key = key};
+                placeHolder = new Placeholder {Key = placeholderName};
             ParentControl.Controls.Add(placeHolder);
 
             var sb = new StringBuilder();
             placeHolder.RenderControl(new HtmlTextWriter(new StringWriter(sb)));
             return Raw(sb.ToString());
+
         }
 
 
@@ -323,17 +332,6 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             return GlassHtml.RenderingParameters<T>(ParentControl.Parameters);
         }
 
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
         /// </summary>
@@ -346,38 +344,5 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
             private set;
 
         }
-
-
-
-        #region Obsolete
-
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <returns>IEncodedString.</returns>
-        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public IEncodedString RenderImage(Image image)
-        {
-            return GlassHtml.RenderImage(image);
-        }
-
-        /// <summary>
-        /// Renders the image.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns>IEncodedString.</returns>
-        [Obsolete("Use RenderImage(Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public IEncodedString RenderImage(Image image, NameValueCollection attributes)
-        {
-            return GlassHtml.RenderImage(image, attributes);
-        }
-
-
-        #endregion
-
-       
     }
 }

@@ -18,6 +18,7 @@
 
 
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Sitecore.Data;
 
@@ -72,6 +73,26 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreType<T> TemplateId(ID id)
         {
             _configuration.TemplateId = id;
+            return this;
+        }
+
+        /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID.
+        /// </summary>
+        public SitecoreType<T> EnforceTemplate()
+        {
+            _configuration.EnforceTemplate = SitecoreEnforceTemplate.Template;
+            return this;
+        }
+
+        /// <summary>
+        /// Forces Glass to do a template check and only returns an class if the item 
+        /// matches the template ID or inherits a template with the templateId
+        /// </summary>
+        public SitecoreType<T> EnforceTemplateAndBase()
+        {
+            _configuration.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
             return this;
         }
 
@@ -329,8 +350,10 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> Import<K>(SitecoreType<K> typeConfig)
         {
-            typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
-          
+            typeConfig._configuration.Properties
+                .Where(x=> _configuration.Properties.All(y=>y.PropertyInfo.Name != x.PropertyInfo.Name))
+                .ForEach(x => _configuration.AddProperty(x));
+
             if (typeConfig._configuration.AutoMap)
                 Config.AutoMap = true;
 
@@ -345,6 +368,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             Config.AutoMap = true;
             return this;
+        }
+
+        /// <summary>
+        /// Map an item field to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreField{`0}.</returns>
+        public SitecoreDelegate<T> Delegate(Expression<Func<T, object>> ex)
+        {
+            SitecoreDelegate<T> builder = new SitecoreDelegate<T>(ex);
+            _configuration.AddProperty(builder.Configuration);
+
+            return builder;
         }
 
 
@@ -375,7 +411,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         ISitecoreClassQueries<T>,
         ISitecoreClassNodes<T>,
         ISitecoreLinkedItems<T>,
-        ISitecoreClassId<T>
+        ISitecoreClassId<T>,
+        ISitecoreDelegate<T>
     {
     }
 
@@ -456,6 +493,20 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         /// <returns>SitecoreLinked{`0}.</returns>
         SitecoreLinked<T> Linked(Expression<Func<T, object>> ex);
+    }
+
+    /// <summary>
+    /// Interface ISitecoreDelegate
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface ISitecoreDelegate<T>
+    {
+        /// <summary>
+        /// Delegates the responsibility for fulfilment to client code
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreDelegate{'0}</returns>
+        SitecoreDelegate<T> Delegate(Expression<Func<T, object>> ex);
     }
 
     #endregion

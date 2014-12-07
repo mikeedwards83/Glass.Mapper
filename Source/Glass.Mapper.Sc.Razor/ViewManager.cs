@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Glass.Mapper.Sc.Razor
@@ -148,6 +149,9 @@ namespace Glass.Mapper.Sc.Razor
             return  _viewCache[viewPath];
         }
 
+
+        private static Regex _placeholders = new Regex("@Placeholder\\(\"([^\"]*)\"\\)");
+
         /// <summary>
         /// Updates the cache.
         /// </summary>
@@ -176,6 +180,15 @@ namespace Glass.Mapper.Sc.Razor
 
                         cached.ViewContent = finalview;
 
+                        List<string> placeholders = new List<string>();
+
+                        var matches = _placeholders.Matches(cached.ViewContent);
+                        foreach (Match match in matches)
+                        {
+                            placeholders.Add(match.Groups[1].Value);    
+                        }
+
+                        cached.Placeholders = placeholders;
                         var template = RazorEngine.Razor.CreateTemplate(cached.ViewContent);
                         
                         cached.Type = template.GetType().BaseType.IsGenericType

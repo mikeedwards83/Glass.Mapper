@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <sitecore>
+    <!-- Read the Sitecore Scaling guide (http://sdn.sitecore.net/Reference/Sitecore%206/Scaling%20Guide.aspx) 
+         in its entirety before you configure Web Deploy.
+
+         If you use Web Deploy to transfer file media to a CD environment that uses DFS to synchronize those files,
+         change the Media.FileFolder setting in the web.config file to the equivalent of /App_Data/Replicated/MediaFiles,
+         and configure Web Deployment for the /App_Data/Replicated/MediaFiles subdirectory rather than the 
+         /App_Data/MediaFiles subdirectory.
+         -->     
+    <events>
+      <event name="publish:begin">
+        <handler type="Sitecore.Publishing.WebDeploy.PublishHandler, Sitecore.Publishing.WebDeploy" method="OnPublish">
+          <tasks hint="list:AddTask">
+            <default type="Sitecore.Publishing.WebDeploy.Task">
+              <!-- Publish operation int othe target database will trigger this deployment task. -->
+              <targetDatabase>web</targetDatabase>
+
+              <!-- Target server is optional. If omitted, operation is performed on the local server. -->
+              <targetServer>beta.b</targetServer>
+              <!-- 
+                userName and password are optional. If omitted, local user identity or
+                credentials saved in Windows Vault will be used to connect to the server.
+              -->
+              <userName>Administrator</userName>
+              <password>example</password>
+
+              <!-- localRoot is optional. If omitted, the website root is used. -->
+              <localRoot>C:\inetpub\Sitecore\test</localRoot>
+              
+              <remoteRoot>C:\inetpub\Sitecore\test</remoteRoot>
+              
+              <!-- Paths, relative to the localRoot, which will be deployed to the remote location. -->
+              <items hint="list:AddPath">
+                <media>App_Data/Replicated/MediaFiles</media>
+              </items>
+              
+            </default>
+          </tasks>
+        </handler>
+      </event>
+    </events>
+  </sitecore>
+</configuration>

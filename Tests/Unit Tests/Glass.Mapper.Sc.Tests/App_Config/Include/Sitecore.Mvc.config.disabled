@@ -1,0 +1,195 @@
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <settings>
+      <!--  MVC: Flag for controlling data source nesting
+            Default: "true"
+      -->
+      <setting name="Mvc.AllowDataSourceNesting" value="true"/>
+
+      <!--  MVC: Path to controller items
+            Default: "/sitecore/layout/controllers"
+      -->
+      <setting name="Mvc.ControllersPath" value="/sitecore/layout/controllers" />
+
+      <!--  MVC: Name of default action to invoke on a controller
+            Default: "Index"
+      -->
+      <setting name="Mvc.DefaultActionName" value="Index" />
+
+      <!--  MVC: Name of default controller to invoke when handling form posts from renderings
+            Default: "" (means that renderings with empty Form Controller fields will not be able to handle form posts)
+      -->
+      <setting name="Mvc.DefaultFormControllerName" value="" />
+
+      <!--  MVC: Default extension of view files
+            Default: "cshtml"
+      -->
+      <setting name="Mvc.DefaultViewExtension" value="cshtml" />
+
+      <!--  MVC: Internal prefix used to filter out route keys that should be ignored
+            Default: "sc_ignore_"
+      -->
+      <setting name="Mvc.IgnoreKeyPrefix" value="sc_ignore_" />
+
+      <!--  MVC: Pipe separated list of rote URL's that is not valid for use with Sitecore.Mvc.
+            For instance, the default ASP.NET route ({controller}/{action}/{id}) will catch most requests 
+            that are actually meant to be handled by the default Sitecore route.
+            Default: "{controller}/{action}/{id}"
+      -->
+      <setting name="Mvc.IllegalRoutes" value="|{controller}/{action}/{id}|" />
+
+      <!--  MVC: Path to model items
+            Default: "/sitecore/layout/models"
+      -->
+      <setting name="Mvc.ModelsPath" value="/sitecore/layout/models" />
+
+      <!--  MVC: Path to the base file folder containing views used for item renderings
+            Default: "/views/renderers"
+      -->
+      <setting name="Mvc.RenderersViewFolder" value="/views/renderers" />
+
+      <!--  MVC: Path to rendering items
+            Default: "/sitecore/layout/renderings"
+      -->
+      <setting name="Mvc.RenderingsPath" value="/sitecore/layout/renderings" />
+
+      <!--  MVC: Name of the default action to invoke in the Sitecore controller
+            Default: "Index"
+      -->
+      <setting name="Mvc.SitecoreActionName" value="Index" />
+
+      <!--  MVC: The name of the Sitecore controller
+            Default: "Sitecore"
+      -->
+      <setting name="Mvc.SitecoreControllerName" value="Sitecore" />
+
+      <!--  MVC: The name of the fall-through route handled by Sitecore
+            Default: "Sitecore"
+      -->
+      <setting name="Mvc.SitecoreRouteName" value="Sitecore" />
+
+      <!--  MVC: Flag for controlling if detailed error messages are shown when a action method can not be found
+            Default: "true"
+      -->
+      <setting name="Mvc.DetailedErrorOnMissingAction" value="true"/>
+
+      <!--  MVC: Flag for controlling if detailed error messages are shown when a controller can not be found
+            Default: "true"
+      -->
+      <setting name="Mvc.DetailedErrorOnMissingController" value="true"/>
+
+      <!--  MVC: Pipe separated list of the legal file extensions for views
+            Default: "|cshtml|"
+      -->
+      <setting name="Mvc.ViewExtensions" value="|cshtml|" />
+
+    </settings>
+    
+    <pipelines>
+
+      <!-- Loader -->
+
+      <initialize>
+        <processor type="Sitecore.Mvc.Pipelines.Loader.InitializeGlobalFilters, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Loader.InitializeControllerFactory, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Loader.InitializeRoutes, Sitecore.Mvc"/>
+      </initialize>
+
+      <!-- Http Request -->
+      
+      <httpRequestBegin>
+        <processor type="Sitecore.Mvc.Pipelines.HttpRequest.TransferRoutedRequest, Sitecore.Mvc" patch:after="processor[@type='Sitecore.Pipelines.HttpRequest.ItemResolver, Sitecore.Kernel']" />
+        <processor type="Sitecore.Mvc.Pipelines.HttpRequest.TransferControllerRequest, Sitecore.Mvc" patch:after="processor[@type='Sitecore.Pipelines.HttpRequest.LayoutResolver, Sitecore.Kernel']" />
+        <processor type="Sitecore.Mvc.Pipelines.HttpRequest.TransferMvcLayout, Sitecore.Mvc" patch:after="processor[@type='Sitecore.Pipelines.HttpRequest.LayoutResolver, Sitecore.Kernel']" />
+      </httpRequestBegin>
+
+      <!-- Mvc Events -->
+
+      <mvc.actionExecuting>
+      </mvc.actionExecuting>
+
+      <mvc.actionExecuted>
+      </mvc.actionExecuted>
+
+      <mvc.exception>
+      </mvc.exception>
+
+      <mvc.resultExecuting>
+      </mvc.resultExecuting>
+
+      <mvc.resultExecuted>
+      </mvc.resultExecuted>
+
+      <!-- Mvc Request -->
+
+      <mvc.requestBegin>
+        <processor type="Sitecore.Mvc.Pipelines.Request.RequestBegin.SetupPageContext, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Request.RequestBegin.ExecuteFormHandler, Sitecore.Mvc"/>
+      </mvc.requestBegin>
+
+      <mvc.requestEnd>
+      </mvc.requestEnd>
+
+      <mvc.createController>
+        <processor type="Sitecore.Mvc.Pipelines.Request.CreateController.CreateItemController, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Request.CreateController.CreateDefaultController, Sitecore.Mvc"/>
+      </mvc.createController>
+
+      <mvc.getModel>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetModel.GetFromModelField, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetModel.CreateDefaultRenderingModel, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetModel.InitializeModel, Sitecore.Mvc"/>
+      </mvc.getModel>
+
+      <!-- Mvc Response -->
+
+      <mvc.getPageItem>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetPageItem.SetLanguage, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetPageItem.GetFromRouteValue, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetPageItem.GetFromRouteUrl, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetPageItem.GetFromOldContext, Sitecore.Mvc"/>
+      </mvc.getPageItem>
+
+      <mvc.buildPageDefinition>
+        <processor type="Sitecore.Mvc.Pipelines.Response.BuildPageDefinition.CreatePageDefinitionInstance, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.BuildPageDefinition.ProcessXmlBasedLayoutDefinition, Sitecore.Mvc"/>
+      </mvc.buildPageDefinition>
+
+      <mvc.getPageRendering>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetPageRendering.GetLayoutRendering, Sitecore.Mvc"/>
+      </mvc.getPageRendering>
+
+      <mvc.getXmlBasedLayoutDefinition>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetXmlBasedLayoutDefinition.GetFromLayoutField, Sitecore.Mvc"/>
+      </mvc.getXmlBasedLayoutDefinition>
+
+      <mvc.renderPlaceholder>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderPlaceholder.InitializeProfiling, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderPlaceholder.EnterPlaceholderContext, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderPlaceholder.PerformRendering, Sitecore.Mvc"/>
+      </mvc.renderPlaceholder>
+
+      <mvc.renderRendering>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.InitializeProfiling, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.SetCacheability, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.GenerateCacheKey, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.RenderFromCache, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.StartRecordingOutput, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.EnterRenderingContext, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.ExecuteRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.RenderRendering.AddRecordedHtmlToCache, Sitecore.Mvc"/>
+      </mvc.renderRendering>
+
+      <mvc.getRenderer>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetViewRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetItemRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetXsltRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetControllerRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetMethodRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetUrlRenderer, Sitecore.Mvc"/>
+        <processor type="Sitecore.Mvc.Pipelines.Response.GetRenderer.GetDefaultRenderer, Sitecore.Mvc"/>
+      </mvc.getRenderer>
+
+    </pipelines>
+  </sitecore>
+</configuration>

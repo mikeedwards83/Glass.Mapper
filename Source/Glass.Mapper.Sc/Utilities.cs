@@ -23,6 +23,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Common;
+using Sitecore.Configuration;
+using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -37,13 +40,12 @@ namespace Glass.Mapper.Sc
     public class Utilities : Mapper.Utilities
     {
         /// <summary>
-        /// Converts a NameValueCollection in to HTML attributes
+        /// Converts a NameValueCollection into HTML attributes
         /// </summary>
         /// <param name="attributes">A list of attributes to convert</param>
         /// <returns>System.String.</returns>
         public static string ConvertAttributes(NameValueCollection attributes)
         {
-
             if (attributes == null || attributes.Count == 0) return "";
 
             StringBuilder sb = new StringBuilder();
@@ -54,10 +56,29 @@ namespace Glass.Mapper.Sc
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Converts a SafeDictionary into HTML attributes
+        /// </summary>
+        /// <param name="attributes">A list of attributes to convert</param>
+        /// <returns>System.String.</returns>
+        public static string ConvertAttributes(SafeDictionary<string> attributes)
+        {
+            if (attributes == null || attributes.Count == 0) return "";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var pair in attributes)
+            {
+                sb.AppendFormat("{0}='{1}' ".Formatted(pair.Key, pair.Value ??""));
+            }
+
+            return sb.ToString();
+        }
+
+
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
         {
-            return CreateFakeItem(fields, new ID(Guid.NewGuid()), new Database("master"), name);
+            return CreateFakeItem(fields, new ID(Guid.NewGuid()), Factory.GetDatabase("master"), name);
         }
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, ID templateId, Database database, string name = "ItemName")
@@ -204,27 +225,43 @@ namespace Glass.Mapper.Sc
         /// <param name="foundItem">The found item.</param>
         /// <param name="language">The language.</param>
         /// <returns>Item.</returns>
-        public static Item GetLanguageItem(Item foundItem, Language language)
+        public static Item GetLanguageItem(Item foundItem, Language language, Config config)
         {
             if (foundItem == null) return null;
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
-            if (item.Versions.Count > 0)
-                return item;
-            else
+
+            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(config)))
+            {
                 return null;
+            }
+
+            return item;
         }
+
+        public static bool DoVersionCheck(Config config)
+        {
+            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+                return false;
+
+
+            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
+
+        }
+
+
+
         /// <summary>
         /// Gets the language items.
         /// </summary>
         /// <param name="foundItems">The found items.</param>
         /// <param name="language">The language.</param>
         /// <returns>IEnumerable{Item}.</returns>
-        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language)
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => GetLanguageItem(x, language)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
         }
     }
 }

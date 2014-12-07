@@ -39,6 +39,12 @@ namespace Glass.Mapper.Sc.DataMappers
         public IEnumerable<Type> TypesHandled { get; private set; }
 
         /// <summary>
+        /// The default value to return if the field isn't found
+        /// </summary>
+        protected virtual object DefaultValue { get { return null; } }
+
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
         /// </summary>
         /// <param name="typesHandled">The types handled.</param>
@@ -105,10 +111,11 @@ namespace Glass.Mapper.Sc.DataMappers
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
 
             if (field == null)
-                return null;
+                return DefaultValue;
 
             return GetField(field, scConfig, scContext);
         }
+
 
         /// <summary>
         /// Gets the field.
@@ -128,7 +135,14 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to map field {0} with value {1}".Formatted( field.Name, fieldValue), ex);
+#if NCRUNCH
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted(field.ID, fieldValue), ex);
+
+#else
+                throw new MapperException("Failed to map field {0} with value {1}".Formatted(field.Name, fieldValue), ex);
+
+#endif
+
             }
         }
         /// <summary>

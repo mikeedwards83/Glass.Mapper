@@ -49,7 +49,7 @@ namespace Glass.Mapper.Sc.Web.Ui
          /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
          /// </summary>
          public AbstractGlassPage()
-             : this(new SitecoreContext())
+             : this(Sc.SitecoreContext.GetFromHttpContext())
         {
 
         }

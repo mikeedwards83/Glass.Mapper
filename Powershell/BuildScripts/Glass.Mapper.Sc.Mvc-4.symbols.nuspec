@@ -22,7 +22,6 @@
     </dependencies>
   </metadata>
   <files>
-	
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.dll" target="lib\net45\Glass.Mapper.Sc.Mvc.dll" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.pdb" target="lib\net45\Glass.Mapper.Sc.Mvc.pdb" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\Net45\Glass.Mapper.Sc.Mvc.xml" target="lib\net45\Glass.Mapper.Sc.Mvc.xml" />

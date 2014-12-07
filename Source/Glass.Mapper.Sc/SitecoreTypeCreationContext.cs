@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using Sitecore.Data;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
@@ -26,7 +27,10 @@ namespace Glass.Mapper.Sc
     public class SitecoreTypeCreationContext : AbstractTypeCreationContext
     {
 
-
+        /// <summary>
+        /// Gets or sets the templateid.
+        /// </summary>
+        public ID TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the item.

@@ -23,6 +23,10 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public class ParentConfiguration : AbstractPropertyConfiguration
     {
+        public ParentConfiguration()
+        {
+            IsLazy = true;
+        }
         /// <summary>
         /// Gets or sets a value indicating whether this instance is lazy.
         /// </summary>

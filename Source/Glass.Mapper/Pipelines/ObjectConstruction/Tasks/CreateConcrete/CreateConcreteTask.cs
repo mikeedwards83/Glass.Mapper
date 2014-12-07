@@ -49,16 +49,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <param name="args">The args.</param>
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null || args.Configuration == null)
+            if (args.Result != null 
+                || args.Configuration == null 
+                || args.Configuration.Type.IsInterface
+		        || args.Configuration.Type.IsSealed)
                 return;
-
-            var type = args.Configuration.Type;
-
-
-            if(type.IsInterface)
-            {
-                return;
-            }
 
             if(args.AbstractTypeCreationContext.IsLazy)
             {
@@ -72,8 +67,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 //here we create a concrete version of the class
                 args.Result = CreateObject(args);
                 args.AbortPipeline();
-
-                
             }
         }
 
@@ -97,16 +90,21 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
-            var parameters =
-                constructorParameters == null || !constructorParameters.Any()
-                    ? Type.EmptyTypes
-                    : constructorParameters.Select(x => x.GetType()).ToArray();
+            Delegate conMethod = null;
+            object obj;
 
-            var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
-
-            Delegate conMethod = args.Configuration.ConstructorMethods[constructorInfo];
-
-            var obj = conMethod.DynamicInvoke(constructorParameters);
+            if (constructorParameters == null || constructorParameters.Length == 0)
+            {
+                //conMethod = args.Configuration.DefaultConstructor;
+                obj = Activator.CreateInstance(args.Configuration.Type);
+            }
+            else
+            {
+                var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
+                var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
+                conMethod = args.Configuration.ConstructorMethods[constructorInfo];
+                obj = conMethod.DynamicInvoke(constructorParameters);
+            }
 
             args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
 

@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using Sitecore.Collections;
 using Sitecore.Text;
 
 namespace Glass.Mapper.Sc.Fields
@@ -78,12 +79,22 @@ namespace Glass.Mapper.Sc.Fields
 
         public const string UrlFormat = "{0}{1}";
 
+        [Obsolete("User the SafeDictionary alternative")]
         public string BuildUrl(NameValueCollection attributes = null)
         {
+            return BuildUrl(attributes.ToSafeDictionary());
+        }
+
+        public string BuildUrl(SafeDictionary<string> attributes = null)
+        {
+            if (attributes == null)
+            {
+                attributes = new SafeDictionary<string>();
+            }
 
             Func<string, Func<string>, string> getValue = (key, func) =>
             {
-                var value = attributes.AllKeys.Any(x => x == key) ? attributes[key] : func();
+                var value = attributes[key] ?? func();
                 attributes.Remove(key);
                 return value;
             };
@@ -92,7 +103,7 @@ namespace Glass.Mapper.Sc.Fields
 
             var query = getValue("query", () => Query);
             var anchor = getValue("anchor", () => Anchor);
-            
+
             if (query.IsNotNullOrEmpty())
                 builder.AddQueryString(query);
 
