@@ -15,19 +15,17 @@
  
 */
 //-CRE-
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
-using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.Fields;
 using NUnit.Framework;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.layouts.testing;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration
@@ -48,7 +46,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var scContext = new SitecoreContext(db);
 
             var glassHtml = new GlassHtml(scContext);
@@ -72,7 +70,7 @@ namespace Glass.Mapper.Sc.Integration
             //Assign
             var context = Context.Create(Utilities.CreateStandardResolver());
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var scContext = new SitecoreContext(db);
             string path = "/sitecore/content/Tests/Misc/ItemPropertySave";
 
@@ -118,7 +116,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
 
             var item = db.GetItem(path);
 
@@ -146,7 +144,7 @@ namespace Glass.Mapper.Sc.Integration
         public void LazyLoadTest_LazyIsFalseAndServiceIsDisposed_NoException()
         {
             //Assign
-            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var database = Factory.GetDatabase("master");
 
             var fluentConfig = new SitecoreFluentConfigurationLoader();
 
@@ -180,7 +178,7 @@ namespace Glass.Mapper.Sc.Integration
         public void LazyLoadTest_LazyIsTrueAndServiceIsDisposed_ThrowsException()
         {
             //Assign
-            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var database = Factory.GetDatabase("master");
 
             var fluentConfig = new SitecoreFluentConfigurationLoader();
 
@@ -227,7 +225,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(fluentConfig);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
 
             var item = db.GetItem(path);
 
@@ -266,7 +264,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(fluentConfig);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
 
             var item = db.GetItem(path);
 
@@ -293,7 +291,7 @@ namespace Glass.Mapper.Sc.Integration
             //Arrange
             Guid itemId = new Guid("{6603A3A7-C1E2-42FE-9DC1-34367D3F6187}");
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var item = db.GetItem(new ID(itemId));
 
             using (new ItemEditing(item, true))
@@ -322,7 +320,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             var path = "/sitecore/content/Tests/Misc/ClassWithItemProperties";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem(path);
