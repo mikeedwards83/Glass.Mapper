@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sc.CastleWindsor</id>
+    <id>Glass.Mapper.Sc-7.2</id>
     <version>$version$</version>
     <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
@@ -43,7 +43,7 @@
 
     <!-- Glass.Mapper.Sc.Mvc-->
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.dll" target="lib\Glass.Mapper.Sc.Mvc.dll" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.pdb" target="lib\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.pdb" target="libe\Glass.Mapper.Sc.Mvc.pdb" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.xml" target="lib\Glass.Mapper.Sc.Mvc.xml" />
 
     <!-- ***********CONFIG FILES***********  -->
