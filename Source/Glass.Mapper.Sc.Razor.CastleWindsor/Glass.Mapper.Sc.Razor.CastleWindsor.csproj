@@ -43,7 +43,7 @@
     <Reference Include="Castle.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
-      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll"</HintPath>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
       <SpecificVersion>False</SpecificVersion>
