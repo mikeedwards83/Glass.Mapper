@@ -6,9 +6,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a1c14499-379c-4dbb-ad8f-9de9d28381a7</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceWebPhysicalPath>..\..\Sites\Sitecore\Glass.Mapper.Sites.Sc</SourceWebPhysicalPath>
-    <SourceWebProject>{c6e8f5c7-7d3c-4492-b38b-707a885b7d27}|Sites\Sitecore\Glass.Mapper.Sites.Sc\Glass.Mapper.Sites.Sc.csproj</SourceWebProject>
-    <SourceWebVirtualPath>/Glass.Mapper.Sites.Sc.csproj</SourceWebVirtualPath>
+    <SourceWebPhysicalPath>..\Glass.Mapper.Sc.Website</SourceWebPhysicalPath>
+    <SourceWebProject>{93420975-6370-4e1f-bc3c-9f9b4eeeceb1}|Source\Glass.Mapper.Sc.Website\Glass.Mapper.Sc.Website.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/Glass.Mapper.Sc.Website.csproj</SourceWebVirtualPath>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
@@ -20,6 +20,8 @@
     <Name>Glass.Mapper.Sc.Razor.Tds</Name>
     <RootNamespace>Glass.Mapper.Sc.Razor.Tds</RootNamespace>
     <SitecoreDatabase>master</SitecoreDatabase>
+    <EnableCodeGeneration>false</EnableCodeGeneration>
+    <AssemblyStatus>Exclude</AssemblyStatus>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +71,9 @@
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <OutputPath>bin\Net45\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc72' ">
+    <OutputPath>.\bin\Sc72\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -255,13 +260,14 @@
     </SitecoreItem>
   </ItemGroup>
   <ItemGroup>
-    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
+    <ProjectReference Include="..\Glass.Mapper.Sc.Website\Glass.Mapper.Sc.Website.csproj">
+      <Project>{93420975-6370-4e1f-bc3c-9f9b4eeeceb1}</Project>
+      <Name>Glass.Mapper.Sc.Website</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sites\Sitecore\Glass.Mapper.Sites.Sc\Glass.Mapper.Sites.Sc.csproj">
-      <Project>{c6e8f5c7-7d3c-4492-b38b-707a885b7d27}</Project>
-      <Name>Glass.Mapper.Sites.Sc</Name>
-    </ProjectReference>
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
 </Project>

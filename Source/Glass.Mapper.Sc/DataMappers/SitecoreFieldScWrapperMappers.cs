@@ -144,13 +144,7 @@ namespace Glass.Mapper.Sc.DataMappers
             return new LookupField(field);
         }
     }
-    public abstract class SitecoreFieldScMediaPathMapper : SitecoreFieldScFieldBaseMapper<Sitecore.Data.Fields.MediaPath>
-    {
-        protected override MediaPath Create(Field field)
-        {
-            return new MediaPath(field);
-        }
-    }
+   
     public abstract class SitecoreFieldScMultilistFieldMapper : SitecoreFieldScFieldBaseMapper<Sitecore.Data.Fields.MultilistField>
     {
         protected override MultilistField Create(Field field)

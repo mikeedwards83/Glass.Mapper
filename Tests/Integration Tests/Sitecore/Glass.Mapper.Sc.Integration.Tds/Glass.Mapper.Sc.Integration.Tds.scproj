@@ -92,6 +92,9 @@
     <OutputPath>.\bin\Net45</OutputPath>
     <DisableFileDeployment>False</DisableFileDeployment>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc72' ">
+    <OutputPath>.\bin\Sc72\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
       <Value>$(AssemblyFileVersion)</Value>

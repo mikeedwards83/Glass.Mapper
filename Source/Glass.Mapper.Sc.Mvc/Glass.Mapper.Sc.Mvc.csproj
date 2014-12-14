@@ -2,14 +2,11 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-
     <!-- Customisable Parameters Start-->
-    <ScKernel Condition="'$(ScKernel)' ==''">..\..\Depends\Sitecore\bin72\Sitecore.Kernel.dll</ScKernel>
-    <ScMvc Condition="'$(ScMvc)' ==''">..\..\Depends\Sitecore\bin72\Sitecore.Mvc.dll</ScMvc>
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <!-- Customisable Parameters End-->
-    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}</ProjectGuid>
@@ -46,6 +43,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
+    <OutputPath>bin\Sc72\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,10 +56,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Sitecore.Kernel">
-      <HintPath>$(ScKernel)</HintPath>
+      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc">
-      <HintPath>$(ScMvc)</HintPath>
+      <HintPath>$(ScDir)Sitecore.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '4'">
@@ -76,7 +76,7 @@
     </Reference>
     <Reference Include="System.Web.WebPages">
       <HintPath>..\..\Depends\System.Web.WebPages\v1\System.Web.WebPages.dll</HintPath>
-    </Reference>  
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '5'">
     <Reference Include="System.Web.Mvc">
