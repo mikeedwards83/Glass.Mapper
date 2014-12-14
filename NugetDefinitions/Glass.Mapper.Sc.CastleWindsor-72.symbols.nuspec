@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Glass.Mapper.Sc.CastleWindsor</id>
+    <version>$version$</version>
+    <authors>Michael Edwards, Tom Dudfield</authors>
+    <owners>Michael Edwards</owners>
+    <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
+      relationships and queries as well as supporting the Page Editor. Allows you to map data from 
+      Sitecore using the Castle Windsor DI Container.
+    </description>
+    <releaseNotes>This is a pre-release version of the package.</releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore Glass.Mapper</tags>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="Castle.Core" version="3.2.0" />
+      <dependency id="Castle.Windsor" version="3.2.0" />
+	</dependencies>
+  </metadata>
+  <files>
+    <!-- ***********ASSEMBLIES***********  -->
+    
+    <!-- Glass.Mapper -->
+    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
+    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
+    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
+
+    <!-- Glass.Mapper.Sc-->
+    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
+    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.pdb" target="lib\net40\Glass.Mapper.Sc.pdb" />
+    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.xml" target="lib\net40\Glass.Mapper.Sc.xml" />
+
+    <!-- Glass.Mapper.Sc.CastleWindsor -->
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.pdb" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.xml" />
+
+    <!-- Glass.Mapper.Sc.Mvc-->
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.dll" target="lib\net45\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.pdb" target="lib\net45\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.xml" target="lib\net45\Glass.Mapper.Sc.Mvc.xml" />
+
+    <!-- ***********CONFIG FILES***********  -->
+    <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" target="content\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
+    <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Start\**" target="content\App_Start" />
+    <file src="Source\Glass.Mapper.Sc.CastleWindsor\App_Config\**" target="content\App_Config" />
+    <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.Mvc.config" target="content\App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
+
+
+
+    <!-- Source Files Castle Windsor-->
+    <file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
+    <file src="Source\Glass.Mapper.Sc\**.cs" target="src\Source\Glass.Mapper.Sc" />
+    <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\**.cs" target="src\Source\Glass.Mapper.Sc.Mvc" />
+
+	  
+
+  </files>
+</package>
