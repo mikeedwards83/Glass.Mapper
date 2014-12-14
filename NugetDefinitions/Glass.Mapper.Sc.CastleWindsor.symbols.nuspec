@@ -27,24 +27,24 @@
     <!-- ***********ASSEMBLIES***********  -->
     
     <!-- Glass.Mapper -->
-    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.dll" target="lib\net40\Glass.Mapper.dll" />
-    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.pdb" target="lib\net40\Glass.Mapper.pdb" />
-    <file src="Source\Glass.Mapper\bin\72\Glass.Mapper.xml" target="lib\net40\Glass.Mapper.xml" />
+    <file src="Source\Glass.Mapper\bin\release\Glass.Mapper.dll" target="lib\Glass.Mapper.dll" />
+    <file src="Source\Glass.Mapper\bin\release\Glass.Mapper.pdb" target="lib\Glass.Mapper.pdb" />
+    <file src="Source\Glass.Mapper\bin\release\Glass.Mapper.xml" target="lib\Glass.Mapper.xml" />
 
     <!-- Glass.Mapper.Sc-->
-    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.dll" target="lib\net40\Glass.Mapper.Sc.dll" />
-    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.pdb" target="lib\net40\Glass.Mapper.Sc.pdb" />
-    <file src="Source\Glass.Mapper.Sc\bin\72\Glass.Mapper.Sc.xml" target="lib\net40\Glass.Mapper.Sc.xml" />
+    <file src="Source\Glass.Mapper.Sc\bin\release\Glass.Mapper.Sc.dll" target="lib\Glass.Mapper.Sc.dll" />
+    <file src="Source\Glass.Mapper.Sc\bin\release\Glass.Mapper.Sc.pdb" target="lib\Glass.Mapper.Sc.pdb" />
+    <file src="Source\Glass.Mapper.Sc\bin\release\Glass.Mapper.Sc.xml" target="lib\Glass.Mapper.Sc.xml" />
 
     <!-- Glass.Mapper.Sc.CastleWindsor -->
-	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.dll" />
-	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.pdb" />
-	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\72\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.CastleWindsor.xml" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\release\Glass.Mapper.Sc.CastleWindsor.dll" target="lib\Glass.Mapper.Sc.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\release\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\Glass.Mapper.Sc.CastleWindsor.pdb" />
+	  <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\release\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\Glass.Mapper.Sc.CastleWindsor.xml" />
 
     <!-- Glass.Mapper.Sc.Mvc-->
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.dll" target="lib\net45\Glass.Mapper.Sc.Mvc.dll" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.pdb" target="lib\net45\Glass.Mapper.Sc.Mvc.pdb" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.xml" target="lib\net45\Glass.Mapper.Sc.Mvc.xml" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.dll" target="lib\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.pdb" target="lib\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\release\Glass.Mapper.Sc.Mvc.xml" target="lib\Glass.Mapper.Sc.Mvc.xml" />
 
     <!-- ***********CONFIG FILES***********  -->
     <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" target="content\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
