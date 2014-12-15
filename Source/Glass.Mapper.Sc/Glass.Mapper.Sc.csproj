@@ -41,7 +41,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
-  <Import Project="..\..\Configuration.proj" />
+  <!--Start: Must come after all PropertyGroups -->
+<Import Project="..\..\Configuration.proj" />
+<!--End: Must come after all PropertyGroups -->
 
   <ItemGroup>
     <Reference Include="System" />

@@ -12,7 +12,6 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <Import Project="..\..\Configuration.proj" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -36,12 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
-    <OutputPath>bin\Sc72\</OutputPath>
-  </PropertyGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
