@@ -36,7 +36,7 @@
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
   
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <ItemGroup>
     
     <Reference Include="Sitecore.Analytics">
       <HintPath>..\..\$(ScDir)Sitecore.Analytics.dll</HintPath>
