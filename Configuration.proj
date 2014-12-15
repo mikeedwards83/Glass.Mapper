@@ -9,6 +9,13 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Sc80\</OutputPath>
+    <DefineConstants>SC80</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc75|AnyCPU' Or '$(ScVersion)' == 'sc75' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin75\</ScDir>
@@ -16,7 +23,7 @@
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Sc75\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>SC75</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>

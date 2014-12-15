@@ -38,6 +38,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
+using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Web;
@@ -857,7 +858,14 @@ namespace Glass.Mapper.Sc
             }
             htmlParams.Remove(ImageParameterKeys.WIDTH);
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
+            string mediaUrl = builder.ToString();
+
+#if (SC80 || SC75)
+            mediaUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
+#endif
+
+            return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams));
+
         }
 
         #endregion

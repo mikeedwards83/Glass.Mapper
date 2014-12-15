@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU'">
+    <OutputPath>bin\Sc80\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\$(ScDir)Sitecore.Kernel.dll</HintPath>

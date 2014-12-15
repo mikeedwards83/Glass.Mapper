@@ -114,6 +114,9 @@
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <OutputPath>.\bin\Sc75\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc80' ">
+    <OutputPath>.\bin\Sc80\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
       <Value>$(AssemblyFileVersion)</Value>
