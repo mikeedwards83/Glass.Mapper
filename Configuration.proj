@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc75|AnyCPU' Or '$(ScVersion)' == 'sc75' ">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin75\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU' Or '$(ScVersion)' == 'sc72' ">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc71|AnyCPU' Or '$(ScVersion)' == 'sc71' ">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin71\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">4</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc70|AnyCPU' Or '$(ScVersion)' == 'sc70' ">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin70\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
+</Project>
