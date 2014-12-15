@@ -246,7 +246,7 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-    <Message Importance="high" Text="ScKernel: $(ScKernel)" />
+    <Message Importance="high" Text="ScVersion: $(ScVersion)" />
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
 </Project>
