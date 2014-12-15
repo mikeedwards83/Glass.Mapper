@@ -17,7 +17,6 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="..\..\Configuration.proj" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -42,6 +41,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
+  <Import Project="..\..\Configuration.proj" />
+
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
