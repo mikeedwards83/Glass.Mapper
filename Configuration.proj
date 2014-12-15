@@ -7,6 +7,13 @@
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <!-- Customisable Parameters End-->
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80' ">
+    <!-- Customisable Parameters Start-->
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <!-- Customisable Parameters End-->
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc75|AnyCPU' Or '$(ScVersion)' == 'sc75' ">
     <!-- Customisable Parameters Start-->
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin75\</ScDir>
