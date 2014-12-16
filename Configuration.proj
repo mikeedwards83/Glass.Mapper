@@ -5,7 +5,6 @@
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Sc80\</OutputPath>
     <DefineConstants>SC80</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -17,7 +16,6 @@
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Sc75\</OutputPath>
     <DefineConstants>SC75</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
