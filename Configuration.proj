@@ -10,6 +10,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc75|AnyCPU' Or '$(ScVersion)' == 'sc75' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin75\</ScDir>
@@ -21,20 +22,24 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU' Or '$(ScVersion)' == 'sc72' Or '$(ScVersion)' == ''">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc71|AnyCPU' Or '$(ScVersion)' == 'sc71' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin71\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">4</Mvc>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc70|AnyCPU' Or '$(ScVersion)' == 'sc70' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin70\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 </Project>

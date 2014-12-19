@@ -57,6 +57,8 @@ namespace Glass.Mapper
         /// </summary>
         public Dictionary<string, object> Parameters { get; set; }
 
+        public abstract string GetUniqueKey();
+
         public virtual string DataSummary()
         {
             return string.Empty;

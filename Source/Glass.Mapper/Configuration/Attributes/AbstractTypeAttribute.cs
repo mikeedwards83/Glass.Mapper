@@ -39,7 +39,13 @@ namespace Glass.Mapper.Configuration.Attributes
             config.Type = type;
             config.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             config.AutoMap = AutoMap;
+            config.Cachable = Cachable;
         }
+
+        /// <summary>
+        /// Indicates that the type is cachable by Glass.Mapper
+        /// </summary>
+        public bool Cachable { get; set; }
 
         /// <summary>
         /// Indicates that properties should be automapped rather than loaded explicitly. 

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -43,7 +42,6 @@
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
   <!--End: Must come after all PropertyGroups -->
-
   <ItemGroup>
     <Reference Include="Castle.Core">
       <SpecificVersion>False</SpecificVersion>
@@ -67,6 +65,9 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\HttpCache.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\InMemoryCache.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
@@ -104,6 +105,8 @@
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAdd\CacheAddTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />

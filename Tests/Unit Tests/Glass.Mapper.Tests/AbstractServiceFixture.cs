@@ -114,6 +114,10 @@ namespace Glass.Mapper.Tests
         public class StubAbstractTypeCreationContext : AbstractTypeCreationContext
         {
 
+            public override string GetUniqueKey()
+            {
+                return string.Empty;
+            }
         }
 
         public class StubAbstractDataMappingContext : AbstractDataMappingContext

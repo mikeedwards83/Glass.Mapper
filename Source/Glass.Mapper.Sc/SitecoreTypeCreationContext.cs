@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 
@@ -51,6 +52,18 @@ namespace Glass.Mapper.Sc
                 return "Item is null";
             }
             return Item.Paths.FullPath;
+        }
+
+        public override string GetUniqueKey()
+        {
+
+            return string.Format("{0}{1}{2}{3}{4}",
+                SitecoreService.GlassContext.Name,
+                Item.ID,
+                Item["__Revision"],
+                RequestedType.FullName,
+                IsLazy
+                );
         }
     }
     

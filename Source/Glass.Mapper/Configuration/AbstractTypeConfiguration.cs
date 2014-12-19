@@ -69,6 +69,11 @@ namespace Glass.Mapper.Configuration
 
 
         /// <summary>
+        /// Indicates that the type is cachable
+        /// </summary>
+        public bool Cachable { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.
         /// </summary>
         public AbstractTypeConfiguration()
