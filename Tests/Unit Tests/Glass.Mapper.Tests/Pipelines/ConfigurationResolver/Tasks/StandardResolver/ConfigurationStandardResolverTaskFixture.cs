@@ -82,6 +82,11 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             {
                 return string.Empty;
             }
+
+            public override bool CacheEnabled
+            {
+                get { return true; }
+            }
         }
         #endregion
     }

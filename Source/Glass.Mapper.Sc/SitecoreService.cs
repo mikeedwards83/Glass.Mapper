@@ -94,8 +94,14 @@ namespace Glass.Mapper.Sc
             Database = database;
         }
 
+
+
         public override void Initiate(IDependencyResolver resolver)
         {
+            CacheEnabled = !Sitecore.Context.PageMode.IsPageEditor &&
+                           !Sitecore.Context.PageMode.IsPageEditorEditing &&
+                           (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] == "true");
+
             Config = resolver.Resolve<Config>();
             base.Initiate(resolver);
         }

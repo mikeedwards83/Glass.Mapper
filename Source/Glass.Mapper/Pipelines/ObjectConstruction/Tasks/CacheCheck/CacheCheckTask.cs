@@ -13,7 +13,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result == null && args.Configuration.Cachable)
+            if (args.Result == null && args.Configuration.Cachable && args.AbstractTypeCreationContext.CacheEnabled && DisableCache.Current == CacheSetting.Enabled)
             {
                 var key = args.Context.Name + args.AbstractTypeCreationContext.GetUniqueKey();
 

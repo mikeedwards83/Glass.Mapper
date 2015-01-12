@@ -59,6 +59,11 @@ namespace Glass.Mapper.Umb
                 ); 
                 
         }
+        public override bool CacheEnabled
+        {
+            get { return UmbracoService.CacheEnabled; }
+        }
+       
     }
 }
 

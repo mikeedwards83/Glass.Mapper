@@ -57,17 +57,26 @@ namespace Glass.Mapper.Sc
         public override string GetUniqueKey()
         {
 
-            return string.Format("{0}{1}{2}{3}{4}",
+            return string.Format("{0}{1}{2}{3}{4}{5}",
                 SitecoreService.GlassContext.Name,
                 Item.ID,
                 Item["__Revision"],
+                Item.Database.Name,
                 RequestedType.FullName,
                 IsLazy
                 );
         }
+
+
+
+        public override bool CacheEnabled
+        {
+            get { return SitecoreService.CacheEnabled; }
+        }
     }
-    
 }
+    
+
 
 
 

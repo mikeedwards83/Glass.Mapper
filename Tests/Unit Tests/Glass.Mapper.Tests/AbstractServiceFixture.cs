@@ -118,6 +118,11 @@ namespace Glass.Mapper.Tests
             {
                 return string.Empty;
             }
+
+            public override bool CacheEnabled
+            {
+                get { return true; }
+            }
         }
 
         public class StubAbstractDataMappingContext : AbstractDataMappingContext

@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
@@ -74,7 +75,7 @@ namespace Glass.Mapper
         protected AbstractService()
             : this(Context.Default)
         {
-
+            
         }
 
         /// <summary>
@@ -93,7 +94,6 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Context is null</exception>
         protected AbstractService(Context glassContext)
         {
-
 
             GlassContext = glassContext;
             if (GlassContext == null) 
@@ -115,7 +115,7 @@ namespace Glass.Mapper
 
         public virtual void Initiate(IDependencyResolver resolver)
         {
-            
+            CacheEnabled = true;            
         }
 
         /// <summary>
@@ -204,6 +204,9 @@ namespace Glass.Mapper
 
             }
         }
+
+
+        public bool CacheEnabled { get; set; }
     }
 
     /// <summary>
@@ -243,6 +246,11 @@ namespace Glass.Mapper
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
 
         ConfigurationResolverArgs RunConfigurationPipeline(AbstractTypeCreationContext abstractTypeCreationContext);
+
+        /// <summary>
+        /// Indicates if the cache should be enable when using this service.
+        /// </summary>
+        bool CacheEnabled { get; set; }
     }
 }
 

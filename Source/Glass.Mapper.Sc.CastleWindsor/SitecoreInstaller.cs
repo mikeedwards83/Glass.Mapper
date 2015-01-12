@@ -20,6 +20,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Glass.Mapper.Caching;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -27,6 +28,8 @@ using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
@@ -200,27 +203,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldIntegerMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLinkMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldLongMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldDictionaryMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNullableDoubleMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNullableDecimalMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNullableFloatMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
-                         .ImplementedBy<SitecoreFieldNullableGuidMapper>()
-                         .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNameValueCollectionMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldDictionaryMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableDateTimeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableDoubleMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableDecimalMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableFloatMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableGuidMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldNullableIntMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldRulesMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreFieldStreamMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
@@ -424,6 +413,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CacheCheckTask>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<EnforcedTemplateCheck>().LifestyleCustom<NoTrackLifestyleManager>()
             );
             
@@ -436,10 +426,18 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CacheAddTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
+
+            if (!container.Kernel.HasComponent(typeof(ICacheManager)))
+            {
+                container.Register(
+                    Component.For<ICacheManager>().ImplementedBy<HttpCache>().LifestyleCustom<NoTrackLifestyleManager>()
+                    );
+            }
         }
     }
 
