@@ -343,7 +343,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, null);
+            return CreateType<T>(item, isLazy, inferType, null);
         }
 
         /// <summary>
@@ -371,12 +371,12 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK>(Item item, TK param1, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1);
+            return CreateType<T>(item, isLazy, inferType, param1);
 
         }
 
         /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
+        /// Creates a class from the specified item with two constructor parameters
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
@@ -389,11 +389,11 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL>(Item item, TK param1, TL param2, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2);
+            return CreateType<T>(item, isLazy, inferType, param1, param2);
         }
 
         /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
+        /// Creates a class from the specified item with three constructor parameters
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
@@ -408,11 +408,11 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2, param3);
+            return CreateType<T>(item, isLazy, inferType, param1, param2, param3);
         }
 
         /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
+        /// Creates a class from the specified item with four constructor parameters
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
@@ -429,7 +429,43 @@ namespace Glass.Mapper.Sc
         /// <returns>The item as the specified type</returns>
         public T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false)
         {
-            return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2, param3, param4);
+            return CreateType<T>(item, isLazy, inferType, param1, param2, param3, param4);
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with fifth constructor parameters
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TN">The type of the fourth constructor parameter</typeparam>
+        /// <typeparam name="TO">The type of the fifth constructor parameter</typeparam>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <param name="param5">The value of the fifth parameter of the constructor</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateType<T, TK, TL, TM, TN, TO>(Item item, TK param1, TL param2, TM param3, TN param4, TO param5, bool isLazy = false, bool inferType = false)
+        {
+            return CreateType<T>(item, isLazy, inferType, param1, param2, param3, param4, param5);
+        }
+
+        /// <summary>
+        /// Creates a class from the specified item with constructor parameters
+        /// </summary>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="constructorParameters">The constructor parameters</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        public T CreateType<T>(Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters)
+        {
+            return (T)CreateType(typeof(T), item, isLazy, inferType, null, constructorParameters);
         }
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
@@ -437,8 +473,8 @@ namespace Glass.Mapper.Sc
             if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
 
 
-            if (constructorParameters != null && constructorParameters.Length > 4)
-                throw new NotSupportedException("Maximum number of constructor parameters is 4");
+            if (constructorParameters != null && constructorParameters.Length > 10)
+                throw new NotSupportedException("Maximum number of constructor parameters is 10");
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;

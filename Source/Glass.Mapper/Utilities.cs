@@ -51,7 +51,7 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>IDictionary{ConstructorInfoDelegate}.</returns>
-        /// <exception cref="MapperException">Only supports constructors with  a maximum of 4 parameters</exception>
+        /// <exception cref="MapperException">Only supports constructors with  a maximum of 10 parameters</exception>
         public static IDictionary<ConstructorInfo, Delegate> CreateConstructorDelegates(Type type)
         {
             var constructors = type.GetConstructors();
@@ -95,8 +95,26 @@ namespace Glass.Mapper
                     case 4:
                         genericType = typeof(Func<,,,,>);
                         break;
+                    case 5:
+                        genericType = typeof(Func<,,,,,>);
+                        break;
+                    case 6:
+                        genericType = typeof(Func<,,,,,,>);
+                        break;
+                    case 7:
+                        genericType = typeof(Func<,,,,,,,>);
+                        break;
+                    case 8:
+                        genericType = typeof(Func<,,,,,,,,>);
+                        break;
+                    case 9:
+                        genericType = typeof(Func<,,,,,,,,>);
+                        break;
+                    case 10:
+                        genericType = typeof(Func<,,,,,,,,,>);
+                        break;
                     default:
-                        throw new MapperException("Only supports constructors with  a maximum of 4 parameters");
+                        throw new MapperException("Only supports constructors with a maximum of 10 parameters");
                 }
 
                 var delegateType = genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
