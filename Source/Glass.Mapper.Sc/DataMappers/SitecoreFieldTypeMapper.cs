@@ -83,13 +83,15 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (context.Service.GlassContext == null)
                 throw new NullReferenceException("The service glass context is null");
+            
+            if (context.Service.Database == null)
+                throw new NullReferenceException("The database is not set for the service");
 
             if (value == null)
                 return string.Empty;
 
             var type = value.GetType();
 
-            // potential null service / context
             var typeConfig = context.Service.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(value);
 
             if(typeConfig == null)
