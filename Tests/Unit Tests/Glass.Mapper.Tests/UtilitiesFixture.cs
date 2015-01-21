@@ -137,18 +137,7 @@ namespace Glass.Mapper.Tests
             Assert.AreEqual(4, result.First().Key.GetParameters().Length);
         }
 
-        [Test]
-        [ExpectedException(typeof(MapperException))]
-        public void CreateConstructorDelegates_FiveParameters_CreatesSingleConstructor()
-        {
-            //Assign
-            Type type = typeof(StubFiveParameters);
-
-            //Act
-            var result = Utilities.CreateConstructorDelegates(type);
-
-            //Assert
-        }
+       
 
 
         #endregion

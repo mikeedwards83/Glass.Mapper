@@ -688,15 +688,20 @@ namespace Glass.Mapper.Sc.Integration
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var service = new SitecoreService(db);
-            string query = "/sitecore/content/Tests/SitecoreService/Query/*";
-            var language = LanguageManager.GetLanguage("af-ZA");
 
-            //Act
-            var result = service.Query<StubClass>(query, language);
+            //this is forced on to avoid other test leaving the disabler in the incorrect state
+            using (new VersionCountDisabler(VersionCountState.Enabled))
+            {
+                string query = "/sitecore/content/Tests/SitecoreService/Query/*";
+                var language = LanguageManager.GetLanguage("af-ZA");
 
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count());
+                //Act
+                var result = service.Query<StubClass>(query, language);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(2, result.Count());
+            }
         }
         #endregion
 
