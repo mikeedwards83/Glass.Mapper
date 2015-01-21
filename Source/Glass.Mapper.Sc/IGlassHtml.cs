@@ -15,11 +15,11 @@
  
 */ 
 //-CRE-
+
 using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq.Expressions;
-using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data;
 
@@ -72,8 +72,8 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
-        /// <param name="image">The image to render</param>
-        /// <param name="attributes">Additional parameters to add. Do not include alt or src</param>
+        /// <param name="field">The image to render</param>
+        /// <param name="parameters">Additional parameters to add. Do not include alt or src</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
         /// <returns>An img HTML element</returns>
         string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = true);
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// Render HTML for a link
         /// </summary>
-        /// <param name="link">The link to render</param>
+        /// <param name="field">The link to render</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
                              bool isEditable = false, string contents = null);
