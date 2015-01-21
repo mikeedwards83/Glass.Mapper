@@ -116,9 +116,7 @@ namespace Glass.Mapper.Sc
         }
         public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions)
         {
-    if (urlOptions == 0) return defaultOptions;
-
-            var t = (urlOptions & SitecoreInfoUrlOptions.AddAspxExtension);
+            if (urlOptions == 0) return defaultOptions;
 
             Func<SitecoreInfoUrlOptions, bool> flagCheck =
                 option => (urlOptions & option) == option;
@@ -260,6 +258,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="foundItems">The found items.</param>
         /// <param name="language">The language.</param>
+        /// <param name="config"></param>
         /// <returns>IEnumerable{Item}.</returns>
         public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
         {
