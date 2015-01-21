@@ -18,6 +18,8 @@ namespace $rootnamespace$.App_Start
 {
 	public class  GlassMapperSc
 	{
+		public static DependencyResolver DependencyResolver { get; private set; }
+
 		public void Process(PipelineArgs args){
 			GlassMapperSc.Start();
 		}
@@ -25,13 +27,13 @@ namespace $rootnamespace$.App_Start
 		public static void Start()
 		{
 			//create the resolver
-			var resolver = DependencyResolver.CreateStandardResolver();
+			DependencyResolver = GlassMapperScCustom.CreateResolver() ?? DependencyResolver.CreateStandardResolver();
 
 			//install the custom services
-			GlassMapperScCustom.CastleConfig(resolver.Container);
+			GlassMapperScCustom.CastleConfig(DependencyResolver.Container);
 
 			//create a context
-			var context = Glass.Mapper.Context.Create(resolver);
+			var context = Glass.Mapper.Context.Create(DependencyResolver);
 			context.Load(      
 				GlassMapperScCustom.GlassLoaders()        				
 				);

@@ -47,5 +47,10 @@ namespace $rootnamespace$.App_Start
              * CODE FIRST END
              */
 		}
+
+		public static DependencyResolver CreateResolver(){
+			// use this if you want to create a resolver using your own container.
+			return null;
+		}
     }
 }
