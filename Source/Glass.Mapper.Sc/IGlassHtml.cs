@@ -70,15 +70,13 @@ namespace Glass.Mapper.Sc
         string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null);
 
         /// <summary>
-        /// Renders an image allowing simple page editor support
+        /// Renders HTML for an image
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <param name="field"></param>
-        /// <param name="parameters"></param>
-        /// <param name="isEditable"></param>
-        /// <returns></returns>
-        string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false);
+        /// <param name="image">The image to render</param>
+        /// <param name="attributes">Additional parameters to add. Do not include alt or src</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
+        /// <returns>An img HTML element</returns>
+        string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = true);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
                                       object attributes = null, bool isEditable = false);

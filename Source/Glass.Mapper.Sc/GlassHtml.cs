@@ -233,11 +233,13 @@ namespace Glass.Mapper.Sc
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
         /// <returns></returns>
         public virtual string RenderImage<T>(T model,
             Expression<Func<T, object>> field,
             object parameters = null,
-            bool isEditable = false)
+            bool isEditable = false,
+            bool outputHeightWidth = true)
         {
 
             var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
@@ -253,7 +255,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs);
+                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth);
             }
         }
 
@@ -743,11 +745,12 @@ namespace Glass.Mapper.Sc
         /// Renders HTML for an image
         /// </summary>
         /// <param name="image">The image to render</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
         /// <returns>An img HTML element</returns>
         [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public virtual string RenderImage(Fields.Image image)
+        public virtual string RenderImage(Fields.Image image, bool outputHeightWidth = true)
         {
-            return RenderImage(image, null);
+            return RenderImage(image, null, outputHeightWidth);
         }
 
         /// <summary>
@@ -755,13 +758,30 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="image">The image to render</param>
         /// <param name="attributes">Additional parameters to add. Do not include alt or src</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
         /// <returns>An img HTML element</returns>
-        public virtual string RenderImage(Fields.Image image, SafeDictionary<string> attributes)
+        public virtual string RenderImage(Fields.Image image, SafeDictionary<string> attributes, bool outputHeightWidth = true)
         {
 
+            if (attributes == null)
+            {
+                attributes = new SafeDictionary<string>();
+            }
 
+            //should there be some warning about these removals?
+            AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
+            AttributeCheck(attributes, ImageParameterKeys.ALT, image.Alt);
+            AttributeCheck(attributes, ImageParameterKeys.BORDER, image.Border);
+            if (image.HSpace > 0)
+                AttributeCheck(attributes, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
+            if (image.VSpace > 0)
+                AttributeCheck(attributes, ImageParameterKeys.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
+            if (image.Width > 0)
+                AttributeCheck(attributes, ImageParameterKeys.WIDTHHTML, image.Width.ToString(CultureInfo.InvariantCulture));
+            if (image.Height > 0)
+                AttributeCheck(attributes, ImageParameterKeys.HEIGHTHTML, image.Height.ToString(CultureInfo.InvariantCulture));
 
-            var urlParams = new NameValueCollection();
+            var urlParams = new SafeDictionary<string>();
             var htmlParams = new SafeDictionary<string>();
 
             /*
@@ -791,6 +811,8 @@ namespace Glass.Mapper.Sc
                 remove(key);
             };
 
+
+
             var keys = attributes.Keys.ToList();
             foreach (var key in keys)
             {
@@ -801,8 +823,6 @@ namespace Glass.Mapper.Sc
                     case ImageParameterKeys.HSPACE:
                     case ImageParameterKeys.VSPACE:
                     case ImageParameterKeys.CLASS:
-                    case ImageParameterKeys.WIDTHHTML:
-                    case ImageParameterKeys.HEIGHTHTML:
                         html(key);
                         break;
                     case ImageParameterKeys.OUTPUT_METHOD:
@@ -819,6 +839,8 @@ namespace Glass.Mapper.Sc
                     case ImageParameterKeys.DISABLE_MEDIA_CACHE:
                         url(key);
                         break;
+                    case ImageParameterKeys.WIDTHHTML:
+                    case ImageParameterKeys.HEIGHTHTML:
                     case ImageParameterKeys.WIDTH:
                     case ImageParameterKeys.HEIGHT:
                         both(key);
@@ -829,33 +851,49 @@ namespace Glass.Mapper.Sc
                 }
             }
 
-            var builder = new UrlBuilder(image.Src);
+           
 
-            foreach (var key in urlParams.AllKeys)
+           
+
+           
+
+
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams[ImageParameterKeys.HEIGHTHTML] == null)
             {
-                builder[key] = urlParams[key];
-            }
-
-            //should there be some warning about these removals?
-            AttributeCheck(htmlParams, ImageParameterKeys.CLASS, image.Class);
-            AttributeCheck(htmlParams, ImageParameterKeys.ALT, image.Alt);
-            AttributeCheck(htmlParams, ImageParameterKeys.BORDER, image.Border);
-            if(image.HSpace >0)
-                AttributeCheck(htmlParams, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
-            if(image.VSpace >0)
-                AttributeCheck(htmlParams, ImageParameterKeys.VSPACE, image.VSpace.ToString(CultureInfo.InvariantCulture));
-
-            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams["height"] == null)
-            {
-                htmlParams["height"] = htmlParams[ImageParameterKeys.HEIGHT];
+                htmlParams[ImageParameterKeys.HEIGHTHTML] = htmlParams[ImageParameterKeys.HEIGHT];
             }
             htmlParams.Remove(ImageParameterKeys.HEIGHT);
 
-            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.WIDTH) && htmlParams["width"] == null)
+            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.WIDTH) && htmlParams[ImageParameterKeys.WIDTHHTML] == null)
             {
-                htmlParams["width"] = htmlParams[ImageParameterKeys.WIDTH];
+                htmlParams[ImageParameterKeys.WIDTHHTML] = htmlParams[ImageParameterKeys.WIDTH];
             }
             htmlParams.Remove(ImageParameterKeys.WIDTH);
+
+            if (urlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHTHTML) && urlParams[ImageParameterKeys.HEIGHT] == null)
+            {
+                urlParams[ImageParameterKeys.HEIGHT] = urlParams[ImageParameterKeys.HEIGHTHTML];
+            }
+            urlParams.Remove(ImageParameterKeys.HEIGHTHTML);
+
+            if (urlParams.Keys.Any(x => x == ImageParameterKeys.WIDTHHTML) && urlParams[ImageParameterKeys.WIDTH] == null)
+            {
+                urlParams[ImageParameterKeys.WIDTH] = urlParams[ImageParameterKeys.WIDTHHTML];
+            }
+            urlParams.Remove(ImageParameterKeys.WIDTHHTML);
+
+            if (!outputHeightWidth)
+            {
+                htmlParams.Remove(ImageParameterKeys.WIDTHHTML);
+                htmlParams.Remove(ImageParameterKeys.HEIGHTHTML);
+            }
+
+            var builder = new UrlBuilder(image.Src);
+
+            foreach (var key in urlParams.Keys)
+            {
+                builder.AddToQueryString(key, urlParams[key]);
+            }
 
             return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
         }
