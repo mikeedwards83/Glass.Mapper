@@ -29,57 +29,57 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The default
         /// </summary>
-        Default = 0x00,
+        Default = 0,
         /// <summary>
         /// The add aspx extension
         /// </summary>
-        AddAspxExtension = 0x01,
+        AddAspxExtension = 1,
         /// <summary>
         /// The always include server URL
         /// </summary>
-        AlwaysIncludeServerUrl = 0x02,
+        AlwaysIncludeServerUrl = 2,
         /// <summary>
         /// The encode names
         /// </summary>
-        EncodeNames = 0x04,
+        EncodeNames = 4,
 
         /// <summary>
         /// Do not use with LanguageEmbeddingAsNeeded, LanguageEmbeddingNever
         /// </summary>
-        LanguageEmbeddingAlways = 0x08,
+        LanguageEmbeddingAlways = 8,
 
         /// <summary>
         /// Do not use with LanguageEmbeddingAlways, LanguageEmbeddingNever
         /// </summary>
-        LanguageEmbeddingAsNeeded = 0x16,
+        LanguageEmbeddingAsNeeded = 16,
 
         /// <summary>
         /// Do not use with LanguageEmbeddingAlways, LanguageEmbeddingAsNeeded
         /// </summary>
-        LanguageEmbeddingNever = 0x32,
+        LanguageEmbeddingNever = 32,
 
         /// <summary>
         /// Do not use with LanguageLocationQueryString
         /// </summary>
-        LanguageLocationFilePath = 0x64,
+        LanguageLocationFilePath = 64,
 
         /// <summary>
         /// Do not use with LanguageLocationFilePath
         /// </summary>
-        LanguageLocationQueryString = 0x128,
+        LanguageLocationQueryString = 128,
 
         /// <summary>
         /// The shorten urls
         /// </summary>
-        ShortenUrls = 0x256,
+        ShortenUrls = 256,
         /// <summary>
         /// The site resolving
         /// </summary>
-        SiteResolving = 0x512,
+        SiteResolving = 512,
         /// <summary>
         /// The use use display name
         /// </summary>
-        UseUseDisplayName = 0x1024
+        UseUseDisplayName = 1024
 
 
     }

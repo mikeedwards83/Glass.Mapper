@@ -112,7 +112,11 @@ namespace Glass.Mapper.Sc
         {
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
 
-            if (urlOptions == 0) return defaultUrl;
+            return CreateUrlOptions(urlOptions, defaultUrl);
+        }
+        public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions)
+        {
+    if (urlOptions == 0) return defaultOptions;
 
             var t = (urlOptions & SitecoreInfoUrlOptions.AddAspxExtension);
 
@@ -121,27 +125,27 @@ namespace Glass.Mapper.Sc
 
 
             //check for any default overrides
-            defaultUrl.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) ? true : defaultUrl.AddAspxExtension;
-            defaultUrl.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) ? true : defaultUrl.AlwaysIncludeServerUrl;
-            defaultUrl.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) ? true : defaultUrl.EncodeNames;
-            defaultUrl.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) ? true : defaultUrl.ShortenUrls;
-            defaultUrl.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) ? true : defaultUrl.SiteResolving;
-            defaultUrl.UseDisplayName =flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) ? true : defaultUrl.UseDisplayName;
+            defaultOptions.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) ? true : defaultOptions.AddAspxExtension;
+            defaultOptions.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) ? true : defaultOptions.AlwaysIncludeServerUrl;
+            defaultOptions.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) ? true : defaultOptions.EncodeNames;
+            defaultOptions.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) ? true : defaultOptions.ShortenUrls;
+            defaultOptions.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) ? true : defaultOptions.SiteResolving;
+            defaultOptions.UseDisplayName =flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) ? true : defaultOptions.UseDisplayName;
 
 
             if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAlways))
-                defaultUrl.LanguageEmbedding = LanguageEmbedding.Always;
+                defaultOptions.LanguageEmbedding = LanguageEmbedding.Always;
             else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded))
-                defaultUrl.LanguageEmbedding = LanguageEmbedding.AsNeeded;
+                defaultOptions.LanguageEmbedding = LanguageEmbedding.AsNeeded;
             else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingNever))
-                defaultUrl.LanguageEmbedding = LanguageEmbedding.Never;
+                defaultOptions.LanguageEmbedding = LanguageEmbedding.Never;
 
             if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationFilePath))
-                defaultUrl.LanguageLocation = LanguageLocation.FilePath;
+                defaultOptions.LanguageLocation = LanguageLocation.FilePath;
             else if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationQueryString))
-                defaultUrl.LanguageLocation = LanguageLocation.QueryString;
+                defaultOptions.LanguageLocation = LanguageLocation.QueryString;
 
-            return defaultUrl;
+            return defaultOptions;
 
         }
 
