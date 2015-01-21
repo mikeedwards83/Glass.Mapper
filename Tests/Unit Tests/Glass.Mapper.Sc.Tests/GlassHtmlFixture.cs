@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=240&amp;h=105' alt='someAlt' height='105' width='380' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=240' alt='someAlt' height='105' width='380' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersHeight_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=200&amp;h=450' height='450' alt='someAlt' width='200' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450&amp;w=200' height='450' alt='someAlt' width='200' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -63,7 +63,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersClass_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=200&amp;h=105' alt='someAlt' height='105' class='someClass' width='200' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='someClass' width='200' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithWidthAndStretcj_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=900&amp;as=True' alt='someAlt' height='105' width='900' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;as=True&amp;w=900' alt='someAlt' height='105' width='900' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -107,7 +107,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithClass_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=200&amp;h=105' alt='someAlt' height='105' class='AClass' width='200' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='AClass' width='200' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -130,7 +130,7 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?w=200&amp;h=105' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?w=400&amp;h=105' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -179,7 +179,7 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?w=400&amp;h=105' vspace='15' hspace='10' border='9' alt='someAlt' />";
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=400' vspace='15' hspace='10' border='9' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -311,6 +311,31 @@ namespace Glass.Mapper.Sc.Tests
 
             var model = new { Link = link };
             var parameters = new NameValueCollection { { "class", "myclass" } };
+            var content = "my other content";
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, parameters, contents: content);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
+        [Test]
+        public void RenderLink_WithMultiParametersRepeated_ReturnsAllParamters()
+        {
+            //Arrange
+            var expected =
+                "<a href='/somewhere.aspx?temp=fred&amp;temp=fred2&amp;temp=fred3&amp;temp1=jane' class='myclass' >my other content</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "/somewhere.aspx";
+            link.Query = "temp=fred&temp=fred2&temp=fred3&temp1=jane";
+
+            var model = new {Link = link};
+            var parameters = new NameValueCollection {{"class", "myclass"}};
             var content = "my other content";
 
             //Act
