@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -37,7 +37,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldStringMapper"/> class.
         /// </summary>
-        public SitecoreFieldStringMapper() : base(typeof (string))
+        public SitecoreFieldStringMapper()
+            : base(typeof(string))
         {
         }
 
@@ -45,7 +46,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
 
         private static HashSet<Guid> _notRichTextSet = new HashSet<Guid>();
-         
+
         /// <summary>
         /// Gets the field.
         /// </summary>
@@ -74,7 +75,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 renderFieldArgs.DisableWebEdit = true;
                 CorePipeline.Run("renderField", renderFieldArgs);
 
-                return renderFieldArgs.Result.FirstPart+renderFieldArgs.Result.LastPart;
+                return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
 
                 //FieldRenderer renderer = new FieldRenderer();
                 //renderer.Item = field.Item;
@@ -105,13 +106,13 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return;
             }
-            
+
             if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
             {
                 throw new NotSupportedException("It is not possible to save data from a rich text field when the data isn't raw."
                     + "Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));
             }
-            
+
             field.Value = value != null ? value.ToString() : null;
         }
 
