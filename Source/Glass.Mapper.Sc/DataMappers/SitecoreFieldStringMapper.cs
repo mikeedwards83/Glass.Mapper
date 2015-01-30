@@ -18,11 +18,13 @@
 
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.Web.UI.WebControls;
@@ -45,7 +47,7 @@ namespace Glass.Mapper.Sc.DataMappers
         private const string _richTextKey = "rich text";
 
 
-        private static HashSet<Guid> _notRichTextSet = new HashSet<Guid>();
+        private static ConcurrentDictionary<Guid, bool> isRichTextDictionary = new ConcurrentDictionary<Guid, bool>();
 
         /// <summary>
         /// Gets the field.
@@ -60,34 +62,43 @@ namespace Glass.Mapper.Sc.DataMappers
                 return string.Empty;
 
             if (config.Setting == SitecoreFieldSettings.RichTextRaw)
-                return field.Value;
-
-            if (_notRichTextSet.Contains(field.ID.Guid))
             {
                 return field.Value;
             }
 
-            if (field.TypeKey == _richTextKey)
+            Guid fieldGuid = field.ID.Guid;
+
+            // shortest route - we know whether or not its rich text
+            if (isRichTextDictionary.ContainsKey(fieldGuid))
             {
-                RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
-                renderFieldArgs.Item = field.Item;
-                renderFieldArgs.FieldName = field.Name;
-                renderFieldArgs.DisableWebEdit = true;
-                CorePipeline.Run("renderField", renderFieldArgs);
-
-                return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
-
-                //FieldRenderer renderer = new FieldRenderer();
-                //renderer.Item = field.Item;
-                //renderer.FieldName = field.Name;
-                //renderer.Parameters = string.Empty;
-                //renderer.DisableWebEditing = true;
-                //return renderer.Render();
+                return GetResult(field, isRichTextDictionary[fieldGuid]);
             }
 
-            _notRichTextSet.Add(field.ID.Guid);
+            // we don't know - it might still be rich text
+            bool isRichText = field.TypeKey == _richTextKey;
+            isRichTextDictionary.TryAdd(fieldGuid, isRichText);
 
-            return field.Value;
+            // now we know it isn't rich text - return the raw result.
+            return GetResult(field, isRichText);
+        }
+
+        private string GetResult(Field field, bool isRichText)
+        {
+            if (!isRichText)
+            {
+                return field.Value;
+            }
+
+            RenderFieldArgs renderFieldArgs = new RenderFieldArgs
+            {
+                Item = field.Item,
+                FieldName = field.Name,
+                DisableWebEdit = true
+            };
+
+            CorePipeline.Run("renderField", renderFieldArgs);
+
+            return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
         }
 
 
