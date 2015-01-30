@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2012 Michael Edwards
  
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
-using Glass.Mapper.Sc.CastleWindsor;
+using System;
+using System.Collections.Generic;
 
-namespace Glass.Mapper.Sc.Integration.Sc7
+namespace Glass.Mapper.Sc.IoC
 {
-    public static class Utilities
+    public interface IGlassInstaller
     {
-        public static IDependencyResolver CreateStandardResolver(bool useWindsorContainer = false)
-        {
-            var resolver = DependencyResolver.CreateStandardResolver();
-            var config = new CastleWindsor.Config {UseWindsorContructor = useWindsorContainer};
-            WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config, resolver.Container);
-            sitecoreInstaller.Install();
-            return resolver;
-        }
+        List<IDependencyInstaller> Actions { get; }
     }
 }
-

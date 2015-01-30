@@ -21,7 +21,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// <summary>
     /// Config
     /// </summary>
-    public class Config :Glass.Mapper.Sc.Config
+    public class Config : Sc.Config
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Config"/> class.
@@ -30,6 +30,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             UseWindsorContructor = false;
         }
+
         /// <summary>
         /// Indicates that classes should be build using the Windsor dependency resolver. Default is False
         /// </summary>
