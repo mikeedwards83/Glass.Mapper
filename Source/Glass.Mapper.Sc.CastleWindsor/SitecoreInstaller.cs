@@ -17,25 +17,24 @@
 //-CRE-
 
 
-using System;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Glass.Mapper.Pipelines.ObjectConstruction;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.IoC;
-using Sitecore.Web.UI.HtmlControls;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
-    public class WindsorSitecoreInstaller : IoC.SitecoreInstaller
+    /// <summary>
+    /// The windsor specific Sitecore installer
+    /// </summary>
+    public class WindsorSitecoreInstaller : SitecoreInstaller
     {
-        public WindsorSitecoreInstaller(Sc.Config config, IWindsorContainer container)
-            : this(config, new WindsorDependencyRegistrar(container))
+        public WindsorSitecoreInstaller(Config config, IWindsorContainer container)
+            : this(config, new DependencyResolver(container))
         {
         }
 
-        protected WindsorSitecoreInstaller(Sc.Config config, IDependencyRegistrar dependencyRegistrar)
+        protected WindsorSitecoreInstaller(Config config, IDependencyRegistrar dependencyRegistrar)
             : base(config, dependencyRegistrar)
         {
         }
@@ -45,9 +44,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         public override void Install()
         {
-            Config windsorConfig = Config as Config;
             int index = ObjectionConstructionTaskInstaller.Actions.FindIndex(x => x.Key == "CreateMultiInferaceTask");
-            if (windsorConfig != null && windsorConfig.UseWindsorContructor && index >= 0)
+            if (Config != null && Config.UseIoCConstructor && index >= 0)
             {
                ObjectionConstructionTaskInstaller.Actions.Insert(index, new DependencyInstaller("WindsorConstruction", x => x.RegisterTransient<IObjectConstructionTask, WindsorConstruction>())); 
             }

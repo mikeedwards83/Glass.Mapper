@@ -25,7 +25,7 @@ namespace Glass.Mapper.Sc.Integration.Sc7
         public static IDependencyResolver CreateStandardResolver(bool useWindsorContainer = false)
         {
             var resolver = DependencyResolver.CreateStandardResolver();
-            var config = new CastleWindsor.Config {UseWindsorContructor = useWindsorContainer};
+            var config = new Config {UseIoCConstructor = useWindsorContainer};
             WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config, resolver.Container);
             sitecoreInstaller.Install();
             return resolver;
