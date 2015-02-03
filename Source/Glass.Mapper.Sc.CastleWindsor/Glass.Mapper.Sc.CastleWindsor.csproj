@@ -105,7 +105,7 @@
     <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SitecoreInstaller.cs" />
+    <Compile Include="WindsorSitecoreInstaller.cs" />
     <None Include="App_Start\GlassMapperScCustom.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>
