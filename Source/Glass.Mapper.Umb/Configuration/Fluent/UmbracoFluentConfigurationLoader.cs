@@ -38,8 +38,17 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         public UmbracoType<T> Add<T>()
         {
             var config = new UmbracoType<T>();
-            _types.Add(config);
             return config;
+        }
+
+        /// <summary>
+        /// Adds this instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public void Add<T>(UmbracoType<T> type)
+        {
+            _types.Add(type);
         }
 
         /// <summary>

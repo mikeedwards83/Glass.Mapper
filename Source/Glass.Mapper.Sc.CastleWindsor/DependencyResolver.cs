@@ -61,8 +61,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public T Resolve<T>(IDictionary<string, object> args = null)
         {
             if (args == null)
+            {
                 return Container.Resolve<T>();
-
+            }
 
             return Container.Resolve<T>((IDictionary) args);
         }

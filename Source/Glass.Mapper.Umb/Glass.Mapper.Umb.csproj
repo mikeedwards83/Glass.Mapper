@@ -282,6 +282,7 @@
     <Compile Include="DataMappers\UmbracoIdMapper.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IUmbracoContext.cs" />
+    <Compile Include="Maps\UmbracoGlassMap.cs" />
     <Compile Include="PropertyTypes\File.cs" />
     <Compile Include="PropertyTypes\Image.cs" />
     <Compile Include="Global.cs" />

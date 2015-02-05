@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
+    <Compile Include="Configuation\Fluent\MapGeneralFixture.cs" />
     <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
