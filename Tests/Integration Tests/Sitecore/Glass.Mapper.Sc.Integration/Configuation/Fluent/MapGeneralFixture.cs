@@ -19,7 +19,6 @@
 
 using System;
 using Castle.MicroKernel.Registration;
-using Castle.Windsor;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
