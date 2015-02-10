@@ -33,7 +33,10 @@ namespace Glass.Mapper.Sc.Integration
             {
                 resolver.Container.Register(registrations);
             }
-            resolver.Container.Install(new SitecoreInstaller(new Glass.Mapper.Sc.CastleWindsor.Config() { UseWindsorContructor = useWindsorContainer }));
+
+            Config config = new Config() { UseIoCConstructor = useWindsorContainer };
+            WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config, resolver.Container);
+            sitecoreInstaller.Install();
             return resolver;
         }
     }

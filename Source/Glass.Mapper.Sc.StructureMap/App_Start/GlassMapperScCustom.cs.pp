@@ -9,14 +9,10 @@ namespace $rootnamespace$.App_Start
 {
     public static  class GlassMapperScCustom
     {
-		public static void CastleConfig(IWindsorContainer container){
+		public static void IoCConfig(IContainer container){
 			var config = new Config();
 
-			container.Register(
-				//Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
-			);
-
-			ISitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config, container);
+			ISitecoreInstaller sitecoreInstaller = new StructureMapSitecoreInstaller(config, container);
 			sitecoreInstaller.Install();
 		}
 
@@ -47,11 +43,6 @@ namespace $rootnamespace$.App_Start
             }
              * CODE FIRST END
              */
-		}
-
-		public static DependencyResolver CreateResolver(){
-			// use this if you want to create a resolver using your own container.
-			return null;
 		}
     }
 }

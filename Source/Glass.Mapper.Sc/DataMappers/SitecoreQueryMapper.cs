@@ -34,17 +34,27 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreQueryMapper : AbstractDataMapper
     {
-        List<ISitecoreQueryParameter> _parameters;
+        private List<ISitecoreQueryParameter> _parameters; 
 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SitecoreQueryMapper"/> class.
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        public SitecoreQueryMapper(IEnumerable<ISitecoreQueryParameter> parameters)
+        protected List<ISitecoreQueryParameter> Parameters
         {
+            get
+            {
+                PopulateParameters();
+                return _parameters;
+            }
+        }
+
+        private void PopulateParameters()
+        {
+            if (_parameters != null)
+            {
+                return;
+            }
 
             _parameters = new List<ISitecoreQueryParameter>();
+
+            var parameters = DependencyResolver.ResolveAll<ISitecoreQueryParameter>();
             if (parameters != null)
                 _parameters.AddRange(parameters);
 
@@ -54,7 +64,17 @@ namespace Glass.Mapper.Sc.DataMappers
             _parameters.Add(new ItemPathParameter());
             _parameters.Add(new ItemIdNoBracketsParameter());
             _parameters.Add(new ItemEscapedPathParameter());
+        }
 
+        protected IDependencyResolver DependencyResolver { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitecoreQueryMapper"/> class.
+        /// </summary>
+        /// <param name="dependencyResolver">The dependency resolver.</param>
+        public SitecoreQueryMapper(IDependencyResolver dependencyResolver)
+        {
+            DependencyResolver = dependencyResolver;
             ReadOnly = true;
         }
 

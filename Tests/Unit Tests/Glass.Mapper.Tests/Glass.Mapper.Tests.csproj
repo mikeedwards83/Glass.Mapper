@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractServiceFixture.cs" />
+    <Compile Include="ActionEqualityFixture.cs" />
     <Compile Include="Configuration\AbstractTypeConfigurationFixture.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoaderFixture.cs" />
     <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />

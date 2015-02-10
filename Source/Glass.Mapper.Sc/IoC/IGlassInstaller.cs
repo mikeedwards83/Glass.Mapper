@@ -16,23 +16,13 @@
 */
 //-CRE-
 
-namespace Glass.Mapper.Sc
+using System;
+using System.Collections.Generic;
+
+namespace Glass.Mapper.Sc.IoC
 {
-    public class Config
+    public interface IGlassInstaller
     {
-        public Config()
-        {
-            ForceItemInPageEditor = true;
-        }
-        public bool ForceItemInPageEditor { get; set; }
-
-        /// <summary>
-        /// Indicates that classes should be build using the Windsor dependency resolver. Default is False
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [use windsor contructor]; otherwise, <c>false</c>.
-        /// </value>
-        public bool UseIoCConstructor { get; set; }
-
+        List<IDependencyInstaller> Actions { get; }
     }
 }
