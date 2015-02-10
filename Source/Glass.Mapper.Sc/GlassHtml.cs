@@ -798,21 +798,19 @@ namespace Glass.Mapper.Sc
                 htmlParams.Remove(ImageParameterKeys.HEIGHTHTML);
             }
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
-            string mediaUrl = builder.ToString();
             var builder = new UrlBuilder(image.Src);
 
-#if (SC80 || SC75)
-            mediaUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
-#endif
 
-            return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams));
+            string mediaUrl = builder.ToString();
 
             foreach (var key in urlParams.Keys)
             {
                 builder.AddToQueryString(key, urlParams[key]);
             }
 
+#if (SC80 || SC75)
+            mediaUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
+#endif
             return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams), quotationMark);
         }
 
