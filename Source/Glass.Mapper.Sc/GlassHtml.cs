@@ -53,7 +53,6 @@ namespace Glass.Mapper.Sc
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
         public const string Parameters = "Parameters";
-        public const string DefaultQuotationMark = "'";
         /// <summary>
         /// The image width
         /// </summary>
@@ -67,6 +66,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public static string ImageTagFormat = "<img src={2}{0}{2} {1}/>";
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
+        public static string QuotationMark = "'";
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
@@ -226,7 +226,7 @@ namespace Glass.Mapper.Sc
 
 
 
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, string quotationMark = GlassHtml.DefaultQuotationMark)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false)
         {
             NameValueCollection attrs;
 
@@ -251,7 +251,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer, quotationMark);
+                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer);
             }
         }
 
@@ -283,7 +283,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isEditable">Indicate if the link should be editable in the page editor</param>
         /// <param name="contents">Content to go in the link</param>
         /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null, string quotationMark = GlassHtml.DefaultQuotationMark)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
             NameValueCollection attrs = null;
 
@@ -325,7 +325,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer, quotationMark
+                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer
                     );
             }
 
@@ -371,9 +371,9 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         [Obsolete("Use the SafeDictionary Overload")]
-        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer, string quotationMark = DefaultQuotationMark)
+        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer)
         {
-            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer, quotationMark);
+            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Fields.Link link, SafeDictionary<string> attributes, string contents,
-            TextWriter writer, string quotationMark = DefaultQuotationMark)
+            TextWriter writer)
         {
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new SafeDictionary<string>();
@@ -396,7 +396,7 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            string firstPart = LinkTagFormat.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes), contents, quotationMark);
+            string firstPart = LinkTagFormat.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes), contents, QuotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
@@ -645,8 +645,7 @@ namespace Glass.Mapper.Sc
             Expression<Func<T, object>> field,
             object parameters = null,
             bool isEditable = false,
-            bool outputHeightWidth = false,
-            string quotationMark = DefaultQuotationMark)
+            bool outputHeightWidth = false)
         {
 
             var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
@@ -662,7 +661,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth, quotationMark);
+                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth);
             }
         }
 
@@ -676,8 +675,7 @@ namespace Glass.Mapper.Sc
         public virtual string RenderImage(
             Fields.Image image, 
             SafeDictionary<string> attributes, 
-            bool outputHeightWidth = false,
-            string quotationMark = DefaultQuotationMark
+            bool outputHeightWidth = false
             )
         {
 
@@ -804,7 +802,7 @@ namespace Glass.Mapper.Sc
                 builder.AddToQueryString(key, urlParams[key]);
             }
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams), quotationMark);
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
 
