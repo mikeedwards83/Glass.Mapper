@@ -35,6 +35,25 @@
   <Import Project="..\..\..\Configuration.proj" />
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CI|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\CI\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Net45\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Reference Include="Castle.Core">
       <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
@@ -94,6 +113,7 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\CreateMultiInterfaceTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\MultiInterfacePropertyInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTaskFixture.cs" />
+    <Compile Include="UrlBuilderFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTaskFixture.cs" />
