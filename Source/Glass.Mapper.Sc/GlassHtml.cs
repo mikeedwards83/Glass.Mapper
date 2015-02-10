@@ -53,7 +53,20 @@ namespace Glass.Mapper.Sc
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
         public const string Parameters = "Parameters";
-
+        public const string DefaultQuotationMark = "'";
+        /// <summary>
+        /// The image width
+        /// </summary>
+        public const string ImageWidth = "width";
+        /// <summary>
+        /// The image height
+        /// </summary>
+        public const string ImageHeight = "height";
+        /// <summary>
+        /// The image tag format
+        /// </summary>
+        public static string ImageTagFormat = "<img src={2}{0}{2} {1}/>";
+        public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
@@ -210,56 +223,10 @@ namespace Glass.Mapper.Sc
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
-        /// <summary>
-        /// The image width
-        /// </summary>
-        public const string ImageWidth = "width";
-        /// <summary>
-        /// The image height
-        /// </summary>
-        public const string ImageHeight = "height";
-     
-    
-        /// <summary>
-        /// The image tag format
-        /// </summary>
-        public const string ImageTagFormat = "<img src='{0}' {1}/>";
 
-        /// <summary>
-        /// Renders an image allowing simple page editor support
-        /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
-        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
-        /// <param name="parameters">Image parameters, e.g. width, height</param>
-        /// <param name="isEditable">Indicates if the field should be editable</param>
-        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
-        /// <returns></returns>
-        public virtual string RenderImage<T>(T model,
-            Expression<Func<T, object>> field,
-            object parameters = null,
-            bool isEditable = false,
-            bool outputHeightWidth = true)
-        {
 
-            var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
 
-            if (IsInEditingMode && isEditable)
-            {
-                var url = new UrlString();
-                foreach (var pair in attrs)
-                {
-                    url.Parameters.Add(pair.Key, pair.Value);
-                }
-                return Editable(model, field, url.Query);
-            }
-            else
-            {
-                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth);
-            }
-        }
-
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, string quotationMark = GlassHtml.DefaultQuotationMark)
         {
             NameValueCollection attrs;
 
@@ -284,7 +251,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer);
+                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer, quotationMark);
             }
         }
 
@@ -316,7 +283,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isEditable">Indicate if the link should be editable in the page editor</param>
         /// <param name="contents">Content to go in the link</param>
         /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
+        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null, string quotationMark = GlassHtml.DefaultQuotationMark)
         {
             NameValueCollection attrs = null;
 
@@ -358,7 +325,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer
+                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer, quotationMark
                     );
             }
 
@@ -404,9 +371,9 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         [Obsolete("Use the SafeDictionary Overload")]
-        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer)
+        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer, string quotationMark = DefaultQuotationMark)
         {
-            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer);
+            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer, quotationMark);
         }
 
         /// <summary>
@@ -417,12 +384,11 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Fields.Link link, SafeDictionary<string> attributes, string contents,
-            TextWriter writer)
+            TextWriter writer, string quotationMark = DefaultQuotationMark)
         {
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
             if (attributes == null) attributes = new SafeDictionary<string>();
 
-            string format = "<a href='{0}' {1}>{2}";
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
@@ -430,7 +396,7 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            string firstPart = format.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes), contents);
+            string firstPart = LinkTagFormat.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes), contents, quotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
@@ -665,92 +631,39 @@ namespace Glass.Mapper.Sc
 
         #endregion
 
-
-        #region Obsolete
-
-
         /// <summary>
-        /// Render HTML for a link
+        /// Renders an image allowing simple page editor support
         /// </summary>
-        /// <param name="link">The link to render</param>
-        /// <returns>An "a" HTML element</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection parameters = null, bool isEditable = false, string contents = null)")]
-        public virtual string RenderLink(Fields.Link link)
-        {
-
-            return RenderLink(link, null, string.Empty);
-
-        }
-
-        /// <summary>
-        /// Render HTML for a link
-        /// </summary>
-        /// <param name="link">The link to render</param>
-        /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
-        /// <returns>An "a" HTML element</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection parameters = null, bool isEditable = false, string contents = null)")]
-        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes)
-        {
-
-            return RenderLink(link, attributes, string.Empty);
-
-        }
-
-        /// <summary>
-        /// Render HTML for a link
-        /// </summary>
-        /// <param name="link">The link to render</param>
-        /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
-        /// <param name="contents">Content to go in the link instead of the standard text</param>
-        /// <returns>An "a" HTML element</returns>
-        [Obsolete("Use RenderLink<T>(T model, Expression<Func<T, object>> field, NameValueCollection parameters = null, bool isEditable = false, string contents = null)")]
-        public virtual string RenderLink(Fields.Link link, NameValueCollection attributes, string contents)
-        {
-            var sb = new StringBuilder();
-            var writer = new StringWriter(sb);
-
-            BeginRenderLink(link, attributes, contents, writer);
-            writer.Flush();
-            writer.Close();
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
-        /// </summary>
-        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
-        /// <param name="target">The model object that contains the item to be edited</param>
-        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T model, Expression<Func<T, object>> field)")]
-        public string Editable<T>(Expression<Func<T, object>> field, T target)
-        {
-            return MakeEditable<T>(field, null, target, string.Empty);
-        }
-        /// <summary>
-        /// Makes the field editable using the Sitecore Page Editor.  Using the specifed service to write data.
-        /// </summary>
-        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="field">The field that should be made editable</param>
-        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
-        /// <param name="target">The model object that contains the item to be edited</param>
-        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        [Obsolete("Use Editable<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput)")]
-        public string Editable<T>(Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, T target)
-        {
-            return MakeEditable<T>(field, standardOutput, target, string.Empty);
-        }
-
-        /// <summary>
-        /// Renders HTML for an image
-        /// </summary>
-        /// <param name="image">The image to render</param>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
-        /// <returns>An img HTML element</returns>
-        [Obsolete("Use RenderImage<T>(T model, Expression<Func<T, object>> field, ImageParameters parameters = null, bool isEditable = false)")]
-        public virtual string RenderImage(Fields.Image image, bool outputHeightWidth = true)
+        /// <returns></returns>
+        public virtual string RenderImage<T>(T model,
+            Expression<Func<T, object>> field,
+            object parameters = null,
+            bool isEditable = false,
+            bool outputHeightWidth = false,
+            string quotationMark = DefaultQuotationMark)
         {
-            return RenderImage(image, null, outputHeightWidth);
+
+            var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
+
+            if (IsInEditingMode && isEditable)
+            {
+                var url = new UrlString();
+                foreach (var pair in attrs)
+                {
+                    url.Parameters.Add(pair.Key, pair.Value);
+                }
+                return Editable(model, field, url.Query);
+            }
+            else
+            {
+                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth, quotationMark);
+            }
         }
 
         /// <summary>
@@ -760,7 +673,12 @@ namespace Glass.Mapper.Sc
         /// <param name="attributes">Additional parameters to add. Do not include alt or src</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
         /// <returns>An img HTML element</returns>
-        public virtual string RenderImage(Fields.Image image, SafeDictionary<string> attributes, bool outputHeightWidth = true)
+        public virtual string RenderImage(
+            Fields.Image image, 
+            SafeDictionary<string> attributes, 
+            bool outputHeightWidth = false,
+            string quotationMark = DefaultQuotationMark
+            )
         {
 
             if (attributes == null)
@@ -811,8 +729,6 @@ namespace Glass.Mapper.Sc
                 remove(key);
             };
 
-
-
             var keys = attributes.Keys.ToList();
             foreach (var key in keys)
             {
@@ -851,13 +767,6 @@ namespace Glass.Mapper.Sc
                 }
             }
 
-           
-
-           
-
-           
-
-
             if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams[ImageParameterKeys.HEIGHTHTML] == null)
             {
                 htmlParams[ImageParameterKeys.HEIGHTHTML] = htmlParams[ImageParameterKeys.HEIGHT];
@@ -895,10 +804,9 @@ namespace Glass.Mapper.Sc
                 builder.AddToQueryString(key, urlParams[key]);
             }
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams));
+            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams), quotationMark);
         }
 
-        #endregion
 
     }
 }

@@ -76,10 +76,10 @@ namespace Glass.Mapper.Sc
         /// <param name="parameters">Additional parameters to add. Do not include alt or src</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
         /// <returns>An img HTML element</returns>
-        string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = true);
+        string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false, string quotationMark = GlassHtml.DefaultQuotationMark);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
-                                      object attributes = null, bool isEditable = false);
+                                      object attributes = null, bool isEditable = false, string quotationMark = GlassHtml.DefaultQuotationMark);
 
         /// <summary>
         /// Render HTML for a link
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc
         /// <param name="field">The link to render</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
-                             bool isEditable = false, string contents = null);
+                             bool isEditable = false, string contents = null, string quotationMark = GlassHtml.DefaultQuotationMark);
 
 
         /// <summary>
