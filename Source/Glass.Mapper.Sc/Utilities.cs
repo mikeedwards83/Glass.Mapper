@@ -61,14 +61,14 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="attributes">A list of attributes to convert</param>
         /// <returns>System.String.</returns>
-        public static string ConvertAttributes(SafeDictionary<string> attributes)
+        public static string ConvertAttributes(SafeDictionary<string> attributes, string quotationMark)
         {
-            if (attributes == null || attributes.Count == 0) return "";
+            if (attributes == null || attributes.Count == 0) return ""; 
 
             StringBuilder sb = new StringBuilder();
             foreach (var pair in attributes)
             {
-                sb.AppendFormat("{0}='{1}' ".Formatted(pair.Key, pair.Value ??""));
+                sb.AppendFormat("{0}={2}{1}{2} ".Formatted(pair.Key, pair.Value ??"", quotationMark));
             }
 
             return sb.ToString();
