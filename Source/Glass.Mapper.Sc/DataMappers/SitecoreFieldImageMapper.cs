@@ -28,12 +28,6 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
-using Sitecore.Diagnostics;
-using Sitecore.Resources;
-using Sitecore.Configuration;
-using Sitecore;
-using Sitecore.IO;
-using Sitecore.Web;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -45,7 +39,8 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldImageMapper"/> class.
         /// </summary>
-        public SitecoreFieldImageMapper() : base(typeof (Image))
+        public SitecoreFieldImageMapper()
+            : base(typeof(Image))
         {
         }
 
@@ -168,16 +163,16 @@ namespace Glass.Mapper.Sc.DataMappers
                 }
             }
 
-            if(image.Height > 0)
+            if (image.Height > 0)
                 field.Height = image.Height.ToString();
-            if(image.Width > 0)
+            if (image.Width > 0)
                 field.Width = image.Width.ToString();
-            if(image.HSpace > 0)
+            if (image.HSpace > 0)
                 field.HSpace = image.HSpace.ToString();
-            if(image.VSpace > 0)
+            if (image.VSpace > 0)
                 field.VSpace = image.VSpace.ToString();
             
-            if(field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+            if (field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
                 field.Alt = image.Alt ?? string.Empty;
             if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
                 field.Border = image.Border ?? string.Empty;

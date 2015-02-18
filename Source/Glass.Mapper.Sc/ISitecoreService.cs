@@ -42,6 +42,8 @@ namespace Glass.Mapper.Sc
         /// <value>The glass context.</value>
         Context GlassContext { get; }
 
+        Config Config { get; set; }
+
         #region  AddVersion
 
         /// <summary>
@@ -107,7 +109,18 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
+        [Obsolete("Use Cast<T> instead")]
         T CreateType<T>(Item item, bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Casts a class from the specified item
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T Cast<T>(Item item, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
         /// Creates a class from the specified item with a single constructor parameter

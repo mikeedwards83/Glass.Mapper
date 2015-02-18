@@ -34,7 +34,6 @@ using Sitecore.Data.DataProviders;
 using Sitecore.Data.DataProviders.Sql;
 using Sitecore.Data.Items;
 using Sitecore.Exceptions;
-using Sitecore.Mvc.Extensions;
 using Sitecore.SecurityModel;
 using Sitecore.Shell.Feeds.Sections;
 
@@ -355,7 +354,7 @@ namespace Glass.Mapper.Sc.CodeFirst
                 {
                     var exists = existing.FirstOrDefault(def => def.Name.Equals(section.SectionName, StringComparison.InvariantCultureIgnoreCase));
                     var newId = GetUniqueGuid(itemDefinition.ID + section.SectionName);
-
+                    
                     record = exists != null ?
                         new SectionInfo(section.SectionName, exists.ID, itemDefinition.ID, section.SectionSortOrder) { Existing = true } :
                         new SectionInfo(section.SectionName, new ID(newId), itemDefinition.ID, 100);
@@ -420,11 +419,11 @@ namespace Glass.Mapper.Sc.CodeFirst
                             {
                                 using (new DisableItemHandler())
                                     sqlProvider.DeleteItem(existing, context);
-                    }
+                            }
                             else
                             {
-                            sqlProvider.DeleteItem(existing, context);
-                    }
+                                sqlProvider.DeleteItem(existing, context);
+                            }
                         }
                     }
 
@@ -824,7 +823,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             while (baseType != null)
             {
-                idCheck(baseType);
+                idCheck(baseType);    
                 baseType = baseType.BaseType;
             }
 

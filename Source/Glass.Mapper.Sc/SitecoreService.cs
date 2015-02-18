@@ -177,7 +177,7 @@ namespace Glass.Mapper.Sc
             SitecoreTypeConfiguration parentType;
             try
             {
-                parentType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(parent, false);
+                parentType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(parent);
             }
             catch (Exception ex)
             {
@@ -347,6 +347,19 @@ namespace Glass.Mapper.Sc
         }
 
         /// <summary>
+        /// Casts a class from the specified item
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        public T Cast<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
+        {
+            return CreateType<T>(item, isLazy, inferType);
+        }
+
+        /// <summary>
         /// Creates a class from the specified item with a single constructor parameter
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
@@ -418,21 +431,10 @@ namespace Glass.Mapper.Sc
         {
             return (T)CreateType(typeof(T), item, isLazy, inferType, null, param1, param2, param3, param4);
         }
-
-
-        private bool DoVersionCheck()
-        {
-            if (Config != null && Config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
-                return false;
-
-
-            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
-
-        }
-
+        
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (item.Versions.Count == 0 && DoVersionCheck())) return null;
+            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 4)

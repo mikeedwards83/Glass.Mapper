@@ -144,7 +144,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink(Expression<Func<T, object>> field,
                                                        object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(Model, field, System.Web.HttpContext.Current.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(Model, field, this.Output, attributes, isEditable);
         }
 
         /// <summary>
@@ -175,9 +175,9 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GetRenderingParameters(control.Parent);
         }
 
-        public virtual T GetRenderingParameters<T>() where T : class
+        public virtual K GetRenderingParameters<K>() where K : class
         {
-            return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
+            return GlassHtml.GetRenderingParameters<K>(RenderingParameters);
         }
     }
 }

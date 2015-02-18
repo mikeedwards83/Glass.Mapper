@@ -10,13 +10,21 @@ using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Razor;
 using Glass.Mapper.Configuration.Attributes;
+// using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
+using Sitecore.Pipelines;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperScRazor), "Start")]
+// WebActivator has been removed. If you wish to continue using WebActivator uncomment the line below
+// and delete the Glass.Mapper.Sc.CastleWindsor.config file from the Sitecore Config Include folder.
+// [assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.GlassMapperScRazor), "Start")]
 
 namespace $rootnamespace$.App_Start
 {
-	public static class  GlassMapperScRazor
+	public  class  GlassMapperScRazor
 	{
+	    public void Process(PipelineArgs args){
+			GlassMapperScRazor.Start();
+		}
+
 		public static void Start()
 		{
 			//create config

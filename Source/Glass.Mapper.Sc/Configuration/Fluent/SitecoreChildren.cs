@@ -52,6 +52,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreChildren(Expression<Func<T, object>> ex)
             : base(ex)
         {
+            Configuration.IsLazy = true;
         }
         /// <summary>
         /// Indicates if children should not be loaded lazily.  If false all children will be loaded when the containing object is created.

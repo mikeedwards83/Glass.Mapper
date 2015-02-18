@@ -55,8 +55,16 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
                     if (_isMapped == false)
                     {
                         _isMapped = true;
+
+                        if (MappingAction == null)
+                        {
+                            throw new NullReferenceException("MappingAction is null");
+                        }
+
                         MappingAction(invocation.InvocationTarget);
-                        
+
+                        //release anything that was used for the mapping
+                        MappingAction = null;
                     }
                 }
             }

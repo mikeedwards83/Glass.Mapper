@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=380' alt='someAlt' width='380' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=240' alt='someAlt' width='380' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -27,7 +27,7 @@ namespace Glass.Mapper.Sc.Tests
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new ImageParameters {Width = 380};
+            var parameters = new  {Width = 380, W=240};
             var model = new {Image = image};
 
             //Act
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersHeight_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450' alt='someAlt' height='450' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450' height='450' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -49,7 +49,7 @@ namespace Glass.Mapper.Sc.Tests
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new ImageParameters { Height = 450};
+            var parameters = new  { Height = 450, H=450};
             var model = new { Image = image };
 
             //Act
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.Tests
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new ImageParameters {Class = "someClass"};
+            var parameters = new  {Class = "someClass"};
             var model = new { Image = image };
 
             //Act
@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithWidthAndStretcj_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=900&amp;as=True' alt='someAlt' width='900' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?as=True' width='900' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -93,7 +93,7 @@ namespace Glass.Mapper.Sc.Tests
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new ImageParameters { Width = 900, AllowStretch = true};
+            var parameters = new  { Width = 900, As = true};
             var model = new { Image = image };
 
             //Act
@@ -129,7 +129,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithBorderHSpaceVSpace_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx' alt='someAlt' border='9' hspace='10' vspace='15' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx' alt='someAlt' border='9' vspace='15' hspace='10' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderLink_LinkWithAllSetProperties()
         {
             //Arrange
-            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' class='myclass' target='_blank' title='mytitle' >hello world</a>";
+            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
@@ -203,7 +203,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderLink_LinkWithMixedPropertiesAndParameters()
         {
             //Arrange
-            var expected = "<a href='/somewhere.aspx?temp=fred#anOther' class='myclass' target='_blank' title='mytitle' >hello world</a>";
+            var expected = "<a href='/somewhere.aspx?temp=fred#anOther' target='_blank' class='myclass' title='mytitle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();

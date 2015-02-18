@@ -31,12 +31,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     public class GlassPage<T> : AbstractGlassPage where T : class
     {
 
-        private TextWriter _writer;
-
-        protected TextWriter Output
-        {
-            get { return _writer ?? this.Response.Output; }
-        }
+      
 
         /// <summary>
         /// Model to render on the sublayout
@@ -136,11 +131,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
         }
 
-        public override void RenderControl(HtmlTextWriter writer)
-        {
-            this._writer = writer;
-            base.RenderControl(writer);
-        }
+       
     }
 
 }

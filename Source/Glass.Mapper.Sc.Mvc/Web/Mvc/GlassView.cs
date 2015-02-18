@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Mvc;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Shell.Applications.Dialogs.ItemLister;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
@@ -29,7 +30,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// 
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    public abstract class GlassView<TModel> : WebViewPage<TModel>
+    public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
 
         /// <summary>
@@ -37,6 +38,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         public IGlassHtml GlassHtml { get; private set; }
 
+        public ISitecoreContext SitecoreContext { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
@@ -53,7 +55,31 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public override void InitHelpers()
         {
             base.InitHelpers();
-            GlassHtml = new GlassHtml(new SitecoreContext());
+            SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
+            GlassHtml = new GlassHtml(SitecoreContext);
+            if (Model == null && this.ViewData.Model == null)
+            {
+                this.ViewData.Model = GetModel();
+            }
+        }
+
+
+        protected virtual TModel GetModel()
+        {
+
+            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+            {
+                return SitecoreContext.GetCurrentItem<TModel>();
+            }
+            else
+            {
+
+                return
+                    SitecoreContext.GetItem<TModel>(
+                        Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+            }
         }
 
         /// <summary>

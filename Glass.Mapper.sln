@@ -91,6 +91,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.ContentSearch.LuceneProvider", "Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\Glass.Mapper.Sc.ContentSearch.LuceneProvider.csproj", "{43C186EB-F6ED-4ADE-941E-EC465B976646}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.ContentSearch", "Source\Glass.Mapper.Sc.ContentSearch\Glass.Mapper.Sc.ContentSearch.csproj", "{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Integration.ThirdParty", "Tests\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration.ThirdParty\Glass.Mapper.Sc.Integration.ThirdParty.csproj", "{032A1EC4-D28D-495C-9796-40EE3DA190ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Integration.Sc7", "Tests\Integration Tests\Sitecore\Glass.Mapper.Sc.Integration.Sc7\Glass.Mapper.Sc.Integration.Sc7.csproj", "{1F3F21BC-69D3-4210-9BA4-21FE7CC0DDAF}"
@@ -210,10 +211,14 @@ Global
 		{468D2D00-F5F6-41C2-A67E-D16AA3F2E4C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Net45|Any CPU.ActiveCfg = Release|Any CPU
+		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Net45|Any CPU.Build.0 = Release|Any CPU
 		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43C186EB-F6ED-4ADE-941E-EC465B976646}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Net45|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Net45|Any CPU.Build.0 = Release|Any CPU
 		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE1CC8D6-60CC-4DCA-9B6C-0256778D107A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{032A1EC4-D28D-495C-9796-40EE3DA190ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

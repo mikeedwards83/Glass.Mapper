@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Profilers;
 
 namespace Glass.Mapper.Pipelines
@@ -50,8 +51,33 @@ namespace Glass.Mapper.Pipelines
         /// <param name="tasks">The tasks.</param>
         public AbstractPipelineRunner(IEnumerable<K> tasks)
         {
+            //Tasks = tasks.Reverse().ToArray();
+
             Tasks = tasks;
+
+            foreach (var task in tasks.Reverse())
+            {
+                _excuteTasks = CreateTaskExpression(task);
+            }
+
             Profiler = new NullProfiler();
+        }
+
+        private Func<T, T> _excuteTasks = args => { return args; };
+
+        protected virtual  Func<T,T>  CreateTaskExpression(K task)
+        {
+            var nextTask = _excuteTasks;
+
+            return (args) =>
+                {
+                    task.Execute(args);
+
+                    if (!args.IsAborted)
+                        nextTask(args);
+
+                    return args;
+                };
         }
 
         /// <summary>
@@ -61,23 +87,24 @@ namespace Glass.Mapper.Pipelines
         /// <returns>`0.</returns>
         public virtual T Run(T args)
         {
-            if (Tasks != null)
-            {
-                foreach (var task in Tasks)
-                {
-#if DEBUG
-                    Profiler.Start(task.GetType().FullName);
-#endif
-                    task.Execute(args);
-#if DEBUG
-                    Profiler.End(task.GetType().FullName);
-#endif 
-                    if (args.IsAborted)
-                        break;
-                }
-            }
-            
-            return args;
+//            if (Tasks != null)
+//            {
+//                for (int i = Tasks.Length-1; i >= 0; i--)
+//                {
+//                    var task = Tasks[i];
+//#if DEBUG
+//                    Profiler.Start(task.GetType().FullName);
+//#endif
+//                    task.Execute(args);
+//#if DEBUG
+//                    Profiler.End(task.GetType().FullName);
+//#endif
+//                    if (args.IsAborted)
+//                        break;
+//                }
+//            }
+
+            return _excuteTasks(args);
         }
 
         public void Dispose()

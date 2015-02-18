@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.IO;
 using System.Linq.Expressions;
 using System.Web.UI;
 using Sitecore.Data.Items;
@@ -29,6 +30,14 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public abstract class AbstractGlassWebControl : WebControl
     {
+
+        private TextWriter _writer;
+
+        protected TextWriter Output
+        {
+            get { return _writer ?? System.Web.HttpContext.Current.Response.Output; }
+        }
+
         private ISitecoreContext _sitecoreContext;
         private IGlassHtml _glassHtml;
 
@@ -60,7 +69,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             //some weird lifecycle stuff in the page editor
             if (_sitecoreContext == null)
             {
-                _sitecoreContext = new SitecoreContext();
+                _sitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
                 _glassHtml = new GlassHtml(_sitecoreContext);
             }
            
@@ -198,7 +207,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
                                                           object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, System.Web.HttpContext.Current.Response.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
         }
 
         /// <summary>
@@ -215,6 +224,12 @@ namespace Glass.Mapper.Sc.Web.Ui
                                             bool isEditable = false, string contents = null)
         {
             return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
+        }
+
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            this._writer = writer;
+            base.RenderControl(writer);
         }
     }
 }

@@ -241,12 +241,14 @@
     <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
     <Compile Include="Configuration\Fluent\IUmbracoClass.cs" />
     <Compile Include="Configuration\Fluent\UmbracoChildren.cs" />
+    <Compile Include="Configuration\Fluent\UmbracoDelegate.cs" />
     <Compile Include="Configuration\Fluent\UmbracoProperty.cs" />
     <Compile Include="Configuration\Fluent\UmbracoFluentConfigurationLoader.cs" />
     <Compile Include="Configuration\Fluent\UmbracoId.cs" />
     <Compile Include="Configuration\Fluent\UmbracoInfo.cs" />
     <Compile Include="Configuration\Fluent\UmbracoParent.cs" />
     <Compile Include="Configuration\Fluent\UmbracoType.cs" />
+    <Compile Include="Configuration\UmbracoDelegateConfiguration.cs" />
     <Compile Include="Configuration\UmbracoInfoConfiguration.cs" />
     <Compile Include="Configuration\UmbracoInfoType.cs" />
     <Compile Include="Configuration\UmbracoPropertyValueConfiguration.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="Configuration\UmbracoPropertyType.cs" />
     <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
     <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
+    <Compile Include="DataMappers\UmbracoDelegateMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyFileMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyIEnumerableMapper.cs" />
     <Compile Include="DataMappers\UmbracoPropertyImageMapper.cs" />

@@ -35,7 +35,7 @@ namespace Glass.Mapper.Sc
         private readonly Type _type;
         private readonly bool _isLazy;
         private readonly bool _inferType;
-        private readonly ISitecoreService _service;
+        private ISitecoreService _service;
         private Lazy<IList<T>> _lazyItemList;
 
         /// <summary>
@@ -59,6 +59,12 @@ namespace Glass.Mapper.Sc
             _service = service;
             
             _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems().ToList());
+
+            if (isLazy == false)
+            {
+                // Force the loading of the items into the list so this occurs in the current security scope.
+                var dummy = _lazyItemList.Value;
+            }
         }
 
         /// <summary>
@@ -67,6 +73,11 @@ namespace Glass.Mapper.Sc
         /// <returns>IEnumerable{`0}.</returns>
         public IEnumerable<T> ProcessItems()
         {
+            if (_service == null)
+            {
+                throw new NullReferenceException("SitecoreService has not been set");
+            }
+
             var items = _getItems();
 
             if (items == null)
@@ -86,6 +97,9 @@ namespace Glass.Mapper.Sc
                     continue;
                 yield return obj;
             }
+
+            //release the service after full enumeration 
+            _service = null;
         }
 
         /// <summary>

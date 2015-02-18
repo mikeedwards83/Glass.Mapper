@@ -34,7 +34,6 @@ using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
-using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
@@ -205,6 +204,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
                          .ImplementedBy<SitecoreFieldNameValueCollectionMapper>()
                          .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
+                         .ImplementedBy<SitecoreFieldDictionaryMapper>()
+                         .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>()
                          .ImplementedBy<SitecoreFieldNullableDateTimeMapper>()
                          .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
@@ -230,6 +232,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreNodeMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreLinkedMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreParentMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>().ImplementedBy<SitecoreDelegateMapper>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>().ImplementedBy<SitecoreQueryMapper>()
                          .DynamicParameters((k, d) =>
                          {
@@ -419,13 +422,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             //dynamic must be first
             container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>()
-                );
-
-            container.Register(
-                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>()
-                );
-
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<EnforcedTemplateCheck>().LifestyleCustom<NoTrackLifestyleManager>()
+            );
+            
             if (Config.UseWindsorContructor)
             {
                 container.Register(
@@ -435,7 +436,6 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             container.Register(
                 // Tasks are called in the order they are specified below.
-                Component.For<IObjectConstructionTask>().ImplementedBy<SearchProxyWrapperTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()

@@ -45,6 +45,10 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         Key,
         /// <summary>
+        /// The item's ItemUri . The property type must be Sitecore.Data.ItemUri
+        /// </summary>
+        ItemUri,
+        /// <summary>
         /// The item's media URL. The property type must be System.String
         /// </summary>
         MediaUrl,

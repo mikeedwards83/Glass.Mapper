@@ -23,6 +23,7 @@ using Glass.Mapper.Sc.Dynamic;
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.Integration.Dynamic
 {
@@ -40,6 +41,319 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
 
             global::Sitecore.Context.Site = global::Sitecore.Sites.SiteContext.GetSite("website");
         }
+        #region INTERFACE TEST
+
+        [Test]
+        public void InterfaceTest()
+        {
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            using (new ItemEditing(item, true))
+            {
+                item["DateTime"] = "20120204T150015";
+                item["SingleLineText"] = "some awesome dynamic content";
+            }
+
+            dynamic d = new DynamicItem(item);
+            IDynamicItem i = d as IDynamicItem;
+
+
+            
+
+            //Act
+            string result = d.DateTime;
+            string path = i.Path;
+
+            //Assert
+            Assert.AreEqual("04/02/2012 15:00:15", result);
+            Assert.AreEqual(item.Paths.Path, path);
+        }
+
+      
+
+        #endregion
+
+
+        #region PROPERTY ContentPath
+
+        [Test]
+        public void ContentPath_ReturnsContentPath()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.ContentPath;
+
+            //Assert
+            Assert.AreEqual(item.Paths.ContentPath, result);
+        }
+
+        #endregion
+
+        #region PROPERTY DisplayName
+
+        [Test]
+        public void DisplayName_ReturnsDisplayName()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.DisplayName;
+
+            //Assert
+            Assert.AreEqual(item["DisplayName"], result);
+        }
+
+        #endregion
+
+        #region PROPERTY FullPath
+
+        [Test]
+        public void FullPath_ReturnsFullPath()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.FullPath;
+
+            //Assert
+            Assert.AreEqual(item.Paths.FullPath, result);
+        }
+
+        #endregion
+
+        #region PROPERTY Key
+
+        [Test]
+        public void Key_ReturnsKey()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Key;
+
+            //Assert
+            Assert.AreEqual(item.Key, result);
+        }
+
+        #endregion
+
+        #region PROPERTY MediaUrl
+
+        [Test]
+        public void MediaUrl_ReturnsMediaUrl()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.MediaUrl;
+
+            //Assert
+            Assert.AreEqual(Sitecore.Resources.Media.MediaManager.GetMediaUrl(new Sitecore.Data.Items.MediaItem(item)), result);
+        }
+
+        #endregion
+        #region PROPERTY Path
+
+        [Test]
+        public void Path_ReturnsPath()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Path;
+
+            //Assert
+            Assert.AreEqual(item.Paths.Path, result);
+        }
+
+        #endregion
+
+        #region PROPERTY TemplateId
+
+        [Test]
+        public void TemplateId_ReturnsTemplateId()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.TemplateId;
+
+            //Assert
+            Assert.AreEqual(item.TemplateID.Guid, result);
+        }
+
+        #endregion
+        #region PROPERTY TemplateName
+
+        [Test]
+        public void TemplateName_ReturnsTemplateName()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.TemplateName;
+
+            //Assert
+            Assert.AreEqual(item.TemplateName, result);
+        }
+
+        #endregion
+        #region PROPERTY Url
+
+        [Test]
+        public void Url_ReturnsUrl()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Url;
+
+            //Assert
+            Assert.AreEqual(LinkManager.GetItemUrl(item), result);
+        }
+
+        #endregion
+        #region PROPERTY Version
+
+        [Test]
+        public void Version_ReturnsVersion()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Version;
+
+            //Assert
+            Assert.AreEqual(item.Version.Number, result);
+        }
+
+        #endregion
+        #region PROPERTY Name
+
+        [Test]
+        public void Name_ReturnsName()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Name;
+
+            //Assert
+            Assert.AreEqual(item.Name, result);
+        }
+
+
+        #endregion
+
+        #region PROPERTY Language
+
+        [Test]
+        public void Language_ReturnsLanguage()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Language;
+
+            //Assert
+            Assert.AreEqual(item.Language, result);
+        }
+
+
+        #endregion
+
+        #region PROPERTY Language
+
+        [Test]
+        public void Language_ReturnsContentPath()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.Language;
+
+            //Assert
+            Assert.AreEqual(item.Language, result);
+        }
+
+
+        #endregion
+
+        #region PROPERTY BaseTemplateIds
+
+        [Test]
+        public void BaseTemplateIds_ReturnsBaseTemplateIds()
+        {
+            //Arrange
+            //Assign
+            Item item = _db.GetItem(TargetPath);
+
+            dynamic d = new DynamicItem(item);
+
+            //Act
+            var result = d.BaseTemplateIds as IEnumerable<Guid>;
+
+            //Assert
+            Assert.Greater(result.Count(), 10);
+        }
+
+
+        #endregion
+
 
         #region
 
@@ -146,6 +460,11 @@ namespace Glass.Mapper.Sc.Integration.Dynamic
                 Assert.IsTrue(path.StartsWith(TargetPath));
         }
         #endregion
+    }
+
+    public interface IDynamicTitle : IDynamicItem
+    {
+        string Title { get; set; }
     }
 
 

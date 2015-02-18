@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/
+*/ 
 //-CRE-
 
 using System;
@@ -51,14 +51,17 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return Enum.ToObject(enumType, intValue);
             }
+            else
+            {
+                if (Enum.IsDefined(enumType, fieldValue))
+                    return Enum.Parse(enumType, fieldValue, true);
+                else if (!fieldValue.IsNullOrEmpty())
+                    throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(fieldValue,
+                                                                                                     enumType.FullName));
+                else
+                   return Enum.GetValues(enumType).GetValue(0);
 
-            if (Enum.IsDefined(enumType, fieldValue))
-                return Enum.Parse(enumType, fieldValue, true);
-
-            if (!fieldValue.IsNullOrEmpty())
-                throw new MapperException("Can not convert value {0} to enum type {1}".Formatted(fieldValue, enumType.FullName));
-
-            return Activator.CreateInstance(enumType);
+            }
         }
 
         /// <summary>
