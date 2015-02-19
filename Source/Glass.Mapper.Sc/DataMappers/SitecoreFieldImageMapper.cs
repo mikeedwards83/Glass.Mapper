@@ -201,7 +201,10 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            var imageItem = new MediaItem(context.Service.Database.GetItem(new ID(fieldValue)));
+			var innerItem = context.Service.Database.GetItem(new ID(fieldValue));
+			if (innerItem == null)
+				return null;
+			var imageItem = new MediaItem(innerItem);
             var image = new Image();
             MapToImage(image, imageItem);
             return image;
