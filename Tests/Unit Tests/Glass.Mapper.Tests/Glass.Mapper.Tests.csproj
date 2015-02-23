@@ -31,11 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
-  <ItemGroup Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CI|AnyCPU'">
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CI|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\CI\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -53,6 +49,11 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
+  <ItemGroup Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
+  </ItemGroup>  
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Reference Include="Castle.Core">
       <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
@@ -138,4 +139,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
