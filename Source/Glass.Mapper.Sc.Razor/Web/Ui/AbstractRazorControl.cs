@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         {
             ViewData = new ViewDataDictionary();
             ViewManager = new ViewManager();
-            GlassHtml = new GlassHtml(new SitecoreContext());
+            GlassHtml = new GlassHtml(SitecoreContext);
         }
 
         /// <summary>

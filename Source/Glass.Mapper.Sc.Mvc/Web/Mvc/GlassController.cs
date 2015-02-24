@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             try
             {
-                SitecoreContext = new SitecoreContext(Sitecore.Context.Database);
+                SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
                 GlassHtml = new GlassHtml(SitecoreContext);
             }
             catch (Exception ex)
@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             GlassHtml = glassHtml;
         }
 
-        public virtual T GetRenderingParameters<T>() where T:class
+        protected virtual T GetRenderingParameters<T>() where T:class
         {
             return
                 GlassHtml.GetRenderingParameters<T>(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters]);
@@ -46,7 +46,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isLazy"></param>
         /// <param name="inferType"></param>
         /// <returns></returns>
-        public virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
                 Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
@@ -67,7 +67,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isLazy"></param>
         /// <param name="inferType"></param>
         /// <returns></returns>
-        public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
 
             if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||

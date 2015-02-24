@@ -68,7 +68,7 @@ namespace Glass.Mapper.Sc.Razor
 
 
 
-            ISitecoreContext _context = new SitecoreContext(Context);
+            ISitecoreContext _context = Sc.SitecoreContext.GetFromHttpContext(Context);
             var model = _context.GetCurrentItem(type);
 
             TypeDescriptor.GetProperties(finalControlType).Find("Model", false).SetValue(finalControl, model);
