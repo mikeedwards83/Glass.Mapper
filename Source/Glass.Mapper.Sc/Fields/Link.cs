@@ -78,6 +78,8 @@ namespace Glass.Mapper.Sc.Fields
 
         public const string UrlFormat = "{0}{1}";
 
+
+
         [Obsolete("User the SafeDictionary alternative")]
         public string BuildUrl(NameValueCollection attributes = null)
         {

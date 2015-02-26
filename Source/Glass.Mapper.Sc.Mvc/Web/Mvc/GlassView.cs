@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Mvc;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Mvc.Configuration;
 using Sitecore.Shell.Applications.Dialogs.ItemLister;
 
 namespace Glass.Mapper.Sc.Web.Mvc
@@ -32,6 +33,18 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// <typeparam name="TModel"></typeparam>
     public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
+
+
+        public static bool HasDataSource<T>() where T : class
+        {
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null || Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null)
+                return false;
+
+            //this has been taken from Sitecore.Mvc.Presentation.Rendering class
+            return MvcSettings.ItemLocator.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
+        }
+
+
 
         /// <summary>
         /// 

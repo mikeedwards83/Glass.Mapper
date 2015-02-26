@@ -44,6 +44,15 @@ namespace Glass.Mapper.Sc
         }
 
         #endregion
+
+        public static bool HasValue(this Glass.Mapper.Sc.Fields.Image image)
+        {
+            return image != null && image.Src.HasValue();
+        }
+        public static bool HasValue(this Glass.Mapper.Sc.Fields.Link link)
+        {
+            return link != null && link.Url.HasValue();
+        }
     }
 }
 
