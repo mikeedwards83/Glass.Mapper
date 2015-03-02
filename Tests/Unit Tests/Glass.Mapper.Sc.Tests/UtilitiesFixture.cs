@@ -19,8 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Text;
+using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using Sitecore.Links;
 
 namespace Glass.Mapper.Sc.Tests
 {
@@ -112,6 +116,55 @@ namespace Glass.Mapper.Sc.Tests
 
         }
 
+        #region CreateUrlOptions
+
+        /// <summary>
+        /// This test relates to https://github.com/mikeedwards83/Glass.Mapper/issues/97
+        /// </summary>
+        [Test]
+        [TestCase(SitecoreInfoUrlOptions.AddAspxExtension, true, false, false, false, false, false)]
+        [TestCase(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl, false, true, false, false, false, false)]
+        [TestCase(SitecoreInfoUrlOptions.EncodeNames, false, false, true, false, false, false)]
+        [TestCase(SitecoreInfoUrlOptions.ShortenUrls, false, false, false, true, false, false)]
+        [TestCase(SitecoreInfoUrlOptions.SiteResolving, false, false, false, false, true, false)]
+        [TestCase(SitecoreInfoUrlOptions.UseUseDisplayName, false, false, false, false, false, true)]
+        public void CreateUrlOptions_SetsOptionsOnDefaultOptions(
+            SitecoreInfoUrlOptions options,
+            bool addAspx,
+            bool includeServer,
+            bool encodeNames,
+            bool shorten,
+            bool siteResolving,
+            bool displayName
+            )
+        {
+            //Arrange
+
+            var defaultOptions = new UrlOptions();
+            defaultOptions.AddAspxExtension = false;
+            defaultOptions.AlwaysIncludeServerUrl = false;
+            defaultOptions.EncodeNames = false;
+            defaultOptions.ShortenUrls = false;
+            defaultOptions.SiteResolving = false;
+            defaultOptions.UseDisplayName = false;
+
+
+            //Act
+            Utilities.CreateUrlOptions(options, defaultOptions);
+
+            //Assert
+            Assert.AreEqual(addAspx, defaultOptions.AddAspxExtension);
+            Assert.AreEqual(includeServer, defaultOptions.AlwaysIncludeServerUrl);
+            Assert.AreEqual(encodeNames, defaultOptions.EncodeNames);
+            Assert.AreEqual(shorten, defaultOptions.ShortenUrls);
+            Assert.AreEqual(siteResolving, defaultOptions.SiteResolving);
+            Assert.AreEqual(displayName, defaultOptions.UseDisplayName);
+
+
+
+        }
+
+        #endregion
 
         #region Stubs
 

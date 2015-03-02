@@ -117,6 +117,7 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\CreateMultiInterfaceTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\MultiInterfacePropertyInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTaskFixture.cs" />
+    <Compile Include="UrlBuilderFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTaskFixture.cs" />

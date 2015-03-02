@@ -125,6 +125,7 @@
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Mvc\GlassController.cs" />
+    <Compile Include="Web\Mvc\GlassHtmlMvc.cs" />
     <Compile Include="Web\Mvc\GlassView.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
   </ItemGroup>

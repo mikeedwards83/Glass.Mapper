@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// </summary>
         /// <param name="propertyInfo">The property info.</param>
         /// <returns>AbstractPropertyConfiguration.</returns>
-        public override Mapper.Configuration.AbstractPropertyConfiguration Configure(System.Reflection.PropertyInfo propertyInfo)
+        public override Mapper.Configuration.AbstractPropertyConfiguration Configure(PropertyInfo propertyInfo)
         {
             var config = new SitecoreInfoConfiguration();
             Configure(propertyInfo, config);
@@ -73,8 +73,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, SitecoreInfoConfiguration config)
         {
-            config.Type = this.Type;
-            config.UrlOptions = this.UrlOptions;
+            config.Type = Type;
+            config.UrlOptions = UrlOptions;
 
             base.Configure(propertyInfo, config);
         }
