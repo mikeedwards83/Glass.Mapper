@@ -77,6 +77,10 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\Depends\Sitecore\bin7\Sitecore.Kernel.dll</HintPath>
     </Reference>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
+  <ItemGroup>
     <Reference Include="Castle.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
