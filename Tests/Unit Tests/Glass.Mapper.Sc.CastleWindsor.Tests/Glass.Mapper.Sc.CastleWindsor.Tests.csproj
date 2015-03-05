@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54a63d42-1614-4b8f-9df5-8f1d2998db9d}</Project>
+      <Project>{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}</Project>
       <Name>Glass.Mapper.Sc.CastleWindsor</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
