@@ -37,8 +37,9 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
             if (args.Result == null)
             {
                 if (
-                    args.Configuration != null && 
-                    args.Configuration.Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider))) 
+                    args.Configurations != null && 
+                    args.Configurations.Any() && 
+                    args.Configurations.First().Type.IsAssignableFrom(typeof(IDynamicMetaObjectProvider))) 
                 {
                     SitecoreTypeCreationContext typeContext =
                       args.AbstractTypeCreationContext as SitecoreTypeCreationContext;

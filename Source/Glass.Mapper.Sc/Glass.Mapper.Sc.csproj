@@ -211,6 +211,7 @@
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
+    <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\DateParameterKeys.cs" />
     <Compile Include="RenderField\ImageParameterKeys.cs" />
@@ -247,9 +248,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pipelines\ContentResolver\" />
-    <Folder Include="Pipelines\MappingPipeline\" />
-    <Folder Include="Pipelines\TypeResolver\" />
     <Folder Include="Proxies\" />
   </ItemGroup>
   <ItemGroup>
