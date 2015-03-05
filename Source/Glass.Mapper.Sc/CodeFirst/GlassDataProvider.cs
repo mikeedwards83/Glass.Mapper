@@ -525,7 +525,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// Setups the specified context.
         /// </summary>
         /// <param name="db">The db.</param>
-        public  void Initialise(Database db)
+        public void Initialise(Database db)
         {
             if (_setupComplete || _setupProcessing)
                 return;

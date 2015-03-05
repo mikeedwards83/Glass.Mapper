@@ -223,8 +223,8 @@ namespace Glass.Mapper.Sc
             return GetRenderingParameters<T>(parameters, config.TemplateId);
         }
 
-     
-    
+
+
 
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false)
         {
@@ -658,18 +658,18 @@ namespace Glass.Mapper.Sc
             var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
 
             if (IsInEditingMode && isEditable)
-        {
+            {
                 var url = new UrlString();
                 foreach (var pair in attrs)
-        {
+                {
                     url.Parameters.Add(pair.Key, pair.Value);
-        }
+                }
                 return Editable(model, field, url.Query);
-        }
+            }
             else
-        {
+            {
                 return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth);
-        }
+            }
         }
 
         /// <summary>

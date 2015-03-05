@@ -13,18 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/
+*/ 
 //-CRE-
 
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
-using Sitecore.Data.Fields;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.Web.UI.WebControls;
@@ -39,16 +37,15 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldStringMapper"/> class.
         /// </summary>
-        public SitecoreFieldStringMapper()
-            : base(typeof(string))
+        public SitecoreFieldStringMapper() : base(typeof (string))
         {
         }
 
         private const string _richTextKey = "rich text";
 
 
-        private static ConcurrentDictionary<Guid, bool> isRichTextDictionary = new ConcurrentDictionary<Guid, bool>();
-
+        private static HashSet<Guid> _notRichTextSet = new HashSet<Guid>();
+         
         /// <summary>
         /// Gets the field.
         /// </summary>
@@ -62,43 +59,34 @@ namespace Glass.Mapper.Sc.DataMappers
                 return string.Empty;
 
             if (config.Setting == SitecoreFieldSettings.RichTextRaw)
+                return field.Value;
+
+            if (_notRichTextSet.Contains(field.ID.Guid))
             {
                 return field.Value;
             }
 
-            Guid fieldGuid = field.ID.Guid;
-
-            // shortest route - we know whether or not its rich text
-            if (isRichTextDictionary.ContainsKey(fieldGuid))
+            if (field.TypeKey == _richTextKey)
             {
-                return GetResult(field, isRichTextDictionary[fieldGuid]);
+                RenderFieldArgs renderFieldArgs = new RenderFieldArgs();
+                renderFieldArgs.Item = field.Item;
+                renderFieldArgs.FieldName = field.Name;
+                renderFieldArgs.DisableWebEdit = true;
+                CorePipeline.Run("renderField", renderFieldArgs);
+
+                return renderFieldArgs.Result.FirstPart+renderFieldArgs.Result.LastPart;
+
+                //FieldRenderer renderer = new FieldRenderer();
+                //renderer.Item = field.Item;
+                //renderer.FieldName = field.Name;
+                //renderer.Parameters = string.Empty;
+                //renderer.DisableWebEditing = true;
+                //return renderer.Render();
             }
 
-            // we don't know - it might still be rich text
-            bool isRichText = field.TypeKey == _richTextKey;
-            isRichTextDictionary.TryAdd(fieldGuid, isRichText);
+            _notRichTextSet.Add(field.ID.Guid);
 
-            // now we know it isn't rich text - return the raw result.
-            return GetResult(field, isRichText);
-        }
-
-        private string GetResult(Field field, bool isRichText)
-        {
-            if (!isRichText)
-            {
-                return field.Value;
-            }
-
-            RenderFieldArgs renderFieldArgs = new RenderFieldArgs
-            {
-                Item = field.Item,
-                FieldName = field.Name,
-                DisableWebEdit = true
-            };
-
-            CorePipeline.Run("renderField", renderFieldArgs);
-
-            return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
+            return field.Value;
         }
 
 
@@ -117,13 +105,13 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 return;
             }
-
+            
             if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
             {
                 throw new NotSupportedException("It is not possible to save data from a rich text field when the data isn't raw."
                     + "Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));
             }
-
+            
             field.Value = value != null ? value.ToString() : null;
         }
 

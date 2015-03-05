@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns>System.String.</returns>
-        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue( object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             return Enum.GetName(config.PropertyInfo.PropertyType, value);
         }

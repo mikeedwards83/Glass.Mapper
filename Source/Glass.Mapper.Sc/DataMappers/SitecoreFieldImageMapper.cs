@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -88,28 +88,28 @@ namespace Glass.Mapper.Sc.DataMappers
             img.VSpace = vSpace;
             img.Width = width;
         }
-        
+
         public static void MapToImage(Image img, MediaItem imageItem)
         {
-           /* int height = 0;
-            int.TryParse(imageItem..Height, out height);
-            int width = 0;
-            int.TryParse(imageItem.Width, out width);
-            int hSpace = 0;
-            int.TryParse(imageItem.HSpace, out hSpace);
-            int vSpace = 0;
-            int.TryParse(imageItem.VSpace, out vSpace);*/
+            /* int height = 0;
+             int.TryParse(imageItem..Height, out height);
+             int width = 0;
+             int.TryParse(imageItem.Width, out width);
+             int hSpace = 0;
+             int.TryParse(imageItem.HSpace, out hSpace);
+             int vSpace = 0;
+             int.TryParse(imageItem.VSpace, out vSpace);*/
 
             img.Alt = imageItem.Alt;
             img.Title = imageItem.Title;
-           // img.Border = imageItem.Border;
-           // img.Class = imageItem.Class;
-           // img.Height = height;
-           // img.HSpace = hSpace;
+            // img.Border = imageItem.Border;
+            // img.Class = imageItem.Class;
+            // img.Height = height;
+            // img.HSpace = hSpace;
             img.MediaId = imageItem.ID.Guid;
             img.Src = MediaManager.GetMediaUrl(imageItem);
-           // img.VSpace = vSpace;
-           // img.Width = width;
+            // img.VSpace = vSpace;
+            // img.Width = width;
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Glass.Mapper.Sc.DataMappers
                         field.MediaID = newId;
                         ItemLink link = new ItemLink(item.Database.Name, item.ID, field.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                         field.UpdateLink(link);
-                        
+
                     }
                     else throw new MapperException("No item with ID {0}. Can not update Media Item field".Formatted(newId));
                 }
@@ -171,7 +171,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 field.HSpace = image.HSpace.ToString();
             if (image.VSpace > 0)
                 field.VSpace = image.VSpace.ToString();
-            
+
             if (field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
                 field.Alt = image.Alt ?? string.Empty;
             if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
