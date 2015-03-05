@@ -271,6 +271,18 @@ namespace Glass.Mapper.Sc
                 collection[name] = defaultValue;
         }
 
+        /// <summary>
+        /// Checks it and attribute is part of the NameValueCollection and updates it with the
+        /// default if it isn't.
+        /// </summary>
+        /// <param name="collection">The collection of parameters</param>
+        /// <param name="name">The name of the attribute in the collection</param>
+        /// <param name="defaultValue">The default value for the attribute</param>
+        public static void AttributeCheck(NameValueCollection collection, string name, string defaultValue)
+        {
+            if (collection[name].IsNullOrEmpty() && !defaultValue.IsNullOrEmpty())
+                collection[name] = defaultValue;
+        }
 
 
         /// <summary>

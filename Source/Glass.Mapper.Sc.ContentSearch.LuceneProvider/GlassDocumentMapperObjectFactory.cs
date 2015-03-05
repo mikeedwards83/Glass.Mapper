@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
     public class GlassDocumentMapperObjectFactory : IIndexDocumentPropertyMapperObjectFactory, ISearchIndexInitializable
     {
         private ISearchIndex _searchIndex;
-        private DefaultDocumentMapperObjectFactory _defaultDocumentMapper = new DefaultDocumentMapperObjectFactory();
+        private readonly DefaultDocumentMapperObjectFactory _defaultDocumentMapper = new DefaultDocumentMapperObjectFactory();
 
         public List<string> GetTypeIdentifyingFields(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {

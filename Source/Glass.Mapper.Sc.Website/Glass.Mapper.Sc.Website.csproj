@@ -93,6 +93,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.example" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
