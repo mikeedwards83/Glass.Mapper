@@ -20,7 +20,16 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper" version="3.0.12" />
+      <group>
+        <dependency id="Glass.Mapper" version="3.0.12" />
+      </group>
+      <group targetFramework="net40">
+        <dependency id="ReadOnlyCollectionInterfaces" version="1.0.0" />
+        <dependency id="System.Collections.Immutable.Net40" version="1.0.30.17" />
+      </group>
+      <group targetFramework="net45">
+        <dependency id="Microsoft.Bcl.Immutable" version="1.0.34" />
+      </group>
     </dependencies>
   </metadata>
   <files>

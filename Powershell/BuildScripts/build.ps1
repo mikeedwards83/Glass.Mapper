@@ -147,14 +147,18 @@ foreach($nuget  in $nugets){
  
     [xml] $nugetContent = Get-Content $nuget
     if ($customName) {
-        $nugetContent.package.metadata.id = $customName + "." + $nugetContent.package.metadata.id;
+        $nugetContent.package.metadata.id = $customName + "." + $nugetContent.package.metadata.id
     }
     if ($author) {
-        $nugetContent.package.metadata.authors = $nugetContent.package.metadata.authors + ", " + $author;
+        $nugetContent.package.metadata.authors = $nugetContent.package.metadata.authors + ", " + $author
     }
     #Removed, using $version$ in Nuget files
     #$nugetContent.package.metadata.version = $releaseNumber
-    foreach ($dependency in $nugetContent.package.metadata.dependencies.dependency){
+    $dependencies = $nugetContent.package.metadata.dependencies.dependency
+    if (!$dependencies){
+      $dependencies = $nugetContent.package.metadata.dependencies.group.dependency
+    }
+    foreach ($dependency in $dependencies){
         if ($dependency -And $dependency.id -And $dependency.id.startsWith("Glass.")) {
             if ($customName) {
                 $dependency.id = $customName + "." + $dependency.id;
