@@ -49,11 +49,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Net45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.Upgrade.XML</DocumentationFile>
-    <DebugType>full</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>bin\Net45\Glass.Mapper.Sc.Upgrade.XML</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>

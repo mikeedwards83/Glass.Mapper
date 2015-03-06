@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Glass.Mapper.Sc70.ContentSearch.LuceneProvider</id>
+    <version>$version$</version>
+    <authors>Michael Edwards, Tom Dudfield</authors>
+    <owners>Michael Edwards</owners>
+    <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+    Only for sitecore 7.0, for sitecore 7.2 or later use Glass.Mapper.Sc70.ContentSearch.LuceneProvider!
+    
+		An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
+		relationships and queries as well as supporting the Page Editor.
+	</description>
+    <releaseNotes>This is a pre-release version of the package.</releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore Glass.Mapper</tags>
+    <language>en-GB</language>
+    <dependencies>
+		<dependency id="Glass.Mapper.Sc" version="3.0.12" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\release\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.dll" target="lib\net45\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.dll" />
+    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\release\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.pdb" target="lib\net45\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\release\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.xml" target="lib\net45\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.xml" />
+    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\**.cs" target="src\Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider" />
+  </files>
+</package>

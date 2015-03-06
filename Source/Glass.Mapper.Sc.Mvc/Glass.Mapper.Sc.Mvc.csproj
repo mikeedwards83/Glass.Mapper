@@ -113,7 +113,6 @@
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>

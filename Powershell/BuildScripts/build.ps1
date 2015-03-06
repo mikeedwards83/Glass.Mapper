@@ -40,6 +40,10 @@ Param(
    [string]$releaseNumber,  
    [Parameter(Position=2)]
    [string]$nugetKey,
+   [Parameter(Position=3)]
+   [string]$customName,
+   [Parameter(Position=4)]
+   [string]$author,
    [switch]$clean,
    [switch]$tidy,
    [switch]$silent
@@ -58,7 +62,7 @@ $releasePath = $rootPath+"\Releases\"+$releaseNumber
 $nugetsPath = $rootPath + "\Nugets\"+$releaseNumber
 $env:windir
 $logfile = $releasePath+"\Build.log"
-$nugetExe = $releasePath+"\Nuget.exe"
+$nugetExe = "nuget" #$releasePath+"\Nuget.exe"
 
 
 . .\utilities.ps1
@@ -98,7 +102,7 @@ Copy-Item $rootPath"\Tests" $releasePath"\Tests" -recurse
 Copy-Item $rootPath"\*.sln" $releasePath
 Copy-Item "*.proj" $releasePath
 Copy-Item "*.nuspec" $releasePath
-Copy-Item "Nuget.exe" $releasePath
+#Copy-Item "Nuget.exe" $releasePath
 
 
 #update the version numbers
@@ -126,10 +130,11 @@ foreach($assInfo  in $assInfos){
 $msbuild = $env:windir+"\Microsoft.NET\Framework\v4.0.30319\msbuild "
 $releaseBuild = $msbuild + $releasePath+"\build-release.proj"
 $debugBuild = $msbuild + $releasePath+"\build-debug.proj"
+$net45Build = $msbuild + $releasePath+"\build-net45.proj"
 
 Invoke-Expression $releaseBuild
 Invoke-Expression $debugBuild
-
+Invoke-Expression $net45Build
 
 #create nuget packages
 
@@ -140,10 +145,25 @@ $nugets = Get-ChildItem -Path $releasePath -Filter *.nuspec | ForEach-Object -Pr
 foreach($nuget  in $nugets){
     LogWrite $nuget
  
- #Removed, using $version$ in Nuget files
- #   [xml] $nugetContent = Get-Content $nuget
- #   $nugetContent.package.metadata.version = $releaseNumber
- #   $nugetContent.Save($nuget)
+    [xml] $nugetContent = Get-Content $nuget
+    if ($customName) {
+        $nugetContent.package.metadata.id = $customName + "." + $nugetContent.package.metadata.id;
+    }
+    if ($author) {
+        $nugetContent.package.metadata.authors = $nugetContent.package.metadata.authors + ", " + $author;
+    }
+    #Removed, using $version$ in Nuget files
+    #$nugetContent.package.metadata.version = $releaseNumber
+    foreach ($dependency in $nugetContent.package.metadata.dependencies.dependency){
+        if ($dependency -And $dependency.id -And $dependency.id.startsWith("Glass.")) {
+            if ($customName) {
+                $dependency.id = $customName + "." + $dependency.id;
+            }
+            $dependency.version = $releaseNumber
+        }
+    }
+
+    $nugetContent.Save($nuget)
 	
     $nugetCmd = $nugetExe + " pack "+$nuget +" -Symbols -Verbosity detailed -Version "+ $releaseNumber + " -OutputDirectory "+$nugetsPath
     
