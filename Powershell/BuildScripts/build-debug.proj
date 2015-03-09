@@ -11,7 +11,8 @@
 	<Target Name="Build">
 		  <MSBuild Projects="Glass.Mapper - Release.sln"
 			 Targets="Build"
-			 Properties="Configuration=$(Configuration)" />
+			 Properties="Configuration=$(Configuration)" 
+			 ContinueOnError="ErrorAndContinue"/>
 	</Target>
 
 </Project>
