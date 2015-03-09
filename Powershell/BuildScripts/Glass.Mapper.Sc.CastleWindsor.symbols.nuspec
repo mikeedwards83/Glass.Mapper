@@ -20,6 +20,7 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Glass.Mapper.Sc" version="3.2.1" />
+		<dependency id="Castle.Core" version="3.3.3" />
 		<dependency id="Castle.Windsor" version="3.3.0" />
 	</dependencies>
   </metadata>
