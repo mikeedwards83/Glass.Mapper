@@ -44,23 +44,23 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{47FF9E2D-AB07-494C-8B87-CBA26C7EC451}"
 	ProjectSection(SolutionItems) = preProject
 		Powershell\BuildScripts\build-debug.proj = Powershell\BuildScripts\build-debug.proj
+		Powershell\BuildScripts\build-net45.proj = Powershell\BuildScripts\build-net45.proj
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
-		Powershell\BuildScripts\Glass.Mapper.nuspec = Powershell\BuildScripts\Glass.Mapper.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.ContentSearch.LuceneProvider.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.ContentSearch.LuceneProvider.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.ContentSearch.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.ContentSearch.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-3.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-3.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-4.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-4.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-5.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Mvc-5.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore-Upgrade.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.CastleWindsor.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.CastleWindsor.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.CastleWindsor.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.Razor.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sitecore.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Razor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc.Upgrade.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
-		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
+		Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec
+		Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec
 		Powershell\BuildScripts\utilities.ps1 = Powershell\BuildScripts\utilities.ps1
 	EndProjectSection
 EndProject
