@@ -34,7 +34,9 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreQueryMapper : AbstractDataMapper
     {
-        private List<ISitecoreQueryParameter> _parameters; 
+        private List<ISitecoreQueryParameter> _parameters;
+
+        private readonly IEnumerable<ISitecoreQueryParameter> _dynamicParameters;
 
         protected List<ISitecoreQueryParameter> Parameters
         {
@@ -54,9 +56,8 @@ namespace Glass.Mapper.Sc.DataMappers
 
             _parameters = new List<ISitecoreQueryParameter>();
 
-            var parameters = DependencyResolver.ResolveAll<ISitecoreQueryParameter>();
-            if (parameters != null)
-                _parameters.AddRange(parameters);
+            if (_dynamicParameters != null && _dynamicParameters.Any())
+                _parameters.AddRange(_dynamicParameters);
 
             //default parameters
             _parameters.Add(new ItemDateNowParameter());
@@ -66,15 +67,13 @@ namespace Glass.Mapper.Sc.DataMappers
             _parameters.Add(new ItemEscapedPathParameter());
         }
 
-        protected IDependencyResolver DependencyResolver { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreQueryMapper"/> class.
         /// </summary>
         /// <param name="dependencyResolver">The dependency resolver.</param>
-        public SitecoreQueryMapper(IDependencyResolver dependencyResolver)
+        public SitecoreQueryMapper(IEnumerable<ISitecoreQueryParameter> dynamicParameters)
         {
-            DependencyResolver = dependencyResolver;
+            _dynamicParameters = dynamicParameters;
             ReadOnly = true;
         }
 
