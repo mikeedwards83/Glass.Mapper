@@ -32,6 +32,7 @@ using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Pipelines.GetChromeData;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Collections;
@@ -133,19 +134,20 @@ namespace Glass.Mapper.Sc
         }
 
 
-        public static GlassEditFrame EditFrame<K>(K model, string title = null, params Expression<Func<K, object>>[] fields) where T : class
+        public GlassEditFrame EditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields) where T : class
         {
             if (IsInEditingMode && model != null)
             {
                 if (fields.Any())
                 {
 
-                    var fieldNames = fields.Select(x => GetGlassProperty(x, view.GlassHtml.SitecoreContext.GlassContext, model))
+                    var fieldNames = fields.Select(x => Glass.Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
+                        .Cast<SitecoreFieldConfiguration>()
                         .Where(x => x != null)
                         .Select(x => x.FieldName);
 
                     var buttonPath = "{0}{1}".Formatted(
-                        Uel.Application.Sc.Pipelines.GetChromeData.EditFrameBuilder.BuildToken,
+                        EditFrameBuilder.BuildToken,
                         fieldNames.Aggregate((x, y) => x + "|" + y));
 
                     if (title.IsNotNullOrEmpty())
@@ -156,7 +158,7 @@ namespace Glass.Mapper.Sc
                     var field = fields.FirstOrDefault();
 
 
-                    var config = GetTypeConfig(field, view.GlassHtml.SitecoreContext.GlassContext, model);
+                    var config = Glass.Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, SitecoreContext.GlassContext, model);
                     var pathConfig = config.Properties
                         .OfType<SitecoreInfoConfiguration>()
                         .FirstOrDefault(x => x.Type == SitecoreInfoType.Path);
@@ -167,10 +169,10 @@ namespace Glass.Mapper.Sc
                     var path = pathConfig.PropertyGetter(model) as string;
 
 
-                    return view.BeginEditFrame(buttonPath, path);
+                    return EditFrame(buttonPath, path);
                 }
             }
-            return view.BeginEditFrame("/sitecore");
+            return EditFrame("/sitecore");
 
         }
 
@@ -514,9 +516,10 @@ namespace Glass.Mapper.Sc
 
                 if (IsInEditingMode)
                 {
-
-
-                    var dataHandler = GetGlassProperty(field, context, model);
+                    MemberExpression memberExpression;
+                    var finalTarget = Mapper.Utilities.GetTargetObjectOfLamba(field, model, out memberExpression);
+                    var config = Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, context, model);
+                    var dataHandler = Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(field, context, model);
 
                     var scClass = config.ResolveItem(finalTarget, database);
 
@@ -594,94 +597,7 @@ namespace Glass.Mapper.Sc
         }
 
 
-        public static AbstractPropertyConfiguration GetGlassProperty<T>(
-            Expression<Func<T, object>> field, 
-            Context context,
-            T model)
-        {
-
-            if (field.Parameters.Count > 1)
-                throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
-
-            MemberExpression memberExpression;
-
-            if (field.Body is UnaryExpression)
-            {
-                memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
-            }
-            else if (!(field.Body is MemberExpression))
-            {
-                throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
-            }
-            else
-            {
-                memberExpression = (MemberExpression)field.Body;
-            }
-
-
-
-            //we have to deconstruct the lambda expression to find the 
-            //correct model object
-            //For example if we have the lambda expression x =>x.Children.First().Content
-            //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
-
-            //this contains the expression that will evaluate to the object containing the property
-            var objectExpression = memberExpression.Expression;
-
-            var finalTarget =
-                Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(model);
-
-            var site = global::Sitecore.Context.Site;
-
-            if (context == null)
-                throw new NullReferenceException("Context cannot be null");
-
-            var config = context.GetTypeConfiguration<SitecoreTypeConfiguration>(finalTarget);
-
-            //lambda expression does not always return expected memberinfo when inheriting
-            //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
-            var prop = config.Type.GetProperty(memberExpression.Member.Name);
-
-            //interfaces don't deal with inherited properties well
-            if (prop == null && config.Type.IsInterface)
-            {
-                Func<Type, PropertyInfo> interfaceCheck = null;
-                interfaceCheck = (inter) =>
-                {
-                    var interfaces = inter.GetInterfaces();
-                    var properties =
-                        interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
-                            x => x != null);
-                    if (properties.Any()) return properties.First();
-                    else
-                        return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
-                };
-                prop = interfaceCheck(config.Type);
-            }
-
-            if (prop != null && prop.DeclaringType != prop.ReflectedType)
-            {
-                //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
-                prop = prop.DeclaringType.GetProperty(prop.Name);
-            }
-
-            if (prop == null)
-                throw new MapperException(
-                    "Page editting error. Could not find property {0} on type {1}".Formatted(
-                        memberExpression.Member.Name, config.Type.FullName));
-
-            //ME - changed this to work by name because properties on interfaces do not show up as declared types.
-            var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
-            if (dataHandler == null)
-            {
-                throw new MapperException(
-                    "Page editing error. Could not find data handler for property {2} {0}.{1}".Formatted(
-                        prop.DeclaringType, prop.Name, prop.MemberType));
-            }
-
-
-            return dataHandler;
-        }
+    
         #endregion
 
         /// <summary>

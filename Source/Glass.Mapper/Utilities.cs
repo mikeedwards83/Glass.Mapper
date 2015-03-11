@@ -25,6 +25,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Reflection;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper
 {
@@ -403,8 +404,113 @@ namespace Glass.Mapper
 			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
 			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
 		}
-    }
-}
+
+
+        public static AbstractPropertyConfiguration GetGlassProperty<T, K>(
+        Expression<Func<T, object>> field,
+        Context context,
+        T model) where K : AbstractTypeConfiguration, new ()
+        {
+
+            MemberExpression memberExpression;
+
+            var finalTarget = GetTargetObjectOfLamba(field, model, out memberExpression);
+
+            if (context == null)
+                throw new NullReferenceException("Context cannot be null");
+
+            var config = context.GetTypeConfiguration<K>(finalTarget);
+
+            //lambda expression does not always return expected memberinfo when inheriting
+            //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
+            var prop = config.Type.GetProperty(memberExpression.Member.Name);
+
+            //interfaces don't deal with inherited properties well
+            if (prop == null && config.Type.IsInterface)
+            {
+                Func<Type, PropertyInfo> interfaceCheck = null;
+                interfaceCheck = (inter) =>
+                {
+                    var interfaces = inter.GetInterfaces();
+                    var properties =
+                        interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
+                            x => x != null);
+                    if (properties.Any()) return properties.First();
+                    else
+                        return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
+                };
+                prop = interfaceCheck(config.Type);
+            }
+
+            if (prop != null && prop.DeclaringType != prop.ReflectedType)
+            {
+                //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
+                prop = prop.DeclaringType.GetProperty(prop.Name);
+            }
+
+            if (prop == null)
+                throw new MapperException(
+                    "Page editting error. Could not find property {0} on type {1}".Formatted(
+                        memberExpression.Member.Name, config.Type.FullName));
+
+            //ME - changed this to work by name because properties on interfaces do not show up as declared types.
+            var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
+            if (dataHandler == null)
+            {
+                throw new MapperException(
+                    "Page editing error. Could not find data handler for property {2} {0}.{1}".Formatted(
+                        prop.DeclaringType, prop.Name, prop.MemberType));
+            }
+
+
+            return dataHandler;
+        }
+
+        public static K GetTypeConfig<T, K>(Expression<Func<T, object>> field, Context context, T model) where K : AbstractTypeConfiguration, new()
+        {
+            MemberExpression memberExpression;
+            var finalTarget = GetTargetObjectOfLamba(field, model, out memberExpression);
+
+            if (context == null)
+                throw new NullReferenceException("Context cannot be null");
+
+            var config = context.GetTypeConfiguration<K>(finalTarget);
+
+            return config;
+        }
+
+
+        public static object GetTargetObjectOfLamba<T>(Expression<Func<T, object>> field, T model, out MemberExpression memberExpression)
+        {
+            if (field.Parameters.Count > 1)
+                throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
+
+            if (field.Body is UnaryExpression)
+            {
+                memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
+            }
+            else if (!(field.Body is MemberExpression))
+            {
+                throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
+            }
+            else
+            {
+                memberExpression = (MemberExpression)field.Body;
+            }
+
+            //we have to deconstruct the lambda expression to find the 
+            //correct model object
+            //For example if we have the lambda expression x =>x.Children.First().Content
+            //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
+
+            //this contains the expression that will evaluate to the object containing the property
+            var objectExpression = memberExpression.Expression;
+
+            var finalTarget =
+                Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(model);
+
+            return finalTarget;
+        }
 
 
 

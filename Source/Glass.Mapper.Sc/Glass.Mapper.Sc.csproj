@@ -42,9 +42,8 @@
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
-<Import Project="..\..\Configuration.proj" />
-<!--End: Must come after all PropertyGroups -->
-
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -185,6 +184,7 @@
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
+    <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
