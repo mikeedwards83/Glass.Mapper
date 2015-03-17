@@ -104,6 +104,11 @@
     <Compile Include="IDependencyRegistrar.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="Maps\AbstractGlassMap.cs" />
+    <Compile Include="Maps\ConfigurationMap.cs" />
+    <Compile Include="Maps\IConfigurationMap.cs" />
+    <Compile Include="Maps\IGlassMap.cs" />
+    <Compile Include="Maps\IMapProvider.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />

@@ -80,6 +80,7 @@
     <Compile Include="Configuration\Fluent\SitecoreDelegate.cs" />
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreMapConfigurationLoader.cs" />
     <Compile Include="Configuration\SitecoreDelegateConfiguration.cs" />
     <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Maps\SitecoreGlassMap.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />

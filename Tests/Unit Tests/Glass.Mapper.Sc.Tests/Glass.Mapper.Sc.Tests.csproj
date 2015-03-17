@@ -69,6 +69,7 @@
     <Compile Include="Configuration\Attributes\SitecoreLinkedAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreNodeAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
+    <Compile Include="Configuration\SitecoreMapConfigurationFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
