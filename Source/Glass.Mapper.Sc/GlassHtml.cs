@@ -68,29 +68,35 @@ namespace Glass.Mapper.Sc
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
         public static string QuotationMark = "'";
 
+		// This doesn't work with a construction like this: 
+		// foreach(var item in items) { @Editable(i=>item.Property) }, because both the expression body and typename are the same
+		// Disabled the caching for now
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
-            var key = typeof(T).FullName + expression.Body.ToString();
+            //var key = typeof(T).FullName + expression.Body.ToString();
 
-            if (_compileCache.ContainsKey(key))
-            {
-                return (Func<T, string>)_compileCache[key];
-            }
+            //if (_compileCache.ContainsKey(key))
+            //{
+            //    return (Func<T, string>)_compileCache[key];
+            //}
             var compiled = expression.Compile();
-            _compileCache.TryAdd(key, compiled);
+            //_compileCache.TryAdd(key, compiled);
             return compiled;
         }
 
+		// This doesn't work with a construction like this: 
+		// foreach(var item in items) { @Editable(i=>item.Property) }, because both the expression body and typename are the same
+		// Disabled the caching for now 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
-            var key = typeof (T).FullName + expression.Body.ToString();
+			//var key = typeof (T).FullName + expression.Body.ToString();
 
-            if (_compileCache.ContainsKey(key))
-            {
-                return (Func<T, object>) _compileCache[key];
-            }
+            //if (_compileCache.ContainsKey(key))
+            //{
+            //    return (Func<T, object>) _compileCache[key];
+            //}
             var compiled = expression.Compile();
-            _compileCache.TryAdd(key, compiled);
+           // _compileCache.TryAdd(key, compiled);
             return compiled;
         }
 
