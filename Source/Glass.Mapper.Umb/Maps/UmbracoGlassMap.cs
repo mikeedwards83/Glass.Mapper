@@ -18,7 +18,7 @@ namespace Glass.Mapper.Umb.Maps
         /// </summary>
         /// <typeparam name="TK">The type to find</typeparam>
         /// <returns></returns>
-        public UmbracoType<TK> GetUmbracoType<TK>() where TK : class
+        protected virtual UmbracoType<TK> GetUmbracoType<TK>() where TK : class
         {
             UmbracoGlassMap<TK> map = MapProvider.Maps.FirstOrDefault(x => x.MappedType == typeof(TK)) as UmbracoGlassMap<TK>;
             if (map == null)
@@ -28,27 +28,6 @@ namespace Glass.Mapper.Umb.Maps
             }
 
             return map.GlassType;
-        }
-
-        /// <summary>
-        /// Performs the mapping against the container
-        /// </summary>
-        /// <param name="mappingContainer">
-        /// The mapping container - expects an UmbracoFluentConfigurationLoader</param>
-        public override void PerformMap<TLoader>(TLoader mappingContainer)
-        {
-            if (CanLoad(mappingContainer))
-            {
-                return;
-            }
-
-            var fluentConfigurationLoader = mappingContainer as UmbracoFluentConfigurationLoader;
-            if (fluentConfigurationLoader == null)
-            {
-                return;
-            }
-
-            fluentConfigurationLoader.Add(GlassType);
         }
 
         /// <summary>
@@ -64,6 +43,32 @@ namespace Glass.Mapper.Umb.Maps
             }
 
             GlassType.Import(typeConfig);
+        }
+
+        /// <summary>
+        /// Performs the mapping against the container
+        /// </summary>
+        /// <param name="mappingContainer">
+        /// The mapping container - expects an UmbracoFluentConfigurationLoader</param>
+        public override void PerformMap<TLoader>(TLoader mappingContainer)
+        {
+            if (mappingContainer == null)
+            {
+                return;
+            }
+
+            if (GlassType == null)
+            {
+                return;
+            }
+
+            var fluentConfigurationLoader = mappingContainer as UmbracoFluentConfigurationLoader;
+            if (fluentConfigurationLoader == null)
+            {
+                return;
+            }
+
+            fluentConfigurationLoader.Add(GlassType);
         }
 
         /// <summary>

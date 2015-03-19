@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc.Maps
         /// </summary>
         /// <typeparam name="TK">The type to find</typeparam>
         /// <returns></returns>
-        public SitecoreType<TK> GetSitecoreType<TK>() where TK : class
+        protected virtual SitecoreType<TK> GetSitecoreType<TK>() where TK : class
         {
             SitecoreGlassMap<TK> map = MapProvider.Maps.FirstOrDefault(x => x.MappedType == typeof(TK)) as SitecoreGlassMap<TK>;
             if (map == null)

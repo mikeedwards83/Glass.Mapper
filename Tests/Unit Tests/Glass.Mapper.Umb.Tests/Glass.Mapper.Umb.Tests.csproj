@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Umb.Tests</RootNamespace>
-    <AssemblyName>Glass.Mapper.Umb.Tests</AssemblyName>  
+    <AssemblyName>Glass.Mapper.Umb.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -65,6 +65,7 @@
     <Compile Include="Configuration\Attributes\UmbracoChildrenAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\UmbracoPropertyAttributeFixture.cs" />
     <Compile Include="Configuration\Attributes\UmbracoIdAttributeFixture.cs" />
+    <Compile Include="Configuration\UmbracoMapConfigurationFixture.cs" />
     <Compile Include="Configuration\UmbracoTypeConfigurationFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
