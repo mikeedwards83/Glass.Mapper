@@ -24,6 +24,8 @@ using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;
 
 namespace Glass.Mapper.Tests
@@ -185,9 +187,66 @@ namespace Glass.Mapper.Tests
             Assert.IsNotNull(config);
 
         }
+
+        [Test]
+        public void GetTypeConfiguration_TwoInterfacesWithTheSameNameUsingCastleProxy_ReturnsEachCorrectly()
+        {
+            //Arrange
+            string contextName = "testContext";
+            bool isDefault = true;
+            var type = typeof (NS1.ProxyTest1);
+            var service = Substitute.For<IAbstractService>();
+            var task = new CreateInterfaceTask();
+            
+            #region CreateTypes
+
+            Context context = Context.Create(Substitute.For<IDependencyResolver>());
+
+            AbstractTypeCreationContext abstractTypeCreationContext1 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext1.RequestedType = typeof(NS1.ProxyTest1);
+
+            var configuration1 = Substitute.For<AbstractTypeConfiguration>();
+            configuration1.Type = typeof(NS1.ProxyTest1);
+
+            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service);
+
+            AbstractTypeCreationContext abstractTypeCreationContext2 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext2.RequestedType = typeof(NS2.ProxyTest1);
+
+            var configuration2 = Substitute.For<AbstractTypeConfiguration>();
+            configuration2.Type = typeof(NS2.ProxyTest1); 
+
+            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service);
+
+            //Act
+            task.Execute(args1);
+            task.Execute(args2);
+
+            #endregion
+
+            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS1.ProxyTest1));
+            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS2.ProxyTest1));
+
+
+            //Act
+            var config1 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args1.Result.GetType());
+            var config2 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args2.Result.GetType());
+
+            //Assert
+            Assert.AreEqual(typeof(NS1.ProxyTest1), config1.Type);
+            Assert.AreEqual(typeof(NS2.ProxyTest1), config2.Type);
+
+        }
+
+
+
+
+
+       
         #endregion
 
         #region Stubs
+
 
         public interface IStubInterface1
         {
@@ -236,6 +295,15 @@ namespace Glass.Mapper.Tests
         }
 
         #endregion
+    }
+
+    namespace NS1
+    {
+        public interface ProxyTest1 { }
+    }
+    namespace NS2
+    {
+        public interface ProxyTest1 { }
     }
 }
 

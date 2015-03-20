@@ -97,6 +97,48 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         }
 
         [Test]
+        public void Execute_TwoClassesWithTheSameName_ProxyGetsCreated()
+        {
+            //Assign
+            var glassConfig = Substitute.For<IGlassConfiguration>();
+            var service = Substitute.For<IAbstractService>();
+
+            Context context = Context.Create(Substitute.For<IDependencyResolver>());
+
+            AbstractTypeCreationContext abstractTypeCreationContext1 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext1.RequestedType = typeof(NS1.ProxyTest1);
+
+            var configuration1 = Substitute.For<AbstractTypeConfiguration>();
+            configuration1.Type = typeof(NS1.ProxyTest1);
+
+            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service);
+
+            AbstractTypeCreationContext abstractTypeCreationContext2 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext2.RequestedType = typeof(NS2.ProxyTest1);
+
+            var configuration2 = Substitute.For<AbstractTypeConfiguration>();
+            configuration2.Type = typeof(NS2.ProxyTest1); ;
+
+            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service);
+
+            //Act
+            _task.Execute(args1);
+            _task.Execute(args2);
+
+            //Assert
+            Assert.IsNotNull(args1.Result);
+            Assert.IsTrue(args1.IsAborted);
+            Assert.IsTrue(args1.Result is NS1.ProxyTest1);
+            Assert.IsFalse(args1.Result.GetType() == typeof(NS1.ProxyTest1));
+
+            Assert.IsNotNull(args2.Result);
+            Assert.IsTrue(args2.IsAborted);
+            Assert.IsTrue(args2.Result is NS2.ProxyTest1);
+            Assert.IsFalse(args2.Result.GetType() == typeof(NS2.ProxyTest1));
+        }
+
+        
+        [Test]
         public void Execute_ResultAlreadySet_DoesNoWork()
         {
             //Assign
@@ -141,6 +183,15 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         }
 
         #endregion
+    }
+
+    namespace NS1
+    {
+        public interface ProxyTest1 { }
+    }
+    namespace NS2
+    {
+        public interface ProxyTest1 { }
     }
 }
 
