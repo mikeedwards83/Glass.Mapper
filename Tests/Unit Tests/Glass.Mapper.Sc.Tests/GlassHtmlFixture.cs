@@ -323,6 +323,29 @@ namespace Glass.Mapper.Sc.Tests
             Assert.AreEqual(expected, result);
         }
 
+        /// <summary>
+        /// Test for issue:https://github.com/mikeedwards83/Glass.Mapper/issues/112
+        /// </summary>
+        [Test]
+        public void RenderLink_LinkHasQuestionMarkAndAnchorAtEnd()
+        {
+            //Arrange
+            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2#anchor' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "http://www.seek.com.au/jobs/in-australia/?dateRange=test&value1=test2#anchor";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
         [Test]
         public void RenderLink_LinkWithNoAttributes()
         {
