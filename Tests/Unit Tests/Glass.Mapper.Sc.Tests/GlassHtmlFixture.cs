@@ -254,6 +254,75 @@ namespace Glass.Mapper.Sc.Tests
 
         #region Method - RenderLink
 
+        /// <summary>
+        /// Test for issue:https://github.com/mikeedwards83/Glass.Mapper/issues/112
+        /// </summary>
+        [Test]
+        public void RenderLink_LinkHasHashBang()
+        {
+            //Arrange
+            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange=999&workType=0&industry=&occupation=&graduateSearch=false&salaryFrom=0&salaryTo=999999&salaryType=annual&advertiserID=&advertiserGroup=&keywords=sitecore+developer&page=1&displaySuburb=&seoSuburb=&isAreaUnspecified=false&location=&area=&nation=3000&sortMode=KeywordRelevance&searchFrom=filters&searchType=' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "http://www.seek.com.au/jobs/in-australia/#dateRange=999&workType=0&industry=&occupation=&graduateSearch=false&salaryFrom=0&salaryTo=999999&salaryType=annual&advertiserID=&advertiserGroup=&keywords=sitecore+developer&page=1&displaySuburb=&seoSuburb=&isAreaUnspecified=false&location=&area=&nation=3000&sortMode=KeywordRelevance&searchFrom=filters&searchType=";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Test for issue:https://github.com/mikeedwards83/Glass.Mapper/issues/112
+        /// </summary>
+        [Test]
+        public void RenderLink_LinkHasHash()
+        {
+            //Arrange
+            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "http://www.seek.com.au/jobs/in-australia/#dateRange";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Test for issue:https://github.com/mikeedwards83/Glass.Mapper/issues/112
+        /// </summary>
+        [Test]
+        public void RenderLink_LinkHasQuestionMark()
+        {
+            //Arrange
+            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2' >hello world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello world";
+            link.Url = "http://www.seek.com.au/jobs/in-australia/?dateRange=test&value1=test2";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
         [Test]
         public void RenderLink_LinkWithNoAttributes()
         {
