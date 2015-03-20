@@ -98,7 +98,14 @@ namespace Glass.Mapper.Sc.Fields
                 return value;
             };
 
-            UrlBuilder builder = new UrlBuilder(Url);
+            var url = Url;
+
+            if (Type == LinkType.Anchor)
+            {
+                url = string.Empty;
+            }
+
+            UrlBuilder builder = new UrlBuilder(url);
 
             var query = getValue("query", () => Query);
             var anchor = getValue("anchor", () => Anchor);

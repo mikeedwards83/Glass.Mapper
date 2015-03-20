@@ -31,10 +31,10 @@ namespace Glass.Mapper
     /// <summary>
     /// Class Utilities
     /// </summary>
-    public   class Utilities 
+    public class Utilities
     {
-		private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators = 
-			new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
+        private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
+            new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
 
         public static object GetDefault(Type type)
@@ -63,7 +63,7 @@ namespace Glass.Mapper
                 var parameters = constructor.GetParameters();
                 var types = parameters.Select(x => x.ParameterType).ToArray();
 
-                
+
 
                 var dynMethod = new DynamicMethod("DM$OBJ_FACTORY_" + type.Name, type, types, type);
 
@@ -81,19 +81,19 @@ namespace Glass.Mapper
                 switch (parameters.Count())
                 {
                     case 0:
-                        genericType = typeof(Func<>);
+                        genericType = typeof (Func<>);
                         break;
                     case 1:
-                        genericType = typeof(Func<,>);
+                        genericType = typeof (Func<,>);
                         break;
                     case 2:
-                        genericType = typeof(Func<,,>);
+                        genericType = typeof (Func<,,>);
                         break;
                     case 3:
-                        genericType = typeof(Func<,,,>);
+                        genericType = typeof (Func<,,,>);
                         break;
                     case 4:
-                        genericType = typeof(Func<,,,,>);
+                        genericType = typeof (Func<,,,,>);
                         break;
                     case 5:
                         genericType = typeof(Func<,,,,,>);
@@ -117,7 +117,8 @@ namespace Glass.Mapper
                         throw new MapperException("Only supports constructors with a maximum of 10 parameters");
                 }
 
-                var delegateType = genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
+                var delegateType =
+                    genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] {type}).ToArray());
 
                 if (!types.Any())
                     types = Type.EmptyTypes;
@@ -131,7 +132,8 @@ namespace Glass.Mapper
         /// <summary>
         /// The flags
         /// </summary>
-        public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
+        public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy |
+                                           BindingFlags.Instance;
 
         /// <summary>
         /// Gets a property based on the type and name
@@ -151,14 +153,14 @@ namespace Glass.Mapper
                 //this is probably caused by an item having two indexers e.g SearchResultItem;
             }
 
-            if(property == null)
+            if (property == null)
             {
                 var interfaces = type.GetInterfaces();
                 foreach (var inter in interfaces)
                 {
-                      property = inter.GetProperty(name);
-                      if (property != null)
-                          return property;
+                    property = inter.GetProperty(name);
+                    if (property != null)
+                        return property;
                 }
             }
 
@@ -195,7 +197,8 @@ namespace Glass.Mapper
         }
 
 
-        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false, bool underscoreForHyphens = true)
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false,
+            bool underscoreForHyphens = true)
         {
             NameValueCollection nameValues = new NameValueCollection();
             if (target != null)
@@ -228,14 +231,14 @@ namespace Glass.Mapper
         /// <param name="arguments">The arguments.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.Object.</returns>
-        public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
+        public static object CreateGenericType(Type type, Type[] arguments, params object[] parameters)
         {
             Type genericType = type.MakeGenericType(arguments);
             object obj;
-	        if (parameters != null && parameters.Count() > 0)
-		        obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
-			else
-				obj = GetActivator(genericType)();
+            if (parameters != null && parameters.Count() > 0)
+                obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
+            else
+                obj = GetActivator(genericType)();
             return obj;
         }
 
@@ -252,8 +255,10 @@ namespace Glass.Mapper
         public static Type GetGenericArgument(Type type)
         {
             Type[] types = type.GetGenericArguments();
-            if (types.Count() > 1) throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
-            if (types.Count() == 0) throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
+            if (types.Count() > 1)
+                throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
+            if (types.Count() == 0)
+                throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
             return types[0];
         }
 
@@ -292,8 +297,8 @@ namespace Glass.Mapper
         {
             string name = GetPropertyName(expression);
 
-          
-            if(name.IsNullOrEmpty())
+
+            if (name.IsNullOrEmpty())
                 throw new MapperException("Unable to get property name from lambda expression");
 
             PropertyInfo info = type.GetProperty(name);
@@ -308,89 +313,90 @@ namespace Glass.Mapper
             return info;
         }
 
-	    /// <summary>
-	    /// Creates an action delegate that can be used to set a property's value
-	    /// </summary>
-	    /// <remarks>
-	    /// This compiles down to 'native' IL for maximum performance
-	    /// </remarks>
-		/// <param name="property">The property to create a setter for</param>
-	    /// <returns>An action delegate</returns>
-	    public static Action<object, object> SetPropertyAction(PropertyInfo property)
-		{
-			PropertyInfo propertyInfo = property;
-			Type type = property.DeclaringType;
+        /// <summary>
+        /// Creates an action delegate that can be used to set a property's value
+        /// </summary>
+        /// <remarks>
+        /// This compiles down to 'native' IL for maximum performance
+        /// </remarks>
+        /// <param name="property">The property to create a setter for</param>
+        /// <returns>An action delegate</returns>
+        public static Func<PropertyInfo, Action<object, object>> SetPropertyAction = (PropertyInfo property) =>
+        {
+            PropertyInfo propertyInfo = property;
+            Type type = property.DeclaringType;
 
-	        if (propertyInfo.CanWrite)
-	        {
-	            if (type == null)
-	            {
-	                throw new InvalidOperationException(
-	                    "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
-	            }
+            if (propertyInfo.CanWrite)
+            {
+                if (type == null)
+                {
+                    throw new InvalidOperationException(
+                        "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+                }
 
-	            Type propertyType = propertyInfo.PropertyType;
+                Type propertyType = propertyInfo.PropertyType;
 
-	            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
-	            ParameterExpression valueParameter = Expression.Parameter(typeof (object), "value");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+                ParameterExpression valueParameter = Expression.Parameter(typeof (object), "value");
 
-	            Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
-	                Expression.Assign(
-	                    Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
-	                    Expression.Convert(valueParameter, propertyType)),
-	                instanceParameter,
-	                valueParameter
-	                );
+                Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
+                    Expression.Assign(
+                        Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
+                        Expression.Convert(valueParameter, propertyType)),
+                    instanceParameter,
+                    valueParameter
+                    );
 
-	            return lambda.Compile();
-	        }
-	        else
-	        {
-	            return (object instance, object value) =>
-	                       {
-	                           //does nothing
-	                       };
-	        }
-		}
+                return lambda.Compile();
+            }
+            else
+            {
+                return (object instance, object value) =>
+                {
+                    //does nothing
+                };
+            }
+        };
 
-	    /// <summary>
-	    /// Creates a function delegate that can be used to get a property's value
-	    /// </summary>
-	    /// <remarks>
-	    /// This compiles down to 'native' IL for maximum performance
-	    /// </remarks>
-	    /// <param name="property">The property to create a getter for</param>
-	    /// <returns>A function delegate</returns>
-	    public static Func<object, object> GetPropertyFunc(PropertyInfo property)
-		{
-			PropertyInfo propertyInfo = property;
-			Type type = property.DeclaringType;
+        /// <summary>
+        /// Creates a function delegate that can be used to get a property's value
+        /// </summary>
+        /// <remarks>
+        /// This compiles down to 'native' IL for maximum performance
+        /// </remarks>
+        /// <param name="property">The property to create a getter for</param>
+        /// <returns>A function delegate</returns>
+        public static Func<PropertyInfo, Func<object, object>> GetPropertyFunc = (PropertyInfo property) =>
+        {
+            PropertyInfo propertyInfo = property;
+            Type type = property.DeclaringType;
 
-			if (type == null)
-			{
-				throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
-			}
+            if (type == null)
+            {
+                throw new InvalidOperationException(
+                    "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+            }
 
-	        if (propertyInfo.CanWrite)
-	        {
-	            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+            if (propertyInfo.CanWrite)
+            {
+                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
 
-	            Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
-	                Expression.Convert(
-	                    Expression.Property(
-	                        Expression.Convert(instanceParameter, type),
-	                        propertyInfo),
-	                    typeof (object)),
-	                instanceParameter
-	                );
+                Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
+                    Expression.Convert(
+                        Expression.Property(
+                            Expression.Convert(instanceParameter, type),
+                            propertyInfo),
+                        typeof (object)),
+                    instanceParameter
+                    );
 
-	            return lambda.Compile();
-	        }
-	        else
-	        {
-	            return (object instance) => { return null; };
-	        }
-		}
+                return lambda.Compile();
+            }
+            else
+            {
+                return (object instance) => { return null; };
+            }
+        };
 
         /// <summary>
         /// Gets the activator.
