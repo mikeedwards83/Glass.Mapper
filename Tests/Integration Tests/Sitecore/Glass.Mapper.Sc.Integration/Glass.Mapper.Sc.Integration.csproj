@@ -126,6 +126,7 @@
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
     <Compile Include="ConnectionFixture.cs" />
+    <Compile Include="ContextFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />

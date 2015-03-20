@@ -377,6 +377,7 @@ namespace Glass.Mapper
                     "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
             }
 
+            
             if (propertyInfo.CanWrite)
             {
                 ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
