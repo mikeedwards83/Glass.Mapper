@@ -183,8 +183,10 @@ namespace Glass.Mapper.Tests
             config1.AutoMap = true;
             loader1.Load().Returns(new[] { config1 });
 
+            var resolver = Substitute.For<IDependencyResolver>();
+
             //Act
-            var context = Context.Create(Substitute.For<IDependencyResolver>());
+            var context = Context.Create(resolver);
             context.Load(loader1);
 
             //Assert
