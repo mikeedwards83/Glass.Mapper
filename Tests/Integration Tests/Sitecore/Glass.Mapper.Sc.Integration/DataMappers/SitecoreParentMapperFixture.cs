@@ -27,6 +27,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -125,6 +126,40 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
             service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, true, null);
+        }
+
+        /// <summary>
+        /// Test for issue https://github.com/mikeedwards83/Glass.Mapper/issues/107
+        /// </summary>
+        [Test]
+        public void MapToProperty_ParentDoesNotHaveLanguageVersion_ReturnsNull()
+        {
+            //Assign
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var language = LanguageManager.GetLanguage("af-ZA");
+            var item = db.GetItem("/sitecore/content/Tests/DataMappers/SitecoreParentMapperFixture/EmptyItem", language);
+
+            //parent mustn't have a version
+            Assert.AreEqual(0, item.Parent.Versions.Count);
+
+            var service = Substitute.For<ISitecoreService>();
+            var scContext = new SitecoreDataMappingContext(null, item, service);
+
+            var config = new SitecoreParentConfiguration();
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+            config.InferType = true;
+
+            var mapper = new SitecoreParentMapper();
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            //Act
+            var result = mapper.MapToProperty(scContext);
+
+            //Assert
+
+            //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
+            service.Received().CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, true, null);
+            Assert.IsNull(result);
         }
 
         #endregion
