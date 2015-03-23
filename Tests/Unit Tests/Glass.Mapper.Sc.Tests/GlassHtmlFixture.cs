@@ -88,6 +88,27 @@ namespace Glass.Mapper.Sc.Tests
         }
 
         [Test]
+        public void RenderImage_ValidImageWithNullParameterForWidth_RendersCorrectHtmlWidthSentHeight()
+        {    //Arrange
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105' alt='someAlt' />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "someAlt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var parameters = new { Width = 380, W = (string)null };
+            var model = new { Image = image };
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, false);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void RenderImage_ValidImageWithParametersHeight_RendersCorrectHtml()
         {
             //Arrange
