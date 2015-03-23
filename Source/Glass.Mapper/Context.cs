@@ -163,6 +163,15 @@ namespace Glass.Mapper
                 //first we have to add each type config to the collection
                 foreach (var typeConfig in typeConfigurations)
                 {
+
+                    //don't load generic types
+                    //see https://github.com/mikeedwards83/Glass.Mapper/issues/85
+                    if (typeConfig.Type.IsGenericTypeDefinition)
+                    {
+                        continue;
+                    }
+
+
                     if(TypeConfigurations.ContainsKey(typeConfig.Type)){
                         Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
                         continue;
@@ -194,7 +203,7 @@ namespace Glass.Mapper
         {
             DataMapperResolver runner = new DataMapperResolver(DependencyResolver.ResolveAll<IDataMapperResolverTask>());
 
-            foreach(var property in properties)
+            foreach(var property in properties.Where(x=>x.Mapper == null))
             {
 
                 DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);

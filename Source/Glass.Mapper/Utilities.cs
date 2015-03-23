@@ -371,9 +371,10 @@ namespace Glass.Mapper
 				throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
 			}
 
-	        if (propertyInfo.CanWrite)
-	        {
-	            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+            
+            if (propertyInfo.CanWrite)
+            {
+                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
 
 	            Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
 	                Expression.Convert(

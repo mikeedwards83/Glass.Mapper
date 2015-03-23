@@ -180,7 +180,8 @@ namespace Glass.Mapper.Configuration
             if (AutoMap)
             {
                 //TODO: ME - probably need some binding flags.
-                foreach (var propConfig in AutoMapProperties(Type))
+                var properties = AutoMapProperties(Type);
+                foreach (var propConfig in properties)
                 {
                     AddProperty(propConfig);
                 }
@@ -207,6 +208,8 @@ namespace Glass.Mapper.Configuration
                 }
             }
 
+            var propList = new List<AbstractPropertyConfiguration>();
+
             foreach (var property in properties)
             {
                 if (Properties.All(x => x.PropertyInfo != property))
@@ -230,9 +233,11 @@ namespace Glass.Mapper.Configuration
                     }
 
                     if (propConfig != null)
-                        yield return propConfig;
+                        propList.Add(propConfig);
                 }
             }
+
+            return propList;
         }
 
         /// <summary>

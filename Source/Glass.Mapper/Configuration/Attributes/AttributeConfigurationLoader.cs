@@ -37,6 +37,7 @@ namespace Glass.Mapper.Configuration.Attributes
     {
         private readonly string[] _assemblies;
 
+        public virtual IEnumerable<string> AllowedNamespaces { get; set; } 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeConfigurationLoader{T, K}"/> class.
@@ -123,13 +124,23 @@ namespace Glass.Mapper.Configuration.Attributes
                 {
                     var types = assembly.GetTypes();
 
+
                     foreach (var type in types)
                     {
-                        var loader = new AttributeTypeLoader(type);
-                        var config = loader.Load().FirstOrDefault();
-                        if (config != null)
+                        if(AllowedNamespaces == null || AllowedNamespaces.Any(x=> type.FullName.StartsWith(x)))
                         {
-                            configs.Add(config);
+                            if (type.IsGenericTypeDefinition)
+                            {
+                                continue;
+                            }
+
+                            var loader = new AttributeTypeLoader(type);
+                            var config = loader.Load().FirstOrDefault();
+
+                            if (config != null)
+                            {
+                                configs.Add(config);
+                            }
                         }
                     }
                 }
