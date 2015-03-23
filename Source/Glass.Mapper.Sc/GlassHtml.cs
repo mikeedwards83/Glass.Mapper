@@ -792,15 +792,20 @@ namespace Glass.Mapper.Sc
             }
             urlParams.Remove(ImageParameterKeys.WIDTHHTML);
 
+
+            Action<string, string> originalAttributeClean = (exists, missing) =>
+            {
+                if (origionalKeys.Contains(exists) && !origionalKeys.Contains(missing))
+                {
+                    urlParams.Remove(missing);
+                    htmlParams.Remove(missing);
+                }
+            };
             //we do some smart clean up
-            if (origionalKeys.Contains(ImageParameterKeys.WIDTH) && !origionalKeys.Contains(ImageParameterKeys.HEIGHT))
-            {
-                urlParams.Remove(ImageParameterKeys.HEIGHT);
-            }
-            if (origionalKeys.Contains(ImageParameterKeys.HEIGHT) && !origionalKeys.Contains(ImageParameterKeys.WIDTH))
-            {
-                urlParams.Remove(ImageParameterKeys.WIDTH);
-            }
+            originalAttributeClean(ImageParameterKeys.WIDTH, ImageParameterKeys.HEIGHT);
+            originalAttributeClean(ImageParameterKeys.HEIGHT, ImageParameterKeys.WIDTH);
+            originalAttributeClean(ImageParameterKeys.WIDTHHTML, ImageParameterKeys.HEIGHTHTML);
+            originalAttributeClean(ImageParameterKeys.HEIGHTHTML, ImageParameterKeys.WIDTHHTML);
 
             if (!outputHeightWidth)
             {
