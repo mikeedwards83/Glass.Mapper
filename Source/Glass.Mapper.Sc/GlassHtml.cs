@@ -679,10 +679,13 @@ namespace Glass.Mapper.Sc
             )
         {
 
+            
             if (attributes == null)
             {
                 attributes = new SafeDictionary<string>();
             }
+
+            var origionalKeys = attributes.Keys.ToList();
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
@@ -788,6 +791,16 @@ namespace Glass.Mapper.Sc
                 urlParams[ImageParameterKeys.WIDTH] = urlParams[ImageParameterKeys.WIDTHHTML];
             }
             urlParams.Remove(ImageParameterKeys.WIDTHHTML);
+
+            //we do some smart clean up
+            if (origionalKeys.Contains(ImageParameterKeys.WIDTH) && !origionalKeys.Contains(ImageParameterKeys.HEIGHT))
+            {
+                urlParams.Remove(ImageParameterKeys.HEIGHT);
+            }
+            if (origionalKeys.Contains(ImageParameterKeys.HEIGHT) && !origionalKeys.Contains(ImageParameterKeys.WIDTH))
+            {
+                urlParams.Remove(ImageParameterKeys.WIDTH);
+            }
 
             if (!outputHeightWidth)
             {

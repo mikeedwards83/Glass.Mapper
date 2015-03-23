@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=240' alt='someAlt' height='105' width='380' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=240' alt='someAlt' height='105' width='380' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_AlternativeQuotationMarks_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=240\" alt=\"someAlt\" height=\"105\" width=\"380\" />";
+            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?w=240\" alt=\"someAlt\" height=\"105\" width=\"380\" />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -69,7 +69,7 @@ namespace Glass.Mapper.Sc.Tests
         [Test]
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtmlNoWidthHeight()
         {    //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=240' alt='someAlt' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?w=240' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -90,7 +90,7 @@ namespace Glass.Mapper.Sc.Tests
         [Test]
         public void RenderImage_ValidImageWithNullParameterForWidth_RendersCorrectHtmlWidthSentHeight()
         {    //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105' alt='someAlt' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -112,7 +112,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithParametersHeight_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450&amp;w=200' height='450' alt='someAlt' width='200' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450' height='450' alt='someAlt' width='200' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -225,7 +225,7 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -250,7 +250,7 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=400' vspace='15' hspace='10' border='9' alt='someAlt' />";
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?w=400' vspace='15' hspace='10' border='9' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
