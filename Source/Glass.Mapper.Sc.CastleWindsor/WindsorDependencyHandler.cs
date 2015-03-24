@@ -17,18 +17,20 @@
 //-CRE-
 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using Glass.Mapper.Sc.IoC;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
     /// <summary>
     /// The dependency handler
     /// </summary>
-    public class DependencyResolver : IDependencyRegistrar, IDependencyResolver
+    public class DependencyResolver : IDependencyHandler
     {
         /// <summary>
         /// Creates the standard resolver.
@@ -39,6 +41,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             IWindsorContainer container = new WindsorContainer();
 
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+
             return new DependencyResolver(container);
         }
 
@@ -80,6 +83,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
             return Container.ResolveAll<T>();
         }
 
+        public bool CanResolve(Type type)
+        {
+            return Container.Kernel.HasComponent(type);
+        }
+
         /// <summary>
         /// Registers an item in the container transiently
         /// </summary>
@@ -90,6 +98,13 @@ namespace Glass.Mapper.Sc.CastleWindsor
             Container.Register(Component.For<T, TComponent>().LifestyleCustom<NoTrackLifestyleManager>());
         }
 
+        public void RegisterTransient(Type type)
+        {
+            Container.Register(Component.For(type).LifestyleCustom<NoTrackLifestyleManager>());
+        }
+
+
+
         /// <summary>
         /// Registers an instance of an object
         /// </summary>
@@ -98,6 +113,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public void RegisterInstance<T>(T instance) where T : class
         {
             Container.Register(Component.For<T>().Instance(instance));
+        }
+
+        public SitecoreInstaller CreateInstaller(Config config)
+        {
+            return new WindsorSitecoreInstaller(config, this.Container );
         }
     }
 }

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System;
 using System.Collections.Generic;
 
 namespace Glass.Mapper
@@ -38,6 +39,8 @@ namespace Glass.Mapper
         /// <typeparam name="T"></typeparam>
         /// <returns>IEnumerable{``0}.</returns>
         IEnumerable<T> ResolveAll<T>();
+
+        bool CanResolve(Type type);
     }
 }
 

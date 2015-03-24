@@ -9,10 +9,10 @@ namespace $rootnamespace$.App_Start
 {
     public static  class GlassMapperScCustom
     {
-		public static void IoCConfig(IContainer container){
+		public static void IoCConfig(IDependencyHandler handler){
 			var config = new Config();
 
-			ISitecoreInstaller sitecoreInstaller = new StructureMapSitecoreInstaller(config, container);
+			ISitecoreInstaller sitecoreInstaller = handler.CreateInstaller(config);
 			sitecoreInstaller.Install();
 		}
 

@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using System.Collections;
 using Castle.Windsor;
 using System.Collections.Generic;
@@ -77,6 +78,11 @@ namespace Glass.Mapper.Umb.CastleWindsor
         public IEnumerable<T> ResolveAll<T>()
         {
             return Container.ResolveAll<T>();
+        }
+
+        public bool CanResolve(Type type)
+        {
+            return Container.Kernel.HasComponent(type);
         }
     }
 }

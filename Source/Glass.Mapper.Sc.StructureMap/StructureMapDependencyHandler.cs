@@ -17,8 +17,10 @@
 //-CRE-
 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Glass.Mapper.Sc.IoC;
 using StructureMap;
 using StructureMap.Pipeline;
 
@@ -27,7 +29,7 @@ namespace Glass.Mapper.Sc.StructureMap
     /// <summary>
     /// The dependency handler
     /// </summary>
-    public class DependencyResolver : IDependencyRegistrar, IDependencyResolver
+    public class DependencyResolver : IDependencyHandler
     {
         /// <summary>
         /// Creates the standard resolver.
@@ -78,6 +80,11 @@ namespace Glass.Mapper.Sc.StructureMap
             return Container.GetAllInstances<T>();
         }
 
+        public bool CanResolve(Type type)
+        {
+            return Container.TryGetInstance(type) != null;
+        }
+
         /// <summary>
         /// Registers an item in the container transiently
         /// </summary>
@@ -93,6 +100,18 @@ namespace Glass.Mapper.Sc.StructureMap
             Container.Configure(x => x.For<T>().Use<T>());
         }
 
+        public void RegisterTransient(Type type)
+        {
+            if (Container.TryGetInstance(type) != null)
+            {
+                    Container.Configure(x => x.For(type).Add(type));
+            }
+
+                Container.Configure(x => x.For(type).Use(type));
+
+        }
+        
+
         /// <summary>
         /// Registers an instance of an object
         /// </summary>
@@ -101,6 +120,11 @@ namespace Glass.Mapper.Sc.StructureMap
         public void RegisterInstance<T>(T instance) where T : class
         {
             Container.Configure(x => x.For<T>().Use(instance));
+        }
+
+        public SitecoreInstaller CreateInstaller(Config config)
+        {
+            return new StructureMapSitecoreInstaller(config, this.Container);
         }
     }
 }
