@@ -41,7 +41,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
                 return false;
 
             //this has been taken from Sitecore.Mvc.Presentation.Rendering class
+
+#if (SC70)
+            return Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
+#else
             return MvcSettings.ItemLocator.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
+#endif
+
         }
 
 

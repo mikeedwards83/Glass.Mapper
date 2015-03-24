@@ -25,18 +25,21 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU' Or '$(ScVersion)' == 'sc72' Or '$(ScVersion)' == ''">
+    <DefineConstants>SC72</DefineConstants>
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc71|AnyCPU' Or '$(ScVersion)' == 'sc71' ">
+    <DefineConstants>SC71</DefineConstants>
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin71\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">4</Mvc>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc70|AnyCPU' Or '$(ScVersion)' == 'sc70' ">
+    <DefineConstants>SC70</DefineConstants>
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin70\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
