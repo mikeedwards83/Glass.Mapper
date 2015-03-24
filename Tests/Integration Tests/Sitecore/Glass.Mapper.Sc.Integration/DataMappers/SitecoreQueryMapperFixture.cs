@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
+using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using NUnit.Framework;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
@@ -394,7 +395,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var mapper = new SitecoreQueryMapper(null);
+            var mapper = new SitecoreQueryMapper(new []{new ItemPathParameter()});
             mapper.Setup(new DataMapperResolverArgs(context, config));
 
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Source");

@@ -20,6 +20,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 
 namespace Glass.Mapper.Sc.CastleWindsor
@@ -35,7 +36,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <returns>IDependencyResolver.</returns>
         public static DependencyResolver CreateStandardResolver()
         {
-            IWindsorContainer container = new WindsorContainer();           
+            IWindsorContainer container = new WindsorContainer();
+
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
             return new DependencyResolver(container);
         }
 

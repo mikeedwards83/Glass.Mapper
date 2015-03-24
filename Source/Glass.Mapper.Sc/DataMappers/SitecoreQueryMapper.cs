@@ -34,46 +34,16 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreQueryMapper : AbstractDataMapper
     {
-        private List<ISitecoreQueryParameter> _parameters;
 
-        private readonly IEnumerable<ISitecoreQueryParameter> _dynamicParameters;
-
-        protected List<ISitecoreQueryParameter> Parameters
-        {
-            get
-            {
-                PopulateParameters();
-                return _parameters;
-            }
-        }
-
-        private void PopulateParameters()
-        {
-            if (_parameters != null)
-            {
-                return;
-            }
-
-            _parameters = new List<ISitecoreQueryParameter>();
-
-            if (_dynamicParameters != null && _dynamicParameters.Any())
-                _parameters.AddRange(_dynamicParameters);
-
-            //default parameters
-            _parameters.Add(new ItemDateNowParameter());
-            _parameters.Add(new ItemIdParameter());
-            _parameters.Add(new ItemPathParameter());
-            _parameters.Add(new ItemIdNoBracketsParameter());
-            _parameters.Add(new ItemEscapedPathParameter());
-        }
+        private readonly IEnumerable<ISitecoreQueryParameter> _parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreQueryMapper"/> class.
         /// </summary>
         /// <param name="dependencyResolver">The dependency resolver.</param>
-        public SitecoreQueryMapper(IEnumerable<ISitecoreQueryParameter> dynamicParameters)
+        public SitecoreQueryMapper(IEnumerable<ISitecoreQueryParameter> parameters)
         {
-            _dynamicParameters = dynamicParameters;
+            _parameters = parameters;
             ReadOnly = true;
         }
 
@@ -209,9 +179,12 @@ namespace Glass.Mapper.Sc.DataMappers
         public string ParseQuery(string query, Item item)
         {
             StringBuilder sb = new StringBuilder(query);
-            foreach (var param in _parameters)
+            if (_parameters != null)
             {
-                sb.Replace("{" + param.Name + "}", param.GetValue(item));
+                foreach (var param in _parameters)
+                {
+                    sb.Replace("{" + param.Name + "}", param.GetValue(item));
+                }
             }
             return sb.ToString();
         }
