@@ -322,7 +322,7 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a setter for</param>
         /// <returns>An action delegate</returns>
-        public static Action<object, object> SetPropertyAction(PropertyInfo property)
+        public static Func<PropertyInfo, Action<object, object>> SetPropertyAction = (PropertyInfo property) =>
         {
             PropertyInfo propertyInfo = property;
             Type type = property.DeclaringType;
@@ -357,7 +357,7 @@ namespace Glass.Mapper
                     //does nothing
                 };
             }
-        }
+        };
 
         /// <summary>
         /// Creates a function delegate that can be used to get a property's value
@@ -367,7 +367,7 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a getter for</param>
         /// <returns>A function delegate</returns>
-        public static Func<object, object> GetPropertyFunc(PropertyInfo property)
+        public static Func<PropertyInfo, Func<object, object>> GetPropertyFunc = (PropertyInfo property) =>
         {
             PropertyInfo propertyInfo = property;
             Type type = property.DeclaringType;
@@ -378,6 +378,7 @@ namespace Glass.Mapper
                     "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
             }
 
+            
             if (propertyInfo.CanWrite)
             {
                 ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
@@ -397,7 +398,7 @@ namespace Glass.Mapper
             {
                 return (object instance) => { return null; };
             }
-        }
+        };
 
         /// <summary>
         /// Gets the activator.

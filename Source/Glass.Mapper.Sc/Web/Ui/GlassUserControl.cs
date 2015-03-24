@@ -32,12 +32,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// <typeparam name="T"></typeparam>
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
-        private TextWriter _writer;
-
-        protected TextWriter Output
-        {
-            get { return _writer ?? this.Response.Output; }
-        }
+       
 
         /// <summary>
         /// Model to render on the sublayout
@@ -185,11 +180,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
         }
 
-        public override void RenderControl(HtmlTextWriter writer)
-        {
-            this._writer = writer;
-            base.RenderControl(writer);
-        }
+       
     }
 }
 
