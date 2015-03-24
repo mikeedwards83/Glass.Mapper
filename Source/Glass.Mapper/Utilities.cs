@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -82,44 +82,44 @@ namespace Glass.Mapper
                 switch (parameters.Count())
                 {
                     case 0:
-                        genericType = typeof (Func<>);
+                        genericType = typeof(Func<>);
                         break;
                     case 1:
-                        genericType = typeof (Func<,>);
+                        genericType = typeof(Func<,>);
                         break;
                     case 2:
-                        genericType = typeof (Func<,,>);
+                        genericType = typeof(Func<,,>);
                         break;
                     case 3:
-                        genericType = typeof (Func<,,,>);
+                        genericType = typeof(Func<,,,>);
                         break;
                     case 4:
-                        genericType = typeof (Func<,,,,>);
+                        genericType = typeof(Func<,,,,>);
                         break;
                     case 5:
-                        genericType = typeof (Func<,,,,,>);
+                        genericType = typeof(Func<,,,,,>);
                         break;
                     case 6:
-                        genericType = typeof (Func<,,,,,,>);
+                        genericType = typeof(Func<,,,,,,>);
                         break;
                     case 7:
-                        genericType = typeof (Func<,,,,,,,>);
+                        genericType = typeof(Func<,,,,,,,>);
                         break;
                     case 8:
-                        genericType = typeof (Func<,,,,,,,,>);
+                        genericType = typeof(Func<,,,,,,,,>);
                         break;
                     case 9:
-                        genericType = typeof (Func<,,,,,,,,>);
+                        genericType = typeof(Func<,,,,,,,,>);
                         break;
                     case 10:
-                        genericType = typeof (Func<,,,,,,,,,>);
+                        genericType = typeof(Func<,,,,,,,,,>);
                         break;
                     default:
                         throw new MapperException("Only supports constructors with a maximum of 10 parameters");
                 }
 
                 var delegateType =
-                    genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] {type}).ToArray());
+                    genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
 
                 if (!types.Any())
                     types = Type.EmptyTypes;
@@ -159,9 +159,16 @@ namespace Glass.Mapper
                 var interfaces = type.GetInterfaces();
                 foreach (var inter in interfaces)
                 {
-                    property = inter.GetProperty(name);
-                    if (property != null)
-                        return property;
+                    try
+                    {
+                        property = inter.GetProperty(name);
+                        if (property != null)
+                            return property;
+                    }
+                    catch (AmbiguousMatchException ex)
+                    {
+                        //this is probably caused by an item having two indexers e.g SearchResultItem;
+                    }
                 }
             }
 
@@ -337,8 +344,8 @@ namespace Glass.Mapper
 
                 Type propertyType = propertyInfo.PropertyType;
 
-                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
-                ParameterExpression valueParameter = Expression.Parameter(typeof (object), "value");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
+                ParameterExpression valueParameter = Expression.Parameter(typeof(object), "value");
 
                 Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
                     Expression.Assign(
@@ -378,17 +385,17 @@ namespace Glass.Mapper
                     "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
             }
 
-            
+
             if (propertyInfo.CanWrite)
             {
-                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
 
                 Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
                     Expression.Convert(
                         Expression.Property(
                             Expression.Convert(instanceParameter, type),
                             propertyInfo),
-                        typeof (object)),
+                        typeof(object)),
                     instanceParameter
                     );
 
@@ -497,7 +504,7 @@ namespace Glass.Mapper
 
             if (field.Body is UnaryExpression)
             {
-                memberExpression = ((UnaryExpression) field.Body).Operand as MemberExpression;
+                memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
             }
             else if (!(field.Body is MemberExpression))
             {
@@ -505,7 +512,7 @@ namespace Glass.Mapper
             }
             else
             {
-                memberExpression = (MemberExpression) field.Body;
+                memberExpression = (MemberExpression)field.Body;
             }
 
             //we have to deconstruct the lambda expression to find the 
