@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithWidthHeightAndStretch_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=300&amp;as=True&amp;w=900' alt='someAlt' width='900' height='300'/>";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=300&amp;w=900&amp;as=True' alt='someAlt' height='300' width='900' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();

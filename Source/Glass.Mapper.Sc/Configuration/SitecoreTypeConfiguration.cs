@@ -18,6 +18,7 @@
 
 
 using System;
+using System.Linq;
 using Glass.Mapper.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -153,6 +154,27 @@ namespace Glass.Mapper.Sc.Configuration
             return id;
         }
 
+        /// <summary>
+        /// Dumps information about the current type configuration to the Sitecore logs.
+        /// </summary>
+        public virtual void LogDumpConfiguration()
+        {
+            Sitecore.Diagnostics.Log.Debug("CD - Configuration Dump for {0}".Formatted(Type.FullName), this);
+
+            var interaces = Type.GetInterfaces();
+            if (interaces.Any())
+            {
+                Sitecore.Diagnostics.Log.Debug("CD - {0}".Formatted(interaces.Select(x => x.FullName).Aggregate((x, y) => "{0}, {1}".Formatted(x, y))), this);
+            }
+            if (Properties != null)
+            {
+                foreach (var property in Properties)
+                {
+                    Sitecore.Diagnostics.Log.Debug("CD - property: {0} - {1}".Formatted(property.PropertyInfo.Name, property.PropertyInfo.PropertyType.FullName), this);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Resolves the item.
@@ -182,8 +204,16 @@ namespace Glass.Mapper.Sc.Configuration
             }
 
             if (IdConfig == null && ItemUriConfig == null)
-                throw new NotSupportedException(
-                    "You cannot save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID. Type: {0}".Formatted(target.GetType().FullName));
+            {
+                string message =
+                    "Failed item resolve - You cannot save a class that does not contain a property that represents the item ID. Ensure that at least one property has been marked to contain the Sitecore ID. Type: {0}"
+                        .Formatted(target.GetType().FullName);
+                Sitecore.Diagnostics.Log.Error(message, this);
+                
+                LogDumpConfiguration();
+
+                throw new NotSupportedException(message);
+            }
 
             id = GetId(target);
             language = GetLanguage(target);

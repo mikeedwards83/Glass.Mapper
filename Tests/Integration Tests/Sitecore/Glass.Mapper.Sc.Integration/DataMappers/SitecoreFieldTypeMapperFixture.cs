@@ -386,7 +386,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             public virtual Guid Id { get; set; }
         }
 
-        public class StubContaining
+        public class StubContaining : StubInterface
         {
             public Stub PropertyTrue { get; set; }
             public StubContaining PropertyFalse { get; set; }
@@ -396,6 +396,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [SitecoreType]
         public class StubNoId
         {
+        }
+
+        public interface StubInterface
+        {
+            
         }
 
         #endregion
