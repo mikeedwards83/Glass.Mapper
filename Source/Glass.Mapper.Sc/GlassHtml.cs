@@ -785,13 +785,13 @@ namespace Glass.Mapper.Sc
             var builder = new UrlBuilder(image.Src);
 
 
-            string mediaUrl = builder.ToString();
 
             foreach (var key in urlParams.Keys)
             {
                 builder.AddToQueryString(key, urlParams[key]);
             }
 
+            string mediaUrl = builder.ToString();
 
 #if (SC80 || SC75)
             mediaUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
