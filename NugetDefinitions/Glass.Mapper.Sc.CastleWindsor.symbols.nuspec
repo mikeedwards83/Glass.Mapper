@@ -47,10 +47,8 @@
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.xml" target="lib\Glass.Mapper.Sc.Mvc.xml" />
 
     <!-- ***********CONFIG FILES***********  -->
-    <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" target="content\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
     <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />
     <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
-
 
 
     <!-- Source Files Castle Windsor-->
