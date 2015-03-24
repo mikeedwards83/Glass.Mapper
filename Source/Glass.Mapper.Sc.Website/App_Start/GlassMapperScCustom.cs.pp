@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using Castle.Windsor;
-using Glass.Mapper.Configuration;
-using Glass.Mapper.Sc.CastleWindsor;
-using Glass.Mapper.Sc.Configuration.Attributes;
+﻿using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 
 
 namespace $rootnamespace$.App_Start
@@ -10,10 +7,10 @@ namespace $rootnamespace$.App_Start
     public static  class GlassMapperScCustom
     {
 		public static void IoCConfig(IDependencyHandler handler){
-			var config = new Config();
+			var config = new Glass.Mapper.Sc.Config();
 
-			ISitecoreInstaller sitecoreInstaller = handler.CreateInstaller(config);
-			sitecoreInstaller.Install();
+			IGlassInstaller installer = handler.CreateInstaller(config);
+			installer.Install();
 		}
 
 		public static IConfigurationLoader[] GlassLoaders(){			
