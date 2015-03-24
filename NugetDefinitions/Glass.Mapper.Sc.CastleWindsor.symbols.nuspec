@@ -43,7 +43,7 @@
 
     <!-- Glass.Mapper.Sc.Mvc-->
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.dll" target="lib\Glass.Mapper.Sc.Mvc.dll" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.pdb" target="libe\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.pdb" target="lib\Glass.Mapper.Sc.Mvc.pdb" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.xml" target="lib\Glass.Mapper.Sc.Mvc.xml" />
 
     <!-- ***********CONFIG FILES***********  -->
