@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sc$scVersion$v</id>
+    <id>Glass.Mapper.Sc$scVersion$</id>
     <version>$version$</version>
     <authors>Michael Edwards, Tom Dudfield</authors>
     <owners>Michael Edwards</owners>
@@ -24,7 +24,7 @@
 	</dependencies>
   </metadata>
   <files>
-    <!-- ***********ASSEMBLIES***********  -->
+    <!-- ASSEMBLIES -->
     
     <!-- Glass.Mapper -->
     <file src="Source\Glass.Mapper\bin\$config$\Glass.Mapper.dll" target="lib\Glass.Mapper.dll" />
@@ -46,9 +46,8 @@
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.pdb" target="lib\Glass.Mapper.Sc.Mvc.pdb" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\$config$\Glass.Mapper.Sc.Mvc.xml" target="lib\Glass.Mapper.Sc.Mvc.xml" />
 
-    <!-- ***********CONFIG FILES***********  -->
-    <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />
-    <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
+    <!-- CONFIG FILES  -->
+    <file src="Source\Glass.Mapper.Sc.Website\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" target="content\App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
 
 
     <!-- Source Files Castle Windsor-->
