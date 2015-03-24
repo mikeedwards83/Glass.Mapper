@@ -65,15 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WindsorDependencyHandler.cs" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.CastleWindsor.config.pp" />
-    <None Include="App_Start\GlassMapperSc.cs.pp" />
     <Compile Include="NoTrackLifecycleManager.cs" />
     <Compile Include="Pipelines\ObjectConstruction\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindsorSitecoreInstaller.cs" />
-    <None Include="App_Start\GlassMapperScCustom.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
