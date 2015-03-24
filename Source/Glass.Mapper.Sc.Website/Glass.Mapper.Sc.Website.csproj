@@ -20,7 +20,7 @@
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>   
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,6 +93,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
+    <Content Include="App_Start\GlassMapperSc.cs.pp" />
+    <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.Start.config.pp" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
