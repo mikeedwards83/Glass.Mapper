@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.IoC;
 
 namespace Glass.Mapper.Sc.CastleWindsor
@@ -115,9 +116,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
             Container.Register(Component.For<T>().Instance(instance));
         }
 
-        public SitecoreInstaller CreateInstaller(Config config)
+        public IGlassInstaller CreateInstaller(Mapper.Config config)
         {
-            return new WindsorSitecoreInstaller(config, this.Container );
+            return new WindsorSitecoreInstaller((Mapper.Sc.Config)config, this.Container );
         }
+
     }
 }

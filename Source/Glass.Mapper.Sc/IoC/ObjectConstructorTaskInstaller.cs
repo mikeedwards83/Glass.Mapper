@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
@@ -29,7 +30,7 @@ namespace Glass.Mapper.Sc.IoC
     /// <summary>
     /// Object Construction Tasks - These tasks are run when an a class needs to be instantiated by Glass.Mapper.
     /// </summary>
-    public class ObjectionConstructionTaskInstaller : IGlassInstaller
+    public class ObjectionConstructionTaskInstaller : IDependencyInstaller
     {
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Glass.Mapper.Sc.IoC
         /// </value>
         public Config Config { get; private set; }
 
-        public List<IDependencyInstaller> Actions { get; private set; }
+        public List<IDependencyRegister> Actions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectionConstructionTaskInstaller"/> class.
@@ -58,20 +59,20 @@ namespace Glass.Mapper.Sc.IoC
         /// </summary>
         public void PopulateActions()
         {
-            Actions = new List<IDependencyInstaller>
+            Actions = new List<IDependencyRegister>
             {
-                new DependencyInstaller("CreateDynamicTask", x => x.RegisterTransient<IObjectConstructionTask, CreateDynamicTask>()),
-                new DependencyInstaller("SitecoreItemTask", x => x.RegisterTransient<IObjectConstructionTask, SitecoreItemTask>()),
-                new DependencyInstaller("EnforcedTemplateCheck", x => x.RegisterTransient<IObjectConstructionTask, EnforcedTemplateCheck>()),
+                new DependencyRegister("CreateDynamicTask", x => x.RegisterTransient<IObjectConstructionTask, CreateDynamicTask>()),
+                new DependencyRegister("SitecoreItemTask", x => x.RegisterTransient<IObjectConstructionTask, SitecoreItemTask>()),
+                new DependencyRegister("EnforcedTemplateCheck", x => x.RegisterTransient<IObjectConstructionTask, EnforcedTemplateCheck>()),
             /*if (Config.UseWindsorContructor)
             {
                 container.Register(
                     Component.For<IObjectConstructionTask>().ImplementedBy<WindsorConstruction>().LifestyleCustom<NoTrackLifestyleManager>() 
                     );
             }*/
-                new DependencyInstaller("CreateMultiInferaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateMultiInferaceTask>()),
-                new DependencyInstaller("CreateConcreteTask", x => x.RegisterTransient<IObjectConstructionTask, CreateConcreteTask>()),
-                new DependencyInstaller("CreateInterfaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateInterfaceTask>())
+                new DependencyRegister("CreateMultiInferaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateMultiInferaceTask>()),
+                new DependencyRegister("CreateConcreteTask", x => x.RegisterTransient<IObjectConstructionTask, CreateConcreteTask>()),
+                new DependencyRegister("CreateInterfaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateInterfaceTask>())
             };
         }
     }

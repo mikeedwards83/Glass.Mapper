@@ -18,7 +18,7 @@
 
 namespace Glass.Mapper.Sc
 {
-    public class Config
+    public class Config : Glass.Mapper.Config
     {
         public Config()
         {
@@ -26,13 +26,7 @@ namespace Glass.Mapper.Sc
         }
         public bool ForceItemInPageEditor { get; set; }
 
-        /// <summary>
-        /// Indicates that classes should be build using the Windsor dependency resolver. Default is False
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [use windsor contructor]; otherwise, <c>false</c>.
-        /// </value>
-        public bool UseIoCConstructor { get; set; }
+        
 
     }
 }

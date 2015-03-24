@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.CastleWindsor;
 
 namespace Glass.Mapper.Sc.Integration

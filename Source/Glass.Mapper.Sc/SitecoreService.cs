@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;

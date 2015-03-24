@@ -16,13 +16,12 @@
 */
 //-CRE-
 
-using System;
 using System.Collections.Generic;
 
-namespace Glass.Mapper.Sc.IoC
+namespace Glass.Mapper.IoC
 {
-    public interface IGlassInstaller
+    public interface IDependencyInstaller
     {
-        List<IDependencyInstaller> Actions { get; }
+        List<IDependencyRegister> Actions { get; }
     }
 }

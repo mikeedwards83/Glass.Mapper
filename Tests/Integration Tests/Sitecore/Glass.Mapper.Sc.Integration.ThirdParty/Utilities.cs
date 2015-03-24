@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Castle.MicroKernel.Registration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.CastleWindsor;
 
 namespace Glass.Mapper.Sc.Integration

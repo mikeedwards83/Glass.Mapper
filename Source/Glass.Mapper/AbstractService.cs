@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ConfigurationResolver;

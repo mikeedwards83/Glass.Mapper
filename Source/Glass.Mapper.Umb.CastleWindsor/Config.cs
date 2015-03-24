@@ -20,7 +20,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
     /// <summary>
     /// Config
     /// </summary>
-    public class Config
+    public class Config : Glass.Mapper.Config
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Config"/> class.

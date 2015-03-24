@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 
@@ -26,7 +27,7 @@ namespace Glass.Mapper.Sc.IoC
     /// <summary>
     /// Object Saving Tasks - These tasks are run when an a class needs to be saved by Glass.Mapper.
     /// </summary>
-    public class ObjectSavingTaskInstaller : IGlassInstaller
+    public class ObjectSavingTaskInstaller : IDependencyInstaller
     {
         /// <summary>
         /// Gets the config.
@@ -36,7 +37,7 @@ namespace Glass.Mapper.Sc.IoC
         /// </value>
         public Config Config { get; private set; }
 
-        public List<IDependencyInstaller> Actions { get; private set; }
+        public List<IDependencyRegister> Actions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectSavingTaskInstaller"/> class.
@@ -52,9 +53,9 @@ namespace Glass.Mapper.Sc.IoC
         /// </summary>
         protected void PopulateActions()
         {
-            Actions = new List<IDependencyInstaller>
+            Actions = new List<IDependencyRegister>
             {
-                new DependencyInstaller("StandardSavingTask", x => x.RegisterTransient<IObjectSavingTask, StandardSavingTask>())
+                new DependencyRegister("StandardSavingTask", x => x.RegisterTransient<IObjectSavingTask, StandardSavingTask>())
             };
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Glass.Mapper.Sc.IoC
+namespace Glass.Mapper.IoC
 {
-    public interface IDependencyInstaller
+    public interface IDependencyRegister
     {
         string Key { get; }
 

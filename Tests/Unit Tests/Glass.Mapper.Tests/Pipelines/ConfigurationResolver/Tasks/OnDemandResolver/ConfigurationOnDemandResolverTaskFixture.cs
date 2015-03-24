@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {

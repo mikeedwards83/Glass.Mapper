@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Glass.Mapper
+namespace Glass.Mapper.IoC
 {
     public interface IDependencyRegistrar
     {

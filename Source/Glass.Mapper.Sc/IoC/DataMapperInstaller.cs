@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.DataMappers;
 
 namespace Glass.Mapper.Sc.IoC
@@ -26,7 +27,7 @@ namespace Glass.Mapper.Sc.IoC
     /// Installs the components descended from AbstractDataMapper. These are used to map data
     /// to and from the CMS.
     /// </summary>
-    public class DataMapperInstaller : IGlassInstaller
+    public class DataMapperInstaller : IDependencyInstaller
     {
         /// <summary>
         /// Gets the config.
@@ -49,52 +50,52 @@ namespace Glass.Mapper.Sc.IoC
         /// <summary>
         /// Gets the actions
         /// </summary>
-        public List<IDependencyInstaller> Actions { get; private set; }
+        public List<IDependencyRegister> Actions { get; private set; }
 
         /// <summary>
         /// Performs the installation in the <see cref="T:Castle.Windsor.IWindsorContainer" />.
         /// </summary>
         protected void PopulateActions()
         {
-            Actions = new List<IDependencyInstaller>
+            Actions = new List<IDependencyRegister>
             {
-                new DependencyInstaller("SitecoreIgnoreMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreIgnoreMapper>()),
-                new DependencyInstaller("SitecoreChildrenCastMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreChildrenCastMapper>()),
-                new DependencyInstaller("SitecoreChildrenMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreChildrenMapper>()),
-                new DependencyInstaller("SitecoreFieldBooleanMapper",x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldBooleanMapper>()),
-                new DependencyInstaller("SitecoreFieldDateTimeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDateTimeMapper>()),
-                new DependencyInstaller("SitecoreFieldDecimalMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDecimalMapper>()),
-                new DependencyInstaller("SitecoreFieldDoubleMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDoubleMapper>()),
-                new DependencyInstaller("SitecoreFieldEnumMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldEnumMapper>()),
-                new DependencyInstaller("SitecoreFieldFileMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldFileMapper>()),
-                new DependencyInstaller("SitecoreFieldFloatMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldFloatMapper>()),
-                new DependencyInstaller("SitecoreFieldGuidMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldGuidMapper>()),
-                new DependencyInstaller("SitecoreFieldHtmlEncodingMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldHtmlEncodingMapper>()),
-                new DependencyInstaller("SitecoreFieldIEnumerableMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldIEnumerableMapper>()),
-                new DependencyInstaller("SitecoreFieldImageMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldImageMapper>()),
-                new DependencyInstaller("SitecoreFieldIntegerMapper",x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldIntegerMapper>()),
-                new DependencyInstaller("SitecoreFieldLinkMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldLinkMapper>()),
-                new DependencyInstaller("SitecoreFieldLongMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldLongMapper>()),
-                new DependencyInstaller("SitecoreFieldNameValueCollectionMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNameValueCollectionMapper>()),
-                new DependencyInstaller("SitecoreFieldDictionaryMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDictionaryMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableDateTimeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDateTimeMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableDoubleMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDoubleMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableDecimalMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDecimalMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableFloatMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableFloatMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableGuidMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableGuidMapper>()),
-                new DependencyInstaller("SitecoreFieldNullableIntMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableIntMapper>()),
-                new DependencyInstaller("SitecoreFieldRulesMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldRulesMapper>()),
-                new DependencyInstaller("SitecoreFieldStreamMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldStreamMapper>()),
-                new DependencyInstaller("SitecoreFieldStringMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldStringMapper>()),
-                new DependencyInstaller("SitecoreFieldTypeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldTypeMapper>()),
-                new DependencyInstaller("SitecoreIdMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreIdMapper>()),
-                new DependencyInstaller("SitecoreItemMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreItemMapper>()),
-                new DependencyInstaller("SitecoreInfoMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreInfoMapper>()),
-                new DependencyInstaller("SitecoreNodeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreNodeMapper>()),
-                new DependencyInstaller("SitecoreLinkedMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreLinkedMapper>()),
-                new DependencyInstaller("SitecoreParentMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreParentMapper>()),
-                new DependencyInstaller("SitecoreDelegateMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreDelegateMapper>()),
-                new DependencyInstaller("SitecoreQueryMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreQueryMapper>())
+                new DependencyRegister("SitecoreIgnoreMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreIgnoreMapper>()),
+                new DependencyRegister("SitecoreChildrenCastMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreChildrenCastMapper>()),
+                new DependencyRegister("SitecoreChildrenMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreChildrenMapper>()),
+                new DependencyRegister("SitecoreFieldBooleanMapper",x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldBooleanMapper>()),
+                new DependencyRegister("SitecoreFieldDateTimeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDateTimeMapper>()),
+                new DependencyRegister("SitecoreFieldDecimalMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDecimalMapper>()),
+                new DependencyRegister("SitecoreFieldDoubleMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDoubleMapper>()),
+                new DependencyRegister("SitecoreFieldEnumMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldEnumMapper>()),
+                new DependencyRegister("SitecoreFieldFileMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldFileMapper>()),
+                new DependencyRegister("SitecoreFieldFloatMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldFloatMapper>()),
+                new DependencyRegister("SitecoreFieldGuidMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldGuidMapper>()),
+                new DependencyRegister("SitecoreFieldHtmlEncodingMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldHtmlEncodingMapper>()),
+                new DependencyRegister("SitecoreFieldIEnumerableMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldIEnumerableMapper>()),
+                new DependencyRegister("SitecoreFieldImageMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldImageMapper>()),
+                new DependencyRegister("SitecoreFieldIntegerMapper",x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldIntegerMapper>()),
+                new DependencyRegister("SitecoreFieldLinkMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldLinkMapper>()),
+                new DependencyRegister("SitecoreFieldLongMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldLongMapper>()),
+                new DependencyRegister("SitecoreFieldNameValueCollectionMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNameValueCollectionMapper>()),
+                new DependencyRegister("SitecoreFieldDictionaryMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldDictionaryMapper>()),
+                new DependencyRegister("SitecoreFieldNullableDateTimeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDateTimeMapper>()),
+                new DependencyRegister("SitecoreFieldNullableDoubleMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDoubleMapper>()),
+                new DependencyRegister("SitecoreFieldNullableDecimalMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableDecimalMapper>()),
+                new DependencyRegister("SitecoreFieldNullableFloatMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableFloatMapper>()),
+                new DependencyRegister("SitecoreFieldNullableGuidMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableGuidMapper>()),
+                new DependencyRegister("SitecoreFieldNullableIntMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldNullableIntMapper>()),
+                new DependencyRegister("SitecoreFieldRulesMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldRulesMapper>()),
+                new DependencyRegister("SitecoreFieldStreamMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldStreamMapper>()),
+                new DependencyRegister("SitecoreFieldStringMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldStringMapper>()),
+                new DependencyRegister("SitecoreFieldTypeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreFieldTypeMapper>()),
+                new DependencyRegister("SitecoreIdMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreIdMapper>()),
+                new DependencyRegister("SitecoreItemMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreItemMapper>()),
+                new DependencyRegister("SitecoreInfoMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreInfoMapper>()),
+                new DependencyRegister("SitecoreNodeMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreNodeMapper>()),
+                new DependencyRegister("SitecoreLinkedMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreLinkedMapper>()),
+                new DependencyRegister("SitecoreParentMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreParentMapper>()),
+                new DependencyRegister("SitecoreDelegateMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreDelegateMapper>()),
+                new DependencyRegister("SitecoreQueryMapper", x => x.RegisterTransient<AbstractDataMapper, SitecoreQueryMapper>())
             };
         }
     }

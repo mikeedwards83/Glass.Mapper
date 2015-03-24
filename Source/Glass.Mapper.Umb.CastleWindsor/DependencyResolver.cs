@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using Castle.Windsor;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Umb.CastleWindsor
 {

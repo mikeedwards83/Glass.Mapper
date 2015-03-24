@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 
@@ -27,7 +28,7 @@ namespace Glass.Mapper.Sc.IoC
     /// Data Mapper Resolver Tasks -
     /// These tasks are run when Glass.Mapper tries to resolve which DataMapper should handle a given property, e.g.
     /// </summary>
-    public class DataMapperTaskInstaller : IGlassInstaller
+    public class DataMapperTaskInstaller : IDependencyInstaller
     {
         /// <summary>
         /// Gets the config.
@@ -37,7 +38,7 @@ namespace Glass.Mapper.Sc.IoC
         /// </value>
         public Config Config { get; private set; }
 
-        public List<IDependencyInstaller> Actions { get; private set; }
+        public List<IDependencyRegister> Actions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataMapperTaskInstaller"/> class.
@@ -53,9 +54,9 @@ namespace Glass.Mapper.Sc.IoC
         /// </summary>
         protected void PopulateActions()
         {
-            Actions = new List<IDependencyInstaller>
+            Actions = new List<IDependencyRegister>
             {
-                new DependencyInstaller("DataMapperStandardResolverTask", x => x.RegisterTransient<IDataMapperResolverTask, DataMapperStandardResolverTask>())
+                new DependencyRegister("DataMapperStandardResolverTask", x => x.RegisterTransient<IDataMapperResolverTask, DataMapperStandardResolverTask>())
             };
         }
     }

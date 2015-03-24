@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Glass.Mapper.Sc.IoC
+namespace Glass.Mapper.IoC
 {
-    public class DependencyInstaller : IDependencyInstaller
+    public class DependencyRegister : IDependencyRegister
     {
-        public DependencyInstaller(string key, Action<IDependencyRegistrar> action)
+        public DependencyRegister(string key, Action<IDependencyRegistrar> action)
         {
             Key = key;
             Action = action;

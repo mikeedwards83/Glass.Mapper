@@ -170,9 +170,6 @@
     <Compile Include="IoC\ConfigurationInstaller.cs" />
     <Compile Include="IoC\DataMapperInstaller.cs" />
     <Compile Include="IoC\DataMapperTaskInstaller.cs" />
-    <Compile Include="IoC\DependencyInstaller.cs" />
-    <Compile Include="IoC\IDependencyInstaller.cs" />
-    <Compile Include="IoC\IGlassInstaller.cs" />
     <Compile Include="IoC\ObjectConstructorTaskInstaller.cs" />
     <Compile Include="IoC\ObjectSavingTaskInstaller.cs" />
     <Compile Include="IoC\QueryParameterInstaller.cs" />

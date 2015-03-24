@@ -18,6 +18,7 @@
 
 
 using Castle.Windsor;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.IoC;
@@ -47,7 +48,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
             int index = ObjectionConstructionTaskInstaller.Actions.FindIndex(x => x.Key == "CreateMultiInferaceTask");
             if (Config != null && Config.UseIoCConstructor && index >= 0)
             {
-               ObjectionConstructionTaskInstaller.Actions.Insert(index, new DependencyInstaller("WindsorConstruction", x => x.RegisterTransient<IObjectConstructionTask, WindsorConstruction>())); 
+               ObjectionConstructionTaskInstaller.Actions.Insert(index, new DependencyRegister("WindsorConstruction", x => x.RegisterTransient<IObjectConstructionTask, WindsorConstruction>())); 
             }
             base.Install();
         }

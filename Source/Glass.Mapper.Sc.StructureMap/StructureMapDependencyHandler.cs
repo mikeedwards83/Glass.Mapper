@@ -20,6 +20,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.IoC;
 using StructureMap;
 using StructureMap.Pipeline;
@@ -122,9 +123,9 @@ namespace Glass.Mapper.Sc.StructureMap
             Container.Configure(x => x.For<T>().Use(instance));
         }
 
-        public SitecoreInstaller CreateInstaller(Config config)
+        public IGlassInstaller CreateInstaller(Mapper.Config config)
         {
-            return new StructureMapSitecoreInstaller(config, this.Container);
+            return new StructureMapSitecoreInstaller((Mapper.Sc.Config) config, this.Container);
         }
     }
 }

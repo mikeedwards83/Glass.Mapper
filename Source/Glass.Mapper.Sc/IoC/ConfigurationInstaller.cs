@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Sc.IoC
     /// <summary>
     /// Configuration Resolver Tasks - These tasks are run when Glass.Mapper tries to find the configuration the user has requested based on the type passsed.
     /// </summary>
-    public class ConfigurationResolverTaskInstaller : IGlassInstaller
+    public class ConfigurationResolverTaskInstaller : IDependencyInstaller
     {
         /// <summary>
         /// Gets the config.
@@ -43,7 +44,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <summary>
         /// The actions
         /// </summary>
-        public List<IDependencyInstaller> Actions { get; private set; }
+        public List<IDependencyRegister> Actions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationResolverTaskInstaller"/> class.
@@ -67,12 +68,12 @@ namespace Glass.Mapper.Sc.IoC
             // the standard resolver will return the MyClass configuration. 
             // Tasks are called in the order they are specified below.
 
-            Actions = new List<IDependencyInstaller>
+            Actions = new List<IDependencyRegister>
             {
-                new DependencyInstaller("SitecoreItemResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, SitecoreItemResolverTask>()),
-                new DependencyInstaller("MultiInterfaceResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, MultiInterfaceResolverTask>()),
-                new DependencyInstaller("ConfigurationStandardResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, ConfigurationStandardResolverTask>()),
-                new DependencyInstaller("ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>", x => x.RegisterTransient<IConfigurationResolverTask, ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>())
+                new DependencyRegister("SitecoreItemResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, SitecoreItemResolverTask>()),
+                new DependencyRegister("MultiInterfaceResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, MultiInterfaceResolverTask>()),
+                new DependencyRegister("ConfigurationStandardResolverTask", x => x.RegisterTransient<IConfigurationResolverTask, ConfigurationStandardResolverTask>()),
+                new DependencyRegister("ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>", x => x.RegisterTransient<IConfigurationResolverTask, ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>>())
             };
         }
     }

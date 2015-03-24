@@ -20,6 +20,7 @@
 using System;
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using NSubstitute;

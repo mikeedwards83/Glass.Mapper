@@ -17,13 +17,14 @@
 //-CRE-
 
 using System;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Sc.IoC
 {
     /// <summary>
-    /// Class SitecoreInstaller
+    /// Class SitecoreRegister
     /// </summary>
-    public class SitecoreInstaller
+    public class SitecoreInstaller : IGlassInstaller
     {
         /// <summary>
         /// Gets the config.
@@ -39,7 +40,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The data mapper installer.
         /// </value>
-        public IGlassInstaller DataMapperInstaller { get; set; }
+        public IDependencyInstaller DataMapperInstaller { get; set; }
 
         /// <summary>
         /// Gets or sets the query parameter installer.
@@ -47,7 +48,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The query parameter installer.
         /// </value>
-        public IGlassInstaller QueryParameterInstaller { get; set; }
+        public IDependencyInstaller QueryParameterInstaller { get; set; }
 
         /// <summary>
         /// Gets or sets the data mapper task installer.
@@ -55,7 +56,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The data mapper task installer.
         /// </value>
-        public IGlassInstaller DataMapperTaskInstaller { get; set; }
+        public IDependencyInstaller DataMapperTaskInstaller { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration resolver task installer.
@@ -63,7 +64,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The configuration resolver task installer.
         /// </value>
-        public IGlassInstaller ConfigurationResolverTaskInstaller { get; set; }
+        public IDependencyInstaller ConfigurationResolverTaskInstaller { get; set; }
 
         /// <summary>
         /// Gets or sets the objection construction task installer.
@@ -71,7 +72,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The objection construction task installer.
         /// </value>
-        public IGlassInstaller ObjectionConstructionTaskInstaller { get; set; }
+        public IDependencyInstaller ObjectionConstructionTaskInstaller { get; set; }
 
         /// <summary>
         /// Gets or sets the object saving task installer.
@@ -79,7 +80,7 @@ namespace Glass.Mapper.Sc.IoC
         /// <value>
         /// The object saving task installer.
         /// </value>
-        public IGlassInstaller ObjectSavingTaskInstaller { get; set; }
+        public IDependencyInstaller ObjectSavingTaskInstaller { get; set; }
 
         protected IDependencyRegistrar DependencyRegistrar { get; private set; }
 
@@ -124,16 +125,16 @@ namespace Glass.Mapper.Sc.IoC
             DependencyRegistrar.RegisterInstance(Config);
         }
 
-        private void ProcessGlassInstaller(IGlassInstaller glassInstaller)
+        private void ProcessGlassInstaller(IDependencyInstaller dependencyInstaller)
         {
-            foreach (IDependencyInstaller dependencyInstaller in glassInstaller.Actions)
+            foreach (IDependencyRegister dependencyRegister in dependencyInstaller.Actions)
             {
-                if (dependencyInstaller.Action == null)
+                if (dependencyRegister.Action == null)
                 {
                     continue;
                 }
 
-                dependencyInstaller.Action(DependencyRegistrar);
+                dependencyRegister.Action(DependencyRegistrar);
             }
         }
     }

@@ -25,6 +25,7 @@ using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using System.Collections.Concurrent;
 using Castle.Core.Logging;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper
 {

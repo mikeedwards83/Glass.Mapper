@@ -50,9 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Glass.Mapper.Sc">
-      <HintPath>..\Glass.Mapper.Sc.Website\Bin\Glass.Mapper.Sc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -71,6 +68,7 @@
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
@@ -104,10 +102,14 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
-    <Compile Include="IDependencyHandler.cs" />
-    <Compile Include="IDependencyRegistrar.cs" />
-    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IoC\DependencyRegister.cs" />
+    <Compile Include="IoC\IDependencyHandler.cs" />
+    <Compile Include="IoC\IDependencyRegister.cs" />
+    <Compile Include="IoC\IDependencyRegistrar.cs" />
+    <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="IoC\IDependencyInstaller.cs" />
+    <Compile Include="IoC\IGlassInstaller.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />

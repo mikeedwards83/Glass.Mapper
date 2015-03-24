@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;

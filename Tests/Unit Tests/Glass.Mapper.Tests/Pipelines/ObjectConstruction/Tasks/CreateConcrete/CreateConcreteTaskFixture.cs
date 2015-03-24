@@ -26,6 +26,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NUnit.Framework;
 using NSubstitute;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
