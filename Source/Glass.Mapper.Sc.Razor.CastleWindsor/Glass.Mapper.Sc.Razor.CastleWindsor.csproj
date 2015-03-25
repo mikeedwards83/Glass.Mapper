@@ -69,6 +69,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="App_Start\GlassMapperScRazor.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>

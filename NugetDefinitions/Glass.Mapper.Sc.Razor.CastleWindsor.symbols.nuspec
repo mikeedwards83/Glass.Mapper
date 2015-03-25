@@ -18,8 +18,9 @@
     <language>en-GB</language>
     <dependencies>
 		<dependency id="Castle.Windsor" version="3.2.0" />
+      <dependency id="RazorEngine" version="3.2.0" />
 
-	</dependencies>
+    </dependencies>
   </metadata>
   <files>
 
