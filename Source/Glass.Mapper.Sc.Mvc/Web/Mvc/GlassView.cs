@@ -175,7 +175,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        public HtmlString Editable(Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
+        public HtmlString Editable(
+            Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
         {
             return new HtmlString(GlassHtml.Editable(Model, field, standardOutput, parameters));
         }
@@ -191,9 +192,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual HtmlString RenderImage(Expression<Func<TModel, object>> field,
                                            object parameters = null,
-                                           bool isEditable = false)
+                                           bool isEditable = false,
+                                           bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable));
+            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable, outputHeightWidth ));
         }
 
         /// <summary>
