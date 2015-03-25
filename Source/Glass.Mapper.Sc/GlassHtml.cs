@@ -679,6 +679,10 @@ namespace Glass.Mapper.Sc
             )
         {
 
+            if (image == null)
+            {
+                return string.Empty;
+            }
             
             if (attributes == null)
             {

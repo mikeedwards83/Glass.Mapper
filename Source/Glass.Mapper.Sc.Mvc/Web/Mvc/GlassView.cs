@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Specialized;
@@ -115,12 +115,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be rendered to the HTML element</param>
         /// <returns></returns>
         public virtual HtmlString RenderImage<T>(T target, Expression<Func<T, object>> field,
-                                           object parameters = null,
-                                           bool isEditable = false)
+            object parameters = null,
+            bool isEditable = false,
+            bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable));
+            return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable, outputHeightWidth));
         }
 
         /// <summary>
@@ -230,7 +232,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
 
 
-        
+
 
         /// <summary>
         /// Begins the edit frame.
@@ -267,12 +269,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return frame;
         }
 
-        public T GetRenderingParameters<T>() where T: class
+        public T GetRenderingParameters<T>() where T : class
         {
             var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
         }
-      
+
     }
 }
