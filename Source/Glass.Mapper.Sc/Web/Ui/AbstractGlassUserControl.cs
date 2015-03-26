@@ -125,6 +125,18 @@ namespace Glass.Mapper.Sc.Web.Ui
             }
         }
 
+        /// <summary>
+        /// Returns either the item specified by the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item ContextItem
+        {
+            get { return global::Sitecore.Context.Item; }
+        }
+
+        /// <summary>
+        /// Returns the item specificed by the data source only. Returns null if no datasource set
+        /// </summary>
         public Item DataSourceItem
         {
             get
