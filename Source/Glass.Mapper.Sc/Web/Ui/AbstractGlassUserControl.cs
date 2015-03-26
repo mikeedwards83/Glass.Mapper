@@ -117,13 +117,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                if (DataSourceItem == null)
-                    return global::Sitecore.Context.Item;
-                else
-                    return DataSourceItem;
-
+                return DataSourceItem ?? ContextItem;
             }
         }
+
 
         /// <summary>
         /// Returns either the item specified by the current context item
@@ -153,9 +150,9 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>() where T:class
+        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(ContextItem);
+            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
         }
 
         /// <summary>
@@ -163,21 +160,20 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>() where T : class
+        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(DataSourceItem);
+            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
         }
 
         /// <summary>
-        /// Returns the Layout Item as strongly typed
+        /// Returns the DataSource item or the Context Item as strongly typed
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>() where T : class
+        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(LayoutItem);
+            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
         }
-
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.

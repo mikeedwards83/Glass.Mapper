@@ -23,6 +23,7 @@ using System.Web.Mvc;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Shell.Applications.Dialogs.ItemLister;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
@@ -50,6 +51,76 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         /// <summary>
+        /// Returns either the item specified by the DataSource or the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item LayoutItem
+        {
+            get
+            {
+                return DataSourceItem ?? ContextItem;
+            }
+        }
+
+        /// <summary>
+        /// Returns either the item specified by the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item ContextItem
+        {
+            get { return global::Sitecore.Context.Item; }
+        }
+
+        /// <summary>
+        /// Returns the item specificed by the data source only. Returns null if no datasource set
+        /// </summary>
+        public Item DataSourceItem
+        {
+            get
+            {
+                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                {
+                    return null;
+                }
+                else
+                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+            }
+        }
+
+        /// <summary>
+        /// Returns the Context Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Returns the Data Source Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Returns the Layout Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+        }
+
+
+        /// <summary>
         /// Inits the helpers.
         /// </summary>
         public override void InitHelpers()
@@ -66,20 +137,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         protected virtual TModel GetModel()
         {
-
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
-            {
-                return SitecoreContext.GetCurrentItem<TModel>();
-            }
-            else
-            {
-
-                return
-                    SitecoreContext.GetItem<TModel>(
-                        Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
-            }
+            return SitecoreContext.Cast<TModel>(LayoutItem);
         }
 
         /// <summary>
