@@ -155,7 +155,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetContextItem<T>() where T:class
         {
-            return SitecoreContext.CreateType<T>(ContextItem);
+            return SitecoreContext.Cast<T>(ContextItem);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetDataSourceItem<T>() where T : class
         {
-            return SitecoreContext.CreateType<T>(DataSourceItem);
+            return SitecoreContext.Cast<T>(DataSourceItem);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetLayoutItem<T>() where T : class
         {
-            return SitecoreContext.CreateType<T>(LayoutItem);
+            return SitecoreContext.Cast<T>(LayoutItem);
         }
 
 
