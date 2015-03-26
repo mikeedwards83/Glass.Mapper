@@ -148,6 +148,35 @@ namespace Glass.Mapper.Sc.Web.Ui
             }
         }
 
+        /// <summary>
+        /// Returns the Context Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetContextItem<T>() where T:class
+        {
+            return SitecoreContext.CreateType<T>(ContextItem);
+        }
+
+        /// <summary>
+        /// Returns the Data Source Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetDataSourceItem<T>() where T : class
+        {
+            return SitecoreContext.CreateType<T>(DataSourceItem);
+        }
+
+        /// <summary>
+        /// Returns the Layout Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetLayoutItem<T>() where T : class
+        {
+            return SitecoreContext.CreateType<T>(LayoutItem);
+        }
 
 
         /// <summary>
