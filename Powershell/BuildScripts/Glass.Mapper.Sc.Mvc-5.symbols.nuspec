@@ -18,7 +18,7 @@
     <tags>Glass Mapper Sitecore Glass.Mapper MVC</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper.Sc" version="3.0.15.31" />
+		<dependency id="Glass.Mapper.Sc" version="3.3.0.51" />
     </dependencies>
   </metadata>
   <files>
