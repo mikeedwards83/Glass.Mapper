@@ -20,7 +20,7 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper" version="3.0.14.27" />
+		<dependency id="Glass.Mapper" version="3.0.15.31" />
     </dependencies>
   </metadata>
   <files>
