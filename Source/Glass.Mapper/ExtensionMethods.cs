@@ -76,6 +76,11 @@ namespace Glass.Mapper
             return !IsNullOrEmpty(target);
         }
 
+        public static string[] Split(this string text, char character, StringSplitOptions options)
+        {
+            return text.Split(new[] {character}, options);
+        }
+
         #endregion
 
         #region IEnumerable<T>

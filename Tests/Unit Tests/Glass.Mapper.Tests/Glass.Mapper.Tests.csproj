@@ -51,9 +51,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-
-
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Reference Include="Castle.Core">
       <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
@@ -81,7 +78,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-   
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -115,6 +111,7 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\CreateMultiInterfaceTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultitInterface\MultiInterfacePropertyInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTaskFixture.cs" />
+    <Compile Include="UrlBuilderFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
     <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTaskFixture.cs" />

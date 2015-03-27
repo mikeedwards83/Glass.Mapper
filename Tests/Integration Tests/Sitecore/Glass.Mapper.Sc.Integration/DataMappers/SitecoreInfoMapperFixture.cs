@@ -148,6 +148,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(expected, value);
         }
 
+
+
         [Test]
         public void MapToProperty_SitecoreInfoTypeItemuri_ReturnsFullItemUri()
         {

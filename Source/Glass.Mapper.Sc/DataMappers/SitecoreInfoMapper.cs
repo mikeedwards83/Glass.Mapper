@@ -19,13 +19,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Links;
+using Sitecore.Resources.Media;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -59,9 +61,20 @@ namespace Glass.Mapper.Sc.DataMappers
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
+
+            if (context == null)
+            {
+                throw new NullReferenceException("Mapping context has not been set.");
+            }
+
             var item = context.Item;
             var value = context.PropertyValue;
             var scConfig = Configuration as SitecoreInfoConfiguration;
+
+            if (scConfig == null)
+            {
+                throw  new NullReferenceException("Configuration is not set");
+            }
 
             switch (scConfig.Type)
             {
@@ -75,7 +88,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     if (value is string || value == null)
                     {
                         //if the name is null or empty nothing should happen
-                        if ((value ?? string.Empty).ToString().IsNullOrEmpty()) 
+                        if (value == null  || value.ToString().IsNullOrEmpty()) 
                             throw new MapperException("You can not set an empty or null Item name");
 
                         if (item.Name != value.ToString())
@@ -101,9 +114,19 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var context = mappingContext as SitecoreDataMappingContext;
+
+            if (context == null)
+            {
+                throw new NullReferenceException("Mapping Context has not been set.");
+            }
+
             var item = context.Item;
             var scConfig = Configuration as SitecoreInfoConfiguration;
 
+            if (scConfig == null)
+            {
+                throw new NullReferenceException("Configuration has not been set.");
+            }
             //TODO: move this to the config?
             var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
 
@@ -121,12 +144,12 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Key:
                     return item.Key;
                 case SitecoreInfoType.MediaUrl:
-                    var media = new global::Sitecore.Data.Items.MediaItem(item);
-                    return global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                    var media = new MediaItem(item);
+                    return MediaManager.GetMediaUrl(media);
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
-                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (Sitecore.Data.ID))
+                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (ID))
                         return item.TemplateID;
                     return item.TemplateID.Guid;
                 case SitecoreInfoType.TemplateName:
@@ -149,7 +172,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.BaseTemplateIds:
                     Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
                     if (scConfig.PropertyInfo != null &&
-                        scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<Sitecore.Data.ID>))
+                        scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<ID>))
                         return template.GetBaseTemplates().Select(x => x.ID);
                     return template.GetBaseTemplates().Select(x => x.ID.Guid);
                 case SitecoreInfoType.ItemUri:
@@ -166,7 +189,13 @@ namespace Glass.Mapper.Sc.DataMappers
         public override void Setup(DataMapperResolverArgs args)
         {
             var scConfig = args.PropertyConfiguration as SitecoreInfoConfiguration;
-            this.ReadOnly = scConfig.Type != SitecoreInfoType.DisplayName && scConfig.Type != SitecoreInfoType.Name;
+
+            if (scConfig == null)
+            {
+                throw new NullReferenceException("Configuration has not been set.");
+            }
+
+            ReadOnly = scConfig.Type != SitecoreInfoType.DisplayName && scConfig.Type != SitecoreInfoType.Name;
             base.Setup(args);
         }
 
@@ -176,7 +205,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="configuration">The configuration.</param>
         /// <param name="context">The context.</param>
         /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
-        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
+        public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
         {
             return configuration is SitecoreInfoConfiguration;
         }

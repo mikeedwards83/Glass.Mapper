@@ -89,7 +89,7 @@ namespace Glass.Mapper.Configuration
                 if (_properties.Any(x => x.PropertyInfo.Name == property.PropertyInfo.Name))
                 {
                     throw new MapperException(
-                        "You cannot have duplicate mappings for properties. Property Name: {0}  Type: {0}".Formatted(
+                        "You cannot have duplicate mappings for properties. Property Name: {0}  Type: {1}".Formatted(
                             property.PropertyInfo.Name, Type.Name));
                 }
 
@@ -180,7 +180,8 @@ namespace Glass.Mapper.Configuration
             if (AutoMap)
             {
                 //TODO: ME - probably need some binding flags.
-                foreach (var propConfig in AutoMapProperties(Type))
+                var properties = AutoMapProperties(Type);
+                foreach (var propConfig in properties)
                 {
                     AddProperty(propConfig);
                 }
@@ -207,6 +208,8 @@ namespace Glass.Mapper.Configuration
                 }
             }
 
+            var propList = new List<AbstractPropertyConfiguration>();
+
             foreach (var property in properties)
             {
                 if (Properties.All(x => x.PropertyInfo != property))
@@ -230,9 +233,11 @@ namespace Glass.Mapper.Configuration
                     }
 
                     if (propConfig != null)
-                        yield return propConfig;
+                        propList.Add(propConfig);
                 }
             }
+
+            return propList;
         }
 
         /// <summary>

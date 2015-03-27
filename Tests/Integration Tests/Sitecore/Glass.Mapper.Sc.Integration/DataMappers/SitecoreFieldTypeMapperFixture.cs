@@ -23,6 +23,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
@@ -244,6 +245,104 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
+        public void SetField_ContextDatabaseNull_ThrowsException()
+        {
+            //Assign
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
+            var mapper = new SitecoreFieldTypeMapper();
+            var field = item.Fields[FieldName];
+
+            var config = new SitecoreFieldConfiguration();
+            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreService(null as Database, context);
+
+            var propertyValue = new StubNoId();
+
+            var scContext = new SitecoreDataMappingContext(null, item, service);
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = string.Empty;
+            }
+
+            //Act
+            using (new ItemEditing(item, true))
+            {
+                mapper.SetField(field, propertyValue, config, scContext);
+            }
+
+            //Assert
+            Assert.AreEqual(string.Empty, item[FieldName]);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SetField_ContextNull_ThrowsException()
+        {
+            //Assign
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
+            var mapper = new SitecoreFieldTypeMapper();
+            var field = item.Fields[FieldName];
+
+            var config = new SitecoreFieldConfiguration();
+            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
+
+            var propertyValue = new StubNoId();
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = string.Empty;
+            }
+
+            //Act
+            using (new ItemEditing(item, true))
+            {
+                mapper.SetField(field, propertyValue, config, null);
+            }
+
+            //Assert
+            Assert.AreEqual(string.Empty, item[FieldName]);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void SetField_ContextServiceNull_ThrowsException()
+        {
+            //Assign
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldTypeMapper/SetField");
+            var mapper = new SitecoreFieldTypeMapper();
+            var field = item.Fields[FieldName];
+
+            var config = new SitecoreFieldConfiguration();
+            config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var propertyValue = new StubNoId();
+
+            var scContext = new SitecoreDataMappingContext(null, item, null);
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = string.Empty;
+            }
+
+            //Act
+            using (new ItemEditing(item, true))
+            {
+                mapper.SetField(field, propertyValue, config, scContext);
+            }
+
+            //Assert
+            Assert.AreEqual(string.Empty, item[FieldName]);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NullReferenceException))]
         public void SetField_ClassContainsIdButItemMissing_ThrowsException()
         {
             //Assign
@@ -287,7 +386,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             public virtual Guid Id { get; set; }
         }
 
-        public class StubContaining
+        public class StubContaining : StubInterface
         {
             public Stub PropertyTrue { get; set; }
             public StubContaining PropertyFalse { get; set; }
@@ -297,6 +396,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         [SitecoreType]
         public class StubNoId
         {
+        }
+
+        public interface StubInterface
+        {
+            
         }
 
         #endregion

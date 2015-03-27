@@ -36,12 +36,10 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The database.</value>
         Database Database { get; }
-        /// <summary>
-        /// Gets the glass context.
-        /// </summary>
-        /// <value>The glass context.</value>
-        Context GlassContext { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         Config Config { get; set; }
 
         #region  AddVersion
@@ -165,7 +163,7 @@ namespace Glass.Mapper.Sc
         T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false);
 
         /// <summary>
-        /// Creates a class from the specified item with a two constructor parameter
+        /// Creates a class from the specified item with four constructor parameters
         /// </summary>
         /// <typeparam name="T">The type to return</typeparam>
         /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
@@ -181,6 +179,36 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
         T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false);
+
+        /// <summary>
+        /// Creates a class from the specified item with five constructor parameters
+        /// </summary>
+        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="TK">The type of the first constructor parameter</typeparam>
+        /// <typeparam name="TL">The type of the second constructor parameter</typeparam>
+        /// <typeparam name="TM">The type of the third constructor parameter</typeparam>
+        /// <typeparam name="TN">The type of the fourth constructor parameter</typeparam>
+        /// <typeparam name="TO">The type of the fifth constructor parameter</typeparam>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="param1">The value of the first parameter of the constructor</param>
+        /// <param name="param2">The value of the second parameter of the constructor</param>
+        /// <param name="param3">The value of the third parameter of the constructor</param>
+        /// <param name="param4">The value of the fourth parameter of the constructor</param>
+        /// <param name="param5">The value of the fifth parameter of the constructor</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T, TK, TL, TM, TN, TO>(Item item, TK param1, TL param2, TM param3, TN param4, TO param5, bool isLazy = false, bool inferType = false);
+
+        /// <summary>
+        /// Creates a class from the specified item with constructor parameters
+        /// </summary>
+        /// <param name="item">The item to load data from</param>
+        /// <param name="isLazy">If true creates a proxy for the class</param>
+        /// <param name="constructorParameters">The constructor parameters - maximum 10</param>
+        /// <param name="inferType">Infer the type to be loaded from the template</param>
+        /// <returns>The item as the specified type</returns>
+        T CreateType<T>(Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters);
 
         #endregion
 
@@ -939,12 +967,6 @@ namespace Glass.Mapper.Sc
         /// <returns>AbstractDataMappingContext.</returns>
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
 
-        /// <summary>
-        /// Instantiates the object.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <returns>System.Object.</returns>
-        object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext);
         /// <summary>
         /// Saves the object.
         /// </summary>

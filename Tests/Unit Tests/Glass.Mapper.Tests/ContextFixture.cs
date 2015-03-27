@@ -20,10 +20,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;
 
 namespace Glass.Mapper.Tests
@@ -122,6 +125,75 @@ namespace Glass.Mapper.Tests
             Assert.AreEqual(config2, Context.Default.TypeConfigurations[config2.Type]);
         }
 
+        /// <summary>
+        /// From issue https://github.com/mikeedwards83/Glass.Mapper/issues/85
+        /// </summary>
+        [Test]
+        public void Load_LoadContextWithGenericType_CanGetTypeConfigsFromContext()
+        {
+            //Assign
+            var loader1 = Substitute.For<IConfigurationLoader>();
+            var config1 = Substitute.For<AbstractTypeConfiguration>();
+            config1.Type = typeof(Sample);
+            loader1.Load().Returns(new[] { config1 });
+
+            //Act
+            var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Load(loader1);
+
+            //Assert
+            Assert.IsNotNull(Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
+            Assert.AreEqual(config1, Context.Default.TypeConfigurations[config1.Type]);
+        }
+
+        /// <summary>
+        /// From issue https://github.com/mikeedwards83/Glass.Mapper/issues/85
+        /// </summary>
+        [Test]
+        public void Load_LoadContextGenericType_GenericTypeNotCreated()
+        {
+            //Assign
+            var loader1 = Substitute.For<IConfigurationLoader>();
+            var config1 = new StubAbstractTypeConfiguration();
+            config1.Type = typeof(Generic<>);
+            config1.AutoMap = true;
+            loader1.Load().Returns(new[] { config1 });
+
+            //Act
+            var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Load(loader1);
+
+            //Assert
+            Assert.IsNotNull(Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
+            Assert.IsFalse(Context.Default.TypeConfigurations.ContainsKey(config1.Type));
+        }
+
+        /// <summary>
+        /// From issue https://github.com/mikeedwards83/Glass.Mapper/issues/85
+        /// </summary>
+        [Test]
+        public void Load_LoadContextDerivedFromGenericType_CanGetTypeConfigsFromContext()
+        {
+            //Assign
+            var loader1 = Substitute.For<IConfigurationLoader>();
+            var config1 = new StubAbstractTypeConfiguration();
+            config1.Type = typeof(Sample);
+            config1.AutoMap = true;
+            loader1.Load().Returns(new[] { config1 });
+
+            var resolver = Substitute.For<IDependencyResolver>();
+
+            //Act
+            var context = Context.Create(resolver);
+            context.Load(loader1);
+
+            //Assert
+            Assert.IsNotNull(Context.Default);
+            Assert.AreEqual(Context.Contexts[Context.DefaultContextName], Context.Default);
+            Assert.IsTrue(Context.Default.TypeConfigurations.ContainsKey(config1.Type));
+        }
         
 
         #endregion
@@ -185,9 +257,68 @@ namespace Glass.Mapper.Tests
             Assert.IsNotNull(config);
 
         }
+
+        [Test]
+        public void GetTypeConfiguration_TwoInterfacesWithTheSameNameUsingCastleProxy_ReturnsEachCorrectly()
+        {
+            //Arrange
+            string contextName = "testContext";
+            bool isDefault = true;
+            var type = typeof (NS1.ProxyTest1);
+            var service = Substitute.For<IAbstractService>();
+            var task = new CreateInterfaceTask();
+            
+            #region CreateTypes
+
+            Context context = Context.Create(Substitute.For<IDependencyResolver>());
+
+            AbstractTypeCreationContext abstractTypeCreationContext1 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext1.RequestedType = typeof(NS1.ProxyTest1);
+
+            var configuration1 = Substitute.For<AbstractTypeConfiguration>();
+            configuration1.Type = typeof(NS1.ProxyTest1);
+
+            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service);
+
+            AbstractTypeCreationContext abstractTypeCreationContext2 = Substitute.For<AbstractTypeCreationContext>();
+            abstractTypeCreationContext2.RequestedType = typeof(NS2.ProxyTest1);
+
+            var configuration2 = Substitute.For<AbstractTypeConfiguration>();
+            configuration2.Type = typeof(NS2.ProxyTest1); 
+
+            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service);
+
+            //Act
+            task.Execute(args1);
+            task.Execute(args2);
+
+            #endregion
+
+            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS1.ProxyTest1));
+            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS2.ProxyTest1));
+
+
+            //Act
+            var config1 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args1.Result.GetType());
+            var config2 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args2.Result.GetType());
+
+            //Assert
+            Assert.AreEqual(typeof(NS1.ProxyTest1), config1.Type);
+            Assert.AreEqual(typeof(NS2.ProxyTest1), config2.Type);
+
+        }
+
+
+
+
+
+       
         #endregion
 
         #region Stubs
+
+
+        
 
         public interface IStubInterface1
         {
@@ -203,6 +334,27 @@ namespace Glass.Mapper.Tests
         {
 
         }
+
+        #region ISSUE 85
+
+        public class ItemBase
+        {
+            public virtual Guid ItemId { get; set; }
+        }
+
+        public abstract class Generic<T> : ItemBase
+        {
+            public T Value { get; set; }
+
+            public string Text { get; set; }
+        }
+
+        public class Sample : Generic<string>
+        {
+            public string Title { get; set; }
+        }
+
+        #endregion
 
         public class StubAbstractDataMapper : AbstractDataMapper
         {
@@ -232,10 +384,26 @@ namespace Glass.Mapper.Tests
 
         public class StubAbstractTypeConfiguration : AbstractTypeConfiguration
         {
-            
+            protected override AbstractPropertyConfiguration AutoMapProperty(PropertyInfo property)
+            {
+                var config = new StubAbstractPropertyConfiguration();
+                config.PropertyInfo = property;
+                config.Mapper = new StubAbstractDataMapper();
+                return config;
+            }
         }
+        public class StubAbstractPropertyConfiguration : AbstractPropertyConfiguration { }
 
         #endregion
+    }
+
+    namespace NS1
+    {
+        public interface ProxyTest1 { }
+    }
+    namespace NS2
+    {
+        public interface ProxyTest1 { }
     }
 }
 
