@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
-            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
+            if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
                 return expression.Compile();
             }
