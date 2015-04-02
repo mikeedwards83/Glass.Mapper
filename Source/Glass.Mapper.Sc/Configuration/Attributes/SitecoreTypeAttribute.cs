@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                 else
                     scConfig.BranchId = ID.Null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new MapperException("Failed to convert BranchId for type {0}. Value was {1}".Formatted(type.FullName, this.TemplateId), ex);
             }
@@ -104,7 +104,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                 else
                     scConfig.TemplateId = ID.Null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new MapperException("Failed to convert TemplateId for type {0}. Value was {1}".Formatted(type.FullName, this.TemplateId), ex);
             }

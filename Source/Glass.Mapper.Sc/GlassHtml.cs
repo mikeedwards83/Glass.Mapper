@@ -53,11 +53,7 @@ namespace Glass.Mapper.Sc
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
 
-        /// <summary>
-        /// Indicates in the Lambda Cache should be used (default True). The cache speeds up page rendering but can cause issues
-        /// when using lambda expressions with dynamic variables.
-        /// </summary>
-        public bool UseLambdaCache { get; set; }
+     
 
         public const string Parameters = "Parameters";
         /// <summary>
@@ -77,7 +73,7 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
-            if (!UseLambdaCache)
+            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
                 return expression.Compile();
             }
@@ -96,7 +92,7 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
-            if (!UseLambdaCache)
+            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
                 return expression.Compile();
             }
@@ -130,7 +126,6 @@ namespace Glass.Mapper.Sc
         {
             SitecoreContext = sitecoreContext;
             _context = sitecoreContext.GlassContext;
-            UseLambdaCache = true;
         }
 
 
