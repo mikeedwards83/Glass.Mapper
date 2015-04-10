@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
@@ -61,8 +62,11 @@ namespace Glass.Mapper.Sc.IoC
         {
             Actions = new List<IDependencyRegister>
             {
+
                 new DependencyRegister("CreateDynamicTask", x => x.RegisterTransient<IObjectConstructionTask, CreateDynamicTask>()),
                 new DependencyRegister("SitecoreItemTask", x => x.RegisterTransient<IObjectConstructionTask, SitecoreItemTask>()),
+                new DependencyRegister("CacheCheckTask", x => x.RegisterTransient<IObjectConstructionTask, Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck.CacheCheckTask>()),
+
                 new DependencyRegister("EnforcedTemplateCheck", x => x.RegisterTransient<IObjectConstructionTask, EnforcedTemplateCheck>()),
             /*if (Config.UseWindsorContructor)
             {
@@ -72,8 +76,16 @@ namespace Glass.Mapper.Sc.IoC
             }*/
                 new DependencyRegister("CreateMultiInferaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateMultiInferaceTask>()),
                 new DependencyRegister("CreateConcreteTask", x => x.RegisterTransient<IObjectConstructionTask, CreateConcreteTask>()),
-                new DependencyRegister("CreateInterfaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateInterfaceTask>())
+                new DependencyRegister("CreateInterfaceTask", x => x.RegisterTransient<IObjectConstructionTask, CreateInterfaceTask>()),
+                new DependencyRegister("CacheAddTask", x => x.RegisterTransient<IObjectConstructionTask, Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd.CacheAddTask>()),
+
+
+                new DependencyRegister("HttpCache", x => x.RegisterTransient<ICacheManager, Glass.Mapper.Caching.HttpCache>()),
+
             };
+
+
+             
         }
     }
 }
