@@ -248,8 +248,23 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
 
 
+        /// <summary>
+        /// Returns an Sitecore Edit Frame
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
+        public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields)
+            where T : class
+        {
+            var frame = GlassHtml.EditFrame(model, title, this.Output, fields);
+            frame.RenderFirstPart();
+            return frame;
+        }
 
-        
 
         /// <summary>
         /// Begins the edit frame.

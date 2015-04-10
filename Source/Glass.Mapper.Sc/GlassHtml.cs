@@ -126,21 +126,24 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        public GlassEditFrame EditFrame(string buttons, string path = null)
+        public GlassEditFrame EditFrame(string buttons, string path = null, TextWriter output = null)
         {
-            var frame = new GlassEditFrame(buttons, HttpContext.Current.Response.Output, path);
+            if (output == null)
+            {
+                output = HttpContext.Current.Response.Output;
+            }
+            var frame = new GlassEditFrame(buttons, output, path);
             frame.RenderFirstPart();
             return frame;
         }
 
 
-        public GlassEditFrame EditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields) where T : class
+        public GlassEditFrame EditFrame<T>(T model, string title = null,  TextWriter output = null, params Expression<Func<T, object>>[] fields) where T : class
         {
             if (IsInEditingMode && model != null)
             {
                 if (fields.Any())
                 {
-
                     var fieldNames = fields.Select(x => Glass.Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
                         .Cast<SitecoreFieldConfiguration>()
                         .Where(x => x != null)
@@ -169,7 +172,7 @@ namespace Glass.Mapper.Sc
                     var path = pathConfig.PropertyGetter(model) as string;
 
 
-                    return EditFrame(buttonPath, path);
+                    return EditFrame(buttonPath, path, output);
                 }
             }
             return EditFrame("/sitecore");
