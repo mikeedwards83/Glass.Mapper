@@ -207,12 +207,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields)
+        public GlassEditFrame BeginEditFrame<T>(T model, string title = null,
+            params Expression<Func<T, object>>[] fields)
             where T : class
         {
-            var frame = GlassHtml.EditFrame(model, title, this.Output, fields);
-            frame.RenderFirstPart();
-            return frame;
+            return GlassHtml.EditFrame(model, title, this.Output, fields);
         }
 
 

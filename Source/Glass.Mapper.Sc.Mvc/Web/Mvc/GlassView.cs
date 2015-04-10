@@ -260,9 +260,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields)
             where T : class
         {
-            var frame = GlassHtml.EditFrame(model, title, this.Output, fields);
-            frame.RenderFirstPart();
-            return frame;
+           return GlassHtml.EditFrame(model, title, this.Output, fields);
         }
 
 
@@ -274,9 +272,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
-            var frame = new GlassEditFrame(buttons, this.Output, dataSource);
-            frame.RenderFirstPart();
-            return frame;
+            return GlassHtml.EditFrame(buttons, dataSource, this.Output);
         }
         /// <summary>
         /// Creates an Edit Frame using the Default Buttons list
@@ -285,9 +281,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string dataSource)
         {
-            var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output, dataSource);
-            frame.RenderFirstPart();
-            return frame;
+            return GlassHtml.EditFrame(GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
         }
 
         /// <summary>

@@ -92,7 +92,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Config\Include\Glass.Mapper.Sc.Mvc.config" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.config" />
     <Content Include="App_Start\GlassMapperSc.cs.pp" />
     <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
     <Content Include="App_Config\Include\Glass.Mapper.Sc.Start.config.pp" />
