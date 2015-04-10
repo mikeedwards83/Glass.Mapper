@@ -80,7 +80,6 @@ namespace Glass.Mapper.Sc.IoC
                 new DependencyRegister("CacheAddTask", x => x.RegisterTransient<IObjectConstructionTask, Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd.CacheAddTask>()),
 
 
-                new DependencyRegister("HttpCache", x => x.RegisterTransient<ICacheManager, Glass.Mapper.Caching.HttpCache>()),
 
             };
 

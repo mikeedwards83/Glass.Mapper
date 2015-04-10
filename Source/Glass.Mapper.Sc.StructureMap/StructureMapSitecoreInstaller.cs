@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc.StructureMap
         {
         }
 
-        protected StructureMapSitecoreInstaller(Config config, IDependencyRegistrar dependencyRegistrar)
+        protected StructureMapSitecoreInstaller(Config config, IDependencyHandler dependencyRegistrar)
             : base(config, dependencyRegistrar)
         {
         }

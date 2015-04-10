@@ -8,12 +8,12 @@ namespace Glass.Mapper.Caching
 {
     public class HttpCache : ICacheManager
     {
-        private ConcurrentBag<string> _keys = new ConcurrentBag<string>();
+        private static ConcurrentBag<string> _keys = new ConcurrentBag<string>();
 
         public int AbsoluteExpiry { get; set; }
         public int SlidingExpiry { get; set; }
 
-        protected ConcurrentBag<string> Keys { get { return _keys; } }
+        protected static ConcurrentBag<string> Keys { get { return _keys; } }
 
         protected Cache Cache
         {
@@ -21,7 +21,7 @@ namespace Glass.Mapper.Caching
             {
                 return HttpContext.Current != null
                     ? HttpContext.Current.Cache
-                    : null;
+                    : HttpRuntime.Cache; 
             }
         }
 

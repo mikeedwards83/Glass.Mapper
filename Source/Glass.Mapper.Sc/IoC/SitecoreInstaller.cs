@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Sc.IoC
@@ -82,12 +83,12 @@ namespace Glass.Mapper.Sc.IoC
         /// </value>
         public IDependencyInstaller ObjectSavingTaskInstaller { get; set; }
 
-        protected IDependencyRegistrar DependencyRegistrar { get; private set; }
+        protected IDependencyHandler DependencyRegistrar { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
         /// </summary>
-        public SitecoreInstaller(IDependencyRegistrar dependencyRegistrar)
+        public SitecoreInstaller(IDependencyHandler dependencyRegistrar)
             : this(new Config(), dependencyRegistrar)
         {
         }
@@ -96,7 +97,7 @@ namespace Glass.Mapper.Sc.IoC
         /// Initializes a new instance of the <see cref="SitecoreInstaller"/> class.
         /// </summary>
         /// <param name="config">The config.</param>
-        public SitecoreInstaller(Config config, IDependencyRegistrar dependencyRegistrar)
+        public SitecoreInstaller(Config config, IDependencyHandler dependencyRegistrar)
         {
             Config = config;
             DependencyRegistrar = dependencyRegistrar;
@@ -122,7 +123,15 @@ namespace Glass.Mapper.Sc.IoC
             ProcessGlassInstaller(ObjectionConstructionTaskInstaller);
             ProcessGlassInstaller(ObjectSavingTaskInstaller);
 
-            DependencyRegistrar.RegisterInstance(Config);
+            if (!DependencyRegistrar.CanResolve(typeof (ICacheManager)))
+            {
+                var cacheManager =
+                    new DependencyRegister("HttpCache", x => x.RegisterTransient<ICacheManager, HttpCache>());
+
+                cacheManager.Action(DependencyRegistrar);
+
+            }
+
         }
 
         private void ProcessGlassInstaller(IDependencyInstaller dependencyInstaller)

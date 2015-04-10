@@ -35,7 +35,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
         }
 
-        protected WindsorSitecoreInstaller(Config config, IDependencyRegistrar dependencyRegistrar)
+        protected WindsorSitecoreInstaller(Config config, IDependencyHandler dependencyRegistrar)
             : base(config, dependencyRegistrar)
         {
         }
