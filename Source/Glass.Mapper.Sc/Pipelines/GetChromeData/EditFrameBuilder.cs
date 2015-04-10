@@ -13,7 +13,7 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
     public class EditFrameBuilder : GetChromeDataProcessor
     {
         private const string WebEditButtonRoot = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/";
-        public const string BuildToken = "build:";
+        public const string BuildToken = "glassBuild:";
 
         private readonly TemplateID _folderTemplateId = new TemplateID(new ID("{B0666CFE-8C7B-4CC1-8E32-8253742EBFA9}"));
         private readonly TemplateID _editTemplateId = new TemplateID(new ID("{1AB4F9AD-B004-413C-8924-3E07143A614B}"));
