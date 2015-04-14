@@ -52,6 +52,9 @@ namespace Glass.Mapper.Sc
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
+
+     
+
         public const string Parameters = "Parameters";
         /// <summary>
         /// The image width
@@ -73,14 +76,20 @@ namespace Glass.Mapper.Sc
 		// Disabled the caching for now
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
-            //var key = typeof(T).FullName + expression.Body.ToString();
+            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
+            {
+                return expression.Compile();
+            }
 
-            //if (_compileCache.ContainsKey(key))
-            //{
-            //    return (Func<T, string>)_compileCache[key];
-            //}
+            var key = typeof(T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, string>)_compileCache[key];
+            }
+
             var compiled = expression.Compile();
-            //_compileCache.TryAdd(key, compiled);
+            _compileCache.TryAdd(key, compiled);
             return compiled;
         }
 
@@ -89,14 +98,19 @@ namespace Glass.Mapper.Sc
 		// Disabled the caching for now 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
-			//var key = typeof (T).FullName + expression.Body.ToString();
+            if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
+            {
+                return expression.Compile();
+            }
 
-            //if (_compileCache.ContainsKey(key))
-            //{
-            //    return (Func<T, object>) _compileCache[key];
-            //}
+            var key = typeof (T).FullName + expression.Body.ToString();
+
+            if (_compileCache.ContainsKey(key))
+            {
+                return (Func<T, object>) _compileCache[key];
+            }
             var compiled = expression.Compile();
-           // _compileCache.TryAdd(key, compiled);
+            _compileCache.TryAdd(key, compiled);
             return compiled;
         }
 
@@ -704,10 +718,17 @@ namespace Glass.Mapper.Sc
             )
         {
 
+            if (image == null)
+            {
+                return string.Empty;
+            }
+            
             if (attributes == null)
             {
                 attributes = new SafeDictionary<string>();
             }
+
+            var origionalKeys = attributes.Keys.ToList();
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
@@ -813,6 +834,21 @@ namespace Glass.Mapper.Sc
                 urlParams[ImageParameterKeys.WIDTH] = urlParams[ImageParameterKeys.WIDTHHTML];
             }
             urlParams.Remove(ImageParameterKeys.WIDTHHTML);
+
+
+            Action<string, string> originalAttributeClean = (exists, missing) =>
+            {
+                if (origionalKeys.Contains(exists) && !origionalKeys.Contains(missing))
+                {
+                    urlParams.Remove(missing);
+                    htmlParams.Remove(missing);
+                }
+            };
+            //we do some smart clean up
+            originalAttributeClean(ImageParameterKeys.WIDTH, ImageParameterKeys.HEIGHT);
+            originalAttributeClean(ImageParameterKeys.HEIGHT, ImageParameterKeys.WIDTH);
+            originalAttributeClean(ImageParameterKeys.WIDTHHTML, ImageParameterKeys.HEIGHTHTML);
+            originalAttributeClean(ImageParameterKeys.HEIGHTHTML, ImageParameterKeys.WIDTHHTML);
 
             if (!outputHeightWidth)
             {

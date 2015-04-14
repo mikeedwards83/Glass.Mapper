@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
@@ -46,11 +47,49 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         }
 
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void ResolveItem_NoId_ThrowsException()
+        {
+            //Arrange 
+
+            var config = new SitecoreTypeConfiguration();
+            config.Type = typeof (StubClassNoId);
+
+            config.AddProperty(
+                new SitecoreFieldConfiguration()
+                {
+                    PropertyInfo = typeof (StubClassNoId).GetProperty("Field")
+                });
+
+            var instance = new StubClassNoId();
+
+            var database = Factory.GetDatabase("master");
+
+
+
+            //Act
+            var result = config.ResolveItem(instance, database);
+
+            //Assert
+
+
+        }
+
         #endregion
 
 
         #region Stubs
 
+        public class StubClassNoId : StubInterface
+        {
+            public virtual string Field { get; set; }
+        }
+
+        public interface StubInterface
+        {
+            
+        }
         public class StubClass
         {
             
