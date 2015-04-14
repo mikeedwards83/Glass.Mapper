@@ -63,9 +63,19 @@
     
     <!-- Glass.Mapper.Sc.Mvc-->
     
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.dll" target="lib\70\Glass.Mapper.Sc.Mvc.dll" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.pdb" target="lib\70\Glass.Mapper.Sc.Mvc.pdb" />
-    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.xml" target="lib\70\Glass.Mapper.Sc.Mvc.xml" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc3\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc3\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\70\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc3\Glass.Mapper.Sc.Mvc.xml" />
+
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\71\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc4\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\71\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc4\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\71\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc4\Glass.Mapper.Sc.Mvc.xml" />
+
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.xml" />
+
+
 
     <!-- CONFIG FILES  -->
     <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />

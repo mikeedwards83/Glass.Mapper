@@ -20,6 +20,8 @@ if($scKernel){
 	$scVerion = [double]::Parse([string]::Format("{0}.{1}",$scFileVersion.Split(".")[0], $scFileVersion.Split(".")[1]));
 	$gmsPath = "";
 
+	Write-Host "Checking version "$scVerion;
+
 	if($scVersion -ge 8.0){
 		$gmsPath = $installPath +"\lib\80\"
 	}
