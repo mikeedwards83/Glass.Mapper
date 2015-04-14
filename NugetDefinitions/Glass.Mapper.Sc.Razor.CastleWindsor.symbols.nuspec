@@ -31,9 +31,9 @@
 
 
     <!-- Windsor -->
-    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.dll" />
-	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" />
-	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\Release\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
+    <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\75\Glass.Mapper.Sc.Razor.CastleWindsor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.dll" />
+	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\75\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.pdb" />
+	  <file src="Source\Glass.Mapper.Sc.Razor.CastleWindsor\bin\75\Glass.Mapper.Sc.Razor.CastleWindsor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.CastleWindsor.xml" />
 
     <!-- Razor Content -->
     <file src="Source\Glass.Mapper.Sc.Razor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor" />
