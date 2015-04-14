@@ -1,7 +1,7 @@
 param($installPath, $toolsPath, $package, $project)
 
 Function GetVersion{
-	params($name);
+	param($name);
 
 	Write-Host "Check Version of "$name;
 	$item = $project.Object.References.Item($name);
