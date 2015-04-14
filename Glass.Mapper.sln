@@ -118,6 +118,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glass.Mapper.Sc", "Glass.Mapper.Sc", "{45B9EEB9-4683-4144-9876-5F4F7CD40B04}"
 	ProjectSection(SolutionItems) = preProject
 		Powershell\Glass.Mapper.Sc\Install.ps1 = Powershell\Glass.Mapper.Sc\Install.ps1
+		Powershell\Glass.Mapper.Sc\Uninstall.ps1 = Powershell\Glass.Mapper.Sc\Uninstall.ps1
 	EndProjectSection
 EndProject
 Global
