@@ -54,7 +54,7 @@ if($scKernel){
 
 		$finalPath= "{0}{1}" -f $gmsPath,$name;
 
-		Write-Host "Adding reference to "$name;
+		Write-Host "Adding reference to "$finalPath;
 
 		$project.Object.References.Add($finalPath);
 		$project.Object.References.Item("Glass.Mapper.Sc").CopyLocal = "True"
