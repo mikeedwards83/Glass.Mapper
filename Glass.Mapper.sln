@@ -104,6 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NugetDefinitions", "NugetDe
 	ProjectSection(SolutionItems) = preProject
 		NugetDefinitions\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec
 		NugetDefinitions\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.Razor.CastleWindsor.symbols.nuspec
+		NugetDefinitions\Glass.Mapper.Sc.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.symbols.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A01363A8-C28E-475D-9576-A1F75C1CAAA0}"
