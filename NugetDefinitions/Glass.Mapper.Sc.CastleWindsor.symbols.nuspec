@@ -56,6 +56,10 @@
     <file src="Source\Glass.Mapper.Sc\**.cs" target="src\Source\Glass.Mapper.Sc" />
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
     <file src="Source\Glass.Mapper.Sc.Mvc\**.cs" target="src\Source\Glass.Mapper.Sc.Mvc" />
+    
+    <!-- Powershell -->
+    
+    <file src="Powershell\Glass.Mapper.Sc\Install.ps1" target="Install.ps1" />
 
 	  
 
