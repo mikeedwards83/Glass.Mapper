@@ -21,19 +21,19 @@ if($scKernel){
 	$gmsPath = "";
 
 	if($scVersion -ge 8.0){
-		$gmsPath = $installPath +"\libs\80\"
+		$gmsPath = $installPath +"\lib\80\"
 	}
 	elseif($scVersion -ge 7.5){
-		$gmsPath = $installPath +"\libs\75\"
+		$gmsPath = $installPath +"\lib\75\"
 	}
 	elseif($scVersion -ge 7.2){
-		$gmsPath = $installPath +"\libs\72\"
+		$gmsPath = $installPath +"\lib\72\"
 	}
 	elseif($scVersion -ge 7.1){
-		$gmsPath = $installPath +"\libs\71\"
+		$gmsPath = $installPath +"\lib\71\"
 	}
 	else{ 
-		$gmsPath = $installPath +"\libs\70\"
+		$gmsPath = $installPath +"\lib\70\"
 	}
 
 
