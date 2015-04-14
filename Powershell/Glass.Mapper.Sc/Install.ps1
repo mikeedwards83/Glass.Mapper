@@ -10,17 +10,17 @@ Function GetVersion{
 	if($item){	
 		$itemPath = $item.Path
 
-		Write-Host "{0} Path: {1}" -f $name, $itemPath;
+		Write-Host ("{0} Path: {1}" -f $name, $itemPath);
 
 		$fileVersion = (Get-item $scKernelPath).VersionInfo.FileVersion;
 
-		Write-Host "Check {0} File Version is {1}" -f $name, $fileVersion;
+		Write-Host ("Check {0} File Version is {1}" -f $name, $fileVersion);
 	
 		$versionString = "{0}.{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
 
 		$version = [double]::Parse($versionString);
 
-		Write-Host "Parsed Version for {0} is {1}" -f $name, $version;
+		Write-Host ("Parsed Version for {0} is {1}" -f $name, $version);
 		
 		return $version;
 	}
