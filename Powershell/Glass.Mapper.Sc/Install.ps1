@@ -15,7 +15,7 @@ Function GetVersion{
 
 		Write-Host ("Check {0} File Version is {1}" -f $name, $fileVersion);
 	
-		if($length == 2){
+		if($length -eq 2){
 			return $versionString = "{0}{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
 		}
 		else{
@@ -55,9 +55,19 @@ if($scVersion){
 	
 	RemovingExisting("Glass.Mapper.Sc");
 	AddReference($gmsPath, "Glass.Mapper.Sc");
+
+	$mvcVersion = GetVersion "System.Web.Mvc" 1;
+	
+	if($mvcVersion){
+	}
+	else{
+		Write-Host "WARNING: Could not locate System.Web.Mvc.dll, cannot add reference to Glass.Mapper.Sc.Mvc";
+
+	}
+
 }
 else{
-	Write-Host "Could not locate Sitecore.Kernel.dll, please add reference before installing Glass.Mapper.Sc";
+	Write-Host "ERROR: Could not locate Sitecore.Kernel.dll, please add reference before installing Glass.Mapper.Sc";
 }
 
 
