@@ -5,10 +5,7 @@ Write-Host "Check Sitecore Version"
 
 $scKernel = $project.Object.References.Item('Sitecore.Kernel');
 
-if($scKernel -eq null){
-	Write-Host "Could not locate Sitecore.Kernel.dll, please add reference before installing Glass.Mapper.Sc";
-}
-else{
+if($scKernel){	
 	$scKernelPath = $scKernel.Path
 
 	Write-Host "Sitecore.Kernel Path: "+$scKernelPath;
@@ -29,7 +26,7 @@ else{
 	}
 
 	$existing = $project.Object.References.Item("Glass.Mapper.Sc");
-	if(existing -ne null){
+	if($existing){
 		Write-Host "Removing existing Glass.Mapper.Sc reference";
 		$existing.Remove();
 	}
@@ -38,4 +35,7 @@ else{
 
 	$project.Object.References.Add($gmsPath);
 	$project.Object.References.Item("Glass.Mapper.Sc").CopyLocal = "True"
+}
+else{
+	Write-Host "Could not locate Sitecore.Kernel.dll, please add reference before installing Glass.Mapper.Sc";
 }
