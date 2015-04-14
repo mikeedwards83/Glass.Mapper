@@ -58,12 +58,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 	ProjectSection(SolutionItems) = preProject
 		Powershell\BuildScripts\build-debug.proj = Powershell\BuildScripts\build-debug.proj
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
-		Powershell\BuildScripts\build.ps1 = Powershell\BuildScripts\build.ps1
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec
 		Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec
-		Powershell\BuildScripts\NuGet.exe = Powershell\BuildScripts\NuGet.exe
-		Powershell\BuildScripts\utilities.ps1 = Powershell\BuildScripts\utilities.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Razor", "Source\Glass.Mapper.Sc.Razor\Glass.Mapper.Sc.Razor.csproj", "{717C4ADB-B71A-4DFF-BEC5-AFD343776194}"
