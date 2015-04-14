@@ -8,9 +8,9 @@ $scKernel = $project.Object.References.Item('Sitecore.Kernel');
 if($scKernel){	
 	$scKernelPath = $scKernel.Path
 
-	Write-Host "Sitecore.Kernel Path: "+$scKernelPath;
+	Write-Host "Sitecore.Kernel Path: "$scKernelPath;
 
-	$scFileVersion = (Get-item $scKernel).VersionInfo.FileVersion;
+	$scFileVersion = (Get-item $scKernelPath).VersionInfo.FileVersion;
 
 	Write-Host "Check Sitecore File Version is "$scFileVersion;
 
