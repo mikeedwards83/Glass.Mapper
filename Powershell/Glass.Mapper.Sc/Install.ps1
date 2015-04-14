@@ -34,9 +34,12 @@ $scVerion = GetVersion "Sitecore.Kernel";
 if($scVerion -ge -1){	
 
 	$gmsPath = "";
+	Write-Host ($scVersion -ge 8.0)
+	
 
 	Write-Host "Checking version "$scVerion;
 
+	Write-Host ([double]::Parse($scVersion) -ge 8.0)
 	Write-Host ($scVersion -ge 8.0)
 
 	if($scVersion -ge 8.0){
