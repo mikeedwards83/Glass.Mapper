@@ -13,6 +13,7 @@ param($installPath, $toolsPath, $package, $project)
 
 	
 	RemovingExisting("Glass.Mapper.Sc");
+	RemovingExisting("Glass.Mapper.Sc.Mvc");
 	
 	
 

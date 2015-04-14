@@ -59,6 +59,11 @@ if($scVersion){
 	$mvcVersion = GetVersion "System.Web.Mvc" 1;
 	
 	if($mvcVersion){
+		$mvcPath = "{0}\lib\Mvc{1}\{2}" -f $installPath, $mvcVersion, "Glass.Mapper.Sc.Mvc.dll";
+		
+		RemovingExisting("Glass.Mapper.Sc.Mvc");
+		AddReference($mvcPath, "Glass.Mapper.Sc.Mvc");
+
 	}
 	else{
 		Write-Host "WARNING: Could not locate System.Web.Mvc.dll, cannot add reference to Glass.Mapper.Sc.Mvc";
@@ -71,4 +76,5 @@ else{
 }
 
 
+Write-Host "Installation complete";
 	
