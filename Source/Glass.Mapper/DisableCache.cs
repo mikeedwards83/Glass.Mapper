@@ -41,7 +41,7 @@ namespace Glass.Mapper
                     _cacheSetting = value;
 
                 }
-                if (HttpContext.Current.Items[ItemsKey] != null)
+                else
                 {
                     HttpContext.Current.Items[ItemsKey] = value;
                 }

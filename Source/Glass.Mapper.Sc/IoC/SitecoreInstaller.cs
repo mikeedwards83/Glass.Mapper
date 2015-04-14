@@ -123,15 +123,20 @@ namespace Glass.Mapper.Sc.IoC
             ProcessGlassInstaller(ObjectionConstructionTaskInstaller);
             ProcessGlassInstaller(ObjectSavingTaskInstaller);
 
-            if (!DependencyRegistrar.CanResolve(typeof (ICacheManager)))
+
+            VerifyAndAdd<ICacheManager, HttpCache>("HttpCache");
+            VerifyAndAdd<Config, Config>("Config");
+        }
+
+        public void VerifyAndAdd<T, TK>(string name) where TK:T where T:class
+        {
+            if (!DependencyRegistrar.CanResolve(typeof(T)))
             {
-                var cacheManager =
-                    new DependencyRegister("HttpCache", x => x.RegisterTransient<ICacheManager, HttpCache>());
+                var entity =
+                      new DependencyRegister(name, x => x.RegisterTransient<T,TK>());
 
-                cacheManager.Action(DependencyRegistrar);
-
+                entity.Action(DependencyRegistrar);
             }
-
         }
 
         private void ProcessGlassInstaller(IDependencyInstaller dependencyInstaller)
