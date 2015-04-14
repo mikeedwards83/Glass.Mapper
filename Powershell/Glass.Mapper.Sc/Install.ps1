@@ -23,7 +23,7 @@ Function GetVersion{
 		}
 	}
 
-	return null;
+	return $null;
 }
 
 	Function RemovingExisting{
