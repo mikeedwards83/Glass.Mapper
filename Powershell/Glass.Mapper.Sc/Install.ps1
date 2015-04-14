@@ -12,7 +12,7 @@ Function GetVersion{
 
 		Write-Host ("{0} Path: {1}" -f $name, $itemPath);
 
-		$fileVersion = (Get-item $scKernelPath).VersionInfo.FileVersion;
+		$fileVersion = (Get-item $itemPath).VersionInfo.FileVersion;
 
 		Write-Host ("Check {0} File Version is {1}" -f $name, $fileVersion);
 	
