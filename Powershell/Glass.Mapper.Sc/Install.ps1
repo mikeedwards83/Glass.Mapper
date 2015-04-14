@@ -37,6 +37,8 @@ if($scVerion -ge -1){
 
 	Write-Host "Checking version "$scVerion;
 
+	Write-Host ($scVersion -ge 8.0)
+
 	if($scVersion -ge 8.0){
 		$gmsPath = $installPath +"\lib\80\"
 		Write-Host "Checking version in at 8";
