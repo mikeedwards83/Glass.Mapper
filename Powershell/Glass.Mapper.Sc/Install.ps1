@@ -1,5 +1,8 @@
 param($installPath, $toolsPath, $package, $project)
 
+
+Write-Host "Check Sitecore Version"
+
 $scKernel = $project.Object.References.Item('Sitecore.Kernel').FullPath
 
 $scFileVersion = (Get-item $scKernel).VersionInfo.FileVersion;

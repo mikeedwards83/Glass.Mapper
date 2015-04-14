@@ -59,7 +59,7 @@
     
     <!-- Powershell -->
     
-    <file src="Powershell\Glass.Mapper.Sc\Install.ps1" target="Install.ps1" />
+    <file src="Powershell\Glass.Mapper.Sc\install.ps1" target="install.ps1" />
 
 	  
 
