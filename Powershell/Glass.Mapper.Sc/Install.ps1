@@ -63,7 +63,7 @@ if($scKernel){
 
 
 	RemovingExisting("Glass.Mapper.Sc");
-	AddReference("Glass.Mapper.Sc");
+	AddReference("Glass.Mapper.Sc.dll");
 	
 }
 else{
