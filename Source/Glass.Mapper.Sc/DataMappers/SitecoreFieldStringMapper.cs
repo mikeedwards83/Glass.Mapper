@@ -18,7 +18,9 @@
 
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
@@ -43,8 +45,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
         private const string _richTextKey = "rich text";
 
-
-        private static HashSet<Guid> _notRichTextSet = new HashSet<Guid>();
+        private static ImmutableHashSet<Guid> _notRichTextSet = ImmutableHashSet<Guid>.Empty;
          
         /// <summary>
         /// Gets the field.
@@ -84,7 +85,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 //return renderer.Render();
             }
 
-            _notRichTextSet.Add(field.ID.Guid);
+            _notRichTextSet = _notRichTextSet.Add(field.ID.Guid);
 
             return field.Value;
         }
