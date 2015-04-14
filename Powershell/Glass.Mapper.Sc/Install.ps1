@@ -1,29 +1,45 @@
 param($installPath, $toolsPath, $package, $project)
 
+Function GetVersion{
+	params($name);
+
+	Write-Host "Check Version of "$name;
+	$item = $project.Object.References.Item($name);
 
 
+	if($item){	
+		$itemPath = $item.Path
 
-Write-Host "Check Sitecore Version"
+		Write-Host "{0} Path: {1}" -f $name, $itemPath;
 
-$scKernel = $project.Object.References.Item("Sitecore.Kernel");
+		$fileVersion = (Get-item $scKernelPath).VersionInfo.FileVersion;
 
-if($scKernel){	
-	$scKernelPath = $scKernel.Path
+		Write-Host "Check {0} File Version is {1}" -f $name, $fileVersion;
+	
+		$versionString = "{0}.{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
 
-	Write-Host "Sitecore.Kernel Path: "$scKernelPath;
+		$version = [double]::Parse($versionString);
 
-	$scFileVersion = (Get-item $scKernelPath).VersionInfo.FileVersion;
+		Write-Host "Parsed Version for {0} is {1}" -f $name, $version;
+		
+		return $version;
+	}
 
-	Write-Host "Check Sitecore File Version is "$scFileVersion;
 
+	return -1;
+}
 
-	$scVerion = [double]::Parse([string]::Format("{0}.{1}",$scFileVersion.Split(".")[0], $scFileVersion.Split(".")[1]));
+$scVerion = GetVersion "Sitecore.Kernel";
+
+if($scVerion -ge -1){	
+
 	$gmsPath = "";
 
 	Write-Host "Checking version "$scVerion;
 
 	if($scVersion -ge 8.0){
 		$gmsPath = $installPath +"\lib\80\"
+		Write-Host "Checking version in at 8";
 	}
 	elseif($scVersion -ge 7.5){
 		$gmsPath = $installPath +"\lib\75\"
@@ -61,8 +77,6 @@ if($scKernel){
 		$project.Object.References.Add($finalPath);
 		$project.Object.References.Item("Glass.Mapper.Sc").CopyLocal = "True"
     }
-
-
 
 	RemovingExisting("Glass.Mapper.Sc");
 	AddReference("Glass.Mapper.Sc.dll");
