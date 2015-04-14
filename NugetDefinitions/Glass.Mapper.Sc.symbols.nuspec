@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Glass.Mapper.Sc</id>
+    <id>Glass.Mapper.ScV4</id>
     <version>$version$</version>
     <authors>Michael Edwards</authors>
     <owners>Michael Edwards</owners>
