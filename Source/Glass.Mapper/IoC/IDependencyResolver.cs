@@ -32,7 +32,7 @@ namespace Glass.Mapper.IoC
         /// <typeparam name="T"></typeparam>
         /// <param name="args">The args.</param>
         /// <returns>``0.</returns>
-        T Resolve<T>(IDictionary<string, object> args = null);
+        T Resolve<T>() where T : class;
         /// <summary>
         /// Resolves all.
         /// </summary>

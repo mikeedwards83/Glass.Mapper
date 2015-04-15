@@ -63,12 +63,9 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <typeparam name="T"></typeparam>
         /// <param name="args">The args.</param>
         /// <returns>``0.</returns>
-        public T Resolve<T>(IDictionary<string, object> args = null)
+        public T Resolve<T>() where T : class
         {
-            if (args == null)
-                return Container.Resolve<T>();
-            
-            return Container.Resolve<T>((IDictionary) args);
+            return Container.Resolve<T>();
         }
 
         /// <summary>

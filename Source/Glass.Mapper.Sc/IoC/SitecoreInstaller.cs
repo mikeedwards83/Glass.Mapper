@@ -128,7 +128,7 @@ namespace Glass.Mapper.Sc.IoC
             VerifyAndAdd<Config, Config>("Config");
         }
 
-        public void VerifyAndAdd<T, TK>(string name) where TK:T where T:class
+        public void VerifyAndAdd<T, TK>(string name) where TK: class, T where T:class
         {
             if (!DependencyRegistrar.CanResolve(typeof(T)))
             {

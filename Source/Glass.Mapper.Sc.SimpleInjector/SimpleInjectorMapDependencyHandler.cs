@@ -18,15 +18,12 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.Resolvers.SpecializedResolvers;
-using Castle.Windsor;
 using Glass.Mapper.IoC;
-using Glass.Mapper.Sc.IoC;
+using SimpleInjector;
+using SimpleInjector.Advanced;
 
-namespace Glass.Mapper.Sc.CastleWindsor
+namespace Glass.Mapper.Sc.SimpleInjector
 {
     /// <summary>
     /// The dependency handler
@@ -39,10 +36,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <returns>IDependencyResolver.</returns>
         public static DependencyResolver CreateStandardResolver()
         {
-            IWindsorContainer container = new WindsorContainer();
-
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
-
+            Container container = new Container();           
             return new DependencyResolver(container);
         }
 
@@ -50,7 +44,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// Initializes a new instance of the <see cref="DependencyResolver"/> class.
         /// </summary>
         /// <param name="container">The container.</param>
-        public DependencyResolver(IWindsorContainer container)
+        public DependencyResolver(Container container)
         {
             Container = container;
         }
@@ -59,7 +53,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// Gets the container.
         /// </summary>
         /// <value>The container.</value>
-        public IWindsorContainer Container { get; private set; }
+        public Container Container { get; private set; }
 
         /// <summary>
         /// Resolves the specified args.
@@ -69,7 +63,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <returns>``0.</returns>
         public T Resolve<T>() where T : class
         {
-            return Container.Resolve<T>();
+            return Container.GetInstance<T>();
         }
 
         /// <summary>
@@ -79,12 +73,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <returns>IEnumerable{``0}.</returns>
         public IEnumerable<T> ResolveAll<T>()
         {
-            return Container.ResolveAll<T>();
+            return Container.GetAllInstances<T>();
         }
 
         public bool CanResolve(Type type)
         {
-            return Container.Kernel.HasComponent(type);
+            return Container.GetInstance(type) != null;
         }
 
         /// <summary>
@@ -94,15 +88,19 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <typeparam name="TComponent"></typeparam>
         public void RegisterTransient<T, TComponent>() where T : class where TComponent : class, T
         {
-            Container.Register(Component.For<T, TComponent>().LifestyleCustom<NoTrackLifestyleManager>());
+            if (Container.GetInstance<T>() != null)
+            {
+                Container.AppendToCollection(typeof(T), typeof(TComponent)); 
+            }
+
+            Container.Register<T, TComponent>();
         }
 
         public void RegisterTransient(Type type)
-        {
-            Container.Register(Component.For(type).LifestyleCustom<NoTrackLifestyleManager>());
+        {          
+            Container.Register(type);
         }
-
-
+        
 
         /// <summary>
         /// Registers an instance of an object
@@ -111,13 +109,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// <typeparam name="T"></typeparam>
         public void RegisterInstance<T>(T instance) where T : class
         {
-            Container.Register(Component.For<T>().Instance(instance));
+            Container.Register(() => instance);
         }
 
         public IGlassInstaller CreateInstaller(Mapper.Config config)
         {
-            return new WindsorSitecoreInstaller((Mapper.Sc.Config)config, this.Container );
+            return new SimpleInjectorMapSitecoreInstaller((Config) config, this.Container);
         }
-
     }
 }
