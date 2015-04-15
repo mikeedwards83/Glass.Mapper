@@ -36,7 +36,7 @@ namespace Glass.Mapper.Sc.SimpleInjector
         /// <returns>IDependencyResolver.</returns>
         public static DependencyResolver CreateStandardResolver()
         {
-            Container container = new Container();           
+            Container container = new Container();
             return new DependencyResolver(container);
         }
 
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.SimpleInjector
 
         public bool CanResolve(Type type)
         {
-            return Container.GetInstance(type) != null;
+            return Container.GetRegistration(type) != null;
         }
 
         /// <summary>
@@ -88,19 +88,21 @@ namespace Glass.Mapper.Sc.SimpleInjector
         /// <typeparam name="TComponent"></typeparam>
         public void RegisterTransient<T, TComponent>() where T : class where TComponent : class, T
         {
-            if (Container.GetInstance<T>() != null)
-            {
-                Container.AppendToCollection(typeof(T), typeof(TComponent)); 
-            }
+            Container.AppendToCollection(typeof(T), typeof(TComponent));
 
+            // We replace any earlier registration for T. This means that when Resolve<T> is called,
+            // we get the last registration. When ResolveAll<T> is called, we get them all.
+            bool original = Container.Options.AllowOverridingRegistrations;
+            Container.Options.AllowOverridingRegistrations = true;
             Container.Register<T, TComponent>();
+            Container.Options.AllowOverridingRegistrations = original;
         }
 
         public void RegisterTransient(Type type)
-        {          
-            Container.Register(type);
+        {
+            Container.Register(type, type, Lifestyle.Transient);
         }
-        
+
 
         /// <summary>
         /// Registers an instance of an object
@@ -109,7 +111,7 @@ namespace Glass.Mapper.Sc.SimpleInjector
         /// <typeparam name="T"></typeparam>
         public void RegisterInstance<T>(T instance) where T : class
         {
-            Container.Register(() => instance);
+            Container.RegisterSingle<T>(instance);
         }
 
         public IGlassInstaller CreateInstaller(Mapper.Config config)
