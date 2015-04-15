@@ -44,12 +44,9 @@
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="Castle.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
-      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -162,7 +159,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
