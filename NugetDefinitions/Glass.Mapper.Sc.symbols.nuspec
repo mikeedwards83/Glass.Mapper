@@ -67,10 +67,10 @@
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.xml" />
 
     <!-- CONFIG FILES  -->
-    <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
+    <file src="Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
 
     <!-- PP FILES  -->
-    <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />
+    <file src="Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
 
     <file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
