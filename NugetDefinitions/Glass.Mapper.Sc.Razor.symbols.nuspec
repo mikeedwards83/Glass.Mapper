@@ -32,7 +32,7 @@
     <file src="Source\Glass.Mapper.Sc.Razor\**.cs" target="src\Source\Glass.Mapper.Sc.Razor" />
     <file src="Source\Glass.Mapper.Sc.Razor\App_Config\**.*" target="content\App_Config" />
     <file src="Source\Glass.Mapper.Sc.Razor\Sitecore Modules\**.*" target="content\Sitecore Modules" />
-    <file src="Source\Glass.Mapper.Sc.Razor\Data\**.*" target="content\Data" />
+    <file src="Source\Glass.Mapper.Sc.Razor\Packages\**.*" target="content\Data\Packages" />
     <file src="Source\Glass.Mapper.Sc.Razor\App_Start\**" target="content\App_Start" />
     <file src="Source\Glass.Mapper.Sc.Razor\App_Config\**" target="content\App_Config" />
 

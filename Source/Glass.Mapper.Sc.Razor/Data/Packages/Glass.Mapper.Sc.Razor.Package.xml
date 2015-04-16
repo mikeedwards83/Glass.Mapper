@@ -1,0 +1,134 @@
+<project>
+  <Metadata>
+    <metadata>
+      <PackageName>Glass Mapper Sc Razor Package</PackageName>
+      <Author>Michael Edwards</Author>
+      <Version />
+      <Revision />
+      <License />
+      <Comment />
+      <Attributes />
+      <Readme />
+      <Publisher />
+      <PostStep />
+      <PackageID />
+    </metadata>
+  </Metadata>
+  <SaveProject>True</SaveProject>
+  <Sources>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/templates/Glass/{B3E50E8D-F251-4600-9A1F-3B5642253708}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/{5721BC3E-8AC0-4B14-B409-EDA814CC036B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/{A764683C-AAD2-4107-ACFE-54A03DEC3509}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/{710AADB1-7D09-4ECA-B44A-88D9765E3F6E}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassBehindRazor/{833488E7-E021-4DB8-9BB1-566D65CE7113}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassDynamicRazor/{802647AE-3728-44A1-9120-1C9ADE93120A}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassTypedRazor/{F57A9A42-7C9C-43FB-BDC7-E5EA07F78567}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Glass Razor Folder/__Standard Values/{AB9E2785-032B-47DE-9191-01DA1EFDF28E}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Glass Razor Folder/{A4F60160-BD14-4471-B362-CB56905E9564}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/{78AB05BF-363C-433F-9D9B-B181DD028A7B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/{E5A4C1EB-150A-409B-9A76-890DA9EA2F58}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/{9E2D0F4E-A40D-4C78-BE71-1165112149E5}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Customize Page/{CBCD2044-C193-41DC-93C2-CDEC10F902AC}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Description/{672C38BE-E308-4BD6-8C36-214B315452FA}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Open Properties after Add/{7E06F166-55A2-4077-BDEC-6B2F78BFAB8D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Parameters Template/{D88AB812-79B1-4B41-84B6-910660B72AA7}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/{9B162562-C999-45BF-B688-1C65D0EBCAAD}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/{607C36A1-9C97-4101-A44C-0D0CAF7CDBB3}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Assembly/{5FB9B658-1B86-417E-9F15-123659D65859}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Name/{ED0BF240-10A2-4CC9-9EC2-7FC003C57723}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Type/{7C26A665-40B4-43A3-87B5-D431A4CFEF67}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/{4432051D-8D3E-48E9-8C06-F1970EE607C5}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/Data/{94A0467A-3471-42DA-863D-C0B54F89E176}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/Data/Name/{F7A949BD-E80F-4F4C-AE9B-458B8661D68D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/{7B10C01D-B0DF-4626-BE34-F48E38828FB7}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/{86B6FD81-D73F-49C1-BB3E-0886679CA07D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Assembly/{9FE53A24-17A5-40C7-9638-0CDC67644CE1}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Name/{EB82C2E2-62A6-41EC-A24D-D3897B7F1F8D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Type/{71AC1C5B-B99C-4F6C-B2EC-5B397FB9DC26}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/{B3E50E8D-F251-4600-9A1F-3B5642253708}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/{5721BC3E-8AC0-4B14-B409-EDA814CC036B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/{A764683C-AAD2-4107-ACFE-54A03DEC3509}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/{710AADB1-7D09-4ECA-B44A-88D9765E3F6E}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassBehindRazor/{833488E7-E021-4DB8-9BB1-566D65CE7113}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassDynamicRazor/{802647AE-3728-44A1-9120-1C9ADE93120A}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Commands/GlassTypedRazor/{F57A9A42-7C9C-43FB-BDC7-E5EA07F78567}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Glass Razor Folder/__Standard Values/{AB9E2785-032B-47DE-9191-01DA1EFDF28E}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Glass Razor Folder/{A4F60160-BD14-4471-B362-CB56905E9564}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/{78AB05BF-363C-433F-9D9B-B181DD028A7B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/__Standard Values/{7263DCA3-D72D-44D0-BFBA-50ABA6431F4C}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/{E5A4C1EB-150A-409B-9A76-890DA9EA2F58}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Data/{2EDEAF21-4C87-4253-89D4-08D90C10C2A8}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Data/ContextName/{E4D9818F-72EA-419D-B22C-6BCED52F638F}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/{9E2D0F4E-A40D-4C78-BE71-1165112149E5}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Customize Page/{CBCD2044-C193-41DC-93C2-CDEC10F902AC}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Description/{672C38BE-E308-4BD6-8C36-214B315452FA}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Open Properties after Add/{7E06F166-55A2-4077-BDEC-6B2F78BFAB8D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBaseTemplate/Editor Options/Parameters Template/{D88AB812-79B1-4B41-84B6-910660B72AA7}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/{9B162562-C999-45BF-B688-1C65D0EBCAAD}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/{607C36A1-9C97-4101-A44C-0D0CAF7CDBB3}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Assembly/{5FB9B658-1B86-417E-9F15-123659D65859}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Name/{ED0BF240-10A2-4CC9-9EC2-7FC003C57723}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassBehindRazor/Data/Type/{7C26A665-40B4-43A3-87B5-D431A4CFEF67}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/{4432051D-8D3E-48E9-8C06-F1970EE607C5}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/Data/{94A0467A-3471-42DA-863D-C0B54F89E176}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassDynamicRazor/Data/Name/{F7A949BD-E80F-4F4C-AE9B-458B8661D68D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/{7B10C01D-B0DF-4626-BE34-F48E38828FB7}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/{86B6FD81-D73F-49C1-BB3E-0886679CA07D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Assembly/{9FE53A24-17A5-40C7-9638-0CDC67644CE1}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Name/{EB82C2E2-62A6-41EC-A24D-D3897B7F1F8D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Glass/Mapper/Razor/Layouts/GlassTypedRazor/Data/Type/{71AC1C5B-B99C-4F6C-B2EC-5B397FB9DC26}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Templates</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/layout/Glass Razor/{A97EE6DA-D936-4AA0-B44A-5E68C45BF6A0}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Layout</Name>
+    </xitems>
+  </Sources>
+  <Converter>
+    <TrivialConverter>
+      <Transforms />
+    </TrivialConverter>
+  </Converter>
+  <Include />
+  <Exclude />
+  <Name />
+</project>
