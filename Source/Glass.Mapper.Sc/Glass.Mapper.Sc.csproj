@@ -168,13 +168,8 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
-    <Compile Include="IoC\ConfigurationInstaller.cs" />
-    <Compile Include="IoC\DataMapperInstaller.cs" />
-    <Compile Include="IoC\DataMapperTaskInstaller.cs" />
-    <Compile Include="IoC\ObjectConstructorTaskInstaller.cs" />
-    <Compile Include="IoC\ObjectSavingTaskInstaller.cs" />
-    <Compile Include="IoC\QueryParameterInstaller.cs" />
-    <Compile Include="IoC\SitecoreInstaller.cs" />
+    <Compile Include="IoC\DependencyResolver.cs" />
+    <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />

@@ -16,22 +16,25 @@
 */
 //-CRE-
 
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
-using Glass.Mapper.Sc.IoC;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
+using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
     /// <summary>
     /// The dependency handler
     /// </summary>
-    public class DependencyResolver : IDependencyHandler
+    public class DependencyResolver  : Glass.Mapper.Sc.IoC.IDependencyResolver
     {
         /// <summary>
         /// Creates the standard resolver.
@@ -60,66 +63,46 @@ namespace Glass.Mapper.Sc.CastleWindsor
         /// </summary>
         /// <value>The container.</value>
         public IWindsorContainer Container { get; private set; }
+        
 
-        /// <summary>
-        /// Resolves the specified args.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="args">The args.</param>
-        /// <returns>``0.</returns>
-        public T Resolve<T>(IDictionary<string, object> args = null)
+        public Mapper.Config GetConfig()
         {
-            return args == null 
-                ? Container.Resolve<T>() 
-                : Container.Resolve<T>((IDictionary) args);
+            return Container.Resolve<Mapper.Config>();
         }
 
-        /// <summary>
-        /// Resolves all.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable{``0}.</returns>
-        public IEnumerable<T> ResolveAll<T>()
+        public ICacheManager GetCacheManager()
         {
-            return Container.ResolveAll<T>();
+            return Container.Resolve<ICacheManager>();
         }
 
-        public bool CanResolve(Type type)
+        public IEnumerable<IDataMapperResolverTask> GetDataMapperResolverTasks()
         {
-            return Container.Kernel.HasComponent(type);
+            return Container.ResolveAll<IDataMapperResolverTask>();
         }
 
-        /// <summary>
-        /// Registers an item in the container transiently
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TComponent"></typeparam>
-        public void RegisterTransient<T, TComponent>() where T : class
+        public IEnumerable<AbstractDataMapper> GetDataMappers()
         {
-            Container.Register(Component.For<T, TComponent>().LifestyleCustom<NoTrackLifestyleManager>());
+            return Container.ResolveAll<AbstractDataMapper>();
         }
 
-        public void RegisterTransient(Type type)
+        public IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks()
         {
-            Container.Register(Component.For(type).LifestyleCustom<NoTrackLifestyleManager>());
+            return Container.ResolveAll<IConfigurationResolverTask>();
         }
 
-
-
-        /// <summary>
-        /// Registers an instance of an object
-        /// </summary>
-        /// <param name="instance">The instance</param>
-        /// <typeparam name="T"></typeparam>
-        public void RegisterInstance<T>(T instance) where T : class
+        public IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks()
         {
-            Container.Register(Component.For<T>().Instance(instance));
+            return Container.ResolveAll<IObjectConstructionTask>();
         }
 
-        public IGlassInstaller CreateInstaller(Mapper.Config config)
+        public IEnumerable<IObjectSavingTask> GetObjectSavingTasks()
         {
-            return new WindsorSitecoreInstaller((Mapper.Sc.Config)config, this.Container );
+            return Container.ResolveAll<IObjectSavingTask>();
         }
 
+        public IEnumerable<ISitecoreQueryParameter> QueryParameterFactory()
+        {
+            return Container.ResolveAll<ISitecoreQueryParameter>();
+        }
     }
 }

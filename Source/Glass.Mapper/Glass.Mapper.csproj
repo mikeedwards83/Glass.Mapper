@@ -99,14 +99,9 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
-    <Compile Include="IoC\DependencyRegister.cs" />
-    <Compile Include="IoC\IDependencyHandler.cs" />
-    <Compile Include="IoC\IDependencyRegister.cs" />
-    <Compile Include="IoC\IDependencyRegistrar.cs" />
+    <Compile Include="IoC\AbstractConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
-    <Compile Include="IoC\IDependencyInstaller.cs" />
-    <Compile Include="IoC\IGlassInstaller.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />

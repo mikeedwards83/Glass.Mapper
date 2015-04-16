@@ -202,14 +202,14 @@ namespace Glass.Mapper
         ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
-            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.ResolveAll<IDataMapperResolverTask>());
+            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.GetDataMapperResolverTasks());
 
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {
 
                 DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);
                 args.PropertyConfiguration = property;
-                args.DataMappers = DependencyResolver.ResolveAll<AbstractDataMapper>();
+                args.DataMappers = DependencyResolver.GetDataMappers();
                 runner.Run(args);
                 if(args.Result == null)
                 {

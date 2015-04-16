@@ -36,8 +36,8 @@ namespace Glass.Mapper.Sc.Integration
             }
 
             Config config = new Config() { UseIoCConstructor = useWindsorContainer };
-            WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config, resolver.Container);
-            sitecoreInstaller.Install();
+            WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config);
+            resolver.Container.Install(sitecoreInstaller);
             return resolver;
         }
     }
