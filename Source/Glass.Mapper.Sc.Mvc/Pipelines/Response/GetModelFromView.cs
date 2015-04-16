@@ -9,6 +9,7 @@ using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Pipelines.Response.GetModel;
 using Sitecore.Data.Items;
+using Sitecore.Mvc.Presentation;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
@@ -64,9 +65,31 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            // If you are using an orm, replace this line with an orm specific implementation.
-            args.Result = Activator.CreateInstance(modelType);
-            Assert.IsNotNull(args.Result, "args.Result");
+            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext();
+
+            Rendering renderingItem = args.Rendering;
+
+            object model = null;
+
+            if (renderingItem.DataSource.IsNotNullOrEmpty())
+            {
+                var item = scContext.Database.GetItem(renderingItem.DataSource);
+                model = scContext.CreateType(modelType, item, false, false, null);
+            }
+            else if (renderingItem.Item != null)
+            {   
+                /**
+             * Issues #82:
+             * Check Item before defaulting to the current item.
+             */
+                model = scContext.CreateType(modelType, renderingItem.Item, false, false, null);
+            }
+            else
+            {
+                model = scContext.GetCurrentItem(modelType);
+            }
+
+            args.Result = model;
         }
 
         private string GetPathFromLayout(
