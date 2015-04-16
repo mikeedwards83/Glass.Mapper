@@ -10,6 +10,7 @@ using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Razor;
 using Glass.Mapper.Configuration.Attributes;
+using Glass.Mapper.Sc
 // using Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.SearchProxy;
 using Sitecore.Pipelines;
 
