@@ -30,6 +30,15 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is in editing mode.
+        /// </summary>
+        /// <value><c>true</c> if this instance is in editing mode; otherwise, <c>false</c>.</value>
+        public bool IsInEditingMode
+        {
+            get { return Sc.GlassHtml.IsInEditingMode; }
+        }
+
+        /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <param name="field">The field that should be made editable</param>
