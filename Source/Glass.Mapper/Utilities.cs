@@ -243,8 +243,11 @@ namespace Glass.Mapper
         {
             Type genericType = type.MakeGenericType(arguments);
             object obj;
-            if (parameters != null && parameters.Count() > 0)
-                obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
+            if (parameters != null && parameters.Any())
+            {
+                var paramTypes = parameters.Select(p => p.GetType()).ToArray();
+                obj = GetActivator(genericType, paramTypes)(parameters);
+            }
             else
                 obj = GetActivator(genericType)();
             return obj;
@@ -263,11 +266,13 @@ namespace Glass.Mapper
         public static Type GetGenericArgument(Type type)
         {
             Type[] types = type.GetGenericArguments();
-            if (types.Count() > 1)
+            var count = types.Count();
+            if (count == 1)
+                return types[0];
+            else if(count > 1)
                 throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
-            if (types.Count() == 0)
+            else
                 throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
-            return types[0];
         }
 
         public static string GetPropertyName(Expression expression)
@@ -414,10 +419,9 @@ namespace Glass.Mapper
         /// <param name="parameterTypes">The parameter types.</param>
         /// <returns></returns>
         protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType,
-            IEnumerable<Type> parameterTypes = null)
+            Type [] parameterTypes = null)
         {
-            var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
-            return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
+            return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, parameterTypes));
         }
 
 
