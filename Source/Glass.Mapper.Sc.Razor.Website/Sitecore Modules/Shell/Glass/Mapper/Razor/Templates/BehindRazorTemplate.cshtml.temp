@@ -1,2 +1,0 @@
-﻿@inherits Glass.Mapper.Sc.Razor.Web.Ui.TemplateBase<{{insertYourType}}>
-
