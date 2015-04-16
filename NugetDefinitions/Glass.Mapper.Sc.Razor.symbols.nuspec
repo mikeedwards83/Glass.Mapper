@@ -23,9 +23,9 @@
   <files>
 
     <!-- Razor -->
-    <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.dll" />
-    <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.pdb" />
-    <file src="Source\Glass.Mapper.Sc.Razor\bin\Release\Glass.Mapper.Sc.Razor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.xml" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\72\Glass.Mapper.Sc.Razor.dll" target="lib\net40\Glass.Mapper.Sc.Razor.dll" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\72\Glass.Mapper.Sc.Razor.pdb" target="lib\net40\Glass.Mapper.Sc.Razor.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Razor\bin\72\Glass.Mapper.Sc.Razor.xml" target="lib\net40\Glass.Mapper.Sc.Razor.xml" />
 
 
     <!-- Razor Content -->
