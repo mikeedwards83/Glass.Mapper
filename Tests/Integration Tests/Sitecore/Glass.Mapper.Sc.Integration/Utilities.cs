@@ -16,8 +16,8 @@
 */ 
 //-CRE-
 
-using Glass.Mapper.IoC;
-using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.IoC;
+using IDependencyResolver = Glass.Mapper.IoC.IDependencyResolver;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -25,10 +25,8 @@ namespace Glass.Mapper.Sc.Integration
     {
         public static IDependencyResolver CreateStandardResolver(bool useWindsorContainer = false)
         {
-            var resolver = DependencyResolver.CreateStandardResolver();
             var config = new Config {UseIoCConstructor = useWindsorContainer};
-            WindsorSitecoreInstaller sitecoreInstaller = new WindsorSitecoreInstaller(config);
-            resolver.Container.Install(sitecoreInstaller);
+            var resolver = new DependencyResolver(config);
             return resolver;
         }
     }

@@ -15,22 +15,20 @@
  
 */ 
 //-CRE-
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.CodeFirst;
 using Glass.Mapper.Sc.Configuration;
-using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
+using Glass.Mapper.Sc.Integration.CodeFirst.Templates.Level1;
+using Glass.Mapper.Sc.Integration.CodeFirst.Templates.Level1.Level2;
 using NUnit.Framework;
 using Sitecore;
 using Sitecore.Collections;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.DataProviders;
-using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.CodeFirst
@@ -47,7 +45,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
         public void Setup()
         {
             _disabler = new SecurityDisabler();
-            _db = Sitecore.Configuration.Factory.GetDatabase("master");
+            _db = Factory.GetDatabase("master");
             _dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
             _context = Context.Create(Utilities.CreateStandardResolver());
             //GlassDataProvider._setupComplete = false;
@@ -126,7 +124,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
             var loader = new SitecoreFluentConfigurationLoader();
 
-            loader.Add<Templates.Level1.CodeFirstClass2>()
+            loader.Add<CodeFirstClass2>()
                   .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
                   .TemplateName("CodeFirstClass2")
                   .CodeFirst();
@@ -139,7 +137,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             //Act
             var folder = _db.GetItem(path);
-            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
+            string xml = Factory.GetConfiguration().OuterXml;
 
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass2");
@@ -152,7 +150,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
             var loader = new SitecoreFluentConfigurationLoader();
 
-            loader.Add<Templates.Level1.Level2.CodeFirstClass3>()
+            loader.Add<CodeFirstClass3>()
                   .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
                   .TemplateName("CodeFirstClass2")
                   .CodeFirst();
@@ -165,7 +163,7 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
 
             //Act
             var folder = _db.GetItem(path);
-            string xml = Sitecore.Configuration.Factory.GetConfiguration().OuterXml;
+            string xml = Factory.GetConfiguration().OuterXml;
 
             //Assert
             Assert.AreEqual(folder.Name, "CodeFirstClass2");
@@ -178,12 +176,12 @@ namespace Glass.Mapper.Sc.Integration.CodeFirst
             //Assign
             var loader = new SitecoreFluentConfigurationLoader();
 
-            loader.Add<Templates.Level1.Level2.CodeFirstClass3>()
+            loader.Add<CodeFirstClass3>()
                   .TemplateId("E33F1C58-FAB2-475A-B2FE-C26F5D7565A2")
                   .TemplateName("CodeFirstClass3")
                   .CodeFirst();
 
-            loader.Add<Templates.Level1.Level2.CodeFirstClass4>()
+            loader.Add<CodeFirstClass4>()
                  .TemplateId("{42B45E08-20A4-434B-8AC7-ED8ABCE5B3BE}")
                  .TemplateName("CodeFirstClass4")
                  .CodeFirst();

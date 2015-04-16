@@ -19,9 +19,9 @@
 
 using System.Linq;
 using System.Xml;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
@@ -38,7 +38,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_NonGeneric()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -58,7 +58,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_NoParameters()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -79,7 +79,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_OneParameters()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -101,7 +101,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_TwoParameters()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -124,7 +124,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_ThreeParameters()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -148,7 +148,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetCurrentItem_FourParameters()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Integration
         public void GetHomeItem_ReturnsHomeItem()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -212,7 +212,7 @@ namespace Glass.Mapper.Sc.Integration
         public void QueryRelative_RetrievesSiblings()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -239,7 +239,7 @@ namespace Glass.Mapper.Sc.Integration
         public void QueryRelative_NoResultsReturnsEmptyResult()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
@@ -269,7 +269,7 @@ namespace Glass.Mapper.Sc.Integration
         public void QuerySingleRelative_RetrievesSibling()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
