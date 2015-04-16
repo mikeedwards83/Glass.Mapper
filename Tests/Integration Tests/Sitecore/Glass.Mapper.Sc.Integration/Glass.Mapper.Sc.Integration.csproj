@@ -42,11 +42,6 @@
       <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
       <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\..\..\packages\Castle.Windsor.3.3.0\lib\net40\Castle.Windsor.dll</HintPath>
-      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\..\packages\NSubstitute.1.6.0.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
@@ -127,7 +122,6 @@
     <Compile Include="SitecoreContextFixture.cs" />
     <Compile Include="SitecoreServiceFixture.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction\WindsorConstructionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Commands.config">
@@ -243,10 +237,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54a63d42-1614-4b8f-9df5-8f1d2998db9d}</Project>
-      <Name>Glass.Mapper.Sc.CastleWindsor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</Project>
       <Name>Glass.Mapper.Sc</Name>

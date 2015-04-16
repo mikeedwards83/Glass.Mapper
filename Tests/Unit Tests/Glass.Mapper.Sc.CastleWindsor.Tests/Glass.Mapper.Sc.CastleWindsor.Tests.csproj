@@ -51,7 +51,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore\bin7.2\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,11 +67,16 @@
   <ItemGroup>
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstructionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
       <Project>{54a63d42-1614-4b8f-9df5-8f1d2998db9d}</Project>
       <Name>Glass.Mapper.Sc.CastleWindsor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+      <Project>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</Project>
+      <Name>Glass.Mapper.Sc</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
       <Project>{566109ED-A88A-467E-BDDB-BBF7F831A006}</Project>

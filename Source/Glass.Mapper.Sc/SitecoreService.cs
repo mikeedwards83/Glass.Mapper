@@ -103,7 +103,7 @@ namespace Glass.Mapper.Sc
                             !Sitecore.Context.PageMode.IsPageEditorEditing &&
                             (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] == "true"));
 
-            Config = resolver.Resolve<Config>();
+            Config = resolver.GetConfig() as Config ;
             base.Initiate(resolver);
         }
 

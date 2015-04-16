@@ -18,6 +18,11 @@
 
 using System;
 using System.Collections.Generic;
+using Glass.Mapper.Caching;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 
 namespace Glass.Mapper.IoC
 {
@@ -26,21 +31,13 @@ namespace Glass.Mapper.IoC
     /// </summary>
     public interface IDependencyResolver
     {
-        /// <summary>
-        /// Resolves the specified args.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="args">The args.</param>
-        /// <returns>``0.</returns>
-        T Resolve<T>(IDictionary<string, object> args = null);
-        /// <summary>
-        /// Resolves all.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable{``0}.</returns>
-        IEnumerable<T> ResolveAll<T>();
-
-        bool CanResolve(Type type);
+        Config GetConfig();
+        ICacheManager GetCacheManager();
+        IEnumerable<IDataMapperResolverTask> GetDataMapperResolverTasks();
+        IEnumerable<AbstractDataMapper> GetDataMappers();
+        IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks();
+        IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks();
+        IEnumerable<IObjectSavingTask> GetObjectSavingTasks();
     }
 }
 

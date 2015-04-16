@@ -100,13 +100,13 @@ namespace Glass.Mapper
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
 
-            var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
+            var objectConstructionTasks = glassContext.DependencyResolver.GetObjectConstructionTasks();
             _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
 
-            var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
+            var configurationResolverTasks = glassContext.DependencyResolver.GetConfigurationResolverTasks();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
 
-            var objectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
+            var objectSavingTasks = glassContext.DependencyResolver.GetObjectSavingTasks();
             _objectSaving = new ObjectSaving(objectSavingTasks);
 
             Profiler = new NullProfiler();

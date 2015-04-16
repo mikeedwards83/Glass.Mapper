@@ -38,10 +38,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\..\..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>..\..\$(ScDir)Sitecore.Analytics.dll</HintPath>
     </Reference>
@@ -206,10 +202,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54a63d42-1614-4b8f-9df5-8f1d2998db9d}</Project>
-      <Name>Glass.Mapper.Sc.CastleWindsor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
       <Name>Glass.Mapper.Sc</Name>

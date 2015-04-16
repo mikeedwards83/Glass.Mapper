@@ -21,7 +21,13 @@ using System;
 using System.Collections;
 using Castle.Windsor;
 using System.Collections.Generic;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 
 namespace Glass.Mapper.Umb.CastleWindsor
 {
@@ -33,15 +39,16 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <summary>
         /// Creates the standard resolver.
         /// </summary>
-        /// <returns>
-        /// IDependencyResolver.
-        /// </returns>
+        /// <returns>IDependencyResolver.</returns>
         public static DependencyResolver CreateStandardResolver()
         {
             IWindsorContainer container = new WindsorContainer();
+
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+
             return new DependencyResolver(container);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DependencyResolver"/> class.
         /// </summary>
@@ -57,33 +64,40 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <value>The container.</value>
         public IWindsorContainer Container { get; private set; }
 
-        /// <summary>
-        /// Resolves the specified args.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="args">The args.</param>
-        /// <returns>``0.</returns>
-        public T Resolve<T>(IDictionary<string, object> args = null)
+
+        public Mapper.Config GetConfig()
         {
-            if (args == null)
-                return Container.Resolve<T>();
-            
-            return Container.Resolve<T>((IDictionary) args);
+            return Container.Resolve<Mapper.Config>();
         }
 
-        /// <summary>
-        /// Resolves all.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable{``0}.</returns>
-        public IEnumerable<T> ResolveAll<T>()
+        public ICacheManager GetCacheManager()
         {
-            return Container.ResolveAll<T>();
+            return Container.Resolve<ICacheManager>();
         }
 
-        public bool CanResolve(Type type)
+        public IEnumerable<IDataMapperResolverTask> GetDataMapperResolverTasks()
         {
-            return Container.Kernel.HasComponent(type);
+            return Container.ResolveAll<IDataMapperResolverTask>();
+        }
+
+        public IEnumerable<AbstractDataMapper> GetDataMappers()
+        {
+            return Container.ResolveAll<AbstractDataMapper>();
+        }
+
+        public IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks()
+        {
+            return Container.ResolveAll<IConfigurationResolverTask>();
+        }
+
+        public IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks()
+        {
+            return Container.ResolveAll<IObjectConstructionTask>();
+        }
+
+        public IEnumerable<IObjectSavingTask> GetObjectSavingTasks()
+        {
+            return Container.ResolveAll<IObjectSavingTask>();
         }
     }
 }

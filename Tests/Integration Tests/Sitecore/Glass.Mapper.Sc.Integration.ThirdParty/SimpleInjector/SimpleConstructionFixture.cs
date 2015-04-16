@@ -1,7 +1,8 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.IoC;
 using NUnit.Framework;
 using SimpleInjector;
 
@@ -19,7 +20,10 @@ namespace Glass.Mapper.Sc.Integration.ThirdParty.SimpleInjector
             SimpleInjectorTask.Container.Register<StubServiceInterface, StubService>(); 
             
             var path = "/sitecore/content/Tests/ThirdParties/SimpleInjector/Target";
-            var resolver = Utilities.CreateStandardResolver(false, new[] { Component.For<IObjectConstructionTask>().ImplementedBy<SimpleInjectorTask>().LifestyleTransient() }) as DependencyResolver;
+
+            var resolver = Utilities.CreateStandardResolver() as DependencyResolver;
+            resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask());
+
 
             var context = Context.Create(resolver);
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -70,7 +74,9 @@ namespace Glass.Mapper.Sc.Integration.ThirdParty.SimpleInjector
             SimpleInjectorTask.Container.Register<StubServiceInterface, StubService>(); 
 
             var path = "/sitecore/content/Tests/ThirdParties/SimpleInjector/Target";
-            var resolver = Utilities.CreateStandardResolver(false, new[] { Component.For<IObjectConstructionTask>().ImplementedBy<SimpleInjectorTask>().LifestyleTransient() }) as DependencyResolver;
+            var resolver = Utilities.CreateStandardResolver() as DependencyResolver;
+            resolver.ObjectConstructionFactory.Insert(0, ()=> new SimpleInjectorTask());
+
             var context = Context.Create(resolver);
 
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
