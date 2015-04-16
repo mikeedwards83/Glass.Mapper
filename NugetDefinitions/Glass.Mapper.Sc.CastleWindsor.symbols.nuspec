@@ -31,9 +31,7 @@
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\70\Glass.Mapper.Sc.CastleWindsor.pdb" target="lib\Glass.Mapper.Sc.CastleWindsor.pdb" />
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\bin\70\Glass.Mapper.Sc.CastleWindsor.xml" target="lib\Glass.Mapper.Sc.CastleWindsor.xml" />
   
-    <!-- CONFIG FILES  -->
-    <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />
-
+  
     <!-- Source Files Castle Windsor-->
     <file src="Source\Glass.Mapper.Sc.CastleWindsor\**.cs" target="src\Source\Glass.Mapper.Sc.CastleWindsor" />
 

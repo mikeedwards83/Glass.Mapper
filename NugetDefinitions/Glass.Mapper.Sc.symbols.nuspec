@@ -69,6 +69,9 @@
     <!-- CONFIG FILES  -->
     <file src="Source\Glass.Mapper.Sc.Website\App_Config\**" target="content\App_Config" />
 
+    <!-- PP FILES  -->
+    <file src="Source\Glass.Mapper.Sc.Website\App_Start\**" target="content\App_Start" />
+
 
     <file src="Source\Glass.Mapper\**.cs" target="src\Source\Glass.Mapper" />
     <file src="Source\Glass.Mapper.Sc\**.cs" target="src\Source\Glass.Mapper.Sc" />
