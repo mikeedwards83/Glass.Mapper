@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using Glass.Mapper.Caching;
+using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
@@ -38,6 +39,7 @@ namespace Glass.Mapper.IoC
         IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks();
         IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks();
         IEnumerable<IObjectSavingTask> GetObjectSavingTasks();
+        IEnumerable<IGlassMap> GetConfigurationMaps();
     }
 }
 

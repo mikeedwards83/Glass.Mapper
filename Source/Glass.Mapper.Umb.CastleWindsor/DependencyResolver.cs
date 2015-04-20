@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
+using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
@@ -98,6 +99,11 @@ namespace Glass.Mapper.Umb.CastleWindsor
         public IEnumerable<IObjectSavingTask> GetObjectSavingTasks()
         {
             return Container.ResolveAll<IObjectSavingTask>();
+        }
+
+        public IEnumerable<IGlassMap> GetConfigurationMaps()
+        {
+            return Container.ResolveAll<IGlassMap>();
         }
     }
 }

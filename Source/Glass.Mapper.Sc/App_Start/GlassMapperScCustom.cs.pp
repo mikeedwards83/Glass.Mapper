@@ -1,6 +1,8 @@
 ﻿using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
+using Glass.Mapper.Maps;
 using Glass.Mapper.Sc.IoC;
-
+using IDependencyResolver = Glass.Mapper.Sc.IoC.IDependencyResolver;
 
 namespace $rootnamespace$.App_Start
 {
@@ -40,5 +42,10 @@ namespace $rootnamespace$.App_Start
              * CODE FIRST END
              */
 		}
+		public static void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
+        {
+			// Add maps here
+            // mapsConfigFactory.Add(() => new SeoMap());
+        }
     }
 }

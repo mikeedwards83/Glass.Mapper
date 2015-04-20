@@ -16,25 +16,24 @@
 */
 //-CRE-
 
-using System.Collections;
 using System.Collections.Generic;
-using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Glass.Mapper.Caching;
-using Glass.Mapper.IoC;
+using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
+using Glass.Mapper.Sc.IoC;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
     /// <summary>
     /// The dependency handler
     /// </summary>
-    public class DependencyResolver  : Glass.Mapper.Sc.IoC.IDependencyResolver
+    public class DependencyResolver  : IDependencyResolver
     {
         /// <summary>
         /// Creates the standard resolver.
@@ -98,6 +97,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public IEnumerable<IObjectSavingTask> GetObjectSavingTasks()
         {
             return Container.ResolveAll<IObjectSavingTask>();
+        }
+
+        public IEnumerable<IGlassMap> GetConfigurationMaps()
+        {
+            return Container.ResolveAll<IGlassMap>();
         }
 
         public IEnumerable<ISitecoreQueryParameter> QueryParameterFactory()

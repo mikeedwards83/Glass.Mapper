@@ -4,6 +4,8 @@ DO NOT CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
 
 **************************************/
 
+using Glass.Mapper.Maps;
+using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.IoC;
 using Sitecore.Pipelines;
 
@@ -27,11 +29,28 @@ namespace $rootnamespace$.App_Start
 			//create a context
 			var context = Glass.Mapper.Context.Create(resolver);
 
+			LoadConfigurationMaps(resolver, context);
+
 			context.Load(      
 				GlassMapperScCustom.GlassLoaders()        				
 				);
 
 			GlassMapperScCustom.PostLoad();
 		}
+
+        public static void LoadConfigurationMaps(IDependencyResolver resolver, Glass.Mapper.Context context)
+        {
+            var dependencyResolver = resolver as DependencyResolver;
+            if (dependencyResolver == null)
+            {
+                return;
+            }
+
+            GlassMapperScCustom.AddMaps(dependencyResolver.ConfigurationMapFactory);
+
+            IConfigurationMap configurationMap = new ConfigurationMap(dependencyResolver);
+            SitecoreFluentConfigurationLoader configurationLoader = configurationMap.GetConfigurationLoader<SitecoreFluentConfigurationLoader>();
+            context.Load(configurationLoader);
+        }
 	}
 }

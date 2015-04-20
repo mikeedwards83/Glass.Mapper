@@ -1,4 +1,6 @@
-﻿using Glass.Mapper.Configuration;
+﻿using System.Linq;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Maps
 {
@@ -7,6 +9,16 @@ namespace Glass.Mapper.Maps
         public ConfigurationMap(IGlassMap[] maps)
         {
             Maps = maps;
+        }
+
+        public ConfigurationMap(IDependencyResolver dependencyResolver)
+        {
+            if (dependencyResolver.GetConfigurationMaps() == null)
+            {
+                return;
+            }
+
+            Maps = dependencyResolver.GetConfigurationMaps().ToArray();
         }
 
         public IGlassMap[] Maps { get; private set; }
@@ -31,6 +43,11 @@ namespace Glass.Mapper.Maps
         /// <param name="loader"></param>
         public void Load<T>(T loader) where T : class, IConfigurationLoader
         {
+            if (Maps == null)
+            {
+                return;
+            }
+
             foreach (IGlassMap sitecoreMap in Maps)
             {
                 sitecoreMap.SetMapProvider(this);
