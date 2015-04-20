@@ -6,9 +6,12 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a1c14499-379c-4dbb-ad8f-9de9d28381a7</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceWebPhysicalPath>..\Glass.Mapper.Sc.Website</SourceWebPhysicalPath>
-    <SourceWebProject>{93420975-6370-4e1f-bc3c-9f9b4eeeceb1}|Source\Glass.Mapper.Sc.Website\Glass.Mapper.Sc.Website.csproj</SourceWebProject>
-    <SourceWebVirtualPath>/Glass.Mapper.Sc.Website.csproj</SourceWebVirtualPath>
+    <SourceWebPhysicalPath>
+    </SourceWebPhysicalPath>
+    <SourceWebProject>
+    </SourceWebProject>
+    <SourceWebVirtualPath>
+    </SourceWebVirtualPath>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
@@ -22,6 +25,7 @@
     <SitecoreDatabase>master</SitecoreDatabase>
     <EnableCodeGeneration>false</EnableCodeGeneration>
     <AssemblyStatus>Exclude</AssemblyStatus>
+    <ManageRoles>False</ManageRoles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -283,12 +287,6 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper.Sc.Website\Glass.Mapper.Sc.Website.csproj">
-      <Project>{93420975-6370-4e1f-bc3c-9f9b4eeeceb1}</Project>
-      <Name>Glass.Mapper.Sc.Website</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ExcludedAssemblies Include="Sitecore.%2a.dll" />
