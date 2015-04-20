@@ -172,7 +172,7 @@ namespace Glass.Mapper.Sc
                     {
                         var id = config.GetId(model);
                         var item = SitecoreContext.Database.GetItem(id);
-                        path = item.Paths.FullPath;
+                        path = item.Paths.Path;
 
                     }
                     else
