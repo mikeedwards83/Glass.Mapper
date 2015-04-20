@@ -63,8 +63,8 @@ namespace Glass.Mapper.Tests
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();
 
-            resolver.GetConfigurationResolverTasks().Returns(new[] { configTask });
-            resolver.GetObjectConstructionTasks().Returns(new []{objTask});
+            resolver.ConfigurationResolverFactory.GetItems().Returns(new[] { configTask });
+            resolver.ObjectConstructionFactory.GetItems().Returns(new []{objTask});
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());

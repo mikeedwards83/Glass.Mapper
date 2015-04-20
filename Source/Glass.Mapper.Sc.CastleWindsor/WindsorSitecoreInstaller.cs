@@ -20,7 +20,6 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -37,7 +36,6 @@ using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
-using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Pipelines.ObjectConstruction;
 
@@ -57,10 +55,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-
             container.Register(
-               Component.For<Glass.Mapper.Sc.Config>().Instance(_config).Named("ScConfig"),
-               Component.For<Glass.Mapper.Config>().Instance(_config).Named("Config")
+               Component.For<Config>().Instance(_config).Named("ScConfig"),
+               Component.For<Mapper.Config>().Instance(_config).Named("Config")
                );
 
             #region DataMappers

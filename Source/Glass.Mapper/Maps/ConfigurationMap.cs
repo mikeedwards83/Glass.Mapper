@@ -13,12 +13,12 @@ namespace Glass.Mapper.Maps
 
         public ConfigurationMap(IDependencyResolver dependencyResolver)
         {
-            if (dependencyResolver.GetConfigurationMaps() == null)
+            if (dependencyResolver.ConfigurationMapFactory == null || dependencyResolver.ConfigurationMapFactory.GetItems() == null)
             {
                 return;
             }
 
-            Maps = dependencyResolver.GetConfigurationMaps().ToArray();
+            Maps = dependencyResolver.ConfigurationMapFactory.GetItems().ToArray();
         }
 
         public IGlassMap[] Maps { get; private set; }

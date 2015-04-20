@@ -168,6 +168,7 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
+    <Compile Include="IoC\AbstractDataResolver.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
     <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
     <Compile Include="IoC\DataMapperConfigFactory.cs" />
