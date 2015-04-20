@@ -26,7 +26,11 @@ namespace Glass.Mapper.Sc
         }
         public bool ForceItemInPageEditor { get; set; }
 
-        
+        /// <summary>
+        /// When using Lazy Enumerables this setting indicates that proxy objects
+        /// should be used. Be default this is false.
+        /// </summary>
+        public bool UseProxiesForLazyEnumerables { get; set; }
 
     }
 }

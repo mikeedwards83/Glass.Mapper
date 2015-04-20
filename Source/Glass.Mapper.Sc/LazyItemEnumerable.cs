@@ -90,7 +90,7 @@ namespace Glass.Mapper.Sc
                 var obj = _service.CreateType(
                     _type,
                     child,
-                    _isLazy,
+                    _service.Config.UseProxiesForLazyEnumerables && _isLazy,
                     _inferType, null) as T;
 
                 if (obj == null)

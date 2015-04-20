@@ -60,6 +60,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                                                                                   {
                                                                                       Id =  info.Arg<Item>().ID
                                                                                   });
+            service.Config.Returns(new Config());
 
             var context = new SitecoreDataMappingContext(null, item, service);
 
