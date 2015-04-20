@@ -166,10 +166,19 @@ namespace Glass.Mapper.Sc
                         .OfType<SitecoreInfoConfiguration>()
                         .FirstOrDefault(x => x.Type == SitecoreInfoType.Path);
 
-                    if (pathConfig == null)
-                        throw new Exception("No path property");
+                    var path = string.Empty;
 
-                    var path = pathConfig.PropertyGetter(model) as string;
+                    if (pathConfig == null)
+                    {
+                        var id = config.GetId(model);
+                        var item = SitecoreContext.Database.GetItem(id);
+                        path = item.Paths.Path;
+
+                    }
+                    else
+                    {
+                        path = pathConfig.PropertyGetter(model) as string;
+                    }
 
 
                     return EditFrame(buttonPath, path, output);
