@@ -797,11 +797,18 @@ namespace Glass.Mapper.Sc
             string mediaUrl = builder.ToString();
 
 #if (SC80 || SC75)
-            mediaUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
+            mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
-
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
+
+#if (SC80 || SC75)
+        public virtual string ProtectMediaUrl(string url)
+        {
+            return HashingUtils.ProtectAssetUrl(url);
+        }
+#endif
+
 
 
     }
