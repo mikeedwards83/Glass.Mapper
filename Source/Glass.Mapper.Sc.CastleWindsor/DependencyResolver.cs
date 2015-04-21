@@ -16,11 +16,9 @@
 */
 //-CRE-
 
-using System.Collections.Generic;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Glass.Mapper.Caching;
-using Glass.Mapper.IoC;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
