@@ -17,11 +17,8 @@
 //-CRE-
 
 
-using System;
-using System.Collections;
-using Castle.Windsor;
-using System.Collections.Generic;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor;
 using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Maps;
@@ -57,6 +54,12 @@ namespace Glass.Mapper.Umb.CastleWindsor
         public DependencyResolver(IWindsorContainer container)
         {
             Container = container;
+            DataMapperResolverFactory = new WindsorConfigFactory<IDataMapperResolverTask>(Container);
+            DataMapperFactory = new WindsorConfigFactory<AbstractDataMapper>(Container);
+            ConfigurationResolverFactory = new WindsorConfigFactory<IConfigurationResolverTask>(Container);
+            ObjectConstructionFactory = new WindsorConfigFactory<IObjectConstructionTask>(Container);
+            ObjectSavingFactory = new WindsorConfigFactory<IObjectSavingTask>(Container);
+            ConfigurationMapFactory = new WindsorConfigFactory<IGlassMap>(Container);
         }
 
         /// <summary>
@@ -76,35 +79,12 @@ namespace Glass.Mapper.Umb.CastleWindsor
             return Container.Resolve<ICacheManager>();
         }
 
-        public IEnumerable<IDataMapperResolverTask> GetDataMapperResolverTasks()
-        {
-            return Container.ResolveAll<IDataMapperResolverTask>();
-        }
-
-        public IEnumerable<AbstractDataMapper> GetDataMappers()
-        {
-            return Container.ResolveAll<AbstractDataMapper>();
-        }
-
-        public IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks()
-        {
-            return Container.ResolveAll<IConfigurationResolverTask>();
-        }
-
-        public IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks()
-        {
-            return Container.ResolveAll<IObjectConstructionTask>();
-        }
-
-        public IEnumerable<IObjectSavingTask> GetObjectSavingTasks()
-        {
-            return Container.ResolveAll<IObjectSavingTask>();
-        }
-
-        public IEnumerable<IGlassMap> GetConfigurationMaps()
-        {
-            return Container.ResolveAll<IGlassMap>();
-        }
+        public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; private set; }
+        public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; private set; }
+        public IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; private set; }
+        public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; private set; }
+        public IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; private set; }
+        public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; private set; }
     }
 }
 

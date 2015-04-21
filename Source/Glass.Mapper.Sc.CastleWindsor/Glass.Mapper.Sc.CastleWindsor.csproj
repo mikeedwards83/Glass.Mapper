@@ -64,7 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WindsorDependencyHandler.cs" />
+    <Compile Include="WindsorConfigFactory.cs" />
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="NoTrackLifecycleManager.cs" />
     <Compile Include="Pipelines\ObjectConstruction\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />

@@ -16,8 +16,6 @@
 */ 
 //-CRE-
 
-using System;
-using System.Collections.Generic;
 using Glass.Mapper.Caching;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
@@ -34,12 +32,12 @@ namespace Glass.Mapper.IoC
     {
         Config GetConfig();
         ICacheManager GetCacheManager();
-        IEnumerable<IDataMapperResolverTask> GetDataMapperResolverTasks();
-        IEnumerable<AbstractDataMapper> GetDataMappers();
-        IEnumerable<IConfigurationResolverTask> GetConfigurationResolverTasks();
-        IEnumerable<IObjectConstructionTask> GetObjectConstructionTasks();
-        IEnumerable<IObjectSavingTask> GetObjectSavingTasks();
-        IEnumerable<IGlassMap> GetConfigurationMaps();
+        IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; }
+        IConfigFactory<AbstractDataMapper> DataMapperFactory { get; }
+        IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; }
+        IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; }
+        IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; }
+        IConfigFactory<IGlassMap> ConfigurationMapFactory { get; } 
     }
 }
 
