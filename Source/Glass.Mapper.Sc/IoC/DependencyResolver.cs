@@ -1,16 +1,8 @@
-﻿using System;
-using Glass.Mapper.Caching;
-using Glass.Mapper.IoC;
-using Glass.Mapper.Maps;
-using Glass.Mapper.Pipelines.ConfigurationResolver;
-using Glass.Mapper.Pipelines.DataMapperResolver;
-using Glass.Mapper.Pipelines.ObjectConstruction;
-using Glass.Mapper.Pipelines.ObjectSaving;
-using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
+﻿using Glass.Mapper.Caching;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class DependencyResolver : AbstractDataResolver
+    public class DependencyResolver : AbstractDependencyResolver
     {
         public DependencyResolver(Config config)
         {

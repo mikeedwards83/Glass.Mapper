@@ -10,7 +10,7 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public abstract class AbstractDataResolver : IDependencyResolver
+    public abstract class AbstractDependencyResolver : IDependencyResolver
     {
         public Mapper.Config Config { get; set; }
         public Func<ICacheManager> CacheManager { get; set; }

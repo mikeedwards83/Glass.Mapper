@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
     /// <summary>
     /// The dependency handler
     /// </summary>
-    public class DependencyResolver : AbstractDataResolver
+    public class DependencyResolver : AbstractDependencyResolver
     {
         /// <summary>
         /// Creates the standard resolver.
