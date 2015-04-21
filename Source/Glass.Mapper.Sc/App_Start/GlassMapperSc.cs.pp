@@ -46,7 +46,10 @@ namespace $rootnamespace$.App_Start
                 return;
             }
 
-            GlassMapperScCustom.AddMaps(dependencyResolver.ConfigurationMapFactory);
+            if (dependencyResolver.ConfigurationMapFactory is ConfigurationMapConfigFactory)
+            {
+                GlassMapperScCustom.AddMaps(dependencyResolver.ConfigurationMapFactory);
+            }
 
             IConfigurationMap configurationMap = new ConfigurationMap(dependencyResolver);
             SitecoreFluentConfigurationLoader configurationLoader = configurationMap.GetConfigurationLoader<SitecoreFluentConfigurationLoader>();
