@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Compilation;
 using Glass.Mapper.Sc.ModelCache;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Pipelines.Response.GetModel;
-using Sitecore.Data.Items;
 using Sitecore.Mvc.Presentation;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
@@ -149,7 +145,8 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             return args.Rendering.RenderingType == "Layout" ||
                    args.Rendering.RenderingType == "View" ||
-                   args.Rendering.RenderingType == "r";
+                   args.Rendering.RenderingType == "r" ||
+                   args.Rendering.RenderingType == String.Empty;
         }
     }
 
