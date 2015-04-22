@@ -1,6 +1,4 @@
-﻿using System;
-using Glass.Mapper.Caching;
-using Glass.Mapper.IoC;
+﻿using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
@@ -13,23 +11,23 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class ObjectConstructionTaskConfigFactory : AbstractConfigFactory<IObjectConstructionTask>
     {
-        private readonly Func<ICacheManager> cacheManager;
+        private readonly IDependencyResolver dependencyResolver;
 
-        public ObjectConstructionTaskConfigFactory(Func<ICacheManager> cacheManager)
+        public ObjectConstructionTaskConfigFactory(IDependencyResolver dependencyResolver)
         {
-            this.cacheManager = cacheManager;
+            this.dependencyResolver = dependencyResolver;
         }
 
         protected override void AddTypes()
         {
             Add(() => new CreateDynamicTask());
             Add(() => new SitecoreItemTask());
-            Add(() => new CacheCheckTask(cacheManager()));
+            Add(() => new CacheCheckTask(dependencyResolver.GetCacheManager()));
             Add(() => new EnforcedTemplateCheck());
             Add(() => new CreateMultiInferaceTask());
             Add(() => new CreateConcreteTask());
             Add(() => new CreateInterfaceTask());
-            Add(() => new CacheAddTask(cacheManager()));
+            Add(() => new CacheAddTask(dependencyResolver.GetCacheManager()));
         }
     }
 }
