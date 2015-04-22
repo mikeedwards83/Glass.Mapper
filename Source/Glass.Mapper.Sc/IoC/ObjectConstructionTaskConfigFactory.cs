@@ -20,14 +20,15 @@ namespace Glass.Mapper.Sc.IoC
 
         protected override void AddTypes()
         {
+            var cacheManager = dependencyResolver.GetCacheManager();
             Add(() => new CreateDynamicTask());
             Add(() => new SitecoreItemTask());
-            Add(() => new CacheCheckTask(dependencyResolver.GetCacheManager()));
+            Add(() => new CacheCheckTask(cacheManager));
             Add(() => new EnforcedTemplateCheck());
             Add(() => new CreateMultiInferaceTask());
             Add(() => new CreateConcreteTask());
             Add(() => new CreateInterfaceTask());
-            Add(() => new CacheAddTask(dependencyResolver.GetCacheManager()));
+            Add(() => new CacheAddTask(cacheManager));
         }
     }
 }
