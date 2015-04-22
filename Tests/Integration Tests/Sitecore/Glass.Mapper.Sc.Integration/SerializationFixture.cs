@@ -39,8 +39,9 @@ namespace Glass.Mapper.Sc.Integration
             IStubInterface deserialized = Deserialize<IStubInterface>(serialized);
 
             //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem", result.Path);
+            Assert.IsNotNull(deserialized);
+            Assert.AreNotEqual(result, deserialized);
+            Assert.AreEqual("/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem", deserialized.Path);
         }
 
         [Test]
@@ -61,8 +62,9 @@ namespace Glass.Mapper.Sc.Integration
             Stub deserialized = Deserialize<Stub>(serialized);
 
             //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem", result.Path);
+            Assert.IsNotNull(deserialized);
+            Assert.AreNotEqual(result, deserialized);
+            Assert.AreEqual("/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem", deserialized.Path);
         }
 
         [Test]
