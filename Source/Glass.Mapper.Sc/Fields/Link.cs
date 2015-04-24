@@ -20,7 +20,6 @@ using System;
 using System.Collections.Specialized;
 using System.Linq;
 using Sitecore.Collections;
-using Sitecore.Text;
 
 namespace Glass.Mapper.Sc.Fields
 {
@@ -99,13 +98,20 @@ namespace Glass.Mapper.Sc.Fields
                 return value;
             };
 
-            UrlBuilder builder = new UrlBuilder(Url);
+            var url = Url;
+
+            if (Type == LinkType.Anchor)
+            {
+                url = string.Empty;
+            }
+
+            UrlBuilder builder = new UrlBuilder(url);
 
             var query = getValue("query", () => Query);
             var anchor = getValue("anchor", () => Anchor);
 
             if (query.IsNotNullOrEmpty())
-                builder.AddQueryString(query);
+                builder.AddToQueryString(query);
 
             return UrlFormat.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#" + anchor);
         }

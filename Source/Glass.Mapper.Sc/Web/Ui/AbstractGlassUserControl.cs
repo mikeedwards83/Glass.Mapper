@@ -117,14 +117,23 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                if (DataSourceItem == null)
-                    return global::Sitecore.Context.Item;
-                else
-                    return DataSourceItem;
-
+                return DataSourceItem ?? ContextItem;
             }
         }
 
+
+        /// <summary>
+        /// Returns either the item specified by the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item ContextItem
+        {
+            get { return global::Sitecore.Context.Item; }
+        }
+
+        /// <summary>
+        /// Returns the item specificed by the data source only. Returns null if no datasource set
+        /// </summary>
         public Item DataSourceItem
         {
             get
@@ -136,7 +145,35 @@ namespace Glass.Mapper.Sc.Web.Ui
             }
         }
 
+        /// <summary>
+        /// Returns the Context Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+        }
 
+        /// <summary>
+        /// Returns the Data Source Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Returns the DataSource item or the Context Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+        }
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -178,13 +215,16 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
         /// <returns></returns>
         public virtual string RenderImage<T>(T model,
                                              Expression<Func<T, object>> field,
                                              object parameters = null,
-                                             bool isEditable = false)
+                                             bool isEditable = false,
+                                             bool outputHeightWidth = true)
+
         {
-            return GlassHtml.RenderImage(model, field, parameters, isEditable);
+            return GlassHtml.RenderImage(model, field, parameters, isEditable, outputHeightWidth);
         }
 
 

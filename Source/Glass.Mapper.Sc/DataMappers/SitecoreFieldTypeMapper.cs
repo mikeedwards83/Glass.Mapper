@@ -73,25 +73,35 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="context">The context.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="System.NullReferenceException">Could not find item to save value {0}.Formatted(Configuration)</exception>
-        public override string  SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException("context", "The context was incorrectly set");
+            
+            if(context.Service == null)
+                throw new NullReferenceException("The context's service property was null");
+
+            if (context.Service.GlassContext == null)
+                throw new NullReferenceException("The service glass context is null");
+            
+            if (context.Service.Database == null)
+                throw new NullReferenceException("The database is not set for the service");
 
             if (value == null)
                 return string.Empty;
-            else
-            {
-                var type = value.GetType();
-                var typeConfig = context.Service.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(value);
 
-                if(typeConfig == null)
-                    throw new NullReferenceException("The type {0} has not been loaded into context {1}".Formatted(type.FullName, context.Service.GlassContext.Name));
+            var type = value.GetType();
 
-                var item = typeConfig.ResolveItem(value, context.Service.Database);
-                if(item == null)
-                    throw new NullReferenceException("Could not find item to save value {0}".Formatted(Configuration));
+            var typeConfig = context.Service.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(value);
 
-               return item.ID.ToString();
-            }
+            if(typeConfig == null)
+                throw new NullReferenceException("The type {0} has not been loaded into context {1}".Formatted(type.FullName, context.Service.GlassContext.Name));
+
+            var item = typeConfig.ResolveItem(value, context.Service.Database);
+            if(item == null)
+                throw new NullReferenceException("Could not find item to save value {0}".Formatted(Configuration));
+
+            return item.ID.ToString();
         }
 
         /// <summary>

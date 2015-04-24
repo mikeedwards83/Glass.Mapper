@@ -77,7 +77,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        public void GetField_FieldContainsEmptyString_ThowsMapperException()
+        public void GetField_FieldContainsEmptyString_ReturnsDefaultEnum()
         {
             //Assign
             string fieldValue = string.Empty;
