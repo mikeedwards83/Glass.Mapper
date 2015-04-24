@@ -50,14 +50,15 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns>System.Object.</returns>
-        /// <exception cref="Glass.Mapper.MapperException">Could not convert value to double</exception>
+        /// <exception cref="Glass.Mapper.MapperException">Could not convert value to System.Integer</exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
                                              SitecoreDataMappingContext context)
         {
-            if (fieldValue.IsNullOrEmpty()) return 0;
-            int dValue = 0;
-            if (int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue)) return dValue;
-            else throw new MapperException("Could not convert value to Integer");
+            if (fieldValue.IsNullOrEmpty()) return DefaultValue;
+            int dValue = (int)DefaultValue;
+            int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue);
+
+            return dValue;
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns>System.String.</returns>
-        /// <exception cref="System.NotSupportedException">The value is not of type System.Double</exception>
+        /// <exception cref="System.NotSupportedException">The value is not of type System.Integer</exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             if (value is int)

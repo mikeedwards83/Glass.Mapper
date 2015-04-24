@@ -49,14 +49,14 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns>System.Object.</returns>
-        /// <exception cref="Glass.Mapper.MapperException">Could not convert value to double</exception>
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
                                              SitecoreDataMappingContext context)
         {
-            if (fieldValue.IsNullOrEmpty()) return 0d;
-            double dValue = 0;
-            if (double.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue)) return dValue;
-            else throw new MapperException("Could not convert value to double");
+            if (fieldValue.IsNullOrEmpty()) return DefaultValue;
+            double dValue = (double)DefaultValue;
+            double.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue);
+
+            return dValue;
         }
 
         /// <summary>
