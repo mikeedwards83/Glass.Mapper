@@ -113,7 +113,7 @@
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="Custom\ChildrenCast.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
-    <Compile Include="DataMappers\SitecoreCacheFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldCacheMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />

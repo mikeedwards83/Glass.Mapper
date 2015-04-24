@@ -7,7 +7,7 @@ using Glass.Mapper.Sc.Configuration;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
-    public class SitecoreCacheFieldMapper : AbstractSitecoreFieldMapper
+    public class SitecoreFieldCacheMapper : AbstractSitecoreFieldMapper
     {
         /// <summary>
         /// Gets the mapper.
@@ -85,7 +85,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             Mapper =
                 args.DataMappers.FirstOrDefault(
-                    x => x.CanHandle(configCopy, args.Context) && !(x is SitecoreCacheFieldMapper));
+                    x => x.CanHandle(configCopy, args.Context) && !(x is SitecoreFieldCacheMapper));
 
 
             if (Mapper == null)

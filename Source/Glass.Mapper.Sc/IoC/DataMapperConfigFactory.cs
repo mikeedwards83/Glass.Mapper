@@ -15,6 +15,7 @@ namespace Glass.Mapper.Sc.IoC
 
         protected override void AddTypes()
         {
+            Add(() => new SitecoreFieldCacheMapper());
             Add(() => new SitecoreIgnoreMapper());
             Add(() => new SitecoreChildrenCastMapper());
             Add(() => new SitecoreChildrenMapper());

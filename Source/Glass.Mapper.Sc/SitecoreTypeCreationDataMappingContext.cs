@@ -5,7 +5,7 @@
         public SitecoreTypeCreationDataMappingContext(object obj, SitecoreTypeCreationContext typeCreationContext, ISitecoreService service)
             : base(obj, typeCreationContext.Item, service)
         {
-            TypeCreationContext = TypeCreationContext;
+            TypeCreationContext = typeCreationContext;
         }
 
         public SitecoreTypeCreationContext TypeCreationContext { get; private set; }
