@@ -56,9 +56,13 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             if (fieldValue.IsNullOrEmpty()) return DefaultValue;
             int dValue = (int)DefaultValue;
-            int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue);
 
-            return dValue;
+            if (int.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue))
+            {
+                return dValue;
+            }
+
+            return Int32.MinValue;
         }
 
         /// <summary>
