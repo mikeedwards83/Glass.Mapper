@@ -56,6 +56,11 @@ namespace Glass.Mapper.Configuration
 		public Action<object, object> PropertySetter { get; private set; }
 
         /// <summary>
+        /// Gets or sets whether the property is cacheable
+        /// </summary>
+        public bool Cacheable { get; set; }
+
+        /// <summary>
         /// Gets the mapper.
         /// </summary>
         /// <value>The mapper.</value>

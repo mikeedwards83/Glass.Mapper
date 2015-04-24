@@ -29,7 +29,7 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldAttribute"/> class.
         /// </summary>
-        public FieldAttribute()
+        protected FieldAttribute()
         { }
 
         /// <summary>
@@ -39,6 +39,11 @@ namespace Glass.Mapper.Configuration.Attributes
         public bool ReadOnly { get; set; }
 
         /// <summary>
+        /// When true the field value will be cached
+        /// </summary>
+        public bool Cachable { get; set; }
+
+        /// <summary>
         /// Configures the specified property info.
         /// </summary>
         /// <param name="propertyInfo">The property info.</param>
@@ -46,6 +51,7 @@ namespace Glass.Mapper.Configuration.Attributes
         public void Configure(PropertyInfo propertyInfo, FieldConfiguration config)
         {
             config.ReadOnly = ReadOnly;
+            config.Cacheable = Cachable;
             base.Configure(propertyInfo, config);
         }
     }

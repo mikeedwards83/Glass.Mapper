@@ -37,6 +37,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             
         }
+
+        /// <summary>
+        /// Sets the field as cachable
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreId<T> Cachable()
+        {
+            Configuration.Cacheable = true;
+            return this;
+        }
     }
 }
 

@@ -26,7 +26,7 @@ namespace Glass.Mapper
     /// </summary>
     public abstract class AbstractTypeCreationContext
     {
-        public AbstractTypeCreationContext()
+        protected AbstractTypeCreationContext()
         {
             Parameters = new Dictionary<string, object>();
         }

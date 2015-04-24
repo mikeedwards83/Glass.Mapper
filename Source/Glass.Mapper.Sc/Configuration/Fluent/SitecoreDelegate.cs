@@ -44,6 +44,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Sets the delegate as cachable
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreDelegate<T> Cachable()
+        {
+            Configuration.Cacheable = true;
+            return this;
+        }
+
+        /// <summary>
         /// Gets the value to be returned in the object
         /// </summary>
         /// <param name="mapFunction"></param>

@@ -70,6 +70,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Sets the field as cachable
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreField<T> Cachable()
+        {
+            Configuration.Cacheable = true;
+            return this;
+        }
+
+        /// <summary>
         /// The ID of the field to load or create in code first
         /// </summary>
         /// <param name="id">The id.</param>

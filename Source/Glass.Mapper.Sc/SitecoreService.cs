@@ -1556,7 +1556,7 @@ namespace Glass.Mapper.Sc
 
             Debug.Assert(scTypeContext != null, "Creation context is null");
 
-            return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
+            return new SitecoreTypeCreationDataMappingContext(obj, scTypeContext, this);
         }
 
         /// <summary>

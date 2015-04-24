@@ -71,6 +71,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Sets the field as cachable - note this will not work with binary serialization
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreNode<T> Cachable()
+        {
+            Configuration.Cacheable = true;
+            return this;
+        }
+
     }
 }
 

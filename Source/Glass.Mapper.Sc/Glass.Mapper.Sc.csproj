@@ -113,6 +113,7 @@
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
     <Compile Include="Custom\ChildrenCast.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
+    <Compile Include="DataMappers\SitecoreCacheFieldMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
+    <Compile Include="SitecoreTypeCreationDataMappingContext.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
