@@ -1,12 +1,19 @@
 ﻿using System.Collections.Concurrent;
+using System.Runtime.Caching;
 
 namespace Glass.Mapper.Caching
 {
     public class InMemoryCache : ICacheManager
     {
+        private const string GlassCacheName = "Glass";
+        private static MemoryCache cache = new MemoryCache(GlassCacheName);
+        private readonly CacheItemPolicy policy;
         private readonly ConcurrentDictionary<string, object> _innerCache = new ConcurrentDictionary<string, object>();
 
-        protected ConcurrentDictionary<string, object> Cache { get { return _innerCache; } }
+        public InMemoryCache(CacheItemPolicy policy)
+        {
+            this.policy = policy;
+        }
 
         public object this[string key]
         {
@@ -22,25 +29,28 @@ namespace Glass.Mapper.Caching
 
         public void ClearCache()
         {
-            Cache.Clear();
+            cache.Dispose();
+            cache = new MemoryCache(GlassCacheName);
         }
 
         public void AddOrUpdate<T>(string key, T value) where T : class
         {
-            Cache.AddOrUpdate(key, value, (s, o) => value);
+            cache.Add(key, value, policy);
         }
 
         public T Get<T>(string key) where T : class
         {
-            object retVal;
-            return Cache.TryGetValue(key, out retVal)
-                ? retVal as T
-                : null;
+            if (!Contains(key))
+            {
+                return default(T);
+            }
+
+            return cache.Get(key) as T;
         }
 
         public bool Contains(string key)
         {
-            return Cache.ContainsKey(key);
+            return cache.Contains(key);
         }
     }
 }
