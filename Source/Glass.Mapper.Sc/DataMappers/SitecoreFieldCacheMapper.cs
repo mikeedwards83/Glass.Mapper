@@ -46,7 +46,10 @@ namespace Glass.Mapper.Sc.DataMappers
             if (!cacheManager.Contains(key))
             {
                 result = Mapper.MapToProperty(mappingContext);
-                cacheManager.AddOrUpdate(key, result);
+                if (result != null)
+                {
+                    cacheManager.AddOrUpdate(key, result);
+                }
             }
             else
             {
