@@ -67,9 +67,14 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             object model = null;
 
-            if (renderingItem.DataSource.IsNotNullOrEmpty())
+            if (renderingItem.DataSource.HasValue())
             {
                 var item = scContext.Database.GetItem(renderingItem.DataSource);
+                model = scContext.CreateType(modelType, item, false, false, null);
+            }
+            else if (renderingItem.RenderingItem.DataSource.HasValue())
+            {
+                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
                 model = scContext.CreateType(modelType, item, false, false, null);
             }
             else if (renderingItem.Item != null)
