@@ -225,12 +225,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return scContext.CreateType(type, item, false, false, null);
             }
 
-            if (renderingItem.RenderingItem.DataSource.HasValue())
-            {
-                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
-                return scContext.CreateType(type, item, false, false, null);
-            }
-
             /**
              * Issues #82:
              * Check Item before defaulting to the current item.
@@ -238,6 +232,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (renderingItem.Item != null)
             {
                 return scContext.CreateType(type, renderingItem.Item, false, false, null);
+            }
+
+            if (renderingItem.RenderingItem.DataSource.HasValue())
+            {
+                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
+                return scContext.CreateType(type, item, false, false, null);
             }
 
             return scContext.GetCurrentItem(type);

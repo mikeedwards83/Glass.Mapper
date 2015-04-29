@@ -72,11 +72,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 var item = scContext.Database.GetItem(renderingItem.DataSource);
                 model = scContext.CreateType(modelType, item, false, false, null);
             }
-            else if (renderingItem.RenderingItem.DataSource.HasValue())
-            {
-                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
-                model = scContext.CreateType(modelType, item, false, false, null);
-            }
             else if (renderingItem.Item != null)
             {   
                 /**
@@ -84,6 +79,11 @@ namespace Glass.Mapper.Sc.Pipelines.Response
              * Check Item before defaulting to the current item.
              */
                 model = scContext.CreateType(modelType, renderingItem.Item, false, false, null);
+            }
+            else if (renderingItem.RenderingItem.DataSource.HasValue())
+            {
+                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
+                model = scContext.CreateType(modelType, item, false, false, null);
             }
             else
             {
