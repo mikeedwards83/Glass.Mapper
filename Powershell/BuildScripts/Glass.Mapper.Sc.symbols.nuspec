@@ -3,7 +3,7 @@
   <metadata>
     <id>Glass.Mapper.Sc</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Tom Dudfield</authors>
+    <authors>Michael Edwards</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
@@ -20,7 +20,7 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-		<dependency id="Glass.Mapper" version="3.0.14.27" />
+		<dependency id="Glass.Mapper" version="3.0.15.31" />
     </dependencies>
   </metadata>
   <files>

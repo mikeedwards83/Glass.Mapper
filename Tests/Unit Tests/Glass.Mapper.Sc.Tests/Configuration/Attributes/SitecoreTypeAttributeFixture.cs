@@ -113,7 +113,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         }
 
         [Test]
-        [ExpectedException(typeof(FormatException))]
+        [ExpectedException(typeof(MapperException))]
         public void Configure_AttributeHasInvalidTemplateId_ExceptionThrown()
         {
             //Assign
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         }
 
         [Test]
-        [ExpectedException(typeof(FormatException))]
+        [ExpectedException(typeof(MapperException))]
         public void Configure_AttributeHasInvalidBranchId_ExceptionThrown()
         {
             //Assign
