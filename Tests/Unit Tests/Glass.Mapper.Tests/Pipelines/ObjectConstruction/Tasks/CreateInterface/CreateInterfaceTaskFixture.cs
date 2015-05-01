@@ -92,7 +92,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             //Assert
             Assert.IsNotNull(args.Result);
-            Assert.IsTrue(args.IsAborted);
+            Assert.IsFalse(args.IsAborted);
             Assert.IsTrue(args.Result is IStubInterface);
             Assert.IsFalse(args.Result.GetType() == typeof(IStubInterface));
         }
@@ -128,12 +128,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             //Assert
             Assert.IsNotNull(args1.Result);
-            Assert.IsTrue(args1.IsAborted);
+            Assert.IsFalse(args1.IsAborted);
             Assert.IsTrue(args1.Result is NS1.ProxyTest1);
             Assert.IsFalse(args1.Result.GetType() == typeof(NS1.ProxyTest1));
 
             Assert.IsNotNull(args2.Result);
-            Assert.IsTrue(args2.IsAborted);
+            Assert.IsFalse(args2.IsAborted);
             Assert.IsTrue(args2.Result is NS2.ProxyTest1);
             Assert.IsFalse(args2.Result.GetType() == typeof(NS2.ProxyTest1));
         }
