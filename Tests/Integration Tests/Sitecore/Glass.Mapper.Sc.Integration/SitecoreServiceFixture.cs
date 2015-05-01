@@ -20,16 +20,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NSubstitute;
 using NUnit.Framework;
+using Sitecore;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Sitecore.SecurityModel;
+using Version = Sitecore.Data.Version;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -47,7 +49,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             //clean up everything 
@@ -67,7 +69,7 @@ namespace Glass.Mapper.Sc.Integration
                 var newVersion = service.AddVersion(oldVersion);
 
                 //clean up
-                var item = db.GetItem(path, newVersion.Language, new Sitecore.Data.Version(newVersion.Version));
+                var item = db.GetItem(path, newVersion.Language, new Version(newVersion.Version));
                 item.Versions.RemoveVersion();
                 //Assert
                 Assert.AreEqual(oldVersion.Version + 1, newVersion.Version);
@@ -85,7 +87,7 @@ namespace Glass.Mapper.Sc.Integration
             //Assign
             var context = Context.Create(Utilities.CreateStandardResolver());
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
 
@@ -105,7 +107,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration") );
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
 
@@ -123,7 +125,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
 
@@ -142,7 +144,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -163,7 +165,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -186,7 +188,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -211,7 +213,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -238,7 +240,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -267,7 +269,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -288,7 +290,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -311,7 +313,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -336,7 +338,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -363,7 +365,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
@@ -392,11 +394,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new  Sitecore.Data.Version(1);
+            Version version = new  Version(1);
             //Act
             var result = service.GetItem<StubClass>(id, language, version);
 
@@ -414,10 +416,10 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             var language = LanguageManager.GetLanguage("af-ZA");
             int param1 = 1;
 
@@ -439,11 +441,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
 
@@ -466,11 +468,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
             DateTime param3 = DateTime.Now;
@@ -495,11 +497,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             Guid id = new Guid("{6DE18DBD-0AF3-404A-8018-02B8A19515C1}");
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
             DateTime param3 = DateTime.Now;
@@ -526,11 +528,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
 
             //Act
             var result = service.GetItem<StubClass>(path, language, version);
@@ -549,11 +551,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
 
             //Act
@@ -574,11 +576,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
 
@@ -601,11 +603,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
             DateTime param3 = DateTime.Now;
@@ -630,11 +632,11 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string path = "/sitecore/content/Tests/SitecoreService/GetItem/EmptyItem";
             var language = LanguageManager.GetLanguage("af-ZA");
-            Sitecore.Data.Version version = new Sitecore.Data.Version(1);
+            Version version = new Version(1);
             int param1 = 1;
             string param2 = "2param";
             DateTime param3 = DateTime.Now;
@@ -667,7 +669,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             string  query = "/sitecore/content/Tests/SitecoreService/Query/*";
 
@@ -686,7 +688,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             //this is forced on to avoid other test leaving the disabler in the incorrect state
@@ -713,7 +715,7 @@ namespace Glass.Mapper.Sc.Integration
             //Assign
             var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
             string expected = "new name";
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
@@ -751,7 +753,7 @@ namespace Glass.Mapper.Sc.Integration
             var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
             string expected = "new name";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
@@ -794,7 +796,7 @@ namespace Glass.Mapper.Sc.Integration
             var itemPath = "/sitecore/content/Tests/SitecoreService/Save/EmptyItem";
             string expected = "new name";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var currentItem = db.GetItem(itemPath);
@@ -843,7 +845,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db, context);
 
             var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result1");
@@ -869,7 +871,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db, context);
 
             var result1 = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateTypes/Result1", language);
@@ -896,7 +898,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -915,7 +917,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -937,7 +939,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -956,7 +958,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -978,7 +980,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1000,7 +1002,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1024,7 +1026,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1048,7 +1050,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1075,7 +1077,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1102,7 +1104,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1130,7 +1132,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1158,7 +1160,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1188,7 +1190,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1210,7 +1212,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1234,7 +1236,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1260,7 +1262,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1288,7 +1290,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1319,7 +1321,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1338,7 +1340,7 @@ namespace Glass.Mapper.Sc.Integration
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
@@ -1392,7 +1394,7 @@ namespace Glass.Mapper.Sc.Integration
             string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             var service = new SitecoreService(db);
 
@@ -1433,7 +1435,7 @@ namespace Glass.Mapper.Sc.Integration
             string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1474,7 +1476,7 @@ namespace Glass.Mapper.Sc.Integration
             string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1518,7 +1520,7 @@ namespace Glass.Mapper.Sc.Integration
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
             string fieldValue = Guid.NewGuid().ToString();
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1563,7 +1565,7 @@ namespace Glass.Mapper.Sc.Integration
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChild";
             string name = "newChild";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1604,7 +1606,7 @@ namespace Glass.Mapper.Sc.Integration
             string name = "newChild";
             Language lang = LanguageManager.GetLanguage("af-ZA");
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1649,7 +1651,7 @@ namespace Glass.Mapper.Sc.Integration
             string parentPath = "/sitecore/content/Tests/SitecoreService/Create";
             string childPath = "/sitecore/content/Tests/SitecoreService/Create/newChildAutoMapped";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1693,7 +1695,7 @@ namespace Glass.Mapper.Sc.Integration
             string parentPath = "/sitecore/content/Tests/SitecoreService/Delete";
             string childPath = "/sitecore/content/Tests/SitecoreService/Delete/Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1740,7 +1742,7 @@ namespace Glass.Mapper.Sc.Integration
             string targetPath = "/sitecore/content/Tests/SitecoreService/Move/Parent1/Target";
             string targetNewPath = "/sitecore/content/Tests/SitecoreService/Move/Parent2/Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var context = Context.Create(Utilities.CreateStandardResolver());
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreService(db);
@@ -1785,7 +1787,7 @@ namespace Glass.Mapper.Sc.Integration
             string expectedString = "some test string";
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
@@ -1793,7 +1795,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -1827,7 +1829,7 @@ namespace Glass.Mapper.Sc.Integration
             string expectedString = "some test string";
             DateTime expectedDate = new DateTime(2015,05,15,15,45,48);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
@@ -1835,7 +1837,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -1867,7 +1869,7 @@ namespace Glass.Mapper.Sc.Integration
             string expectedString = "some test string";
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
@@ -1875,7 +1877,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -1905,7 +1907,7 @@ namespace Glass.Mapper.Sc.Integration
             string expectedString = "some test string";
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target");
@@ -1913,7 +1915,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -1943,7 +1945,7 @@ namespace Glass.Mapper.Sc.Integration
 
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem(path);
@@ -1951,7 +1953,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             
@@ -1986,7 +1988,7 @@ namespace Glass.Mapper.Sc.Integration
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
             string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem(path);
@@ -1994,7 +1996,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             
@@ -2027,7 +2029,7 @@ namespace Glass.Mapper.Sc.Integration
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
             string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem(path);
@@ -2035,7 +2037,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -2066,7 +2068,7 @@ namespace Glass.Mapper.Sc.Integration
             DateTime expectedDate = new DateTime(2015, 05, 15, 15, 45, 48);
             string path = "/sitecore/content/Tests/SitecoreService/GetItemWithInterfaces/Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             var service = new SitecoreService(db);
 
             var item = db.GetItem(path);
@@ -2074,7 +2076,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["StringField"] = expectedString;
-                item["DateField"] = Sitecore.DateUtil.ToIsoDate(expectedDate);
+                item["DateField"] = DateUtil.ToIsoDate(expectedDate);
             }
 
             Guid guidId = new Guid(id);
@@ -2102,7 +2104,7 @@ namespace Glass.Mapper.Sc.Integration
         public void OnDemandMapping_AutomaticallyMapsProperties()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             string text = "test text 1";
             string path = "/sitecore/content/Tests/SitecoreService/OnDemand/Target";
             DateTime date = new DateTime(2013,04,03,12,15,10);
@@ -2136,7 +2138,7 @@ namespace Glass.Mapper.Sc.Integration
         public void Map_ClassWithId_MapsFieldValues()
         {
             //Assign
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             string text = "test text 1";
             Guid id = new Guid("{346D7364-ECBA-4E7A-9580-58DB4785C20A}");
             DateTime date = new DateTime(2013, 04, 03, 12, 15, 10);
@@ -2206,7 +2208,7 @@ namespace Glass.Mapper.Sc.Integration
             string Name { get; set; }
         }
 
-        [SitecoreType(TemplateId = StubClass.TemplateId)]
+        [SitecoreType(TemplateId = TemplateId)]
         public class StubClass
         {
 
@@ -2289,7 +2291,7 @@ namespace Glass.Mapper.Sc.Integration
             public virtual DateTime DateField { get; set; }
         }
 
-        [SitecoreType(TemplateId = StubClassAutoMapped.TemplateId, AutoMap = true)]
+        [SitecoreType(TemplateId = TemplateId, AutoMap = true)]
         public class StubClassAutoMapped
         {
             public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";

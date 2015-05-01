@@ -184,9 +184,6 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
         }
 
-
-       
-        
         #region Stubs
 
         public class StubClass
@@ -213,6 +210,8 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
         public class StubClassWithService 
         {
             public StubServiceInterface Service { get; set; }
+            public virtual string Field1 { get; set; }
+            public virtual StubClassWithService Field2 { get; set; }
 
             public StubClassWithService(StubServiceInterface service)
             {

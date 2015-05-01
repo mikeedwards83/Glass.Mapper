@@ -39,14 +39,30 @@ namespace Glass.Mapper.Sc
         ISitecoreContext SitecoreContext { get; }
 
         /// <summary>
-        /// Edits the frame.
+        /// Returns an Sitecore Edit Frame
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <param name="path">The path.</param>
+        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        GlassEditFrame EditFrame(string buttons, string path = null);
+        GlassEditFrame EditFrame(string buttons, string path = null, TextWriter output= null);
+
+
+        /// <summary>
+        /// Returns an Sitecore Edit Frame using the fields from the specified model.
+        /// </summary>
+        /// <param name="model">The model of the item to use.</param>
+        /// <param name="title">The title to display with the editframe</param>
+        /// <param name="fields">The fields to add to the edit frame</param>
+        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
+        GlassEditFrame EditFrame<T>(T model, string title = null, TextWriter output= null, params Expression<Func<T, object>>[] fields)
+            where T : class;
+
 
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
@@ -130,5 +146,10 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
+
+#if (SC80 || SC75)
+        string ProtectMediaUrl(string url);
+#endif
     }
+
 }

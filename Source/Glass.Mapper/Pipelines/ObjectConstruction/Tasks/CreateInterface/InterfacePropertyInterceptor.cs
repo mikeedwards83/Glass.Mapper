@@ -25,8 +25,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 	/// <summary>
 	/// Class InterfacePropertyInterceptor
 	/// </summary>
+	[Serializable]
 	public class InterfacePropertyInterceptor : IInterceptor
 	{
+        [NonSerialized]
 		private ObjectConstructionArgs _args;
 
 		private readonly Lazy<IDictionary<string, object>> _lazyValues;

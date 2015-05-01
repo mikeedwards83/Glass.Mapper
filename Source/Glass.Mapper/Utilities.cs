@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -25,6 +25,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Reflection;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper
 {
@@ -81,19 +82,19 @@ namespace Glass.Mapper
                 switch (parameters.Count())
                 {
                     case 0:
-                        genericType = typeof (Func<>);
+                        genericType = typeof(Func<>);
                         break;
                     case 1:
-                        genericType = typeof (Func<,>);
+                        genericType = typeof(Func<,>);
                         break;
                     case 2:
-                        genericType = typeof (Func<,,>);
+                        genericType = typeof(Func<,,>);
                         break;
                     case 3:
-                        genericType = typeof (Func<,,,>);
+                        genericType = typeof(Func<,,,>);
                         break;
                     case 4:
-                        genericType = typeof (Func<,,,,>);
+                        genericType = typeof(Func<,,,,>);
                         break;
                     case 5:
                         genericType = typeof(Func<,,,,,>);
@@ -118,7 +119,7 @@ namespace Glass.Mapper
                 }
 
                 var delegateType =
-                    genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] {type}).ToArray());
+                    genericType.MakeGenericType(parameters.Select(x => x.ParameterType).Concat(new[] { type }).ToArray());
 
                 if (!types.Any())
                     types = Type.EmptyTypes;
@@ -158,9 +159,16 @@ namespace Glass.Mapper
                 var interfaces = type.GetInterfaces();
                 foreach (var inter in interfaces)
                 {
-                    property = inter.GetProperty(name);
-                    if (property != null)
-                        return property;
+                    try
+                    {
+                        property = inter.GetProperty(name);
+                        if (property != null)
+                            return property;
+                    }
+                    catch (AmbiguousMatchException ex)
+                    {
+                        //this is probably caused by an item having two indexers e.g SearchResultItem;
+                    }
                 }
             }
 
@@ -235,8 +243,11 @@ namespace Glass.Mapper
         {
             Type genericType = type.MakeGenericType(arguments);
             object obj;
-            if (parameters != null && parameters.Count() > 0)
-                obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
+            if (parameters != null && parameters.Any())
+            {
+                var paramTypes = parameters.Select(p => p.GetType()).ToArray();
+                obj = GetActivator(genericType, paramTypes)(parameters);
+            }
             else
                 obj = GetActivator(genericType)();
             return obj;
@@ -255,11 +266,13 @@ namespace Glass.Mapper
         public static Type GetGenericArgument(Type type)
         {
             Type[] types = type.GetGenericArguments();
-            if (types.Count() > 1)
+            var count = types.Count();
+            if (count == 1)
+                return types[0];
+            else if(count > 1)
                 throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
-            if (types.Count() == 0)
+            else
                 throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
-            return types[0];
         }
 
         public static string GetPropertyName(Expression expression)
@@ -336,8 +349,8 @@ namespace Glass.Mapper
 
                 Type propertyType = propertyInfo.PropertyType;
 
-                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
-                ParameterExpression valueParameter = Expression.Parameter(typeof (object), "value");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
+                ParameterExpression valueParameter = Expression.Parameter(typeof(object), "value");
 
                 Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
                     Expression.Assign(
@@ -377,17 +390,17 @@ namespace Glass.Mapper
                     "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
             }
 
-            
+
             if (propertyInfo.CanWrite)
             {
-                ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "instance");
+                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
 
                 Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
                     Expression.Convert(
                         Expression.Property(
                             Expression.Convert(instanceParameter, type),
                             propertyInfo),
-                        typeof (object)),
+                        typeof(object)),
                     instanceParameter
                     );
 
@@ -405,14 +418,122 @@ namespace Glass.Mapper
         /// <param name="forType">For type.</param>
         /// <param name="parameterTypes">The parameter types.</param>
         /// <returns></returns>
-		protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
-		{
-			var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
-			return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, paramTypes));
-		}
+        protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType,
+            Type [] parameterTypes = null)
+        {
+            return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, parameterTypes));
+        }
+
+
+        public static AbstractPropertyConfiguration GetGlassProperty<T, K>(
+            Expression<Func<T, object>> field,
+            Context context,
+            T model) where K : AbstractTypeConfiguration, new()
+        {
+
+            MemberExpression memberExpression;
+
+            var finalTarget = GetTargetObjectOfLamba(field, model, out memberExpression);
+
+            if (context == null)
+                throw new NullReferenceException("Context cannot be null");
+
+            var config = context.GetTypeConfiguration<K>(finalTarget);
+
+            //lambda expression does not always return expected memberinfo when inheriting
+            //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
+            var prop = config.Type.GetProperty(memberExpression.Member.Name);
+
+            //interfaces don't deal with inherited properties well
+            if (prop == null && config.Type.IsInterface)
+            {
+                Func<Type, PropertyInfo> interfaceCheck = null;
+                interfaceCheck = (inter) =>
+                {
+                    var interfaces = inter.GetInterfaces();
+                    var properties =
+                        interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
+                            x => x != null);
+                    if (properties.Any()) return properties.First();
+                    else
+                        return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
+                };
+                prop = interfaceCheck(config.Type);
+            }
+
+            if (prop != null && prop.DeclaringType != prop.ReflectedType)
+            {
+                //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
+                prop = prop.DeclaringType.GetProperty(prop.Name);
+            }
+
+            if (prop == null)
+                throw new MapperException(
+                    "Page editting error. Could not find property {0} on type {1}".Formatted(
+                        memberExpression.Member.Name, config.Type.FullName));
+
+            //ME - changed this to work by name because properties on interfaces do not show up as declared types.
+            var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
+            if (dataHandler == null)
+            {
+                throw new MapperException(
+                    "Page editing error. Could not find data handler for property {2} {0}.{1}".Formatted(
+                        prop.DeclaringType, prop.Name, prop.MemberType));
+            }
+
+
+            return dataHandler;
+        }
+
+        public static K GetTypeConfig<T, K>(Expression<Func<T, object>> field, Context context, T model)
+            where K : AbstractTypeConfiguration, new()
+        {
+            MemberExpression memberExpression;
+            var finalTarget = GetTargetObjectOfLamba(field, model, out memberExpression);
+
+            if (context == null)
+                throw new NullReferenceException("Context cannot be null");
+
+            var config = context.GetTypeConfiguration<K>(finalTarget);
+
+            return config;
+        }
+
+
+        public static object GetTargetObjectOfLamba<T>(Expression<Func<T, object>> field, T model,
+            out MemberExpression memberExpression)
+        {
+            if (field.Parameters.Count > 1)
+                throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
+
+            if (field.Body is UnaryExpression)
+            {
+                memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
+            }
+            else if (!(field.Body is MemberExpression))
+            {
+                throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
+            }
+            else
+            {
+                memberExpression = (MemberExpression)field.Body;
+            }
+
+            //we have to deconstruct the lambda expression to find the 
+            //correct model object
+            //For example if we have the lambda expression x =>x.Children.First().Content
+            //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
+
+            //this contains the expression that will evaluate to the object containing the property
+            var objectExpression = memberExpression.Expression;
+
+            var finalTarget =
+                Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(model);
+
+            return finalTarget;
+        }
     }
 }
-
 
 
 

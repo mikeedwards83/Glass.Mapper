@@ -25,6 +25,7 @@ using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using System.Collections.Concurrent;
 using Castle.Core.Logging;
+using Glass.Mapper.IoC;
 
 namespace Glass.Mapper
 {
@@ -201,14 +202,14 @@ namespace Glass.Mapper
         ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
-            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.ResolveAll<IDataMapperResolverTask>());
+            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
 
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {
 
                 DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);
                 args.PropertyConfiguration = property;
-                args.DataMappers = DependencyResolver.ResolveAll<AbstractDataMapper>();
+                args.DataMappers = DependencyResolver.DataMapperFactory.GetItems();
                 runner.Run(args);
                 if(args.Result == null)
                 {

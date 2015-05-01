@@ -10,8 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Sc</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc</AssemblyName>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
@@ -40,51 +38,24 @@
     <DocumentationFile>bin\Release\Glass.Mapper.Sc.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CI|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\CI\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
+    <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Net45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\Sitecore\bin6\Sitecore.Kernel.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\Sitecore\bin6\Sitecore.Kernel.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +80,7 @@
     <Compile Include="Configuration\Fluent\SitecoreDelegate.cs" />
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreMapConfigurationLoader.cs" />
     <Compile Include="Configuration\SitecoreDelegateConfiguration.cs" />
     <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
@@ -185,6 +157,7 @@
     <Compile Include="Dynamic\DynamicField.cs" />
     <Compile Include="Dynamic\DynamicItem.cs" />
     <Compile Include="Dynamic\IDynamicItem.cs" />
+    <Compile Include="Events\PublishEnd\GlassCacheClear.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
     <Compile Include="Fields\HtmlEncodedString.cs" />
@@ -195,14 +168,26 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
+    <Compile Include="IoC\AbstractDependencyResolver.cs" />
+    <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
+    <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
+    <Compile Include="IoC\DataMapperConfigFactory.cs" />
+    <Compile Include="IoC\DataMapperTaskConfigFactory.cs" />
+    <Compile Include="IoC\DependencyResolver.cs" />
+    <Compile Include="IoC\IDependencyResolver.cs" />
+    <Compile Include="IoC\ObjectConstructionTaskConfigFactory.cs" />
+    <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
+    <Compile Include="IoC\QueryParameterConfigFactory.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Maps\SitecoreGlassMap.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
+    <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
     <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
     <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
@@ -259,6 +244,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.config" />
+    <Content Include="App_Config\Include\Glass.Mapper.Sc.Start.config.pp" />
+    <Content Include="App_Start\GlassMapperSc.cs.pp" />
+    <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -276,4 +266,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <Message Importance="high" Text="ScVersion: $(ScVersion)" />
+    <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
+  </Target>
 </Project>

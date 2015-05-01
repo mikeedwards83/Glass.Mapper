@@ -18,10 +18,10 @@
 
 
 using System;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using NUnit.Framework;
+using Sitecore.Configuration;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
@@ -38,7 +38,7 @@ namespace Glass.Mapper.Sc.Integration.Configuation.Fluent
             Guid id = new Guid("{A544AE18-BC21-457D-8852-438F53AAE7E1}");
             string name = "Target";
 
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var db = Factory.GetDatabase("master");
             
             var context = Context.Create(Utilities.CreateStandardResolver());
 

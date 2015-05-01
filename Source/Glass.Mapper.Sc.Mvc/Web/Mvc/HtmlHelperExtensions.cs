@@ -127,10 +127,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new GlassEditFrame(editFrame);
         }
 
-        public static GlassHtmlMvc Glass(this HtmlHelper htmlHelper)
+        public static GlassHtmlMvc<T> Glass<T>(this HtmlHelper<T> htmlHelper)
         {
             var html = new GlassHtml(SitecoreContext.GetFromHttpContext());
-            return new GlassHtmlMvc(html, htmlHelper.ViewContext.Writer);
+            return new GlassHtmlMvc<T>(html, htmlHelper.ViewContext.Writer, htmlHelper.ViewData.Model);
         }
     }
 }

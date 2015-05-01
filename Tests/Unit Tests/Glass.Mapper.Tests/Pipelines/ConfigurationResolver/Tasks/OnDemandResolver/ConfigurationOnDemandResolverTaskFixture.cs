@@ -1,12 +1,13 @@
-﻿using Glass.Mapper.Configuration;
-using Glass.Mapper.Pipelines.ConfigurationResolver;
-using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {
@@ -20,9 +21,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
         {
             //Arrange
 
-            var resolver = NSubstitute.Substitute.For<IDependencyResolver>();
+            var resolver = Substitute.For<IDependencyResolver>();
             var context = Context.Create(resolver);
-            var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
+            var typeContext = Substitute.For<AbstractTypeCreationContext>();
             typeContext.RequestedType = typeof (StubClass);
             var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType, null);
 
@@ -45,9 +46,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
         {
             //Arrange
 
-            var resolver = NSubstitute.Substitute.For<IDependencyResolver>();
+            var resolver = Substitute.For<IDependencyResolver>();
             var context = Context.Create(resolver);
-            var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
+            var typeContext = Substitute.For<AbstractTypeCreationContext>();
             typeContext.RequestedType = typeof (StubClass);
             var args = new ConfigurationResolverArgs(context, typeContext, typeContext.RequestedType, null);
             args.Result = new StubTypeConfiguration();
@@ -67,9 +68,9 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.OnDemandResol
         public void Execute_MultipleRequestsUnloadedType_AddsOnlyOnceToContext()
         {
             //Arrange
-            var resolver = NSubstitute.Substitute.For<IDependencyResolver>();
+            var resolver = Substitute.For<IDependencyResolver>();
             var context = Context.Create(resolver);
-            var typeContext = NSubstitute.Substitute.For<AbstractTypeCreationContext>();
+            var typeContext = Substitute.For<AbstractTypeCreationContext>();
             
             var task = new ConfigurationOnDemandResolverTask<StubTypeConfiguration>();
             var argsList = new List<ConfigurationResolverArgs>();

@@ -34,27 +34,16 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreQueryMapper : AbstractDataMapper
     {
-        List<ISitecoreQueryParameter> _parameters;
 
+        private readonly IEnumerable<ISitecoreQueryParameter> _parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreQueryMapper"/> class.
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="dependencyResolver">The dependency resolver.</param>
         public SitecoreQueryMapper(IEnumerable<ISitecoreQueryParameter> parameters)
         {
-
-            _parameters = new List<ISitecoreQueryParameter>();
-            if (parameters != null)
-                _parameters.AddRange(parameters);
-
-            //default parameters
-            _parameters.Add(new ItemDateNowParameter());
-            _parameters.Add(new ItemIdParameter());
-            _parameters.Add(new ItemPathParameter());
-            _parameters.Add(new ItemIdNoBracketsParameter());
-            _parameters.Add(new ItemEscapedPathParameter());
-
+            _parameters = parameters;
             ReadOnly = true;
         }
 
@@ -190,9 +179,12 @@ namespace Glass.Mapper.Sc.DataMappers
         public string ParseQuery(string query, Item item)
         {
             StringBuilder sb = new StringBuilder(query);
-            foreach (var param in _parameters)
+            if (_parameters != null)
             {
-                sb.Replace("{" + param.Name + "}", param.GetValue(item));
+                foreach (var param in _parameters)
+                {
+                    sb.Replace("{" + param.Name + "}", param.GetValue(item));
+                }
             }
             return sb.ToString();
         }
