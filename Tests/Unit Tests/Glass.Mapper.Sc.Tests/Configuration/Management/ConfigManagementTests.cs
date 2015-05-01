@@ -9,6 +9,7 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.IoC;
 using NSubstitute;
 using NUnit.Framework;
+using IDependencyResolver = Glass.Mapper.Sc.IoC.IDependencyResolver;
 
 namespace Glass.Mapper.Sc.Tests.Configuration.Management
 {
@@ -72,8 +73,8 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         public void GetObjectConstructionTasks()
         {
             // Assign
-            
-            IConfigFactory<IObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(()=>new HttpCache());
+            IDependencyResolver dependencyResolver = new DependencyResolver(new Config());
+            IConfigFactory<IObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();

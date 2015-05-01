@@ -12,7 +12,7 @@ namespace Glass.Mapper.Sc.IoC
             DataMapperResolverFactory = new DataMapperTaskConfigFactory();
             DataMapperFactory = new DataMapperConfigFactory(QueryParameterFactory);
             ConfigurationResolverFactory = new ConfigurationResolverConfigFactory();
-            ObjectConstructionFactory = new ObjectConstructionTaskConfigFactory(CacheManager);
+            ObjectConstructionFactory = new ObjectConstructionTaskConfigFactory(this);
             ObjectSavingFactory = new ObjectSavingTaskConfigFactory();
             ConfigurationMapFactory = new ConfigurationMapConfigFactory();
         }
