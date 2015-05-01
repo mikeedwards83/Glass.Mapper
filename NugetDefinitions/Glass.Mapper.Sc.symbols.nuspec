@@ -23,6 +23,9 @@
 	</dependencies>
   </metadata>
   <files>
+
+    <file src="NugetDefinitions\readme.txt" target="readme.txt" />
+
     <!-- ASSEMBLIES -->
     
     <!-- Glass.Mapper -->
