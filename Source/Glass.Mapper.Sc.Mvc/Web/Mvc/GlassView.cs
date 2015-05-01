@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Specialized;
@@ -24,6 +24,7 @@ using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Mvc.Configuration;
 using Sitecore.Shell.Applications.Dialogs.ItemLister;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
@@ -69,6 +70,76 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         /// <summary>
+        /// Returns either the item specified by the DataSource or the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item LayoutItem
+        {
+            get
+            {
+                return DataSourceItem ?? ContextItem;
+            }
+        }
+
+        /// <summary>
+        /// Returns either the item specified by the current context item
+        /// </summary>
+        /// <value>The layout item.</value>
+        public Item ContextItem
+        {
+            get { return global::Sitecore.Context.Item; }
+        }
+
+        /// <summary>
+        /// Returns the item specificed by the data source only. Returns null if no datasource set
+        /// </summary>
+        public Item DataSourceItem
+        {
+            get
+            {
+                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                {
+                    return null;
+                }
+                else
+                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+            }
+        }
+
+        /// <summary>
+        /// Returns the Context Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Returns the Data Source Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+        }
+
+        /// <summary>
+        /// Returns the Layout Item as strongly typed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+        }
+
+
+        /// <summary>
         /// Inits the helpers.
         /// </summary>
         public override void InitHelpers()
@@ -85,20 +156,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         protected virtual TModel GetModel()
         {
-
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
-            {
-                return SitecoreContext.GetCurrentItem<TModel>();
-            }
-            else
-            {
-
-                return
-                    SitecoreContext.GetItem<TModel>(
-                        Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
-            }
+            return SitecoreContext.Cast<TModel>(LayoutItem);
         }
 
         /// <summary>
@@ -134,12 +192,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be rendered to the HTML element</param>
         /// <returns></returns>
         public virtual HtmlString RenderImage<T>(T target, Expression<Func<T, object>> field,
-                                           object parameters = null,
-                                           bool isEditable = false)
+            object parameters = null,
+            bool isEditable = false,
+            bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable));
+            return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable, outputHeightWidth));
         }
 
         /// <summary>
@@ -192,7 +252,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        public HtmlString Editable(Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
+        public HtmlString Editable(
+            Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
         {
             return new HtmlString(GlassHtml.Editable(Model, field, standardOutput, parameters));
         }
@@ -208,9 +269,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual HtmlString RenderImage(Expression<Func<TModel, object>> field,
                                            object parameters = null,
-                                           bool isEditable = false)
+                                           bool isEditable = false,
+                                           bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable));
+            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable, outputHeightWidth ));
         }
 
         /// <summary>
@@ -263,6 +325,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
            return GlassHtml.EditFrame(model, title, this.Output, fields);
         }
 
+        
 
         /// <summary>
         /// Begins the edit frame.
@@ -295,12 +358,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return frame;
         }
 
-        public T GetRenderingParameters<T>() where T: class
+        public T GetRenderingParameters<T>() where T : class
         {
             var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
         }
-      
+
     }
 }

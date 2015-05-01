@@ -1334,7 +1334,6 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateType_IncorrectConstructor_FromParamsArgs_ReturnsItem()
         {
             //Assign
@@ -1346,11 +1345,41 @@ namespace Glass.Mapper.Sc.Integration
             var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
 
             //Act
-            var result = service.CreateType<StubClass>(item, false, false, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            try
+            {
+                var result = service.CreateType<StubClass>(item, false, false, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-            //Assert
-            Assert.IsNull(result);
-            Assert.AreEqual(item.ID.Guid, result.Id);
+                //Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is MapperException);
+                Assert.IsTrue(ex.InnerException is ArgumentNullException);
+            }
+        }
+        [Test]
+        public void CreateType_IncorrectConstructor_NoParameterlessConstructor_ThrowsException()
+        {
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var service = new SitecoreService(db);
+            var item = db.GetItem("/sitecore/content/Tests/SitecoreService/CreateType/Target");
+
+            //Act
+            try
+            {
+                var result = service.CreateType<StubClass>(item, false, false, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+                //Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is MapperException);
+                Assert.IsTrue(ex.InnerException is ArgumentNullException);
+            }
         }
 
         #endregion
@@ -2141,6 +2170,11 @@ namespace Glass.Mapper.Sc.Integration
 
         #region Stubs
 
+
+        public class StubParameterless
+        {
+            public StubParameterless(string value) { }
+        }
         [SitecoreType]
         public class MapStub
         {

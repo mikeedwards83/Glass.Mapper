@@ -93,21 +93,27 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             Delegate conMethod = null;
             object obj;
 
-            if (constructorParameters == null || constructorParameters.Length == 0)
+            try
             {
-                //conMethod = args.Configuration.DefaultConstructor;
-                obj = Activator.CreateInstance(args.Configuration.Type);
+                if (constructorParameters == null || constructorParameters.Length == 0)
+                {
+                    //conMethod = args.Configuration.DefaultConstructor;
+                    obj = Activator.CreateInstance(args.Configuration.Type);
+                }
+                else
+                {
+                    var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
+                    var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
+                    conMethod = args.Configuration.ConstructorMethods[constructorInfo];
+                    obj = conMethod.DynamicInvoke(constructorParameters);
+                }
+
+                args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
             }
-            else
+            catch (Exception ex)
             {
-                var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
-                var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
-                conMethod = args.Configuration.ConstructorMethods[constructorInfo];
-                obj = conMethod.DynamicInvoke(constructorParameters);
+                throw new MapperException("Failed to create type {0}".Formatted(args.Configuration.Type), ex);
             }
-
-            args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
-
             return obj;
         }
     }

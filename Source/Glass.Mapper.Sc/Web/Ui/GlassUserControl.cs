@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Specialized;
@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// <typeparam name="T"></typeparam>
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
-       
+
 
         /// <summary>
         /// Model to render on the sublayout
@@ -97,7 +97,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             return base.Editable(this.Model, field, parameters);
         }
-        
+
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
         /// </summary>
@@ -123,9 +123,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public virtual string RenderImage(Expression<Func<T, object>> field,
                                              object parameters = null,
-                                             bool isEditable = false)
+                                             bool isEditable = false,
+                                            bool outputHeightWidth = false
+            )
         {
-            return base.RenderImage(this.Model, field, parameters, isEditable);
+            return base.RenderImage(this.Model, field, parameters, isEditable, outputHeightWidth);
         }
 
         /// <summary>
@@ -167,20 +169,20 @@ namespace Glass.Mapper.Sc.Web.Ui
 
             if (control is Sublayout)
             {
-                return ((Sublayout) control).Parameters;
+                return ((Sublayout)control).Parameters;
             }
 
             return GetRenderingParameters(control.Parent);
         }
 
-        public virtual string RenderingParameters{get { return GetRenderingParameters(this); }}
+        public virtual string RenderingParameters { get { return GetRenderingParameters(this); } }
 
-        public virtual T GetRenderingParameters<T>() where T: class
+        public virtual T GetRenderingParameters<T>() where T : class
         {
             return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
         }
 
-       
+
     }
 }
 
