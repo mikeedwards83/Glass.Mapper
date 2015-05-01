@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Mvc;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
+using Sitecore.Mvc.Configuration;
 using Sitecore.Shell.Applications.Dialogs.ItemLister;
 using Sitecore.Data.Items;
 
@@ -33,6 +34,24 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// <typeparam name="TModel"></typeparam>
     public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
+
+
+        public static bool HasDataSource<T>() where T : class
+        {
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null || Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null)
+                return false;
+
+            //this has been taken from Sitecore.Mvc.Presentation.Rendering class
+
+#if (SC70)
+            return Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
+#else
+            return MvcSettings.ItemLocator.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
+#endif
+
+        }
+
+
 
         /// <summary>
         /// 
@@ -291,8 +310,22 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
 
 
+        /// <summary>
+        /// Returns an Sitecore Edit Frame
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
+        /// <returns>
+        /// GlassEditFrame.
+        /// </returns>
+        public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields)
+            where T : class
+        {
+           return GlassHtml.EditFrame(model, title, this.Output, fields);
+        }
 
-
+        
 
         /// <summary>
         /// Begins the edit frame.
@@ -302,9 +335,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
-            var frame = new GlassEditFrame(buttons, this.Output, dataSource);
-            frame.RenderFirstPart();
-            return frame;
+            return GlassHtml.EditFrame(buttons, dataSource, this.Output);
         }
         /// <summary>
         /// Creates an Edit Frame using the Default Buttons list
@@ -313,9 +344,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string dataSource)
         {
-            var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output, dataSource);
-            frame.RenderFirstPart();
-            return frame;
+            return GlassHtml.EditFrame(GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
         }
 
         /// <summary>

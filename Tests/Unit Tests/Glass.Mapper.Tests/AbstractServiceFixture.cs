@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using NUnit.Framework;
 using NSubstitute;
@@ -62,8 +63,8 @@ namespace Glass.Mapper.Tests
             var configTask = Substitute.For<IConfigurationResolverTask>();
             var objTask = Substitute.For<IObjectConstructionTask>();
 
-            resolver.ResolveAll<IConfigurationResolverTask>().Returns(new[] { configTask });
-            resolver.ResolveAll<IObjectConstructionTask>().Returns(new[] { objTask });
+            resolver.ConfigurationResolverFactory.GetItems().Returns(new[] { configTask });
+            resolver.ObjectConstructionFactory.GetItems().Returns(new []{objTask});
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());
@@ -114,6 +115,15 @@ namespace Glass.Mapper.Tests
         public class StubAbstractTypeCreationContext : AbstractTypeCreationContext
         {
 
+            public override string GetUniqueKey()
+            {
+                return string.Empty;
+            }
+
+            public override bool CacheEnabled
+            {
+                get { return true; }
+            }
         }
 
         public class StubAbstractDataMappingContext : AbstractDataMappingContext

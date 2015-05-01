@@ -20,7 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
@@ -74,7 +76,7 @@ namespace Glass.Mapper
         protected AbstractService()
             : this(Context.Default)
         {
-
+            
         }
 
         /// <summary>
@@ -94,18 +96,17 @@ namespace Glass.Mapper
         protected AbstractService(Context glassContext)
         {
 
-
             GlassContext = glassContext;
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
 
-            var objectConstructionTasks = glassContext.DependencyResolver.ResolveAll<IObjectConstructionTask>();
+            var objectConstructionTasks = glassContext.DependencyResolver.ObjectConstructionFactory.GetItems();
             _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
 
-            var configurationResolverTasks = glassContext.DependencyResolver.ResolveAll<IConfigurationResolverTask>();
+            var configurationResolverTasks = glassContext.DependencyResolver.ConfigurationResolverFactory.GetItems();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
 
-            var objectSavingTasks = glassContext.DependencyResolver.ResolveAll<IObjectSavingTask>();
+            var objectSavingTasks = glassContext.DependencyResolver.ObjectSavingFactory.GetItems();
             _objectSaving = new ObjectSaving(objectSavingTasks);
 
             Profiler = new NullProfiler();
@@ -115,7 +116,7 @@ namespace Glass.Mapper
 
         public virtual void Initiate(IDependencyResolver resolver)
         {
-            
+            CacheEnabled = true;            
         }
 
         /// <summary>
@@ -204,6 +205,9 @@ namespace Glass.Mapper
 
             }
         }
+
+
+        public bool CacheEnabled { get; set; }
     }
 
     /// <summary>
@@ -243,6 +247,11 @@ namespace Glass.Mapper
         AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
 
         ConfigurationResolverArgs RunConfigurationPipeline(AbstractTypeCreationContext abstractTypeCreationContext);
+
+        /// <summary>
+        /// Indicates if the cache should be enable when using this service.
+        /// </summary>
+        bool CacheEnabled { get; set; }
     }
 }
 

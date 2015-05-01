@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
@@ -93,9 +94,16 @@ namespace Glass.Mapper.Sc
             Database = database;
         }
 
+
+
         public override void Initiate(IDependencyResolver resolver)
         {
-            Config = resolver.Resolve<Config>();
+            CacheEnabled = Sitecore.Context.Site == null ||
+                           (!Sitecore.Context.PageMode.IsPageEditor &&
+                            !Sitecore.Context.PageMode.IsPageEditorEditing &&
+                            (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] == "true"));
+
+            Config = resolver.GetConfig() as Config ;
             base.Initiate(resolver);
         }
 
