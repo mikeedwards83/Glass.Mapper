@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters
         /// <value>The name.</value>
         public string Name
         {
-            get { return "dataNow"; }
+            get { return "dateNow"; }
         }
 
         /// <summary>

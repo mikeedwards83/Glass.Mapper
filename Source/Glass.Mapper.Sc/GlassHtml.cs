@@ -55,6 +55,9 @@ namespace Glass.Mapper.Sc
         private static readonly Type ImageType = typeof(Fields.Image);
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
+
+     
+
         public const string Parameters = "Parameters";
         /// <summary>
         /// The image width
@@ -73,12 +76,18 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
+            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
+            {
+                return expression.Compile();
+            }
+
             var key = typeof(T).FullName + expression.Body.ToString();
 
             if (_compileCache.ContainsKey(key))
             {
                 return (Func<T, string>)_compileCache[key];
             }
+
             var compiled = expression.Compile();
             _compileCache.TryAdd(key, compiled);
             return compiled;
@@ -86,6 +95,11 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
+            if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
+            {
+                return expression.Compile();
+            }
+
             var key = typeof (T).FullName + expression.Body.ToString();
 
             if (_compileCache.ContainsKey(key))
@@ -660,6 +674,10 @@ namespace Glass.Mapper.Sc
             )
         {
 
+            if (image == null)
+            {
+                return string.Empty;
+            }
             
             if (attributes == null)
             {

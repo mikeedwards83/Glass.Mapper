@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -82,18 +82,34 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
 
             if (scConfig == null)
                 throw new ConfigurationException(
-                    "Type configuration is not of type {0}".Formatted(typeof (SitecoreTypeConfiguration).FullName));
+                    "Type configuration is not of type {0}".Formatted(typeof(SitecoreTypeConfiguration).FullName));
 
 
-            if (BranchId.IsNotNullOrEmpty())
-                scConfig.BranchId = new ID(this.BranchId);
-            else
-                scConfig.BranchId = ID.Null;
+            try
+            {
+                if (BranchId.IsNotNullOrEmpty())
+                    scConfig.BranchId = new ID(this.BranchId);
+                else
+                    scConfig.BranchId = ID.Null;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to convert BranchId for type {0}. Value was {1}".Formatted(type.FullName, this.TemplateId), ex);
+            }
 
-            if (TemplateId.IsNotNullOrEmpty())
-                scConfig.TemplateId = new ID(this.TemplateId);
-            else
-                scConfig.TemplateId = ID.Null;
+            try
+            {
+                if (TemplateId.IsNotNullOrEmpty())
+                    scConfig.TemplateId = new ID(this.TemplateId);
+                else
+                    scConfig.TemplateId = ID.Null;
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to convert TemplateId for type {0}. Value was {1}".Formatted(type.FullName, this.TemplateId), ex);
+            }
+
+
 
 
             if (TemplateId.IsNullOrEmpty() && this.EnforceTemplate != SitecoreEnforceTemplate.No)
@@ -103,14 +119,14 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             }
             scConfig.EnforceTemplate = this.EnforceTemplate;
 
-            
+
 
 
             scConfig.CodeFirst = this.CodeFirst;
             scConfig.TemplateName = this.TemplateName;
 
             base.Configure(type, scConfig);
-            
+
             return scConfig;
         }
     }

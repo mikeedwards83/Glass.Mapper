@@ -94,9 +94,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public virtual string RenderImage(Expression<Func<T, object>> field,
                                              object parameters = null,
-                                             bool isEditable = false)
+                                             bool isEditable = false,
+                                            bool outputHeightWidth = false
+            )
         {
-            return base.RenderImage(this.Model, field, parameters, isEditable);
+            return base.RenderImage(this.Model, field, parameters, isEditable, outputHeightWidth);
         }
 
         /// <summary>
