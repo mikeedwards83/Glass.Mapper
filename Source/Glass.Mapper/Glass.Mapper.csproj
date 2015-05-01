@@ -63,6 +63,8 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\AbstractCacheManager.cs" />
+    <Compile Include="Caching\AbstractSerializationCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
@@ -149,6 +151,8 @@
     <Compile Include="Profilers\NullProfiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Profilers\SimpleProfiler.cs" />
+    <Compile Include="Serialization\ISerializationManager.cs" />
+    <Compile Include="Serialization\NetBinarySerializationRepository.cs" />
     <Compile Include="UrlBuilder.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>

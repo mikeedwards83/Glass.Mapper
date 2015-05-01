@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             else
             {
-                result = cacheManager.Get<object>(key);
+                result = cacheManager.Get(key);
             }
 
             return result;

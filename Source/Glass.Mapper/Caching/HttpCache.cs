@@ -44,7 +44,7 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public void AddOrUpdate<T>(string key, T value) where T : class 
+        public void AddOrUpdate(string key, object value)
         {
             var cache = Cache;
             if (cache == null) return;
@@ -64,15 +64,21 @@ namespace Glass.Mapper.Caching
             Keys.Add(key);
         }
 
-        public T Get<T>(string key) where T : class 
+        public object Get(string key)
         {
             if (Cache == null)
             {
-                return default(T);
+                return null;
             }
 
             var result = Cache[key];
-            return result as T;
+            return result;
+        }
+
+
+        public T Get<T>(string key) where T : class
+        {
+            return Get(key) as T;
         }
 
         public bool Contains(string key)

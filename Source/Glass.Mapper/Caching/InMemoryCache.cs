@@ -33,19 +33,24 @@ namespace Glass.Mapper.Caching
             cache = new MemoryCache(GlassCacheName);
         }
 
-        public void AddOrUpdate<T>(string key, T value) where T : class
+        public void AddOrUpdate(string key, object value)
         {
             cache.Add(key, value, policy);
         }
 
-        public T Get<T>(string key) where T : class
+        public object Get(string key)
         {
             if (!Contains(key))
             {
-                return default(T);
+                return null;
             }
 
-            return cache.Get(key) as T;
+            return cache.Get(key);
+        }
+
+        public T Get<T>(string key) where T : class
+        {
+            return Get(key) as T;
         }
 
         public bool Contains(string key)
