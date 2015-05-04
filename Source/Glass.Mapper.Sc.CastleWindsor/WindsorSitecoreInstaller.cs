@@ -139,6 +139,9 @@ namespace Glass.Mapper.Sc.CastleWindsor
                     .ImplementedBy<SitecoreFieldNullableIntMapper>()
                     .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
+                    .ImplementedBy<SitecoreFieldNullableEnumMapper>()
+                    .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>()
                     .ImplementedBy<SitecoreFieldRulesMapper>()
                     .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()
