@@ -16,9 +16,16 @@ namespace Glass.Mapper.Serialization
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                binaryFormatter.Serialize(memoryStream, value);
-                byte[] objectDataAsStream = memoryStream.ToArray();
-                return objectDataAsStream;
+                try
+                {
+                    binaryFormatter.Serialize(memoryStream, value);
+                    byte[] objectDataAsStream = memoryStream.ToArray();
+                    return objectDataAsStream;
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
             }
         }
 
@@ -42,6 +49,16 @@ namespace Glass.Mapper.Serialization
             Type objectType = value.GetType();
 
             if (objectType.IsValueType)
+            {
+                return false;
+            }
+
+            if (objectType == typeof (string))
+            {
+                return false;
+            }
+
+            if (objectType.IsClass && !objectType.IsSerializable)
             {
                 return false;
             }
