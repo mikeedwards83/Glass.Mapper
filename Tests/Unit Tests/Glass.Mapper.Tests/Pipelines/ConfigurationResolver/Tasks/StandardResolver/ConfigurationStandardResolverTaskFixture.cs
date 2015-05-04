@@ -20,6 +20,7 @@
 using System;
 using System.Linq;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using NSubstitute;
@@ -78,7 +79,15 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
 
         public class StubAbstractTypeCreationContext:AbstractTypeCreationContext
         {
-            
+            public override string GetUniqueKey()
+            {
+                return string.Empty;
+            }
+
+            public override bool CacheEnabled
+            {
+                get { return true; }
+            }
         }
         #endregion
     }

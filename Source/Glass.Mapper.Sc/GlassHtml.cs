@@ -28,9 +28,11 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Pipelines.GetChromeData;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Collections;
@@ -38,6 +40,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
+using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Web;
@@ -53,11 +56,7 @@ namespace Glass.Mapper.Sc
         private static readonly Type LinkType = typeof(Fields.Link );
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
 
-        /// <summary>
-        /// Indicates in the Lambda Cache should be used (default True). The cache speeds up page rendering but can cause issues
-        /// when using lambda expressions with dynamic variables.
-        /// </summary>
-        public bool UseLambdaCache { get; set; }
+     
 
         public const string Parameters = "Parameters";
         /// <summary>
@@ -77,7 +76,7 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
-            if (!UseLambdaCache)
+            if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
                 return expression.Compile();
             }
@@ -96,7 +95,7 @@ namespace Glass.Mapper.Sc
 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
-            if (!UseLambdaCache)
+            if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
                 return expression.Compile();
             }
@@ -130,7 +129,6 @@ namespace Glass.Mapper.Sc
         {
             SitecoreContext = sitecoreContext;
             _context = sitecoreContext.GlassContext;
-            UseLambdaCache = true;
         }
 
 
@@ -142,13 +140,67 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        public GlassEditFrame EditFrame(string buttons, string path = null)
+        public GlassEditFrame EditFrame(string buttons, string path = null, TextWriter output = null)
         {
-            var frame = new GlassEditFrame(buttons, HttpContext.Current.Response.Output, path);
+            if (output == null)
+            {
+                output = HttpContext.Current.Response.Output;
+            }
+            var frame = new GlassEditFrame(buttons, output, path);
             frame.RenderFirstPart();
             return frame;
         }
 
+
+        public GlassEditFrame EditFrame<T>(T model, string title = null,  TextWriter output = null, params Expression<Func<T, object>>[] fields) where T : class
+        {
+            if (IsInEditingMode && model != null)
+            {
+                if (fields.Any())
+                {
+                    var fieldNames = fields.Select(x => Glass.Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
+                        .Cast<SitecoreFieldConfiguration>()
+                        .Where(x => x != null)
+                        .Select(x => x.FieldName);
+
+                    var buttonPath = "{0}{1}".Formatted(
+                        EditFrameBuilder.BuildToken,
+                        fieldNames.Aggregate((x, y) => x + "|" + y));
+
+                    if (title.IsNotNullOrEmpty())
+                    {
+                        buttonPath += "<title>{0}<title>".Formatted(title);
+                    }
+
+                    var field = fields.FirstOrDefault();
+
+
+                    var config = Glass.Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, SitecoreContext.GlassContext, model);
+                    var pathConfig = config.Properties
+                        .OfType<SitecoreInfoConfiguration>()
+                        .FirstOrDefault(x => x.Type == SitecoreInfoType.Path);
+
+                    var path = string.Empty;
+
+                    if (pathConfig == null)
+                    {
+                        var id = config.GetId(model);
+                        var item = SitecoreContext.Database.GetItem(id);
+                        path = item.Paths.Path;
+
+                    }
+                    else
+                    {
+                        path = pathConfig.PropertyGetter(model) as string;
+                    }
+
+
+                    return EditFrame(buttonPath, path, output);
+                }
+            }
+            return EditFrame("/sitecore");
+
+        }
 
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
@@ -490,90 +542,12 @@ namespace Glass.Mapper.Sc
 
                 if (IsInEditingMode)
                 {
-                    if (field.Parameters.Count > 1)
-                        throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
-
                     MemberExpression memberExpression;
-
-                    if (field.Body is UnaryExpression)
-                    {
-                        memberExpression = ((UnaryExpression) field.Body).Operand as MemberExpression;
-                    }
-                    else if (!(field.Body is MemberExpression))
-                    {
-                        throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
-                    }
-                    else
-                    {
-                        memberExpression = (MemberExpression) field.Body;
-                    }
-
-
-
-                    //we have to deconstruct the lambda expression to find the 
-                    //correct model object
-                    //For example if we have the lambda expression x =>x.Children.First().Content
-                    //we have to evaluate what the first Child object is, then evaluate the field to edit from there.
-
-                    //this contains the expression that will evaluate to the object containing the property
-                    var objectExpression = memberExpression.Expression;
-
-                    var finalTarget =
-                        Expression.Lambda(objectExpression, field.Parameters).Compile().DynamicInvoke(model);
-
-                    var site = global::Sitecore.Context.Site;
-
-                    if (context == null)
-                        throw new NullReferenceException("Context cannot be null");
-
-                    var config = context.GetTypeConfiguration<SitecoreTypeConfiguration>(finalTarget);
-
-                  
+                    var finalTarget = Mapper.Utilities.GetTargetObjectOfLamba(field, model, out memberExpression);
+                    var config = Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, context, model);
+                    var dataHandler = Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(field, context, model);
 
                     var scClass = config.ResolveItem(finalTarget, database);
-
-                    //lambda expression does not always return expected memberinfo when inheriting
-                    //c.f. http://stackoverflow.com/questions/6658669/lambda-expression-not-returning-expected-memberinfo
-                    var prop = config.Type.GetProperty(memberExpression.Member.Name);
-
-                    //interfaces don't deal with inherited properties well
-                    if (prop == null && config.Type.IsInterface)
-                    {
-                        Func<Type, PropertyInfo> interfaceCheck = null;
-                        interfaceCheck = (inter) =>
-                            {
-                                var interfaces = inter.GetInterfaces();
-                                var properties =
-                                    interfaces.Select(x => x.GetProperty(memberExpression.Member.Name)).Where(
-                                        x => x != null);
-                                if (properties.Any()) return properties.First();
-                                else
-                                    return interfaces.Select(x => interfaceCheck(x)).FirstOrDefault(x => x != null);
-                            };
-                        prop = interfaceCheck(config.Type);
-                    }
-
-                    if (prop != null && prop.DeclaringType != prop.ReflectedType)
-                    {
-                        //properties mapped in data handlers are based on declaring type when field is inherited, make sure we match
-                        prop = prop.DeclaringType.GetProperty(prop.Name);
-                    }
-
-                    if (prop == null)
-                        throw new MapperException(
-                            "Page editting error. Could not find property {0} on type {1}".Formatted(
-                                memberExpression.Member.Name, config.Type.FullName));
-
-                    //ME - changed this to work by name because properties on interfaces do not show up as declared types.
-                    var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
-                    if (dataHandler == null)
-                    {
-                        throw new MapperException(
-                            "Page editing error. Could not find data handler for property {2} {0}.{1}".Formatted(
-                                prop.DeclaringType, prop.Name, prop.MemberType));
-                    }
-
-
 
                     using (new ContextItemSwitcher(scClass))
                     {
@@ -648,6 +622,8 @@ namespace Glass.Mapper.Sc
             //return field.Compile().Invoke(model).ToString();
         }
 
+
+    
         #endregion
 
         /// <summary>
@@ -838,13 +814,28 @@ namespace Glass.Mapper.Sc
 
             var builder = new UrlBuilder(image.Src);
 
+
+
             foreach (var key in urlParams.Keys)
             {
                 builder.AddToQueryString(key, urlParams[key]);
             }
 
-            return ImageTagFormat.Formatted(builder.ToString(), Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
+            string mediaUrl = builder.ToString();
+
+#if (SC80 || SC75)
+            mediaUrl = ProtectMediaUrl(mediaUrl);
+#endif
+            return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
+
+#if (SC80 || SC75)
+        public virtual string ProtectMediaUrl(string url)
+        {
+            return HashingUtils.ProtectAssetUrl(url);
+        }
+#endif
+
 
 
     }

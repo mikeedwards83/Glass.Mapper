@@ -19,10 +19,10 @@
 
 using System;
 using System.Diagnostics;
-using Glass.Mapper.Sc.CastleWindsor;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
+using Sitecore.Configuration;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Integration
@@ -65,7 +65,7 @@ namespace Glass.Mapper.Sc.Integration
 
             _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
-            _db = Sitecore.Configuration.Factory.GetDatabase("master");
+            _db = Factory.GetDatabase("master");
 
             //       service.Profiler = new SimpleProfiler();
 

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Glass.Mapper.Configuration;
 
@@ -165,7 +166,9 @@ namespace Glass.Mapper.Umb.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public UmbracoType<T> Import<K>(UmbracoType<K> typeConfig)
         {
-            typeConfig._configuration.Properties.ForEach(x => _configuration.AddProperty(x));
+            typeConfig._configuration.Properties
+                .Where(x => _configuration.Properties.All(y => y.PropertyInfo.Name != x.PropertyInfo.Name))
+                .ForEach(x => _configuration.AddProperty(x));
 
             if (typeConfig._configuration.AutoMap)
                 Config.AutoMap = true;

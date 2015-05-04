@@ -25,6 +25,7 @@ using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;

@@ -71,7 +71,16 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="target">The string to test.</param>
         /// <returns>flase if the value parameter is null or an empty string (""); otherwise, true.</returns>
+        [Obsolete("Use HasValue")]
         public static bool IsNotNullOrEmpty(this string target)
+        {
+            return HasValue(target);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified string has a value, i.e. Not null or empty
+        /// </summary>
+        public static bool HasValue(this string target)
         {
             return !IsNullOrEmpty(target);
         }
