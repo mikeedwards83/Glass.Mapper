@@ -14,6 +14,7 @@ namespace Glass.Mapper.Sc.IoC
         {
             Add(() => new SitecoreItemResolverTask());
             Add(() => new MultiInterfaceResolverTask());
+            Add(() => new TemplateInferredTypeTask());
             Add(() => new ConfigurationStandardResolverTask());
             Add(() => new ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>());
         }
