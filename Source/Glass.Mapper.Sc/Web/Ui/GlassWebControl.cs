@@ -180,7 +180,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         public virtual K GetRenderingParameters<K>() where K : class
         {
-            return GlassHtml.GetRenderingParameters<K>(RenderingParameters);
+            return GlassHtml.GetRenderingParameters<K>(this.Parameters);
         }
     }
 }
