@@ -6,9 +6,12 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a1c14499-379c-4dbb-ad8f-9de9d28381a7</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceWebPhysicalPath>..\..\Sites\Sitecore\Glass.Mapper.Sites.Sc</SourceWebPhysicalPath>
-    <SourceWebProject>{c6e8f5c7-7d3c-4492-b38b-707a885b7d27}|Sites\Sitecore\Glass.Mapper.Sites.Sc\Glass.Mapper.Sites.Sc.csproj</SourceWebProject>
-    <SourceWebVirtualPath>/Glass.Mapper.Sites.Sc.csproj</SourceWebVirtualPath>
+    <SourceWebPhysicalPath>
+    </SourceWebPhysicalPath>
+    <SourceWebProject>
+    </SourceWebProject>
+    <SourceWebVirtualPath>
+    </SourceWebVirtualPath>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
@@ -20,6 +23,9 @@
     <Name>Glass.Mapper.Sc.Razor.Tds</Name>
     <RootNamespace>Glass.Mapper.Sc.Razor.Tds</RootNamespace>
     <SitecoreDatabase>master</SitecoreDatabase>
+    <EnableCodeGeneration>false</EnableCodeGeneration>
+    <AssemblyStatus>Exclude</AssemblyStatus>
+    <ManageRoles>False</ManageRoles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +75,34 @@
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <OutputPath>bin\Net45\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc72' ">
+    <OutputPath>.\bin\Sc72\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc75' ">
+    <DebugSymbols>true</DebugSymbols>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>
+    </SitecoreDeployFolder>
+    <SitecoreWebUrl>http://sitecore.glass.local/</SitecoreWebUrl>
+    <SitecoreAccessGuid>fd21ce01-25b5-4388-a335-6211a7a211b9</SitecoreAccessGuid>
+    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <PackageAuthor>
+    </PackageAuthor>
+    <PackagePublisher>
+    </PackagePublisher>
+    <PackageVersion>
+    </PackageVersion>
+    <PackageReadme>
+    </PackageReadme>
+    <SitecoreAssemblyPath>E:\Glass\Glass.Mapper\Depends\Sitecore\bin</SitecoreAssemblyPath>
+    <GeneratePackage>True</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <OutputPath>.\bin\Sc75\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sc80' ">
+    <OutputPath>.\bin\Sc80\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -256,12 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <ExcludedAssemblies Include="Sitecore.%2a.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sites\Sitecore\Glass.Mapper.Sites.Sc\Glass.Mapper.Sites.Sc.csproj">
-      <Project>{c6e8f5c7-7d3c-4492-b38b-707a885b7d27}</Project>
-      <Name>Glass.Mapper.Sites.Sc</Name>
-    </ProjectReference>
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
 </Project>

@@ -19,21 +19,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Castle.MicroKernel.Registration;
 using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.IoC;
+using IDependencyResolver = Glass.Mapper.IoC.IDependencyResolver;
 
 namespace Glass.Mapper.Sc.Integration
 {
     public static class Utilities
     {
-        public static IDependencyResolver CreateStandardResolver(bool useWindsorContainer = false, params IRegistration []  registrations)
+        public static IDependencyResolver CreateStandardResolver()
         {
-            var resolver = DependencyResolver.CreateStandardResolver();
-            if (registrations != null && registrations.Any())
-            {
-                resolver.Container.Register(registrations);
-            }
-            resolver.Container.Install(new SitecoreInstaller(new Glass.Mapper.Sc.CastleWindsor.Config() { UseWindsorContructor = useWindsorContainer }));
+            Config config = new Config();
+
+            var resolver = new DependencyResolver(config);
+
             return resolver;
         }
     }

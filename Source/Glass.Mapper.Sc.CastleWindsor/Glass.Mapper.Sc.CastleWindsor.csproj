@@ -9,8 +9,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Sc.CastleWindsor</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.CastleWindsor</AssemblyName>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
-    <!--<TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>-->
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -87,7 +85,25 @@
       <HintPath>..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\packages\Castle.Windsor.3.3.0\lib\net40\Castle.Windsor.dll</HintPath>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -98,17 +114,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Glass.Mapper.Sc.CastleWindsor.config.pp" />
-    <None Include="App_Start\GlassMapperSc.cs.pp" />
+    <Compile Include="WindsorConfigFactory.cs" />
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="NoTrackLifecycleManager.cs" />
     <Compile Include="Pipelines\ObjectConstruction\LazyObjectInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\UsingLazyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\WindsorConstruction.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SitecoreInstaller.cs" />
-    <None Include="App_Start\GlassMapperScCustom.cs.pp" />
+    <Compile Include="WindsorSitecoreInstaller.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -129,4 +142,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <Message Importance="high" Text="ScKernel: $(ScKernel)" />
+    <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
+  </Target>
 </Project>

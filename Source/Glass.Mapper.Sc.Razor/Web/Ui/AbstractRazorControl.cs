@@ -218,7 +218,7 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
 
                     Profiler.Start("Run Template");
 
-                    ((RazorEngine.Templating.ITemplate) template).Run(new ExecuteContext(), output);
+                ((RazorEngine.Templating.ITemplate) template).Run(new ExecuteContext(), output);
 
                     Profiler.End("Run Template");
             }

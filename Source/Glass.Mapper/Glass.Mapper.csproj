@@ -10,8 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper</RootNamespace>
     <AssemblyName>Glass.Mapper</AssemblyName>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">v4.5</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or  '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -61,19 +59,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Debug\Glass.Mapper.XML</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
-    <Reference Include="Castle.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' != 'Net45|AnyCPU' ">
-    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
+    <OutputPath>bin\Sc72\</OutputPath>
+  </PropertyGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.0'">..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
+      <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -89,6 +86,10 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\HttpCache.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
@@ -118,14 +119,23 @@
     <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="DisableCache.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
-    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IoC\AbstractConfigFactory.cs" />
+    <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="Maps\AbstractGlassMap.cs" />
+    <Compile Include="Maps\ConfigurationMap.cs" />
+    <Compile Include="Maps\IConfigurationMap.cs" />
+    <Compile Include="Maps\IGlassMap.cs" />
+    <Compile Include="Maps\IMapProvider.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAdd\CacheAddTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
@@ -176,4 +186,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
+  </Target>
 </Project>

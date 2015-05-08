@@ -147,26 +147,7 @@ namespace Glass.Mapper.Sc
 
         }
 
-        /// <summary>
-        /// Creates the type of the generic.
-        /// </summary>
-        /// <param name="type">The generic type to create e.g. List&lt;&gt;</param>
-        /// <param name="arguments">The list of subtypes for the generic type, e.g string in List&lt;string&gt;</param>
-        /// <param name="parameters">List of parameters to pass to the constructor.</param>
-        /// <returns>System.Object.</returns>
-        public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
-        {
-            Type genericType = type.MakeGenericType(arguments);
-            object obj;
-            if (parameters != null && parameters.Count() > 0)
-				obj = GetActivator(genericType, parameters.Select(p => p.GetType()))(parameters);
-            else
-				obj = GetActivator(genericType)();
-            return obj;
-        }
-
-
-
+      
 
         /// <summary>
         /// Gets the field.

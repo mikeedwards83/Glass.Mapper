@@ -18,13 +18,11 @@
 
 
 using System;
-using Glass.Mapper.Sc.CastleWindsor;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
-using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
-using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {

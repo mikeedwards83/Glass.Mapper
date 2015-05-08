@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80' ">
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>SC80</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\80\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc75|AnyCPU' Or '$(ScVersion)' == 'sc75' ">
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin75\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>SC75</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\75\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU' Or '$(ScVersion)' == 'sc72' Or '$(ScVersion)' == ''">
+    <DefineConstants>SC72</DefineConstants>
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin72\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">5</Mvc>
+    <OutputPath>bin\72\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc71|AnyCPU' Or '$(ScVersion)' == 'sc71' ">
+    <DefineConstants>SC71</DefineConstants>
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin71\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">4</Mvc>
+    <OutputPath>bin\71\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc70|AnyCPU' Or '$(ScVersion)' == 'sc70' ">
+    <DefineConstants>SC70</DefineConstants>
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin70\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
+    <OutputPath>bin\70\</OutputPath>
+  </PropertyGroup>
+</Project>

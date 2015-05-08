@@ -140,6 +140,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Indicates if the model can be cached.
+        /// </summary>
+        /// <returns>SitecoreType{`0}.</returns>
+        public SitecoreType<T> Cachable()
+        {
+            _configuration.Cachable = true;
+            return this;
+        }
+
+        /// <summary>
         /// Templates the name.
         /// </summary>
         /// <param name="name">The name.</param>
