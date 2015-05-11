@@ -74,9 +74,6 @@ namespace Glass.Mapper.Sc
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
         public static string QuotationMark = "'";
 
-		// This doesn't work with a construction like this: 
-		// foreach(var item in items) { @Editable(i=>item.Property) }, because both the expression body and typename are the same
-		// Disabled the caching for now
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
             if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
@@ -96,9 +93,6 @@ namespace Glass.Mapper.Sc
             return compiled;
         }
 
-		// This doesn't work with a construction like this: 
-		// foreach(var item in items) { @Editable(i=>item.Property) }, because both the expression body and typename are the same
-		// Disabled the caching for now 
         protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
             if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
@@ -336,7 +330,7 @@ namespace Glass.Mapper.Sc
 
 
         /// <summary>
-        /// Checks it and attribute is part of the NameValueCollection and updates it with the
+        /// Checks if an attribute is part of the NameValueCollection and updates it with the
         /// default if it isn't.
         /// </summary>
         /// <param name="collection">The collection of parameters</param>
@@ -349,7 +343,7 @@ namespace Glass.Mapper.Sc
         }
 
         /// <summary>
-        /// Checks it and attribute is part of the NameValueCollection and updates it with the
+        /// Checks if an attribute is part of the NameValueCollection and updates it with the
         /// default if it isn't.
         /// </summary>
         /// <param name="collection">The collection of parameters</param>

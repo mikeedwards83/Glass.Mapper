@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -32,7 +32,7 @@ namespace Glass.Mapper
     /// <summary>
     /// Class Utilities
     /// </summary>
-    public   class Utilities 
+    public class Utilities
     {
         private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
             new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
@@ -133,7 +133,8 @@ namespace Glass.Mapper
         /// <summary>
         /// The flags
         /// </summary>
-        public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
+        public static BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy |
+                                           BindingFlags.Instance;
 
         /// <summary>
         /// Gets a property based on the type and name
@@ -153,21 +154,21 @@ namespace Glass.Mapper
                 //this is probably caused by an item having two indexers e.g SearchResultItem;
             }
 
-            if(property == null)
+            if (property == null)
             {
                 var interfaces = type.GetInterfaces();
                 foreach (var inter in interfaces)
                 {
                     try
                     {
-                    property = inter.GetProperty(name);
-                    if (property != null)
-                        return property;
-                }
+                        property = inter.GetProperty(name);
+                        if (property != null)
+                            return property;
+                    }
                     catch (AmbiguousMatchException ex)
                     {
                         //this is probably caused by an item having two indexers e.g SearchResultItem;
-            }
+                    }
                 }
             }
 
@@ -204,7 +205,8 @@ namespace Glass.Mapper
         }
 
 
-        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false, bool underscoreForHyphens = true)
+        public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false,
+            bool underscoreForHyphens = true)
         {
             NameValueCollection nameValues = new NameValueCollection();
             if (target != null)
@@ -237,7 +239,7 @@ namespace Glass.Mapper
         /// <param name="arguments">The arguments.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>System.Object.</returns>
-        public static object CreateGenericType(Type type, Type[] arguments, params  object[] parameters)
+        public static object CreateGenericType(Type type, Type[] arguments, params object[] parameters)
         {
             Type genericType = type.MakeGenericType(arguments);
             object obj;
@@ -309,7 +311,7 @@ namespace Glass.Mapper
             string name = GetPropertyName(expression);
 
 
-            if(name.IsNullOrEmpty())
+            if (name.IsNullOrEmpty())
                 throw new MapperException("Unable to get property name from lambda expression");
 
             PropertyInfo info = type.GetProperty(name);
@@ -332,7 +334,7 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a setter for</param>
         /// <returns>An action delegate</returns>
-	    public static Action<object, object> SetPropertyAction(PropertyInfo property)
+        public static Func<PropertyInfo, Action<object, object>> SetPropertyAction = (PropertyInfo property) =>
         {
             PropertyInfo propertyInfo = property;
             Type type = property.DeclaringType;
@@ -367,7 +369,7 @@ namespace Glass.Mapper
                     //does nothing
                 };
             }
-		}
+        };
 
         /// <summary>
         /// Creates a function delegate that can be used to get a property's value
@@ -377,17 +379,18 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a getter for</param>
         /// <returns>A function delegate</returns>
-	    public static Func<object, object> GetPropertyFunc(PropertyInfo property)
+        public static Func<PropertyInfo, Func<object, object>> GetPropertyFunc = (PropertyInfo property) =>
         {
             PropertyInfo propertyInfo = property;
             Type type = property.DeclaringType;
 
             if (type == null)
             {
-				throw new InvalidOperationException("PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
+                throw new InvalidOperationException(
+                    "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
             }
 
-            
+
             if (propertyInfo.CanWrite)
             {
                 ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
@@ -407,7 +410,7 @@ namespace Glass.Mapper
             {
                 return (object instance) => { return null; };
             }
-		}
+        };
 
         /// <summary>
         /// Gets the activator.
@@ -504,17 +507,17 @@ namespace Glass.Mapper
                 throw new MapperException("To many parameters in linq expression {0}".Formatted(field.Body));
 
             if (field.Body is UnaryExpression)
-		{
+            {
                 memberExpression = ((UnaryExpression)field.Body).Operand as MemberExpression;
-		}
+            }
             else if (!(field.Body is MemberExpression))
             {
                 throw new MapperException("Expression doesn't evaluate to a member {0}".Formatted(field.Body));
-    }
+            }
             else
             {
                 memberExpression = (MemberExpression)field.Body;
-}
+            }
 
             //we have to deconstruct the lambda expression to find the 
             //correct model object
