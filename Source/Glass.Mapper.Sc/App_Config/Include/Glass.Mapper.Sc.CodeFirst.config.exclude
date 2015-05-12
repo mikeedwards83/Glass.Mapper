@@ -1,18 +1,31 @@
-<!--After including this file in your project update the code in the GlassMapperScCustom -->
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
 	<sitecore>
-		<dataProviders>
-			<glass type="Glass.Mapper.Sc.CodeFirst.GlassDataProvider, Glass.Mapper.Sc">
-				<ContextName>Default</ContextName>
-				<DatabaseName>$(1)</DatabaseName>
-			</glass>
-		</dataProviders>
-		<databases>
-			<database id="master">
-				<dataProviders>
-					<dataProvider ref="dataProviders/glass" param1="$(id)" />
-				</dataProviders>
-			</database>
-		</databases>
-	</sitecore>
+    <settings>
+      <setting name="Glass.CodeFirst" value="true" />
+    </settings>
+    <dataProviders>
+      <glass type="Glass.Mapper.Sc.CodeFirst.GlassDataProvider, Glass.Mapper.Sc">
+        <ContextName>Default</ContextName>
+        <DatabaseName>$(1)</DatabaseName>
+        <disable>*</disable>
+        <enable>GetChildIDs</enable>
+        <enable>GetParentID</enable>
+        <enable>GetItemDefinition</enable>
+        <enable>GetItemVersions</enable>
+        <enable>GetItemFields</enable>
+      </glass>
+    </dataProviders>
+    <databases>
+      <database id="master">
+        <dataProviders>
+          <dataProvider ref="dataProviders/glass" param1="$(id)" />
+        </dataProviders>
+      </database>
+      <database id="web">
+        <dataProviders>
+          <dataProvider ref="dataProviders/glass" param1="$(id)" />
+        </dataProviders>
+      </database>
+    </databases>
+  </sitecore>
 </configuration>

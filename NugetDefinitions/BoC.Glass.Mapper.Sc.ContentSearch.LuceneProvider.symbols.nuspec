@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BoC.Glass.Mapper.Sc.ContentSearch.LuceneProvider</id>
+    <version>$version$</version>
+    <authors>Chris van de Steeg Michael Edwards, Nathanael Mann</authors>
+    <owners>Michael Edwards</owners>
+    <licenseUrl>https://github.com/csteeg/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>http://glass.lu/</projectUrl>
+    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      This is a fork of Glass.Mapper, maintained by Chris van de Steeg.
+      The fork contains several fixes for codefirst and contentsearch usage.
+      ----------------------------------------------------------------------
+      An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
+      relationships and queries as well as supporting the Page Editor. Allows you to map data from 
+      Sitecore using the Castle Windsor DI Container.
+    </description>
+    <releaseNotes>This is a pre-release version of the package.</releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore Glass.Mapper</tags>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="Castle.Core" version="3.3.3" />
+      <dependency id="BoC.Glass.Mapper.Sc" version="$version$" />
+      <dependency id="Microsoft.Bcl.Immutable" version="1.0.34" />
+      <dependency id="ReadOnlyCollectionInterfaces" version="1.0.0" />
+      <dependency id="System.Collections.Immutable.Net40" version="1.0.30.17" />
+    </dependencies>
+  </metadata>
+  <files>
+
+    <file src="NugetDefinitions\readme.txt" target="readme.txt" />
+
+    <!-- ASSEMBLIES -->
+    
+    <!-- Glass.Mapper -->
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+	  <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\80\Glass.Mapper.Sc.ContentSearch.dll" target="lib\80\Glass.Mapper.Sc.ContentSearch.dll" />
+	  <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\80\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\75\Glass.Mapper.Sc.ContentSearch.dll" target="lib\75\Glass.Mapper.Sc.ContentSearch.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\75\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\75\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\72\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\72\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\72\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\72\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\72\Glass.Mapper.Sc.ContentSearch.dll" target="lib\72\Glass.Mapper.Sc.ContentSearch.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\72\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\72\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\71\Glass.Mapper.Sc.ContentSearch.dll" target="lib\71\Glass.Mapper.Sc.ContentSearch.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\71\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\71\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\70\Glass.Mapper.Sc.ContentSearch.dll" target="lib\70\Glass.Mapper.Sc.ContentSearch.dll" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\70\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\70\Glass.Mapper.Sc.ContentSearch.pdb" />
+    
+
+    <!-- CONFIG FILES  -->
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\App_Config\**" target="content\App_Config" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\**.cs" target="src\Source\Glass.Mapper.Sc.ContentSearch" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\**.cs" target="src\Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider" />
+    
+    <!-- Powershell -->
+
+    <file src="Powershell\Glass.Mapper.Sc.ContentSearch.LuceneProvider\install.ps1" target="tools\install.ps1" />
+    <file src="Powershell\Glass.Mapper.Sc.ContentSearch.LuceneProvider\uninstall.ps1" target="tools\uninstall.ps1" />
+
+	  
+
+  </files>
+</package>
