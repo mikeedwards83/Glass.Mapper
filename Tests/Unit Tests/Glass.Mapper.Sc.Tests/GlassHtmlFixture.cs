@@ -153,7 +153,7 @@ namespace Glass.Mapper.Sc.Tests
         }
 
         [Test]
-        public void RenderImage_ValidImageWithWidthAndStretcj_RendersCorrectHtml()
+        public void RenderImage_ValidImageWithWidthAndStretch_RendersCorrectHtml()
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;as=True&amp;w=900' alt='someAlt' width='900' />";

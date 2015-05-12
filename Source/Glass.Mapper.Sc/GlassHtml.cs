@@ -21,6 +21,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -40,10 +41,12 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
+using Sitecore.Platform;
 using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Web;
+using Image = Glass.Mapper.Sc.Fields.Image;
 
 namespace Glass.Mapper.Sc
 {
@@ -767,7 +770,29 @@ namespace Glass.Mapper.Sc
                 }
             }
 
-            if (htmlParams.Keys.Any(x => x == ImageParameterKeys.HEIGHT) && htmlParams[ImageParameterKeys.HEIGHTHTML] == null)
+
+            //calculate size
+
+            var finalSize = Utilities.ResizeImage(
+                image.Width,
+                image.Height,
+                urlParams[ImageParameterKeys.SCALE].ToFlaot(),
+                urlParams[ImageParameterKeys.WIDTH].ToInt(),
+                urlParams[ImageParameterKeys.HEIGHT].ToInt(),
+                urlParams[ImageParameterKeys.MAX_WIDTH].ToInt(),
+                urlParams[ImageParameterKeys.MAX_HEIGHT].ToInt());
+
+            if (!(urlParams[ImageParameterKeys.HEIGHT].IsNullOrEmpty() && origionalKeys.Contains(ImageParameterKeys.HEIGHT)))
+            {
+                urlParams[ImageParameterKeys.HEIGHT] = finalSize.Height.ToString();
+            }
+            if (!(urlParams[ImageParameterKeys.WIDTH].IsNullOrEmpty() && origionalKeys.Contains(ImageParameterKeys.WIDTH)))
+            {
+                urlParams[ImageParameterKeys.WIDTH] = finalSize.Width.ToString();
+
+            }
+
+            if (htmlParams.ContainsKey(ImageParameterKeys.HEIGHT) && htmlParams[ImageParameterKeys.HEIGHTHTML] == null)
             {
                 htmlParams[ImageParameterKeys.HEIGHTHTML] = htmlParams[ImageParameterKeys.HEIGHT];
             }

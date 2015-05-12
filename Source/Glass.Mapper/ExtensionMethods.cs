@@ -90,6 +90,28 @@ namespace Glass.Mapper
             return text.Split(new[] {character}, options);
         }
 
+        public static int ToInt(this string target)
+        {
+            int val = 0;
+            if (target.HasValue())
+            {
+                 int.TryParse(target, out val);
+            }
+
+            return val;
+        }
+
+        public static float ToFlaot(this string target)
+        {
+            float val = 0;
+            if (target.HasValue())
+            {
+                float.TryParse(target, out val);
+            }
+
+            return val;
+        }
+
         #endregion
 
         #region IEnumerable<T>
