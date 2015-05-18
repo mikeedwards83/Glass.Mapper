@@ -98,7 +98,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 if (constructorParameters == null || constructorParameters.Length == 0)
                 {
                     //conMethod = args.Configuration.DefaultConstructor;
-                    obj = Activator.CreateInstance(args.Configuration.Type);
+                    //obj = Activator.CreateInstance(args.Configuration.Type);
+                    ActivationManager.CompiledActivator<object> activator = ActivationManager.GetActivator(args.Configuration.Type);
+                    obj = activator();
                 }
                 else
                 {

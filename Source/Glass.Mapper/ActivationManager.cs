@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -33,6 +34,8 @@ namespace Glass.Mapper
 	/// </remarks>
 	public static class ActivationManager
 	{
+	    private static readonly ConcurrentDictionary<Type, CompiledActivator<object>> Activators = new ConcurrentDictionary<Type, CompiledActivator<object>>();
+
 		/// <summary>
 		/// Activator delegate that can be called with an arbitrary number of constructor arguments
 		/// </summary>
@@ -40,6 +43,38 @@ namespace Glass.Mapper
 		/// <param name="args">Array of constructor arguments</param>
 		/// <returns>An instance of type T, constructed with the specified args</returns>
 		public delegate T CompiledActivator<out T>(params object[] args);
+
+        public static CompiledActivator<object> GetActivator(Type forType, IEnumerable<Type> parameterTypes = null)
+        {
+            var paramTypes = parameterTypes == null ? null : parameterTypes.ToArray();
+            return Activators.GetOrAdd(forType, type => GetActivator<object>(type, paramTypes));
+        }
+
+        public static CompiledActivator<object> GetActivator(Type type)
+        {
+            CompiledActivator<object> result;
+            if (Activators.TryGetValue(type, out result))
+            {
+                return result;
+            }
+
+            var constructorInfo = type.GetConstructor(Type.EmptyTypes);
+
+            if (constructorInfo == null)
+            {
+                throw new Exception("Invalid call to the constructorless getactivator");
+            }
+
+            Type forType = constructorInfo.DeclaringType;
+            if (forType == null)
+            {
+                return null;
+            }
+
+            result = CreateActivator<object>(constructorInfo);
+            Activators.TryAdd(type, result);
+            return result;
+        }
 
 		/// <summary>
 		/// Gets a constructor delegate for the given type and constructor arguments

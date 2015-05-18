@@ -19,6 +19,9 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -173,6 +176,77 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
+        }
+
+        [Test]
+        public void DifferentActivation()
+        {
+            Type stubClassType = typeof (StubClassWithLotsOfProperties);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 100000; i++)
+            {
+                var result = Activator.CreateInstance(stubClassType);
+            }
+            sw.Stop();
+
+            Console.WriteLine("Activator.CreateInstance: {0}", sw.ElapsedTicks);
+            
+            sw.Restart();
+            for (var i = 0; i < 100; i++)
+            {
+                ActivationManager.CompiledActivator<object> activator = ActivationManager.GetActivator(stubClassType);
+                var result = activator();
+            }
+
+            sw.Stop();
+
+            Console.WriteLine("Compiled lambda: {0}", sw.ElapsedTicks);
+        }
+
+        delegate object ObjectActivator(params object[] args);
+
+
+        private static ObjectActivator GetActivator(ConstructorInfo ctor)
+        {
+            Type type = ctor.DeclaringType;
+            ParameterInfo[] paramsInfo = ctor.GetParameters();
+
+            //create a single param of type object[]
+            ParameterExpression param =
+                Expression.Parameter(typeof(object[]), "args");
+
+            Expression[] argsExp =
+                new Expression[paramsInfo.Length];
+
+            //pick each arg from the params array 
+            //and create a typed expression of them
+            for (int i = 0; i < paramsInfo.Length; i++)
+            {
+                Expression index = Expression.Constant(i);
+                Type paramType = paramsInfo[i].ParameterType;
+
+                Expression paramAccessorExp =
+                    Expression.ArrayIndex(param, index);
+
+                Expression paramCastExp =
+                    Expression.Convert(paramAccessorExp, paramType);
+
+                argsExp[i] = paramCastExp;
+            }
+
+            //make a NewExpression that calls the
+            //ctor with the args we just created
+            NewExpression newExp = Expression.New(ctor, argsExp);
+
+            //create a lambda with the New
+            //Expression as body and our param object[] as arg
+            LambdaExpression lambda =
+                Expression.Lambda(typeof(ObjectActivator), newExp, param);
+
+            //compile it
+            ObjectActivator compiled = (ObjectActivator)lambda.Compile();
+            return compiled;
         }
 
         #region Stubs
