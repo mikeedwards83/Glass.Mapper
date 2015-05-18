@@ -8,11 +8,25 @@ namespace Glass.Mapper.IoC
 {
     public abstract class AbstractConfigFactory<T> : IConfigFactory<T>
     {
-        protected List<Func<T>> TypeGenerators { get; private set; }
+        private List<Func<T>> _typeGenerators = null;
 
-        protected AbstractConfigFactory()
+        protected List<Func<T>> TypeGenerators
         {
-            TypeGenerators = new List<Func<T>>();
+            get
+            {
+                if (_typeGenerators == null)
+                {
+                    lock (this)
+                    {
+                        if (_typeGenerators == null)
+                        {
+                            _typeGenerators = new List<Func<T>>();
+                            AddTypes();
+                        }
+                    }
+                }
+                return _typeGenerators;
+            }
         }
 
         public void Insert(int index,Func<T> add)
@@ -29,11 +43,6 @@ namespace Glass.Mapper.IoC
 
         public virtual IEnumerable<T> GetItems()
         {
-            if (TypeGenerators.Count == 0)
-            {
-                AddTypes();
-            }
-
             return TypeGenerators != null
                 ? TypeGenerators.Select(f => f())
                 : null;
