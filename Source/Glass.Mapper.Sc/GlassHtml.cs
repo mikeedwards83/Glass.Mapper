@@ -782,6 +782,11 @@ namespace Glass.Mapper.Sc
                 }
             }
 
+            if (!urlParams.ContainsKey(ImageParameterKeys.LANGUAGE) && image.Language != null)
+            {
+                urlParams[ImageParameterKeys.LANGUAGE] = image.Language.Name;
+            }
+
 
             //calculate size
 
