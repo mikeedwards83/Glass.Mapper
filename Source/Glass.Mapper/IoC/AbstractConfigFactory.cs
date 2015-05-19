@@ -13,7 +13,6 @@ namespace Glass.Mapper.IoC
         protected AbstractConfigFactory()
         {
             TypeGenerators = new List<Func<T>>();
-            ProcessTypes();
         }
 
         public void Insert(int index,Func<T> add)
@@ -32,18 +31,11 @@ namespace Glass.Mapper.IoC
             }
         }
 
-        protected abstract void AddTypes();
-
         public virtual IEnumerable<T> GetItems()
         {
             return TypeGenerators != null
                 ? TypeGenerators.Select(f => f())
                 : null;
-        }
-
-        protected void ProcessTypes()
-        {
-            AddTypes();
         }
     }
 
