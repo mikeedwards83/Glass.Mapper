@@ -156,7 +156,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithWidthAndStretch_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;as=True&amp;w=900' alt='someAlt' width='900' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;as=True&amp;w=200' alt='someAlt' width='900' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -178,7 +178,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderImage_ValidImageWithWidthHeightAndStretch_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=300&amp;w=900&amp;as=True' alt='someAlt' height='300' width='900' />";
+            var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=300&amp;as=True&amp;w=900' height='300' alt='someAlt' width='900' />";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var image = new Fields.Image();
@@ -186,7 +186,7 @@ namespace Glass.Mapper.Sc.Tests
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new { Width = 900, height=300, As = true };
+            var parameters = new { Width = 900, height = 300, h = 300, w = 900, As = true };
             var model = new { Image = image };
 
             //Act
