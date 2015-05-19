@@ -18,6 +18,7 @@
 
 using System;
 using Sitecore.Data.Fields;
+using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Fields
 {
@@ -80,6 +81,8 @@ namespace Glass.Mapper.Sc.Fields
         /// The title.
         /// </value>
         public string Title { get; set; }
+
+        public Language Language { get; set; }
     }
 }
 
