@@ -87,6 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             img.VSpace = vSpace;
             img.Width = width;
+            img.Language = field.MediaLanguage;
         }
 
         public static void MapToImage(Image img, MediaItem imageItem)
