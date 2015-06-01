@@ -6,7 +6,11 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class ObjectSavingTaskConfigFactory : AbstractConfigFactory<IObjectSavingTask>
     {
-        protected override void AddTypes()
+        public ObjectSavingTaskConfigFactory()
+        {
+            Init();
+        }
+        protected void Init()
         {
             Add(() => new StandardSavingTask());
         }

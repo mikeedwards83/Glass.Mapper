@@ -28,12 +28,204 @@ using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
 using System.Collections.Specialized;
+using System.IO;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using Glass.Mapper.Sc.Fields;
 
 namespace Glass.Mapper.Sc.Integration
 {
     [TestFixture]
     public class GlassHtmlFixture
     {
+
+        #region Method - RenderImage
+
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/133
+        /// </summary>
+        [Test]
+        [Ignore("This test has to be run manually and compare manually because the order of parameters is different")]
+        public void RenderImage_MatchesSitecoreOutput_Issue133()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/RenderImage/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+
+            string fieldValue= "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
+
+            var item = db.GetItem(targetPath);
+            var field = item.Fields["Image"];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var model = service.GetItem<StubClassWithImage>(targetPath);
+
+
+            var scControl = new Sitecore.Web.UI.WebControls.Image();
+            scControl.Item = item;
+            scControl.Field = "Image";
+            scControl.Parameters = "mw=200";
+           
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Normal);
+
+            Sitecore.Context.Site = siteContext;
+
+            StringBuilder sb = new StringBuilder();
+            HtmlTextWriter writer  = new HtmlTextWriter(new StringWriter(sb));
+            //Act
+            scControl.RenderControl(writer);
+            var scResult = sb.ToString();
+            var result = html.RenderImage(model, x => x.Image, new {mw=200});
+
+            //Assert
+            Assert.AreEqual(result,scResult);
+
+
+
+
+        }
+
+        [Test]
+        [Ignore("This test has to be run manually and compare manually because the order of parameters is different")]
+        public void RenderImage_MatchesSitecoreOutput_Issue133_Test2()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/RenderImage/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+
+            string fieldValue = "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
+
+            var item = db.GetItem(targetPath);
+            var field = item.Fields["Image"];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var model = service.GetItem<StubClassWithImage>(targetPath);
+
+
+            var scControl = new Sitecore.Web.UI.WebControls.Image();
+            scControl.Item = item;
+            scControl.Field = "Image";
+            scControl.Parameters = "w=200&as=true";
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Normal);
+
+            Sitecore.Context.Site = siteContext;
+
+            StringBuilder sb = new StringBuilder();
+            HtmlTextWriter writer = new HtmlTextWriter(new StringWriter(sb));
+            //Act
+            scControl.RenderControl(writer);
+            var scResult = sb.ToString();
+            var result = html.RenderImage(model, x => x.Image, new { mw = 200, As=true });
+
+            //Assert
+            Assert.AreEqual(result, scResult);
+
+
+        }
+
+        [Test]
+        [Ignore("This test has to be run manually and compare manually because the order of parameters is different")]
+        public void RenderImage_MatchesSitecoreOutput_Issue133_Test3()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/RenderImage/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+
+            string fieldValue = "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
+
+            var item = db.GetItem(targetPath);
+            var field = item.Fields["Image"];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var model = service.GetItem<StubClassWithImage>(targetPath);
+
+
+            var scControl = new Sitecore.Web.UI.WebControls.Image();
+            scControl.Item = item;
+            scControl.Field = "Image";
+            scControl.Parameters = "width=200&as=true";
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Normal);
+
+            Sitecore.Context.Site = siteContext;
+
+            StringBuilder sb = new StringBuilder();
+            HtmlTextWriter writer = new HtmlTextWriter(new StringWriter(sb));
+            //Act
+            scControl.RenderControl(writer);
+            var scResult = sb.ToString();
+            var result = html.RenderImage(model, x => x.Image, new { width = 200 });
+
+            //Assert
+            Assert.AreEqual(result, scResult);
+
+
+        }
+
+        #endregion
         #region Method - Editable
 
         [Test]
@@ -88,6 +280,9 @@ namespace Glass.Mapper.Sc.Integration
             Console.WriteLine("result "+result);
         }
 
+     
+
+       
         [Test]
         public void Editable_NotInEditMode_StringFieldReturned()
         {
@@ -135,6 +330,8 @@ namespace Glass.Mapper.Sc.Integration
             Assert.IsFalse(result.Contains("scWebEditInput"));
             Console.WriteLine("result " + result);
         }
+
+
 
         [Test]
         public void Editable_SimpleLambdaInEditMode_StringFieldWithEditReturned()
@@ -958,6 +1155,18 @@ namespace Glass.Mapper.Sc.Integration
 
             [SitecoreQuery("./../*", IsRelative = true)]
             public virtual IEnumerable<StubLambdaClass> EnumerableSubStub { get; set; }
+        }
+
+        [SitecoreType]
+        public class StubClassWithImage
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual Image Image { get; set; }
+
+         
         }
 
 

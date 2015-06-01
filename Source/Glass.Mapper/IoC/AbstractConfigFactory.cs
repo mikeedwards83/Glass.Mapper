@@ -17,23 +17,22 @@ namespace Glass.Mapper.IoC
 
         public void Insert(int index,Func<T> add)
         {
-            TypeGenerators.Insert(index, add);
+            lock (TypeGenerators)
+            {
+                TypeGenerators.Insert(index, add);
+            }
         }
 
         public virtual void Add(Func<T> add)
         {
+            lock (TypeGenerators)
+            {
                 TypeGenerators.Add(add);
+            }
         }
-
-        protected abstract void AddTypes();
 
         public virtual IEnumerable<T> GetItems()
         {
-            if (TypeGenerators.Count == 0)
-            {
-                AddTypes();
-            }
-
             return TypeGenerators != null
                 ? TypeGenerators.Select(f => f())
                 : null;
