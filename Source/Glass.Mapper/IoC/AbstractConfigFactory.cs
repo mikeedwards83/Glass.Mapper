@@ -34,7 +34,7 @@ namespace Glass.Mapper.IoC
         public virtual IEnumerable<T> GetItems()
         {
             return TypeGenerators != null
-                ? TypeGenerators.Select(f => f())
+                ? TypeGenerators.Select(f => f()).ToArray() //we want to force enumeration to avoid race conditions.s
                 : null;
         }
     }
