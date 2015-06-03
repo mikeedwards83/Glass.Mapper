@@ -476,7 +476,31 @@ namespace Glass.Mapper.Sc.Integration
 
         //   }
 
+        [Test]
+        public void DifferentActivation()
+        {
+            Type stubClassType = typeof(StubClassWithLotsOfProperties);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 100000; i++)
+            {
+                var result = Activator.CreateInstance(stubClassType);
+            }
+            sw.Stop();
 
+            Console.WriteLine("Activator.CreateInstance: {0}", sw.ElapsedTicks);
+
+            sw.Restart();
+            for (var i = 0; i < 100000; i++)
+            {
+                ActivationManager.CompiledActivator<object> activator = ActivationManager.GetActivator(stubClassType);
+                var result = activator();
+            }
+
+            sw.Stop();
+
+            Console.WriteLine("Compiled lambda: {0}", sw.ElapsedTicks);
+        }
 
     }
 }

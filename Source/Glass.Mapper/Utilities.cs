@@ -246,11 +246,20 @@ namespace Glass.Mapper
             if (parameters != null && parameters.Any())
             {
                 var paramTypes = parameters.Select(p => p.GetType()).ToArray();
-                obj = GetActivator(genericType, paramTypes)(parameters);
+                var activator = GetActivator(genericType, paramTypes);
+                obj = activator(parameters);
             }
             else
                 obj = GetActivator(genericType)();
             return obj;
+        }
+
+        public static ActivationManager.CompiledActivator<object> GetActivator(Type type, Type[] arguments,
+            Type[] parameterTypes)
+        {
+            Type genericType = type.MakeGenericType(arguments);
+
+            return GetActivator(genericType, parameterTypes);
         }
 
         /// <summary>
@@ -418,7 +427,7 @@ namespace Glass.Mapper
         /// <param name="forType">For type.</param>
         /// <param name="parameterTypes">The parameter types.</param>
         /// <returns></returns>
-        protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType,
+        public static ActivationManager.CompiledActivator<object> GetActivator(Type forType,
             Type [] parameterTypes = null)
         {
             return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, parameterTypes));

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Sitecore.Data.Items;
 using Glass.Mapper.Sc.Configuration;
 
@@ -31,12 +32,29 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreChildrenMapper : AbstractDataMapper
     {
+
+        private Type[] _genericTypes;
+        private Type _lazyType;
+        private ActivationManager.CompiledActivator<object> _activator;
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreChildrenMapper"/> class.
         /// </summary>
         public SitecoreChildrenMapper()
         {
             this.ReadOnly = true;
+        }
+
+        
+
+        public override void Setup(DataMapperResolverArgs args)
+        {
+            var genericType = Mapper.Utilities.GetGenericArgument(args.PropertyConfiguration.PropertyInfo.PropertyType);
+            _genericTypes = new[] {genericType};
+            _lazyType = typeof (LazyItemEnumerable<>);
+            _activator = Utilities.GetActivator(_lazyType, _genericTypes, LazyItemEnumerable.ConstructorTypes);
+
+
+            base.Setup(args);
         }
 
         /// <summary>
@@ -60,18 +78,13 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext = mappingContext as SitecoreDataMappingContext;
             var scConfig = Configuration as SitecoreChildrenConfiguration;
 
-            Type genericType = Mapper.Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
 
             Func<IEnumerable<Item>> getItems = () => scContext.Item.Children;
 
-            return Utilities.CreateGenericType(
-                typeof (LazyItemEnumerable<>),
-                new[] {genericType},
-                getItems,
+            return _activator(getItems,
                 scConfig.IsLazy,
                 scConfig.InferType,
-                scContext.Service
-                );
+                scContext.Service);
 
         }
 

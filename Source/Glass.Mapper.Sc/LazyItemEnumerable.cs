@@ -29,6 +29,12 @@ namespace Glass.Mapper.Sc
     /// Class LazyItemEnumerable
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    /// 
+
+    public static class LazyItemEnumerable
+    {
+        public static readonly Type[] ConstructorTypes = new[] { typeof(Func<IEnumerable<Item>>), typeof(bool), typeof(bool), typeof(ISitecoreService) };
+    }
     public class LazyItemEnumerable<T> : IEnumerable<T> where T:class 
     {
         private readonly Func<IEnumerable<Item>> _getItems;
