@@ -10,10 +10,16 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class ConfigurationResolverConfigFactory : AbstractConfigFactory<IConfigurationResolverTask>
     {
-        protected override void AddTypes()
+        public ConfigurationResolverConfigFactory()
+        {
+            Init();
+        }
+
+        protected  void Init()
         {
             Add(() => new SitecoreItemResolverTask());
             Add(() => new MultiInterfaceResolverTask());
+            Add(() => new TemplateInferredTypeTask());
             Add(() => new ConfigurationStandardResolverTask());
             Add(() => new ConfigurationOnDemandResolverTask<SitecoreTypeConfiguration>());
         }

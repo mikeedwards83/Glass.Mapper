@@ -16,9 +16,10 @@ namespace Glass.Mapper.Sc.IoC
         public ObjectConstructionTaskConfigFactory(IDependencyResolver dependencyResolver)
         {
             this.dependencyResolver = dependencyResolver;
+            Init();
         }
 
-        protected override void AddTypes()
+        protected void Init()
         {
             var cacheManager = dependencyResolver.GetCacheManager();
             Add(() => new CreateDynamicTask());
