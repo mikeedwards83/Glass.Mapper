@@ -112,6 +112,7 @@
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAdd\CacheAddTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\AlternativeCreateConcreteTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />

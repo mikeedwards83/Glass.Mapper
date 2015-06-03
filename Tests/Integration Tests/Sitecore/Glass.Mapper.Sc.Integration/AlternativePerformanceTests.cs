@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc.Integration
 {
     [TestFixture]
     
-    public class PerformanceTests
+    public class AlternativeCreationPerformanceTests
     {
 
         private string _expected;
@@ -63,6 +63,7 @@ namespace Glass.Mapper.Sc.Integration
             _id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
 
             _context = Context.Create(Utilities.CreateStandardResolver());
+            _context.DependencyResolver.ObjectConstructionFactory.Insert(4, () => new AlternativeCreateConcreteTask());
 
 
             _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
@@ -143,6 +144,7 @@ namespace Glass.Mapper.Sc.Integration
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
         }
+
 
         [Test]
         [Timeout(120000)]
