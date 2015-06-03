@@ -146,6 +146,37 @@ namespace Glass.Mapper.Sc.Integration
 
         [Test]
         [Timeout(120000)]
+        [Repeat(10000)]
+        public void GetItems_LotsOfProperties_NotRaw(
+            [Values(1000, 10000, 50000)] int count
+            )
+        {
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Reset();
+                _rawWatch.Reset();
+
+                _rawWatch.Start();
+                var rawItem = _db.GetItem(new ID(_id));
+                var value1 = rawItem["Field"];
+                _rawWatch.Stop();
+                _rawTotal = _rawWatch.ElapsedTicks;
+
+                _glassWatch.Start();
+                var glassItem = _service.GetItem<StubClassWithLotsOfPropertiesNotRaw>(_id);
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+                _glassTotal = _glassWatch.ElapsedTicks;
+
+            }
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+        }
+
+        [Test]
+        [Timeout(120000)]
         public void GetItems_InheritanceTest(
             [Values(100, 200, 300)] int count
             )
@@ -241,6 +272,74 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string Field19 { get; set; }
 
             [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field20 { get; set; }
+
+
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+        }
+
+        [SitecoreType]
+        public class StubClassWithLotsOfPropertiesNotRaw
+        {
+            [SitecoreField("Field")]
+            public virtual string Field1 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field2 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field3 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field4 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field5 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field6 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field7 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field8 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field9 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field10 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field11 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field12 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field13 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field14 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field15 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field16 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field17 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field18 { get; set; }
+
+            [SitecoreField("Field")]
+            public virtual string Field19 { get; set; }
+
+            [SitecoreField("Field")]
             public virtual string Field20 { get; set; }
 
 
