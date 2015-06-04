@@ -65,7 +65,6 @@ namespace Glass.Mapper.Sc.Integration
             _context = Context.Create(Utilities.CreateStandardResolver());
             _context.DependencyResolver.ObjectConstructionFactory.Insert(4, () => new AlternativeCreateConcreteTask());
 
-
             _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             _db = Factory.GetDatabase("master");
@@ -75,10 +74,21 @@ namespace Glass.Mapper.Sc.Integration
             _service = new SitecoreService(_db);
 
             var item = _db.GetItem(new ID(_id));
+
             using (new ItemEditing(item, true))
             {
                 item["Field"] = _expected;
             }
+
+            // Warm up Glass
+            _service.Cast<StubClassWithLotsOfProperties>(item);
+            _service.Cast<StubClass>(item);
+            const string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+            var inheritanceItem = _db.GetItem(path);
+
+
+            _service.Cast<StubClassLevel5>(inheritanceItem);
+            _service.Cast<StubClassLevel1>(inheritanceItem);
         }
 
        

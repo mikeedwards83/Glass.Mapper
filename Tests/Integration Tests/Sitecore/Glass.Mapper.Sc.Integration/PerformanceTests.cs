@@ -74,10 +74,20 @@ namespace Glass.Mapper.Sc.Integration
             _service = new SitecoreService(_db);
 
             var item = _db.GetItem(new ID(_id));
+
             using (new ItemEditing(item, true))
             {
                 item["Field"] = _expected;
             }
+
+            _service.Cast<StubClassWithLotsOfProperties>(item);
+            _service.Cast<StubClass>(item);
+            const string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+            var inheritanceItem = _db.GetItem(path);
+
+
+            _service.Cast<StubClassLevel5>(inheritanceItem);
+            _service.Cast<StubClassLevel1>(inheritanceItem);
         }
 
        
