@@ -37,11 +37,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         public SitecoreType()
         {
-            _configuration = new SitecoreTypeConfiguration();
+            _configuration = CreateSitecoreTypeConfiguration();
             _configuration.Type = typeof (T);
             _configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(_configuration.Type);
+        }
 
-
+        /// <summary>
+        /// Instantiates <see cref="SitecoreTypeConfiguration"/>.
+        /// Override this method to use another implementation
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SitecoreTypeConfiguration CreateSitecoreTypeConfiguration()
+        {
+            return new SitecoreTypeConfiguration();
         }
 
         /// <summary>
