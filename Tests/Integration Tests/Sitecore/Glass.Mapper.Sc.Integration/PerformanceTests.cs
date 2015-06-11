@@ -26,6 +26,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -121,6 +122,99 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void CastItems(
+            [Values(1, 1000, 10000, 50000)] int count
+            )
+        {
+            var rawItem = _db.GetItem(new ID(_id));
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            _rawWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem["Field"];
+            }
+            _rawWatch.Stop();
+            _rawTotal = _rawWatch.ElapsedTicks;
+
+            _glassWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = _service.Cast<StubClass>(rawItem).Field;
+            }
+            _glassWatch.Stop();
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void GlassCastItems(
+            [Values(1, 1000, 10000, 50000)] int count
+            )
+        {
+            var rawItem = _db.GetItem(new ID(_id));
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            _rawWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem["Field"];
+            }
+            _rawWatch.Stop();
+            _rawTotal = _rawWatch.ElapsedTicks;
+
+            _glassWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem.GlassCast<StubClass>().Field;
+            }
+            _glassWatch.Stop();
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void GlassCastItemsWithService(
+            [Values(1, 1000, 10000, 50000)] int count
+            )
+        {
+            var rawItem = _db.GetItem(new ID(_id));
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            _rawWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem["Field"];
+            }
+            _rawWatch.Stop();
+            _rawTotal = _rawWatch.ElapsedTicks;
+
+            _glassWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem.GlassCast<StubClass>(_service).Field;
+            }
+            _glassWatch.Stop();
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
         }
 
         [Test]
