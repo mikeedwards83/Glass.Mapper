@@ -18,7 +18,11 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Sc.Configuration;
@@ -318,6 +322,8 @@ namespace Glass.Mapper.Sc.Integration
         [SitecoreType]
         public class StubClassWithLotsOfProperties
         {
+            public virtual string Url { get; set; }
+
             [SitecoreField("Field",Setting = SitecoreFieldSettings.RichTextRaw)]
             public virtual string Field1 { get; set; }
 
@@ -604,6 +610,90 @@ namespace Glass.Mapper.Sc.Integration
             sw.Stop();
 
             Console.WriteLine("Compiled lambda: {0}", sw.ElapsedTicks);
+        }
+
+        [Test]
+        public void CreateObject()
+        {
+            Type stubClassType = typeof(StubClassWithLotsOfProperties);
+            var constructorInfo = GetConstructorInfo(stubClassType);
+            var warmup1 = new StubClassWithLotsOfProperties { Field1 = "fred" };
+            var warmup2 = ActivationTestBed<StubClassWithLotsOfProperties>(constructorInfo);
+
+            Stopwatch origSw = new Stopwatch();
+            origSw.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var result = new StubClassWithLotsOfProperties {Field1 = "fred"};
+            }
+            origSw.Stop();
+            Console.WriteLine(origSw.ElapsedTicks);
+
+            Stopwatch newSw = new Stopwatch();
+            newSw.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var result = ActivationTestBed<StubClassWithLotsOfProperties>(constructorInfo);
+            }
+            newSw.Stop();
+            Console.WriteLine(newSw.ElapsedTicks);
+
+        }
+
+
+        private ConstructorInfo GetConstructorInfo(Type type)
+        {
+            ConstructorInfo[] constructors = type.GetConstructors();
+            return constructors.FirstOrDefault();
+        }
+
+        private Func<StubClassWithLotsOfProperties> compiledLambda;
+        public StubClassWithLotsOfProperties ActivationTestBed<T>(ConstructorInfo constructor)
+        {
+            if (compiledLambda != null)
+            {
+                return compiledLambda();
+            }
+
+            ParameterInfo[] paramsInfo = constructor.GetParameters();
+
+            //create a single param of type object[]
+            ParameterExpression param = Expression.Parameter(typeof(object[]), "args");
+
+            var argsExp = new Expression[paramsInfo.Length];
+
+            // Create a typed expression with each arg from the parameter array
+            for (int i = 0; i < paramsInfo.Length; i++)
+            {
+                Expression index = Expression.Constant(i);
+                Type paramType = paramsInfo[i].ParameterType;
+
+                Expression paramAccessorExp = Expression.ArrayIndex(param, index);
+                Expression paramCastExp = Expression.Convert(paramAccessorExp, paramType);
+
+                argsExp[i] = paramCastExp;
+            }
+
+            NewExpression newExp = Expression.New(constructor, argsExp);
+            Expression testExpression = Expression.MemberInit(
+                newExp,
+                new List<MemberBinding>()
+                {
+                    Expression.Bind(typeof (T).GetMember("Field1")[0],
+                        Expression.Constant(GetValue()))
+                });
+
+
+            //create a lambda with the New Expression as the body and our param object[] as arg
+            compiledLambda = Expression.Lambda<Func<StubClassWithLotsOfProperties>>(testExpression).Compile();
+
+            // return the compiled activator
+            return compiledLambda();
+        }
+
+        private string GetValue()
+        {
+            return "fred";
         }
 
     }
