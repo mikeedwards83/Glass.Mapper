@@ -3,7 +3,7 @@ using System.Diagnostics;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Glass.Sandbox
+namespace Glass.Sandbox.ObjectCreation
 {
     [TestFixture]
     public class ObjectCreationBase

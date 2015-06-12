@@ -50,7 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ObjectCreationBase.cs" />
+    <Compile Include="ObjectCreation\NewObjectCreationTests.cs" />
+    <Compile Include="ObjectCreation\ObjectCreationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
