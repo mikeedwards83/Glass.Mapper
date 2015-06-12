@@ -479,10 +479,6 @@ namespace Glass.Mapper.Sc
         {
             if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
 
-
-            if (constructorParameters != null && constructorParameters.Length > 10)
-                throw new NotSupportedException("Maximum number of constructor parameters is 10");
-
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;
             creationContext.RequestedType = type;

@@ -53,20 +53,23 @@ namespace Glass.Mapper
         /// <param name="mappingContext">The mapping context.</param>
         public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-            object result;
 
             try
             {
-                 result = MapToProperty(mappingContext);
+                object result;
+                result = MapToProperty(mappingContext);
+                if (result != null)
+                    Configuration.PropertySetter(mappingContext.Object, result);
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+                throw new MapperException(
+                    "Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name,
+                        Configuration.PropertyInfo.ReflectedType.FullName), ex);
             }
-           
 
-            if (result != null)
-				Configuration.PropertySetter(mappingContext.Object, result);
+
+
         }
 
         /// <summary>

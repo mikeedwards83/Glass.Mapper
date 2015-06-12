@@ -120,6 +120,7 @@ namespace Glass.Mapper.Sc.Integration
             [Values(1000, 10000, 50000)] int count
             )
         {
+            var warmUp = _service.GetItem<StubClassWithLotsOfProperties>(_id);
 
             for (int i = 0; i < count; i++)
             {
@@ -208,8 +209,126 @@ namespace Glass.Mapper.Sc.Integration
             Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
         }
 
+        [Test]
+        [Timeout(120000)]
+        public void CastWithService_NoPropertyVsProperty(
+            [Values(3000)] int count
+            )
+        {
+            string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+            var item = _db.GetItem(path);
+
+            var glassItemWarm = item.GlassCast<StubNoProperties>(_service);
+            var glassItemWarm1 = item.GlassCast<StubOneProperty>(_service);
+            
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Reset();
+                _rawWatch.Reset();
+
+                _rawWatch.Start();
+
+                var glassItem1 = item.GlassCast<StubNoProperties>(_service);
+
+                _rawWatch.Stop();
+                _rawTotal += _rawWatch.ElapsedTicks;
+
+                _glassWatch.Start();
+                var glassItem2 = item.GlassCast<StubOneProperty>(_service);
+                _glassWatch.Stop();
+                _glassTotal += _glassWatch.ElapsedTicks;
+
+            }
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance inheritance Test Count: {0},  No Prop: {1},  Gls: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        public void CastWithService_ItemVsProperty(
+            [Values( 3000)] int count
+            )
+        {
+            string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+            var item = _db.GetItem(path);
+
+            var glassItemWarm = item.GlassCast<StubNoProperties>(_service);
+            var glassItemWarm1 = item.GlassCast<StubOneProperty>(_service);
+
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Reset();
+                _rawWatch.Reset();
+
+                _rawWatch.Start();
+
+                var value1 = item["Field"];
+
+                _rawWatch.Stop();
+                _rawTotal += _rawWatch.ElapsedTicks;
+
+                _glassWatch.Start();
+                var glassItem2 = item.GlassCast<StubOneProperty>(_service);
+
+                _glassWatch.Stop();
+                _glassTotal += _glassWatch.ElapsedTicks;
+
+            }
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance inheritance Test Count: {0},  Sc: {1},  Gls: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        public void CastWithService_ManualVsProperty(
+            [Values(3000)] int count
+            )
+        {
+            string path = "/sitecore/content/Tests/PerformanceTests/InheritanceTest";
+            var item = _db.GetItem(path);
+
+            var glassItemWarm = item.GlassCast<StubNoProperties>(_service);
+            var glassItemWarm1 = item.GlassCast<StubOneProperty>(_service);
+
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Reset();
+                _rawWatch.Reset();
+
+                _rawWatch.Start();
+
+                var cls = new StubOneProperty();
+                cls.Field = item["Field"];
+
+                _rawWatch.Stop();
+                _rawTotal += _rawWatch.ElapsedTicks;
+
+                _glassWatch.Start();
+                var glassItem2 = item.GlassCast<StubOneProperty>(_service);
+
+                _glassWatch.Stop();
+                _glassTotal += _glassWatch.ElapsedTicks;
+
+            }
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance inheritance Test Count: {0},  Manual: {1},  Gls: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
+        }
         #region Stubs
 
+        public class StubOneProperty
+        {
+            public virtual string Field { get; set; }
+        }
+        public class StubNoProperties
+        {
+            
+        }
 
         [SitecoreType]
         public class StubClassWithLotsOfProperties

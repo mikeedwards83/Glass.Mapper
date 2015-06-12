@@ -90,7 +90,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
 
-            Delegate conMethod = null;
             object obj;
 
             try
@@ -104,8 +103,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 }
                 else
                 {
+
+                    if (constructorParameters.Length > 10)
+                        throw new NotSupportedException("Maximum number of constructor parameters is 10");
+
                     var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
                     var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
+                    Delegate conMethod = null;
                     conMethod = args.Configuration.ConstructorMethods[constructorInfo];
                     obj = conMethod.DynamicInvoke(constructorParameters);
                 }

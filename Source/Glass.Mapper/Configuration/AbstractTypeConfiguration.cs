@@ -104,28 +104,19 @@ namespace Glass.Mapper.Configuration
             }
         }
 
-        private Action<object, AbstractDataMappingContext> _propertMappingExpression = (obj, context) => { };
+        private Action<AbstractDataMappingContext> _propertMappingExpression = (context) => { };
 
 
-        protected virtual Action<object, AbstractDataMappingContext> CreatePropertyExpression(
+        protected virtual Action<AbstractDataMappingContext> CreatePropertyExpression(
             AbstractPropertyConfiguration property)
         {
             var next = _propertMappingExpression;
 
-            return (obj, context) =>
-                {
-                    try
-                    {
-                        property.Mapper.MapCmsToProperty(context);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new MapperException(
-                            "Failed to map property {0} on {1}".Formatted(property.PropertyInfo.Name,
-                                property.PropertyInfo.DeclaringType.FullName), e);
-                    }
-                    next(obj, context);
-                };
+            return (context) =>
+            {
+                property.Mapper.MapCmsToProperty(context);
+                next(context);
+            };
         }
 
 
@@ -141,38 +132,12 @@ namespace Glass.Mapper.Configuration
             {
                 //create properties 
                 AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
-                _propertMappingExpression(obj, dataMappingContext);
-
-                //var tasks = Properties.Select(x =>
-                //    {
-                //        var t = new Task(() => x.Mapper.MapCmsToProperty(dataMappingContext));
-                //        t.Start();
-                //        return t;
-                //    });
-
-                //Task.WaitAll(tasks.ToArray());
-
-                //for(int i  = Properties.Length-1; i >= 0; i--)
-                //{
-                //    var prop = Properties[i];
-
-                //    try
-                //    {
-                //        prop.Mapper.MapCmsToProperty(context);
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        throw new MapperException(
-                //            "Failed to map property {0} on {1}".Formatted(prop.PropertyInfo.Name,
-                //                prop.PropertyInfo.DeclaringType.FullName), e);
-                //    }
-
-                //}
+                _propertMappingExpression(dataMappingContext);
             }
             catch (Exception ex)
             {
                 throw new MapperException(
-                           "Failed to map properties on {0}.".Formatted(context.DataSummary()), ex);
+                    "Failed to map properties on {0}.".Formatted(context.DataSummary()), ex);
             }
         }
 

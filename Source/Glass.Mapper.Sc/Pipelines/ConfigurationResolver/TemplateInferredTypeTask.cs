@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using System;
@@ -43,35 +43,30 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
         /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
-            if (args.Result == null)
+            if (args.Result == null && args.AbstractTypeCreationContext.InferType)
             {
-                if (args.AbstractTypeCreationContext.InferType)
+                var scContext = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
+
+                var requestedType = scContext.RequestedType;
+                var item = scContext.Item;
+                var templateId = item != null ? item.TemplateID : scContext.TemplateId;
+
+                var key = new Tuple<Context, Type, ID>(args.Context, requestedType, templateId);
+                if (_inferredCache.ContainsKey(key))
                 {
+                    args.Result = _inferredCache[key];
+                }
+                else
+                {
+                    var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
 
-                    
-                    var scContext = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
-
-                    var requestedType = scContext.RequestedType;
-                    var item = scContext.Item;
-                    var templateId = item != null ? item.TemplateID : scContext.TemplateId;
-
-                    var key = new Tuple<Context, Type, ID>(args.Context, requestedType, templateId);
-                    if (_inferredCache.ContainsKey(key))
+                    var types = configs.Where(x => x.TemplateId == templateId);
+                    if (types.Any())
                     {
-                        args.Result = _inferredCache[key];
-                    }
-                    else
-                    {
-                        var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
-
-                        var types = configs.Where(x => x.TemplateId == templateId);
-                        if (types.Any())
+                        args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                        if (!_inferredCache.TryAdd(key, args.Result as SitecoreTypeConfiguration))
                         {
-                            args.Result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
-                            if (!_inferredCache.TryAdd(key, args.Result as SitecoreTypeConfiguration))
-                            {
-                                //TODO: some logging
-                            }
+                            //TODO: some logging
                         }
                     }
                 }
