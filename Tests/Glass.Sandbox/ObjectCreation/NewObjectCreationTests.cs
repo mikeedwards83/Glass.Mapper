@@ -11,7 +11,7 @@ namespace Glass.Sandbox.ObjectCreation
             // Assign
             
             // Act
-            TestObject(x => new StubClass() {Property1 = x.Property1, Property2 = x.Property2});
+            TestObject(x => new StubClass {Property1 = x.Property1, Property2 = x.Property2});
 
             // Assert
         }

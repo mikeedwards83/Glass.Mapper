@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectCreation\LambdaMemberInitObjectCreationTests.cs" />
     <Compile Include="ObjectCreation\NewObjectCreationTests.cs" />
     <Compile Include="ObjectCreation\ObjectCreationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

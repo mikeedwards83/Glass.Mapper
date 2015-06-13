@@ -19,6 +19,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
@@ -98,9 +99,22 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 if (constructorParameters == null || constructorParameters.Length == 0)
                 {
                     //conMethod = args.Configuration.DefaultConstructor;
-                    obj = Activator.CreateInstance(args.Configuration.Type);
-                    /*ActivationManager.CompiledActivator<object> activator = ActivationManager.GetActivator(args.Configuration.Type);
-                    obj = activator();*/
+                   // obj = Activator.CreateInstance(args.Configuration.Type);
+                    if (args.Configuration.DefaultConstructorActivator == null)
+                    {
+
+                        var constructorInfo = args.Configuration.Type.GetConstructors()[0];
+                        NewExpression newExp = Expression.New(constructorInfo);
+
+                        //create a lambda with the New Expression as the body and our param object[] as arg
+                        LambdaExpression lambda = Expression.Lambda(typeof (Func<object>), newExp);
+
+                        // return the compiled activator
+                        args.Configuration.DefaultConstructorActivator = (Func<object>) lambda.Compile();
+
+                    }
+
+                    obj = args.Configuration.DefaultConstructorActivator();
                 }
                 else
                 {

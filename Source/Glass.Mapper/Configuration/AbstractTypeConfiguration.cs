@@ -73,6 +73,8 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public bool Cachable { get; set; }
 
+        public Func<object> DefaultConstructorActivator { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.
         /// </summary>

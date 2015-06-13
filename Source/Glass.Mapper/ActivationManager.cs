@@ -71,7 +71,14 @@ namespace Glass.Mapper
                 return null;
             }
 
-            result = CreateActivator<object>(constructorInfo);
+            if (constructorInfo.GetParameters().Length == 0)
+            {
+                result = CreateDefaultActivator<object>(constructorInfo);
+            }
+            else
+            {
+                result = CreateActivator<object>(constructorInfo);
+            }
             Activators.TryAdd(type, result);
             return result;
         }
@@ -120,6 +127,8 @@ namespace Glass.Mapper
 				argsExp[i] = paramCastExp;
 			}
 
+
+
 			// creates a new expression that calls the constructor with the specified arguments
 			NewExpression newExp = Expression.New(constructor, argsExp);
 
@@ -129,6 +138,18 @@ namespace Glass.Mapper
 			// return the compiled activator
 			return (CompiledActivator<T>)lambda.Compile();
 		}
+
+        public static CompiledActivator<T> CreateDefaultActivator<T>(ConstructorInfo constructor)
+        {
+            // creates a new expression that calls the constructor with the specified arguments
+            NewExpression newExp = Expression.New(constructor);
+
+            //create a lambda with the New Expression as the body and our param object[] as arg
+            LambdaExpression lambda = Expression.Lambda(typeof(CompiledActivator<T>), newExp);
+
+            // return the compiled activator
+            return (CompiledActivator<T>)lambda.Compile();
+        }
 
 		/// <summary>
 		/// Checks if a given sequence is equal to another, using the specified comparer function
