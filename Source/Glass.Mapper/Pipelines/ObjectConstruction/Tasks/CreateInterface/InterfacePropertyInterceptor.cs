@@ -102,7 +102,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
 			foreach (var property in config.Properties)
 			{
-				var result = property.Mapper.MapToProperty(mappingContext);
+			    var result = "";//TODO property.Mapper.MapToProperty(mappingContext);
 				values[property.PropertyInfo.Name] = result;
 			}
 

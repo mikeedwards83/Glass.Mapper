@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.DataMappers
     /// <summary>
     /// Class SitecoreFieldStringMapper
     /// </summary>
-    public class SitecoreFieldStringMapper : AbstractSitecoreFieldMapper
+    public class SitecoreFieldStringMapper : AbstractFastSitecoreFieldMapper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldStringMapper"/> class.
@@ -48,39 +48,6 @@ namespace Glass.Mapper.Sc.DataMappers
 
 
         private static ConcurrentDictionary<Guid, bool> isRichTextDictionary = new ConcurrentDictionary<Guid, bool>();
-
-        /// <summary>
-        /// Gets the field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <returns>System.Object.</returns>
-        public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
-        {
-            if (field == null)
-                return string.Empty;
-
-            if (config.Setting == SitecoreFieldSettings.RichTextRaw)
-            {
-                return field.Value;
-            }
-
-            Guid fieldGuid = field.ID.Guid;
-
-            // shortest route - we know whether or not its rich text
-            if (isRichTextDictionary.ContainsKey(fieldGuid))
-            {
-                return GetResult(field, isRichTextDictionary[fieldGuid]);
-            }
-
-            // we don't know - it might still be rich text
-            bool isRichText = field.TypeKey == _richTextKey;
-            isRichTextDictionary.TryAdd(fieldGuid, isRichText);
-
-            // now we know it isn't rich text - return the raw result.
-            return GetResult(field, isRichText);
-        }
 
         private string GetResult(Field field, bool isRichText)
         {
@@ -102,6 +69,55 @@ namespace Glass.Mapper.Sc.DataMappers
         }
 
 
+        public override void CreateBinding(ExpressionBuilder builder)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+            
+            if (scConfig.Setting == SitecoreFieldSettings.RichTextRaw)
+            {
+               builder.AddMemberBinding(scConfig.PropertyInfo, this, "RawMapper");
+            }
+            else
+            {
+                builder.AddMemberBinding(scConfig.PropertyInfo, this, "NormalMapper");
+            }
+        }
+
+        public string NormalMapper(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+            var scContext = mappingContext as SitecoreDataMappingContext;
+
+            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+
+            if (field == null)
+                return string.Empty;
+
+            Guid fieldGuid = field.ID.Guid;
+
+            // shortest route - we know whether or not its rich text
+            if (isRichTextDictionary.ContainsKey(fieldGuid))
+            {
+                return GetResult(field, isRichTextDictionary[fieldGuid]);
+            }
+
+            // we don't know - it might still be rich text
+            bool isRichText = field.TypeKey == _richTextKey;
+            isRichTextDictionary.TryAdd(fieldGuid, isRichText);
+
+            // now we know it isn't rich text - return the raw result.
+            return GetResult(field, isRichText);
+        }
+
+
+
+        public string RawMapper(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+            var scContext = mappingContext as SitecoreDataMappingContext;
+            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+            return field.Value;
+        }
         /// <summary>
         /// Sets the field.
         /// </summary>
@@ -141,22 +157,6 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             //this will only be used by the SitecoreFieldIEnumerableMapper
             return value as string;
-        }
-
-        /// <summary>
-        /// Gets the field value.
-        /// </summary>
-        /// <param name="fieldValue">The field value.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <returns>
-        /// System.Object.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
-        {
-            //this will only be used by the SitecoreFieldIEnumerableMapper
-            return fieldValue;
         }
     }
 }

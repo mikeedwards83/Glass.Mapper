@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         {
             // Assign
             IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory();
-            IConfigFactory<AbstractDataMapper> configFactory = new DataMapperConfigFactory(queryParameterFactory);
+            IConfigFactory<AbstractCommonDataMapper> configFactory = new DataMapperConfigFactory(queryParameterFactory);
 
             // Act
             var result = configFactory.GetItems();

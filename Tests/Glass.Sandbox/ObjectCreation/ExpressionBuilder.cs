@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Glass.Sandbox.ObjectCreation
@@ -21,9 +23,11 @@ namespace Glass.Sandbox.ObjectCreation
             var mapper2 = new DataMapper2();
             var propertyInfo1 = typeof(Stub).GetProperty("Property1");
             var propertyInfo2 = typeof(Stub).GetProperty("Property2");
+            var propertyInfo3 = typeof(Stub).GetProperty("Property3");
 
             builder.AddMemberBinding(propertyInfo1, mapper1);
             builder.AddMemberBinding(propertyInfo2, mapper2);
+
             var func = builder.Build();
 
             var args1 = new Args();
@@ -35,8 +39,9 @@ namespace Glass.Sandbox.ObjectCreation
             var result2 = func(args2) as Stub;
 
             Assert.AreEqual(args1.Value, result1.Property1);
-            Assert.AreEqual("Hello World", result1.Property2);
+            Assert.AreEqual("hello world", result1.Property2);
             Assert.AreEqual(args2.Value, result2.Property1);
+            Assert.AreEqual("func bound", result2.Property3);
 
         }
 
@@ -57,6 +62,8 @@ namespace Glass.Sandbox.ObjectCreation
             _argsExpression = Expression.Parameter(typeof (Args), "args");
         }
 
+
+       
 
         public void AddMemberBinding(PropertyInfo propertyInfo, DataMapper  target)
         {
@@ -112,5 +119,6 @@ namespace Glass.Sandbox.ObjectCreation
     {
         public string Property1 { get; set; }
         public string Property2 { get; set; }
+        public string Property3 { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         {
             Container = container;
             DataMapperResolverFactory = new WindsorConfigFactory<IDataMapperResolverTask>(Container);
-            DataMapperFactory = new WindsorConfigFactory<AbstractDataMapper>(Container);
+            DataMapperFactory = new WindsorConfigFactory<AbstractCommonDataMapper>(Container);
             ConfigurationResolverFactory = new WindsorConfigFactory<IConfigurationResolverTask>(Container);
             ObjectConstructionFactory = new WindsorConfigFactory<IObjectConstructionTask>(Container);
             ObjectSavingFactory = new WindsorConfigFactory<IObjectSavingTask>(Container);
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
         }
 
         public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; private set; }
-        public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; private set; }
+        public IConfigFactory<AbstractCommonDataMapper> DataMapperFactory { get; private set; }
         public IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; private set; }
         public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; private set; }
         public IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; private set; }

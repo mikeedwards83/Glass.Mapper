@@ -54,8 +54,8 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
                     //todo filter fieldnames from FieldConfigs!
                     foreach (AbstractPropertyConfiguration propertyConfiguration in typeConfiguration.Properties.Where(x=> IndexFields.All(y=> y != x.PropertyInfo.Name)))
                     {
-                        object obj = propertyConfiguration.Mapper.MapToProperty(dataMappingContext);
-                        _values[propertyConfiguration.PropertyInfo.Name] = obj;
+                        //TODO: object obj = propertyConfiguration.Mapper.MapToProperty(dataMappingContext);
+                        _values[propertyConfiguration.PropertyInfo.Name] = "";//obj;
                     }
                     _isLoaded = true;
                 }

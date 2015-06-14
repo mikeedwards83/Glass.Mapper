@@ -97,36 +97,37 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             {
                 if (constructorParameters == null || constructorParameters.Length == 0)
                 {
+                    var mappingContext = args.Service.CreateDataMappingContext(args.AbstractTypeCreationContext, null);
+
                     //conMethod = args.Configuration.DefaultConstructor;
                     //obj = Activator.CreateInstance(args.Configuration.Type);
                     if (args.Configuration.DefaultConstructorActivator == null)
                     {
+                        ExpressionBuilder builder = new ExpressionBuilder(args.Configuration.Type);
 
-                        var constructorInfo = args.Configuration.Type.GetConstructors()[0];
-                        NewExpression newExp = Expression.New(constructorInfo);
+                        foreach (var property in args.Configuration.Properties)
+                        {
+                            if (property.Mapper is AbstractDataMapper)
+                            {
+                                builder.AddMemberBinding(property.PropertyInfo, property.Mapper as AbstractDataMapper , "MapToProperty");
+                            }
+                            else if (property.Mapper is AbstractFastDataMapper)
+                            {
+                                var mapper = property.Mapper as AbstractFastDataMapper;
+                                mapper.MapToProperty(builder);
+                            }
 
-                        //create a lambda with the New Expression as the body and our param object[] as arg
-                        LambdaExpression lambda = Expression.Lambda(typeof(Func<object>), newExp);
+                        }
+
+                        args.Configuration.DefaultConstructorActivator = builder.Build();
 
                         // return the compiled activator
-                        args.Configuration.DefaultConstructorActivator = (Func<object>)lambda.Compile();
 
                     }
 
 
-                    foreach (var property in args.Configuration.Properties)
-                    {
-                        ParameterExpression instanceParameter = Expression.Parameter(args.Configuration.Type, "instance");
-                        ParameterExpression mappingContextParameter = Expression.Parameter(typeof(AbstractDataMappingContext), "mappingContext");
-                        var expression = property.Mapper.GetMappingFunction(instanceParameter, mappingContextParameter);
-                      //  Expression.
-                        
+                    return args.Configuration.DefaultConstructorActivator(mappingContext);
 
-
-
-                    }
-
-                    obj = args.Configuration.DefaultConstructorActivator();
                 }
                 else
                 {

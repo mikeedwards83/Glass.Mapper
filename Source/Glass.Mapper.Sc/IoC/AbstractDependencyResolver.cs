@@ -15,7 +15,7 @@ namespace Glass.Mapper.Sc.IoC
         public Mapper.Config Config { get; set; }
         public Func<ICacheManager> CacheManager { get; set; }
         public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; set; }
-        public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; set; }
+        public IConfigFactory<AbstractCommonDataMapper> DataMapperFactory { get; set; }
         public IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; set; }
         public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; set; }
         public IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; set; }

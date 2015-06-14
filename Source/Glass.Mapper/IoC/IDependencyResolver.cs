@@ -33,7 +33,7 @@ namespace Glass.Mapper.IoC
         Config GetConfig();
         ICacheManager GetCacheManager();
         IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; }
-        IConfigFactory<AbstractDataMapper> DataMapperFactory { get; }
+        IConfigFactory<AbstractCommonDataMapper> DataMapperFactory { get; }
         IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; }
         IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; }
         IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; }

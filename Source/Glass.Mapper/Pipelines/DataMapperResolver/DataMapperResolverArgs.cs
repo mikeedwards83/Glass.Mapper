@@ -35,7 +35,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver
         /// The data mapper to use when loading the property
         /// </summary>
         /// <value>The result.</value>
-        public AbstractDataMapper Result { get; set; }
+        public AbstractCommonDataMapper Result { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataMapperResolverArgs"/> class.
@@ -51,7 +51,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver
         /// A list of all the data mappers loaded by the current context
         /// </summary>
         /// <value>The data mappers.</value>
-        public IEnumerable<AbstractDataMapper> DataMappers { get; set; }
+        public IEnumerable<AbstractCommonDataMapper> DataMappers { get; set; }
 
         
     }

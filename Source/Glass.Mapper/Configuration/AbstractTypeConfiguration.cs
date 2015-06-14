@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Glass.Mapper.Configuration.Attributes;
 
@@ -53,14 +54,12 @@ namespace Glass.Mapper.Configuration
         /// A list of the constructors on a type
         /// </summary>
         /// <value>The constructor methods.</value>
-        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods { get { return _constructorMethods; } set { _constructorMethods = value;
-            DefaultConstructor = _constructorMethods.Where(x=>x.Key.GetParameters().Length == 0).Select(x=>x.Value).FirstOrDefault();
-        } }
+        public IDictionary<ConstructorInfo, Delegate> ConstructorMethods
+        {
+            get { return _constructorMethods; }
+            set { _constructorMethods = value; }
+        }
 
-        /// <summary>
-        /// This is the classes default constructor
-        /// </summary>
-        public Delegate DefaultConstructor { get; private set; }
 
         /// <summary>
         /// Indicates properties should be automatically mapped
@@ -73,7 +72,7 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public bool Cachable { get; set; }
 
-        public Func<object> DefaultConstructorActivator { get; set; }
+        public Func<AbstractDataMappingContext,object> DefaultConstructorActivator { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTypeConfiguration"/> class.
@@ -116,12 +115,11 @@ namespace Glass.Mapper.Configuration
 
             return (context) =>
             {
-                property.Mapper.MapCmsToProperty(context);
+                //TODO property.Mapper.MapCmsToProperty(context);
                 next(context);
             };
         }
-
-
+        
         /// <summary>
         /// Maps the properties to object.
         /// </summary>

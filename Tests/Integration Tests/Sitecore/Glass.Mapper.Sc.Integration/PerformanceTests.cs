@@ -212,7 +212,8 @@ namespace Glass.Mapper.Sc.Integration
             _glassWatch.Start();
             for (int i = 0; i < count; i++)
             {
-                var stringIWant = rawItem.GlassCast<StubClass>(_service).Field;
+                var result = _service.CreateType<StubClass>(rawItem);
+                var stringIWant = result.Field;
             }
             _glassWatch.Stop();
             _glassTotal = _glassWatch.ElapsedTicks;
@@ -230,27 +231,31 @@ namespace Glass.Mapper.Sc.Integration
         {
             var warmUp = _service.GetItem<StubClassWithLotsOfProperties>(_id);
 
+
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            _rawWatch.Start();
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
-                _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
-                _rawWatch.Stop();
-                _rawTotal = _rawWatch.ElapsedTicks;
+            }
+            _rawWatch.Stop();
+            _rawTotal = _rawWatch.ElapsedTicks;
 
+            for (int i = 0; i < count; i++)
+            {
                 _glassWatch.Start();
                 var glassItem = _service.GetItem<StubClassWithLotsOfProperties>(_id);
                 var value2 = glassItem.Field1;
                 _glassWatch.Stop();
-                _glassTotal = _glassWatch.ElapsedTicks;
-
             }
+            _glassTotal = _glassWatch.ElapsedTicks;
 
-            double total = _glassTotal / _rawTotal;
-            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+            double total = _glassTotal/_rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total,
+                _glassTotal/count));
         }
 
         [Test]

@@ -10,6 +10,7 @@ using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security;
+using Glass.Sandbox.ObjectCreation;
 
 namespace Glass.Sandbox
 {
@@ -26,6 +27,7 @@ namespace Glass.Sandbox
             var stopWatch4 = new Stopwatch();
             var stopWatch5 = new Stopwatch();
             var stopWatch6 = new Stopwatch();
+            var stopWatch7 = new Stopwatch();
 
             var type = typeof (Stub);
             var lamda = LamdaMethod(typeof(Stub));
@@ -33,6 +35,8 @@ namespace Glass.Sandbox
             var constructor = type.GetConstructors()[0];
 
             var il = IlMethod(typeof(Stub));
+            var builder = new ExpressionBuilder(type);
+            var builderFunc = builder.Build();
 
             //Act
 
@@ -80,9 +84,16 @@ namespace Glass.Sandbox
             }
             stopWatch6.Stop();
 
+            stopWatch7.Start();
+            for (int i = 0; i < 50000; i++)
+            {
+                var obj7 = builderFunc(null);
+            }
+            stopWatch7.Stop();
+
 
             //Assert
-            Console.WriteLine("Raw: {0} Activator: {1} Lambda: {2} IL: {3} Jit: {4} Constructor: {5}", stopWatch1.ElapsedTicks, stopWatch2.ElapsedTicks, stopWatch3.ElapsedTicks, stopWatch4.ElapsedTicks, stopWatch5.ElapsedTicks, stopWatch6.ElapsedTicks);
+            Console.WriteLine("Raw: {0} Activator: {1} Lambda: {2} IL: {3} Jit: {4} Constructor: {5}, Builder: {6}", stopWatch1.ElapsedTicks, stopWatch2.ElapsedTicks, stopWatch3.ElapsedTicks, stopWatch4.ElapsedTicks, stopWatch5.ElapsedTicks, stopWatch6.ElapsedTicks, stopWatch7.ElapsedTicks);
 
         }
 

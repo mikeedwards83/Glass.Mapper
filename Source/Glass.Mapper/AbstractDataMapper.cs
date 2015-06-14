@@ -18,28 +18,23 @@
 
 
 using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Permissions;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
 {
 
-    /***** 
-    /// 
-    /// I have assumed that all CMSs at the moment will using Strings for data storage
-    /// 
-    *****/
-
-    /// <summary>
-    /// A data mapper converts data from the CMS stored value to the .Net data type
-    /// </summary>
-    public abstract class AbstractDataMapper
+    public abstract class AbstractCommonDataMapper
     {
         /// <summary>
         /// Gets or sets a value indicating whether [read only].
         /// </summary>
         /// <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
-        public bool ReadOnly { get;  set; }
+        public bool ReadOnly { get; set; }
+
 
         /// <summary>
         /// The property this Data Mapper will populate
@@ -48,12 +43,83 @@ namespace Glass.Mapper
         public AbstractPropertyConfiguration Configuration { get; private set; }
 
         /// <summary>
+        /// Takes a Property value and writes it to a CMS value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        public virtual void MapPropertyToCms(AbstractDataMappingContext mappingContext)
+        {
+            if (ReadOnly) return;
+
+            try
+            {
+                mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
+            }
+
+            MapToCms(mappingContext);
+        }
+
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>The value to write</returns>
+        public abstract void MapToCms(AbstractDataMappingContext mappingContext);
+
+        /// <summary>
+        /// Sets up the data mapper for a particular property
+        /// </summary>
+        /// <param name="args">The args.</param>
+        public virtual void Setup(DataMapperResolverArgs args)
+        {
+            Configuration = args.PropertyConfiguration;
+        }
+
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
+        public abstract bool CanHandle(AbstractPropertyConfiguration configuration, Context context);
+
+    }
+
+    /***** 
+    /// 
+    /// I have assumed that all CMSs at the moment will using Strings for data storage
+    /// 
+    *****/
+
+    public abstract class AbstractFastDataMapper : AbstractCommonDataMapper 
+    {
+        /// <summary>
+        /// Must return a default value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mappingContext"></param>
+        /// <returns></returns>
+        public abstract void MapToProperty(ExpressionBuilder builder);
+    }
+
+
+   
+
+
+    /// <summary>
+    /// A data mapper converts data from the CMS stored value to the .Net data type
+    /// </summary>
+    public abstract class AbstractDataMapper : AbstractCommonDataMapper
+    {
+        /// <summary>
         /// Takes CMS data and writes it to the property
         /// </summary>
         /// <param name="mappingContext">The mapping context.</param>
         public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-
             try
             {
                 object result;
@@ -72,35 +138,9 @@ namespace Glass.Mapper
 
         }
 
-        /// <summary>
-        /// Takes a Property value and writes it to a CMS value
-        /// </summary>
-        /// <param name="mappingContext">The mapping context.</param>
-        public virtual  void MapPropertyToCms(AbstractDataMappingContext mappingContext)
-        {
-            if (ReadOnly) return;
+     
 
-            try
-            {
-                mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
-            }
-            catch (Exception ex)
-            {
-                throw new MapperException("Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
-            }
-
-            MapToCms(mappingContext);
-        }
-
-
-
-        /// <summary>
-        /// Maps data from the .Net property value to the CMS value
-        /// </summary>
-        /// <param name="mappingContext">The mapping context.</param>
-        /// <returns>The value to write</returns>
-        public abstract void MapToCms(AbstractDataMappingContext mappingContext);
-
+      
         /// <summary>
         /// Maps data from the CMS value to the .Net property value
         /// </summary>
@@ -109,23 +149,7 @@ namespace Glass.Mapper
         public abstract object MapToProperty(AbstractDataMappingContext mappingContext);
 
 
-        /// <summary>
-        /// Sets up the data mapper for a particular property
-        /// </summary>
-        /// <param name="args">The args.</param>
-        public virtual void Setup(DataMapperResolverArgs args)
-        {
-            Configuration = args.PropertyConfiguration;
-        }
-
-
-        /// <summary>
-        /// Indicates that the data mapper will mapper to and from the property
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="context">The context.</param>
-        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
-        public abstract bool CanHandle(AbstractPropertyConfiguration configuration, Context context);
+      
 
         
     }

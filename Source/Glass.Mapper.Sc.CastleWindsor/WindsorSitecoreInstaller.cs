@@ -144,7 +144,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 Component.For<AbstractDataMapper>()
                     .ImplementedBy<SitecoreFieldStreamMapper>()
                     .LifestyleCustom<NoTrackLifestyleManager>(),
-                Component.For<AbstractDataMapper>()
+                Component.For<AbstractCommonDataMapper>()
                     .ImplementedBy<SitecoreFieldStringMapper>()
                     .LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<AbstractDataMapper>()

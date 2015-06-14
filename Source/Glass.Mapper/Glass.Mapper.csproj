@@ -96,6 +96,7 @@
     <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="DisableCache.cs" />
+    <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />

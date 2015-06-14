@@ -195,6 +195,109 @@ namespace Glass.Mapper.Sc.DataMappers
         }
         
     }
+
+    public abstract class AbstractFastSitecoreFieldMapper : AbstractFastDataMapper
+    {
+          /// <summary>
+        /// Gets the types handled.
+        /// </summary>
+        /// <value>The types handled.</value>
+        public IEnumerable<Type> TypesHandled { get; private set; }
+
+        /// <summary>
+        /// The default value to return if the field isn't found
+        /// </summary>
+        protected virtual object DefaultValue { get { return null; } }
+
+
+        public abstract void CreateBinding(ExpressionBuilder builder);
+
+        public override void MapToProperty(ExpressionBuilder builder)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+
+            if ((scConfig.Setting & SitecoreFieldSettings.PageEditorOnly) == SitecoreFieldSettings.PageEditorOnly)
+            {
+                return;
+            }
+
+            CreateBinding(builder);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
+        /// </summary>
+        /// <param name="typesHandled">The types handled.</param>
+        public AbstractFastSitecoreFieldMapper(params Type[] typesHandled)
+        {
+            TypesHandled = typesHandled;
+        }
+
+
+        /// <summary>
+        /// Indicates that the data mapper will mapper to and from the property
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
+        public override bool CanHandle(Mapper.Configuration.AbstractPropertyConfiguration configuration, Context context)
+        {
+            return configuration is SitecoreFieldConfiguration &&
+                   TypesHandled.Any(x => x == configuration.PropertyInfo.PropertyType);
+        }
+
+        public override void Setup(Mapper.Pipelines.DataMapperResolver.DataMapperResolverArgs args)
+        {
+            var scArgs = args.PropertyConfiguration as FieldConfiguration;
+            this.ReadOnly = scArgs.ReadOnly;
+            base.Setup(args);
+        }
+
+
+        /// <summary>
+        /// Maps data from the .Net property value to the CMS value
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>The value to write</returns>
+        public override void MapToCms(AbstractDataMappingContext mappingContext)
+        {
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+            var scContext = mappingContext as SitecoreDataMappingContext;
+
+            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+
+            if (field == null)
+                return;
+
+            object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
+
+
+            SetField(field, value, scConfig, scContext);
+        }
+
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        public virtual void SetField(Field field, object value, SitecoreFieldConfiguration config,
+                                      SitecoreDataMappingContext context)
+        {
+            field.Value = SetFieldValue(value, config, context);
+        }
+
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.String.</returns>
+        public abstract string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context);
+        
+    }
 }
 
 

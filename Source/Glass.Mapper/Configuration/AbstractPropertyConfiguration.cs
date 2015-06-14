@@ -59,7 +59,7 @@ namespace Glass.Mapper.Configuration
         /// Gets the mapper.
         /// </summary>
         /// <value>The mapper.</value>
-        public AbstractDataMapper Mapper  { get; internal set; }
+        public AbstractCommonDataMapper Mapper  { get; internal set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
