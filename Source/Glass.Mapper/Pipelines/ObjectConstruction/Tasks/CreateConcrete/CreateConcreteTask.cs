@@ -98,7 +98,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 if (constructorParameters == null || constructorParameters.Length == 0)
                 {
                     //conMethod = args.Configuration.DefaultConstructor;
-                   // obj = Activator.CreateInstance(args.Configuration.Type);
+                    //obj = Activator.CreateInstance(args.Configuration.Type);
                     if (args.Configuration.DefaultConstructorActivator == null)
                     {
 
@@ -106,10 +106,23 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                         NewExpression newExp = Expression.New(constructorInfo);
 
                         //create a lambda with the New Expression as the body and our param object[] as arg
-                        LambdaExpression lambda = Expression.Lambda(typeof (Func<object>), newExp);
+                        LambdaExpression lambda = Expression.Lambda(typeof(Func<object>), newExp);
 
                         // return the compiled activator
-                        args.Configuration.DefaultConstructorActivator = (Func<object>) lambda.Compile();
+                        args.Configuration.DefaultConstructorActivator = (Func<object>)lambda.Compile();
+
+                    }
+
+
+                    foreach (var property in args.Configuration.Properties)
+                    {
+                        ParameterExpression instanceParameter = Expression.Parameter(args.Configuration.Type, "instance");
+                        ParameterExpression mappingContextParameter = Expression.Parameter(typeof(AbstractDataMappingContext), "mappingContext");
+                        var expression = property.Mapper.GetMappingFunction(instanceParameter, mappingContextParameter);
+                      //  Expression.
+                        
+
+
 
                     }
 
