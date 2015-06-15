@@ -143,10 +143,8 @@ namespace Glass.Mapper
         {
             get
             {
-                if (TypeConfigurations.ContainsKey(type))
-                    return TypeConfigurations[type];
-                else
-                    return null;
+                AbstractTypeConfiguration config;
+                return TypeConfigurations.TryGetValue(type, out config) ? config : null;
             }
         }
 

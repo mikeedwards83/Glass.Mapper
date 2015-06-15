@@ -19,27 +19,33 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResol
 
         public void Execute(ConfigurationResolverArgs args)
         {
-            if (args.Parameters != null && args.Parameters.ContainsKey(MultiInterfaceTypesKey) && args.RequestedType.IsInterface)
+            var parameters = args.Parameters;
+            if (parameters == null || !parameters.ContainsKey(MultiInterfaceTypesKey) ||
+                !args.RequestedType.IsInterface)
             {
-                var types = args.Parameters[MultiInterfaceTypesKey] as IEnumerable<Type>;
-               
-                if (types!= null && types.All(x => x.IsInterface))
-                {
-                    var typeContext = args.AbstractTypeCreationContext;
-                    var originalType = typeContext.RequestedType;
-                    args.Parameters.Remove(MultiInterfaceTypesKey);
-                    var configuations = new List<AbstractTypeConfiguration>();
-                    foreach (var type in types)
-                    {
-                        typeContext.RequestedType = type;
-                        var result = args.Service.RunConfigurationPipeline(typeContext);
-                        configuations.Add(result.Result);
-                    }
-                    args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = configuations;
-                    args.Parameters[MultiInterfaceTypesKey] = types;
-                    typeContext.RequestedType = originalType;
-                }
+                return;
             }
+
+            var types = args.Parameters[MultiInterfaceTypesKey] as IEnumerable<Type>;
+
+            if (types == null || !types.All(x => x.IsInterface))
+            {
+                return;
+            }
+
+            var typeContext = args.AbstractTypeCreationContext;
+            var originalType = typeContext.RequestedType;
+            args.Parameters.Remove(MultiInterfaceTypesKey);
+            var configuations = new List<AbstractTypeConfiguration>();
+            foreach (var type in types)
+            {
+                typeContext.RequestedType = type;
+                var result = args.Service.RunConfigurationPipeline(typeContext);
+                configuations.Add(result.Result);
+            }
+            args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = configuations;
+            args.Parameters[MultiInterfaceTypesKey] = types;
+            typeContext.RequestedType = originalType;
         }
     }
 }

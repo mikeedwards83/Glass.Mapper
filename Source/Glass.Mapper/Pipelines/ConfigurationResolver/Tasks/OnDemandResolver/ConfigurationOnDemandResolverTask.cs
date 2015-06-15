@@ -14,11 +14,8 @@
    limitations under the License.
  
 */ 
-//-CRE-
-
-using System.Linq;
+//-CRE
 using Glass.Mapper.Configuration;
-using Glass.Mapper.Configuration.Attributes;
 
 namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
 {
@@ -34,14 +31,14 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
         /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
-
-            if (args.Result == null)
+            if (args.Result != null)
             {
-                var loader = new OnDemandLoader<T>(args.RequestedType);
-                args.Context.Load(loader);
-                args.Result = args.Context[args.RequestedType];
+                return;
             }
 
+            var loader = new OnDemandLoader<T>(args.RequestedType);
+            args.Context.Load(loader);
+            args.Result = args.Context[args.RequestedType];
         }
     }
 }

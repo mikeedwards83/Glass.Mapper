@@ -32,10 +32,12 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
         /// <param name="args">The args.</param>
         public void Execute(ConfigurationResolverArgs args)
         {
-            if (args.Result == null)
+            if (args.Result != null)
             {
-                args.Result = args.Context[args.RequestedType];
+                return;
             }
+
+            args.Result = args.Context[args.RequestedType];
 
         }
     }

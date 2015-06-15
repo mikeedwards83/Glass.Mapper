@@ -140,10 +140,32 @@ namespace Glass.Mapper
             return objectArgs.Result;
         }
 
+        private IConfigurationResolverTask[] _configTasks;
+        protected IConfigurationResolverTask[] ConfigTasks
+        {
+            get
+            {
+                return _configTasks ?? (_configTasks = GlassContext.DependencyResolver.ConfigurationResolverFactory.GetItems().ToArray());
+            }
+        } 
+
         public ConfigurationResolverArgs RunConfigurationPipeline(AbstractTypeCreationContext abstractTypeCreationContext)
         {
-            var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, abstractTypeCreationContext.RequestedType, this);
-            configurationArgs.Parameters = abstractTypeCreationContext.Parameters;
+            var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext,
+                abstractTypeCreationContext.RequestedType, this)
+            {
+                Parameters = abstractTypeCreationContext.Parameters
+            };
+
+            /*for (var i = 0; i < ConfigTasks.Length; i++)
+            {
+                ConfigTasks[i].Execute(configurationArgs);
+                if (configurationArgs.IsAborted)
+                {
+                    break;
+                }
+            }*/
+
             _configurationResolver.Run(configurationArgs);
 
             return configurationArgs;

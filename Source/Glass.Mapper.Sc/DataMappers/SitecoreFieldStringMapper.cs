@@ -118,6 +118,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
             return field.Value;
         }
+
         /// <summary>
         /// Sets the field.
         /// </summary>
