@@ -193,6 +193,59 @@ namespace Glass.Mapper.Sc.Integration
         [Test]
         [Timeout(120000)]
         [Repeat(10000)]
+        public void ExpressionBuildIsolationTest(
+            [Values(1, 1000, 10000, 50000)] int count
+            )
+        {
+
+            Stopwatch thirdWatch = new Stopwatch();
+
+            var rawItem = _db.GetItem(new ID(_id));
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            _rawWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var stringIWant = rawItem["Field"];
+            }
+            _rawWatch.Stop();
+            _rawTotal = _rawWatch.ElapsedTicks;
+
+            var tempResult = _service.CreateType<StubClass>(rawItem);
+            var config = _service.GlassContext.TypeConfigurations[typeof (StubClass)];
+            var mappingContext = new SitecoreDataMappingContext(null, rawItem, _service);
+            var activator = config.DefaultConstructorActivator;
+
+            _glassWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var result = (StubClass) activator(mappingContext);
+                var stringIWant = result.Field;
+            }
+            _glassWatch.Stop();
+
+
+            thirdWatch.Start();
+            for (int i = 0; i < count; i++)
+            {
+                var glassItem = _service.GetItem<StubClass>(_id);
+                var value2 = glassItem.Field;
+            }
+            thirdWatch.Stop();
+
+
+
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            double total = _glassTotal / _rawTotal;
+
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}, Third Ratio: {3} Average {4}".Formatted(count, total, _glassTotal / count, thirdWatch.ElapsedTicks / _rawTotal, thirdWatch.ElapsedTicks / count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
         public void GlassCastItemsWithService(
             [Values(1, 1000, 10000, 50000)] int count
             )
