@@ -126,9 +126,51 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+
         }
 
         [Test]
+        [Timeout(120000)]
+        public void GetWholeDb()
+        {
+            var rawItem = _db.GetItem("/sitecore");
+            _service.Cast<StubForWholeDb>(rawItem);
+            Item[] items = rawItem.Axes.GetDescendants();
+
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            var count = 0;
+            foreach (var item in items)
+            {
+                _rawWatch.Start();
+                // Glass performs a version count to ensure we have a version in the language
+                if (item.Versions.Count > 0)
+                {
+                    var value1 = rawItem["__DisplayName"];
+                    count++;
+                }
+                _rawWatch.Stop();
+
+                _glassWatch.Start();
+                var glassItem = _service.Cast<StubForWholeDb>(item);
+                if (glassItem != null)
+                {
+                    var value2 = glassItem.DisplayName;
+                }
+                _glassWatch.Stop();
+            }
+
+            _rawTotal = _rawWatch.ElapsedTicks;
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+            Console.WriteLine("Total Items {0}", count);
+
+        }
+
+            [Test]
         [Timeout(120000)]
         [Repeat(10000)]
         public void CastItems(
@@ -643,6 +685,18 @@ namespace Glass.Mapper.Sc.Integration
 
             [SitecoreId]
             public virtual Guid Id { get; set; }
+        }
+
+        public class StubForWholeDb
+        {
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.Name)]
+            public string Name { get; set; }
+
+            [SitecoreInfo(SitecoreInfoType.DisplayName)]
+            public string DisplayName { get; set; }
         }
 
         [SitecoreType]
