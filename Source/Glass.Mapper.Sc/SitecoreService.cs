@@ -474,23 +474,26 @@ namespace Glass.Mapper.Sc
         {
             return (T)CreateType(typeof(T), item, isLazy, inferType, null, constructorParameters);
         }
-        
+
+        public ID CreateFieldId = new Sitecore.Data.ID("{25BED78C-4957-4165-998A-CA1B52F67497}");
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
+            if (item == null || (Utilities.DoVersionCheck(Config) && item[CreateFieldId].IsNullOrEmpty() )) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)
                 throw new NotSupportedException("Maximum number of constructor parameters is 10");
 
-            SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
-            creationContext.SitecoreService = this;
-            creationContext.RequestedType = type;
-            creationContext.ConstructorParameters = constructorParameters;
-            creationContext.Item = item;
-            creationContext.InferType = inferType;
-            creationContext.IsLazy = isLazy;
-            creationContext.Parameters = parameters ?? new Dictionary<string, object>();
+            SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext
+            {
+                SitecoreService = this,
+                RequestedType = type,
+                ConstructorParameters = constructorParameters,
+                Item = item,
+                InferType = inferType,
+                IsLazy = isLazy,
+                Parameters = parameters ?? new Dictionary<string, object>()
+            };
 
             var obj = InstantiateObject(creationContext);
 
