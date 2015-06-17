@@ -18,12 +18,14 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -87,12 +89,11 @@ namespace Glass.Mapper.Sc.Integration
             [Values(1, 1000, 10000, 50000)] int count
             )
         {
+            _glassWatch.Reset();
+            _rawWatch.Reset();
 
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
                 _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
@@ -119,11 +120,11 @@ namespace Glass.Mapper.Sc.Integration
             )
         {
 
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
                 _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
@@ -140,6 +141,66 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        public void GetWholeDb()
+        {
+            List<Item> items = new List<Item>();
+            var rawItem = _db.GetItem("/sitecore");
+            _service.Cast<StubForWholeDb>(rawItem);
+
+            foreach (Item child in rawItem.GetChildren())
+            {
+                AddChildren(child, items);
+            }
+
+            var count = 0;
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            foreach (var item in items)
+            {
+                _rawWatch.Start();
+                if (item.Versions.Count > 0)
+                {
+                    var value1 = rawItem["__DisplayName"];
+                }
+                _rawWatch.Stop();
+
+                _glassWatch.Start();
+                var glassItem = _service.Cast<StubForWholeDb>(item);
+                if (glassItem != null)
+                {
+                    var value2 = glassItem.Field;
+                }
+                _glassWatch.Stop();
+
+                count++;
+
+            }
+
+            _rawTotal += _rawWatch.ElapsedTicks;
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+            Console.WriteLine("Total Items {0}", count);
+
+        }
+
+        private void AddChildren(Item parent, List<Item> items)
+        {
+            items.Add(parent);
+            if (parent.HasChildren)
+            {
+                foreach (Item child in parent.GetChildren())
+                {
+                    AddChildren(child, items);
+                }
+            }
         }
 
         [Test]
@@ -246,15 +307,19 @@ namespace Glass.Mapper.Sc.Integration
             public virtual Guid Id { get; set; }
         }
 
+        [SitecoreType]
+        public class StubForWholeDb
+        {
+            [SitecoreField("__Display Name")]
+            public virtual string Field { get; set; }
+        }
 
         [SitecoreType]
         public class StubClass
         {
             [SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
             public virtual string Field { get; set; }
-
-            [SitecoreId]
-            public virtual Guid Id { get; set; }
+            
         }
 
         [SitecoreType]
