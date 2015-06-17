@@ -19,6 +19,14 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreIgnoreMapper());
             Add(() => new SitecoreChildrenCastMapper());
             Add(() => new SitecoreChildrenMapper());
+
+            Add(() => new SitecoreFieldLazyBooleanMapper());
+            Add(() => new SitecoreFieldLazyDateTimeMapper());
+            Add(() => new SitecoreFieldLazyIntegerMapper());
+            Add(() => new SitecoreFieldLazyImageMapper());
+            Add(() => new SitecoreFieldLazyFileMapper());
+            Add(() => new SitecoreFieldLazyStringMapper());
+
             Add(() => new SitecoreFieldBooleanMapper());
             Add(() => new SitecoreFieldDateTimeMapper());
             Add(() => new SitecoreFieldDecimalMapper());

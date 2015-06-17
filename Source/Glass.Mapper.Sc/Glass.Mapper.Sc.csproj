@@ -118,6 +118,13 @@
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyBooleanMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyFileMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyImageMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyDateTimeMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyIntegerMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldLazyStringMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />

@@ -22,12 +22,11 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Configuration;
-using Sitecore.Sites;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
     [TestFixture]
-    public class SitecoreFieldLazyMapperFixture : AbstractMapperFixture
+    public class SitecoreFieldStringMapperFixture : AbstractMapperFixture
     {
 
         #region Method - GetField
@@ -40,8 +39,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetField");
             var field = item.Fields[FieldName];
-
+            var lazyMapper = new SitecoreFieldLazyStringMapper();
             var mapper = new SitecoreFieldStringMapper();
+            lazyMapper.Mapper = mapper;
             var config = new SitecoreFieldConfiguration();
 
             using (new ItemEditing(item, true))
@@ -50,72 +50,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             }
 
             //Act
-            var result = mapper.GetField(field, config, null) as string;
+            Lazy<string> result = lazyMapper.GetField(field, config, null) as Lazy<string>;
 
             //Assert
-            Assert.AreEqual(fieldValue, result);
-        }
-
-
-        [Test]
-        public void GetField_RichText_StringIsReturnedWithScapedUrl()
-        {
-            //Assign
-            var fieldValue = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var expected = "<p>Test with <a href=\"/en/Tests/DataMappers/SitecoreFieldStringMapper/GetField.aspx\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetFieldRichText");
-            var field = item.Fields[FieldName];
-
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-
-            Sitecore.Context.Site = Factory.GetSite("website");
-            Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
-            
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-
-
-            //Act
-            var result = mapper.GetField(field, config, null) as string;
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void GetField_RichTextSettingsIsRaw_StringIsReturnedWithoutEscaping()
-        {
-            //Assign
-            var fieldValue = "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetFieldRichText");
-            var field = item.Fields[FieldName];
-
-            var mapper = new SitecoreFieldStringMapper();
-            var config = new SitecoreFieldConfiguration();
-            config.Setting = SitecoreFieldSettings.RichTextRaw;
-
-            Sitecore.Context.Site = Factory.GetSite("website");
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-
-
-            //Act
-            var result = mapper.GetField(field, config, null) as string;
-
-            Sitecore.Context.Site = null;
-
-            //Assert
-            Assert.AreEqual(fieldValue, result);
+            Assert.AreEqual(fieldValue, result.Value);
         }
 
         #endregion
@@ -191,12 +129,12 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         #region Method - CanHandle
 
         [Test]
-        public void CanHandle_StreamType_ReturnsTrue()
+        public void CanHandle_LazyType_ReturnsTrue()
         {
             //Assign
-            var mapper = new SitecoreFieldStringMapper();
+            var mapper = new SitecoreFieldLazyStringMapper();
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof (StubClass).GetProperty("String");
+            config.PropertyInfo = typeof (StubClass).GetProperty("LazyString");
 
             //Act
             var result = mapper.CanHandle(config, null);
@@ -205,12 +143,29 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsTrue(result);
         }
 
+        [Test]
+        public void CanHandle_NonLazyType_ReturnsFalse()
+        {
+            //Assign
+            var mapper = new SitecoreFieldLazyStringMapper();
+            var config = new SitecoreFieldConfiguration();
+            config.PropertyInfo = typeof(StubClass).GetProperty("String");
+
+            //Act
+            var result = mapper.CanHandle(config, null);
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
         #endregion
 
         #region Stub
 
         public class StubClass
         {
+            public Lazy<string> LazyString { get; set; }
+
             public string String { get; set; }
         }
         #endregion
