@@ -257,6 +257,7 @@ namespace Glass.Mapper.Sc
                     T obj = item.GlassCast<T>(this.SitecoreContext);
 
                     item.Editing.EndEdit();
+                    item.Delete(); //added for clean up
                     return obj;
                 }
             }
