@@ -23,11 +23,39 @@ namespace Glass.Mapper.IoC
             }
         }
 
+        /// <summary>
+        /// Inserts function as the first in the list. Same as Insert(0, ()=>new T())
+        /// </summary>
+        /// <param name="add"></param>
+        public virtual void First(Func<T> add)
+        {
+           Insert(0, add);
+        }
+
+        /// <summary>
+        /// Replaces the function at the given index
+        /// </summary>
+        /// <param name="add"></param>
+        public virtual void Replace(int index, Func<T> replace)
+        {
+            lock (TypeGenerators)
+            {
+                TypeGenerators[index] = replace;
+            }
+        }
+
         public virtual void Add(Func<T> add)
         {
             lock (TypeGenerators)
             {
                 TypeGenerators.Add(add);
+            }
+        }
+        public virtual void RemoveAt(int index)
+        {
+            lock (TypeGenerators)
+            {
+                TypeGenerators.RemoveAt(index);
             }
         }
 
@@ -43,6 +71,9 @@ namespace Glass.Mapper.IoC
     {
         void Insert(int index, Func<T> add);
         void Add(Func<T> add);
+        void First(Func<T> add);
+        void Replace(int index, Func<T> replace);
         IEnumerable<T> GetItems();
+        void RemoveAt(int index);
     }
 }
