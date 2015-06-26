@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
         }
@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
         }
@@ -104,7 +104,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
         }
