@@ -20,6 +20,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Glass.Mapper.Caching;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -57,7 +58,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             container.Register(
                Component.For<Config>().Instance(_config).Named("ScConfig"),
-               Component.For<Mapper.Config>().Instance(_config).Named("Config")
+               Component.For<Mapper.Config>().Instance(_config).Named("Config"),
+               Component.For<Mapper.Caching.ICacheManager>()
+                    .ImplementedBy<HttpCache>()
+                    .LifestyleCustom<NoTrackLifestyleManager>()
                );
 
             #region DataMappers
