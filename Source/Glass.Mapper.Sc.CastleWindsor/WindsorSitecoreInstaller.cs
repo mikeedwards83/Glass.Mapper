@@ -28,6 +28,8 @@ using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
+using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
@@ -242,6 +244,7 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
             #region ObjectConstruction
             container.Register(
+                Component.For<IObjectConstructionTask>().ImplementedBy<CacheCheckTask>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateDynamicTask>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<SitecoreItemTask>().LifestyleCustom<NoTrackLifestyleManager>(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<EnforcedTemplateCheck>().LifestyleCustom<NoTrackLifestyleManager>()
@@ -258,7 +261,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
                 // Tasks are called in the order they are specified below.
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateMultiInferaceTask>().LifestyleTransient(),
                 Component.For<IObjectConstructionTask>().ImplementedBy<CreateConcreteTask>().LifestyleTransient(),
-                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient()
+                Component.For<IObjectConstructionTask>().ImplementedBy<CreateInterfaceTask>().LifestyleTransient(),
+                Component.For<IObjectConstructionTask>().ImplementedBy<CacheAddTask>().LifestyleCustom<NoTrackLifestyleManager>()
                 );
 
             #endregion
