@@ -33,6 +33,10 @@
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
+  <PropertyGroup>
+    <ScDir Condition="'$(ScDir)' =='..\..\Depends\Sitecore\bin70\'">..\..\Depends\Sitecore\bin72\</ScDir>
+    <ScDir Condition="'$(ScDir)' =='..\..\Depends\Sitecore\bin71\'">..\..\Depends\Sitecore\bin72\</ScDir>
+  </PropertyGroup>
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="Castle.Core">
@@ -41,22 +45,22 @@
       <HintPath Condition="'$(TargetFrameworkVersion)' == 'v4.5'">..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
-      <HintPath>..\..\Depends\sitecore\bin7\Lucene.Net.dll</HintPath>
+      <HintPath>$(ScDir)Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\Depends\sitecore\bin72\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.Linq">
-      <HintPath>..\..\Depends\sitecore\bin72\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.Linq.Lucene">
-      <HintPath>..\..\Depends\sitecore\bin72\Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.LuceneProvider">
-      <HintPath>..\..\Depends\sitecore\bin72\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Depends\sitecore\bin72\Sitecore.Kernel.dll</HintPath>
+      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,7 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Glass.Mapper.Sc.ContentSearch.Lucene.Config" />
+    <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.ContentSearch.Lucene.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
