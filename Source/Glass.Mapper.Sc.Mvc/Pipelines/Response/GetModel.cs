@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// </summary>
         public GetModel()
         {
-            ContextName = "Default";
+            ContextName = Context.DefaultContextName;
 
         }
 

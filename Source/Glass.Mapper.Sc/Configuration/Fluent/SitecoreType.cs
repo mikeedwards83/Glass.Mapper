@@ -30,17 +30,16 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
     /// <typeparam name="T"></typeparam>
     public class SitecoreType<T> : ISitecoreType, ISitecoreType<T>
     {
-        private SitecoreTypeConfiguration _configuration;
+        protected SitecoreTypeConfiguration Configuration{get;set;}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreType{T}"/> class.
         /// </summary>
         public SitecoreType()
         {
-            _configuration = new SitecoreTypeConfiguration();
-            _configuration.Type = typeof (T);
-            _configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(_configuration.Type);
-
+            Configuration = new SitecoreTypeConfiguration();
+            Configuration.Type = typeof(T);
+            Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(Configuration.Type);
 
         }
 
@@ -72,7 +71,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> TemplateId(ID id)
         {
-            _configuration.TemplateId = id;
+            Configuration.TemplateId = id;
             return this;
         }
 
@@ -82,7 +81,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         public SitecoreType<T> EnforceTemplate()
         {
-            _configuration.EnforceTemplate = SitecoreEnforceTemplate.Template;
+            Configuration.EnforceTemplate = SitecoreEnforceTemplate.Template;
             return this;
         }
 
@@ -92,7 +91,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// </summary>
         public SitecoreType<T> EnforceTemplateAndBase()
         {
-            _configuration.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+            Configuration.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
             return this;
         }
 
@@ -124,7 +123,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> BranchId(ID id)
         {
-            _configuration.BranchId = id;
+            Configuration.BranchId = id;
             return this;
         }
 
@@ -135,7 +134,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> CodeFirst()
         {
-            _configuration.CodeFirst = true;
+            Configuration.CodeFirst = true;
             return this;
         }
 
@@ -145,7 +144,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> Cachable()
         {
-            _configuration.Cachable = true;
+            Configuration.Cachable = true;
             return this;
         }
 
@@ -156,7 +155,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> TemplateName(string name)
         {
-            _configuration.TemplateName = name;
+            Configuration.TemplateName = name;
             return this;
         }
 
@@ -168,7 +167,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreChildren<T> Children(Expression<Func<T, object>> ex)
         {
             SitecoreChildren<T> builder = new SitecoreChildren<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -182,7 +181,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreField<T> Field(Expression<Func<T, object>> ex)
         {
             SitecoreField<T> builder = new SitecoreField<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
 
             return builder;
         }
@@ -195,7 +194,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreIgnore<T> Ignore(Expression<Func<T, object>> ex)
         {
             SitecoreIgnore<T> builder = new SitecoreIgnore<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
 
             return builder;
         }
@@ -209,7 +208,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreId<T> Id(Expression<Func<T, object>> ex)
         {
             SitecoreId<T> builder = new SitecoreId<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -220,8 +219,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreInfo{`0}.</returns>
         public SitecoreInfo<T> Info(Expression<Func<T, object>> ex)
         {
-            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex, _configuration);
-            _configuration.AddProperty(builder.Configuration);
+            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex, Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -232,8 +231,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreInfo{`0}.</returns>
         public SitecoreItem<T> Item(Expression<Func<T, object>> ex)
         {
-            SitecoreItem<T> builder = new SitecoreItem<T>(ex, _configuration);
-            _configuration.AddProperty(builder.Configuration);
+            SitecoreItem<T> builder = new SitecoreItem<T>(ex, Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -245,7 +244,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreParent<T> Parent(Expression<Func<T, object>> ex)
         {
             SitecoreParent<T> builder = new SitecoreParent<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -257,7 +256,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreQuery<T> Query(Expression<Func<T, object>> ex)
         {
             SitecoreQuery<T> builder = new SitecoreQuery<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -269,7 +268,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreNode<T> Node(Expression<Func<T, object>> ex)
         {
             SitecoreNode<T> builder = new SitecoreNode<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -281,7 +280,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreLinked<T> Linked(Expression<Func<T, object>> ex)
         {
             SitecoreLinked<T> builder = new SitecoreLinked<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
             return builder;
         }
 
@@ -360,11 +359,11 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <returns>SitecoreType{`0}.</returns>
         public SitecoreType<T> Import<K>(SitecoreType<K> typeConfig)
         {
-            typeConfig._configuration.Properties
-                .Where(x=> _configuration.Properties.All(y=>y.PropertyInfo.Name != x.PropertyInfo.Name))
-                .ForEach(x => _configuration.AddProperty(x));
+            typeConfig.Configuration.Properties
+                .Where(x=> Configuration.Properties.All(y=>y.PropertyInfo.Name != x.PropertyInfo.Name))
+                .ForEach(x => Configuration.AddProperty(x));
 
-            if (typeConfig._configuration.AutoMap)
+            if (typeConfig.Configuration.AutoMap)
                 Config.AutoMap = true;
 
             return this;
@@ -388,7 +387,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreDelegate<T> Delegate(Expression<Func<T, object>> ex)
         {
             SitecoreDelegate<T> builder = new SitecoreDelegate<T>(ex);
-            _configuration.AddProperty(builder.Configuration);
+            Configuration.AddProperty(builder.Configuration);
 
             return builder;
         }
@@ -402,7 +401,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <value>The config.</value>
         public SitecoreTypeConfiguration Config
         {
-            get { return _configuration; }
+            get { return Configuration; }
         }
 
         #endregion

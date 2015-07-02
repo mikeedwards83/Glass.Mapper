@@ -5,7 +5,11 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class QueryParameterConfigFactory : AbstractConfigFactory<ISitecoreQueryParameter>
     {
-        protected override void AddTypes()
+        public QueryParameterConfigFactory()
+        {
+            Init();
+        }
+        protected void Init()
         {
             Add(() => new ItemDateNowParameter());
             Add(() => new ItemEscapedPathParameter());

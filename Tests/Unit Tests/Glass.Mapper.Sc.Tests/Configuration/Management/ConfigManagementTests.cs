@@ -39,7 +39,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
             var result = queryParameterFactory.GetItems();
 
             // Assert
-            Assert.AreEqual(4, result.Count());
+            Assert.AreEqual(5, result.Count());
         }
 
         [Test]
