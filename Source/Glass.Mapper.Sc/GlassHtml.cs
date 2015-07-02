@@ -390,7 +390,7 @@ namespace Glass.Mapper.Sc
                     field,
                     null,
                     model,
-                    Utilities.ConstructQueryString(attrs),
+                    attrs,
                     _context, SitecoreContext.Database, writer);
 
                 if (contents.IsNotNullOrEmpty())
