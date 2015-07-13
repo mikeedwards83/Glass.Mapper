@@ -40,6 +40,65 @@ namespace Glass.Mapper.Sc.Integration
     public class GlassHtmlFixture
     {
 
+        #region Method - RenderLink
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/155
+        /// </summary>
+        [Test]
+        public void RenderLink_LinkContainsAnchor_Issue155()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+
+            string fieldValue = "<link text='text' linktype='anchor' anchor='footer' title='' class='' />";
+            string expected = "<a href='#footer'>text</a>";
+
+            var item = db.GetItem(targetPath);
+            var field = item.Fields["StringField"];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var model = service.GetItem<IStubLinkClass>(targetPath);
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Normal);
+
+            Sitecore.Context.Site = siteContext;
+
+            StringBuilder sb = new StringBuilder();
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
+
+        #endregion
+
+
+
         #region Method - RenderImage
 
 
@@ -101,10 +160,6 @@ namespace Glass.Mapper.Sc.Integration
 
             //Assert
             Assert.AreEqual(result,scResult);
-
-
-
-
         }
 
         [Test]
@@ -1199,6 +1254,13 @@ namespace Glass.Mapper.Sc.Integration
         public class StubLambdaClass : StubClass
         {
 
+        }
+
+
+        public interface IStubLinkClass
+        {
+            [SitecoreField("StringField")]
+            Link Link { get; set; }
         }
 
 
