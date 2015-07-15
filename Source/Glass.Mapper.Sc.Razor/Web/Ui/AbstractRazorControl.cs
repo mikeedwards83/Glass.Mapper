@@ -249,7 +249,10 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         private void WriteException(HtmlTextWriter output, Exception ex)
         {
 
-            
+            if (!GlassRazorSettings.CatchExceptions)
+            {
+                throw ex;
+            }
 
             output.Write("<h1>Glass Razor Rendering Exception</h1>");
             output.Write("<p>View: {0}</p>".Formatted(View.Name));
