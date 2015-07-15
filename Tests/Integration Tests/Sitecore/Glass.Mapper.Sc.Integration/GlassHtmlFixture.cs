@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Integration
 
 
             string fieldValue = "<link text='text' linktype='anchor' anchor='footer' title='' class='' />";
-            string expected = "<a href='#footer'>text</a>";
+            string expected = "<a href='#footer' >text</a>";
 
             var item = db.GetItem(targetPath);
             var field = item.Fields["StringField"];
