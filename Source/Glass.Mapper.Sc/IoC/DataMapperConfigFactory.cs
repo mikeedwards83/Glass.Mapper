@@ -41,6 +41,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreFieldNullableFloatMapper());
             Add(() => new SitecoreFieldNullableGuidMapper());
             Add(() => new SitecoreFieldNullableIntMapper());
+            Add(() => new SitecoreFieldNullableEnumMapper());
             Add(() => new SitecoreFieldRulesMapper());
             Add(() => new SitecoreFieldStreamMapper());
             Add(() => new SitecoreFieldStringMapper());

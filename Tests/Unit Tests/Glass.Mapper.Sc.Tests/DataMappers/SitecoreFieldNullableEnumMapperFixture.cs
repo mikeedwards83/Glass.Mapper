@@ -26,7 +26,7 @@ using Sitecore.Data;
 namespace Glass.Mapper.Sc.Tests.DataMappers
 {
     [TestFixture]
-    public class SitecoreFieldEnumMapperFixture : AbstractMapperFixture
+    public class SitecoreFieldNullableEnumMapperFixture : AbstractMapperFixture
     {
         #region Method - GetField
 
@@ -44,13 +44,14 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
       //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            var result = (StubEnum?)mapper.GetField(field, config, null);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(expected, result.Value);
         }
 
         [Test]
@@ -67,13 +68,14 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
             //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            var result = (StubEnum?)mapper.GetField(field, config, null);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(expected, result.Value);
         }
 
         [Test]
@@ -90,17 +92,18 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
             
             //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            var result = (StubEnum?)mapper.GetField(field, config, null);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(expected, result.Value);
         }
 
         [Test]
-        public void GetField_FieldContainsEmptyString_ReturnsDefaultEnum()
+        public void GetField_FieldContainsEmptyString_ReturnsNull()
         {
             //Assign
             string fieldValue = string.Empty;
@@ -112,13 +115,13 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
             //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            var result = (StubEnum?)mapper.GetField(field, config, null);
 
             //Assert
-            Assert.AreEqual(StubEnum.Value1, result);
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -135,10 +138,10 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
          //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            var result = (StubEnum?)mapper.GetField(field, config, null);
 
             //Assert
         }
@@ -162,7 +165,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
             item.Editing.BeginEdit();
 
@@ -190,7 +193,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
             
             //Act
            
@@ -206,13 +209,13 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         #region Method - CanHandle
 
         [Test]
-        public void CanHandle_PropertyIsEnum_ReturnsTrue()
+        public void CanHandle_PropertyIsNullableEnum_ReturnsTrue()
         {
             //Assign
             var config = new SitecoreFieldConfiguration();
             config.PropertyInfo = typeof (Stub).GetProperty("Property");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
             //Act
             var result = mapper.CanHandle(config, null);
@@ -222,13 +225,13 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        public void CanHandle_PropertyIsNotEnum_ReturnsTrue()
+        public void CanHandle_PropertyIsNotNullableEnum_ReturnsFalse()
         {
             //Assign
             var config = new SitecoreFieldConfiguration();
-            config.PropertyInfo = typeof(Stub).GetProperty("PropertyNotEnum");
+            config.PropertyInfo = typeof(Stub).GetProperty("PropertyNotNullableEnum");
 
-            var mapper = new SitecoreFieldEnumMapper();
+            var mapper = new SitecoreFieldNullableEnumMapper();
 
             //Act
             var result = mapper.CanHandle(config, null);
@@ -250,8 +253,9 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
 
         public class Stub
         {
-            public StubEnum Property { get; set; }
-            public string PropertyNotEnum { get; set; }
+            public StubEnum? Property { get; set; }
+
+            public StubEnum PropertyNotNullableEnum { get; set; }
         }
         
     
