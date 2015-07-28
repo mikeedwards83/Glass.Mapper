@@ -90,51 +90,51 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsNull(result.Field);
         }
 
-        //[Test]
-        //public void GetField_FieldIsEmpty_ReturnsNullImageObject()
-        //{
-        //    //Assign
-        //    var fieldValue = string.Empty;
+        [Test]
+        public void GetField_FieldIsEmpty_ReturnsNullImageObject()
+        {
+            //Assign
+            var fieldValue = string.Empty;
 
-        //    var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
-        //    var field = item.Fields[FieldName];
-        //    var mapper = new SitecoreFieldImageMapper();
-        
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
 
 
-        //    using (new ItemEditing(item, true))
-        //    {
-        //        field.Value = fieldValue;
-        //    }
 
-        //    //Act
-        //    var result = mapper.GetField(field, null, null) as Image;
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
 
-        //    //Assert
-        //    Assert.IsNull(result);
-        //}
+            //Act
+            var result = mapper.GetField(field, null, null) as Image;
 
-        //[Test]
-        //public void GetField_FieldIsNull_ReturnsNullImageObject()
-        //{
-        //    //Assign
-        //    string fieldValue = null;
+            //Assert
+            Assert.IsNull(result);
+        }
 
-        //    var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
-        //    var field = item.Fields[FieldName];
-        //    var mapper = new SitecoreFieldImageMapper();
+        [Test]
+        public void GetField_FieldIsNull_ReturnsNullImageObject()
+        {
+            //Assign
+            string fieldValue = null;
 
-        //    using (new ItemEditing(item, true))
-        //    {
-        //        field.Value = fieldValue;
-        //    }
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
 
-        //    //Act
-        //    var result = mapper.GetField(field, null, null) as Image;
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
 
-        //    //Assert
-        //    Assert.IsNull(result);
-        //}
+            //Act
+            var result = mapper.GetField(field, null, null) as Image;
+
+            //Assert
+            Assert.IsNull(result);
+        }
 
         #endregion
 
