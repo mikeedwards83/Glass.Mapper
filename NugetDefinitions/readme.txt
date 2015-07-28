@@ -1,3 +1,5 @@
+
+
 /*******************************/
 
 Glass.Mapper.Sc V4
@@ -5,6 +7,16 @@ Glass.Mapper.Sc V4
 /*******************************/
 
 Thank you for downloading Glass.Mapper.Sc V4, this is the latest and greatest version of Glass.Mapper.Sc.
+
+//TODO: CHECK THE FOLLOWING!!!
+
+* Does your project contain a reference to Glass.Mapper.Sc.dll? If this reference is missing Glass was unable to find the Sitecore.Kernel.dll 
+reference in your project. Add a reference to Sitecore.Kernel.dll and re-install the Glass.Mapper.Sc nuget package.
+*  Does your project contain a reference to Glass.Mapper.Sc,Mvc.dll? If this reference is missing Glass was unable to find the System.Web.Mvc.dll 
+reference in your project. Add a reference to System.Web.Mvc.dll and re-install the Glass.Mapper.Sc nuget package. You only need to do this if 
+you want MVC support with Glass.* 
+
+
 
 For more information on how to use the framework please visit http://www.glass.lu/Mapper/Sc
 
