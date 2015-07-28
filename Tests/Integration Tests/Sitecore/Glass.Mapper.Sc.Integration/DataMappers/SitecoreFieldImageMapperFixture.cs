@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.IoC;
 using NUnit.Framework;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
@@ -63,6 +64,32 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(640, result.Width);
         }
 
+		[Test]
+        public void GetField_ImageFieldEmpty_ReturnsNull()
+        {
+            //Assign
+            var fieldValue = string.Empty;
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var context = Context.Create(new DependencyResolver(new Config()));
+            var service = new SitecoreService(Database, context);
+
+            //Act
+            var result =
+                service.GetItem<StubImage>("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+
+            //Assert
+            Assert.IsNull(result.Field);
+        }
+
         //[Test]
         //public void GetField_FieldIsEmpty_ReturnsNullImageObject()
         //{
@@ -72,6 +99,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         //    var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
         //    var field = item.Fields[FieldName];
         //    var mapper = new SitecoreFieldImageMapper();
+        
+
 
         //    using (new ItemEditing(item, true))
         //    {
@@ -179,7 +208,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        
+        #region Stubs
+
+        public class StubImage
+        {
+            public virtual Image Field { get; set; }
+        }
+
+        #endregion
 
     }
 }

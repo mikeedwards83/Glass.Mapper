@@ -23,11 +23,16 @@ namespace Glass.Mapper.Sc.Razor
     /// </summary>
     public class GlassRazorSettings
     {
+         static GlassRazorSettings()
+         {
+             CatchExceptions = true;
+         }
         /// <summary>
         /// The context name
         /// </summary>
         public const string ContextName = "GlassRazor";
 
+        public static bool CatchExceptions { get; set; }
 
         ///// <summary>
         ///// Loads the specified resolver.
