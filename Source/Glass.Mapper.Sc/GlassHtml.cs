@@ -38,6 +38,7 @@ using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Collections;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
@@ -278,19 +279,22 @@ namespace Glass.Mapper.Sc
 
             using (new SecurityDisabler())
             {
-                using (new VersionCountDisabler())
+                using (new EventDisabler())
                 {
-                    item.Editing.BeginEdit();
-
-                    foreach (var key in parameters.AllKeys)
+                    using (new VersionCountDisabler())
                     {
-                        item[key] = parameters[key];
-                    }
-                    T obj = item.GlassCast<T>(this.SitecoreContext);
+                        item.Editing.BeginEdit();
 
-                    item.Editing.EndEdit();
-                    item.Delete(); //added for clean up
-                    return obj;
+                        foreach (var key in parameters.AllKeys)
+                        {
+                            item[key] = parameters[key];
+                        }
+                        T obj = item.GlassCast<T>(this.SitecoreContext);
+
+                        item.Editing.EndEdit();
+                        item.Delete(); //added for clean up
+                        return obj;
+                    }
                 }
             }
 

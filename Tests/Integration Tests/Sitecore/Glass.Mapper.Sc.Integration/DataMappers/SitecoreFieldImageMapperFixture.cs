@@ -64,8 +64,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(640, result.Width);
         }
 
-
-        [Test]
+		[Test]
         public void GetField_ImageFieldEmpty_ReturnsNull()
         {
             //Assign
@@ -91,7 +90,51 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsNull(result.Field);
         }
 
+        [Test]
+        public void GetField_FieldIsEmpty_ReturnsNullImageObject()
+        {
+            //Assign
+            var fieldValue = string.Empty;
 
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
+
+
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, null, null) as Image;
+
+            //Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetField_FieldIsNull_ReturnsNullImageObject()
+        {
+            //Assign
+            string fieldValue = null;
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, null, null) as Image;
+
+            //Assert
+            Assert.IsNull(result);
+        }
 
         #endregion
 

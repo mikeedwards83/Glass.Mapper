@@ -96,6 +96,35 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(expected, resultStr);
         }
 
+        [Test]
+        public void SetField_NullPassed_NoExceptionThrown()
+        {
+            //Assign
+            var fieldValue = "";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStreamMapper/SetField");
+            var field = item.Fields[FieldName];
+            string expected = "hello world";
+
+            Stream stream = null;
+            var mapper = new SitecoreFieldStreamMapper();
+
+            using (new ItemEditing(item, true))
+            {
+                field.SetBlobStream(new MemoryStream());
+            }
+
+            //Act
+            using (new ItemEditing(item, true))
+            {
+                mapper.SetField(field, stream, null, null);
+            }
+
+            //Assert
+            var outStream = field.GetBlobStream();
+            Assert.IsNull(outStream);
+
+        }
         #endregion
 
         #region Method - CanHandle

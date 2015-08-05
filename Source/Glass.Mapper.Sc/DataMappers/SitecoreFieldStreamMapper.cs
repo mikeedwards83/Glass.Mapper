@@ -58,6 +58,11 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="context">The context.</param>
         public override void SetField(Sitecore.Data.Fields.Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
+
+            if (value == null)
+            {
+                return;
+            }
             field.SetBlobStream(value as Stream);
         }
 
