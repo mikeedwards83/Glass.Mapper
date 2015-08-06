@@ -60,38 +60,10 @@ namespace Glass.Mapper.Sc
         private static readonly Type LinkType = typeof(Fields.Link);
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
 
-        public static HashSet<string> ImageAttributes { get; private set; }
-        public static HashSet<string> ImageQueryString { get; private set; }
 
         static GlassHtml()
         {
-            ImageAttributes = new HashSet<string>(new[]
-            {
-                ImageParameterKeys.BORDER,
-                ImageParameterKeys.ALT,
-                ImageParameterKeys.HSPACE,
-                ImageParameterKeys.VSPACE,
-                ImageParameterKeys.CLASS,
-                ImageParameterKeys.WIDTHHTML,
-                ImageParameterKeys.HEIGHTHTML
-            });
-            ImageQueryString = new HashSet<string>(new[]
-            {
-                ImageParameterKeys.OUTPUT_METHOD,
-                ImageParameterKeys.ALLOW_STRETCH,
-                ImageParameterKeys.IGNORE_ASPECT_RATIO,
-                ImageParameterKeys.SCALE,
-                ImageParameterKeys.MAX_WIDTH,
-                ImageParameterKeys.MAX_HEIGHT,
-                ImageParameterKeys.THUMBNAIL,
-                ImageParameterKeys.BACKGROUND_COLOR,
-                ImageParameterKeys.DATABASE,
-                ImageParameterKeys.LANGUAGE,
-                ImageParameterKeys.VERSION,
-                ImageParameterKeys.DISABLE_MEDIA_CACHE,
-                ImageParameterKeys.WIDTH,
-                ImageParameterKeys.HEIGHT
-            });
+           
         }
 
         public const string Parameters = "Parameters";
@@ -773,21 +745,30 @@ namespace Glass.Mapper.Sc
             var keys = attributes.Keys.ToList();
             foreach (var key in keys)
             {
-                bool found = false;
-                if (ImageAttributes.Contains(key))
+                //if we have not config we just add it to both
+                if (SitecoreContext.Config == null)
                 {
-                    html(key);
-                    found = true;
+                    both(key);
                 }
-                if (ImageQueryString.Contains(key))
+                else
                 {
-                    url(key);
-                    found = true;
-                }
+                    bool found = false;
 
-                if (!found)
-                {
-                    html(key);
+                    if (SitecoreContext.Config.ImageAttributes.Contains(key))
+                    {
+                        html(key);
+                        found = true;
+                    }
+                    if (SitecoreContext.Config.ImageQueryString.Contains(key))
+                    {
+                        url(key);
+                        found = true;
+                    }
+
+                    if (!found)
+                    {
+                        html(key);
+                    }
                 }
             }
 
