@@ -272,7 +272,7 @@ namespace Glass.Mapper.Sc
             SitecoreTypeConfiguration newType;
             try
             {
-                newType = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(typeof(T)) ;
+                newType = GlassContext.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(typeof(T)) ;
             }
             catch (Exception ex)
             {
