@@ -153,6 +153,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public T GetRenderingParameters<T>() where T : class
         {
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null)
+                return null;
+
             var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);

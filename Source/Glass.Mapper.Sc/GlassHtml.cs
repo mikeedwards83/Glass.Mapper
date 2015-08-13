@@ -61,6 +61,10 @@ namespace Glass.Mapper.Sc
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
 
 
+        static GlassHtml()
+        {
+           
+        }
 
         public const string Parameters = "Parameters";
         /// <summary>
@@ -741,36 +745,30 @@ namespace Glass.Mapper.Sc
             var keys = attributes.Keys.ToList();
             foreach (var key in keys)
             {
-                switch (key)
+                //if we have not config we just add it to both
+                if (SitecoreContext.Config == null)
                 {
-                    case ImageParameterKeys.BORDER:
-                    case ImageParameterKeys.ALT:
-                    case ImageParameterKeys.HSPACE:
-                    case ImageParameterKeys.VSPACE:
-                    case ImageParameterKeys.CLASS:
-                    case ImageParameterKeys.WIDTHHTML:
-                    case ImageParameterKeys.HEIGHTHTML:
+                    both(key);
+                }
+                else
+                {
+                    bool found = false;
+
+                    if (SitecoreContext.Config.ImageAttributes.Contains(key))
+                    {
                         html(key);
-                        break;
-                    case ImageParameterKeys.OUTPUT_METHOD:
-                    case ImageParameterKeys.ALLOW_STRETCH:
-                    case ImageParameterKeys.IGNORE_ASPECT_RATIO:
-                    case ImageParameterKeys.SCALE:
-                    case ImageParameterKeys.MAX_WIDTH:
-                    case ImageParameterKeys.MAX_HEIGHT:
-                    case ImageParameterKeys.THUMBNAIL:
-                    case ImageParameterKeys.BACKGROUND_COLOR:
-                    case ImageParameterKeys.DATABASE:
-                    case ImageParameterKeys.LANGUAGE:
-                    case ImageParameterKeys.VERSION:
-                    case ImageParameterKeys.DISABLE_MEDIA_CACHE:
-                    case ImageParameterKeys.WIDTH:
-                    case ImageParameterKeys.HEIGHT:
+                        found = true;
+                    }
+                    if (SitecoreContext.Config.ImageQueryString.Contains(key))
+                    {
                         url(key);
-                        break;
-                    default:
+                        found = true;
+                    }
+
+                    if (!found)
+                    {
                         html(key);
-                        break;
+                    }
                 }
             }
 
