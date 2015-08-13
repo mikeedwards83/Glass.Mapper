@@ -111,6 +111,7 @@
     <Compile Include="GlassHtmlFixture.cs" />
     <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
     <Compile Include="Issues\Issue145\Issue145.cs" />
+    <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTaskFixture.cs" />
