@@ -252,7 +252,7 @@ namespace Glass.Mapper.Tests
             var context = Context.Contexts[contextName];
 
             //Act
-            var config = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(type);
+            var config = context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(type);
 
             //Assert
             Assert.IsNotNull(config);
@@ -295,13 +295,13 @@ namespace Glass.Mapper.Tests
 
             #endregion
 
-            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS1.ProxyTest1));
-            context.GetTypeConfiguration<StubAbstractTypeConfiguration>(typeof(NS2.ProxyTest1));
+            context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(typeof(NS1.ProxyTest1));
+            context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(typeof(NS2.ProxyTest1));
 
 
             //Act
-            var config1 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args1.Result.GetType());
-            var config2 = context.GetTypeConfiguration<StubAbstractTypeConfiguration>(args2.Result.GetType());
+            var config1 = context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(args1.Result.GetType());
+            var config2 = context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(args2.Result.GetType());
 
             //Assert
             Assert.AreEqual(typeof(NS1.ProxyTest1), config1.Type);

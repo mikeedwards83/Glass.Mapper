@@ -24,9 +24,27 @@ namespace Glass.Mapper.Sc.CastleWindsor
             throw new NotSupportedException("Configuration cannot be added to container based config factories");
         }
 
+        public void First(Func<T> add)
+        {
+            throw new NotSupportedException("Configuration cannot be added to container based config factories");
+
+        }
+
+        public void Replace(int index, Func<T> replace)
+        {
+            throw new NotSupportedException("Configuration cannot be added to container based config factories");
+
+        }
+
         public IEnumerable<T> GetItems()
         {
             return container.ResolveAll<T>();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotSupportedException("Configuration cannot be added to container based config factories");
+
         }
     }
 }

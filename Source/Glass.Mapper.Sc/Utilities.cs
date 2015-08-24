@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
@@ -31,6 +32,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Links;
+using Sitecore.Xml.Xsl;
 
 namespace Glass.Mapper.Sc
 {
@@ -101,6 +103,22 @@ namespace Glass.Mapper.Sc
             var itemData = new ItemData(itemDefinition, language, version, fieldList);
             var item = new Item(id, itemData, database);
             return item;
+        }
+
+        
+
+        public static Size ResizeImage(int imageW, int imageH, float imageScale, int w, int h, int maxW, int maxH)
+        {
+
+            Size size = new Size(w, h);
+            Size imageSize = new Size(imageW, imageH);
+            Size maxSize = new Size(maxW, maxH);
+
+            if (imageW == 0 || imageH == 0)
+                return size;
+
+            return new GlassImageRender().GetFinalImageSize(imageSize, imageScale, size, maxSize);
+
         }
 
         /// <summary>
@@ -246,6 +264,15 @@ namespace Glass.Mapper.Sc
             if (foundItems == null) return Enumerable.Empty<Item>();
 
             return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
+        }
+
+        public class GlassImageRender : ImageRenderer
+        {
+
+            public Size GetFinalImageSize(Size imageSize, float imageScale, Size size, Size  maxSize )
+            {
+                return base.GetFinalImageSize(base.GetInitialImageSize(imageSize, imageScale, size), size, maxSize);
+            }
         }
     }
 }

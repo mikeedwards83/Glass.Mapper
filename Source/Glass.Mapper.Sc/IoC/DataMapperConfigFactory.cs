@@ -11,9 +11,10 @@ namespace Glass.Mapper.Sc.IoC
         public DataMapperConfigFactory(IConfigFactory<ISitecoreQueryParameter> queryParameterFactory)
         {
             this.queryParameterFactory = queryParameterFactory;
+            Init();
         }
 
-        protected override void AddTypes()
+        protected void Init()
         {
             Add(() => new SitecoreIgnoreMapper());
             Add(() => new SitecoreChildrenCastMapper());
@@ -40,6 +41,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreFieldNullableFloatMapper());
             Add(() => new SitecoreFieldNullableGuidMapper());
             Add(() => new SitecoreFieldNullableIntMapper());
+            Add(() => new SitecoreFieldNullableEnumMapper());
             Add(() => new SitecoreFieldRulesMapper());
             Add(() => new SitecoreFieldStreamMapper());
             Add(() => new SitecoreFieldStringMapper());

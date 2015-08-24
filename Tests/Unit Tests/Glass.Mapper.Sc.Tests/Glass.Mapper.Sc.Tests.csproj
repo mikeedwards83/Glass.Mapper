@@ -77,6 +77,7 @@
     <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDecimalMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldDoubleMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNullableEnumMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldEnumMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />

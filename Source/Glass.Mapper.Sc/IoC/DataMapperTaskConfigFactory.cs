@@ -6,7 +6,12 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class DataMapperTaskConfigFactory : AbstractConfigFactory<IDataMapperResolverTask>
     {
-        protected override void AddTypes()
+        public DataMapperTaskConfigFactory()
+        {
+            Init();
+        }
+
+        protected  void Init()
         {
             Add(() => new DataMapperStandardResolverTask());
         }

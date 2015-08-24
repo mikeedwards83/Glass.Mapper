@@ -23,6 +23,9 @@ using System.Linq;
 using System.Text;
 using Sitecore.Data.Items;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Collections;
+using Sitecore.Data.Managers;
+using Sitecore.SecurityModel;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -62,8 +65,9 @@ namespace Glass.Mapper.Sc.DataMappers
 
             Type genericType = Mapper.Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
 
-            Func<IEnumerable<Item>> getItems = () => scContext.Item.Children;
-
+            Func<IEnumerable<Item>> getItems = () =>
+                ItemManager.GetChildren(scContext.Item, SecurityCheck.Enable, ChildListOptions.None);
+            
             return Utilities.CreateGenericType(
                 typeof (LazyItemEnumerable<>),
                 new[] {genericType},

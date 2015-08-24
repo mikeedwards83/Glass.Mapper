@@ -61,6 +61,52 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void GenericModelTest_CanRetrieveAGenericModel_WithGenericChildren()
+        {
+            /*
+             * Tests that we can save to an item property.
+             */
+
+            //Assign
+            var context = Context.Create(Utilities.CreateStandardResolver());
+
+            var db = Factory.GetDatabase("master");
+            var scContext = new SitecoreService(db);
+            string path = "/sitecore/content/";
+
+
+
+            //Act
+            var instance1 = scContext.GetItem<Parent<Child1>>(path);
+            var instance2 = scContext.GetItem<Parent<Child2>>(path);
+
+
+            //Assert
+            Assert.IsNotNull(instance1);
+            Assert.Greater(instance1.Children.Count(),0);
+            Assert.IsNotNull(instance1.Children.FirstOrDefault(x=>x.Name == "Tests"));
+
+            Assert.IsNotNull(instance2);
+            Assert.Greater(instance2.Children.Count(), 0);
+            Assert.IsNotNull(instance2.Children.FirstOrDefault(x => x.Name == "Tests"));
+        }
+
+        public class Parent<T>
+        {
+            public virtual IEnumerable<T> Children { get; set; }
+        }
+
+        public class Child1
+        {
+           public virtual string Name { get; set; }
+        }
+        public class Child2
+        {
+            public virtual string Name { get; set; }
+
+        }
+
+        [Test]
         public void ItemPropertySave_SavesItemOnProperty_SetsField()
         {
             /*

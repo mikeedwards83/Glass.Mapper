@@ -35,6 +35,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         protected virtual T GetRenderingParameters<T>() where T:class
         {
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null)
+                return null;
+
             return
                 GlassHtml.GetRenderingParameters<T>(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters]);
         }
@@ -68,14 +71,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             get
             {
-                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource.IsNullOrEmpty())
                 {
                     return null;
                 }
                 else
-                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource);
             }
         }
 
@@ -84,7 +87,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
         }
@@ -94,7 +97,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
         }
@@ -104,7 +107,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
         }
@@ -120,15 +123,15 @@ namespace Glass.Mapper.Sc.Web.Mvc
         [Obsolete("User GetDataSourceItem")]
         protected virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource.IsNullOrEmpty())
             {
                 return default(T);
             }
 
             return SitecoreContext.GetItem<T>(
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource, isLazy, inferType
+                Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource, isLazy, inferType
                 );
         }
 
@@ -143,9 +146,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
         protected virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
 
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null ||
+                Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource.IsNullOrEmpty())
             {
                 return SitecoreContext.GetCurrentItem<T>();
             }

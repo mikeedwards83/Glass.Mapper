@@ -226,9 +226,9 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(object obj, bool doNotLoad = false, bool checkBase = true) where T: AbstractTypeConfiguration, new()
+        public T GetTypeConfiguration<T>(object obj, bool doNotLoad = false, bool checkBase = true) where T : AbstractTypeConfiguration, new()
         {
-            return GetTypeConfiguration<T>(obj.GetType(), doNotLoad, checkBase);
+            return GetTypeConfigurationFromType<T>(obj.GetType(), doNotLoad, checkBase);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false, bool checkBase = true)
+        public T GetTypeConfigurationFromType<T>(Type type, bool doNotLoad = false, bool checkBase = true)
             where T : AbstractTypeConfiguration, new()
         {
 
@@ -270,7 +270,7 @@ namespace Glass.Mapper
             if (config == null && !doNotLoad)
             {
                 Load(new OnDemandLoader<T>(type));
-                return GetTypeConfiguration<T>(type, true);
+                return GetTypeConfigurationFromType<T>(type, true);
             }
 
             return config as T;
