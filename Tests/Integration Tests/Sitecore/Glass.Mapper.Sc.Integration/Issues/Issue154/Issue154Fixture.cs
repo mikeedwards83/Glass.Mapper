@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sc.Integration.Issues.Issue154
 
             context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(Class1)));
 
-            var class1Config = context.GetTypeConfiguration(typeof (Class1));
+            var class1Config = context.GetTypeConfigurationFromType< SitecoreTypeConfiguration>(typeof (Class1));
 
             Assert.IsNotNull(class1Config);
 
