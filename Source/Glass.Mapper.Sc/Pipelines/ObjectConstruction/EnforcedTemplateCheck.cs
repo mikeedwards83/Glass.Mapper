@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
@@ -24,7 +22,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
             {
                 var scConfig = args.Configuration as SitecoreTypeConfiguration;
 
-                if (scConfig.EnforceTemplate != SitecoreEnforceTemplate.No)
+                if (scConfig != null && scConfig.EnforceTemplate != SitecoreEnforceTemplate.No)
                 {
                     var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
@@ -41,8 +39,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 
                         if (scConfig.EnforceTemplate == SitecoreEnforceTemplate.TemplateAndBase)
                         {
-                            result = item.TemplateID == scConfig.TemplateId ||
-                                     item.Template.BaseTemplates.Any(x => x.ID == scConfig.TemplateId);
+                            result = TemplateAndBaseCheck(item.Template, scConfig.TemplateId);
                         }
                         else if(scConfig.EnforceTemplate == SitecoreEnforceTemplate.Template)
                         {
@@ -52,11 +49,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                         _cache[key] = result;
                     }
 
-                    if (result)
-                    {
-                        return;
-                    }
-                    else
+                    if (!result)
                     {
                         args.AbortPipeline();
                     }
@@ -64,6 +57,25 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                 }
 
             }
+        }
+
+        protected virtual bool TemplateAndBaseCheck(TemplateItem template, ID templateId)
+        {
+            if (template.ID == templateId)
+            {
+                return true;
+            }
+
+
+            foreach (var baseTemplate in template.BaseTemplates)
+            {
+                if (TemplateAndBaseCheck(baseTemplate, templateId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
