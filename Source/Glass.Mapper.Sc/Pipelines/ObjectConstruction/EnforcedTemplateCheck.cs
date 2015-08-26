@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
@@ -66,16 +67,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                 return true;
             }
 
-
-            foreach (var baseTemplate in template.BaseTemplates)
-            {
-                if (TemplateAndBaseCheck(baseTemplate, templateId))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return template.BaseTemplates.Any(baseTemplate => TemplateAndBaseCheck(baseTemplate, templateId));
         }
     }
 }
