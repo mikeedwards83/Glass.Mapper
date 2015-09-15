@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
@@ -9,11 +10,11 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
     public class EnforcedTemplateCheck : IObjectConstructionTask
     {
-        private static Dictionary<string, bool> _cache;
+        private static ConcurrentDictionary<string, bool> _cache;
 
         static EnforcedTemplateCheck()
         {
-            _cache= new Dictionary<string, bool>();
+            _cache= new ConcurrentDictionary<string, bool>();
         }
 
         public void Execute(ObjectConstructionArgs args)
@@ -47,7 +48,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                             result = item.TemplateID == scConfig.TemplateId;
                         }
 
-                        _cache[key] = result;
+                        _cache.TryAdd(key, result);
                     }
 
                     if (!result)
