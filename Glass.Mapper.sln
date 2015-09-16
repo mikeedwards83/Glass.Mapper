@@ -104,7 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glass.Mapper.Sc", "Glass.Ma
 		Powershell\Glass.Mapper.Sc\Uninstall.ps1 = Powershell\Glass.Mapper.Sc\Uninstall.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Mvc.Tests", "Tests\Glass.Mapper.Sc.Mvc.Tests\Glass.Mapper.Sc.Mvc.Tests.csproj", "{93828C18-FFB1-4597-86C9-CA3B462AD4E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.Mvc.Tests", "Tests\Unit Tests\Glass.Mapper.Sc.Mvc.Tests\Glass.Mapper.Sc.Mvc.Tests.csproj", "{93828C18-FFB1-4597-86C9-CA3B462AD4E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
