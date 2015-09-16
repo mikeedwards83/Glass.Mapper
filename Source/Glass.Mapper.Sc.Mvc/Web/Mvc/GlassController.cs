@@ -91,7 +91,16 @@ namespace Glass.Mapper.Sc.Web.Mvc
             SitecoreContext = sitecoreContext;
             GlassHtml = glassHtml;
             RenderingContextWrapper = renderingContextWrapper;
-            if (httpContext != null)
+            if (httpContext == null)
+            {
+                return;
+            }
+
+            if (ControllerContext != null)
+            {
+                ControllerContext.HttpContext = httpContext;
+            }
+            else
             {
                 ControllerContext = new ControllerContext(httpContext, new RouteData(), this);
             }

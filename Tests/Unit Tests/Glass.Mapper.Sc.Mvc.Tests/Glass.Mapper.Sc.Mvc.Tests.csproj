@@ -54,7 +54,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Depends\Sitecore\bin80\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Depends\Sitecore\bin80\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -72,15 +72,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj">
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj">
       <Project>{f872cefa-8f7b-4703-adab-49b8081b8ebe}</Project>
       <Name>Glass.Mapper.Sc.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
       <Name>Glass.Mapper.Sc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
       <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
       <Name>Glass.Mapper</Name>
     </ProjectReference>
