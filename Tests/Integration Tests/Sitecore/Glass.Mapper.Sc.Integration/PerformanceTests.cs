@@ -80,7 +80,51 @@ namespace Glass.Mapper.Sc.Integration
             }
         }
 
-       
+        [Test]
+        public void GetItemByIdvsItemByPath()
+        {
+            _glassWatch.Reset();
+            // Warm up
+            ID id = new ID(_id);
+
+            var item1 = _db.GetItem(id);
+            string path = item1.Paths.FullPath;
+            Console.WriteLine(path);
+            var item2 = _db.GetItem(path);
+
+            string itemIdString = _id.ToString();
+            var item3 = _db.GetItem(itemIdString);
+
+            // Start
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(id);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine("Item by Id: {0}", _glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(path);
+            }
+            _glassWatch.Stop();
+
+            Console.WriteLine("Item by Path: {0}", _glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(itemIdString);
+            }
+            _glassWatch.Stop();
+
+            Console.WriteLine("Item by Id String: {0}", _glassWatch.ElapsedMilliseconds);
+        }
 
         [Test]
         [Timeout(120000)]
