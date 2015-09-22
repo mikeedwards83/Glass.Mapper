@@ -88,6 +88,8 @@
     <Compile Include="Web\Mvc\GlassHtmlMvc.cs" />
     <Compile Include="Web\Mvc\GlassView.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Web\Mvc\IRenderingContextWrapper.cs" />
+    <Compile Include="Web\Mvc\RenderingContextWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
