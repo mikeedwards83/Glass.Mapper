@@ -59,7 +59,39 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var resultStr = reader.ReadToEnd();
             Assert.AreEqual(expected, resultStr);
         }
-        
+
+        [Test]
+        public void GetField_FieldContainsDataTestConnectionLimit_StreamIsReturned()
+        {
+            //Assign
+            var fieldValue = "";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStreamMapper/GetField");
+            var field = item.Fields[FieldName];
+            string expected = "hello world";
+
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(expected));
+            var mapper = new SitecoreFieldStreamMapper();
+
+            using (new ItemEditing(item, true))
+            {
+                field.SetBlobStream(stream);
+            }
+
+            //Act
+            var results = new List<Stream>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var result = mapper.GetField(field, null, null) as Stream;
+                results.Add(result);
+            }
+
+            //Assert
+            Assert.AreEqual(1000, results.Count);
+        }
+
+
         #endregion
 
 

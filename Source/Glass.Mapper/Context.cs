@@ -173,23 +173,19 @@ namespace Glass.Mapper
                     }
 
 
-                    if(TypeConfigurations.ContainsKey(typeConfig.Type)){
+                    if (TypeConfigurations.ContainsKey(typeConfig.Type)){
                         Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
                         continue;
                     }
                     
                     typeConfig.PerformAutoMap();
 
+                    ProcessProperties(typeConfig.Properties);
+
                     if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
                     {
                         Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type)); 
                     }
-                }
-                //then process the properties.
-                //this stops the problem of types not existing for certain data handlers
-                foreach (var typeConfig in typeConfigurations)
-                {
-                    ProcessProperties(typeConfig.Properties);
                 }
             }
         }
@@ -203,6 +199,7 @@ namespace Glass.Mapper
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
             DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
+
 
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {
