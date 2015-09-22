@@ -17,8 +17,14 @@ namespace Glass.Mapper.IoC
 
         public void Insert(int index,Func<T> add)
         {
+            if (add == null)
+            {
+                throw new NullReferenceException("Cannot insert with a null function");
+            }
+
             lock (TypeGenerators)
             {
+                
                 TypeGenerators.Insert(index, add);
             }
         }
@@ -38,6 +44,11 @@ namespace Glass.Mapper.IoC
         /// <param name="add"></param>
         public virtual void Replace(int index, Func<T> replace)
         {
+            if (replace == null)
+            {
+                throw new NullReferenceException("Cannot replace with a null function");
+            }
+
             lock (TypeGenerators)
             {
                 TypeGenerators[index] = replace;
@@ -46,6 +57,11 @@ namespace Glass.Mapper.IoC
 
         public virtual void Add(Func<T> add)
         {
+            if (add == null)
+            {
+                throw new NullReferenceException("Cannot add with a null function");
+            }
+
             lock (TypeGenerators)
             {
                 TypeGenerators.Add(add);
