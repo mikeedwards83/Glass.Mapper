@@ -18,8 +18,6 @@
 
 using System;
 using System.Linq.Expressions;
-using System.Web.UI;
-using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
@@ -41,7 +39,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <summary>
         ///     Initializes a new instance of the <see cref="GlassWebControl{T}" /> class.
         /// </summary>
-        public GlassWebControl()
+        protected GlassWebControl()
         {
         }
 
@@ -67,7 +65,13 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </value>
         public bool IsLazy { get; set; }
 
-        public virtual string RenderingParameters => RenderingContext.GetRenderingParameters();
+        public virtual string RenderingParameters
+        {
+            get
+            {
+                return RenderingContext.GetRenderingParameters();
+            }   
+        }
 
         /// <summary>
         ///     Gets the model.
