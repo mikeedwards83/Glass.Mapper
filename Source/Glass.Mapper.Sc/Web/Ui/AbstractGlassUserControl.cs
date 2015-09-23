@@ -29,6 +29,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public class AbstractGlassUserControl : UserControl
     {
+        protected IRenderingContext RenderingContext { get; set; }
 
         private TextWriter _writer;
 
@@ -37,14 +38,24 @@ namespace Glass.Mapper.Sc.Web.Ui
             get { return _writer ?? this.Response.Output; }
         }
 
+
+        public AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext)
+        {
+            //We try always force a rendering context.
+            RenderingContext = renderingContext ?? new RenderingContextUserControlWrapper(this);
+            _glassHtml = glassHtml;
+            _sitecoreContext = context;
+
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml)
+        public AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml):
+            this(context,glassHtml,null)
+
         {
-            _glassHtml = glassHtml;
-            _sitecoreContext = context;
+            
 
         }
 
@@ -98,16 +109,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// The custom data source for the sublayout
         /// </summary>
         /// <value>The data source.</value>
-        public string DataSource
-        {
-            get
-            {
-                WebControl parent = Parent as WebControl;
-                if (parent == null)
-                    return string.Empty;
-                return parent.DataSource;
-            }
-        }
+        public string DataSource => RenderingContext.GetDataSource();
 
         /// <summary>
         /// Returns either the item specified by the DataSource or the current context item

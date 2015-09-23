@@ -2,7 +2,7 @@
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
-    public class RenderingContextWrapper : IRenderingContextWrapper
+    public class RenderingContextMvcWrapper : IRenderingContext
     {
         public bool ContextActive
         {
@@ -16,7 +16,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public string GetRenderingParameters()
         {
-            return RenderingContext.CurrentOrNull.Rendering[GlassHtml.Parameters];
+            return ContextActive ? RenderingContext.CurrentOrNull.Rendering[GlassHtml.Parameters] : string.Empty;
         }
 
         public string GetDataSource()

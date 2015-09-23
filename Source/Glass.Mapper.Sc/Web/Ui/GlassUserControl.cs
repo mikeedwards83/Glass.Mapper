@@ -162,20 +162,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
         }
 
-
-        private string GetRenderingParameters(Control control)
-        {
-            if (control == null) return null;
-
-            if (control is Sublayout)
-            {
-                return ((Sublayout)control).Parameters;
-            }
-
-            return GetRenderingParameters(control.Parent);
-        }
-
-        public virtual string RenderingParameters { get { return GetRenderingParameters(this); } }
+        public virtual string RenderingParameters => RenderingContext.GetRenderingParameters();
 
         public virtual T GetRenderingParameters<T>() where T : class
         {

@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Web;
 using FluentAssertions;
+using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Mvc;
 using NSubstitute;
 using NUnit.Framework;
@@ -180,14 +181,14 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             {
                 SitecoreContext = Substitute.For<ISitecoreContext>();
                 GlassHtml = Substitute.For<IGlassHtml>();
-                RenderingContextWrapper = Substitute.For<IRenderingContextWrapper>();
+                RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
                 GlassController = new GlassController<StubClass>(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
             }
 
             public HttpContextBase HttpContext { get; private set; }
 
-            public IRenderingContextWrapper RenderingContextWrapper { get; private set; }
+            public IRenderingContext RenderingContextWrapper { get; private set; }
 
             public IGlassHtml GlassHtml { get; private set; }
 
