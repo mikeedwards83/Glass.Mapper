@@ -29,14 +29,14 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public abstract class AbstractGlassUserControl : UserControl
     {
-        private readonly ISitecoreContext _sitecoreContext;
-        private IGlassHtml _glassHtml;
         private TextWriter _writer;
+        private IRenderingContext _renderingContext;
+        private ISitecoreContext _sitecoreContext;
+        private IGlassHtml _glassHtml;
 
         protected AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext)
         {
-            //We try always force a rendering context.
-            RenderingContext = renderingContext ?? new RenderingContextUserControlWrapper(this);
+            _renderingContext = renderingContext;
             _glassHtml = glassHtml;
             _sitecoreContext = context;
 
@@ -55,17 +55,20 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         protected AbstractGlassUserControl(ISitecoreContext context) : this(context, new GlassHtml(context))
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
-        protected AbstractGlassUserControl() : this(Sc.SitecoreContext.GetFromHttpContext())
+        protected AbstractGlassUserControl()
         {
         }
 
-        protected IRenderingContext RenderingContext { get; set; }
+        public virtual IRenderingContext RenderingContext
+        {
+            get { return _renderingContext ?? (_renderingContext = new RenderingContextUserControlWrapper(this)); }
+            set { _renderingContext = value; }
+        }
 
         protected TextWriter Output
         {
@@ -85,18 +88,19 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Represents the current Sitecore context
         /// </summary>
         /// <value>The sitecore context.</value>
-        public ISitecoreContext SitecoreContext
+        public virtual ISitecoreContext SitecoreContext
         {
-            get { return _sitecoreContext; }
+            get { return _sitecoreContext ?? ( _sitecoreContext = Sc.SitecoreContext.GetFromHttpContext()); }
+            set { _sitecoreContext = value; }
         }
 
         /// <summary>
         /// Access to rendering helpers
         /// </summary>
         /// <value>The glass HTML.</value>
-        protected virtual IGlassHtml GlassHtml
+        public virtual IGlassHtml GlassHtml
         {
-            get { return _glassHtml; }
+            get { return _glassHtml ?? (_glassHtml = new GlassHtml(SitecoreContext)); }
             set { _glassHtml = value; }
         }
 
@@ -153,7 +157,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+            return SitecoreContext.GetCurrentItem<T>(isLazy, inferType);
         }
 
         /// <summary>
@@ -163,7 +167,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+            string dataSource = RenderingContext.GetDataSource();
+            return !String.IsNullOrEmpty(dataSource) 
+                ? SitecoreContext.GetItem<T>(dataSource, isLazy, inferType) 
+                : null;
         }
 
         /// <summary>
@@ -173,7 +180,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+            string dataSource = RenderingContext.GetDataSource();
+            return !String.IsNullOrEmpty(dataSource)
+                ? GetDataSourceItem<T>(isLazy, inferType)
+                : GetContextItem<T>(isLazy, inferType);
         }
 
         /// <summary>

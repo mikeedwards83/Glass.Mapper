@@ -105,6 +105,21 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
         }
 
         [Test]
+        public void DataSource_returns_from_rendering_context_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            const string expected = "data source";
+            testHarness.RenderingContext.GetDataSource().Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.DataSource;
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
         public void RenderingParameters_returns_from_rendering_context_successfully()
         {
             // Arrange
@@ -150,6 +165,157 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
 
             // Act
             var result = testHarness.GlassUserControl.RenderLink(fieldExpression);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test] // Most DI frameworks use property injection since the construction is done via the webforms framework
+        public void Can_set_values_using_property_injection_successfully()
+        {
+            // Arrange
+            ISitecoreContext sitecoreContext = Substitute.For<ISitecoreContext>();
+            IRenderingContext renderingContext = Substitute.For<IRenderingContext>();
+            IGlassHtml glassHtml = Substitute.For<IGlassHtml>();
+            var glassUserControl = new GlassUserControl<StubClass>();
+            glassUserControl.SitecoreContext = sitecoreContext;
+            glassUserControl.RenderingContext = renderingContext;
+            glassUserControl.GlassHtml = glassHtml;
+
+            // Act - no actions to perform
+
+            // Assert
+            glassUserControl.SitecoreContext.Should().Be(sitecoreContext);
+            glassUserControl.RenderingContext.Should().Be(renderingContext);
+            glassUserControl.GlassHtml.Should().Be(glassHtml);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void Not_setting_sitecore_context_results_in_original_behaviour()
+        {
+            // Arrange
+            var glassUserControl = new GlassUserControl<StubClass>();
+
+            // Act
+            var result = glassUserControl.SitecoreContext;
+
+            // Assert - expected NotSupportedException from SitecoreContext cache
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void Not_setting_glass_html_results_in_original_behaviour()
+        {
+            // Arrange
+            var glassUserControl = new GlassUserControl<StubClass>();
+
+            // Act
+            var result = glassUserControl.GlassHtml;
+
+            // Assert - expected NotSupportedException from SitecoreContext cache
+        }
+
+        [Test]
+        public void Not_setting_rendering_context_results_in_original_behaviour()
+        {
+            // Arrange
+            var glassUserControl = new GlassUserControl<StubClass>();
+
+            // Act
+            IRenderingContext result = glassUserControl.RenderingContext;
+
+            // Assert
+            result.Should().NotBeNull();
+            result.GetType().Should().Be(typeof (RenderingContextUserControlWrapper));
+        }
+
+        [Test]
+        public void GetContextItem_returns_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            StubClass expected = new StubClass();
+            testHarness.SitecoreContext.GetCurrentItem<StubClass>().Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetContextItem<StubClass>();
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void GetDataSourceItem_returns_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            testHarness.RenderingContext.GetDataSource().Returns("fred");
+            StubClass expected = new StubClass();
+            testHarness.SitecoreContext.GetItem<StubClass>("fred").Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetDataSourceItem<StubClass>();
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void GetDataSourceItem_no_datasource_set_returns_null()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+
+            // Act
+            var result = testHarness.GlassUserControl.GetDataSourceItem<StubClass>();
+
+            // Assert
+            result.Should().BeNull();
+            testHarness.SitecoreContext.Received(0).GetItem<StubClass>(Arg.Any<string>());
+        }
+
+        [Test]
+        public void GetLayoutItem_returns_data_source_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            testHarness.RenderingContext.GetDataSource().Returns("fred");
+            StubClass expected = new StubClass();
+            testHarness.SitecoreContext.GetItem<StubClass>("fred").Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetLayoutItem<StubClass>();
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void GetLayoutItem_returns_context_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            StubClass expected = new StubClass();
+            testHarness.SitecoreContext.GetCurrentItem<StubClass>().Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetLayoutItem<StubClass>();
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void Model_can_be_set_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            StubClass expected = new StubClass();
+            testHarness.GlassUserControl.Model = expected;
+
+            // Act
+            var result = testHarness.GlassUserControl.Model;
 
             // Assert
             result.Should().Be(expected);

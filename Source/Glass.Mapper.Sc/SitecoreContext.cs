@@ -110,6 +110,11 @@ namespace Glass.Mapper.Sc
         {
             get
             {
+                if (HttpContext.Current == null)
+                {
+                    throw new NotSupportedException("Cached Contexts are stored in the http context items collection, the http context is currently null");
+                }
+
                 if (Sitecore.Context.Items != null)
                 {
                     var dictionary = HttpContext.Current.Items[CachedContextsKey] as Dictionary<string, SitecoreContext>;

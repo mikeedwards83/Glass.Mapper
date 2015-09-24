@@ -41,6 +41,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public GlassUserControl(ISitecoreContext context)
             : base(context)
         {
+            // todo: NM - consider this constructor - I don't think webforms will allow you to set it ??
         }
 
         /// <summary>
@@ -94,13 +95,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         protected virtual void GetModel()
         {
-            if (!String.IsNullOrEmpty(DataSource))
-            {
-                model = SitecoreContext.GetItem<T>(DataSource, IsLazy, InferType);
-                return;
-            }
-
-            model = SitecoreContext.GetCurrentItem<T>(IsLazy, InferType);
+            model = GetLayoutItem<T>(IsLazy, InferType);
         }
 
         /// <summary>
