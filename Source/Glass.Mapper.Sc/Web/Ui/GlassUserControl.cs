@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Glass.Mapper.Sc.Web.Ui
@@ -38,6 +39,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
+        [ExcludeFromCodeCoverage] // No logic to test
         public GlassUserControl(ISitecoreContext context)
             : base(context)
         {
