@@ -88,15 +88,21 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual IEnumerable<T> GetItems()
         {
+            IEnumerable<Func<T>> builders;
             lock (_lockObject)
             {
                 if (TypeGenerators == null)
                 {
                     return null;
                 }
-
-                return TypeGenerators.Select(f => f());
+                //we create a local copy of the generators to avoid any problems with the 
+                // list being modified during enumeration and exit the lock ASAP
+                builders = TypeGenerators.ToArray();             
             }
+
+            //generate the class outside of the lock encase there are any long running operations.
+            //and then force them into an array to avoid any enumeration issues.
+            return builders.Select(x => x()).ToArray();
         }
     }
 }

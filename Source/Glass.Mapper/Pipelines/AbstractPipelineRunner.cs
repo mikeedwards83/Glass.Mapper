@@ -57,9 +57,7 @@ namespace Glass.Mapper.Pipelines
 
             if (tasks != null)
             {
-                var tasksArray = tasks.ToArray();
-
-                Tasks = tasksArray;
+                Tasks = tasks;
 
                 foreach (var task in tasksArray.Reverse())
                 {
