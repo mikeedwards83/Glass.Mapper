@@ -46,6 +46,46 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
         }
 
         [Test]
+        public void Editable_returns_from_glass_html_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            const string expected = "field value";
+            StubClass expectedStub = new StubClass();
+            testHarness.SitecoreContext.GetCurrentItem<StubClass>().Returns(expectedStub);
+
+            Expression<Func<StubClass, object>> fieldExpression = x => x.Field;
+            testHarness.GlassHtml.Editable(testHarness.GlassUserControl.Model, fieldExpression, null as object).Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.Editable(fieldExpression);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void Editable_returns_from_glass_html_with_standard_output_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            const string expected = "field value";
+            StubClass expectedStub = new StubClass();
+            testHarness.SitecoreContext.GetCurrentItem<StubClass>().Returns(expectedStub);
+
+            Expression<Func<StubClass, object>> fieldExpression = x => x.Field;
+            Expression<Func<StubClass, string>> defaultExpression = x => "fred";
+
+            testHarness.GlassHtml.Editable(testHarness.GlassUserControl.Model, fieldExpression, defaultExpression, null).Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.Editable(fieldExpression, defaultExpression);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
         public void RenderImage_returns_from_glass_html_successfully()
         {
             // Arrange
@@ -59,6 +99,38 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
 
             // Act
             var result = testHarness.GlassUserControl.RenderImage(fieldExpression);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void RenderingParameters_returns_from_rendering_context_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            const string expected = "rendering";
+            testHarness.RenderingContext.GetRenderingParameters().Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.RenderingParameters;
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void RenderingParameters_returns_from_glass_html_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            const string renderingParameters = "rendering";
+            testHarness.RenderingContext.GetRenderingParameters().Returns(renderingParameters);
+            StubClass expected = new StubClass();
+            testHarness.GlassHtml.GetRenderingParameters<StubClass>(renderingParameters).Returns(expected);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
 
             // Assert
             result.Should().Be(expected);
@@ -88,6 +160,8 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             public Image GlassImage { get; set; }
 
             public Link GlassLink { get; set; }
+
+            public string Field { get; set; }
         }
 
         public class GlassUserControlTestHarness
