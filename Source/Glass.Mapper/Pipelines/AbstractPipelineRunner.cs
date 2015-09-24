@@ -33,6 +33,8 @@ namespace Glass.Mapper.Pipelines
         where K:IPipelineTask<T>
     {
 
+        private readonly Func<T, T> _excuteTasks = args => { return args; };
+
         /// <summary>
         /// Gets the tasks.
         /// </summary>
@@ -49,23 +51,26 @@ namespace Glass.Mapper.Pipelines
         /// Initializes a new instance of the <see cref="AbstractPipelineRunner{T, K}"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public AbstractPipelineRunner(IEnumerable<K> tasks)
+        protected AbstractPipelineRunner(IEnumerable<K> tasks)
         {
             //Tasks = tasks.Reverse().ToArray();
 
-            Tasks = tasks;
-
-            foreach (var task in tasks.Reverse())
+            if (tasks != null)
             {
-                _excuteTasks = CreateTaskExpression(task);
+                var tasksArray = tasks.ToArray();
+
+                Tasks = tasksArray;
+
+                foreach (var task in tasksArray.Reverse())
+                {
+                    _excuteTasks = CreateTaskExpression(task);
+                }
             }
 
             Profiler = new NullProfiler();
         }
 
-        private Func<T, T> _excuteTasks = args => { return args; };
-
-        protected virtual  Func<T,T>  CreateTaskExpression(K task)
+        protected virtual Func<T,T> CreateTaskExpression(K task)
         {
             var nextTask = _excuteTasks;
 
@@ -115,21 +120,24 @@ namespace Glass.Mapper.Pipelines
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!disposing)
             {
-                if (Tasks != null)
+                return;
+            }
+
+            if (Tasks != null)
+            {
+                foreach (var task in Tasks)
                 {
-                    foreach (var task in Tasks)
+                    var disposableTask = task as IDisposable;
+                    if (disposableTask != null)
                     {
-                        var disposableTask = task as IDisposable;
-                        if (disposableTask != null)
-                        {
-                            disposableTask.Dispose();
-                        }
+                        disposableTask.Dispose();
                     }
                 }
-                Tasks = null;
             }
+
+            Tasks = null;
         }
     }
 }
