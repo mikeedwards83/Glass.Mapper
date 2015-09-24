@@ -59,7 +59,7 @@ namespace Glass.Mapper.Pipelines
             {
                 Tasks = tasks;
 
-                foreach (var task in tasksArray.Reverse())
+                foreach (var task in Tasks.Reverse())
                 {
                     _excuteTasks = CreateTaskExpression(task);
                 }
