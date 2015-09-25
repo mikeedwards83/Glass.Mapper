@@ -15,14 +15,10 @@
  
 */
 //-CRE-
+
 using System;
-using System.Collections.Specialized;
-using System.Dynamic;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Glass.Mapper.Sc.RenderField;
-using System.Web.UI;
-using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
@@ -32,13 +28,48 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// <typeparam name="T"></typeparam>
     public class GlassUserControl<T> : AbstractGlassUserControl where T : class
     {
+        private T model;
 
+        public GlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext)
+            : base(context, glassHtml, renderingContext)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        [ExcludeFromCodeCoverage] // No logic to test
+        public GlassUserControl(ISitecoreContext context)
+            : base(context)
+        {
+            // todo: NM - consider this constructor - I don't think webforms will allow you to set it ??
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
+        /// </summary>
+        public GlassUserControl()
+        {
+        }
 
         /// <summary>
         /// Model to render on the sublayout
         /// </summary>
         /// <value>The model.</value>
-        public T Model { get; set; }
+        public T Model
+        {
+            get
+            {
+                if (model == null)
+                {
+                    GetModel();
+                }
+
+                return model;
+            }
+            set { model = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [infer type].
@@ -56,35 +87,17 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </value>
         public bool IsLazy { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public GlassUserControl(ISitecoreContext context) : base(context) { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GlassUserControl{T}"/> class.
-        /// </summary>
-        public GlassUserControl() : base() { }
-
+        public virtual string RenderingParameters
+        {
+            get { return RenderingContext.GetRenderingParameters(); }
+        }
 
         /// <summary>
         /// Gets the model.
         /// </summary>
         protected virtual void GetModel()
         {
-
-
-            Model = SitecoreContext.CreateType<T>(LayoutItem, IsLazy, InferType);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs" /> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            GetModel();
-            base.OnLoad(e);
+            model = GetLayoutItem<T>(IsLazy, InferType);
         }
 
         /// <summary>
@@ -116,16 +129,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Renders an image allowing simple page editor support
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Whether to output the height and width attributes</param>
         /// <returns></returns>
-        public virtual string RenderImage(Expression<Func<T, object>> field,
-                                             object parameters = null,
-                                             bool isEditable = false,
-                                            bool outputHeightWidth = false
-            )
+        public virtual string RenderImage(Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false)
         {
             return base.RenderImage(this.Model, field, parameters, isEditable, outputHeightWidth);
         }
@@ -134,7 +143,6 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Render HTML for a link with contents
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
@@ -143,14 +151,12 @@ namespace Glass.Mapper.Sc.Web.Ui
                                                      object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
-
         }
 
         /// <summary>
         /// Render HTML for a link
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
@@ -158,28 +164,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public virtual string RenderLink(Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
-
             return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
         }
 
-
-        private string GetRenderingParameters(Control control)
+        public virtual TParam GetRenderingParameters<TParam>() where TParam : class
         {
-            if (control == null) return null;
-
-            if (control is Sublayout)
-            {
-                return ((Sublayout)control).Parameters;
-            }
-
-            return GetRenderingParameters(control.Parent);
-        }
-
-        public virtual string RenderingParameters { get { return GetRenderingParameters(this); } }
-
-        public virtual T GetRenderingParameters<T>() where T : class
-        {
-            return GlassHtml.GetRenderingParameters<T>(RenderingParameters);
+            return GlassHtml.GetRenderingParameters<TParam>(RenderingParameters);
         }
 
 

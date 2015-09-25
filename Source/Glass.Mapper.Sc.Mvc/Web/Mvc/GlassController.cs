@@ -20,7 +20,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
-            IRenderingContextWrapper renderingContextWrapper, HttpContextBase httpContext)
+            IRenderingContext renderingContextWrapper, HttpContextBase httpContext)
             : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
         {
         }
@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
-            IRenderingContextWrapper renderingContextWrapper, HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+            IRenderingContext renderingContextWrapper, HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
         {
         }
 
@@ -72,7 +72,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
-        protected IRenderingContextWrapper RenderingContextWrapper { get; set; }
+        protected IRenderingContext RenderingContextWrapper { get; set; }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
         public GlassController() : this(GetContextFromHttp())
@@ -81,12 +81,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
-        protected GlassController(ISitecoreContext sitecoreContext) : this(sitecoreContext, new GlassHtml(sitecoreContext), new RenderingContextWrapper(), null)
+        protected GlassController(ISitecoreContext sitecoreContext) : this(sitecoreContext, new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
         {
             
         }
 
-        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml, IRenderingContextWrapper renderingContextWrapper, HttpContextBase httpContext)
+        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml, IRenderingContext renderingContextWrapper, HttpContextBase httpContext)
         {
             SitecoreContext = sitecoreContext;
             GlassHtml = glassHtml;
@@ -109,14 +109,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual T GetRenderingParameters<T>() where T:class
         {
             string renderingParameters = RenderingContextWrapper.GetRenderingParameters();
-            if (String.IsNullOrEmpty(renderingParameters))
-            {
-                return null;
-            }
+            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
 
-            return RenderingContextWrapper.ContextActive
-                ? GlassHtml.GetRenderingParameters<T>(renderingParameters)
-                : null;
         }
 
 

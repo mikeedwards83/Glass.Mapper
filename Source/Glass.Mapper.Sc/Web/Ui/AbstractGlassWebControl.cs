@@ -30,6 +30,7 @@ namespace Glass.Mapper.Sc.Web.Ui
     /// </summary>
     public abstract class AbstractGlassWebControl : WebControl
     {
+        protected IRenderingContext RenderingContext { get; set; }
 
         private TextWriter _writer;
 
@@ -41,18 +42,27 @@ namespace Glass.Mapper.Sc.Web.Ui
         private ISitecoreContext _sitecoreContext;
         private IGlassHtml _glassHtml;
 
+
+
+        public AbstractGlassWebControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext)
+        {
+            RenderingContext = renderingContext ?? new RenderingContextUserControlWrapper(this);
+            _glassHtml = glassHtml;
+            _sitecoreContext = context;
+        }
+
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="glassHtml"></param>
         public AbstractGlassWebControl(ISitecoreContext context, IGlassHtml glassHtml)
+            : this(context, glassHtml, null)
         {
-            _glassHtml = glassHtml;
-            _sitecoreContext = context;
         }
 
-       
+
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AbstractGlassUserControl" /> class.
@@ -117,8 +127,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             {
                 if (_dataSource == null)
                 {
-                    var parent = Parent as WebControl;
-                    _dataSource = parent == null ? string.Empty : parent.DataSource;
+                    _dataSource = RenderingContext.GetRenderingParameters();
                 }
                 return _dataSource;
             }

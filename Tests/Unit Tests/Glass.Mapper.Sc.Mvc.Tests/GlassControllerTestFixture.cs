@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Web;
 using FluentAssertions;
+using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Mvc;
 using NSubstitute;
 using NUnit.Framework;
@@ -145,7 +146,6 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             // Arrange
             StubClass classToReturn = new StubClass();
             var testHarness = new GlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.ContextActive.Returns(true);
             const string renderingParameters = "p=1&r=2";
             testHarness.RenderingContextWrapper.GetRenderingParameters().Returns(renderingParameters);
             testHarness.GlassHtml.GetRenderingParameters<StubClass>(renderingParameters).Returns(classToReturn);
@@ -162,7 +162,6 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         {
             // Arrange
             var testHarness = new GlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.ContextActive.Returns(false);
 
             // Act
             var result = testHarness.GlassController.GetRenderingParameters<StubClass>();
@@ -178,7 +177,6 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
             // Arrange
             var testHarness = new GlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.ContextActive.Returns(true);
             testHarness.RenderingContextWrapper.GetRenderingParameters().Returns(String.Empty);
 
             // Act
@@ -197,7 +195,6 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
             // Arrange
             var testHarness = new GlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.ContextActive.Returns(true);
             testHarness.RenderingContextWrapper.GetRenderingParameters().Returns(null as string);
 
             // Act
@@ -242,14 +239,14 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             {
                 SitecoreContext = Substitute.For<ISitecoreContext>();
                 GlassHtml = Substitute.For<IGlassHtml>();
-                RenderingContextWrapper = Substitute.For<IRenderingContextWrapper>();
+                RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
                 GlassController = new GlassController(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
             }
 
             public HttpContextBase HttpContext { get; private set; }
 
-            public IRenderingContextWrapper RenderingContextWrapper { get; private set; }
+            public IRenderingContext RenderingContextWrapper { get; private set; }
 
             public IGlassHtml GlassHtml { get; private set; }
 
