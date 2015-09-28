@@ -40,7 +40,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         public void GetField_FieldContainsData_StringIsReturned()
         {
             //Assign
-            var fieldValue = "hello world";
+            var fieldValue = "<p>hello world</p>";
 
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetField");
             var field = item.Fields[FieldName];
@@ -60,7 +60,70 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(fieldValue, result);
         }
 
+        [Test]
+        public void GetField_ForceRenderFieldPipeline_StringIsReturned()
+        {
+            //Assign
 
+            var fieldValue = "<p>hello world</p>";
+            var expected = "&lt;p&gt;hello world&lt;/p&gt;";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            var mapper = new SitecoreFieldStringMapper();
+            var config = new SitecoreFieldConfiguration();
+            config.Setting = SitecoreFieldSettings.ForceRenderField;
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
+            Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
+
+
+            //Act
+            var result = mapper.GetField(field, config, null) as string;
+
+            //Assert
+
+            Sitecore.Context.Site = null;
+
+            Assert.AreEqual(expected, result);
+
+
+        }
+        [Test]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void SetField_ForceRenderFieldPipeline_ThrowsException()
+        {
+            //Assign
+
+            var fieldValue = "<p>hello world</p>";
+            var expected = "&lt;p&gt;hello world&lt;/p&gt;";
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldStringMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            var mapper = new SitecoreFieldStringMapper();
+            var config = new SitecoreFieldConfiguration();
+            config.Setting = SitecoreFieldSettings.ForceRenderField;
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+
+
+            //Act
+            mapper.SetField(field, fieldValue, config, null);
+
+            //Assert
+
+        }
         [Test]
         public void GetField_RichText_StringIsReturnedWithScapedUrl()
         {
