@@ -46,7 +46,11 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The field will only be used to enable the page editor but values will not be read or written to it.
         /// </summary>
-        PageEditorOnly = 0x8
+        PageEditorOnly = 0x8,
+        /// <summary>
+        /// Indicates that the RenderField pipeline should be called for Single Line Text Fields.
+        /// </summary>
+        ForceRenderField = 0x12,
     }
 }
 

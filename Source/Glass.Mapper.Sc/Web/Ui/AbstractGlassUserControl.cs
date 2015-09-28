@@ -15,56 +15,65 @@
  
 */ 
 //-CRE-
+
 using System;
 using System.IO;
 using System.Linq.Expressions;
 using System.Web.UI;
 using Sitecore.Data.Items;
-using Sitecore.Web.UI;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
     /// <summary>
     /// Class AbstractGlassUserControl
     /// </summary>
-    public class AbstractGlassUserControl : UserControl
+    public abstract class AbstractGlassUserControl : UserControl
     {
-
         private TextWriter _writer;
+        private IRenderingContext _renderingContext;
+        private ISitecoreContext _sitecoreContext;
+        private IGlassHtml _glassHtml;
 
-        protected TextWriter Output
+        protected AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext)
         {
-            get { return _writer ?? this.Response.Output; }
+            _renderingContext = renderingContext;
+            _glassHtml = glassHtml;
+            _sitecoreContext = context;
+
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml)
+        /// <param name="glassHtml">The glass html</param>
+        protected AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml) : this(context, glassHtml, null)
         {
-            _glassHtml = glassHtml;
-            _sitecoreContext = context;
+
 
         }
 
-        public AbstractGlassUserControl(ISitecoreContext context)
-            : this(context, new GlassHtml(context))
+        protected AbstractGlassUserControl(ISitecoreContext context) : this(context, new GlassHtml(context))
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
-        public AbstractGlassUserControl()
-            : this(Sc.SitecoreContext.GetFromHttpContext())
+        protected AbstractGlassUserControl()
         {
-
         }
 
-        private ISitecoreContext _sitecoreContext;
-        private IGlassHtml _glassHtml;
+        public virtual IRenderingContext RenderingContext
+        {
+            get { return _renderingContext ?? (_renderingContext = new RenderingContextUserControlWrapper(this)); }
+            set { _renderingContext = value; }
+        }
+
+        protected TextWriter Output
+        {
+            get { return _writer ?? this.Response.Output; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
@@ -79,18 +88,19 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Represents the current Sitecore context
         /// </summary>
         /// <value>The sitecore context.</value>
-        public ISitecoreContext SitecoreContext
+        public virtual ISitecoreContext SitecoreContext
         {
-            get { return _sitecoreContext; }
+            get { return _sitecoreContext ?? ( _sitecoreContext = Sc.SitecoreContext.GetFromHttpContext()); }
+            set { _sitecoreContext = value; }
         }
 
         /// <summary>
         /// Access to rendering helpers
         /// </summary>
         /// <value>The glass HTML.</value>
-        protected virtual IGlassHtml GlassHtml
+        public virtual IGlassHtml GlassHtml
         {
-            get { return _glassHtml; }
+            get { return _glassHtml ?? (_glassHtml = new GlassHtml(SitecoreContext)); }
             set { _glassHtml = value; }
         }
 
@@ -102,10 +112,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             get
             {
-                WebControl parent = Parent as WebControl;
-                if (parent == null)
-                    return string.Empty;
-                return parent.DataSource;
+                return RenderingContext.GetDataSource();
             }
         }
 
@@ -128,7 +135,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The layout item.</value>
         public Item ContextItem
         {
-            get { return global::Sitecore.Context.Item; }
+            get { return Sitecore.Context.Item; }
         }
 
         /// <summary>
@@ -136,12 +143,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </summary>
         public Item DataSourceItem
         {
-            get
-            {
-                if (DataSource.IsNullOrEmpty())
-                    return null;
-                else
-                    return global::Sitecore.Context.Database.GetItem(DataSource);
+            get {
+                return DataSource.IsNullOrEmpty() 
+                    ? null 
+                    : Sitecore.Context.Database.GetItem(DataSource);
             }
         }
 
@@ -152,7 +157,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+            return SitecoreContext.GetCurrentItem<T>(isLazy, inferType);
         }
 
         /// <summary>
@@ -162,7 +167,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+            string dataSource = RenderingContext.GetDataSource();
+            return !String.IsNullOrEmpty(dataSource) 
+                ? SitecoreContext.GetItem<T>(dataSource, isLazy, inferType) 
+                : null;
         }
 
         /// <summary>
@@ -172,7 +180,10 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+            string dataSource = RenderingContext.GetDataSource();
+            return !String.IsNullOrEmpty(dataSource)
+                ? GetDataSourceItem<T>(isLazy, inferType)
+                : GetContextItem<T>(isLazy, inferType);
         }
 
         /// <summary>
@@ -187,10 +198,6 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             return GlassHtml.Editable(model, field, parameters);
         }
-
-
-
-
 
         /// <summary>
         /// Makes a field editable via the Page Editor. Use the Model property as the target item, e.g. model =&gt; model.Title where Title is field name.
@@ -237,8 +244,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
         /// <returns></returns>
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
-                                                     object attributes = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false)
         {
             return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
 
@@ -256,22 +262,16 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <returns></returns>
         public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,  bool isEditable = false, string contents=null)
         {
-
             return GlassHtml.RenderLink(model, field, attributes, isEditable, contents);
         }
 
         /// <summary>
         /// Returns an Sitecore Edit Frame
         /// </summary>
-        /// <param name="buttons">The buttons.</param>
-        /// <param name="path">The path.</param>
-        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        public GlassEditFrame BeginEditFrame<T>(T model, string title = null,
-            params Expression<Func<T, object>>[] fields)
-            where T : class
+        public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields) where T : class
         {
             return GlassHtml.EditFrame(model, title, this.Output, fields);
         }

@@ -1,20 +1,20 @@
-﻿using System;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
     public class EnforcedTemplateCheck : IObjectConstructionTask
     {
-        private static Dictionary<string, bool> _cache;
+        private static ConcurrentDictionary<string, bool> _cache;
 
         static EnforcedTemplateCheck()
         {
-            _cache= new Dictionary<string, bool>();
+            _cache= new ConcurrentDictionary<string, bool>();
         }
 
         public void Execute(ObjectConstructionArgs args)
@@ -24,7 +24,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
             {
                 var scConfig = args.Configuration as SitecoreTypeConfiguration;
 
-                if (scConfig.EnforceTemplate != SitecoreEnforceTemplate.No)
+                if (scConfig != null && scConfig.EnforceTemplate != SitecoreEnforceTemplate.No)
                 {
                     var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
@@ -41,22 +41,17 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 
                         if (scConfig.EnforceTemplate == SitecoreEnforceTemplate.TemplateAndBase)
                         {
-                            result = item.TemplateID == scConfig.TemplateId ||
-                                     item.Template.BaseTemplates.Any(x => x.ID == scConfig.TemplateId);
+                            result = TemplateAndBaseCheck(item.Template, scConfig.TemplateId);
                         }
                         else if(scConfig.EnforceTemplate == SitecoreEnforceTemplate.Template)
                         {
                             result = item.TemplateID == scConfig.TemplateId;
                         }
 
-                        _cache[key] = result;
+                        _cache.TryAdd(key, result);
                     }
 
-                    if (result)
-                    {
-                        return;
-                    }
-                    else
+                    if (!result)
                     {
                         args.AbortPipeline();
                     }
@@ -64,6 +59,16 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                 }
 
             }
+        }
+
+        protected virtual bool TemplateAndBaseCheck(TemplateItem template, ID templateId)
+        {
+            if (template.ID == templateId)
+            {
+                return true;
+            }
+
+            return template.BaseTemplates.Any(baseTemplate => TemplateAndBaseCheck(baseTemplate, templateId));
         }
     }
 }

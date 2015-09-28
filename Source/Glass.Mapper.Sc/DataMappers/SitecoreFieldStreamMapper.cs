@@ -46,7 +46,21 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.Object.</returns>
         public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            return field.GetBlobStream();          
+            var data = field.GetBlobStream();
+
+            var stream = new MemoryStream();
+
+            byte[] buffer = new byte[2048];
+            int bytesRead;
+            while ((bytesRead = data.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                stream.Write(buffer, 0, bytesRead);
+            }
+
+            data.Close();
+
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream;
         }
 
         /// <summary>
