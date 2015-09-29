@@ -241,7 +241,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                 GlassHtml = Substitute.For<IGlassHtml>();
                 RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
-                GlassController = new GlassController(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
+                GlassController = new StubController(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
             }
 
             public HttpContextBase HttpContext { get; private set; }
@@ -252,7 +252,39 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
             public ISitecoreContext SitecoreContext { get; private set; }
 
-            public GlassController GlassController { get; private set; }
+            public StubController GlassController { get; private set; }
         }
+
+        public class StubController : GlassController
+        {
+            public StubController(
+                ISitecoreContext sitecoreContext,
+                IGlassHtml glassHtml,
+                IRenderingContext renderingContextWrapper,
+                HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+            {
+
+            }
+
+            public new T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+            {
+                return base.GetContextItem<T>(isLazy, inferType);
+            }
+
+            public new T GetRenderingParameters<T>() where T : class
+            {
+                return base.GetRenderingParameters<T>();
+            }
+            public new T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+            {
+                return base.GetDataSourceItem<T>(isLazy, inferType);
+            }
+            public new T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+            {
+                return base.GetLayoutItem<T>(isLazy, inferType);
+            }
+        }
+
+        
     }
 }

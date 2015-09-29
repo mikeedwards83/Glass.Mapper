@@ -86,7 +86,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
             
         }
 
-        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml, IRenderingContext renderingContextWrapper, HttpContextBase httpContext)
+        public GlassController(
+            ISitecoreContext sitecoreContext, 
+            IGlassHtml glassHtml, 
+            IRenderingContext renderingContextWrapper,
+            HttpContextBase httpContext)
         {
             SitecoreContext = sitecoreContext;
             GlassHtml = glassHtml;
@@ -106,12 +110,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
         }
 
-        public virtual T GetRenderingParameters<T>() where T:class
-        {
-            string renderingParameters = RenderingContextWrapper.GetRenderingParameters();
-            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
-
-        }
+       
 
 
         /// <summary>
@@ -154,7 +153,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return SitecoreContext.GetCurrentItem<T>(isLazy, inferType);
         }
@@ -164,7 +163,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             if (!RenderingContextWrapper.HasDataSource)
             {
@@ -180,13 +179,20 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return RenderingContextWrapper.HasDataSource 
                 ? GetDataSourceItem<T>(isLazy, inferType) 
                 : GetContextItem<T>(isLazy, inferType);
         }
 
+
+        protected virtual T GetRenderingParameters<T>() where T : class
+        {
+            string renderingParameters = RenderingContextWrapper.GetRenderingParameters();
+            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
+
+        }
 
         /// <summary>
         /// Returns the data source item.
@@ -196,7 +202,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="inferType"></param>
         /// <returns></returns>
         [Obsolete("Use GetDataSourceItem")]
-        public virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return GetDataSourceItem<T>(isLazy, inferType);
         }
@@ -209,7 +215,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="inferType"></param>
         /// <returns></returns>
         [Obsolete("Use GetLayoutItem")]
-        public virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
             return GetLayoutItem<T>(isLazy, inferType);
         }
