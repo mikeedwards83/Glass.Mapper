@@ -27,10 +27,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
 
         public void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null)
-                return;
-
-            if (args.Configuration.Type.IsInterface && args.Parameters.ContainsKey(MultiInterfaceConfigsKey))
+            if (args.Result == null 
+                && args.Configuration.Type.IsInterface 
+                && args.Parameters.ContainsKey(MultiInterfaceConfigsKey))
             {
                 var configs = args.Parameters[MultiInterfaceConfigsKey] as IEnumerable<AbstractTypeConfiguration>;
 
