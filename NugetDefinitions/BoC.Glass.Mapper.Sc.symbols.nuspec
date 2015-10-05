@@ -3,20 +3,22 @@
   <metadata>
     <id>BoC.Glass.Mapper.Sc</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Nathanael Mann</authors>
-    <owners>Michael Edwards</owners>
-    <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
-    <projectUrl>http://glass.lu/</projectUrl>
-    <iconUrl>http://glass.lu/images/logo-50.png</iconUrl>
+    <authors>Chris van de Steeg, Michael Edwards, Nathanael Mann</authors>
+    <owners>Chris van de Steeg</owners>
+    <licenseUrl>https://github.com/csteeg/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>https://github.com/csteeg/Glass.Mapper/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
+      This is a fork of Glass.Mapper, maintained by Chris van de Steeg.
+      The fork contains several fixes for codefirst and contentsearch usage.
+      ----------------------------------------------------------------------
       An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
       relationships and queries as well as supporting the Page Editor. Allows you to map data from 
       Sitecore using the Castle Windsor DI Container.
     </description>
-    <releaseNotes>This is a pre-release version of the package.</releaseNotes>
+    <releaseNotes>This is a forked version of the Mike Edwards package with better support for codefirst and contentsearch integration.</releaseNotes>
     <copyright>Copyright (C) by Michael Edwards</copyright>
-    <tags>Glass Mapper Sitecore Glass.Mapper</tags>
+    <tags>Glass Mapper Sitecore Glass.Mapper BOC</tags>
     <language>en-GB</language>
     <dependencies>
       <dependency id="Castle.Core" version="3.3.3" />
