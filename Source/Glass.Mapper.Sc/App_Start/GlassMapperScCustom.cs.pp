@@ -31,7 +31,7 @@ namespace $rootnamespace$.App_Start
 			//Set config property to true in Glass.Mapper.Sc.CodeFirst.config to enable codefirst
 			if (!global::Sitecore.Configuration.Settings.GetBoolSetting("Glass.CodeFirst", false)) return;
 
-            var dbs = Sitecore.Configuration.Factory.GetDatabases();
+            var dbs = global::Sitecore.Configuration.Factory.GetDatabases();
             foreach (var db in dbs)
             {
                 var provider = db.GetDataProviders().FirstOrDefault(x => x is GlassDataProvider) as GlassDataProvider;
