@@ -66,6 +66,11 @@ namespace Glass.Mapper.Sc.DataMappers
                 return field.Value;
             }
 
+            if (config.Setting == SitecoreFieldSettings.ForceRenderField)
+            {
+                return RunPipeline(field);
+            }
+
             Guid fieldGuid = field.ID.Guid;
 
             // shortest route - we know whether or not its rich text
@@ -82,13 +87,8 @@ namespace Glass.Mapper.Sc.DataMappers
             return GetResult(field, isRichText);
         }
 
-        private string GetResult(Field field, bool isRichText)
+        protected virtual string RunPipeline(Field field)
         {
-            if (!isRichText)
-            {
-                return field.Value;
-            }
-
             RenderFieldArgs renderFieldArgs = new RenderFieldArgs
             {
                 Item = field.Item,
@@ -99,6 +99,16 @@ namespace Glass.Mapper.Sc.DataMappers
             CorePipeline.Run("renderField", renderFieldArgs);
 
             return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
+        }
+
+        protected virtual string GetResult(Field field, bool isRichText)
+        {
+            if (!isRichText)
+            {
+                return field.Value;
+            }
+
+            return RunPipeline(field);
         }
 
 
@@ -118,7 +128,14 @@ namespace Glass.Mapper.Sc.DataMappers
                 return;
             }
 
-            if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw)
+            if(config.Setting == SitecoreFieldSettings.ForceRenderField)
+            {
+                throw new NotSupportedException("It is not possible to save data from a field when the data isn't raw."
+                     + "In the SitecoreFieldAttribute remove the SitecoreFieldSettings.ForceRenderField valuea for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));
+
+            }
+
+            if (field.Type.StartsWith("Rich Text") && config.Setting != SitecoreFieldSettings.RichTextRaw )
             {
                 throw new NotSupportedException("It is not possible to save data from a rich text field when the data isn't raw."
                     + "Set the SitecoreFieldAttribute setting property to SitecoreFieldSettings.RichTextRaw for property {0} on type {1}".Formatted(config.PropertyInfo.Name, config.PropertyInfo.ReflectedType.FullName));

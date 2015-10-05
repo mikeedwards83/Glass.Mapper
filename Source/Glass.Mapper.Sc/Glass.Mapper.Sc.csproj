@@ -132,6 +132,7 @@
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNullableEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
+    <Compile Include="Web\IRenderingContext.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -241,6 +243,7 @@
     <Compile Include="Web\Ui\GlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Web\Ui\RenderingContextUserControlWrapper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

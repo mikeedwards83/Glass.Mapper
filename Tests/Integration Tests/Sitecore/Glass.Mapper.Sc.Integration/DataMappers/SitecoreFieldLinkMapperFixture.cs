@@ -194,6 +194,40 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
+        public void GetField_FieldContainsInternalButItemMissing_ReturnsEmptyUrl()
+        {
+            //Assign
+            var mapper = new SitecoreFieldLinkMapper();
+            var fieldValue =
+                "<link text=\"Test description\" linktype=\"internal\" url=\"/Tests/DataMappers/SitecoreFieldLinkMapper/Target.aspx\" anchor=\"testAnchor\" querystring=\"q=s\" title=\"test alternative\" class=\"testClass\" target=\"testTarget\" id=\"{AAAAAAAA-3B6F-4F5F-A5C2-FD2B9D5A47A0}\" />";
+
+            Sitecore.Context.Site = null;
+
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldLinkMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+            //Assert
+            Assert.AreEqual("testAnchor", result.Anchor);
+            Assert.AreEqual("testClass", result.Class);
+            Assert.AreEqual("q=s", result.Query);
+            Assert.AreEqual("testTarget", result.Target);
+            Assert.AreEqual(new Guid("{AAAAAAAA-3B6F-4F5F-A5C2-FD2B9D5A47A0}"), result.TargetId);
+            Assert.AreEqual("Test description", result.Text);
+            Assert.AreEqual("test alternative", result.Title);
+            Assert.AreEqual(LinkType.Internal, result.Type);
+            Assert.AreEqual(string.Empty, result.Url);
+        }
+
+        [Test]
         public void GetField_FieldContainsInternalAbsoluteUrl_ReturnsInternalLink()
         {
             //Assign

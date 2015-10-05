@@ -97,14 +97,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             get
             {
-                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+                if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null ||
+                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource.IsNullOrEmpty())
                 {
                     return null;
                 }
                 else
-                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource);
             }
         }
 
@@ -360,6 +360,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public T GetRenderingParameters<T>() where T : class
         {
+            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null)
+                return null;
+
             var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
             return
                 GlassHtml.GetRenderingParameters<T>(parameters);
