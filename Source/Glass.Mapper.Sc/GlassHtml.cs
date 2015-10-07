@@ -848,7 +848,7 @@ namespace Glass.Mapper.Sc
 #if (SC80 || SC75)
         public virtual string ProtectMediaUrl(string url)
         {
-            return HashingUtils.ProtectAssetUrl(url);
+            return Sitecore.Resources.Media.HashingUtils.ProtectAssetUrl(url);
         }
 #endif
 
