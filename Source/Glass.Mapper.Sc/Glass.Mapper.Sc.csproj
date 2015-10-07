@@ -272,6 +272,7 @@
   -->
   <Target Name="BeforeBuild">
     <Message Importance="high" Text="ScVersion: $(ScVersion)" />
+    <Message Importance="high" Text="ScDir: $(ScDir)" />
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
 </Project>
