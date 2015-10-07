@@ -19,17 +19,13 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 using System.Web;
-using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
@@ -40,14 +36,12 @@ using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
-using Sitecore.Platform;
-using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Web;
-using Image = Glass.Mapper.Sc.Fields.Image;
 
 namespace Glass.Mapper.Sc
 {
@@ -56,10 +50,11 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class GlassHtml : IGlassHtml
     {
-        private static readonly Type ImageType = typeof(Fields.Image);
-        private static readonly Type LinkType = typeof(Fields.Link);
+        private static readonly Type ImageType = typeof(Image);
+        private static readonly Type LinkType = typeof(Link);
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
 
+        private readonly Context _context;
 
         static GlassHtml()
         {
@@ -89,7 +84,7 @@ namespace Glass.Mapper.Sc
                 return expression.Compile();
             }
 
-            var key = typeof(T).FullName + expression.Body.ToString();
+            var key = typeof(T).FullName + expression.Body;
 
             if (_compileCache.ContainsKey(key))
             {
@@ -108,7 +103,7 @@ namespace Glass.Mapper.Sc
                 return expression.Compile();
             }
 
-            var key = typeof(T).FullName + expression.Body.ToString();
+            var key = typeof(T).FullName + expression.Body;
 
             if (_compileCache.ContainsKey(key))
             {
@@ -127,7 +122,6 @@ namespace Glass.Mapper.Sc
         /// The sitecore context.
         /// </value>
         public ISitecoreContext SitecoreContext { get; private set; }
-        private readonly Context _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassHtml"/> class.
@@ -145,6 +139,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <param name="path">The path.</param>
+        /// <param name="output">The output text writer</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
@@ -166,7 +161,7 @@ namespace Glass.Mapper.Sc
             {
                 if (fields.Any())
                 {
-                    var fieldNames = fields.Select(x => Glass.Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
+                    var fieldNames = fields.Select(x => Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
                         .Cast<SitecoreFieldConfiguration>()
                         .Where(x => x != null)
                         .Select(x => x.FieldName);
@@ -183,7 +178,7 @@ namespace Glass.Mapper.Sc
                     var field = fields.FirstOrDefault();
 
 
-                    var config = Glass.Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, SitecoreContext.GlassContext, model);
+                    var config = Mapper.Utilities.GetTypeConfig<T, SitecoreTypeConfiguration>(field, SitecoreContext.GlassContext, model);
                     var pathConfig = config.Properties
                         .OfType<SitecoreInfoConfiguration>()
                         .FirstOrDefault(x => x.Type == SitecoreInfoType.Path);
@@ -234,7 +229,6 @@ namespace Glass.Mapper.Sc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public virtual string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null)
         {
-
             return MakeEditable(field, standardOutput, target, parameters);
         }
 
@@ -246,7 +240,6 @@ namespace Glass.Mapper.Sc
         }
         public T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class
         {
-
             var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, SitecoreContext.Database, "renderingParameters");
 
             using (new SecurityDisabler())
@@ -261,6 +254,7 @@ namespace Glass.Mapper.Sc
                         {
                             item[key] = parameters[key];
                         }
+
                         T obj = item.GlassCast<T>(this.SitecoreContext);
 
                         item.Editing.EndEdit();
@@ -282,6 +276,11 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(string parameters) where T : class
         {
+            if (String.IsNullOrEmpty(parameters))
+            {
+                return default(T);
+            }
+
             var nameValueCollection = WebUtil.ParseUrlParameters(parameters);
             return GetRenderingParameters<T>(nameValueCollection);
         }
@@ -296,12 +295,18 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         public virtual T GetRenderingParameters<T>(NameValueCollection parameters) where T : class
         {
+            if (parameters == null)
+            {
+                return default(T);
+            }
+
             var config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
 
             if (config == null)
             {
                 SitecoreContext.GlassContext.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(T)));
             }
+
             config = SitecoreContext.GlassContext[typeof(T)] as SitecoreTypeConfiguration;
 
             return GetRenderingParameters<T>(parameters, config.TemplateId);
@@ -335,7 +340,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(field.Compile().Invoke(model) as Fields.Link, attrs, string.Empty, writer);
+                return BeginRenderLink(field.Compile().Invoke(model) as Link, attrs, string.Empty, writer);
             }
         }
 
@@ -360,7 +365,6 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// Render HTML for a link
         /// </summary>
-        /// <param name="link">The link to render</param>
         /// <param name="model">The model containing the link</param>
         /// <param name="field">An expression that points to the link</param>
         /// <param name="attributes">A collection of parameters to added to the link</param>
@@ -369,7 +373,7 @@ namespace Glass.Mapper.Sc
         /// <returns>An "a" HTML element</returns>
         public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
-            NameValueCollection attrs = null;
+            NameValueCollection attrs;
 
             if (attributes is NameValueCollection)
             {
@@ -378,13 +382,12 @@ namespace Glass.Mapper.Sc
             else
             {
                 attrs = Utilities.GetPropertiesCollection(attributes, true);
-
             }
 
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
 
-            RenderingResult result = null;
+            RenderingResult result;
             if (IsInEditingMode && isEditable)
             {
                 if (!string.IsNullOrEmpty(contents))
@@ -409,7 +412,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Fields.Link, attrs, contents, writer
+                        GetCompiled(field).Invoke(model) as Link, attrs, contents, writer
                     );
             }
 
@@ -430,7 +433,7 @@ namespace Glass.Mapper.Sc
             get
             {
                 return
-                            global::Sitecore.Context.PageMode.IsPageEditorEditing;
+                            Sitecore.Context.PageMode.IsPageEditorEditing;
             }
         }
 
@@ -455,7 +458,7 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         [Obsolete("Use the SafeDictionary Overload")]
-        public static RenderingResult BeginRenderLink(Fields.Link link, NameValueCollection attributes, string contents, TextWriter writer)
+        public static RenderingResult BeginRenderLink(Link link, NameValueCollection attributes, string contents, TextWriter writer)
         {
             return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer);
         }
@@ -467,7 +470,7 @@ namespace Glass.Mapper.Sc
         /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
-        public static RenderingResult BeginRenderLink(Fields.Link link, SafeDictionary<string> attributes, string contents,
+        public static RenderingResult BeginRenderLink(Link link, SafeDictionary<string> attributes, string contents,
             TextWriter writer)
         {
             if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
@@ -568,7 +571,7 @@ namespace Glass.Mapper.Sc
                         renderFieldArgs.Item = scClass;
 
                         var fieldConfig = (SitecoreFieldConfiguration)dataHandler;
-                        if (fieldConfig.FieldId != (Sitecore.Data.ID)null && fieldConfig.FieldId != ID.Null)
+                        if (fieldConfig.FieldId != (ID)null && fieldConfig.FieldId != ID.Null)
                         {
                             renderFieldArgs.FieldName = fieldConfig.FieldId.ToString();
                         }
@@ -626,7 +629,7 @@ namespace Glass.Mapper.Sc
             catch (Exception ex)
             {
                 firstPart = "<p>{0}</p><pre>{1}</pre>".Formatted(ex.Message, ex.StackTrace);
-                Sitecore.Diagnostics.Log.Error("Failed to render field", ex, typeof(IGlassHtml));
+                Log.Error("Failed to render field", ex, typeof(IGlassHtml));
             }
 
             return new RenderingResult(writer, firstPart, lastPart);
@@ -669,7 +672,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return RenderImage(GetCompiled(field).Invoke(model) as Fields.Image, parameters == null ? null : attrs, outputHeightWidth);
+                return RenderImage(GetCompiled(field).Invoke(model) as Image, parameters == null ? null : attrs, outputHeightWidth);
             }
         }
 
@@ -681,7 +684,7 @@ namespace Glass.Mapper.Sc
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be output when rendering the image</param>
         /// <returns>An img HTML element</returns>
         public virtual string RenderImage(
-            Fields.Image image,
+            Image image,
             SafeDictionary<string> attributes,
             bool outputHeightWidth = false
             )
@@ -720,7 +723,7 @@ namespace Glass.Mapper.Sc
              * because it stops another call having to be passed to Sitecore.
              */
 
-            if (image == null || image.Src.IsNullOrWhiteSpace()) return "";
+            if (image == null || image.Src.IsNullOrWhiteSpace()) return String.Empty;
 
             if (attributes == null) attributes = new SafeDictionary<string>();
 
