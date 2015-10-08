@@ -188,6 +188,11 @@ namespace Glass.Mapper.Sc
                     if (pathConfig == null)
                     {
                         var id = config.GetId(model);
+                        if (id == ID.Null)
+                        {
+                            throw new MapperException(
+                                "Failed to find ID. Ensure that you have an ID property on your model.");
+                        }
                         var item = SitecoreContext.Database.GetItem(id);
                         path = item.Paths.Path;
 
