@@ -70,12 +70,17 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public bool UseProxiesForLazyEnumerables { get; set; }
 
+        /// <summary>
         /// Indicates it the lambda expressions used by Editable expression in renderings are cached for performance.
         /// By default this is true, if you experience caching issue then set this to false.
         /// </summary>
         public bool UseGlassHtmlLambdaCache { get; set; }
 
-
+        /// <summary>
+        /// Indicates that the SitecoreFieldImageMapper will return an empty Glass.Mapper.Sc.Image object instead of null 
+        /// if the Image field in Sitecore does not have a value.
+        /// </summary>
+        public bool ReturnEmtpyImage { get; set; }
 
     }
 }

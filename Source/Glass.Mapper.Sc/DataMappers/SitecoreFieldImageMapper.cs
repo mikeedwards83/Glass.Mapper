@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (field.Value.IsNullOrEmpty())
             {
-                return null;
+                return context.Service.Config.ReturnEmtpyImage ? new Image() : null;
             }
 
             Image img = new Image();
