@@ -72,12 +72,13 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
                 str = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/" + name;
                 Database database = Factory.GetDatabase("core");
                 Assert.IsNotNull((object)database, "core");
-                Item folderItem = database.GetItem(str);
-
-                if (folderItem == null)
+                using (new SecurityDisabler())
                 {
-                    using (new SecurityDisabler())
+                    Item folderItem = database.GetItem(str);
+
+                    if (folderItem == null)
                     {
+
 
                         var rootItem = database.GetItem(WebEditButtonRoot);
 
@@ -105,9 +106,10 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
 
                     }
 
+                    args.CustomData["buttonsPath"] = folderItem.Paths.Path;
+
                 }
 
-                args.CustomData["buttonsPath"] = folderItem.Paths.Path;
 
             }
 

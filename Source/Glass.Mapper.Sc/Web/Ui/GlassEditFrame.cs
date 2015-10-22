@@ -28,6 +28,7 @@ using Sitecore.Web.UI.WebControls;
 
 namespace Glass.Mapper.Sc.Web.Ui
 {
+
     /// <summary>
     /// Class GlassEditFrame
     /// </summary>
@@ -67,7 +68,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <summary>
         /// Renders the first part.
         /// </summary>
-        public void RenderFirstPart()
+        public virtual void RenderFirstPart()
         {
             _frame.RenderFirstPart(_writer);
         }
@@ -77,9 +78,26 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             _frame.RenderLastPart(_writer);
+        }
+    }
+
+    public class GlassNullEditFrame : GlassEditFrame
+    {
+        public GlassNullEditFrame() : base(null)
+        {
+        }
+
+        public override void RenderFirstPart()
+        {
+            //DO NOTHING
+        }
+
+        public override void Dispose()
+        {
+            //DO NOTHING
         }
     }
 }

@@ -157,7 +157,7 @@ namespace Glass.Mapper.Sc
 
         public GlassEditFrame EditFrame<T>(T model, string title = null, TextWriter output = null, params Expression<Func<T, object>>[] fields) where T : class
         {
-            if (IsInEditingMode && model != null)
+            if (IsInEditingMode  && Sitecore.Context.IsLoggedIn && model != null)
             {
                 if (fields.Any())
                 {
@@ -206,7 +206,7 @@ namespace Glass.Mapper.Sc
                     return EditFrame(buttonPath, path, output);
                 }
             }
-            return EditFrame("/sitecore");
+            return new GlassNullEditFrame();
 
         }
 
