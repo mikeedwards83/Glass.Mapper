@@ -118,6 +118,7 @@
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldImageEmptyMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldNullableEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
