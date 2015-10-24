@@ -18,12 +18,14 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -78,7 +80,51 @@ namespace Glass.Mapper.Sc.Integration
             }
         }
 
-       
+        [Test]
+        public void GetItemByIdvsItemByPath()
+        {
+            _glassWatch.Reset();
+            // Warm up
+            ID id = new ID(_id);
+
+            var item1 = _db.GetItem(id);
+            string path = item1.Paths.FullPath;
+            Console.WriteLine(path);
+            var item2 = _db.GetItem(path);
+
+            string itemIdString = _id.ToString();
+            var item3 = _db.GetItem(itemIdString);
+
+            // Start
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(id);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine("Item by Id: {0}", _glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(path);
+            }
+            _glassWatch.Stop();
+
+            Console.WriteLine("Item by Path: {0}", _glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+
+            for (var i = 0; i < 10000; i++)
+            {
+                _db.GetItem(itemIdString);
+            }
+            _glassWatch.Stop();
+
+            Console.WriteLine("Item by Id String: {0}", _glassWatch.ElapsedMilliseconds);
+        }
 
         [Test]
         [Timeout(120000)]
@@ -87,12 +133,11 @@ namespace Glass.Mapper.Sc.Integration
             [Values(1, 1000, 10000, 50000)] int count
             )
         {
+            _glassWatch.Reset();
+            _rawWatch.Reset();
 
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
                 _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
@@ -114,79 +159,16 @@ namespace Glass.Mapper.Sc.Integration
         [Test]
         [Timeout(120000)]
         [Repeat(10000)]
-        public void GetItems_LotsOfLazyPropertiesNotRaw(
-            [Values(1,1000, 10000, 50000)] int count
-            )
-        {
-
-            for (int i = 0; i < count; i++)
-            {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
-                _rawWatch.Start();
-                var rawItem = _db.GetItem(new ID(_id));
-                var value1 = rawItem["Field"];
-                _rawWatch.Stop();
-                _rawTotal = _rawWatch.ElapsedTicks;
-
-                _glassWatch.Start();
-                var glassItem = _service.GetItem<StubClassWithLotsOfPropertiesNotRaw>(_id);
-                var value2 = glassItem.Field1;
-                _glassWatch.Stop();
-                _glassTotal = _glassWatch.ElapsedTicks;
-
-            }
-
-            double total = _glassTotal / _rawTotal;
-            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
-        }
-
-        [Test]
-        [Timeout(120000)]
-        [Repeat(10000)]
-        public void GetItems_LotsOfLazyProperties(
-            [Values(1, 1000, 10000, 50000)] int count
-            )
-        {
-
-            for (int i = 0; i < count; i++)
-            {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
-                _rawWatch.Start();
-                var rawItem = _db.GetItem(new ID(_id));
-                var value1 = rawItem["Field"];
-                _rawWatch.Stop();
-                _rawTotal = _rawWatch.ElapsedTicks;
-
-                _glassWatch.Start();
-                var glassItem = _service.GetItem<StubLazyClassWithLotsOfProperties>(_id);
-                var value2 = glassItem.Field1.Value;
-                _glassWatch.Stop();
-                _glassTotal = _glassWatch.ElapsedTicks;
-                Assert.IsFalse(glassItem.Field2.IsValueCreated);
-
-            }
-
-            double total = _glassTotal / _rawTotal;
-            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
-        }
-
-        [Test]
-        [Timeout(120000)]
-        [Repeat(10000)]
         public void GetItems_LotsOfProperties(
             [Values(1000, 10000, 50000)] int count
             )
         {
 
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
             for (int i = 0; i < count; i++)
             {
-                _glassWatch.Reset();
-                _rawWatch.Reset();
-
                 _rawWatch.Start();
                 var rawItem = _db.GetItem(new ID(_id));
                 var value1 = rawItem["Field"];
@@ -203,6 +185,66 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal/count));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        public void GetWholeDb()
+        {
+            List<Item> items = new List<Item>();
+            var rawItem = _db.GetItem("/sitecore");
+            _service.Cast<StubForWholeDb>(rawItem);
+
+            foreach (Item child in rawItem.GetChildren())
+            {
+                AddChildren(child, items);
+            }
+
+            var count = 0;
+            _glassWatch.Reset();
+            _rawWatch.Reset();
+
+            foreach (var item in items)
+            {
+                _rawWatch.Start();
+                if (item.Versions.Count > 0)
+                {
+                    var value1 = rawItem["__DisplayName"];
+                }
+                _rawWatch.Stop();
+
+                _glassWatch.Start();
+                var glassItem = _service.Cast<StubForWholeDb>(item);
+                if (glassItem != null)
+                {
+                    var value2 = glassItem.Field;
+                }
+                _glassWatch.Stop();
+
+                count++;
+
+            }
+
+            _rawTotal += _rawWatch.ElapsedTicks;
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+
+            double total = _glassTotal / _rawTotal;
+            Console.WriteLine("Performance Test Count: {0} Ratio: {1} Average: {2}".Formatted(count, total, _glassTotal / count));
+            Console.WriteLine("Total Items {0}", count);
+
+        }
+
+        private void AddChildren(Item parent, List<Item> items)
+        {
+            items.Add(parent);
+            if (parent.HasChildren)
+            {
+                foreach (Item child in parent.GetChildren())
+                {
+                    AddChildren(child, items);
+                }
+            }
         }
 
         [Test]
@@ -310,150 +352,18 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [SitecoreType]
-        public class StubClassWithLotsOfPropertiesNotRaw
+        public class StubForWholeDb
         {
-            [SitecoreField("Field")]
-            public virtual string Field1 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field2 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field3 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field4 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field5 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field6 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field7 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field8 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field9 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field10 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field11 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field12 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field13 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field14 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field15 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field16 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field17 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field18 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field19 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual string Field20 { get; set; }
-
-
-            [SitecoreId]
-            public virtual Guid Id { get; set; }
+            [SitecoreField("__Display Name")]
+            public virtual string Field { get; set; }
         }
-
-        [SitecoreType]
-        public class StubLazyClassWithLotsOfProperties
-        {
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field1 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field2 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field3 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field4 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field5 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field6 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field7 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field8 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field9 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field10 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field11 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field12 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field13 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field14 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field15 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field16 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field17 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field18 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field19 { get; set; }
-
-            [SitecoreField("Field")]
-            public virtual Lazy<string> Field20 { get; set; }
-
-
-            [SitecoreId]
-            public virtual Guid Id { get; set; }
-        }
-
 
         [SitecoreType]
         public class StubClass
         {
             [SitecoreField(Setting = SitecoreFieldSettings.RichTextRaw)]
             public virtual string Field { get; set; }
-
-            [SitecoreId]
-            public virtual Guid Id { get; set; }
+            
         }
 
         [SitecoreType]

@@ -28,6 +28,12 @@ namespace Glass.Mapper
     {
         #region String
 
+
+        public static string OrDefault(this string target, Func<string> defaultValue)
+        {
+            return target.HasValue() ?  target : defaultValue();
+        }
+
         /// <summary>
         /// Replaces the format item in a specified string with the string representation
         /// of a corresponding object in a specified array.

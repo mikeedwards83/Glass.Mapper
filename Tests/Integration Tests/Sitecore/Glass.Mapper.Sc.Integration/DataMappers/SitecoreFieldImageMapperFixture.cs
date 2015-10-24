@@ -21,9 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI.WebControls;
 using Glass.Mapper.Sc.DataMappers;
-using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.IoC;
+using NSubstitute;
 using NUnit.Framework;
+using Image = Glass.Mapper.Sc.Fields.Image;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -63,7 +66,85 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.AreEqual(640, result.Width);
         }
 
+		[Test]
+        public void GetField_ImageFieldEmpty_ReturnsNull()
+        {
+            //Assign
+            var fieldValue = string.Empty;
 
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+
+            
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            var context = Context.Create(new DependencyResolver(new Config()));
+            var service = new SitecoreService(Database, context);
+
+            //Act
+            var result =
+                service.GetItem<StubImage>("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+
+            //Assert
+            Assert.IsNull(result.Field);
+        }
+
+        [Test]
+        public void GetField_FieldIsEmpty_ReturnsNullImageObject()
+        {
+            //Assign
+            var fieldValue = string.Empty;
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
+            var service = Substitute.For<ISitecoreService>();
+            service.Config = new Config();
+            
+            var context = new SitecoreDataMappingContext(null, null, service);
+
+
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+
+            //Act
+            var result = mapper.GetField(field, null, context) as Image;
+
+            //Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetField_FieldIsNull_ReturnsNullImageObject()
+        {
+            //Assign
+            string fieldValue = null;
+
+            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
+            var field = item.Fields[FieldName];
+            var mapper = new SitecoreFieldImageMapper();
+
+            var service = Substitute.For<ISitecoreService>();
+            service.Config = new Config();
+
+            var context = new SitecoreDataMappingContext(null, null, service);
+            using (new ItemEditing(item, true))
+            {
+                field.Value = fieldValue;
+            }
+
+            //Act
+            var result = mapper.GetField(field, null, context) as Image;
+
+            //Assert
+            Assert.IsNull(result);
+        }
 
 
         #endregion
@@ -138,7 +219,14 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
 
         #endregion
 
-        
+        #region Stubs
+
+        public class StubImage
+        {
+            public virtual Image Field { get; set; }
+        }
+
+        #endregion
 
     }
 }

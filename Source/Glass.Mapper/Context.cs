@@ -173,23 +173,19 @@ namespace Glass.Mapper
                     }
 
 
-                    if(TypeConfigurations.ContainsKey(typeConfig.Type)){
+                    if (TypeConfigurations.ContainsKey(typeConfig.Type)){
                         Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
                         continue;
                     }
                     
                     typeConfig.PerformAutoMap();
 
+                    ProcessProperties(typeConfig.Properties);
+
                     if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
                     {
                         Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type)); 
                     }
-                }
-                //then process the properties.
-                //this stops the problem of types not existing for certain data handlers
-                foreach (var typeConfig in typeConfigurations)
-                {
-                    ProcessProperties(typeConfig.Properties);
                 }
             }
         }
@@ -203,6 +199,7 @@ namespace Glass.Mapper
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
             DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
+
 
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {
@@ -226,9 +223,9 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(object obj, bool doNotLoad = false, bool checkBase = true) where T: AbstractTypeConfiguration, new()
+        public T GetTypeConfiguration<T>(object obj, bool doNotLoad = false, bool checkBase = true) where T : AbstractTypeConfiguration, new()
         {
-            return GetTypeConfiguration<T>(obj.GetType(), doNotLoad, checkBase);
+            return GetTypeConfigurationFromType<T>(obj.GetType(), doNotLoad, checkBase);
         }
 
         /// <summary>
@@ -236,7 +233,7 @@ namespace Glass.Mapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns>AbstractTypeConfiguration.</returns>
-        public T GetTypeConfiguration<T>(Type type, bool doNotLoad = false, bool checkBase = true)
+        public T GetTypeConfigurationFromType<T>(Type type, bool doNotLoad = false, bool checkBase = true)
             where T : AbstractTypeConfiguration, new()
         {
 
@@ -270,7 +267,7 @@ namespace Glass.Mapper
             if (config == null && !doNotLoad)
             {
                 Load(new OnDemandLoader<T>(type));
-                return GetTypeConfiguration<T>(type, true);
+                return GetTypeConfigurationFromType<T>(type, true);
             }
 
             return config as T;

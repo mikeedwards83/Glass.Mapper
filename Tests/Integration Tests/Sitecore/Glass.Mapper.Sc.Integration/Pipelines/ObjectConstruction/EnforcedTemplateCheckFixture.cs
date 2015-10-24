@@ -206,5 +206,38 @@ namespace Glass.Mapper.Sc.Integration.Pipelines.ObjectConstruction
                 Assert.IsFalse(args.IsAborted);
             }
         }
+
+        [Test]
+        public void Execute_EnforeTemplateAndBaseInheritsTemplateFromDeepBase_PipelineContinues()
+        {
+            //Arrange
+            var task = new EnforcedTemplateCheck();
+
+
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+            var path = "/sitecore/content/Tests/Pipelines/ObjectConstruction/EnforcedTemplateCheck/Target";
+            var item = database.GetItem(path);
+
+            var config = new SitecoreTypeConfiguration();
+            config.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+
+            using (new SecurityDisabler())
+            {
+                config.TemplateId = item.Template.BaseTemplates.First().BaseTemplates.Skip(1).First().ID;
+
+                var typeContext = new SitecoreTypeCreationContext();
+                typeContext.Item = item;
+
+                var args = new ObjectConstructionArgs(null, typeContext, config, null);
+
+                //Act
+                task.Execute(args);
+
+                //Assert
+                Assert.IsNull(args.Result);
+                Assert.IsFalse(args.IsAborted);
+            }
+        }
+
     }
 }

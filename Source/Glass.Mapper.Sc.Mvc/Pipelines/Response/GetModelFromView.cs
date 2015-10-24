@@ -16,13 +16,22 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         public GetModelFromView()
             : this(new ModelCacheManager())
         {
-
+            ContextName = Context.DefaultContextName;
         }
 
         public GetModelFromView(IModelCacheManager modelCacheManager)
         {
             this.modelCacheManager = modelCacheManager;
         }
+
+        /// <summary>
+        /// Gets or sets the name of the context.
+        /// </summary>
+        /// <value>
+        /// The name of the context.
+        /// </value>
+        public string ContextName { get; set; }
+
 
         public override void Process(GetModelArgs args)
         {
@@ -61,7 +70,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext();
+            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
 
             Rendering renderingItem = args.Rendering;
 

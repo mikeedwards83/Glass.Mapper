@@ -54,6 +54,29 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
+        public void GetField_FieldContainsValidEnumInLowercase_ReturnsEnum()
+        {
+            //Assign
+            string fieldValue = "value1";
+            StubEnum expected = StubEnum.Value1;
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
+            var config = new SitecoreFieldConfiguration();
+            config.PropertyInfo = typeof(Stub).GetProperty("Property");
+
+            var mapper = new SitecoreFieldEnumMapper();
+
+            //Act
+            var result = (StubEnum)mapper.GetField(field, config, null);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void GetField_FieldContainsValidEnumInteger_ReturnsEnum()
         {
             //Assign

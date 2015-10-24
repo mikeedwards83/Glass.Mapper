@@ -125,6 +125,8 @@
     <Compile Include="DataMappers\SitecoreFieldLazyMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLazyIntegerMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLazyStringMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldImageEmptyMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldNullableEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
+    <Compile Include="Web\IRenderingContext.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -234,6 +237,7 @@
     <Compile Include="Web\Ui\GlassUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Web\Ui\RenderingContextUserControlWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />
@@ -276,6 +280,7 @@
   -->
   <Target Name="BeforeBuild">
     <Message Importance="high" Text="ScVersion: $(ScVersion)" />
+    <Message Importance="high" Text="ScDir: $(ScDir)" />
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
 </Project>

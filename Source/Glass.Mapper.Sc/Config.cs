@@ -16,6 +16,9 @@
 */
 //-CRE-
 
+using System.Collections.Generic;
+using Glass.Mapper.Sc.RenderField;
+
 namespace Glass.Mapper.Sc
 {
     public class Config : Glass.Mapper.Config
@@ -24,7 +27,41 @@ namespace Glass.Mapper.Sc
         {
             ForceItemInPageEditor = true;
             UseGlassHtmlLambdaCache = true;
+
+            ImageAttributes = new HashSet<string>(new[]
+           {
+                ImageParameterKeys.BORDER,
+                ImageParameterKeys.ALT,
+                ImageParameterKeys.HSPACE,
+                ImageParameterKeys.VSPACE,
+                ImageParameterKeys.CLASS,
+                ImageParameterKeys.WIDTHHTML,
+                ImageParameterKeys.HEIGHTHTML
+            });
+            ImageQueryString = new HashSet<string>(new[]
+            {
+                ImageParameterKeys.OUTPUT_METHOD,
+                ImageParameterKeys.ALLOW_STRETCH,
+                ImageParameterKeys.IGNORE_ASPECT_RATIO,
+                ImageParameterKeys.SCALE,
+                ImageParameterKeys.MAX_WIDTH,
+                ImageParameterKeys.MAX_HEIGHT,
+                ImageParameterKeys.THUMBNAIL,
+                ImageParameterKeys.BACKGROUND_COLOR,
+                ImageParameterKeys.DATABASE,
+                ImageParameterKeys.LANGUAGE,
+                ImageParameterKeys.VERSION,
+                ImageParameterKeys.DISABLE_MEDIA_CACHE,
+                ImageParameterKeys.WIDTH,
+                ImageParameterKeys.HEIGHT
+            });
         }
+
+
+        public HashSet<string> ImageAttributes { get; private set; }
+        public HashSet<string> ImageQueryString { get; private set; }
+
+
         public bool ForceItemInPageEditor { get; set; }
 
         /// <summary>
@@ -33,6 +70,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public bool UseProxiesForLazyEnumerables { get; set; }
 
+        /// <summary>
         /// Indicates it the lambda expressions used by Editable expression in renderings are cached for performance.
         /// By default this is true, if you experience caching issue then set this to false.
         /// </summary>

@@ -11,7 +11,9 @@ namespace $rootnamespace$.App_Start
 		public static IDependencyResolver CreateResolver(){
 			var config = new Glass.Mapper.Sc.Config();
 
-			return new DependencyResolver(config);
+			var dependencyResolver = new DependencyResolver(config);
+			// add any changes to the standard resolver here
+			return dependencyResolver;
 		}
 
 		public static IConfigurationLoader[] GlassLoaders(){			

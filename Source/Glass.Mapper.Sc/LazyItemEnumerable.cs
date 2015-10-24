@@ -54,11 +54,11 @@ namespace Glass.Mapper.Sc
         {
             _getItems = getItems;
             _type = typeof(T);
-            _isLazy = isLazy;
+            _isLazy = service.Config.UseProxiesForLazyEnumerables &&  isLazy;
             _inferType = inferType;
             _service = service;
             
-            _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems().ToList());
+            _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems());
 
             if (isLazy == false)
             {
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc
         /// Processes the items.
         /// </summary>
         /// <returns>IEnumerable{`0}.</returns>
-        public IEnumerable<T> ProcessItems()
+        public List<T> ProcessItems()
         {
             if (_service == null)
             {
@@ -85,21 +85,29 @@ namespace Glass.Mapper.Sc
                 items = new Item[] {};
             }
 
+            items = items.ToArray();
+
+            var results = new List<T>();
+
+           
             foreach (Item child in items)
             {
                 var obj = _service.CreateType(
                     _type,
                     child,
-                    _service.Config.UseProxiesForLazyEnumerables && _isLazy,
+                    _isLazy,
                     _inferType, null) as T;
 
                 if (obj == null)
                     continue;
-                yield return obj;
+                
+                results.Add(obj);
             }
 
             //release the service after full enumeration 
             _service = null;
+
+            return results;
         }
 
         /// <summary>

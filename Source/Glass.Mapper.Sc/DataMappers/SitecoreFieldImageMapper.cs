@@ -53,6 +53,12 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>System.Object.</returns>
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
+
+            if (field.Value.IsNullOrEmpty())
+            {
+                return null;
+            }
+
             Image img = new Image();
             ImageField scImg = new ImageField(field);
 

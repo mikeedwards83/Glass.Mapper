@@ -1,50 +1,124 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Mvc.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
+    public class GlassController<TContext, TDataSource> : GlassController where TContext : class where TDataSource : class
+    {
+        private TDataSource dataSource;
+        private TContext contextItem;
+
+        public GlassController()
+        {
+
+        }
+
+        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
+            IRenderingContext renderingContextWrapper, HttpContextBase httpContext)
+            : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+        {
+        }
+
+        public TDataSource DataSource
+        {
+            get { return dataSource ?? (dataSource = GetDataSourceItem<TDataSource>()); }
+        }
+
+        public TContext Context
+        {
+            get { return contextItem ?? (contextItem = GetContextItem<TContext>()); }
+        }
+    }
+
+    public class GlassController<T> : GlassController where T : class
+    {
+        private T dataSourceItem;
+        private T contextItem;
+
+        public GlassController()
+        {
+            
+        }
+
+        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
+            IRenderingContext renderingContextWrapper, HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+        {
+        }
+
+        public T Layout
+        {
+            get { return DataSource ?? Context; }
+        }
+
+        public T DataSource
+        {
+            get { return dataSourceItem ?? (dataSourceItem = GetDataSourceItem<T>()); }
+        }
+
+        public T Context
+        {
+            get { return contextItem ?? (contextItem = GetContextItem<T>()); }
+        }
+    }
+
     public class GlassController : SitecoreController
     {
 
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
-         
-        public GlassController()
+        protected IRenderingContext RenderingContextWrapper { get; set; }
+
+        [ExcludeFromCodeCoverage] // Chained constructor - no logic
+        public GlassController() : this(GetContextFromHttp())
         {
-            try
-            {
-                SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
-                GlassHtml = new GlassHtml(SitecoreContext);
-            }
-            catch (Exception ex)
-            {
-                Sitecore.Diagnostics.Log.Error("Failed to create SitecoreContext", ex, this);
-            }
+
         }
 
-        protected GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml)
+        [ExcludeFromCodeCoverage] // Chained constructor - no logic
+        protected GlassController(ISitecoreContext sitecoreContext) : this(sitecoreContext, new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
+        {
+            
+        }
+
+        public GlassController(
+            ISitecoreContext sitecoreContext, 
+            IGlassHtml glassHtml, 
+            IRenderingContext renderingContextWrapper,
+            HttpContextBase httpContext)
         {
             SitecoreContext = sitecoreContext;
             GlassHtml = glassHtml;
+            RenderingContextWrapper = renderingContextWrapper;
+            if (httpContext == null)
+            {
+                return;
+            }
+
+            if (ControllerContext != null)
+            {
+                ControllerContext.HttpContext = httpContext;
+            }
+            else
+            {
+                ControllerContext = new ControllerContext(httpContext, new RouteData(), this);
+            }
         }
 
-        protected virtual T GetRenderingParameters<T>() where T:class
-        {
-            return
-                GlassHtml.GetRenderingParameters<T>(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters]);
-        }
+       
 
 
         /// <summary>
         /// Returns either the item specified by the DataSource or the current context item
         /// </summary>
         /// <value>The layout item.</value>
-        public Item LayoutItem
+        [ExcludeFromCodeCoverage] // Helper property not to be tested       
+        public virtual Item LayoutItem
         {
             get
             {
@@ -56,26 +130,21 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// Returns either the item specified by the current context item
         /// </summary>
         /// <value>The layout item.</value>
-        public Item ContextItem
+        [ExcludeFromCodeCoverage] // Helper property not to be tested
+        public virtual Item ContextItem
         {
-            get { return global::Sitecore.Context.Item; }
+            get { return Sitecore.Context.Item; }
         }
 
         /// <summary>
         /// Returns the item specificed by the data source only. Returns null if no datasource set
         /// </summary>
-        public Item DataSourceItem
+        [ExcludeFromCodeCoverage] // Helper property not to be tested
+        public virtual Item DataSourceItem
         {
             get
             {
-                if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
-                {
-                    return null;
-                }
-                else
-                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource);
+                return RenderingContextWrapper.HasDataSource ? Sitecore.Context.Database.GetItem(RenderingContextWrapper.GetDataSource()) : null;
             }
         }
 
@@ -84,9 +153,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+            return SitecoreContext.GetCurrentItem<T>(isLazy, inferType);
         }
 
         /// <summary>
@@ -94,9 +163,15 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+            if (!RenderingContextWrapper.HasDataSource)
+            {
+                return null;
+            }
+
+            string dataSource = RenderingContextWrapper.GetDataSource();
+            return !String.IsNullOrEmpty(dataSource) ? SitecoreContext.GetItem<T>(dataSource, isLazy, inferType) : null;
         }
 
         /// <summary>
@@ -104,11 +179,20 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+            return RenderingContextWrapper.HasDataSource 
+                ? GetDataSourceItem<T>(isLazy, inferType) 
+                : GetContextItem<T>(isLazy, inferType);
         }
 
+
+        protected virtual T GetRenderingParameters<T>() where T : class
+        {
+            string renderingParameters = RenderingContextWrapper.GetRenderingParameters();
+            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
+
+        }
 
         /// <summary>
         /// Returns the data source item.
@@ -117,19 +201,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isLazy"></param>
         /// <param name="inferType"></param>
         /// <returns></returns>
-        [Obsolete("User GetDataSourceItem")]
+        [Obsolete("Use GetDataSourceItem")]
         protected virtual T GetRenderingItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
-            {
-                return default(T);
-            }
-
-            return SitecoreContext.GetItem<T>(
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource, isLazy, inferType
-                );
+            return GetDataSourceItem<T>(isLazy, inferType);
         }
 
         /// <summary>
@@ -139,27 +214,23 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isLazy"></param>
         /// <param name="inferType"></param>
         /// <returns></returns>
-        [Obsolete("User GetLayoutItem")]
+        [Obsolete("Use GetLayoutItem")]
         protected virtual T GetControllerItem<T>(bool isLazy = false, bool inferType = false) where T : class
         {
+            return GetLayoutItem<T>(isLazy, inferType);
+        }
 
-            if (Sitecore.Mvc.Presentation.RenderingContext.Current == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering == null ||
-                Sitecore.Mvc.Presentation.RenderingContext.Current.Rendering.DataSource.IsNullOrEmpty())
+        [ExcludeFromCodeCoverage] // Specific to live implementation
+        private static ISitecoreContext GetContextFromHttp()
+        {
+            try
             {
-                return SitecoreContext.GetCurrentItem<T>();
+                return Sc.SitecoreContext.GetFromHttpContext();
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    return GetRenderingItem<T>(isLazy, inferType);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    return SitecoreContext.GetCurrentItem<T>();
-
-                }
+                Log.Error("Failed to create SitecoreContext", ex, null);
+                return null;
             }
         }
     }
