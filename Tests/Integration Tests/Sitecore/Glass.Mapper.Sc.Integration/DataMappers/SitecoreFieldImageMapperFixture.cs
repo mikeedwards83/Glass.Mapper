@@ -146,60 +146,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             Assert.IsNull(result);
         }
 
-        [Test]
-        public void GetField_FieldIsEmptyReturnEmptyImageFlagSet_ReturnsNullImageObject()
-        {
-            //Assign
-            var fieldValue = string.Empty;
 
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
-            var field = item.Fields[FieldName];
-            var mapper = new SitecoreFieldImageMapper();
-            var service = Substitute.For<ISitecoreService>();
-            service.Config = new Config();
-            service.Config.ReturnEmtpyImage = true;
-            var context = new SitecoreDataMappingContext(null, null, service);
-            
-
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-
-            //Act
-            var result = mapper.GetField(field, null, context) as Image;
-
-            //Assert
-            Assert.IsNotNull(result);
-        }
-
-        [Test]
-        public void GetField_FieldIsNullReturnEmptyImageFlagSet_ReturnsNullImageObject()
-        {
-            //Assign
-            string fieldValue = null;
-
-            var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
-            var field = item.Fields[FieldName];
-            var mapper = new SitecoreFieldImageMapper();
-
-            var service = Substitute.For<ISitecoreService>();
-            service.Config = new Config();
-            service.Config.ReturnEmtpyImage = true;
-
-            var context = new SitecoreDataMappingContext(null, null, service);
-            using (new ItemEditing(item, true))
-            {
-                field.Value = fieldValue;
-            }
-
-            //Act
-            var result = mapper.GetField(field, null, context) as Image;
-
-            //Assert
-            Assert.IsNotNull(result);
-        }
         #endregion
 
         #region Method - SetField
