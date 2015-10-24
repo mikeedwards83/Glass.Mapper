@@ -844,13 +844,13 @@ namespace Glass.Mapper.Sc
 
             string mediaUrl = builder.ToString();
 
-#if (SC80 || SC75)
+#if (SC81 || SC80 || SC75)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
-#if (SC80 || SC75)
+#if (SC81 || SC80 || SC75)
         public virtual string ProtectMediaUrl(string url)
         {
             return Sitecore.Resources.Media.HashingUtils.ProtectAssetUrl(url);
