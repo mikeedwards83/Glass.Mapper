@@ -229,7 +229,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to create SitecoreContext", ex, null);
+                Log.Error("Failed to create SitecoreContext", ex, typeof(SitecoreContext));
                 return null;
             }
         }
