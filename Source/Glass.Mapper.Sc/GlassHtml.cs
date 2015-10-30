@@ -606,12 +606,12 @@ namespace Glass.Mapper.Sc
                         var type = field.Body.Type;
                         object target = (GetCompiled<T>(field)(model) ?? string.Empty);
 
-                        if (type == ImageType)
+                        if (ImageType.IsAssignableFrom(type))
                         {
                             var image = target as Image;
                             firstPart = RenderImage(image, dictionary);
                         }
-                        else if (type == LinkType)
+                        else if (LinkType.IsAssignableFrom(type))
                         {
                             var link = target as Link;
                             var sb = new StringBuilder();
