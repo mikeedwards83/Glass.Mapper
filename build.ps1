@@ -35,12 +35,14 @@ $build71 = $build+' /property:ScVersion=sc71'
 $build72 = $build+' /property:ScVersion=sc72'
 $build75 = $build+' /property:ScVersion=sc75'
 $build80 = $build+' /property:ScVersion=sc80'
+$build81 = $build+' /property:ScVersion=sc81'
 
 Invoke-Expression $build70
 Invoke-Expression $build71
 Invoke-Expression $build72
 Invoke-Expression $build75
 Invoke-Expression $build80
+Invoke-Expression $build81
 
 New-Item -ItemType directory -Path nugets -Force
 $nuget1 = "nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
