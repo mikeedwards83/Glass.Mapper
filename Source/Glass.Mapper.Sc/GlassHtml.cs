@@ -603,15 +603,14 @@ namespace Glass.Mapper.Sc
                     }
                     else
                     {
-                        var type = field.Body.Type;
                         object target = (GetCompiled<T>(field)(model) ?? string.Empty);
 
-                        if (type == ImageType)
+                        if (ImageType.IsInstanceOfType(target))
                         {
                             var image = target as Image;
                             firstPart = RenderImage(image, dictionary);
                         }
-                        else if (type == LinkType)
+                        else if (LinkType.IsInstanceOfType(target))
                         {
                             var link = target as Link;
                             var sb = new StringBuilder();
