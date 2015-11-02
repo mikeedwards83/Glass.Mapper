@@ -21,10 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI.WebControls;
 using Glass.Mapper.Sc.DataMappers;
-using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.IoC;
+using NSubstitute;
 using NUnit.Framework;
+using Image = Glass.Mapper.Sc.Fields.Image;
 
 namespace Glass.Mapper.Sc.Integration.DataMappers
 {
@@ -99,7 +101,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var item = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreFieldImageMapper/GetField");
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldImageMapper();
-
+            var service = Substitute.For<ISitecoreService>();
+            service.Config = new Config();
+            
+            var context = new SitecoreDataMappingContext(null, null, service);
 
 
             using (new ItemEditing(item, true))
@@ -107,8 +112,9 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
                 field.Value = fieldValue;
             }
 
+
             //Act
-            var result = mapper.GetField(field, null, null) as Image;
+            var result = mapper.GetField(field, null, context) as Image;
 
             //Assert
             Assert.IsNull(result);
@@ -124,17 +130,22 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var field = item.Fields[FieldName];
             var mapper = new SitecoreFieldImageMapper();
 
+            var service = Substitute.For<ISitecoreService>();
+            service.Config = new Config();
+
+            var context = new SitecoreDataMappingContext(null, null, service);
             using (new ItemEditing(item, true))
             {
                 field.Value = fieldValue;
             }
 
             //Act
-            var result = mapper.GetField(field, null, null) as Image;
+            var result = mapper.GetField(field, null, context) as Image;
 
             //Assert
             Assert.IsNull(result);
         }
+
 
         #endregion
 

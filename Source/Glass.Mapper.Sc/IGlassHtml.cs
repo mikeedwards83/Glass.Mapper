@@ -147,7 +147,7 @@ namespace Glass.Mapper.Sc
         T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
 
-#if (SC80 || SC75)
+#if (SC81 || SC80 || SC75)
         string ProtectMediaUrl(string url);
 #endif
     }
