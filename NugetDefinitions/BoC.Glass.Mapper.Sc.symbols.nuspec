@@ -37,6 +37,10 @@
     <file src="Source\Glass.Mapper\bin\70\Glass.Mapper.xml" target="lib\Glass.Mapper.xml" />
 
     <!-- Glass.Mapper.Sc-->
+    <file src="Source\Glass.Mapper.Sc\bin\81\Glass.Mapper.Sc.dll" target="lib\81\Glass.Mapper.Sc.dll" />
+    <file src="Source\Glass.Mapper.Sc\bin\81\Glass.Mapper.Sc.pdb" target="lib\81\Glass.Mapper.Sc.pdb" />
+    <file src="Source\Glass.Mapper.Sc\bin\81\Glass.Mapper.Sc.xml" target="lib\81\Glass.Mapper.Sc.xml" />
+
     <file src="Source\Glass.Mapper.Sc\bin\80\Glass.Mapper.Sc.dll" target="lib\80\Glass.Mapper.Sc.dll" />
 	  <file src="Source\Glass.Mapper.Sc\bin\80\Glass.Mapper.Sc.pdb" target="lib\80\Glass.Mapper.Sc.pdb" />
 	  <file src="Source\Glass.Mapper.Sc\bin\80\Glass.Mapper.Sc.xml" target="lib\80\Glass.Mapper.Sc.xml" />

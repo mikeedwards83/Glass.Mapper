@@ -74,6 +74,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.ContentSear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc70.ContentSearch.LuceneProvider", "Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\Glass.Mapper.Sc70.ContentSearch.LuceneProvider.csproj", "{27966B6A-0809-4855-B9D9-7BE6F3B7DFE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2261B12A-74B3-467F-A36D-EF96C69F9332}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CI|Any CPU = CI|Any CPU
