@@ -22,12 +22,12 @@ using Sitecore.Data;
 namespace Glass.Mapper.Sc
 {
     /// <summary>
-    /// Class SitecoreContext
+    /// Class SitecoreContentContext
     /// </summary>
     public class SitecoreContentContext : AbstractSitecoreContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
+        /// Initializes a new instance of the <see cref="SitecoreContentContext"/> class.
         /// </summary>
         public SitecoreContentContext()
             : base(Sitecore.Context.Database, GetContextFromSite())
@@ -35,7 +35,7 @@ namespace Glass.Mapper.Sc
 
         }
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractService" /> class.
+        /// Initializes a new instance of the <see cref="SitecoreContentContext" /> class.
         /// </summary>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreContentContext(string contextName)
@@ -45,7 +45,7 @@ namespace Glass.Mapper.Sc
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
+        /// Initializes a new instance of the <see cref="SitecoreContentContext"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         public SitecoreContentContext(Context context)

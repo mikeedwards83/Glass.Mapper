@@ -53,67 +53,9 @@ namespace Glass.Mapper.Sc
             return Sitecore.Context.Site.Properties["glassContext"] ?? Context.DefaultContextName;
         }
 
-        public static SitecoreContext GetFromHttpContext(string contextName = null)
-        {
-            if (string.IsNullOrEmpty(contextName))
-            {
-                contextName = GetContextFromSite();
-            }
 
-            var cachedContexts = CachedContexts;
-            if (cachedContexts == null)
-            {
-                return new SitecoreContext(contextName);
-            }
-            else
-            {
-                SitecoreContext context = null;
-                if (cachedContexts.ContainsKey(contextName))
-                {
-                    context = cachedContexts[contextName];
-                }
 
-                if (context == null)
-                {
-                    context = new SitecoreContext(contextName);
-                    cachedContexts[contextName] = context;
-                }
-                return context;
-            }
-            
-        }
-
-        private const string CachedContextsKey = "CEC8A395-F2AE-48BD-A24F-4F40598094BD";
-
-        protected static Dictionary<string, SitecoreContext> CachedContexts
-        {
-            get
-            {
-                if (HttpContext.Current == null)
-                {
-                    throw new NotSupportedException("Cached Contexts are stored in the http context items collection, the http context is currently null");
-                }
-
-                if (Sitecore.Context.Items != null)
-                {
-                    var dictionary = HttpContext.Current.Items[CachedContextsKey] as Dictionary<string, SitecoreContext>;
-                    if (dictionary == null)
-                    {
-                        dictionary = new Dictionary<string, SitecoreContext>();
-                        HttpContext.Current.Items[CachedContextsKey] = dictionary;
-                    }
-                    return dictionary;
-                }
-                else
-                {
-                    return null;
-                }
-                    
-                
-            }
-        }
-
-        #region ISitecoreContext Members
+        #region AbstractSitecoreContext Members
 
 
 
