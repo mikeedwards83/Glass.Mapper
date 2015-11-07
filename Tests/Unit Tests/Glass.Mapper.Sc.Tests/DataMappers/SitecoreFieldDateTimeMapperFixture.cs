@@ -36,8 +36,8 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         public void GetField_FieldContainsValidDate_ReturnsDateTime()
         {
             //Assign
-            string fieldValue = "20151013T230000Z";
-            DateTime expected = new DateTime(2015,10,13,0,0,0);
+            string fieldValue = "20120101T010101";
+            DateTime expected = new DateTime(2012, 01, 01, 01, 01, 01);
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
@@ -57,8 +57,8 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         public void GetField_FieldContainsValidIsoDate_ReturnsDateTime()
         {
             //Assign 
-            string fieldValue = "20120930T230000Z";
-            DateTime expected = new DateTime(2012, 10, 01, 00, 00, 00);
+            string fieldValue = "20121101T230000";
+            DateTime expected = new DateTime(2012, 11, 01, 23, 00, 00);
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
@@ -73,6 +73,8 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             //Assert
             Assert.AreEqual(expected, result);
         }
+
+#if (SC80 || SC81)
 
         [Test]
         public void SitecoreTimeZoneDemo()
@@ -177,6 +179,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             Console.WriteLine(sw.ElapsedTicks);
         }
 
+#endif
 
         #endregion
 
