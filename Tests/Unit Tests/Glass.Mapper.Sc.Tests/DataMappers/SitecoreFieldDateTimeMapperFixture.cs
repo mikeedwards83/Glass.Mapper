@@ -189,10 +189,10 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         public void SetField_DateTimePassed_SetsFieldValue()
         {
             //Assign
-#if (SC75)
-            string expected = "20120101T010101";
-#else
+#if (SC80 || SC81)
             string expected = "20120101T010101Z";
+#else
+            string expected = "20120101T010101";
 #endif
             DateTime objectValue = new DateTime(2012, 01, 01, 01, 01, 01);
             var fieldId = Guid.NewGuid();

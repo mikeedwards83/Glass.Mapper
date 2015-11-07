@@ -110,7 +110,7 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var mapper = new SitecoreFieldStringMapper();
             var config = new SitecoreFieldConfiguration();
             config.Setting = SitecoreFieldSettings.ForceRenderField;
-
+            config.PropertyInfo = new FakePropertyInfo(typeof(string), "String", typeof(StubClass));
             using (new ItemEditing(item, true))
             {
                 field.Value = fieldValue;

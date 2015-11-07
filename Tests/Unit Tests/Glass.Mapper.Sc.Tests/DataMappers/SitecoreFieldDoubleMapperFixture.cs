@@ -50,6 +50,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
         public void GetField_FieldContainsEmptyString_ReturnsDoubleZero()
         {
             //Assign
