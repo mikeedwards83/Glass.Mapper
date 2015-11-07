@@ -13,6 +13,25 @@ namespace Glass.Mapper.Sc.Mvc.Tests
     [TestFixture]
     public class GlassControllerTestFixture
     {
+
+
+        #region Constructors
+
+        [Test]
+        public void Constructor_Default_CreatsWithoutException()
+        {
+            //Act 
+            var controller = new GlassController();
+        }
+
+        [Test]
+        public void Constructor_NullSitecoreContext_CreatsWithoutException()
+        {
+            //Act 
+            var controller = new StubController((ISitecoreContext)null);
+        }
+
+        #endregion
         #region [ Data Source Tests ]
 
         [Test]
@@ -257,6 +276,11 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
         public class StubController : GlassController
         {
+
+            public StubController(ISitecoreContext sitecoreContext):base(sitecoreContext)
+            {
+                
+            }
             public StubController(
                 ISitecoreContext sitecoreContext,
                 IGlassHtml glassHtml,

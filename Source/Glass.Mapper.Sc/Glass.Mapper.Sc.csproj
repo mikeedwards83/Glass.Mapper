@@ -118,6 +118,7 @@
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldImageEmptyMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldNullableEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
@@ -199,6 +200,8 @@
     <Compile Include="RenderField\ImageParameterKeys.cs" />
     <Compile Include="RenderField\LinkParameterKeys.cs" />
     <Compile Include="RenderingResult.cs" />
+    <Compile Include="SitecoreContentContext.cs" />
+    <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
@@ -272,6 +275,7 @@
   -->
   <Target Name="BeforeBuild">
     <Message Importance="high" Text="ScVersion: $(ScVersion)" />
+    <Message Importance="high" Text="ScDir: $(ScDir)" />
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
 </Project>

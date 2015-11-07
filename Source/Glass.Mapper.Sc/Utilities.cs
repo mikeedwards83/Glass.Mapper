@@ -184,7 +184,7 @@ namespace Glass.Mapper.Sc
             {
                 field = item.Fields[fieldName];
             }
-            else// if (item.Fields.Contains(fieldId) || item.Template.GetField(fieldId) != null)
+            else
             {
                 field = item.Fields[fieldId];
             }

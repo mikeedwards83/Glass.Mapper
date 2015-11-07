@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc
         {
             _getItems = getItems;
             _type = typeof(T);
-            _isLazy = isLazy;
+            _isLazy = service.Config.UseProxiesForLazyEnumerables &&  isLazy;
             _inferType = inferType;
             _service = service;
             
@@ -89,12 +89,13 @@ namespace Glass.Mapper.Sc
 
             var results = new List<T>();
 
+           
             foreach (Item child in items)
             {
                 var obj = _service.CreateType(
                     _type,
                     child,
-                    _service.Config.UseProxiesForLazyEnumerables && _isLazy,
+                    _isLazy,
                     _inferType, null) as T;
 
                 if (obj == null)

@@ -19,8 +19,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         }
 
-        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
-            IRenderingContext renderingContextWrapper, HttpContextBase httpContext)
+        public GlassController(
+            ISitecoreContext sitecoreContext, 
+            IGlassHtml glassHtml,
+            IRenderingContext renderingContextWrapper, 
+            HttpContextBase httpContext)
             : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
         {
         }
@@ -72,16 +75,18 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public ISitecoreContext SitecoreContext { get; set; }
         public IGlassHtml GlassHtml { get; set; }
-        protected IRenderingContext RenderingContextWrapper { get; set; }
+        public IRenderingContext RenderingContextWrapper { get; set; }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
-        public GlassController() : this(GetContextFromHttp())
+        public GlassController() 
+            : this(GetContextFromHttp())
         {
 
         }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
-        protected GlassController(ISitecoreContext sitecoreContext) : this(sitecoreContext, new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
+        protected GlassController(ISitecoreContext sitecoreContext) 
+            : this(sitecoreContext, sitecoreContext == null? null : new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
         {
             
         }
@@ -229,7 +234,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to create SitecoreContext", ex, null);
+                Log.Error("Failed to create SitecoreContext", ex, typeof(GlassController));
                 return null;
             }
         }

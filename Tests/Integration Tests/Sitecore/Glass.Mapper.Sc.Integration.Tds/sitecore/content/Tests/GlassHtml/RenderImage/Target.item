@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {EF681575-C92F-46A2-861E-B3D970B3BFBC}
+database: master
+path: /sitecore/content/Tests/GlassHtml/RenderImage/Target
+parent: {FFD1AA5E-4B2F-4DF6-B088-FAE2CC4B7236}
+name: Target
+master: {00000000-0000-0000-0000-000000000000}
+template: {F12AEAB5-B752-4F54-983E-1EAA82F91488}
+templatekey: RenderImage
+
+----version----
+language: en
+version: 1
+revision: 7fd545d9-2706-4eab-b544-1ea224a8fce4
+
+----field----
+field: {6C1BA8B5-D705-45AD-B52E-64DBE66F7963}
+name: Image
+key: image
+content-length: 169
+
+<image mediaid="{D897833C-1F53-4FAE-B54B-BB5B11B8F851}" mediapath="/Files/20121222_001405" src="~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx" hspace="15" vspace="20" />
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20150512T103525
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+7fd545d9-2706-4eab-b544-1ea224a8fce4
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20150512T103753:635670238738988362
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+extranet\Anonymous

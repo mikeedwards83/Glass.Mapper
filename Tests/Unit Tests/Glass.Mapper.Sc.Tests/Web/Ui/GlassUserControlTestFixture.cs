@@ -135,7 +135,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
         }
 
         [Test]
-        public void RenderingParameters_returns_from_glass_html_successfully()
+        public void GetRenderingParameters_returns_from_glass_html_successfully()
         {
             // Arrange
             var testHarness = new GlassUserControlTestHarness();
@@ -149,6 +149,34 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
 
             // Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void GetRenderingParameters_returns_if_null_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            testHarness.RenderingContext.GetRenderingParameters().Returns(null as string);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
+
+            // Assert
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public void GetRenderingParameters_returns_if_empty_string_successfully()
+        {
+            // Arrange
+            var testHarness = new GlassUserControlTestHarness();
+            testHarness.RenderingContext.GetRenderingParameters().Returns(String.Empty);
+
+            // Act
+            var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
+
+            // Assert
+            result.Should().BeNull();
         }
 
         [Test]
