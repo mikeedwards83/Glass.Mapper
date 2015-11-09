@@ -78,6 +78,22 @@
       <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(Mvc)' == '51'">
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Depends\System.Web.Mvc\v51\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Mvc)' == '52'">
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Depends\System.Web.Mvc\v52\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelCache\IModelCacheManager.cs" />
     <Compile Include="ModelCache\ModelCacheManager.cs" />
