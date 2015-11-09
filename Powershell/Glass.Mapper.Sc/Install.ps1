@@ -65,7 +65,7 @@ if($scVersion){
 		
 		$mvcExists = Test-Path $mvcPath
 
-		if($mvcExists == false ){
+		if($mvcExists -eq $false ){
 			$mvcVersion = GetVersion "System.Web.Mvc" 1;
 			$mvcPath = ("{0}\lib\Mvc{1}\{2}" -f $installPath, $mvcVersion, "Glass.Mapper.Sc.Mvc.dll");
 			Write-Host ("Mvc Path 2 {0}" -f $mvcPath);
