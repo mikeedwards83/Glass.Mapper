@@ -61,16 +61,18 @@ if($scVersion){
 	if($mvcVersion){
 
 		$mvcPath = "{0}\lib\Mvc{1}\{2}" -f $installPath, $mvcVersion, "Glass.Mapper.Sc.Mvc.dll";
-		Write-Host ("Mvc Path 1 " -f $mvcPath);
-	
-		if(Get-item $mvcPath){
+		Write-Host ("Mvc Path 1 {0}" -f $mvcPath);
+		
+		$mvcExists = Test-Path $mvcPath
+
+		if($mvcExists == false ){
 			$mvcVersion = GetVersion "System.Web.Mvc" 1;
 			$mvcPath = ("{0}\lib\Mvc{1}\{2}" -f $installPath, $mvcVersion, "Glass.Mapper.Sc.Mvc.dll");
-			Write-Host "Mvc Path 2 " -f $mvcPath;
+			Write-Host ("Mvc Path 2 {0}" -f $mvcPath);
 
 		}
 
-		Write-Host ("MVC Final Path " -f $mvcPath);
+		Write-Host ("MVC Final Path {0}" -f $mvcPath);
 
 		RemovingExisting "Glass.Mapper.Sc.Mvc" ;
 		AddReference $mvcPath "Glass.Mapper.Sc.Mvc";
