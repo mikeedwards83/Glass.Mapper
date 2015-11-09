@@ -78,7 +78,7 @@
       <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Mvc)' == '51">
+  <ItemGroup Condition="'$(Mvc)' == '51'">
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\Depends\System.Web.Mvc\v51\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -86,7 +86,7 @@
       <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Mvc)' == '52">
+  <ItemGroup Condition="'$(Mvc)' == '52'">
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\Depends\System.Web.Mvc\v52\System.Web.Mvc.dll</HintPath>
     </Reference>
