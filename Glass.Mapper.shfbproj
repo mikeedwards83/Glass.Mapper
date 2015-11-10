@@ -20,7 +20,8 @@
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
     <DocumentationSources>
       <DocumentationSource sourceFile="Source\Glass.Mapper\Glass.Mapper.csproj" />
-    </DocumentationSources>
+<DocumentationSource sourceFile="Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+<DocumentationSource sourceFile="Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj" /></DocumentationSources>
     <BuildAssemblerVerbosity>AllMessages</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
