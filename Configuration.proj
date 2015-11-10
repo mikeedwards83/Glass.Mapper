@@ -57,4 +57,7 @@
     <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
     <OutputPath>bin\70\</OutputPath>
   </PropertyGroup>
+
+  
+  
 </Project>

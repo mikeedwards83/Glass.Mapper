@@ -166,6 +166,20 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
+
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
+
+  <PropertyGroup>
+    <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
+  </PropertyGroup>
+  <!-- Target Name="AfterBuild">
+    < Build source code docs >
+
+
+    <Message Text="Starting source code documentation" />
+    <Message Text="SHFBROOT= $(SHFBROOT)" />
+    <MSBuild Projects="$(SolutionDir)\Glass.Mapper.shfbproj"
+      Properties="Configuration=Release;Platform=AnyCPU;OutDir=$(OutDir)" />
+  </-->
 </Project>
