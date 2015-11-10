@@ -20,14 +20,26 @@
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Source\Glass.Mapper\Glass.Mapper.csproj" />
-<DocumentationSource sourceFile="..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
-<DocumentationSource sourceFile="..\Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+      <DocumentationSource sourceFile="..\Source\Glass.Mapper.Sc.Mvc\Glass.Mapper.Sc.Mvc.csproj" />
+    </DocumentationSources>
     <BuildAssemblerVerbosity>AllMessages</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
+    <TransformComponentArguments>
+      <Argument Key="logoFile" Value="" xmlns="" />
+      <Argument Key="logoHeight" Value="" xmlns="" />
+      <Argument Key="logoWidth" Value="" xmlns="" />
+      <Argument Key="logoAltText" Value="Glass.Mapper Assembly Documentation" xmlns="" />
+      <Argument Key="logoPlacement" Value="left" xmlns="" />
+      <Argument Key="logoAlignment" Value="left" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" xmlns="" />
+      <Argument Key="defaultLanguage" Value="cs" xmlns="" />
+      <Argument Key="includeEnumValues" Value="true" xmlns="" />
+    </TransformComponentArguments>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -59,12 +71,19 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Web\" />
+    <Folder Include="Transforms\" />
     <Folder Include="Styles\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Web\search.html" />
     <Content Include="Styles\branding.css" />
   </ItemGroup>
   <ItemGroup>
     <ResourceItems Include="Resouce.items" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Transforms\utilities_reference.xsl" />
+    <None Include="Transforms\main_conceptual.xsl" />
   </ItemGroup>
 </Project>

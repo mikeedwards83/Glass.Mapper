@@ -152,10 +152,10 @@ pre {
 	color: #F39200;;
 	padding: 5px 10px;
     padding-left: 70px;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-bottom: 0px;
 	vertical-align: middle;
-	height: 40px;
+	height: 60px;
     background-image: url('http://www.glass.lu/Images/logo-50-new.png?new=1');
     background-position: 10px 10px;
     background-repeat: no-repeat;
@@ -564,4 +564,21 @@ sup.citation a:link a:visited a:active {
 
 /* Placeholder for the Help 1 user data style class */
 .userDataStyle {
+}
+
+
+/*MENU */
+
+.pageHeader h1, .pageHeader ul.menu , .pageHeader ul.menu li{
+	display:inline
+}
+
+.pageHeader h1, .pageHeader a, .pageHeader a:hover, .pageHeader a:visited, .pageHeader a:link{
+	color:#F39200
+}
+.pageHeader a:hover{
+	text-decoration:underline;
+}
+.pageHeader ul.menu li{
+	margin-left:20px
 }
