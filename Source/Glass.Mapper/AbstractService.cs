@@ -18,10 +18,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Glass.Mapper.Configuration;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
@@ -37,6 +33,11 @@ namespace Glass.Mapper
     {
 
         private IPerformanceProfiler _profiler;
+        private ObjectConstruction _objectConstruction;
+        private ConfigurationResolver _configurationResolver;
+        private ObjectSaving _objectSaving;
+        private bool factoryConfigLoaded;
+        private readonly object lockObject = new object();
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -46,12 +47,9 @@ namespace Glass.Mapper
         /// </value>
         public IPerformanceProfiler Profiler
         {
-            get { return _profiler; }
+            get { return _profiler ?? ( _profiler = new NullProfiler() ); }
             set
             {
-                _configurationResolver.Profiler = value;
-                _objectConstruction.Profiler = value;
-                _objectSaving.Profiler = value;
                 _profiler = value;
             }
         }
@@ -62,13 +60,34 @@ namespace Glass.Mapper
         /// <value>
         /// The glass context.
         /// </value>
-        public  Context GlassContext { get; private set; }
+        public Context GlassContext { get; private set; }
 
-        private ConfigurationResolver _configurationResolver;
+        protected virtual ObjectConstruction ObjectConstruction
+        {
+            get
+            {
+                LoadFactoryConfig();
+                return _objectConstruction;
+            }
+        }
 
-        private ObjectConstruction _objectConstruction;
+        protected virtual ConfigurationResolver ConfigurationResolver
+        {
+            get
+            {
+                LoadFactoryConfig();
+                return _configurationResolver;
+            }
+        }
 
-        private ObjectSaving _objectSaving;
+        protected virtual ObjectSaving ObjectSaving
+        {
+            get
+            {
+                LoadFactoryConfig();
+                return _objectSaving;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
@@ -82,9 +101,8 @@ namespace Glass.Mapper
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
         /// </summary>
-        /// <param name="contextName">Name of the context.</param>
-        protected AbstractService(string contextName)
-            : this(Context.Contexts[contextName])
+        /// <param name="glassContextName">Name of the context.</param>
+        protected AbstractService(string glassContextName) : this(Context.Contexts[glassContextName])
         {
         }
 
@@ -95,28 +113,58 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Context is null</exception>
         protected AbstractService(Context glassContext)
         {
-
             GlassContext = glassContext;
-            if (GlassContext == null) 
+            Initialise();
+        }
+
+        protected void Initialise()
+        {
+            if (GlassContext == null)
+            {
                 throw new NullReferenceException("Context is null");
+            }
 
-            var objectConstructionTasks = glassContext.DependencyResolver.ObjectConstructionFactory.GetItems();
-            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
+            // NM: at this point, the GlassContext is available and scaffolded
 
-            var configurationResolverTasks = glassContext.DependencyResolver.ConfigurationResolverFactory.GetItems();
-            _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
-
-            var objectSavingTasks = glassContext.DependencyResolver.ObjectSavingFactory.GetItems();
-            _objectSaving = new ObjectSaving(objectSavingTasks);
-
-            Profiler = new NullProfiler();
-
-            Initiate(glassContext.DependencyResolver);
+            // The original initiate logic still fires on the constructor
+            Initiate(GlassContext.DependencyResolver);
         }
 
         public virtual void Initiate(IDependencyResolver resolver)
         {
             CacheEnabled = true;            
+        }
+
+
+        private void LoadFactoryConfig()
+        {
+            lock (lockObject)
+            {
+                if (factoryConfigLoaded)
+                {
+                    return;
+                }
+
+                // todo: consider if the items here could be loaded from a singleton / factory pattern taking the hit up front
+                factoryConfigLoaded = true;
+                var objectConstructionTasks = GlassContext.DependencyResolver.ObjectConstructionFactory.GetItems();
+                _objectConstruction = new ObjectConstruction(objectConstructionTasks)
+                {
+                    Profiler = Profiler
+                };
+
+                var objectSavingTasks = GlassContext.DependencyResolver.ObjectSavingFactory.GetItems();
+                _objectSaving = new ObjectSaving(objectSavingTasks)
+                {
+                    Profiler = Profiler
+                };
+
+                var configurationResolverTasks = GlassContext.DependencyResolver.ConfigurationResolverFactory.GetItems();
+                _configurationResolver = new ConfigurationResolver(configurationResolverTasks)
+                {
+                    Profiler = Profiler
+                };
+            }
         }
 
         /// <summary>
@@ -135,7 +183,7 @@ namespace Glass.Mapper
             //Run the object construction
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
             objectArgs.Parameters = configurationArgs.Parameters;
-            _objectConstruction.Run(objectArgs);
+            ObjectConstruction.Run(objectArgs);
 
             return objectArgs.Result;
         }
@@ -144,7 +192,7 @@ namespace Glass.Mapper
         {
             var configurationArgs = new ConfigurationResolverArgs(GlassContext, abstractTypeCreationContext, abstractTypeCreationContext.RequestedType, this);
             configurationArgs.Parameters = abstractTypeCreationContext.Parameters;
-            _configurationResolver.Run(configurationArgs);
+            ConfigurationResolver.Run(configurationArgs);
 
             return configurationArgs;
         }
@@ -157,7 +205,7 @@ namespace Glass.Mapper
         {
             //Run the object construction
             var savingArgs = new ObjectSavingArgs(GlassContext, abstractTypeSavingContext.Object, abstractTypeSavingContext, this);
-            _objectSaving.Run(savingArgs);
+            ObjectSaving.Run(savingArgs);
         }
 
         /// <summary>
@@ -190,10 +238,12 @@ namespace Glass.Mapper
                 {
                     _configurationResolver.Dispose();
                 }
+
                 if (_objectConstruction != null)
                 {
                     _objectConstruction.Dispose();
                 }
+
                 if (_objectSaving != null)
                 {
                     _objectSaving.Dispose();

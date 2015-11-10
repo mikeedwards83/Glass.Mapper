@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Glass.Mapper.Configuration;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -42,21 +43,41 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class SitecoreService : AbstractService, ISitecoreService
     {
-        public Config Config { get; set; }
+        private string _databaseName;
+        private Database _database;
+        private Config _config;
+
+        public Config Config
+        {
+            get { return _config ?? (_config = GlassContext.DependencyResolver.GetConfig() as Config); }
+            set { _config = value; }
+        }
 
         /// <summary>
         /// Gets the database.
         /// </summary>
         /// <value>The database.</value>
-        public  Database Database { get; private set; }
+        public Database Database
+        {
+            get
+            {
+                if (_database == null && _databaseName == null)
+                {
+                    throw new ConfigurationException("SitecoreService.Database: Database and Database name were not set");
+                }
+
+                return _database ?? (_database = Factory.GetDatabase(_databaseName));
+            }
+            private set { _database = value; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreService"/> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        /// <param name="contextName">Name of the context.</param>
-        public SitecoreService(Database database, string contextName = "Default")
-            :base(contextName)
+        /// <param name="glassContextName">Name of the context.</param>
+        public SitecoreService(Database database, string glassContextName = "Default")
+            :base(glassContextName)
         {
             Database = database;
         }
@@ -65,11 +86,11 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreService"/> class.
         /// </summary>
         /// <param name="databaseName">Name of the database.</param>
-        /// <param name="contextName">Name of the context.</param>
-        public SitecoreService(string databaseName, string contextName = "Default")
-            : base(contextName)
+        /// <param name="glassContextName">Name of the context.</param>
+        public SitecoreService(string databaseName, string glassContextName = "Default")
+            : base(glassContextName)
         {
-            Database = Factory.GetDatabase(databaseName);
+            _databaseName = databaseName;
         }
 
         /// <summary>
@@ -80,7 +101,7 @@ namespace Glass.Mapper.Sc
         public SitecoreService(string databaseName, Context context)
             : base(context ?? Context.Default )
         {
-            Database = Factory.GetDatabase(databaseName);
+            _databaseName = databaseName;
         }
 
         /// <summary>
@@ -94,8 +115,6 @@ namespace Glass.Mapper.Sc
             Database = database;
         }
 
-
-
         public override void Initiate(IDependencyResolver resolver)
         {
             CacheEnabled = Sitecore.Context.Site == null ||
@@ -103,7 +122,6 @@ namespace Glass.Mapper.Sc
                             !Sitecore.Context.PageMode.IsPageEditorEditing &&
                             (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] == "true"));
 
-            Config = resolver.GetConfig() as Config ;
             base.Initiate(resolver);
         }
 

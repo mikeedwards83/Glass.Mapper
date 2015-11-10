@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -78,6 +79,56 @@ namespace Glass.Mapper.Sc.Integration
             {
                 item["Field"] = _expected;
             }
+        }
+
+        [Test]
+        public void CreateService_Lots()
+        {
+            // NM- Original pass 87ms
+            // NM: Current pass 3 - 4ms
+            SitecoreService sitecoreService = null;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Console.WriteLine();
+            for (var i = 0; i < 10000; i++)
+            {
+                sitecoreService = new SitecoreService("master");
+            }
+            sw.Stop();
+            Console.WriteLine("Instantiation Time: {0}", sw.ElapsedMilliseconds);
+
+            Assert.IsNotNull(sitecoreService);
+
+            Assert.AreEqual("master", sitecoreService.Database.Name);
+            Assert.AreEqual(typeof(NullProfiler), sitecoreService.Profiler.GetType());
+            var item = sitecoreService.GetItem<StubClass>(_id);
+            Assert.IsNotNull(item);
+            Assert.IsNotNullOrEmpty(item.Field);
+        }
+
+        [Test]
+        public void CreateContext_Lots()
+        {
+            SitecoreContext sitecoreContext = null;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Console.WriteLine();
+            for (var i = 0; i < 10000; i++)
+            {
+                sitecoreContext = new SitecoreContext(_db);
+            }
+
+            sw.Stop();
+            Console.WriteLine("Instantiation Time: {0}", sw.ElapsedMilliseconds);
+
+            Assert.IsNotNull(sitecoreContext);
+
+            Assert.AreEqual("master", sitecoreContext.Database.Name);
+            Assert.AreEqual(typeof(NullProfiler), sitecoreContext.Profiler.GetType());
+
+            var item = sitecoreContext.GetItem<StubClass>(_id);
+            Assert.IsNotNull(item);
+            Assert.IsNotNullOrEmpty(item.Field);
         }
 
         [Test]
