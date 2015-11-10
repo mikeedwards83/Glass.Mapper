@@ -91,13 +91,9 @@
 	<xsl:template match="/">
 		<html>
 			<head>
-				<link rel="shortcut icon">
-					<includeAttribute name="href" item="iconPath">
-						<parameter>
-							<xsl:value-of select="'favicon.ico'"/>
-						</parameter>
-					</includeAttribute>
-				</link>
+				
+				<link rel="shortcut icon" href="http://glass.lu/favicon.ico" />
+
 				<link rel="stylesheet" type="text/css">
 					<includeAttribute name="href" item="stylePath">
 						<parameter>
