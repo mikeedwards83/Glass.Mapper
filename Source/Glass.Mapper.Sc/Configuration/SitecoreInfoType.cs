@@ -27,64 +27,76 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// No value has been set
         /// </summary>
-        NotSet,
+        NotSet = 0,
         /// <summary>
         /// The item's content path. The property type must be System.String
         /// </summary>
-        ContentPath,
+        ContentPath =1,
         /// <summary>
         /// The item's display name. The property type must be System.String
         /// </summary>
-        DisplayName,
+        DisplayName = 2,
         /// <summary>
         /// The item's full path. The property type must be System.String
         /// </summary>
-        FullPath,
+        FullPath =3,
         /// <summary>
         /// The item's key . The property type must be System.String
         /// </summary>
-        Key,
+        Key =4,
         /// <summary>
         /// The item's ItemUri . The property type must be Sitecore.Data.ItemUri
         /// </summary>
-        ItemUri,
+        ItemUri =5,
         /// <summary>
         /// The item's media URL. The property type must be System.String
         /// </summary>
-        MediaUrl,
+        MediaUrl =6,
         /// <summary>
         /// The item's path. The property type must be System.String
         /// </summary>
-        Path,
+        Path=7,
         /// <summary>
         /// The item's template Id. The property type must be System.Guid
         /// </summary>
-        TemplateId,
+        TemplateId=8,
         /// <summary>
         /// The item's template name. The property type must be System.String
         /// </summary>
-        TemplateName,
+        TemplateName=9,
         /// <summary>
         /// The item's URL. The property type must be System.String
         /// </summary>
-        Url,
+        Url=10,
         /// <summary>
         /// The item's version. The property type must be System.Int32
         /// </summary>
-        Version,
+        Version=11,
         /// <summary>
         /// The item's Name. The property type must be System.String
         /// </summary>
-        Name,
+        Name=12,
         /// <summary>
         /// The items language. The property type must be Sitecore.Globalization.Language
         /// </summary>
-        Language,
+        Language=13,
         
         /// <summary>
         /// Gets the Base Template IDs - does not return the template is. The property type must be IEnumerable&lt;Guid&gt;
         /// </summary>
-        BaseTemplateIds
+        BaseTemplateIds=14,
+
+#if SC81
+        /// <summary>
+        /// Gets  the original language.
+        /// </summary>
+        OriginalLanguage =15,
+        /// <summary>
+        /// Get the originator Id
+        /// </summary>
+        OriginatorId = 15
+#endif
+
     }
 }
 
