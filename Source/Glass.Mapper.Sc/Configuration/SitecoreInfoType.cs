@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// Get the originator Id
         /// </summary>
-        OriginatorId = 15
+        OriginatorId = 16
 #endif
 
     }
