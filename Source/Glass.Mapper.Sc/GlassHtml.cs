@@ -396,11 +396,11 @@ namespace Glass.Mapper.Sc
             RenderingResult result;
             if (IsInEditingMode && isEditable)
             {
-                if (!string.IsNullOrEmpty(contents))
-                    attrs["haschildren"] = "true";
-                if (contents.IsNotNullOrEmpty())
+              
+                if (contents.HasValue())
                 {
                     attrs.Add("haschildren", "true");
+                    attrs.Add("text",contents);
                 }
 
                 result = MakeEditable(
