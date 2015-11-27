@@ -39,7 +39,7 @@ namespace Glass.Mapper.Pipelines
         /// Gets the tasks.
         /// </summary>
         /// <value>The tasks.</value>
-        public IEnumerable<K> Tasks { get; private set; }
+        public K [] Tasks { get; private set; }
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -51,18 +51,13 @@ namespace Glass.Mapper.Pipelines
         /// Initializes a new instance of the <see cref="AbstractPipelineRunner{T, K}"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        protected AbstractPipelineRunner(IEnumerable<K> tasks)
+        protected AbstractPipelineRunner(K [] tasks)
         {
             //Tasks = tasks.Reverse().ToArray();
 
             if (tasks != null)
             {
                 Tasks = tasks;
-
-                foreach (var task in Tasks.Reverse())
-                {
-                    _excuteTasks = CreateTaskExpression(task);
-                }
             }
 
             Profiler = new NullProfiler();
@@ -73,14 +68,14 @@ namespace Glass.Mapper.Pipelines
             var nextTask = _excuteTasks;
 
             return (args) =>
-                {
-                    task.Execute(args);
+            {
+                task.Execute(args);
 
-                    if (!args.IsAborted)
-                        nextTask(args);
+                if (!args.IsAborted)
+                    nextTask(args);
 
-                    return args;
-                };
+                return args;
+            };
         }
 
         /// <summary>
@@ -90,24 +85,20 @@ namespace Glass.Mapper.Pipelines
         /// <returns>`0.</returns>
         public virtual T Run(T args)
         {
-//            if (Tasks != null)
-//            {
-//                for (int i = Tasks.Length-1; i >= 0; i--)
-//                {
-//                    var task = Tasks[i];
-//#if DEBUG
-//                    Profiler.Start(task.GetType().FullName);
-//#endif
-//                    task.Execute(args);
-//#if DEBUG
-//                    Profiler.End(task.GetType().FullName);
-//#endif
-//                    if (args.IsAborted)
-//                        break;
-//                }
-//            }
+            if (Tasks != null)
+            {
+                for (int i = -0; i < Tasks.Length; i++)
+                {
+                    var task = Tasks[i];
+                    task.Execute(args);
+                    if (args.IsAborted)
+                        break;
+                }
+            }
 
-            return _excuteTasks(args);
+            return args;
+
+            // return _excuteTasks(args);
         }
 
         public void Dispose()

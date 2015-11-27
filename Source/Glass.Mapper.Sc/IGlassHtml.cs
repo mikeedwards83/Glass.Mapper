@@ -44,10 +44,11 @@ namespace Glass.Mapper.Sc
         /// <param name="buttons">The buttons.</param>
         /// <param name="path">The path.</param>
         /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
+        /// <param name="title">The title for the edit frame</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        GlassEditFrame EditFrame(string buttons, string path = null, TextWriter output= null);
+        GlassEditFrame EditFrame(string title, string buttons, string path = null, TextWriter output= null);
 
 
         /// <summary>

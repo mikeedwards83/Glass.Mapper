@@ -162,26 +162,27 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
+        /// <param name="model">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="parameters"> </param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        public HtmlString Editable<T>(T target, Expression<Func<T, object>> field, object parameters = null)
+        public HtmlString Editable<T>(T model, Expression<Func<T, object>> field, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(target, field, parameters));
+            return new HtmlString(GlassHtml.Editable(model, field, parameters));
         }
 
         /// <summary>
         /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
         /// </summary>
         /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
-        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="model">The model object that contains the item to be edited</param>
         /// <param name="field">The field that should be made editable</param>
         /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
-        public HtmlString Editable<T>(T target, Expression<Func<T, object>> field,
+        public HtmlString Editable<T>(T model, Expression<Func<T, object>> field,
                                       Expression<Func<T, string>> standardOutput, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(target, field, standardOutput, parameters));
+            return new HtmlString(GlassHtml.Editable(model, field, standardOutput, parameters));
         }
 
         /// <summary>
@@ -194,12 +195,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="isEditable">Indicates if the field should be editable</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be rendered to the HTML element</param>
         /// <returns></returns>
-        public virtual HtmlString RenderImage<T>(T target, Expression<Func<T, object>> field,
+        public virtual HtmlString RenderImage<T>(T model, Expression<Func<T, object>> field,
             object parameters = null,
             bool isEditable = false,
             bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage<T>(target, field, parameters, isEditable, outputHeightWidth));
+            return new HtmlString(GlassHtml.RenderImage<T>(model, field, parameters, isEditable, outputHeightWidth));
         }
 
         /// <summary>
@@ -262,7 +263,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// Renders an image allowing simple page editor support
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
@@ -279,7 +279,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// Render HTML for a link with contents
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
@@ -295,7 +294,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// Render HTML for a link
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model</param>
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
@@ -313,7 +311,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <summary>
         /// Returns an Sitecore Edit Frame
         /// </summary>
-        /// <param name="buttons">The buttons.</param>
+        /// <param name="model">The model</param>
         /// <param name="path">The path.</param>
         /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
         /// <returns>
@@ -335,8 +333,21 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
-            return GlassHtml.EditFrame(buttons, dataSource, this.Output);
+            return GlassHtml.EditFrame(string.Empty, buttons, dataSource, this.Output);
         }
+
+        /// <summary>
+        /// Begins the edit frame.
+        /// </summary>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="dataSource">The data source.</param>
+        /// <returns></returns>
+        public GlassEditFrame BeginEditFrame(string buttons, string dataSource, string title)
+        {
+            return GlassHtml.EditFrame(title, buttons, dataSource, this.Output);
+        }
+
+
         /// <summary>
         /// Creates an Edit Frame using the Default Buttons list
         /// </summary>
@@ -344,7 +355,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string dataSource)
         {
-            return GlassHtml.EditFrame(GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
+            return GlassHtml.EditFrame(string.Empty, GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
         }
 
         /// <summary>
@@ -353,7 +364,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame()
         {
-            var frame = new GlassEditFrame(GlassEditFrame.DefaultEditButtons, this.Output);
+            var frame = new GlassEditFrame(string.Empty, GlassEditFrame.DefaultEditButtons, this.Output);
             frame.RenderFirstPart();
             return frame;
         }

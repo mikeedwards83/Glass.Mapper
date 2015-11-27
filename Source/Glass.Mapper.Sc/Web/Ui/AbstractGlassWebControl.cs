@@ -116,7 +116,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             set { _glassHtml = value; }
         }
 
-        private string _dataSource = null;
+        private string _dataSource;
         /// <summary>
         ///     The custom data source for the sublayout
         /// </summary>
@@ -210,9 +210,9 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <summary>
         /// Returns an Sitecore Edit Frame
         /// </summary>
-        /// <param name="buttons">The buttons.</param>
-        /// <param name="path">The path.</param>
-        /// <param name="output">The stream to write the editframe output to. If the value is null the HttpContext Response Stream is used.</param>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="title">The title for the edit frame</param>
+        /// <param name="fields">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
@@ -220,7 +220,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             params Expression<Func<T, object>>[] fields)
             where T : class
         {
-            return GlassHtml.EditFrame(model, title, this.Output, fields);
+            return GlassHtml.EditFrame(model, title, Output, fields);
         }
 
 
@@ -237,7 +237,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
                                                           object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(model, field, Output, attributes, isEditable);
         }
 
         /// <summary>
