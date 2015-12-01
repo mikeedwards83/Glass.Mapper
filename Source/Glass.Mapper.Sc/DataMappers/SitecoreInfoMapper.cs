@@ -129,9 +129,10 @@ namespace Glass.Mapper.Sc.DataMappers
             }
             //TODO: move this to the config?
             var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
-
             switch (scConfig.Type)
             {
+
+
 
                 case SitecoreInfoType.ContentPath:
                     return item.Paths.ContentPath;
@@ -179,6 +180,12 @@ namespace Glass.Mapper.Sc.DataMappers
                     return template.GetBaseTemplates().Select(x => x.ID.Guid);
                 case SitecoreInfoType.ItemUri:
                     return new ItemUri(item.ID, item.Language, item.Version, item.Database);
+#if SC81
+                case SitecoreInfoType.OriginalLanguage:
+                    return item.OriginalLanguage;
+                case SitecoreInfoType.OriginatorId:
+                    return item.OriginatorId;
+#endif
                 default:
                     throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
             }

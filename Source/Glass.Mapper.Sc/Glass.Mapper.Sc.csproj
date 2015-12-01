@@ -214,6 +214,8 @@
     <Compile Include="RenderField\ImageParameterKeys.cs" />
     <Compile Include="RenderField\LinkParameterKeys.cs" />
     <Compile Include="RenderingResult.cs" />
+    <Compile Include="SitecoreContentContext.cs" />
+    <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />

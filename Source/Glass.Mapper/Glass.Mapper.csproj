@@ -173,6 +173,7 @@
     <Compile Include="Profilers\NullProfiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Profilers\SimpleProfiler.cs" />
+    <Compile Include="SettingStack.cs" />
     <Compile Include="UrlBuilder.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
@@ -188,6 +189,7 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
+
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -197,4 +199,17 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+
+  <PropertyGroup>
+    <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
+  </PropertyGroup>
+  <!-- Target Name="AfterBuild">
+    < Build source code docs >
+
+
+    <Message Text="Starting source code documentation" />
+    <Message Text="SHFBROOT= $(SHFBROOT)" />
+    <MSBuild Projects="$(SolutionDir)\Glass.Mapper.shfbproj"
+      Properties="Configuration=Release;Platform=AnyCPU;OutDir=$(OutDir)" />
+  </-->
 </Project>

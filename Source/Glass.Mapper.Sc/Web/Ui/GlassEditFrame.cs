@@ -47,11 +47,12 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <param name="buttons">The buttons.</param>
         /// <param name="writer">The writer.</param>
         /// <param name="dataSource">The data source.</param>
-        public GlassEditFrame(string buttons, TextWriter writer, string dataSource = "")
+        public GlassEditFrame(string title, string buttons, TextWriter writer, string dataSource = "")
         {
             _frame = new EditFrame();
             _frame.DataSource = dataSource;
             _frame.Buttons = buttons;
+            _frame.Title = title;
             _writer = new HtmlTextWriter(writer);
 
         }

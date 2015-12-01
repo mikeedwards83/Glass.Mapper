@@ -169,7 +169,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         public virtual TParam GetRenderingParameters<TParam>() where TParam : class
         {
-            return !RenderingParameters.HasValue()
+            return RenderingParameters.HasValue()
                 ? GlassHtml.GetRenderingParameters<TParam>(RenderingParameters) 
                 : default(TParam);
         }
