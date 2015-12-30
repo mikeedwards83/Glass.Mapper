@@ -848,6 +848,7 @@ namespace Glass.Mapper.Sc
 #if (SC81 || SC80 || SC75)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
+            mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
