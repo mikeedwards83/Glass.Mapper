@@ -710,7 +710,11 @@ namespace Glass.Mapper.Sc
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
-            AttributeCheck(attributes, ImageParameterKeys.ALT, image.Alt);
+
+            if (!attributes.ContainsKey(ImageParameterKeys.ALT))
+            {
+                attributes[ImageParameterKeys.ALT] = image.Alt;
+            }
             AttributeCheck(attributes, ImageParameterKeys.BORDER, image.Border);
             if (image.HSpace > 0)
                 AttributeCheck(attributes, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
