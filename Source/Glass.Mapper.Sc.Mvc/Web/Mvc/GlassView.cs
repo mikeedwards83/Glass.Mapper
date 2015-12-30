@@ -34,6 +34,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// <typeparam name="TModel"></typeparam>
     public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
+        protected IRenderingContext RenderingContext { get; set; }
 
 
         public static bool HasDataSource<T>() where T : class
@@ -97,14 +98,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             get
             {
-                if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering == null ||
-                    Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource.IsNullOrEmpty())
-                {
-                    return null;
-                }
-                else
-                    return global::Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource);
+                return RenderingContext.HasDataSource ? Sitecore.Context.Database.GetItem(RenderingContext.GetDataSource()) : null;
             }
         }
 
@@ -147,6 +141,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
             base.InitHelpers();
             SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
             GlassHtml = new GlassHtml(SitecoreContext);
+            RenderingContext = new RenderingContextMvcWrapper();
+
             if (Model == null && this.ViewData.Model == null)
             {
                 this.ViewData.Model = GetModel();
@@ -156,7 +152,14 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         protected virtual TModel GetModel()
         {
-            return SitecoreContext.Cast<TModel>(LayoutItem);
+            if (RenderingContext.HasDataSource)
+            {
+                return SitecoreContext.Cast<TModel>(DataSourceItem);
+            }
+            else
+            {
+                return SitecoreContext.Cast<TModel>(ContextItem);
+            }
         }
 
         /// <summary>
@@ -371,12 +374,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public T GetRenderingParameters<T>() where T : class
         {
-            if (Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull == null)
-                return null;
-
-            var parameters = Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering[Sc.GlassHtml.Parameters];
-            return
-                GlassHtml.GetRenderingParameters<T>(parameters);
+            string renderingParameters = RenderingContext.GetRenderingParameters();
+            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
         }
 
     }
