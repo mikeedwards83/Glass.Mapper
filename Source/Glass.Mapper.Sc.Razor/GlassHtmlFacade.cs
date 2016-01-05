@@ -187,12 +187,13 @@ namespace Glass.Mapper.Sc.Razor
         /// </summary>
         /// <param name="buttons">The buttons.</param>
         /// <param name="dataSource">The data source.</param>
+        /// <param name="title">The title for the edit frame</param>
         /// <returns></returns>
-        public GlassEditFrame EditFrame(string buttons, string dataSource = null)
+        public GlassEditFrame EditFrame(string title, string buttons, string dataSource = null)
         {
             
 
-            var frame = new GlassEditFrame(buttons, _writer, dataSource);
+            var frame = new GlassEditFrame(title, buttons, _writer, dataSource);
             frame.RenderFirstPart();
             return frame;
             
@@ -234,7 +235,10 @@ namespace Glass.Mapper.Sc.Razor
                     control.CastTo<PartialControl>().SetModel(model);
             }
             var webControl = control as WebControl;
-            webControl.RenderControl(_writer);
+            if (webControl != null)
+            {
+                webControl.RenderControl(_writer);
+            }
         }
 
 

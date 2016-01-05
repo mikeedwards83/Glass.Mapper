@@ -14,7 +14,7 @@ namespace Glass.Mapper
 
         public UrlBuilder(string url)
         {
-            QuerySeparator = "&amp;";
+            QuerySeparator = "&";
             _url = url;
             QueryString = new List<KeyValuePair<string, string>>();
             ProcessQueryString(_url, QueryString);

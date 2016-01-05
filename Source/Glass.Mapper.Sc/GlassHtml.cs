@@ -140,16 +140,17 @@ namespace Glass.Mapper.Sc
         /// <param name="buttons">The buttons.</param>
         /// <param name="path">The path.</param>
         /// <param name="output">The output text writer</param>
+        /// <param name="title">The title for the edit frame</param>
         /// <returns>
         /// GlassEditFrame.
         /// </returns>
-        public GlassEditFrame EditFrame(string buttons, string path = null, TextWriter output = null)
+        public GlassEditFrame EditFrame(string title,  string buttons, string path = null, TextWriter output = null)
         {
             if (output == null)
             {
                 output = HttpContext.Current.Response.Output;
             }
-            var frame = new GlassEditFrame(buttons, output, path);
+            var frame = new GlassEditFrame(title, buttons, output, path);
             frame.RenderFirstPart();
             return frame;
         }
@@ -203,7 +204,7 @@ namespace Glass.Mapper.Sc
                     }
 
 
-                    return EditFrame(buttonPath, path, output);
+                    return EditFrame(title, buttonPath, path, output);
                 }
             }
             return new GlassNullEditFrame();
@@ -395,11 +396,11 @@ namespace Glass.Mapper.Sc
             RenderingResult result;
             if (IsInEditingMode && isEditable)
             {
-                if (!string.IsNullOrEmpty(contents))
-                    attrs["haschildren"] = "true";
-                if (contents.IsNotNullOrEmpty())
+              
+                if (contents.HasValue())
                 {
                     attrs.Add("haschildren", "true");
+                    attrs.Add("text",contents);
                 }
 
                 result = MakeEditable(
@@ -518,7 +519,8 @@ namespace Glass.Mapper.Sc
             Expression<Func<T, string>> standardOutput,
             T model,
             object parameters,
-            Context context, Database database,
+            Context context, 
+            Database database,
             TextWriter writer)
         {
 
@@ -599,11 +601,11 @@ namespace Glass.Mapper.Sc
                 {
                     if (standardOutput != null)
                     {
-                        firstPart = GetCompiled<T>(standardOutput)(model).ToString();
+                        firstPart = GetCompiled(standardOutput)(model).ToString();
                     }
                     else
                     {
-                        object target = (GetCompiled<T>(field)(model) ?? string.Empty);
+                        object target = (GetCompiled(field)(model) ?? string.Empty);
 
                         if (ImageType.IsInstanceOfType(target))
                         {
@@ -708,7 +710,11 @@ namespace Glass.Mapper.Sc
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
-            AttributeCheck(attributes, ImageParameterKeys.ALT, image.Alt);
+
+            if (!attributes.ContainsKey(ImageParameterKeys.ALT))
+            {
+                attributes[ImageParameterKeys.ALT] = image.Alt;
+            }
             AttributeCheck(attributes, ImageParameterKeys.BORDER, image.Border);
             if (image.HSpace > 0)
                 AttributeCheck(attributes, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
@@ -846,6 +852,7 @@ namespace Glass.Mapper.Sc
 #if (SC81 || SC80 || SC75)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
+            mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
