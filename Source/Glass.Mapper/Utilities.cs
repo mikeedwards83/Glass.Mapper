@@ -115,7 +115,7 @@ namespace Glass.Mapper
                         genericType = typeof(Func<,,,,,,,,,>);
                         break;
                     default:
-                        throw new MapperException("Only supports constructors with a maximum of 10 parameters");
+                        throw new MapperException("Only supports constructors with a maximum of 10 parameters for type {0}".Formatted(type.FullName));
                 }
 
                 var delegateType =
