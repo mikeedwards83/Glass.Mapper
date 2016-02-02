@@ -69,12 +69,13 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotSupportedException">The value is not of type System.Double</exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            if (value is double)
+            double? doubleValue = value as double?;
+            if (doubleValue.HasValue)
             {
-                return value.ToString();
+                return doubleValue.Value.ToString(CultureInfo.InvariantCulture);
             }
-            else
-                throw new NotSupportedException("The value is not of type System.Double");
+
+            throw new NotSupportedException("The value is not of type System.Double");
         }
     }
 }

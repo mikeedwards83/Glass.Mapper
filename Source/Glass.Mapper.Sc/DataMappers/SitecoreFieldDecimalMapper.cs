@@ -68,12 +68,13 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotSupportedException">The value is not of type System.Decimal</exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            if (value is decimal)
+            decimal? decimalValue = value as decimal?;
+            if (decimalValue.HasValue)
             {
-                return value.ToString();
+                return decimalValue.Value.ToString(CultureInfo.InvariantCulture);
             }
-            else
-                throw new NotSupportedException("The value is not of type System.Decimal");
+
+            throw new NotSupportedException("The value is not of type System.Decimal");
         }
     }
 }
