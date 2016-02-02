@@ -10,10 +10,22 @@ namespace Glass.Mapper.Caching
     {
         private static ConcurrentBag<string> _keys = new ConcurrentBag<string>();
 
+        //Absolute time in second
         public int AbsoluteExpiry { get; set; }
+        /// <summary>
+        /// Sliding time in seconds
+        /// </summary>
         public int SlidingExpiry { get; set; }
 
         protected static ConcurrentBag<string> Keys { get { return _keys; } }
+
+        public HttpCache()
+        {
+
+            //20 minute default
+            SlidingExpiry = 60*20;
+        }
+
 
         protected Cache Cache
         {
