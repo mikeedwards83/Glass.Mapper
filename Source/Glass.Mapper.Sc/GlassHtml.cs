@@ -491,6 +491,7 @@ namespace Glass.Mapper.Sc
 
             var url = link.BuildUrl(attributes);
             url = HttpUtility.HtmlEncode(url);
+
             string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
