@@ -489,7 +489,9 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            string firstPart = LinkTagFormat.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
+            var url = link.BuildUrl(attributes);
+            url = HttpUtility.HtmlEncode(url);
+            string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
