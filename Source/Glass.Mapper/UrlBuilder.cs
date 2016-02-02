@@ -10,11 +10,13 @@ namespace Glass.Mapper
         private readonly string _url;
         public List<KeyValuePair<string, string>> QueryString { get; private set; }
 
+        public string HtmlQuerySeparator { get; set; }
         public string QuerySeparator { get; set; }
 
         public UrlBuilder(string url)
         {
             QuerySeparator = "&";
+            HtmlQuerySeparator = "&amp;";
             _url = url;
             QueryString = new List<KeyValuePair<string, string>>();
             ProcessQueryString(_url, QueryString);
@@ -29,7 +31,7 @@ namespace Glass.Mapper
 
                 if (query.IsNotNullOrEmpty())
                 {
-                    query = query.Replace(QuerySeparator, "&");
+                    query = query.Replace(HtmlQuerySeparator, "&");
                     var pairs = query.Split('&', StringSplitOptions.RemoveEmptyEntries);
                     foreach (var pair in pairs)
                     {

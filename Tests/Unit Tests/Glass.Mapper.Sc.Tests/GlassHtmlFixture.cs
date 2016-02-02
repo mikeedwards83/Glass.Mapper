@@ -434,7 +434,7 @@ namespace Glass.Mapper.Sc.Tests
         public void RenderLink_LinkHasHashBang()
         {
             //Arrange
-            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange=999&workType=0&industry=&occupation=&graduateSearch=false&salaryFrom=0&salaryTo=999999&salaryType=annual&advertiserID=&advertiserGroup=&keywords=sitecore+developer&page=1&displaySuburb=&seoSuburb=&isAreaUnspecified=false&location=&area=&nation=3000&sortMode=KeywordRelevance&searchFrom=filters&searchType=' >hello world</a>";
+            var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange=999&amp;workType=0&amp;industry=&amp;occupation=&amp;graduateSearch=false&amp;salaryFrom=0&amp;salaryTo=999999&amp;salaryType=annual&amp;advertiserID=&amp;advertiserGroup=&amp;keywords=sitecore+developer&amp;page=1&amp;displaySuburb=&amp;seoSuburb=&amp;isAreaUnspecified=false&amp;location=&amp;area=&amp;nation=3000&amp;sortMode=KeywordRelevance&amp;searchFrom=filters&amp;searchType=' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
             
             var html = new GlassHtml(scContext);
