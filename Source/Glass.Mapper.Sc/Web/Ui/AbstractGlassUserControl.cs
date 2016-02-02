@@ -282,6 +282,18 @@ namespace Glass.Mapper.Sc.Web.Ui
             this._writer = writer;
             base.RenderControl(writer);
         }
+
+        public virtual string RenderingParameters
+        {
+            get { return RenderingContext.GetRenderingParameters(); }
+        }
+
+        public virtual TParam GetRenderingParameters<TParam>() where TParam : class
+        {
+            return RenderingParameters.HasValue()
+                ? GlassHtml.GetRenderingParameters<TParam>(RenderingParameters)
+                : default(TParam);
+        }
     }
 }
 
