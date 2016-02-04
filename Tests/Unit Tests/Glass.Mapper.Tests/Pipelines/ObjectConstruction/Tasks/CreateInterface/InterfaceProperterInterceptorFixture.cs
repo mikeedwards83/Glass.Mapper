@@ -45,7 +45,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var invocation = Substitute.For<IInvocation>();
             invocation.Method.Returns(typeof(IStubInterfaceWithProp).GetProperty("StubProp").GetMethod);
 
-            //Preconditional Assert; ensure that we haven't yet received any calls to the underlying datasource
+            //Preconditional Assert; ensure that we haven't yet received any calls to the underlying datasource (via access to the LazyValues property)
             Assert.IsFalse(interceptor.ValuesCalled);
 
             //Act
@@ -65,7 +65,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var invocation = Substitute.For<IInvocation>();
             invocation.Method.Returns(typeof(IStubInterfaceWithProp).GetProperty("StubProp").GetMethod);
 
-            //Preconditional Assert; ensure that we haven't yet received any calls to the underlying datasource
+            //Preconditional Assert; ensure that we have already received the call to the underlying datasource (via access to the LazyValues property)
             Assert.IsTrue(interceptor.ValuesCalled);
 
             //Act
