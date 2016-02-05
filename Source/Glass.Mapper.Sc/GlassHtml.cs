@@ -508,7 +508,10 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", link.Title);
 
-            string firstPart = LinkTagFormat.Formatted(link.BuildUrl(attributes), Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
+            var url = link.BuildUrl(attributes);
+            url = HttpUtility.HtmlEncode(url);
+
+            string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
@@ -688,11 +691,19 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
+              
+
                 var url = new UrlString();
                 foreach (var pair in attrs)
                 {
                     url.Parameters.Add(pair.Key, pair.Value);
                 }
+                if (!outputHeightWidth)
+                {
+                    url.Parameters.Add("width", "-1");
+                    url.Parameters.Add("height", "-1");
+                }
+
                 return Editable(model, field, url.Query);
             }
             else
@@ -729,7 +740,11 @@ namespace Glass.Mapper.Sc
 
             //should there be some warning about these removals?
             AttributeCheck(attributes, ImageParameterKeys.CLASS, image.Class);
-            AttributeCheck(attributes, ImageParameterKeys.ALT, image.Alt);
+
+            if (!attributes.ContainsKey(ImageParameterKeys.ALT))
+            {
+                attributes[ImageParameterKeys.ALT] = image.Alt;
+            }
             AttributeCheck(attributes, ImageParameterKeys.BORDER, image.Border);
             if (image.HSpace > 0)
                 AttributeCheck(attributes, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
@@ -867,6 +882,7 @@ namespace Glass.Mapper.Sc
 #if (SC81 || SC80 || SC75)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
+            mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 

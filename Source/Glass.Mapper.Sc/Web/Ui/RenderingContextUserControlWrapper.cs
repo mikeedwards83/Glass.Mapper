@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         {
             if (control == null) return null;
 
-            var sublayout = _control as Sublayout;
+            var sublayout = control as Sublayout;
             if (sublayout != null)
             {
                 return sublayout.Parameters;

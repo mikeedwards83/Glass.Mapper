@@ -87,10 +87,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// </value>
         public bool IsLazy { get; set; }
 
-        public virtual string RenderingParameters
-        {
-            get { return RenderingContext.GetRenderingParameters(); }
-        }
+       
 
         /// <summary>
         /// Gets the model.
@@ -167,12 +164,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             return GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents);
         }
 
-        public virtual TParam GetRenderingParameters<TParam>() where TParam : class
-        {
-            return RenderingParameters.HasValue()
-                ? GlassHtml.GetRenderingParameters<TParam>(RenderingParameters) 
-                : default(TParam);
-        }
+       
     }
 }
 

@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc
@@ -35,6 +36,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>A strongly typed class representation of the item</returns>
+        [Obsolete("Best Practice - Use SitecoreService.CreateType or SitecoreService.Cast methods")]
         public static T GlassCast<T>(this Item item, ISitecoreService service, bool isLazy = false, bool inferType = false) where T : class
         {
             return service.CreateType<T>(item, isLazy, inferType);
@@ -49,6 +51,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>A strongly typed class representation of the item</returns>
+        [Obsolete("Best Practice - Use SitecoreService.CreateType or SitecoreService.Cast methods")]
         public static T GlassCast<T>(this Item item, bool isLazy = false, bool inferType = false) where T : class
         {
             var service = new SitecoreService(item.Database);
@@ -62,6 +65,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">The type of the class to read from.</typeparam>
         /// <param name="item">The item to write to</param>
         /// <param name="target">The class to read from</param>
+        [Obsolete("Best Practice - Use SitecoreService.WriteToItem methods")]
         public static void GlassRead<T>(this Item item, T target) where T : class
         {
             ISitecoreService service = new SitecoreService(item.Database);

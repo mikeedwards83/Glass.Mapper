@@ -95,6 +95,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Configuration.proj = Configuration.proj
 		Glass.Mapper.shfbproj = Glass.Mapper.shfbproj
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC Specific", "IoC Specific", "{C4655EE5-DED7-4128-9A73-705C0A23A1C1}"
