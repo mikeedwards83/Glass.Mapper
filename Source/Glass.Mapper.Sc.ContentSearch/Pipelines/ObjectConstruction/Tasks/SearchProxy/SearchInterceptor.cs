@@ -47,8 +47,8 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
                             var typeCreationContext = ((SitecoreTypeCreationContext)_args.AbstractTypeCreationContext);
                             typeCreationContext.Item = typeCreationContext.SitecoreService.Database.GetItem(Id);
                             var typeConfiguration = 
-                                typeCreationContext.SitecoreService.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(invocation.TargetType) ??
-                                typeCreationContext.SitecoreService.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(_args.AbstractTypeCreationContext.RequestedType);
+                                typeCreationContext.SitecoreService.GlassContext.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(invocation.TargetType) ??
+                                typeCreationContext.SitecoreService.GlassContext.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(_args.AbstractTypeCreationContext.RequestedType);
                             var dataMappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
                             foreach (var propertyConfiguration in typeConfiguration.Properties.Where(x => !_fieldValues.ContainsKey(x.PropertyInfo.Name)))
                             {

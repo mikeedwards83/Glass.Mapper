@@ -45,7 +45,7 @@ Invoke-Expression $build80
 Invoke-Expression $build81
 
 New-Item -ItemType directory -Path nugets -Force
-$nuget1 = "nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
-$nuget2 = "nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.ContentSearch.LuceneProvider.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
+$nuget1 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
+$nuget2 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.ContentSearch.LuceneProvider.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
 Invoke-Expression $nuget1
 Invoke-Expression $nuget2

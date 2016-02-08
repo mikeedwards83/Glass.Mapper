@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public List<string> GetTypeIdentifyingFields(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {
-            var typeConfig = Context.Default.GetTypeConfiguration<SitecoreTypeConfiguration>(baseType);
+            var typeConfig = Context.Default.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType);
             if (typeConfig == null || typeConfig.TemplateId == (ID)null)
                 return _defaultDocumentMapper.GetTypeIdentifyingFields(baseType, executionContexts);
 
@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public object CreateElementInstance(Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
         {
-            var typeConfig = Context.Default.GetTypeConfiguration<SitecoreTypeConfiguration>(baseType);
+            var typeConfig = Context.Default.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType);
             if (typeConfig == null || typeConfig.TemplateId == (ID)null)
                 return _defaultDocumentMapper.CreateElementInstance(baseType, fieldValues, executionContexts);
 

@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
             if (searchInterceptor == null) return;
 
             searchInterceptor.Id = new ID(id);
-            searchInterceptor.TypeConfiguration = _sitecoreContext.GlassContext.GetTypeConfiguration <SitecoreTypeConfiguration>(target);
+            searchInterceptor.TypeConfiguration = _sitecoreContext.GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(target);
         }
     }
 }
