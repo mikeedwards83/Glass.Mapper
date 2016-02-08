@@ -22,6 +22,7 @@
     <language>en-GB</language>
     <dependencies>
       <dependency id="Castle.Core" version="3.3.3" />
+      <dependency id="Rackspace.Collections.Immutable" version="1.1.36" />
 	</dependencies>
   </metadata>
   <files>
@@ -74,7 +75,15 @@
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.dll" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.pdb" />
     <file src="Source\Glass.Mapper.Sc.Mvc\bin\72\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc5\Glass.Mapper.Sc.Mvc.xml" />
-
+    
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\80\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc51\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\80\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc51\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\80\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc51\Glass.Mapper.Sc.Mvc.xml" />
+    
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\81\Glass.Mapper.Sc.Mvc.dll" target="lib\Mvc52\Glass.Mapper.Sc.Mvc.dll" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\81\Glass.Mapper.Sc.Mvc.pdb" target="lib\Mvc52\Glass.Mapper.Sc.Mvc.pdb" />
+    <file src="Source\Glass.Mapper.Sc.Mvc\bin\81\Glass.Mapper.Sc.Mvc.xml" target="lib\Mvc52\Glass.Mapper.Sc.Mvc.xml" />
+    
     <!-- CONFIG FILES  -->
     <file src="Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
 

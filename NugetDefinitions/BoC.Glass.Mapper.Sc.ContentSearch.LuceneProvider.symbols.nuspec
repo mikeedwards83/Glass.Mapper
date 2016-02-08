@@ -23,9 +23,6 @@
     <dependencies>
       <dependency id="Castle.Core" version="3.3.3" />
       <dependency id="BoC.Glass.Mapper.Sc" version="$version$" />
-      <dependency id="Microsoft.Bcl.Immutable" version="1.0.34" />
-      <dependency id="ReadOnlyCollectionInterfaces" version="1.0.0" />
-      <dependency id="System.Collections.Immutable.Net40" version="1.0.30.17" />
     </dependencies>
   </metadata>
   <files>
