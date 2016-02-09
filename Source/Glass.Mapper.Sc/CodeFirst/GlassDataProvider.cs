@@ -569,6 +569,8 @@ namespace Glass.Mapper.Sc.CodeFirst
                         if (Settings.GetBoolSetting("AutomaticallyRemoveDeletedTemplates", true))
                             RemoveDeletedClasses(glassFolder, sqlProvider, context);
 
+                        _setupComplete = true; //mark as complete before clearing caches, FXMSiteProvider initializes all GetChildIds during cache clear
+
                         ClearCaches(db);
                     }
 
