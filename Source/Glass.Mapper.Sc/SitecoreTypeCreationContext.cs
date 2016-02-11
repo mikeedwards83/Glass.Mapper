@@ -71,7 +71,8 @@ namespace Glass.Mapper.Sc
 
         public override bool CacheEnabled
         {
-            get { return SitecoreService.CacheEnabled && Sitecore.Context.PageMode.IsNormal; }
+            get { return SitecoreService.CacheEnabled 
+                    && (Sitecore.Context.Site == null || Sitecore.Context.PageMode.IsNormal); }
         }
     }
 }
