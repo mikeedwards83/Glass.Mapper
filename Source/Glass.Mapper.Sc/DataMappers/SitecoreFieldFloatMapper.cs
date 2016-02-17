@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (fieldValue.IsNullOrEmpty()) return 0f;
             float dValue = 0f;
             if (float.TryParse(fieldValue, NumberStyles.Any, CultureInfo.InvariantCulture, out dValue)) return dValue;
-            else throw new MapperException("Could not convert value to double");
+            else throw new MapperException("Could not convert value to float");
         }
 
         /// <summary>
@@ -66,15 +66,16 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <param name="config">The config.</param>
         /// <param name="context">The context.</param>
         /// <returns>System.String.</returns>
-        /// <exception cref="System.NotSupportedException">The value is not of type System.Double</exception>
+        /// <exception cref="System.NotSupportedException">The value is not of type System.Float</exception>
         public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
-            if (value is float)
+            float? floatValue = value as float?;
+            if (floatValue.HasValue)
             {
-                return value.ToString();
+                return floatValue.Value.ToString(CultureInfo.InvariantCulture);
             }
-            else
-                throw new NotSupportedException("The value is not of type System.Float");
+
+            throw new NotSupportedException("The value is not of type System.Float");
         }
     }
 }

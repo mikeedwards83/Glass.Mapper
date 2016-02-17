@@ -129,6 +129,15 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>``0.</returns>
         T GetHomeItem<T>(bool isLazy = false, bool inferType = false) where T : class;
+
+        /// <summary>
+        /// Gets the root item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        T GetRootItem<T>(bool isLazy = false, bool inferType = false) where T : class;
     }
 }
 

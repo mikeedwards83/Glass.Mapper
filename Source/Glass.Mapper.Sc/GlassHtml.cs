@@ -672,11 +672,19 @@ namespace Glass.Mapper.Sc
 
             if (IsInEditingMode && isEditable)
             {
+              
+
                 var url = new UrlString();
                 foreach (var pair in attrs)
                 {
                     url.Parameters.Add(pair.Key, pair.Value);
                 }
+                if (!outputHeightWidth)
+                {
+                    url.Parameters.Add("width", "-1");
+                    url.Parameters.Add("height", "-1");
+                }
+
                 return Editable(model, field, url.Query);
             }
             else

@@ -75,6 +75,20 @@ namespace Glass.Mapper.Sc
             return GetItem<T>(Sitecore.Context.Site.StartPath, isLazy, inferType);
         }
 
+
+        /// <summary>
+        /// Gets the root item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>``0.</returns>
+        public T GetRootItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        {
+
+            return GetItem<T>(Sitecore.Context.Site.RootPath, isLazy, inferType);
+        }
+
         /// <summary>
         /// Performs a query relative to the current item
         /// </summary>

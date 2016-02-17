@@ -52,23 +52,13 @@ namespace Glass.Mapper.Sc.ModelCache
 
         public virtual Type Get(string path)
         {
-            return CachedTypes.ContainsKey(path) ? CachedTypes[path] : null;
+            Type retVal;
+            return CachedTypes.TryGetValue(path, out retVal) ? retVal : null;
         }
 
         public string GetKey(string path)
         {
-            string realPath;
-            if (CachedKeys.ContainsKey(path))
-            {
-                realPath = CachedKeys[path];
-            }
-            else
-            {
-                realPath = HttpContext.Current.Server.MapPath(path);
-                CachedKeys.TryAdd(path, realPath);
-            }
-
-            return realPath;
+           return CachedKeys.GetOrAdd(path, key => HttpContext.Current.Server.MapPath(key));            
         }
     }
 }
