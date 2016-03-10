@@ -17,8 +17,20 @@ namespace Glass.Mapper
         /// <summary>
         /// This is only used when a HttpContext.Items isn't available
         /// </summary>
-        [ThreadStatic] private static Hashtable ThreadStack = new Hashtable();
+        [ThreadStatic] private static Hashtable _threadStack = null;
 
+        public static Hashtable ThreadStack
+        {
+            get
+            {
+                if (_threadStack == null)
+                {
+                    _threadStack =new Hashtable();
+                }
+                return _threadStack;
+                
+            }
+        }
 
         public SettingStack(T newPush)
         {
@@ -40,13 +52,12 @@ namespace Glass.Mapper
 
                 if (HttpContext.Current == null)
                 {
-                    
-                    if (ThreadStack1[key] == null)
+                    if (ThreadStack[key] == null)
                     {
-                        ThreadStack1[key] = NewStack();
+                        ThreadStack[key] = NewStack();
                     }
 
-                    return ThreadStack1[key] as Stack<T>;
+                    return ThreadStack[key] as Stack<T>;
                 }
 
                 if (HttpContext.Current.Items[key] == null)
@@ -61,18 +72,7 @@ namespace Glass.Mapper
             get { return CacheStack.Peek(); }
         }
 
-        public static Hashtable ThreadStack1
-        {
-            get
-            {
-                return ThreadStack;
-            }
-
-            set
-            {
-                ThreadStack = value;
-            }
-        }
+        
 
         public void Dispose()
         {
