@@ -32,6 +32,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Links;
+using Sitecore.Resources.Media;
 using Sitecore.Xml.Xsl;
 
 namespace Glass.Mapper.Sc
@@ -41,6 +42,8 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class Utilities : Mapper.Utilities
     {
+
+
         /// <summary>
         /// Converts a NameValueCollection into HTML attributes
         /// </summary>
@@ -121,6 +124,51 @@ namespace Glass.Mapper.Sc
 
         }
 
+
+        public static MediaUrlOptions GetMediaUrlOptions(SitecoreInfoMediaUrlOptions mediaUrlOptions)
+        {
+
+
+            var defaultMediaUrl = MediaUrlOptions.Empty;
+
+            if (mediaUrlOptions == 0) return defaultMediaUrl;
+
+
+            Func<SitecoreInfoMediaUrlOptions, bool> flagCheck =
+                option => (mediaUrlOptions & option) == option;
+
+            defaultMediaUrl.AbsolutePath = !flagCheck(SitecoreInfoMediaUrlOptions.DisableAbsolutePath) && defaultMediaUrl.AbsolutePath;
+            defaultMediaUrl.AllowStretch = flagCheck(SitecoreInfoMediaUrlOptions.AllowStretch) || defaultMediaUrl.AllowStretch;
+            defaultMediaUrl.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl) || defaultMediaUrl.AlwaysIncludeServerUrl;
+            defaultMediaUrl.DisableBrowserCache = flagCheck(SitecoreInfoMediaUrlOptions.DisableBrowserCache) || defaultMediaUrl.DisableBrowserCache;
+            defaultMediaUrl.DisableMediaCache = flagCheck(SitecoreInfoMediaUrlOptions.DisableMediaCache) || defaultMediaUrl.DisableMediaCache;
+            defaultMediaUrl.IgnoreAspectRatio = flagCheck(SitecoreInfoMediaUrlOptions.IgnoreAspectRatio) || defaultMediaUrl.IgnoreAspectRatio;
+            defaultMediaUrl.IncludeExtension = !flagCheck(SitecoreInfoMediaUrlOptions.RemoveExtension) && defaultMediaUrl.IncludeExtension;
+            defaultMediaUrl.LowercaseUrls = flagCheck(SitecoreInfoMediaUrlOptions.LowercaseUrls) || defaultMediaUrl.LowercaseUrls;
+            defaultMediaUrl.Thumbnail = flagCheck(SitecoreInfoMediaUrlOptions.Thumbnail) || defaultMediaUrl.Thumbnail;
+            defaultMediaUrl.UseDefaultIcon = flagCheck(SitecoreInfoMediaUrlOptions.UseDefaultIcon) || defaultMediaUrl.UseDefaultIcon;
+            defaultMediaUrl.UseItemPath = flagCheck(SitecoreInfoMediaUrlOptions.UseItemPath) || defaultMediaUrl.UseItemPath;
+
+            // defaultMediaUrl.BackgroundColor 
+            // defaultMediaUrl.Database 
+            // defaultMediaUrl.Height 
+            // defaultMediaUrl.DefaultIcon
+            // defaultMediaUrl.ItemRevision 
+            //defaultMediaUrl.Language;
+            //defaultMediaUrl.MaxHeight;
+            //defaultMediaUrl.MaxWidth;
+            //defaultMediaUrl.MediaLinkServerUrl;
+            //defaultMediaUrl.RequestExtension;
+            //defaultMediaUrl.Scale;
+            //defaultMediaUrl.Version;
+            //defaultMediaUrl.VirtualFolder;
+            //defaultMediaUrl.Width;
+
+
+
+            return defaultMediaUrl;
+        }
+
         /// <summary>
         /// Creates the URL options.
         /// </summary>
@@ -141,12 +189,12 @@ namespace Glass.Mapper.Sc
 
 
             //check for any default overrides
-            defaultOptions.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) ? true : defaultOptions.AddAspxExtension;
-            defaultOptions.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) ? true : defaultOptions.AlwaysIncludeServerUrl;
-            defaultOptions.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) ? true : defaultOptions.EncodeNames;
-            defaultOptions.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) ? true : defaultOptions.ShortenUrls;
-            defaultOptions.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) ? true : defaultOptions.SiteResolving;
-            defaultOptions.UseDisplayName =flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) ? true : defaultOptions.UseDisplayName;
+            defaultOptions.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) || defaultOptions.AddAspxExtension;
+            defaultOptions.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) || defaultOptions.AlwaysIncludeServerUrl;
+            defaultOptions.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) || defaultOptions.EncodeNames;
+            defaultOptions.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) || defaultOptions.ShortenUrls;
+            defaultOptions.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) || defaultOptions.SiteResolving;
+            defaultOptions.UseDisplayName =flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) || defaultOptions.UseDisplayName;
 
 
             if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAlways))

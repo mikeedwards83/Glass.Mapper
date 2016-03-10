@@ -69,6 +69,17 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             return this;
         }
 
+        /// <summary>
+        /// UrlOptions, use in conjunction with SitecoreInfoType.Url
+        /// </summary>
+        /// <param name="option">The option.</param>
+        /// <returns>SitecoreInfo{`0}.</returns>
+        public SitecoreInfo<T> UrlOptions(SitecoreInfoMediaUrlOptions option)
+        {
+            Configuration.MediaUrlOptions = option;
+            return this;
+        }
+
 
     }
 }
