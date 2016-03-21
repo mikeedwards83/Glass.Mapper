@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +67,7 @@
     <Compile Include="Caching\ICacheKeyGenerator.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Caching\NetMemoryCacheManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
