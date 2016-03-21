@@ -219,6 +219,56 @@ namespace Glass.Mapper.Sc.Tests
 
         #endregion
 
+        #region DoVersionCheck
+
+        [Test]
+        public void DoVersionCheck_DefaultValues_ReturnTrue()
+        {
+            //Arrange
+            var config = new Config();
+
+            //Act
+            var result = Utilities.DoVersionCheck(config);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void DoVersionCheck_DisableVersionCount_ReturnFalse()
+        {
+            //Arrange
+            var config = new Config();
+            config.DisableVersionCount = true;
+
+            //Act
+            var result = Utilities.DoVersionCheck(config);
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void DoVersionCheck_VersionCountDisabler_ReturnFalse()
+        {
+            //Arrange
+            var config = new Config();
+            config.DisableVersionCount = true;
+
+            var result = true;
+
+            //Act
+            using (new VersionCountDisabler())
+            {
+                result = Utilities.DoVersionCheck(config);
+            }
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        #endregion
+
         #region Stubs
 
         public class StubClass

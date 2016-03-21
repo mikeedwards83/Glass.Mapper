@@ -290,9 +290,15 @@ namespace Glass.Mapper.Sc
 
         public static bool DoVersionCheck(Config config)
         {
-            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+            if (config.DisableVersionCount)
+            {
                 return false;
+            }
 
+            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+            {
+                return false;
+            }
 
             return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
 
