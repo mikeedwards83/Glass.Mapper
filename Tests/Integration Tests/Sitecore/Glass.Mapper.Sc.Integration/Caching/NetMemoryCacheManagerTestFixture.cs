@@ -13,10 +13,9 @@ namespace Glass.Mapper.Sc.Integration.Caching
         {
             // Arrange
             const string cacheKey = "TestAbsoluteKey";
-            NetMemoryCacheManager memoryCacheManager = new NetMemoryCacheManager();
-            
+            NetMemoryCacheManager memoryCacheManager = new NetMemoryCacheManager {AbsoluteExpiry = 2};
+
             // Act
-            memoryCacheManager.AbsoluteExpiry = 2;
             TestCacheStub testCacheClass = new TestCacheStub();
 
             memoryCacheManager.AddOrUpdate(cacheKey, testCacheClass);
