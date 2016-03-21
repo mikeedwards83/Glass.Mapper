@@ -1,15 +1,16 @@
 ﻿using Glass.Mapper.Caching;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
     public class CacheCheckTask : IObjectConstructionTask
     {
         private readonly ICacheManager _cacheManager;
+        private readonly ICacheKeyGenerator _cacheKeyGenerator;
 
-        public CacheCheckTask(ICacheManager cacheManager)
+        public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {
             _cacheManager = cacheManager;
+            _cacheKeyGenerator = cacheKeyGenerator;
         }
 
         public virtual void Execute(ObjectConstructionArgs args)
@@ -20,7 +21,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 && args.AbstractTypeCreationContext.CacheEnabled
                 )
             {
-                var key = GetKey(args);
+                var key = _cacheKeyGenerator.Generate(args);
 
                 var cacheItem = _cacheManager.Get<object>(key);
                 if (cacheItem != null)
@@ -30,11 +31,5 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 }
             }
         }
-
-        public virtual string GetKey(ObjectConstructionArgs args)
-        {
-            return CacheAddTask.CreateCacheKey(args);
-        }
-
     }
 }

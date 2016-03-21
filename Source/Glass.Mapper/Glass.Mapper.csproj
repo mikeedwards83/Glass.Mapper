@@ -63,6 +63,7 @@
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
+    <Compile Include="Caching\ICacheKeyGenerator.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
     <Compile Include="Config.cs" />
@@ -166,10 +167,8 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
-
   <PropertyGroup>
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
   </PropertyGroup>

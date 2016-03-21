@@ -7,10 +7,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
     public class CacheAddTask : IObjectConstructionTask
     {
         private readonly ICacheManager _cacheManager;
+        private readonly ICacheKeyGenerator _cacheKeyGenerator;
 
-        public CacheAddTask(ICacheManager cacheManager)
+        public CacheAddTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {
             _cacheManager = cacheManager;
+            _cacheKeyGenerator = cacheKeyGenerator;
         }
 
         public virtual void Execute(ObjectConstructionArgs args)
@@ -21,21 +23,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
                 && args.AbstractTypeCreationContext.CacheEnabled
                 )
             {
-                var key = GetKey(args);
+                var key = _cacheKeyGenerator.Generate(args);
                 // This will also OVERRIDE any existing item that may already be cached (to be consistent across different cache impls)
                 // Will allow for multiple threads to update the cached object on first load, when they are all racing to cache the item for the first time
                 _cacheManager.AddOrUpdate(key, args.Result);
             }
         }
 
-        public virtual string GetKey(ObjectConstructionArgs args)
-        {
-            return CreateCacheKey(args);
-        }
-
-        public static string CreateCacheKey(ObjectConstructionArgs args)
-        {
-            return args.Context.Name + args.AbstractTypeCreationContext.GetUniqueKey();
-        }
+      
     }
 }
