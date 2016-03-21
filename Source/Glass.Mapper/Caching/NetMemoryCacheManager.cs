@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Caching;
+using System.Threading;
 
 namespace Glass.Mapper.Caching
 {
@@ -39,7 +40,8 @@ namespace Glass.Mapper.Caching
         public void ClearCache()
         {
             // destroy and recreate the cache
-            _memoryCache = new MemoryCache(CacheName);
+            var newMemoryCache = new MemoryCache(CacheName);
+            Interlocked.Exchange(ref _memoryCache, newMemoryCache);
         }
 
         /// <summary>
