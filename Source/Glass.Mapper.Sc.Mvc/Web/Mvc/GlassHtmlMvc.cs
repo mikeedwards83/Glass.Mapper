@@ -62,24 +62,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             return new HtmlString(GlassHtml.Editable(model, field, standardOutput, parameters));
         }
 
-        /// <summary>
-        /// Renders an image allowing simple page editor support
-        /// </summary>
-        /// <typeparam name="T">The model type</typeparam>
-        /// <param name="model">The model that contains the image field</param>
-        /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
-        /// <param name="parameters">Image parameters, e.g. width, height</param>
-        /// <param name="isEditable">Indicates if the field should be editable</param>
-        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
-        /// <returns></returns>
-        public virtual HtmlString RenderImage<T>(T model, Expression<Func<T, object>> field,
-            object parameters = null,
-            bool isEditable = false,
-            bool outputHeightWidth = true)
-
-        {
-            return new HtmlString(GlassHtml.RenderImage(model, field, parameters, isEditable, outputHeightWidth));
-        }
+       
 
         /// <summary>
         /// Render HTML for a link with contents
@@ -178,11 +161,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
                 GlassHtml.GetRenderingParameters<T>(parameters);
         }
 
-
-
-
-
-
         /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
@@ -191,15 +169,16 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">A lambda expression to the image field, should be of type Glass.Mapper.Sc.Fields.Image</param>
         /// <param name="parameters">Image parameters, e.g. width, height</param>
         /// <param name="isEditable">Indicates if the field should be editable</param>
+        /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
         /// <returns></returns>
         public virtual HtmlString RenderImage<T>(T model, Expression<Func<T, object>> field,
             object parameters = null,
-            bool isEditable = false)
+            bool isEditable = false,
+            bool outputHeightWidth = false)
+
         {
-            return new HtmlString(GlassHtml.RenderImage(model, field, parameters, isEditable));
+            return new HtmlString(GlassHtml.RenderImage(model, field, parameters, isEditable, outputHeightWidth));
         }
-
-
 
 
 
