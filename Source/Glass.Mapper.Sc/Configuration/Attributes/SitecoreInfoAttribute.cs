@@ -55,6 +55,12 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public SitecoreInfoUrlOptions UrlOptions { get; set; }
 
         /// <summary>
+        /// MediaUrlOptions, use in conjunction with SitecoreInfoType.MediaUrl
+        /// </summary>
+        /// <value>The URL options.</value>
+        public SitecoreInfoMediaUrlOptions MediaUrlOptions { get; set; }
+
+        /// <summary>
         /// Configures the specified property info.
         /// </summary>
         /// <param name="propertyInfo">The property info.</param>
@@ -75,7 +81,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         {
             config.Type = Type;
             config.UrlOptions = UrlOptions;
-
+            config.MediaUrlOptions = MediaUrlOptions;
             base.Configure(propertyInfo, config);
         }
     }

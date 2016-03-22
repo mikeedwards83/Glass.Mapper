@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheKeyGenerator.cs" />
     <Compile Include="CodeFirst\FieldInfo.cs" />
     <Compile Include="CodeFirst\GlassDataProvider.cs" />
     <Compile Include="CodeFirst\SectionInfo.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Configuration\SitecoreIdConfiguration.cs" />
     <Compile Include="Configuration\SitecoreIgnoreConfiguration.cs" />
     <Compile Include="Configuration\SitecoreInfoConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreInfoMediaUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreInfoType.cs" />
     <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreItemConfiguration.cs" />

@@ -16,7 +16,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         public GetModelFromView()
             : this(new ModelCacheManager())
         {
-            ContextName = Context.DefaultContextName;
         }
 
         public GetModelFromView(IModelCacheManager modelCacheManager)
@@ -30,7 +29,15 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <value>
         /// The name of the context.
         /// </value>
-        public string ContextName { get; set; }
+        public virtual string ContextName
+        {
+            get
+            {
+                var context = AbstractSitecoreContext.GetContextFromSite();
+                Sitecore.Diagnostics.Log.Info("using context " + context, this);
+                return context;
+            }
+        }
 
 
         public override void Process(GetModelArgs args)

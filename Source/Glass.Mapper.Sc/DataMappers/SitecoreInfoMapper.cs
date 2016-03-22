@@ -128,7 +128,6 @@ namespace Glass.Mapper.Sc.DataMappers
                 throw new NullReferenceException("Configuration has not been set.");
             }
             //TODO: move this to the config?
-            var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
             switch (scConfig.Type)
             {
 
@@ -145,8 +144,9 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Key:
                     return item.Key;
                 case SitecoreInfoType.MediaUrl:
+                    var mediaUrlOptions = Utilities.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                     var media = new MediaItem(item);
-                    return MediaManager.GetMediaUrl(media);
+                    return MediaManager.GetMediaUrl(media, mediaUrlOptions);
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
@@ -156,6 +156,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
+                    var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
                     urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:

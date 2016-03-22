@@ -204,6 +204,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheKeyGenerator.cs" />
     <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\UmbracoInfoAttribute.cs" />
     <Compile Include="Configuration\Attributes\UmbracoPropertyValueAttribute.cs" />

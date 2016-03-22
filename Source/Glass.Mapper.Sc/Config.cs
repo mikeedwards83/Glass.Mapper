@@ -75,5 +75,10 @@ namespace Glass.Mapper.Sc
         /// By default this is true, if you experience caching issue then set this to false.
         /// </summary>
         public bool UseGlassHtmlLambdaCache { get; set; }
+
+        /// <summary>
+        /// Completely disables the version count check mechinism across the entire solution
+        /// </summary>
+        public bool DisableVersionCount { get; set; }
     }
 }

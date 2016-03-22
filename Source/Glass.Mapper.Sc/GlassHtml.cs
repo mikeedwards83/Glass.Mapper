@@ -826,10 +826,15 @@ namespace Glass.Mapper.Sc
                 urlParams[ImageParameterKeys.MAX_WIDTH].ToInt(),
                 urlParams[ImageParameterKeys.MAX_HEIGHT].ToInt());
 
-          
 
-            urlParams[ImageParameterKeys.HEIGHT] = finalSize.Height.ToString();
-            urlParams[ImageParameterKeys.WIDTH] = finalSize.Width.ToString();
+            if (finalSize.Height > 0)
+            {
+                urlParams[ImageParameterKeys.HEIGHT] = finalSize.Height.ToString();
+            }
+            if (finalSize.Width > 0)
+            {
+                urlParams[ImageParameterKeys.WIDTH] = finalSize.Width.ToString();
+            }
 
             Action<string, string> originalAttributeClean = (exists, missing) =>
             {

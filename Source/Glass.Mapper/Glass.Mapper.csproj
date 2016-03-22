@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -63,8 +64,10 @@
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
+    <Compile Include="Caching\ICacheKeyGenerator.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Caching\NetMemoryCacheManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
@@ -166,10 +169,8 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
-
   <PropertyGroup>
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
   </PropertyGroup>
