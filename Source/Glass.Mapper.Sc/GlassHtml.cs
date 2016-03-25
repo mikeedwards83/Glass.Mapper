@@ -485,12 +485,14 @@ namespace Glass.Mapper.Sc
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
-            AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "target", link.Target);
-            AttributeCheck(attributes, "title", link.Title);
-
             var url = link.BuildUrl(attributes);
             url = HttpUtility.HtmlEncode(url);
+            contents = HttpUtility.HtmlEncode(contents);
+            var title = HttpUtility.HtmlEncode(link.Title);
+
+            AttributeCheck(attributes, "class", link.Class);
+            AttributeCheck(attributes, "target", link.Target);
+            AttributeCheck(attributes, "title", title);
 
             string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
