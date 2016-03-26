@@ -487,8 +487,11 @@ namespace Glass.Mapper.Sc
 
             var url = link.BuildUrl(attributes);
             url = HttpUtility.HtmlEncode(url);
-            contents = HttpUtility.HtmlEncode(contents);
-            var title = HttpUtility.HtmlEncode(link.Title);
+
+            //we decode and then encode the HTML to avoid a double encoding of HTML characters.
+            //some versions of Sitecore save '&' as '&amp;' and others as '&'.
+            contents = HttpUtility.HtmlEncode(HttpUtility.HtmlDecode(contents));
+            var title = HttpUtility.HtmlEncode(HttpUtility.HtmlDecode(link.Title));
 
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
