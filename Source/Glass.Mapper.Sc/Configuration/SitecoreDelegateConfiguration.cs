@@ -36,5 +36,20 @@ namespace Glass.Mapper.Sc.Configuration
         /// Gets or sets the action to take place when mapping to the objects property
         /// </summary>
         public Func<SitecoreDataMappingContext, object> MapToPropertyAction { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreDelegateConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreDelegateConfiguration;
+
+            config.MapToCmsAction = MapToCmsAction;
+            config.MapToPropertyAction = MapToPropertyAction;
+
+            base.Copy(copy);
+        }
     }
 }

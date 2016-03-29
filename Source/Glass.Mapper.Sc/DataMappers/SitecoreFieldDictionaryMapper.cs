@@ -162,7 +162,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
         private AbstractSitecoreFieldMapper GetMapper(Type genericArgument, SitecoreFieldConfiguration fieldConfiguration, PropertyInfo propertyInfo, DataMapperResolverArgs args)
         {
-            SitecoreFieldConfiguration configCopy = fieldConfiguration.Copy();
+            AbstractPropertyConfiguration configCopy = fieldConfiguration.Copy();
 
             configCopy.PropertyInfo = new FakePropertyInfo(genericArgument, propertyInfo.Name, propertyInfo.DeclaringType);
 

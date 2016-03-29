@@ -30,6 +30,16 @@ namespace Glass.Mapper.Umb.Configuration
     /// </summary>
     public class UmbracoIdConfiguration : IdConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new UmbracoIdConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoIdConfiguration;
+            base.Copy(copy);
+        }
     }
 }
 

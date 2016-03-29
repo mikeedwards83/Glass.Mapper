@@ -36,5 +36,17 @@ namespace Glass.Mapper.Umb.Configuration
         /// Gets or sets the action to take place when mapping to the objects property
         /// </summary>
         public Func<UmbracoDataMappingContext, object> MapToPropertyAction { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new UmbracoDelegateConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoDelegateConfiguration;
+
+            base.Copy(copy);
+        }
     }
 }

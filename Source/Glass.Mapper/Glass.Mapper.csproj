@@ -102,6 +102,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
+    <Compile Include="GlassLazy.cs" />
     <Compile Include="IoC\AbstractConfigFactory.cs" />
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />

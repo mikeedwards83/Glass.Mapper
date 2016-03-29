@@ -393,7 +393,12 @@ namespace Glass.Mapper.Tests
                 return config;
             }
         }
-        public class StubAbstractPropertyConfiguration : AbstractPropertyConfiguration { }
+        public class StubAbstractPropertyConfiguration : AbstractPropertyConfiguration {
+            protected override AbstractPropertyConfiguration CreateCopy()
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         #endregion
     }

@@ -38,6 +38,21 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         /// <value><c>true</c> if [infer type]; otherwise, <c>false</c>.</value>
         public bool InferType { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new ParentConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as ParentConfiguration;
+
+            config.IsLazy = IsLazy;
+            config.InferType = InferType;
+
+            base.Copy(copy);
+        }
     }
 }
 
