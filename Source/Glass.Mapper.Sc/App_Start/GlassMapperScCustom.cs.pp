@@ -1,4 +1,5 @@
-﻿using Glass.Mapper.Configuration;
+﻿#region GlassMapperScCustom generated code
+using Glass.Mapper.Configuration;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Sc.IoC;
@@ -51,3 +52,4 @@ namespace $rootnamespace$.App_Start
         }
     }
 }
+#endregion
