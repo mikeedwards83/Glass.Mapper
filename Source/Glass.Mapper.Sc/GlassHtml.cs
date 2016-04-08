@@ -162,14 +162,14 @@ namespace Glass.Mapper.Sc
             {
                 if (fields.Any())
                 {
-                    var fieldNames = fields.Select(x => Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
+                    var fieldIdsOrNames = fields.Select(x => Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
                         .Cast<SitecoreFieldConfiguration>()
                         .Where(x => x != null)
-                        .Select(x => x.FieldName);
+                        .Select(x => x.FieldId != (ID)null ? x.FieldId.ToString() : x.FieldName);
 
                     var buttonPath = "{0}{1}".Formatted(
                         EditFrameBuilder.BuildToken,
-                        fieldNames.Aggregate((x, y) => x + "|" + y));
+                        string.Join("|", fieldIdsOrNames));
 
                     if (title.IsNotNullOrEmpty())
                     {
