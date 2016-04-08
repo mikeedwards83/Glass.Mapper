@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             get
             {
                 var context = AbstractSitecoreContext.GetContextFromSite();
-                Sitecore.Diagnostics.Log.Info("using context " + context, this);
+                Sitecore.Diagnostics.Log.Debug("using context " + context, this);
                 return context;
             }
         }
