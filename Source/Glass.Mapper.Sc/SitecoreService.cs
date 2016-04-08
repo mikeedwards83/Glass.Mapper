@@ -48,7 +48,7 @@ namespace Glass.Mapper.Sc
         /// Gets the database.
         /// </summary>
         /// <value>The database.</value>
-        public  Database Database { get; private set; }
+        public Database Database { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreService"/> class.
@@ -56,9 +56,8 @@ namespace Glass.Mapper.Sc
         /// <param name="database">The database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(Database database, string contextName = "Default")
-            :base(contextName)
+            :this(database, Context.Contexts[contextName])
         {
-            Database = database;
         }
 
         /// <summary>
@@ -67,9 +66,8 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="contextName">Name of the context.</param>
         public SitecoreService(string databaseName, string contextName = "Default")
-            : base(contextName)
+            : this(Factory.GetDatabase(databaseName), Context.Contexts[contextName])
         {
-            Database = Factory.GetDatabase(databaseName);
         }
 
         /// <summary>
@@ -78,9 +76,8 @@ namespace Glass.Mapper.Sc
         /// <param name="databaseName">Name of the database.</param>
         /// <param name="context">The context.</param>
         public SitecoreService(string databaseName, Context context)
-            : base(context ?? Context.Default )
+            : this(Factory.GetDatabase(databaseName), context ?? Context.Default )
         {
-            Database = Factory.GetDatabase(databaseName);
         }
 
         /// <summary>

@@ -32,9 +32,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         public ObjectConstruction(IEnumerable<IObjectConstructionTask> tasks ):base(tasks)
         {
         }
-
-
-
     }
 }
 

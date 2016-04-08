@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Web;
+using System.Web.Mvc;
 using FluentAssertions;
 using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Mvc;
@@ -15,7 +16,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
     {
 
 
-        #region Constructors
+        #region [ Constructors ]
 
         [Test]
         public void Constructor_Default_CreatsWithoutException()
@@ -32,6 +33,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         }
 
         #endregion
+
         #region [ Data Source Tests ]
 
         [Test]
@@ -153,6 +155,22 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
             // Assert
             result.Should().Be(classToReturn);
+        }
+
+        #endregion
+
+        #region [ View Tests ]
+
+        [Test]
+        public void GlassController_can_get_view_action_result()
+        {
+            // Arrange
+            var testHarness = new GlassControllerTestHarness();
+
+            // Act
+            var result = testHarness.GlassController.GetView();
+
+            // Assert
         }
 
         #endregion
@@ -288,6 +306,11 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                 HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
             {
 
+            }
+
+            public ActionResult GetView()
+            {
+                return View("/asd");
             }
 
             public new T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class

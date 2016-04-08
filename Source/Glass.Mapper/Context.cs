@@ -92,6 +92,8 @@ namespace Glass.Mapper
             if (isDefault)
                 Default = context;
 
+           context.PipelineFactory = new PipelineFactory(context);
+
             return context;
         }
 
@@ -121,7 +123,7 @@ namespace Glass.Mapper
         /// <value>The dependency resolver.</value>
         public IDependencyResolver DependencyResolver { get; set; }
 
-
+        public PipelineFactory PipelineFactory { get; private set; }
 
         public ILogger Log { get; set; }
 

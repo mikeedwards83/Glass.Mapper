@@ -20,6 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Glass.Mapper.Pipelines.ConfigurationResolver;
+using Glass.Mapper.Pipelines.ObjectConstruction;
+using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -279,6 +283,67 @@ namespace Glass.Mapper.Sc.Integration
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
         }
+
+        [Test]
+        public void CreateService_Lots()
+        {
+            // Warm up
+            
+            Stopwatch sw = new Stopwatch();
+
+            ISitecoreService service = new SitecoreService(_db);
+            sw.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                service = new SitecoreService(_db);
+            }
+            sw.Stop();
+
+            Console.WriteLine(sw.ElapsedMilliseconds);
+
+
+            // Warm up
+            ISitecoreService service2 = new SitecoreService2(_db);
+            Stopwatch sw2 = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                //Console.WriteLine(i);
+                service2 = new SitecoreService2(_db);
+            }
+            sw2.Stop();
+
+            Console.WriteLine(sw2.ElapsedMilliseconds);
+
+        }
+
+        [Test]
+        public void ScaffoldService_Lots()
+        {
+            // Warm up
+            ObjectConstruction objectConstruction = new ObjectConstruction(_context.DependencyResolver.ObjectConstructionFactory.GetItems());
+            Stopwatch sw = Stopwatch.StartNew();
+            for (var i = 0; i < 10000; i++)
+            {
+                objectConstruction = new ObjectConstruction(_context.DependencyResolver.ObjectConstructionFactory.GetItems());
+            }
+            Console.WriteLine(sw.ElapsedTicks);
+
+            sw.Stop();
+
+            PipelinePool<ObjectConstruction> pipelinePool = new PipelinePool<ObjectConstruction>(_context, 1, x => new ObjectConstruction(x.DependencyResolver.ObjectConstructionFactory.GetItems()));
+
+            sw.Restart();
+            for (var i = 0; i < 10000; i++)
+            {
+                objectConstruction = pipelinePool.GetFromPool();
+            }
+
+            Console.WriteLine(sw.ElapsedTicks);
+
+            objectConstruction = pipelinePool.GetFromPool();
+        }
+
 
         #region Stubs
 

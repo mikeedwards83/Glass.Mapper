@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AbstractDataMapper.cs" />
     <Compile Include="AbstractDataMappingContext.cs" />
+    <Compile Include="AbstractService2.cs" />
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
@@ -106,11 +107,14 @@
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="IPipelinePool.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />
     <Compile Include="Maps\IGlassMap.cs" />
     <Compile Include="Maps\IMapProvider.cs" />
+    <Compile Include="PipelineFactory.cs" />
+    <Compile Include="PipelinePool.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
