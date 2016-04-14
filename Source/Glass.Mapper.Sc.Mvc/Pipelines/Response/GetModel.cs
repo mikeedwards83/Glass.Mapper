@@ -66,7 +66,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             get
             {
                 var context = AbstractSitecoreContext.GetContextFromSite();
-                Sitecore.Diagnostics.Log.Info("using context " + context, this);
+                Sitecore.Diagnostics.Log.Debug("using context " + context, this);
                 return context;
             }
         }
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="args">The args.</param>
         public override void Process(GetModelArgs args)
         {
-            Sitecore.Diagnostics.Log.Info("Glass GetModel Process " + ContextName, this);
+            Sitecore.Diagnostics.Log.Debug("Glass GetModel Process " + ContextName, this);
 
             if (args.Result == null)
             {
