@@ -35,6 +35,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
+using Glass.Mapper.Sc.Caching;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
@@ -61,9 +62,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
             container.Register(
                Component.For<Config>().Instance(_config).Named("ScConfig"),
                Component.For<Mapper.Config>().Instance(_config).Named("Config"),
-               Component.For<Mapper.Caching.ICacheManager>()
+               Component.For<ICacheManager>()
                     .ImplementedBy<HttpCache>()
-                    .LifestyleCustom<NoTrackLifestyleManager>()
+                    .LifestyleCustom<NoTrackLifestyleManager>(),
+               Component.For<ICacheKeyGenerator>()
+                   .ImplementedBy<CacheKeyGenerator>()
+                   .LifestyleCustom<NoTrackLifestyleManager>()
                );
 
             #region DataMappers
