@@ -48,6 +48,21 @@ namespace Glass.Mapper.Configuration
             get;
             set;
         }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new ChildrenConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as ChildrenConfiguration;
+
+            config.IsLazy = IsLazy;
+            config.InferType = InferType;
+
+            base.Copy(copy);
+        }
     }
 }
 

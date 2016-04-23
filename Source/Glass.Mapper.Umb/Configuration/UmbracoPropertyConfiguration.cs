@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -111,27 +111,29 @@ namespace Glass.Mapper.Umb.Configuration
 
         #endregion
 
-        /// <summary>
-        /// Makes a copy of the UmbracoPropertyConfiguration
-        /// </summary>
-        /// <returns></returns>
-        public UmbracoPropertyConfiguration Copy()
+
+        protected override AbstractPropertyConfiguration CreateCopy()
         {
-            return new UmbracoPropertyConfiguration()
-            {
-                CodeFirst = this.CodeFirst,
-                PropertyAlias = this.PropertyAlias,
-                PropertyDescription = this.PropertyDescription,
-                ContentTab = this.ContentTab,
-                PropertyIsMandatory = this.PropertyIsMandatory,
-                PropertyName = this.PropertyName,
-                PropertyValidation = this.PropertyValidation,
-                PropertyInfo = this.PropertyInfo,
-                ReadOnly = this.ReadOnly,
-                PropertyType = this.PropertyType,
-                Setting = this.Setting
-            };
+            return new UmbracoPropertyConfiguration();
         }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoPropertyConfiguration;
+
+            config.CodeFirst = this.CodeFirst;
+            config.PropertyAlias = this.PropertyAlias;
+            config.PropertyDescription = this.PropertyDescription;
+            config.ContentTab = this.ContentTab;
+            config.PropertyIsMandatory = this.PropertyIsMandatory;
+            config.PropertyName = this.PropertyName;
+            config.PropertyValidation = this.PropertyValidation;
+            config.PropertyType = this.PropertyType;
+            config.Setting = this.Setting;
+            base.Copy(copy);
+        }
+
+
     }
 }
 

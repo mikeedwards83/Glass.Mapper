@@ -26,7 +26,16 @@ namespace Glass.Mapper.Umb.Configuration
     /// </summary>
     public class UmbracoParentConfiguration : ParentConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new UmbracoParentConfiguration();
+        }
 
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoParentConfiguration;
+            base.Copy(copy);
+        }
     }
 }
 

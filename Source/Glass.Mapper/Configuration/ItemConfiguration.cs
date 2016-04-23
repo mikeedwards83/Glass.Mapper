@@ -7,5 +7,9 @@ namespace Glass.Mapper.Configuration
 {
     public class ItemConfiguration : AbstractPropertyConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new ItemConfiguration();
+        }
     }
 }

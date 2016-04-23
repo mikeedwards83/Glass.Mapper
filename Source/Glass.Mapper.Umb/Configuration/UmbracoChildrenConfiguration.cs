@@ -30,6 +30,18 @@ namespace Glass.Mapper.Umb.Configuration
         /// Which Document Type this property should map to
         /// </summary>
         public virtual string DocumentTypeAlias { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new UmbracoChildrenConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoChildrenConfiguration;
+            config.DocumentTypeAlias = DocumentTypeAlias;
+            base.Copy(copy);
+        }
     }
 }
 

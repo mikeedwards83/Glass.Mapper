@@ -35,6 +35,18 @@ namespace Glass.Mapper.Umb.Configuration
         /// The type.
         /// </value>
         public UmbracoInfoType Type { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new UmbracoInfoConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as UmbracoInfoConfiguration;
+            config.Type = Type;
+            base.Copy(copy);
+        }
     }
 }
 

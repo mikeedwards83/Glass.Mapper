@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using Glass.Mapper.Configuration;
@@ -25,8 +25,19 @@ namespace Glass.Mapper.Sc.Configuration
     /// Class SitecorePropertyConfiguration
     /// </summary>
 	public class SitecorePropertyConfiguration : AbstractPropertyConfiguration
-	{
-	}
+    {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecorePropertyConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecorePropertyConfiguration;
+
+            base.Copy(copy);
+        }
+    }
 }
 
 
