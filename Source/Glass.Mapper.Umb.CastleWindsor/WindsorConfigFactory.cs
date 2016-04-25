@@ -36,7 +36,7 @@ namespace Glass.Mapper.Umb.CastleWindsor
 
         }
 
-        public IEnumerable<T> GetItems()
+        public T[] GetItems()
         {
             return container.ResolveAll<T>();
         }

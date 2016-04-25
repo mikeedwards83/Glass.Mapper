@@ -86,7 +86,7 @@ namespace Glass.Mapper.IoC
         /// <summary>
         /// Gets a list of the created objects 
         /// </summary>
-        public virtual IEnumerable<T> GetItems()
+        public virtual T[] GetItems()
         {
             IEnumerable<Func<T>> builders;
             lock (_lockObject)

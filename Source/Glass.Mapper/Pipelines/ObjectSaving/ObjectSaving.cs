@@ -29,7 +29,7 @@ namespace Glass.Mapper.Pipelines.ObjectSaving
         /// Initializes a new instance of the <see cref="ObjectSaving"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public ObjectSaving(IEnumerable<IObjectSavingTask> tasks) : base(tasks)
+        public ObjectSaving(IObjectSavingTask[] tasks) : base(tasks)
         {
         }
     }

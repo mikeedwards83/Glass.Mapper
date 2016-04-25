@@ -29,7 +29,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver
         /// Initializes a new instance of the <see cref="DataMapperResolver"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public DataMapperResolver(IEnumerable<IDataMapperResolverTask> tasks)
+        public DataMapperResolver(IDataMapperResolverTask[] tasks)
             : base(tasks)
         {
         }

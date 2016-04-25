@@ -42,7 +42,7 @@ namespace Glass.Mapper.Tests.Pipelines
         {
             //Assign
             var args = new StubAbstractPipelineArgs(null);
-            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+            var runner = new StubAbstractPipelineRunner(new IPipelineTask<StubAbstractPipelineArgs>[0]);
             
             //Act
             var result = runner.Run(args);
@@ -129,7 +129,7 @@ namespace Glass.Mapper.Tests.Pipelines
 
         public class StubAbstractPipelineRunner : AbstractPipelineRunner<StubAbstractPipelineArgs, IPipelineTask<StubAbstractPipelineArgs>>
         {
-            public StubAbstractPipelineRunner(IEnumerable<IPipelineTask<StubAbstractPipelineArgs>> tasks  ):base(tasks)
+            public StubAbstractPipelineRunner(IPipelineTask<StubAbstractPipelineArgs>[] tasks  ):base(tasks)
             {
             }
         }

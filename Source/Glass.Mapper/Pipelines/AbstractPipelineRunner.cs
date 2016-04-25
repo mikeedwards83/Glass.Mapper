@@ -51,7 +51,7 @@ namespace Glass.Mapper.Pipelines
         /// Initializes a new instance of the <see cref="AbstractPipelineRunner{T, K}"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        protected AbstractPipelineRunner(IEnumerable<K> tasks)
+        protected AbstractPipelineRunner(K[] tasks)
         {
             //Tasks = tasks.Reverse().ToArray();
 
@@ -59,9 +59,9 @@ namespace Glass.Mapper.Pipelines
             {
                 Tasks = tasks;
 
-                foreach (var task in Tasks.Reverse())
+                for (var i = tasks.Length - 1; i >= 0; i--)
                 {
-                    _excuteTasks = CreateTaskExpression(task);
+                    _excuteTasks = CreateTaskExpression(tasks[i]);
                 }
             }
 

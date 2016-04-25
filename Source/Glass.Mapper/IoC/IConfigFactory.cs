@@ -13,7 +13,7 @@ namespace Glass.Mapper.IoC
 
         void Replace(int index, Func<T> replace);
 
-        IEnumerable<T> GetItems();
+        T[] GetItems();
 
         void RemoveAt(int index);
     }

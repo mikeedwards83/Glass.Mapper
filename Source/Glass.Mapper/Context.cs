@@ -92,7 +92,7 @@ namespace Glass.Mapper
             if (isDefault)
                 Default = context;
 
-           context.PipelineFactory = new PipelineFactory(context);
+           context.PipelineFactory = new PipelineFactory(resolver);
 
             return context;
         }
@@ -200,8 +200,7 @@ namespace Glass.Mapper
         ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
-            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
-
+            DataMapperResolver runner = PipelineFactory.DataMapperResolverPipelinePool.GetFromPool();
 
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {

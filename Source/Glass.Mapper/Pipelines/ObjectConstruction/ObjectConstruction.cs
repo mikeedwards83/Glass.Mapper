@@ -29,7 +29,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// Initializes a new instance of the <see cref="ObjectConstruction"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public ObjectConstruction(IEnumerable<IObjectConstructionTask> tasks ):base(tasks)
+        public ObjectConstruction(IObjectConstructionTask[] tasks ):base(tasks)
         {
         }
     }

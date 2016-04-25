@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
@@ -288,32 +289,53 @@ namespace Glass.Mapper.Sc.Integration
         public void CreateService_Lots()
         {
             // Warm up
-            
+            const int count = 10000;
             Stopwatch sw = new Stopwatch();
 
             ISitecoreService service = new SitecoreService(_db);
+
             sw.Start();
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < count; i++)
             {
                 service = new SitecoreService(_db);
             }
             sw.Stop();
 
-            Console.WriteLine(sw.ElapsedMilliseconds);
+            Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
 
+
+            Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
+            Console.WriteLine("Object construction missed: {0}", _context.PipelineFactory.ObjectConstructionPipelinePool.Missed);
+            Console.WriteLine("Configuration resolver missed: {0}", _context.PipelineFactory.ConfigurationResolverPipelinePool.Missed);
+            Console.WriteLine("Object saving missed: {0}", _context.PipelineFactory.ObjectSavingPipelinePool.Missed);
+            Console.WriteLine("Data mapper resolver missed: {0}", _context.PipelineFactory.DataMapperResolverPipelinePool.Missed);
+
+        }
+
+        [Test]
+        public void CreateOldService_Lots()
+        {
+            // Warm up
+            const int count = 10000;
+            Stopwatch sw = new Stopwatch();
 
             // Warm up
             ISitecoreService service2 = new SitecoreService2(_db);
-            Stopwatch sw2 = new Stopwatch();
+
             sw.Start();
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < count; i++)
             {
                 //Console.WriteLine(i);
                 service2 = new SitecoreService2(_db);
             }
-            sw2.Stop();
+            sw.Stop();
 
-            Console.WriteLine(sw2.ElapsedMilliseconds);
+
+            Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
+            Console.WriteLine("Object construction missed: {0}", _context.PipelineFactory.ObjectConstructionPipelinePool.Missed);
+            Console.WriteLine("Configuration resolver missed: {0}", _context.PipelineFactory.ConfigurationResolverPipelinePool.Missed);
+            Console.WriteLine("Object saving missed: {0}", _context.PipelineFactory.ObjectSavingPipelinePool.Missed);
+            Console.WriteLine("Data mapper resolver missed: {0}", _context.PipelineFactory.DataMapperResolverPipelinePool.Missed);
 
         }
 
@@ -323,23 +345,25 @@ namespace Glass.Mapper.Sc.Integration
             // Warm up
             ObjectConstruction objectConstruction = new ObjectConstruction(_context.DependencyResolver.ObjectConstructionFactory.GetItems());
             Stopwatch sw = Stopwatch.StartNew();
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 5000; i++)
             {
                 objectConstruction = new ObjectConstruction(_context.DependencyResolver.ObjectConstructionFactory.GetItems());
             }
-            Console.WriteLine(sw.ElapsedTicks);
+            Console.WriteLine("Original: {0}", sw.ElapsedMilliseconds);
 
             sw.Stop();
 
-            PipelinePool<ObjectConstruction> pipelinePool = new PipelinePool<ObjectConstruction>(_context, 1, x => new ObjectConstruction(x.DependencyResolver.ObjectConstructionFactory.GetItems()));
+            PipelinePool<ObjectConstruction> pipelinePool = new PipelinePool<ObjectConstruction>(_context.DependencyResolver, 2000, x => new ObjectConstruction(x.ObjectConstructionFactory.GetItems()));
 
             sw.Restart();
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 5000; i++)
             {
                 objectConstruction = pipelinePool.GetFromPool();
             }
 
-            Console.WriteLine(sw.ElapsedTicks);
+            Console.WriteLine("Pipeline: {0}", sw.ElapsedMilliseconds);
+
+            Console.WriteLine("Pipeline Missed: {0}", pipelinePool.Missed);
 
             objectConstruction = pipelinePool.GetFromPool();
         }
