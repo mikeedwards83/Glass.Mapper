@@ -31,9 +31,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         [NonSerialized]
 		private ObjectConstructionArgs _args;
 
-		private readonly Lazy<IDictionary<string, object>> _lazyValues;
+        /// <summary>
+        /// Lazy initializer for model properties
+        /// </summary>
+		protected readonly Lazy<IDictionary<string, object>> LazyValues;
 
-		protected IDictionary<string, object> Values { get { return _lazyValues.Value; } }
+        /// <summary>
+        /// The underlying model's property dictionary
+        /// </summary>
+		protected virtual IDictionary<string, object> Values { get { return LazyValues.Value; } }
 
 	    private readonly string _fullName;
 
@@ -45,7 +51,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 		{
 			_args = args;
 		    _fullName = _args.Configuration.Type.FullName;
-			_lazyValues = new Lazy<IDictionary<string, object>>(LoadValues);
+			LazyValues = new Lazy<IDictionary<string, object>>(LoadValues);
+
+		    if (!args.AbstractTypeCreationContext.IsLazy)
+		    {
+                // Force the lazy values to be eagerly loaded
+		        var value = LazyValues.Value;
+		    }
 		}
 
 		/// <summary>
