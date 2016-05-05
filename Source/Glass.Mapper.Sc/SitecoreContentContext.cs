@@ -30,7 +30,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContentContext"/> class.
         /// </summary>
         public SitecoreContentContext()
-            : base(Sitecore.Context.Database, GetContextFromSite())
+            : base(Sitecore.Context.ContentDatabase, GetContextFromSite())
         {
 
         }
