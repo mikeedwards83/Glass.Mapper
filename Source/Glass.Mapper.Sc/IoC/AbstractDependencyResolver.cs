@@ -22,6 +22,10 @@ namespace Glass.Mapper.Sc.IoC
         public IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
 
+        public ISitecoreFieldResolver FieldResolver { get; set; }
+
+        public IUrlOptionsResolver UrlOptionsResolver { get; set; }
+
         public abstract ICacheManager GetCacheManager();
 
         public abstract Mapper.Config GetConfig();

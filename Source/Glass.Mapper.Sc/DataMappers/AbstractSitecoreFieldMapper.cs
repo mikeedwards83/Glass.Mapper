@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
@@ -84,11 +83,16 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>The value to write</returns>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            var scConfig = Configuration as SitecoreFieldConfiguration;
-            var scContext =  mappingContext  as SitecoreDataMappingContext ;
+            SitecoreFieldConfiguration scConfig = Configuration as SitecoreFieldConfiguration;
+            SitecoreDataMappingContext scContext =  mappingContext  as SitecoreDataMappingContext ;
 
-            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
-            
+            if (scContext == null)
+            {
+                throw new NullReferenceException("The sitecore data mapping context is not set");
+            }
+
+            Field field = scContext.FieldResolver.GetSitecoreField(scContext.Item, scConfig);
+
             if(field ==null)
                return;
             
@@ -108,7 +112,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreFieldConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
+            Field field = scContext.FieldResolver.GetSitecoreField(scContext.Item, scConfig);
 
             if (field == null)
                 return DefaultValue;
@@ -193,7 +197,7 @@ namespace Glass.Mapper.Sc.DataMappers
             this.ReadOnly = scArgs.ReadOnly;
             base.Setup(args);
         }
-        
+
     }
 }
 

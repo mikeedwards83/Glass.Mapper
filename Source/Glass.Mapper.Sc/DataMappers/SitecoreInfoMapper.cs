@@ -42,8 +42,8 @@ namespace Glass.Mapper.Sc.DataMappers
         public SitecoreInfoMapper()
         {
             ReadOnly = true;
-        }
 
+        }
 
         /// <summary>
         /// Maps data from the .Net property value to the CMS value
@@ -144,7 +144,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Key:
                     return item.Key;
                 case SitecoreInfoType.MediaUrl:
-                    var mediaUrlOptions = Utilities.GetMediaUrlOptions(scConfig.MediaUrlOptions);
+                    var mediaUrlOptions = context.UrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                     var media = new MediaItem(item);
                     return MediaManager.GetMediaUrl(media, mediaUrlOptions);
                 case SitecoreInfoType.Path:
@@ -156,7 +156,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
-                    var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
+                    var urlOptions = context.UrlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
                     urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:

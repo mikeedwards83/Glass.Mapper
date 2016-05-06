@@ -15,6 +15,8 @@ namespace Glass.Mapper.Sc.IoC
             ObjectConstructionFactory = new ObjectConstructionTaskConfigFactory(this);
             ObjectSavingFactory = new ObjectSavingTaskConfigFactory();
             ConfigurationMapFactory = new ConfigurationMapConfigFactory();
+            FieldResolver = new SitecoreFieldResolver();
+            UrlOptionsResolver = new UrlOptionsResolver();
         }
 
         public override Mapper.Config GetConfig()

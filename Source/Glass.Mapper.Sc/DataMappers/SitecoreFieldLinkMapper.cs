@@ -79,8 +79,6 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
 
-
-
             Link link = new Link();
             LinkField linkField = new LinkField(field);
 
@@ -122,7 +120,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
-                    var urlOptions = Utilities.CreateUrlOptions(config.UrlOptions);
+                    var urlOptions = context.UrlOptionsResolver.CreateUrlOptions(config.UrlOptions);
                     link.Url = linkField.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
