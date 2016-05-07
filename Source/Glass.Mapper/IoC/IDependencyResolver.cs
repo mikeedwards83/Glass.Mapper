@@ -31,6 +31,7 @@ namespace Glass.Mapper.IoC
     public interface IDependencyResolver
     {
         Config GetConfig();
+        ILog GetLog();
         ICacheManager GetCacheManager();
         IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; }
         IConfigFactory<AbstractDataMapper> DataMapperFactory { get; }

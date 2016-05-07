@@ -7,6 +7,7 @@ namespace Glass.Mapper.Sc.IoC
         public DependencyResolver(Config config)
         {
             Config = config;
+            Log = new Log();
             CacheManager = () => new NetMemoryCacheManager();
             QueryParameterFactory = new QueryParameterConfigFactory();
             DataMapperResolverFactory = new DataMapperTaskConfigFactory();
@@ -20,6 +21,11 @@ namespace Glass.Mapper.Sc.IoC
         public override Mapper.Config GetConfig()
         {
             return Config;
+        }
+
+        public override ILog GetLog()
+        {
+            return Log;
         }
 
         public override ICacheManager GetCacheManager()

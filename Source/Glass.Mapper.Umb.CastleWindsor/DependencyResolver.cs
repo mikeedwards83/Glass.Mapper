@@ -74,6 +74,11 @@ namespace Glass.Mapper.Umb.CastleWindsor
             return Container.Resolve<Mapper.Config>();
         }
 
+        public ILog GetLog()
+        {
+            return Container.Resolve<ILog>();
+        }
+
         public ICacheManager GetCacheManager()
         {
             return Container.Resolve<ICacheManager>();

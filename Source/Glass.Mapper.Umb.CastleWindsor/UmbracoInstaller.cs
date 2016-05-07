@@ -66,6 +66,11 @@ namespace Glass.Mapper.Umb.CastleWindsor
         /// <param name="store">The configuration store.</param>
         public virtual void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            container.Register(
+                Component.For<Config>().Instance(Config).Named("UmbConfig"),
+                Component.For<ILog>().ImplementedBy<NullLogger>(),
+                Component.For<Mapper.Config>().Instance(Config)
+                );
 
             #region DataMapper
 
