@@ -36,13 +36,26 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreInfoMapper : AbstractDataMapper
     {
+        private readonly IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
+        private readonly IUrlOptionsResolver _urlOptionsResolver;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
         /// </summary>
-        public SitecoreInfoMapper()
+        public SitecoreInfoMapper():
+            this(
+                new MediaUrlOptionsResolver(),
+                new UrlOptionsResolver()
+                )
         {
             ReadOnly = true;
 
+        }
+
+        public SitecoreInfoMapper(IMediaUrlOptionsResolver mediaUrlOptionsResolver, IUrlOptionsResolver urlOptionsResolver)
+        {
+            _mediaUrlOptionsResolver = mediaUrlOptionsResolver;
+            _urlOptionsResolver = urlOptionsResolver;
         }
 
         /// <summary>
@@ -144,7 +157,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Key:
                     return item.Key;
                 case SitecoreInfoType.MediaUrl:
-                    var mediaUrlOptions = context.UrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
+                    var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                     var media = new MediaItem(item);
                     return MediaManager.GetMediaUrl(media, mediaUrlOptions);
                 case SitecoreInfoType.Path:
@@ -156,7 +169,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
-                    var urlOptions = context.UrlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
+                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
                     urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:

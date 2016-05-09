@@ -42,14 +42,6 @@ namespace Glass.Mapper.Sc
             //TODO: ME - should we assert that these are not null
             this.Item = item;
             Service = service;
-            IDependencyResolver dependencyResolver = service.GlassContext.DependencyResolver as IDependencyResolver;
-            if (dependencyResolver == null)
-            {
-                return;
-            }
-
-            UrlOptionsResolver = dependencyResolver.UrlOptionsResolver;
-            FieldResolver = dependencyResolver.FieldResolver;
         }
 
         /// <summary>
@@ -62,11 +54,6 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The service.</value>
         public ISitecoreService Service { get; private set; }
-
-
-        public ISitecoreFieldResolver FieldResolver { get; private set; }
-
-        public IUrlOptionsResolver UrlOptionsResolver { get; private set; }
     }
 }
 

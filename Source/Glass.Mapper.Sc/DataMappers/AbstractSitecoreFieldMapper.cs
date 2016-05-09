@@ -13,13 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
@@ -47,7 +48,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
         /// </summary>
         /// <param name="typesHandled">The types handled.</param>
-        public AbstractSitecoreFieldMapper(params Type [] typesHandled)
+        public AbstractSitecoreFieldMapper(params Type[] typesHandled)
         {
             TypesHandled = typesHandled;
         }
@@ -83,19 +84,14 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <returns>The value to write</returns>
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
-            SitecoreFieldConfiguration scConfig = Configuration as SitecoreFieldConfiguration;
-            SitecoreDataMappingContext scContext =  mappingContext  as SitecoreDataMappingContext ;
+            var scConfig = Configuration as SitecoreFieldConfiguration;
+            var scContext = mappingContext as SitecoreDataMappingContext;
 
-            if (scContext == null)
-            {
-                throw new NullReferenceException("The sitecore data mapping context is not set");
-            }
+            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
 
-            Field field = scContext.FieldResolver.GetSitecoreField(scContext.Item, scConfig);
+            if (field == null)
+                return;
 
-            if(field ==null)
-               return;
-            
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
 
@@ -112,7 +108,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var scConfig = Configuration as SitecoreFieldConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
 
-            Field field = scContext.FieldResolver.GetSitecoreField(scContext.Item, scConfig);
+            var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
 
             if (field == null)
                 return DefaultValue;
@@ -131,8 +127,8 @@ namespace Glass.Mapper.Sc.DataMappers
         public virtual object GetField(Field field, SitecoreFieldConfiguration config,
                                        SitecoreDataMappingContext context)
         {
-            
-                var fieldValue = field.Value;
+
+            var fieldValue = field.Value;
             try
             {
                 return GetFieldValue(fieldValue, config, context);

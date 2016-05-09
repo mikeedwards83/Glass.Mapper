@@ -198,7 +198,7 @@ namespace Glass.Mapper.Sc.Tests
             bool useItemPath)
         {
             //Arrange
-            var urlOptionsResolver = new UrlOptionsResolver();
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
 
             //Act
             var result = urlOptionsResolver.GetMediaUrlOptions(option);

@@ -174,6 +174,7 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
+    <Compile Include="IMediaUrlOptionsResolver.cs" />
     <Compile Include="IoC\AbstractDependencyResolver.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
     <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="IUrlOptionsResolver.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Maps\SitecoreGlassMap.cs" />
+    <Compile Include="MediaUrlOptionsResolver.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
@@ -209,7 +211,6 @@
     <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
-    <Compile Include="SitecoreFieldResolver.cs" />
     <Compile Include="UrlOptionsResolver.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +265,7 @@
     <Content Include="App_Start\GlassMapperSc.cs.pp" />
     <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
     <Content Include="App_Config\Include\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
+    <Compile Include="Pipelines\DataMapper\DataMapperFieldsWithSpace.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

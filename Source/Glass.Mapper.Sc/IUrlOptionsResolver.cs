@@ -15,6 +15,5 @@ namespace Glass.Mapper.Sc
 
         UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions);
 
-        MediaUrlOptions GetMediaUrlOptions(SitecoreInfoMediaUrlOptions mediaUrlOptions);
     }
 }

@@ -79,6 +79,31 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="fieldId">The field id.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns>Field.</returns>
+        public static Field GetField(Item item, ID fieldId, string fieldName = "")
+        {
+            if (item == null)
+                throw new NullReferenceException("Item is null");
+
+            Field field;
+            if (ID.IsNullOrEmpty(fieldId))
+            {
+                field = item.Fields[fieldName];
+            }
+            else
+            {
+                field = item.Fields[fieldId];
+            }
+
+            return field;
+        }
+
 
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
