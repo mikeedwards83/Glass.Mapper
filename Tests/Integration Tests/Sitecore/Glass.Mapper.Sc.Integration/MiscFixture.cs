@@ -19,6 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
@@ -226,7 +228,11 @@ namespace Glass.Mapper.Sc.Integration
             //Assert
             Assert.AreEqual(expected, instance.FieldWithSpace);
             Assert.IsNotNull(instance.ImageSpace);
+            SitecoreFieldConfiguration imageFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "ImageSpace") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Image Space", imageFieldTypeConfig.FieldName);
 
+            SitecoreFieldConfiguration stringFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "FieldWithSpace") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Field With Space", stringFieldTypeConfig.FieldName);
         }
 
         [Test]

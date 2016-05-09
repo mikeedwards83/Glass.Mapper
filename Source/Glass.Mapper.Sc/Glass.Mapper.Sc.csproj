@@ -185,10 +185,12 @@
     <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
     <Compile Include="IoC\QueryParameterConfigFactory.cs" />
     <Compile Include="ISitecoreContext.cs" />
+    <Compile Include="ISitecoreFieldResolver.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
+    <Compile Include="IUrlOptionsResolver.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Maps\SitecoreGlassMap.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
@@ -207,7 +209,8 @@
     <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
-    <Compile Include="SitecoreDataResolver.cs" />
+    <Compile Include="SitecoreFieldResolver.cs" />
+    <Compile Include="UrlOptionsResolver.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
