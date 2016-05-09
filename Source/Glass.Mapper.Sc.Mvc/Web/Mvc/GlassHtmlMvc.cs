@@ -8,11 +8,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
 {
     public class GlassHtmlMvc<TK>
     {
-        protected IGlassHtml GlassHtml { get; private set; }
+        public IGlassHtml GlassHtml { get; private set; }
 
         protected TextWriter Output { get; private set; }
 
-        protected TK Model { get; set; }
+        public TK Model { get; set; }
 
         public GlassHtmlMvc(IGlassHtml glassHtml, TextWriter output, TK model)
         {
