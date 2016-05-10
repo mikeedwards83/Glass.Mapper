@@ -1555,7 +1555,7 @@ namespace Glass.Mapper.Sc
         {
             var scTypeContext =  abstractTypeCreationContext as SitecoreTypeCreationContext;
 
-            Debug.Assert(scTypeContext != null, "Creation context is null");
+           System.Diagnostics.Debug.Assert(scTypeContext != null, "Creation context is null");
 
             return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
         }
@@ -1569,7 +1569,7 @@ namespace Glass.Mapper.Sc
         {
             var scContext = creationContext as SitecoreTypeSavingContext;
 
-            Debug.Assert(scContext != null, "Saving context is null");
+            System.Diagnostics.Debug.Assert(scContext != null, "Saving context is null");
 
             return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }

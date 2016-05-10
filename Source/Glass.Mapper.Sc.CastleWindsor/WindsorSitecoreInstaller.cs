@@ -60,7 +60,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-               Component.For<Config>().Instance(_config).Named("ScConfig"),
+                Component.For<Config>().Instance(_config).Named("ScConfig"),
+                Component.For<ILog>().ImplementedBy<Log>(),
                Component.For<Mapper.Config>().Instance(_config).Named("Config"),
                Component.For<ICacheManager>()
                     .ImplementedBy<HttpCache>()

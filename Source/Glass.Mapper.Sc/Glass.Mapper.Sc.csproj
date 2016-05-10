@@ -190,6 +190,7 @@
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Maps\SitecoreGlassMap.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />

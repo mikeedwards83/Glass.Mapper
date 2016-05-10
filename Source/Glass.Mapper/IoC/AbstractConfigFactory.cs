@@ -60,6 +60,14 @@ namespace Glass.Mapper.IoC
             }
         }
 
+
+        public virtual void Replace<TReplace, TK>(Func<TK> func) where TReplace : T where TK : T
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TReplace));
+            RemoveAt(index);
+            Insert(index, func);
+        }
+
         public virtual void InsertBefore<TBefore, TK>(Func<TK> func ) where TBefore : T where TK : T
         {
             var index = TypeGenerators.FindIndex(x => x.Type == typeof (TBefore));

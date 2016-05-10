@@ -643,7 +643,7 @@ namespace Glass.Mapper.Sc
             catch (Exception ex)
             {
                 firstPart = "<p>{0}</p><pre>{1}</pre>".Formatted(ex.Message, ex.StackTrace);
-                Log.Error("Failed to render field", ex, typeof(IGlassHtml));
+                Sitecore.Diagnostics.Log.Error("Failed to render field", ex, typeof(IGlassHtml));
             }
 
             return new RenderingResult(writer, firstPart, lastPart);

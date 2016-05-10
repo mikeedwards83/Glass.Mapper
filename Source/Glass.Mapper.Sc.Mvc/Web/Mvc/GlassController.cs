@@ -234,7 +234,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to create SitecoreContext", ex, typeof(GlassController));
+                Sitecore.Diagnostics.Log.Error("Failed to create SitecoreContext", ex, typeof(GlassController));
                 return null;
             }
         }
