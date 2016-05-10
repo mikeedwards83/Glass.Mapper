@@ -29,8 +29,10 @@ namespace Glass.Mapper.Umb.Integration
         {
             var config = new Glass.Mapper.Umb.CastleWindsor.Config();
             var resolver = DependencyResolver.CreateStandardResolver();
+
+            ((DependencyResolver) resolver).Container.Install(new UmbracoInstaller(config));
             var context = Context.Create(resolver);
-            ((DependencyResolver)resolver).Container.Install(new UmbracoInstaller(config));
+
             return context;
         }
     }
