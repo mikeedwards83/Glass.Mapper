@@ -291,6 +291,7 @@ namespace Glass.Mapper.Sc.Integration
             _glassWatch.Reset();
 
             var sitecoreItem = _db.GetItem(new ID(_id));
+            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
 
             for (int i = 0; i < count; i++)
             {
@@ -298,11 +299,55 @@ namespace Glass.Mapper.Sc.Integration
                 var glassItem = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
                 var value2 = glassItem.Field1;
                 _glassWatch.Stop();
-                _glassTotal = _glassWatch.ElapsedTicks;
 
             }
+            _glassTotal = _glassWatch.ElapsedTicks;
 
-            double total = _glassTotal;
+            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void CastItems_LotsOfProperties_ServiceEveryTime(
+            [Values(1000, 10000, 50000)] int count)
+        {
+
+            _glassWatch.Reset();
+
+            var sitecoreItem = _db.GetItem(new ID(_id));
+            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var service = new SitecoreService(_db);
+                var glassItem = service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+
+            }
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
+        }
+
+        [Test]
+        public void CreateService_Lots(
+            [Values(1000, 10000, 50000)] int count)
+        {
+            _glassWatch.Reset();
+
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var service = new SitecoreService(_db);
+                _glassWatch.Stop();
+            }
+
+            _glassTotal = _glassWatch.ElapsedTicks;
+
             Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
         }
 
