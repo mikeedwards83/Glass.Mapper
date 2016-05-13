@@ -42,6 +42,7 @@ using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Pipelines.ObjectConstruction;
+using DataMapperResolver = Glass.Mapper.Pipelines.DataMapperResolver.Tasks.DataMapperResolver;
 
 namespace Glass.Mapper.Sc.CastleWindsor
 {
@@ -221,8 +222,8 @@ namespace Glass.Mapper.Sc.CastleWindsor
             #region DataMapperTasks
 
             container.Register(
-                Component.For<IDataMapperResolverTask>()
-                    .ImplementedBy<DataMapperStandardResolverTask>()
+                Component.For<IDataMapperResolver>()
+                    .ImplementedBy<DataMapperResolver>()
                     .LifestyleCustom<NoTrackLifestyleManager>()
                 );
 

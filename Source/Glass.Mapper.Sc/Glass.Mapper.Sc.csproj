@@ -178,7 +178,6 @@
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
     <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
     <Compile Include="IoC\DataMapperConfigFactory.cs" />
-    <Compile Include="IoC\DataMapperTaskConfigFactory.cs" />
     <Compile Include="IoC\DependencyResolver.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IoC\ObjectConstructionTaskConfigFactory.cs" />

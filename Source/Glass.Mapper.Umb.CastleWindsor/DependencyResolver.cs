@@ -54,7 +54,6 @@ namespace Glass.Mapper.Umb.CastleWindsor
         public DependencyResolver(IWindsorContainer container)
         {
             Container = container;
-            DataMapperResolverFactory = new WindsorConfigFactory<IDataMapperResolverTask>(Container);
             DataMapperFactory = new WindsorConfigFactory<AbstractDataMapper>(Container);
             ConfigurationResolverFactory = new WindsorConfigFactory<IConfigurationResolverTask>(Container);
             ObjectConstructionFactory = new WindsorConfigFactory<IObjectConstructionTask>(Container);
@@ -84,7 +83,14 @@ namespace Glass.Mapper.Umb.CastleWindsor
             return Container.Resolve<ICacheManager>();
         }
 
-        public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; private set; }
+        public IDataMapperResolver DataMapperResolver
+        {
+            get
+            {
+                return Container.Resolve<IDataMapperResolver>();
+            }
+        }
+
         public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; private set; }
         public IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; private set; }
         public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; private set; }

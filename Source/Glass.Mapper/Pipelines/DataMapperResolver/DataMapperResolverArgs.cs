@@ -32,12 +32,6 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver
         public Configuration.AbstractPropertyConfiguration PropertyConfiguration { get; set; }
 
         /// <summary>
-        /// The data mapper to use when loading the property
-        /// </summary>
-        /// <value>The result.</value>
-        public AbstractDataMapper Result { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DataMapperResolverArgs"/> class.
         /// </summary>
         /// <param name="context">The context.</param>

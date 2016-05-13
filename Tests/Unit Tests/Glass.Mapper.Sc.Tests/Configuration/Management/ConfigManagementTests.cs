@@ -3,6 +3,7 @@ using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
@@ -54,19 +55,6 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
 
             // Assert
             Assert.AreEqual(39, result.Count());
-        }
-
-        [Test]
-        public void GetDataMapperResolverTasks()
-        {
-            // Assign
-            IConfigFactory<IDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
-
-            // Act
-            var result = dataMapperResolverConfigFactory.GetItems();
-
-            // Assert
-            Assert.AreEqual(1, result.Count());
         }
 
         [Test]

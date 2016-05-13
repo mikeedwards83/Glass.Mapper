@@ -29,7 +29,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver
         /// Initializes a new instance of the <see cref="ConfigurationResolver"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public ConfigurationResolver(IEnumerable<IConfigurationResolverTask> tasks ):base( tasks)
+        public ConfigurationResolver(IEnumerable<IConfigurationResolverTask> tasks):base( tasks)
         {
 
         }

@@ -201,23 +201,20 @@ namespace Glass.Mapper
         ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
         private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
-            DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
-
-
             foreach(var property in properties.Where(x=>x.Mapper == null))
             {
 
                 DataMapperResolverArgs args = new DataMapperResolverArgs(this, property);
                 args.PropertyConfiguration = property;
                 args.DataMappers = DependencyResolver.DataMapperFactory.GetItems();
-                runner.Run(args);
-                if(args.Result == null)
+                AbstractDataMapper mapper = DependencyResolver.DataMapperResolver.GetMapper(args);
+                if(mapper == null)
                 {
                     throw new NullReferenceException(
                         "Could not find data mapper for property {0} on type {1}"
                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName));
                 }
-                property.Mapper = args.Result;
+                property.Mapper = mapper;
             }
         }
 

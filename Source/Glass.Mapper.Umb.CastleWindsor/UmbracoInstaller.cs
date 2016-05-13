@@ -34,6 +34,7 @@ using Glass.Mapper.Umb.CastleWindsor.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Umb.CastleWindsor.Pipelines.ObjectConstruction;
 using Glass.Mapper.Umb.Configuration;
 using Glass.Mapper.Umb.DataMappers;
+using DataMapperResolver = Glass.Mapper.Pipelines.DataMapperResolver.Tasks.DataMapperResolver;
 
 namespace Glass.Mapper.Umb.CastleWindsor
 {
@@ -119,8 +120,8 @@ namespace Glass.Mapper.Umb.CastleWindsor
             #region DataMapperResolvers
 
             container.Register(
-                Component.For<IDataMapperResolverTask>()
-                         .ImplementedBy<DataMapperStandardResolverTask>()
+                Component.For<IDataMapperResolver>()
+                         .ImplementedBy<DataMapperResolver>()
                          .LifestyleTransient()
                 );
 

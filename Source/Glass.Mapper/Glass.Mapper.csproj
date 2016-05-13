@@ -137,9 +137,8 @@
     <Compile Include="Pipelines\ConfigurationResolver\IConfigurationResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTask.cs" />
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverArgs.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperResolver.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\IDataMapperResolverTask.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperStandardResolverTask.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\IDataMapperResolver.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperResolver.cs" />
     <Compile Include="Pipelines\IPipelineTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />

@@ -55,7 +55,6 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             Container = container;
             QueryParameterFactory = new WindsorConfigFactory<ISitecoreQueryParameter>(Container);
-            DataMapperResolverFactory = new WindsorConfigFactory<IDataMapperResolverTask>(Container);
             DataMapperFactory = new WindsorConfigFactory<AbstractDataMapper>(Container);
             ConfigurationResolverFactory = new WindsorConfigFactory<IConfigurationResolverTask>(Container);
             ObjectConstructionFactory = new WindsorConfigFactory<IObjectConstructionTask>(Container);

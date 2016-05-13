@@ -1,4 +1,6 @@
 ﻿using Glass.Mapper.Caching;
+using Glass.Mapper.Pipelines.DataMapperResolver;
+using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 
 namespace Glass.Mapper.Sc.IoC
 {
@@ -10,7 +12,7 @@ namespace Glass.Mapper.Sc.IoC
             Log = new Log();
             CacheManager = () => new NetMemoryCacheManager();
             QueryParameterFactory = new QueryParameterConfigFactory();
-            DataMapperResolverFactory = new DataMapperTaskConfigFactory();
+            DataMapperResolver = new DataMapperResolver();
             DataMapperFactory = new DataMapperConfigFactory(QueryParameterFactory);
             ConfigurationResolverFactory = new ConfigurationResolverConfigFactory();
             ObjectConstructionFactory = new ObjectConstructionTaskConfigFactory(this);
