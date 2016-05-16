@@ -80,6 +80,13 @@ namespace Glass.Mapper.IoC
             Insert(index+1, func);
         }
 
+
+        public virtual void Remove<TRemove>() where TRemove : T 
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TRemove));
+            RemoveAt(index);
+        }
+
         /// <summary>
         /// Adds a function to the end of the current list
         /// </summary>
