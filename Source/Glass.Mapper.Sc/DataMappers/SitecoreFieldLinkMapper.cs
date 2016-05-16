@@ -34,12 +34,20 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldLinkMapper : AbstractSitecoreFieldMapper
     {
+        private readonly IUrlOptionsResolver _urlOptionsResolver;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldLinkMapper"/> class.
         /// </summary>
-        public SitecoreFieldLinkMapper() : base(typeof (Link))
+        public SitecoreFieldLinkMapper() : this(new UrlOptionsResolver())
         {
         }
+
+        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver) : base(typeof(Link))
+        {
+            _urlOptionsResolver = urlOptionsResolver;
+        }
+
 
         /// <summary>
         /// Sets the field value.
@@ -78,8 +86,6 @@ namespace Glass.Mapper.Sc.DataMappers
         {
 
             if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
-
-
 
             Link link = new Link();
             LinkField linkField = new LinkField(field);
@@ -122,7 +128,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
-                    var urlOptions = Utilities.CreateUrlOptions(config.UrlOptions);
+                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
                     link.Url = linkField.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
