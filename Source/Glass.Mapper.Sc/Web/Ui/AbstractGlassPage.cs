@@ -23,6 +23,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web.UI;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.RenderField;
 using Sitecore.Data.Items;
 
@@ -45,24 +46,32 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
 
+        protected AbstractGlassPage(IConfigurationFactory configurationFactory, ISitecoreContext context)
+        {
+            if (context == null)
+            {
+                context = configurationFactory.SitecoreContextFactory.GetSitecoreContext();
+            }
 
+            _sitecoreContext = context;
+            _glassHtml = configurationFactory.GlassHtmlFactory.GetGlassHtml(context);
+        }
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-         public AbstractGlassPage(ISitecoreContext context)
+         public AbstractGlassPage(ISitecoreContext context) : this(ConfigurationFactory.Default, context)
         {
-            _glassHtml = new GlassHtml(context);
-            _sitecoreContext = context;
+            
         }
 
          /// <summary>
          /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
          /// </summary>
          public AbstractGlassPage()
-             : this(Sc.SitecoreContext.GetFromHttpContext())
+             : this(ConfigurationFactory.Default, null)
         {
 
         }

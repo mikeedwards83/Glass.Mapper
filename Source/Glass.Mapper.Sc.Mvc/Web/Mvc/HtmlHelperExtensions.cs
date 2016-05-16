@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Data;
 using Sitecore.Web.UI.WebControls;
@@ -184,7 +185,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public static GlassHtmlMvc<T> Glass<T>(this HtmlHelper<T> htmlHelper)
         {
-            var html = new GlassHtml(SitecoreContext.GetFromHttpContext());
+            var configurationFactory = ConfigurationFactory.Default;
+            ISitecoreContext sitecoreContext = configurationFactory.SitecoreContextFactory.GetSitecoreContext();
+            var html = configurationFactory.GlassHtmlFactory.GetGlassHtml(sitecoreContext);
             return new GlassHtmlMvc<T>(html, htmlHelper.ViewContext.Writer, htmlHelper.ViewData.Model);
         }
     }

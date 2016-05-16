@@ -22,6 +22,7 @@ using System.Linq;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.IoC;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -49,7 +50,7 @@ namespace Glass.Mapper.Sc.Integration
             var db = Factory.GetDatabase("master");
             var scContext = new SitecoreContext(db);
 
-            var glassHtml = new GlassHtml(scContext);
+            var glassHtml = GetGlassHtml(scContext);
             var instance = scContext.GetItem<IBasePage>("/sitecore");
 
             //Act
@@ -174,7 +175,7 @@ namespace Glass.Mapper.Sc.Integration
             
             var scContext = new SitecoreContext(db);
 
-            var glassHtml = new GlassHtml(scContext);
+            var glassHtml = GetGlassHtml(scContext);
 
             //Act
             var instance = scContext.GetItem<FieldWithSpaceIssue>(path);
@@ -380,8 +381,12 @@ namespace Glass.Mapper.Sc.Integration
             Assert.AreEqual(item.Children.Count, result.Children.Count());
         }
 
+        private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        {
+            return ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(sitecoreContext);
+        }
 
-#region Stubs
+        #region Stubs
 
 
         public class LazyLoadParent

@@ -40,20 +40,10 @@ namespace Glass.Mapper.Sc
         }
 
         protected AbstractSitecoreContext(Database database, string contextName)
-    : base(database, contextName)
+            : base(database, contextName)
         {
 
         }
-
-        public static string GetContextFromSite()
-        {
-            if (Sitecore.Context.Site == null)
-                return Context.DefaultContextName;
-
-            return Sitecore.Context.Site.Properties["glassContext"] ?? Context.DefaultContextName;
-        }
-
-
 
         #region AbstractSitecoreContext Members
 

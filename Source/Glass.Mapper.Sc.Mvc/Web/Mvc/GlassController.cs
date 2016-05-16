@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Controllers;
@@ -74,19 +75,28 @@ namespace Glass.Mapper.Sc.Web.Mvc
     {
 
         public ISitecoreContext SitecoreContext { get; set; }
+
         public IGlassHtml GlassHtml { get; set; }
+
         public IRenderingContext RenderingContextWrapper { get; set; }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
         public GlassController() 
-            : this(GetContextFromHttp())
+            : this(GetContextFromFactory())
         {
 
         }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
         protected GlassController(ISitecoreContext sitecoreContext) 
-            : this(sitecoreContext, sitecoreContext == null? null : new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
+            : this(sitecoreContext, ConfigurationFactory.Default, new RenderingContextMvcWrapper(), null)
+        {
+            
+        }
+
+        protected GlassController(ISitecoreContext sitecoreContext, IConfigurationFactory configurationFactory,
+            IRenderingContext renderingContext, HttpContextBase httpContextBase) 
+            : this(sitecoreContext, configurationFactory.GlassHtmlFactory.GetGlassHtml(sitecoreContext), renderingContext, httpContextBase)
         {
             
         }
@@ -226,11 +236,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         [ExcludeFromCodeCoverage] // Specific to live implementation
-        private static ISitecoreContext GetContextFromHttp()
+        private static ISitecoreContext GetContextFromFactory()
         {
             try
             {
-                return Sc.SitecoreContext.GetFromHttpContext();
+                return ConfigurationFactory.Default.SitecoreContextFactory.GetSitecoreContext();
             }
             catch (Exception ex)
             {

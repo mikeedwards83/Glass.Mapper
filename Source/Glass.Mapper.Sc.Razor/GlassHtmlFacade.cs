@@ -20,6 +20,7 @@ using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Web.UI;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Razor.RenderingTypes;
 using Glass.Mapper.Sc.Razor.Web.Ui;
 using Glass.Mapper.Sc.RenderField;
@@ -70,14 +71,18 @@ namespace Glass.Mapper.Sc.Razor
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="writer">The writer.</param>
-        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase) : this(context, ConfigurationFactory.Default)
 
         {
             _writer = writer;
-            _glassHtml = new GlassHtml(context);
             TemplateBase = templateBase;
         }
-  
+
+        protected GlassHtmlFacade(ISitecoreContext context, IConfigurationFactory configurationFactory)
+        {
+            _glassHtml = configurationFactory.GlassHtmlFactory.GetGlassHtml(context);
+        }
+
         /// <summary>
         /// Editables the specified target.
         /// </summary>
