@@ -24,6 +24,7 @@ using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Pipelines.DataMapper;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -191,12 +192,7 @@ namespace Glass.Mapper.Sc.Integration
         [Test]
         public void FieldWithSpacesAutoMap()
         {
-            /*
-             * This test is in response to issue 53 raised on the Glass.Sitecore.Mapper
-             * project. When two interfaces have similar names are created as proxies
-             * the method GetTypeConfiguration returns the wrong config.
-             */
-
+          
 
             //Assign
             string path = "/sitecore/content/Tests/Misc/FieldWithSpace";
@@ -205,6 +201,8 @@ namespace Glass.Mapper.Sc.Integration
                 "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
             var context = Context.Create(Utilities.CreateStandardResolver());
+            context.DependencyResolver.DataMapperResolverFactory.Add(() => new DataMapperFieldsWithSpace());
+
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Factory.GetDatabase("master");
