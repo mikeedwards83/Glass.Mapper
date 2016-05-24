@@ -17,6 +17,9 @@ namespace Glass.Mapper.Tests
         [TestCase(null, "")]
         [TestCase("http://glass.co/test/somevalue?test=value&test1=", "http://glass.co/test/somevalue?test=value&test1=")]
         [TestCase("http://glass.co/test/somevalue?test=value&=another&test=value3", "http://glass.co/test/somevalue?test=value&test=value3")]
+        //tests for issue 222
+        [TestCase("http://glass.co/test/somevalue?test%3dvalue&%3danother&test=value3", "http://glass.co/test/somevalue?test=value&test=value3")]
+        [TestCase("http://glass.co/test/somevalue?test%3Dvalue&test1%3D", "http://glass.co/test/somevalue?test=value&test1=")]
         public void UrlBuilder_TestUrlShouldRemainTheSame_NoAdditionalQueryParameters(string url, string expected)
         {
             //Arrange
