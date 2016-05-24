@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -48,7 +48,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// Initializes a new instance of the <see cref="AbstractSitecoreFieldMapper"/> class.
         /// </summary>
         /// <param name="typesHandled">The types handled.</param>
-        public AbstractSitecoreFieldMapper(params Type [] typesHandled)
+        public AbstractSitecoreFieldMapper(params Type[] typesHandled)
         {
             TypesHandled = typesHandled;
         }
@@ -85,13 +85,13 @@ namespace Glass.Mapper.Sc.DataMappers
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
             var scConfig = Configuration as SitecoreFieldConfiguration;
-            var scContext =  mappingContext  as SitecoreDataMappingContext ;
+            var scContext = mappingContext as SitecoreDataMappingContext;
 
             var field = Utilities.GetField(scContext.Item, scConfig.FieldId, scConfig.FieldName);
-            
-            if(field ==null)
-               return;
-            
+
+            if (field == null)
+                return;
+
             object value = Configuration.PropertyInfo.GetValue(mappingContext.Object, null);
 
 
@@ -127,8 +127,8 @@ namespace Glass.Mapper.Sc.DataMappers
         public virtual object GetField(Field field, SitecoreFieldConfiguration config,
                                        SitecoreDataMappingContext context)
         {
-            
-                var fieldValue = field.Value;
+
+            var fieldValue = field.Value;
             try
             {
                 return GetFieldValue(fieldValue, config, context);
@@ -193,7 +193,7 @@ namespace Glass.Mapper.Sc.DataMappers
             this.ReadOnly = scArgs.ReadOnly;
             base.Setup(args);
         }
-        
+
     }
 }
 

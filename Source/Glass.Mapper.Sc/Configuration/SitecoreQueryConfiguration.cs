@@ -30,7 +30,19 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         /// <value><c>true</c> if [use query context]; otherwise, <c>false</c>.</value>
         public bool UseQueryContext { get; set; }
- 
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreQueryConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreQueryConfiguration;
+            config.UseQueryContext = UseQueryContext;
+            base.Copy(copy);
+        }
+
     }
 }
 

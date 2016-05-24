@@ -74,6 +74,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
             return Container.Resolve<Mapper.Config>();
         }
 
+        public override ILog GetLog()
+        {
+            return Container.Resolve<ILog>();
+        }
+
         public override ICacheManager GetCacheManager()
         {
             return Container.Resolve<ICacheManager>();

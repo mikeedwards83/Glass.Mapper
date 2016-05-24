@@ -87,6 +87,7 @@ namespace Glass.Mapper
             var context = new Context();
             context.DependencyResolver = resolver;
             context.Name = contextName;
+            context.Config = resolver.GetConfig();
             Contexts[contextName] = context;
 
             if (isDefault)
@@ -94,6 +95,8 @@ namespace Glass.Mapper
 
             return context;
         }
+
+        public Config Config { get; set; }
 
         /// <summary>
         /// Clears all static and default contexts
@@ -123,7 +126,7 @@ namespace Glass.Mapper
 
 
 
-        public ILogger Log { get; set; }
+        public ILog Log { get; set; }
 
         /// <summary>
         /// Prevents a default instance of the <see cref="Context"/> class from being created.

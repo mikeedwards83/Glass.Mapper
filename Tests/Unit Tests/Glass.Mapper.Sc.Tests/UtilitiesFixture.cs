@@ -149,10 +149,11 @@ namespace Glass.Mapper.Sc.Tests
             defaultOptions.ShortenUrls = false;
             defaultOptions.SiteResolving = false;
             defaultOptions.UseDisplayName = false;
+            var urlOptionsResolver = new UrlOptionsResolver();
 
 
             //Act
-            Utilities.CreateUrlOptions(options, defaultOptions);
+            urlOptionsResolver.CreateUrlOptions(options, defaultOptions);
 
             //Assert
             Assert.AreEqual(addAspx, defaultOptions.AddAspxExtension);
@@ -197,10 +198,10 @@ namespace Glass.Mapper.Sc.Tests
             bool useItemPath)
         {
             //Arrange
-
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
 
             //Act
-            var result = Utilities.GetMediaUrlOptions(option);
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
 
             //Assert
             Assert.AreEqual(result.AbsolutePath, absolutePath);

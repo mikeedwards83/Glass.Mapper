@@ -614,6 +614,70 @@ namespace Glass.Mapper.Sc.Tests
         }
 
         [Test]
+        public void RenderLink_HtmlEncodesText()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello & world";
+            link.Url = "/somewhere.aspx";
+            link.Query = "temp=fred";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_HtmlEncodesTitle()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello & world";
+            link.Url = "/somewhere.aspx";
+            link.Title = "hello & world";
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
+        [Test]
+        public void RenderLink_HtmlTitleAlreadyEncoded_DoesNotDoubleEncode()
+        {
+            //Arrange
+            //This test checks that a value already encoded does not get accidentally double HTML encoded.
+            var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello &amp; world";
+            link.Url = "/somewhere.aspx";
+            link.Title = "hello &amp; world";
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
+        [Test]
         public void RenderLink_LinkWithCustomContent()
         {
             //Arrange
@@ -635,6 +699,7 @@ namespace Glass.Mapper.Sc.Tests
             //Assert
             Assert.AreEqual(expected, result);
         }
+
 
 
         [Test]

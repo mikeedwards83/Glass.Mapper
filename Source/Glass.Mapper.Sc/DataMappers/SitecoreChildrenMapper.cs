@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Sitecore.Data.Items;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Collections;
@@ -34,6 +35,11 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreChildrenMapper : AbstractDataMapper
     {
+
+        protected Type GenericType { get; set; }
+
+        private ActivationManager.CompiledActivator<object> _activator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreChildrenMapper"/> class.
         /// </summary>
@@ -63,21 +69,35 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext = mappingContext as SitecoreDataMappingContext;
             var scConfig = Configuration as SitecoreChildrenConfiguration;
 
-            Type genericType = Mapper.Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
-
             Func<IEnumerable<Item>> getItems = () =>
                 ItemManager.GetChildren(scContext.Item, SecurityCheck.Enable, ChildListOptions.None);
-            
-            return Utilities.CreateGenericType(
-                typeof (LazyItemEnumerable<>),
-                new[] {genericType},
-                getItems,
+
+            if (_activator == null)
+            {
+                _activator = Mapper.Utilities.GetActivator(
+                    typeof (LazyItemEnumerable<>),
+                    new[] {GenericType},
+                    getItems,
+                    scConfig.IsLazy,
+                    scConfig.InferType,
+                    scContext.Service);
+            }
+
+            return _activator(getItems,
                 scConfig.IsLazy,
                 scConfig.InferType,
-                scContext.Service
-                );
+                scContext.Service);
 
         }
+
+        public override void Setup(DataMapperResolverArgs args)
+        {
+
+            base.Setup(args);
+            GenericType = Mapper.Utilities.GetGenericArgument(Configuration.PropertyInfo.PropertyType);
+
+        }
+
 
         /// <summary>
         /// Indicates that the data mapper will mapper to and from the property

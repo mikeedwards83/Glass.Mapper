@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc

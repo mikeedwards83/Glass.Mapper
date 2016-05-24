@@ -97,7 +97,7 @@
     <Compile Include="Configuration\Fluent\SitecoreLinked.cs" />
     <Compile Include="Configuration\Fluent\SitecoreParent.cs" />
     <Compile Include="Configuration\Fluent\SitecoreQuery.cs" />
-    <Compile Include="Configuration\Fluent\SitecoreChildrenConfiguration.cs" />
+    <Compile Include="Configuration\SitecoreChildrenConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldConfiguration.cs" />
     <Compile Include="Configuration\SitecoreFieldSettings.cs" />
     <Compile Include="Configuration\SitecoreFieldType.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="DataMappers\SitecoreFieldNullableEnumMapper.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapper.cs" />
     <Compile Include="DataMappers\SitecoreItemMapper.cs" />
+    <Compile Include="DataMappers\SitecoreLazyMapper.cs" />
     <Compile Include="DataMappers\SitecoreNodeMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldLongMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapper.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
+    <Compile Include="IMediaUrlOptionsResolver.cs" />
     <Compile Include="IoC\AbstractDependencyResolver.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
     <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
@@ -184,12 +186,16 @@
     <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
     <Compile Include="IoC\QueryParameterConfigFactory.cs" />
     <Compile Include="ISitecoreContext.cs" />
+    <Compile Include="ISitecoreFieldResolver.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
+    <Compile Include="IUrlOptionsResolver.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Maps\SitecoreGlassMap.cs" />
+    <Compile Include="MediaUrlOptionsResolver.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
@@ -206,6 +212,7 @@
     <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
+    <Compile Include="UrlOptionsResolver.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
@@ -259,6 +266,7 @@
     <Content Include="App_Start\GlassMapperSc.cs.pp" />
     <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
     <Content Include="App_Config\Include\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
+    <Compile Include="Pipelines\DataMapper\DataMapperFieldsWithSpace.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

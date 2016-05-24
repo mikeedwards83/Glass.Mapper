@@ -13,6 +13,7 @@ namespace Glass.Mapper.Sc.IoC
     public abstract class AbstractDependencyResolver : IDependencyResolver
     {
         public Mapper.Config Config { get; set; }
+        public ILog Log { get; set; }
         public Func<ICacheManager> CacheManager { get; set; }
         public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; set; }
         public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; set; }
@@ -25,5 +26,6 @@ namespace Glass.Mapper.Sc.IoC
         public abstract ICacheManager GetCacheManager();
 
         public abstract Mapper.Config GetConfig();
+        public abstract ILog GetLog();
     }
 }

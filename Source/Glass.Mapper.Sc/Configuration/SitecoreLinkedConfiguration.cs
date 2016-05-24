@@ -30,6 +30,18 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         /// <value>The option.</value>
         public SitecoreLinkedOptions Option { get; set; }
+
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreLinkedConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreLinkedConfiguration;
+            config.Option = Option;
+            base.Copy(copy);
+        }
     }
 }
 

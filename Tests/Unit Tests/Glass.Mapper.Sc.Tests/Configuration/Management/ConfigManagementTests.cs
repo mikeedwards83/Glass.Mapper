@@ -53,7 +53,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
             var result = configFactory.GetItems();
 
             // Assert
-            Assert.AreEqual(38, result.Count());
+            Assert.AreEqual(39, result.Count());
         }
 
         [Test]

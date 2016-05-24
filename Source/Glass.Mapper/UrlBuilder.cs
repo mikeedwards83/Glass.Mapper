@@ -24,24 +24,29 @@ namespace Glass.Mapper
 
         protected void ProcessQueryString(string url, List<KeyValuePair<string, string>> queryString)
         {
-            if (url.IsNotNullOrEmpty() && url.IndexOf("?", StringComparison.Ordinal) > -1)
+            if (!url.IsNotNullOrEmpty() || url.IndexOf("?", StringComparison.Ordinal) <= -1)
             {
-                var urlQuery = url.Split('?');
-                var query = urlQuery[1];
+                return;
+            }
 
-                if (query.IsNotNullOrEmpty())
+            var urlQuery = url.Split('?');
+            var query = urlQuery[1];
+
+            if (!query.IsNotNullOrEmpty())
+            {
+                return;
+            }
+
+            query = query.Replace(HtmlQuerySeparator, "&");
+            var pairs = query.Split('&', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var pair in pairs)
+            {
+                string tempValue = pair.Replace("%3D", "=").Replace("%3d", "=");
+                string[] keyValue = tempValue.Split('=');
+                if (keyValue.Length == 2)
                 {
-                    query = query.Replace(HtmlQuerySeparator, "&");
-                    var pairs = query.Split('&', StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var pair in pairs)
-                    {
-                        var keyValue = pair.Split('=');
-                        if (keyValue.Length == 2)
-                        {
-                            QueryString.Add(new KeyValuePair<string, string>(keyValue[0] ?? string.Empty,
-                                keyValue[1] ?? string.Empty));
-                        }
-                    }
+                    QueryString.Add(new KeyValuePair<string, string>(keyValue[0] ?? string.Empty,
+                        keyValue[1] ?? string.Empty));
                 }
             }
         }

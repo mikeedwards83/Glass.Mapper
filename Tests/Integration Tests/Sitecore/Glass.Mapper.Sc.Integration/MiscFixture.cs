@@ -19,9 +19,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Pipelines.DataMapper;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -184,6 +187,50 @@ namespace Glass.Mapper.Sc.Integration
             Assert.AreEqual(expected, instance.FieldWithSpace);
             Assert.IsNotNull(instance.ImageSpace);
 
+        }
+
+        [Test]
+        public void FieldWithSpacesAutoMap()
+        {
+          
+
+            //Assign
+            string path = "/sitecore/content/Tests/Misc/FieldWithSpace";
+            string expected = "Hello space";
+            string imageValue =
+                "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.DependencyResolver.DataMapperResolverFactory.Add(() => new DataMapperFieldsWithSpace());
+
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var db = Factory.GetDatabase("master");
+
+            var item = db.GetItem(path);
+
+            using (new ItemEditing(item, true))
+            {
+                item["Field With Space"] = expected;
+                item["Image Field"] = imageValue;
+            }
+
+            var scContext = new SitecoreContext(db);
+
+            var glassHtml = new GlassHtml(scContext);
+
+            //Act
+            var instance = scContext.GetItem<FieldWithSpaceAutoMap>(path);
+
+
+            //Assert
+            Assert.AreEqual(expected, instance.FieldWithSpace);
+            Assert.IsNotNull(instance.ImageSpace);
+            SitecoreFieldConfiguration imageFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "ImageSpace") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Image Space", imageFieldTypeConfig.FieldName);
+
+            SitecoreFieldConfiguration stringFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "FieldWithSpace") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Field With Space", stringFieldTypeConfig.FieldName);
         }
 
         [Test]
@@ -423,6 +470,14 @@ namespace Glass.Mapper.Sc.Integration
             public virtual string FieldWithSpace { get; set; }
 
             [SitecoreField("Image Space")]
+            public virtual Image ImageSpace { get; set; }
+        }
+
+        [SitecoreType(AutoMap = true)]
+        public class FieldWithSpaceAutoMap
+        {
+            public virtual string FieldWithSpace { get; set; }
+
             public virtual Image ImageSpace { get; set; }
         }
 

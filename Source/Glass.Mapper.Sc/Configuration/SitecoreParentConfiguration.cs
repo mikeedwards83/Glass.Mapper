@@ -25,7 +25,17 @@ namespace Glass.Mapper.Sc.Configuration
     /// </summary>
     public class SitecoreParentConfiguration : ParentConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreParentConfiguration();
+        }
 
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreParentConfiguration;
+
+            base.Copy(copy);
+        }
     }
 }
 

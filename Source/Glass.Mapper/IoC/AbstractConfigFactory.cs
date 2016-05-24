@@ -6,19 +6,21 @@ namespace Glass.Mapper.IoC
 {
     public abstract class AbstractConfigFactory<T> : IConfigFactory<T>
     {
+
+
         private readonly object _lockObject = new object();
 
-        protected List<Func<T>> TypeGenerators { get; private set; }
+        protected List<Builder> TypeGenerators { get; private set; }
 
         protected AbstractConfigFactory()
         {
             lock (_lockObject)
             {
-                TypeGenerators = new List<Func<T>>();
+                TypeGenerators = new List<Builder>();
             }
         }
 
-        public void Insert(int index, Func<T> add)
+        public void Insert<TK>(int index, Func<TK> add) where TK : T
         {
             if (add == null)
             {
@@ -27,7 +29,7 @@ namespace Glass.Mapper.IoC
 
             lock (_lockObject)
             {
-                TypeGenerators.Insert(index, add);
+                TypeGenerators.Insert(index, new Builder { Type = typeof(TK), Func = ()=> add() });
             }
         }
 
@@ -35,7 +37,7 @@ namespace Glass.Mapper.IoC
         /// Inserts function as the first in the list. Same as Insert(0, ()=>new T())
         /// </summary>
         /// <param name="add"></param>
-        public virtual void First(Func<T> add)
+        public virtual void First<TK>(Func<TK> add) where TK : T
         {
            Insert(0, add);
         }
@@ -43,7 +45,7 @@ namespace Glass.Mapper.IoC
         /// <summary>
         /// Replaces the function at the given index
         /// </summary>
-        public virtual void Replace(int index, Func<T> replace)
+        public virtual void Replace<K>(int index, Func<K> replace) where K :T
         {
             if (replace == null)
             {
@@ -52,14 +54,43 @@ namespace Glass.Mapper.IoC
 
             lock (_lockObject)
             {
-                TypeGenerators[index] = replace;
+               
+
+                TypeGenerators[index] = new Builder { Type = replace.Method.ReturnType, Func = ()=> replace() };
             }
+        }
+
+
+        public virtual void Replace<TReplace, TK>(Func<TK> func) where TReplace : T where TK : T
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TReplace));
+            RemoveAt(index);
+            Insert(index, func);
+        }
+
+        public virtual void InsertBefore<TBefore, TK>(Func<TK> func ) where TBefore : T where TK : T
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof (TBefore));
+            Insert(index, func);
+        }
+
+        public virtual void InsertAfter<TAfter, TK>(Func<TK> func) where TAfter : T where TK : T
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TAfter));
+            Insert(index+1, func);
+        }
+
+
+        public virtual void Remove<TRemove>() where TRemove : T 
+        {
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TRemove));
+            RemoveAt(index);
         }
 
         /// <summary>
         /// Adds a function to the end of the current list
         /// </summary>
-        public virtual void Add(Func<T> add)
+        public virtual void Add<TK>(Func<TK> add) where TK : T
         {
             if (add == null)
             {
@@ -68,7 +99,10 @@ namespace Glass.Mapper.IoC
 
             lock (_lockObject)
             {
-                TypeGenerators.Add(add);
+
+                TypeGenerators.Add(
+                    new Builder { Type = typeof(TK), Func =  ()=> add()}
+                    );
             }
         }
 
@@ -97,12 +131,18 @@ namespace Glass.Mapper.IoC
                 }
                 //we create a local copy of the generators to avoid any problems with the 
                 // list being modified during enumeration and exit the lock ASAP
-                builders = TypeGenerators.ToArray();             
+                builders = TypeGenerators.Select(x=>x.Func).ToArray();             
             }
 
             //generate the class outside of the lock encase there are any long running operations.
             //and then force them into an array to avoid any enumeration issues.
             return builders.Select(x => x()).ToArray();
+        }
+
+        protected struct Builder
+        {
+            public Type Type { get; set; }
+            public Func<T> Func { get; set; } 
         }
     }
 }

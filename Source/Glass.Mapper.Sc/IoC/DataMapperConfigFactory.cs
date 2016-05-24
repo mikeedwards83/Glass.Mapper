@@ -16,6 +16,7 @@ namespace Glass.Mapper.Sc.IoC
 
         protected void Init()
         {
+            Add(() => new SitecoreLazyMapper());
             Add(() => new SitecoreIgnoreMapper());
             Add(() => new SitecoreChildrenCastMapper());
             Add(() => new SitecoreChildrenMapper());

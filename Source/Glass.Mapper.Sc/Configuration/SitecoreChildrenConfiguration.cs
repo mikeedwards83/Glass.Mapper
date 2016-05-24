@@ -26,6 +26,17 @@ namespace Glass.Mapper.Sc.Configuration
     /// </summary>
     public class SitecoreChildrenConfiguration : ChildrenConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreChildrenConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreChildrenConfiguration;
+           
+            base.Copy(copy);
+        }
     }
 }
 

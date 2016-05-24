@@ -253,6 +253,15 @@ namespace Glass.Mapper
             return obj;
         }
 
+        public static ActivationManager.CompiledActivator<object> GetActivator(Type type, 
+            Type[] arguments,
+            params object[] parameters)
+        {
+            Type genericType = type.MakeGenericType(arguments);
+            var paramTypes = parameters.Select(p => p.GetType()).ToArray();
+            return GetActivator(genericType, paramTypes);
+        }
+
         /// <summary>
         /// Gets the generic argument.
         /// </summary>

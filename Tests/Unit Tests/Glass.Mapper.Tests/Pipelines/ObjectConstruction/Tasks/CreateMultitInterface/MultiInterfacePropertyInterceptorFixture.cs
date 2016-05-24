@@ -154,7 +154,10 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
         }
         public class StubAbstractPropertyConfiguration : AbstractPropertyConfiguration
         {
-            
+            protected override AbstractPropertyConfiguration CreateCopy()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class StubAbstractDataMapper : AbstractDataMapper
