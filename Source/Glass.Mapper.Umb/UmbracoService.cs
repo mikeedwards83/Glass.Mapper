@@ -166,6 +166,10 @@ namespace Glass.Mapper.Umb
                     IsLazy = isLazy,
                     PublishedOnly =  PublishedOnly
                 };
+
+            creationContext.Parameters.Add("Id", content.Id);
+            creationContext.Parameters.Add("Name", content.Name);
+
             var obj = InstantiateObject(creationContext);
 
             return obj;
