@@ -105,6 +105,7 @@
     <Compile Include="ContextFixture.cs" />
     <Compile Include="DisableCacheFixture.cs" />
     <Compile Include="ExtensionMethodFixture.cs" />
+    <Compile Include="GlassLazyTestFixture.cs" />
     <Compile Include="IoC\AbstractConfigFactoryFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTaskFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTaskFixture.cs" />
