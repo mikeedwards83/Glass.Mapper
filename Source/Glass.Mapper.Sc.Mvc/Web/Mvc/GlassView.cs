@@ -20,6 +20,7 @@ using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.RenderField;
 using Glass.Mapper.Sc.Web.Ui;
 using Sitecore.Mvc.Configuration;
@@ -34,7 +35,19 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// <typeparam name="TModel"></typeparam>
     public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
+        protected GlassView() : this(IoC.ConfigurationFactory.Default)
+        {
+            
+        }
+
+        protected GlassView(IConfigurationFactory configurationFactory)
+        {
+            ConfigurationFactory = configurationFactory;
+        }
+
         protected IRenderingContext RenderingContext { get; set; }
+
+        public IConfigurationFactory ConfigurationFactory { get; set; }
 
 
         public static bool HasDataSource<T>() where T : class
@@ -51,8 +64,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
 #endif
 
         }
-
-
 
         /// <summary>
         /// 
@@ -139,8 +150,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public override void InitHelpers()
         {
             base.InitHelpers();
-            SitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
-            GlassHtml = new GlassHtml(SitecoreContext);
+            SitecoreContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext();
+            GlassHtml = ConfigurationFactory.GlassHtmlFactory.GetGlassHtml(SitecoreContext);
             RenderingContext = new RenderingContextMvcWrapper();
 
             if (Model == null && this.ViewData.Model == null)

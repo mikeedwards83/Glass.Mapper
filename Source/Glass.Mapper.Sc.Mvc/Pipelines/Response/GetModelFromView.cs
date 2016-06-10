@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Compilation;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.ModelCache;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -14,14 +15,17 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private readonly IModelCacheManager modelCacheManager;
 
         public GetModelFromView()
-            : this(new ModelCacheManager())
+            : this(new ModelCacheManager(), IoC.ConfigurationFactory.Default)
         {
         }
 
-        public GetModelFromView(IModelCacheManager modelCacheManager)
+        public GetModelFromView(IModelCacheManager modelCacheManager, IConfigurationFactory configurationFactory)
         {
+            ConfigurationFactory = configurationFactory;
             this.modelCacheManager = modelCacheManager;
         }
+
+        protected IConfigurationFactory ConfigurationFactory { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the context.
@@ -29,12 +33,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <value>
         /// The name of the context.
         /// </value>
-        public virtual string ContextName
+        public virtual Context Context
         {
             get
             {
-                var context = AbstractSitecoreContext.GetContextFromSite();
-                Sitecore.Diagnostics.Log.Debug("using context " + context, this);
+                var context = ConfigurationFactory.GlassContextProvider.GetContext();
+                Sitecore.Diagnostics.Log.Debug("using context " + context.Name, this);
                 return context;
             }
         }
@@ -77,7 +81,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
+            ISitecoreContext scContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext(Context);
 
             Rendering renderingItem = args.Rendering;
 

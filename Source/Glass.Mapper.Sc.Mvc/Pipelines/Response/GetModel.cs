@@ -20,6 +20,7 @@ using System;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;
@@ -35,7 +36,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
     /// </summary>
     public class GetModel : GetModelProcessor
     {
-
         /// <summary>
         /// The model type field
         /// </summary>
@@ -51,9 +51,16 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <summary>
         /// Initializes a new instance of the <see cref="GetModel"/> class.
         /// </summary>
-        public GetModel()
+        public GetModel() : this(IoC.ConfigurationFactory.Default)
         {
         }
+
+        public GetModel(IConfigurationFactory configurationFactory)
+        {
+            ConfigurationFactory = configurationFactory;
+        }
+
+        public IConfigurationFactory ConfigurationFactory { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the context.
@@ -61,12 +68,12 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <value>
         /// The name of the context.
         /// </value>
-        public virtual string ContextName
+        public virtual Context Context
         {
             get
             {
-                var context = AbstractSitecoreContext.GetContextFromSite();
-                Sitecore.Diagnostics.Log.Debug("using context " + context, this);
+                var context = ConfigurationFactory.GlassContextProvider.GetContext();
+                Sitecore.Diagnostics.Log.Debug("using context " + context.Name, this);
                 return context;
             }
         }
@@ -78,7 +85,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="args">The args.</param>
         public override void Process(GetModelArgs args)
         {
-            Sitecore.Diagnostics.Log.Debug("Glass GetModel Process " + ContextName, this);
+            Sitecore.Diagnostics.Log.Debug("Glass GetModel Process " + Context.Name, this);
 
             if (args.Result == null)
             {
@@ -213,7 +220,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (type == null || renderingModelType.IsAssignableFrom(type))
                 return null;
            
-            ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
+            ISitecoreContext scContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext(Context);
 
 
             //this is really aggressive

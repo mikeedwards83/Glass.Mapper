@@ -18,6 +18,7 @@
 using System;
 using Sitecore.Web.UI;
 using System.ComponentModel;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Razor.Web.Ui;
 
 namespace Glass.Mapper.Sc.Razor
@@ -68,7 +69,7 @@ namespace Glass.Mapper.Sc.Razor
 
 
 
-            ISitecoreContext _context = Sc.SitecoreContext.GetFromHttpContext(Context);
+            ISitecoreContext _context = ConfigurationFactory.Default.SitecoreContextFactory.GetSitecoreContext(Context);
             var model = _context.GetCurrentItem(type);
 
             TypeDescriptor.GetProperties(finalControlType).Find("Model", false).SetValue(finalControl, model);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.IoC;
 using NUnit.Framework;
 using Sitecore.ContentSearch.SearchTypes;
 
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Sc.Integration.Sc7.Issues
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var scContext = new SitecoreContext(db);
 
-            var glassHtml = new GlassHtml(scContext);
+            var glassHtml = ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(scContext);
             var instance = scContext.GetItem<Sc7SitecoreItem>("/sitecore");
 
             //Act
