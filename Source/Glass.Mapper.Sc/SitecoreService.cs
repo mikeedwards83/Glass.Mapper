@@ -478,7 +478,7 @@ namespace Glass.Mapper.Sc
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
+            if (item == null || (Utilities.DoVersionCheck(Config) && item.Versions.Count == 0)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)
