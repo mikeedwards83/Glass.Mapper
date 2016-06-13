@@ -32,6 +32,8 @@ using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.UI;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
 
 namespace Glass.Mapper.Sc.Integration
@@ -489,6 +491,166 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void Editable_SimpleLambdaInEditModeInterface_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<IStubClass>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            string result;
+
+            using (new SecurityDisabler())
+            {
+                result = html.Editable(model, x => x.SubStub.StringField);
+            }
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+        [Test]
+        public void Editable_SimpleLambdaInEditModeInterfaceClearingContext_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<IStubClass>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            string result;
+
+
+           context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(System.Object)));
+
+           // model = null;
+            using (new SecurityDisabler())
+            {
+                result = html.Editable(model, x => x.StringField);
+            }
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+
+        [Test]
+        public void Editable_SimpleLambdaInEditModeInterfaceWithInheritance_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<IStubClassInherits>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            string result;
+
+            using (new SecurityDisabler())
+            {
+                result = html.Editable(model, x => x.SubStub.StringField);
+            }
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+        [Test]
         public void Editable_SimpleLambdaNotInEditMode_StringFieldReturned()
         {
             //Assign
@@ -586,6 +748,109 @@ namespace Glass.Mapper.Sc.Integration
             Assert.IsTrue(result.Contains("scWebEditInput"));
             Console.WriteLine("result " + result);
         }
+
+        [Test]
+        public void Editable_ComplexLambdaInEditModeUsingInterface_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<IStubClass>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            string result;
+
+            using (new SecurityDisabler())
+            {
+                result = html.Editable(model, x => x.EnumerableSubStub.First().StringField);
+            }
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
+        [Test]
+        public void Editable_ComplexLambdaInEditModeUsingInterfaceInheritance_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/Tests/GlassHtml/MakeEditable/Target";
+
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+            var service = new SitecoreContext(db);
+
+            var html = new GlassHtml(service);
+
+            var model = service.GetItem<IStubClassInherits>(targetPath);
+
+            var fieldValue = "test content field";
+
+            model.StringField = fieldValue;
+
+            using (new SecurityDisabler())
+            {
+                service.Save(model);
+            }
+
+            var doc = new XmlDocument();
+            doc.LoadXml("<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+            var siteContext = new SiteContextStub(
+                new SiteInfo(
+                    doc.FirstChild
+                    )
+                );
+
+            siteContext.SetDisplayMode(DisplayMode.Edit);
+
+            Sitecore.Context.Site = siteContext;
+
+            //Act
+            string result;
+
+            using (new SecurityDisabler())
+            {
+                result = html.Editable(model, x => x.EnumerableSubStub.First().StringField);
+            }
+            //Assert
+            Assert.IsTrue(result.Contains(fieldValue));
+            //this is the webedit class
+            Assert.IsTrue(result.Contains("scWebEditInput"));
+            Console.WriteLine("result " + result);
+        }
+
 
         [Test]
         public void Editable_InterfaceComplexLambdaNotInEditMode_StringFieldReturned()
@@ -1236,6 +1501,8 @@ namespace Glass.Mapper.Sc.Integration
             public virtual Guid Id { get; set; }
         }
 
+       
+
         [SitecoreType]
         public class StubClass
         {
@@ -1278,6 +1545,12 @@ namespace Glass.Mapper.Sc.Integration
         public interface IStubLambdaClass : IStubClass
         {
        
+        }
+
+
+        [SitecoreType]
+        public interface IStubClassInherits: IStubClass
+        {
         }
 
         [SitecoreType]
