@@ -142,3 +142,4 @@ Depends/Sitecore/bin81/*.lic
 Depends/Sitecore/bin81/social
 Documentation/Glass.Mapper.Sc/Help/
 Help/
+Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Tds/Package_Release/
