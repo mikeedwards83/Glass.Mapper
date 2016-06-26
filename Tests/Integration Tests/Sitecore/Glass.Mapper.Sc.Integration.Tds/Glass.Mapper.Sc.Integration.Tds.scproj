@@ -212,61 +212,6 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper.item">
-      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\20121222_001405.item">
-      <Icon>/sitecore/shell/themes/standard/~/media/C10794CE624F4F72A2B914336F3FB582.ashx?h=16&amp;thn=1&amp;w=16&amp;db=master</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\GetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\SetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldIEnumerableMapper.item">
-      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldIEnumerableMapper\GetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldIEnumerableMapper\SetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper.item">
-      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\20121222_001405.item">
-      <Icon>/sitecore/shell/themes/standard/~/media/C10794CE624F4F72A2B914336F3FB582.ashx?h=16&amp;thn=1&amp;w=16&amp;db=master</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\GetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\SetField.item">
-      <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\Dynamic.item">
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
