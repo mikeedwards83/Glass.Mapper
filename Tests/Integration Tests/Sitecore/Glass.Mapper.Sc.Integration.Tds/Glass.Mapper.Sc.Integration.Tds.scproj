@@ -247,6 +247,12 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\20121222_001405.item">
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\GetField.item">
       <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
