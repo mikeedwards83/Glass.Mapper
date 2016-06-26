@@ -54,8 +54,8 @@
     <PackageName>Glass.Mapper.Sc.Integration.Tds</PackageName>
     <GeneratePackage>True</GeneratePackage>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
-    <PackageExcludeCode>False</PackageExcludeCode>
-    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <PackageExcludeCode>True</PackageExcludeCode>
+    <AddDateTimeToPackageName>True</AddDateTimeToPackageName>
     <PackageAuthor>Michael Edwards, Nathanael Mann</PackageAuthor>
     <PackagePublisher>Glass.lu</PackagePublisher>
     <PackageReadme>
