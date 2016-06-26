@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 using System;
@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// </summary>
         public const string ModelTypeField = "Model Type";
 
-        private readonly Type renderingModelType = typeof (IRenderingModel);
+        private readonly Type renderingModelType = typeof(IRenderingModel);
 
         /// <summary>
         /// The model field
@@ -82,24 +82,28 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             if (args.Result == null)
             {
+
+                GetObjectResult result = null;
+
                 Rendering rendering = args.Rendering;
+
                 if (rendering.RenderingType == "Layout")
                 {
-                    args.Result = GetFromItem(rendering, args);
-                    if (args.Result == null)
+                    result = GetFromItem(rendering, args);
+                    if (result == null)
                     {
-                        args.Result = GetFromLayout(rendering, args);
+                        result = GetFromLayout(rendering, args);
                     }
                 }
-                if (args.Result == null)
+                if (result == null)
                 {
-                    args.Result = GetFromPropertyValue(rendering, args);
+                    result = GetFromPropertyValue(rendering, args);
                 }
-                if (args.Result == null)
+                if (result == null)
                 {
-                    args.Result = GetFromField(rendering, args);
+                    result = GetFromField(rendering, args);
                 }
-                if (args.Result != null)
+                if (result != null && result.GlassType)
                 {
                     args.AbortPipeline();
                 }
@@ -113,13 +117,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object GetFromField(Rendering rendering, GetModelArgs args)
+        protected virtual GetObjectResult GetFromField(Rendering rendering, GetModelArgs args)
         {
             Item obj = rendering.RenderingItem.ValueOrDefault(i => i.InnerItem);
             if (obj == null)
                 return null;
-            return rendering.Item == null 
-                ? null 
+            return rendering.Item == null
+                ? null
                 : GetObject(obj[ModelField], rendering.Item.Database, rendering);
         }
 
@@ -129,7 +133,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object GetFromPropertyValue(Rendering rendering, GetModelArgs args)
+        protected virtual GetObjectResult GetFromPropertyValue(Rendering rendering, GetModelArgs args)
         {
             string model = rendering.Properties[ModelField];
             if (model.IsWhiteSpaceOrNull())
@@ -144,7 +148,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object GetFromLayout(Rendering rendering, GetModelArgs args)
+        protected virtual GetObjectResult GetFromLayout(Rendering rendering, GetModelArgs args)
         {
             string pathOrId = rendering.Properties["LayoutId"];
             if (pathOrId.IsWhiteSpaceOrNull())
@@ -162,7 +166,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="rendering">The rendering.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object GetFromItem(Rendering rendering, GetModelArgs args)
+        protected virtual GetObjectResult GetFromItem(Rendering rendering, GetModelArgs args)
         {
             string model = rendering.Item.ValueOrDefault(i => i["MvcLayoutModel"]);
             if (model.IsWhiteSpaceOrNull())
@@ -179,7 +183,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="db">The db.</param>
         /// <returns></returns>
         /// <exception cref="Glass.Mapper.MapperException">Failed to find context {0}.Formatted(ContextName)</exception>
-        public object GetObject(string model, Database db, Rendering renderingItem)
+        public GetObjectResult GetObject(string model, Database db, Rendering renderingItem)
         {
 
             if (model.IsNullOrEmpty())
@@ -192,8 +196,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 if (target == null)
                     return null;
 
-                string newModel = target[ModelTypeField];
-                return GetObject(newModel, db, renderingItem);
+                model = target[ModelTypeField];
             }
             //if guid must be that to Model item
             Guid targetId;
@@ -203,17 +206,21 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 if (target == null)
                     return null;
 
-                string newModel = target[ModelTypeField];
-                return GetObject(newModel, db, renderingItem);
+                model = target[ModelTypeField];
             }
-
 
             var type = Type.GetType(model, false);
 
             if (type == null || renderingModelType.IsAssignableFrom(type))
-                return null;
-           
+            {
+                return new GetObjectResult() { GlassType = false };
+            }
+
+
             ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
+
+
+
 
 
             //this is really aggressive
@@ -227,16 +234,20 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             }
 
+
+            var result = new GetObjectResult();
+            result.GlassType = true;
+
             if (renderingItem.DataSource.IsNotNullOrEmpty())
             {
                 var item = scContext.Database.GetItem(renderingItem.DataSource);
-                return scContext.CreateType(type, item, false, false, null);
+                result.Result = scContext.CreateType(type, item, false, false, null);
             }
 
             if (renderingItem.RenderingItem.DataSource.HasValue())
             {
                 var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
-                return scContext.CreateType(type, item, false, false, null);
+                result.Result = scContext.CreateType(type, item, false, false, null);
             }
 
             /**
@@ -245,11 +256,18 @@ namespace Glass.Mapper.Sc.Pipelines.Response
              */
             if (renderingItem.Item != null)
             {
-                return scContext.CreateType(type, renderingItem.Item, false, false, null);
+                result.Result = scContext.CreateType(type, renderingItem.Item, false, false, null);
             }
 
-            return scContext.GetCurrentItem(type);
+            result.Result = scContext.GetCurrentItem(type);
+            return result;
 
+        }
+
+        public class GetObjectResult
+        {
+            public object Result { get; set; }
+            public bool GlassType { get; set; }
         }
     }
 }
