@@ -217,6 +217,12 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\20121222_001405.item">
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\GetField.item">
       <Icon>/temp/IconCache/Applications/32x32/form_blue.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
@@ -266,6 +272,12 @@
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldLinkMapper.item">
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldLinkMapper\20121222_001405.item">
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldLinkMapper\GetField.item">
