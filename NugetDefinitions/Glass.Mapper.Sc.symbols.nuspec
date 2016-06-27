@@ -19,7 +19,6 @@
     <tags>Glass Mapper Sitecore Glass.Mapper</tags>
     <language>en-GB</language>
     <dependencies>
-      <dependency id="Castle.Core" version="3.3.3" />
       <dependency id="Glass.Mapper.Sc.Core" version="$version$" />
 	</dependencies>
   </metadata>
