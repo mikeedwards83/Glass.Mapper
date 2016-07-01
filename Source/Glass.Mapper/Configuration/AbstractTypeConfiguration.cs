@@ -35,7 +35,7 @@ namespace Glass.Mapper.Configuration
     {
         private IDictionary<ConstructorInfo, Delegate> _constructorMethods;
 
-        private AbstractPropertyConfiguration[] _properties;
+        private IList<AbstractPropertyConfiguration> _properties;
 
         /// <summary>
         /// The type this configuration represents
@@ -47,7 +47,7 @@ namespace Glass.Mapper.Configuration
         /// A list of the properties configured on a type
         /// </summary>
         /// <value>The properties.</value>
-        public AbstractPropertyConfiguration[] Properties { get { return _properties; } }
+        public AbstractPropertyConfiguration[] Properties { get { return _properties.ToArray(); } }
 
         /// <summary>
         /// A list of the constructors on a type
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Configuration
         /// </summary>
         public AbstractTypeConfiguration()
         {
-            _properties = new AbstractPropertyConfiguration[]{};
+            _properties = new List<AbstractPropertyConfiguration>();
         }
 
 
@@ -91,15 +91,16 @@ namespace Glass.Mapper.Configuration
         {
             if (property != null)
             {
-                if (_properties.Any(x => x.PropertyInfo.Name == property.PropertyInfo.Name))
+
+                var currentProperty = _properties.FirstOrDefault(x => x.PropertyInfo.Name == property.PropertyInfo.Name);
+                if (currentProperty != null)
                 {
-                    throw new MapperException(
-                        "You cannot have duplicate mappings for properties. Property Name: {0}  Type: {1}".Formatted(
-                            property.PropertyInfo.Name, Type.Name));
+                    _properties.Remove(currentProperty);
                 }
 
 
-                _properties = _properties.Concat(new[] {property}).ToArray();
+                _properties.Add(property);
+
                 _propertMappingExpression = CreatePropertyExpression(property);
             }
         }
