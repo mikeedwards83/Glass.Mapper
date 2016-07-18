@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Glass.Mapper.Sc.IoC
+﻿namespace Glass.Mapper.Sc.IoC
 {
     public class ConfigurationFactory : IConfigurationFactory
     {
@@ -21,6 +15,7 @@ namespace Glass.Mapper.Sc.IoC
             GlassContextProvider = new GlassContextProvider();
             SitecoreContextFactory = new SitecoreContextFactory(GlassContextProvider);
             GlassHtmlFactory = new GlassHtmlFactory();
+            ItemVersionHandler = new ItemVersionHandler();
         }
 
         public ISitecoreContextFactory SitecoreContextFactory { get; set; }
@@ -28,5 +23,7 @@ namespace Glass.Mapper.Sc.IoC
         public IGlassContextProvider GlassContextProvider { get; set; }
 
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
+
+        public IItemVersionHandler ItemVersionHandler { get; set; }
     }
 }

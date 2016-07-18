@@ -7,5 +7,7 @@
         IGlassContextProvider GlassContextProvider { get; set; }
 
         IGlassHtmlFactory GlassHtmlFactory { get; set; }
+
+        IItemVersionHandler ItemVersionHandler { get; set; }
     }
 }

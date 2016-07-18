@@ -23,6 +23,7 @@ using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 
@@ -80,7 +81,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 targetItem = item.Database.GetItem(scConfig.Path, item.Language);
             }
 
-            if (targetItem == null || targetItem.Versions.Count == 0)
+            if (targetItem == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(targetItem, scContext.Service.Config))
             {
                 return null;
             }

@@ -22,15 +22,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
+using IDependencyResolver = Glass.Mapper.IoC.IDependencyResolver;
 using Version = Sitecore.Data.Version;
 
 namespace Glass.Mapper.Sc
@@ -478,7 +479,7 @@ namespace Glass.Mapper.Sc
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (Utilities.DoVersionCheck(Config) && item.Versions.Count == 0)) return null;
+            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, Config)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)

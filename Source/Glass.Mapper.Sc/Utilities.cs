@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Common;
 using Sitecore.Configuration;
 using Sitecore.Collections;
@@ -187,31 +188,13 @@ namespace Glass.Mapper.Sc
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
 
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(config)))
+            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, config))
             {
                 return null;
             }
 
             return item;
         }
-
-        public static bool DoVersionCheck(Config config)
-        {
-            if (config.DisableVersionCount)
-            {
-                return false;
-            }
-
-            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
-            {
-                return false;
-            }
-
-            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
-
-        }
-
-
 
         /// <summary>
         /// Gets the language items.
