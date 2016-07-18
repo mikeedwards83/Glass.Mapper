@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sc
                 throw new ArgumentNullException(nameof(item));
             }
 
-            string cacheKey = String.Format("GlassVersionCount_{0}", item.ID.Guid);
+            string cacheKey = String.Format("GlassVersionCount_{0}", item.GetUniqueId());
 
             if (ConfigurationFactory.Default.CacheManager.Contains(cacheKey))
             {
