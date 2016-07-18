@@ -50,7 +50,7 @@ namespace Glass.Mapper.Caching
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <typeparam name="T"></typeparam>
-        public void AddOrUpdate<T>(string key, T value) where T : class
+        public void AddOrUpdate<T>(string key, T value)
         {
             if (_memoryCache.Contains(key))
             {
@@ -73,6 +73,18 @@ namespace Glass.Mapper.Caching
         public T Get<T>(string key) where T : class
         {
             return _memoryCache[key] as T;
+        }
+
+        public T GetValue<T>(string key) where T : struct
+        {
+            try
+            {
+                return (T) _memoryCache[key];
+            }
+            catch (Exception ex)
+            {
+                return default(T);
+            }
         }
 
         public bool Contains(string key)

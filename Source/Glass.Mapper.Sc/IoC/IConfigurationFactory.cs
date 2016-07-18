@@ -1,4 +1,6 @@
-﻿namespace Glass.Mapper.Sc.IoC
+﻿using Glass.Mapper.Caching;
+
+namespace Glass.Mapper.Sc.IoC
 {
     public interface IConfigurationFactory
     {
@@ -9,5 +11,7 @@
         IGlassHtmlFactory GlassHtmlFactory { get; set; }
 
         IItemVersionHandler ItemVersionHandler { get; set; }
+
+        ICacheManager CacheManager { get; set; }
     }
 }
