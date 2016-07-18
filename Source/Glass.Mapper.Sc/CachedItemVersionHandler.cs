@@ -6,9 +6,14 @@ namespace Glass.Mapper.Sc
 {
     public class CachedItemVersionHandler : ItemVersionHandler
     {
+        protected virtual bool CanCache()
+        {
+            return Sitecore.Context.PageMode.IsNormal || Sitecore.Context.PageMode.IsDebugging;
+        }
+
         public override bool HasVersions(Item item)
         {
-            if (!Sitecore.Context.PageMode.IsNormal && !Sitecore.Context.PageMode.IsDebugging)
+            if (!CanCache())
             {
                 return base.HasVersions(item);
             }

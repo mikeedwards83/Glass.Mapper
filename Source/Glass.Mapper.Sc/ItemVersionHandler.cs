@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc
                 throw new ArgumentNullException(nameof(item));
             }
 
-            return ConfigurationFactory.Default.ItemVersionHandler.HasVersions(item);
+            return item.Versions.Count > 0;
         }
 
         public virtual bool VersionCountEnabledAndHasVersions(Item item, Config config)

@@ -248,6 +248,43 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void VersionCountsTest()
+        {
+            //Arrange
+            var config = new Config();
+            IItemVersionHandler versionHandler = new ItemVersionHandler();
+            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler();
+            var warmupItem = _db.GetItem(new ID(_id));
+            bool result1 = false;
+            bool result2 = false;
+
+
+            //Act
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var sitecoreItem = _db.GetItem(new ID(_id));
+                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var sitecoreItem = _db.GetItem(new ID(_id));
+                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            //Assert
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
+        }
+
+        [Test]
         [Timeout(120000)]
         public void GetItems_InheritanceTest(
             [Values(100, 200, 300)] int count
@@ -557,6 +594,13 @@ namespace Glass.Mapper.Sc.Integration
 
 
 
+        public class TestCachedItemVersionHandler : CachedItemVersionHandler
+        {
+            protected override bool CanCache()
+            {
+                return true;
+            }
+        }
     }
 }
 
