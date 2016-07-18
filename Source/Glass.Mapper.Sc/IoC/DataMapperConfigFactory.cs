@@ -55,6 +55,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreParentMapper());
             Add(() => new SitecoreDelegateMapper());
             Add(() => new SitecoreQueryMapper(queryParameterFactory.GetItems()));
+            Add(() => new SitecoreSelfMapper());
         }
     }
 }
