@@ -188,7 +188,7 @@ namespace Glass.Mapper.Sc
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
 
-            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, config))
+            if (item == null || !ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, config))
             {
                 return null;
             }

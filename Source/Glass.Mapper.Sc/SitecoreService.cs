@@ -479,7 +479,7 @@ namespace Glass.Mapper.Sc
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, Config)) return null;
+            if (item == null || !ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, Config)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)
