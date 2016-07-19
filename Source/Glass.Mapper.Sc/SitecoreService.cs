@@ -51,6 +51,8 @@ namespace Glass.Mapper.Sc
         /// <value>The database.</value>
         public  Database Database { get; private set; }
 
+        public IItemVersionHandler ItemVersionHandler { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreService"/> class.
         /// </summary>
@@ -100,7 +102,12 @@ namespace Glass.Mapper.Sc
         public override void Initiate(IDependencyResolver resolver)
         {
             Config = resolver.GetConfig() as Config;
-            
+
+            var scDependencyResolver = resolver as Mapper.Sc.IoC.IDependencyResolver;
+
+            ItemVersionHandler = scDependencyResolver.ItemVersionHandler;
+
+
             base.Initiate(resolver);
             
             CacheEnabled = Sitecore.Context.Site == null ||
@@ -479,7 +486,7 @@ namespace Glass.Mapper.Sc
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, Config)) return null;
+            if (item == null || !ItemVersionHandler.VersionCountEnabledAndHasVersions(item)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)

@@ -240,6 +240,8 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
             config.Id = "{EC4351CE-C5F1-4F01-B354-3D26DC7A66CD}";
 
+            service.ItemVersionHandler.Returns(new ItemVersionHandler(new Config()));
+
             service.CreateType(
                 typeof(StubMapped),
                 Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),

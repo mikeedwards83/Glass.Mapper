@@ -182,13 +182,13 @@ namespace Glass.Mapper.Sc
         /// <param name="foundItem">The found item.</param>
         /// <param name="language">The language.</param>
         /// <returns>Item.</returns>
-        public static Item GetLanguageItem(Item foundItem, Language language, Config config)
+        public static Item GetLanguageItem(Item foundItem, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItem == null) return null;
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
 
-            if (item == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(item, config))
+            if (item == null || !versionHandler.VersionCountEnabledAndHasVersions(item))
             {
                 return null;
             }
@@ -203,11 +203,11 @@ namespace Glass.Mapper.Sc
         /// <param name="language">The language.</param>
         /// <param name="config"></param>
         /// <returns>IEnumerable{Item}.</returns>
-        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language, versionHandler)).Where(x => x != null);
         }
 
         public class GlassImageRender : ImageRenderer

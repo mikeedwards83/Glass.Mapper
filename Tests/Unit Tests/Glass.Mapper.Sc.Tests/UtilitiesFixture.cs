@@ -227,10 +227,10 @@ namespace Glass.Mapper.Sc.Tests
         {
             //Arrange
             var config = new Config();
-            IItemVersionHandler versionHandler = new ItemVersionHandler();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
 
             //Act
-            var result = versionHandler.VersionCountEnabled(config);
+            var result = versionHandler.VersionCountEnabled();
 
             //Assert
             Assert.IsTrue(result);
@@ -242,10 +242,10 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var config = new Config();
             config.DisableVersionCount = true;
-            IItemVersionHandler versionHandler = new ItemVersionHandler();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
 
             //Act
-            var result = versionHandler.VersionCountEnabled(config);
+            var result = versionHandler.VersionCountEnabled();
 
             //Assert
             Assert.IsFalse(result);
@@ -257,14 +257,14 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var config = new Config();
             config.DisableVersionCount = true;
-            IItemVersionHandler versionHandler = new ItemVersionHandler();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
 
             var result = true;
 
             //Act
             using (new VersionCountDisabler())
             {
-                result = versionHandler.VersionCountEnabled(config);
+                result = versionHandler.VersionCountEnabled();
             }
 
             //Assert

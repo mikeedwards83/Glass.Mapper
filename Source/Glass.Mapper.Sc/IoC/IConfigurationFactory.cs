@@ -9,9 +9,5 @@ namespace Glass.Mapper.Sc.IoC
         IGlassContextProvider GlassContextProvider { get; set; }
 
         IGlassHtmlFactory GlassHtmlFactory { get; set; }
-
-        IItemVersionHandler ItemVersionHandler { get; set; }
-
-        ICacheManager CacheManager { get; set; }
     }
 }

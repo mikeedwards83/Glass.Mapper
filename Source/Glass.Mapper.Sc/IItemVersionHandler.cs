@@ -4,10 +4,10 @@ namespace Glass.Mapper.Sc
 {
     public interface IItemVersionHandler
     {
-        bool VersionCountEnabled(Config config);
+        bool VersionCountEnabled();
 
         bool HasVersions(Item item);
 
-        bool VersionCountEnabledAndHasVersions(Item item, Config config);
+        bool VersionCountEnabledAndHasVersions(Item item);
     }
 }

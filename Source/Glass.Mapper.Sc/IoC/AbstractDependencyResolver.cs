@@ -21,6 +21,7 @@ namespace Glass.Mapper.Sc.IoC
         public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; set; }
         public IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; set; }
         public IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; set; }
+        public IItemVersionHandler ItemVersionHandler { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
 
         public abstract ICacheManager GetCacheManager();

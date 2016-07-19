@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 targetItem = item.Database.GetItem(scConfig.Path, item.Language);
             }
 
-            if (targetItem == null || ConfigurationFactory.Default.ItemVersionHandler.VersionCountEnabledAndHasVersions(targetItem, scContext.Service.Config))
+            if (targetItem == null || !scContext.Service.ItemVersionHandler.VersionCountEnabledAndHasVersions(targetItem))
             {
                 return null;
             }

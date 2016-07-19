@@ -38,7 +38,8 @@ namespace Glass.Mapper.IoC
         IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; }
         IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; }
         IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; }
-        IConfigFactory<IGlassMap> ConfigurationMapFactory { get; } 
+        IConfigFactory<IGlassMap> ConfigurationMapFactory { get; }
+       
     }
 }
 

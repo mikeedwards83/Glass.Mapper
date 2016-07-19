@@ -17,8 +17,6 @@ namespace Glass.Mapper.Sc.IoC
             GlassContextProvider = new GlassContextProvider();
             SitecoreContextFactory = new SitecoreContextFactory(GlassContextProvider);
             GlassHtmlFactory = new GlassHtmlFactory();
-            ItemVersionHandler = new ItemVersionHandler();
-            CacheManager = new NetMemoryCacheManager();
         }
 
         public ISitecoreContextFactory SitecoreContextFactory { get; set; }
@@ -26,9 +24,5 @@ namespace Glass.Mapper.Sc.IoC
         public IGlassContextProvider GlassContextProvider { get; set; }
 
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
-
-        public IItemVersionHandler ItemVersionHandler { get; set; }
-
-        public ICacheManager CacheManager { get; set; }
     }
 }

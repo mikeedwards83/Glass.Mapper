@@ -7,25 +7,36 @@ namespace Glass.Mapper.Sc
 {
     public class ItemVersionHandler : IItemVersionHandler
     {
-        public virtual bool VersionCountEnabled(Config config)
+        private readonly Config _config;
+
+        public ItemVersionHandler(Config config)
         {
-            if (config == null)
+            _config = config;
+        }
+
+        public virtual bool VersionCountEnabled()
+        {
+           
+            if (_config == null)
             {
-                throw new ArgumentNullException(nameof(config));
+                throw new ArgumentNullException(nameof(_config));
             }
 
-            if (config.DisableVersionCount)
+            if (_config.DisableVersionCount)
             {
                 return false;
             }
 
-            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
+            if (_config != null && _config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
             {
                 return false;
             }
 
             return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
         }
+
+      
+
 
         public virtual bool HasVersions(Item item)
         {
@@ -34,12 +45,21 @@ namespace Glass.Mapper.Sc
                 throw new ArgumentNullException(nameof(item));
             }
 
-            return ConfigurationFactory.Default.ItemVersionHandler.HasVersions(item);
+            return item.Versions.Count > 0;
         }
 
-        public virtual bool VersionCountEnabledAndHasVersions(Item item, Config config)
+        public virtual bool VersionCountEnabledAndHasVersions(Item item)
         {
-            return VersionCountEnabled(config) && HasVersions(item);
+            if (VersionCountEnabled() && HasVersions(item))
+            {
+                return true;
+            }
+            if (!VersionCountEnabled())
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
