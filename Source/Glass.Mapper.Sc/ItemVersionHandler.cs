@@ -39,7 +39,7 @@ namespace Glass.Mapper.Sc
 
         public virtual bool VersionCountEnabledAndHasVersions(Item item, Config config)
         {
-            return VersionCountEnabled(config) && HasVersions(item);
+            return !VersionCountEnabled(config) || VersionCountEnabled(config) && HasVersions(item);
         }
     }
 }
