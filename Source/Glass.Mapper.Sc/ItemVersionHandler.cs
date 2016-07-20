@@ -35,9 +35,6 @@ namespace Glass.Mapper.Sc
             return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
         }
 
-      
-
-
         public virtual bool HasVersions(Item item)
         {
             if (item == null)
@@ -50,16 +47,8 @@ namespace Glass.Mapper.Sc
 
         public virtual bool VersionCountEnabledAndHasVersions(Item item)
         {
-            if (VersionCountEnabled() && HasVersions(item))
-            {
-                return true;
-            }
-            if (!VersionCountEnabled())
-            {
-                return true;
-            }
-
-            return false;
+            bool versionCountEnabled = VersionCountEnabled();
+            return !versionCountEnabled || HasVersions(item);
         }
     }
 }

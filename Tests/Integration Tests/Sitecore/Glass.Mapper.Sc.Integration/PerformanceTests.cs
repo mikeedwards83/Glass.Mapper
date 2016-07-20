@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Glass.Mapper.Caching;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -253,8 +254,8 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Arrange
             var config = new Config();
-            IItemVersionHandler versionHandler = new ItemVersionHandler();
-            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new NetMemoryCacheManager(), config);
             var warmupItem = _db.GetItem(new ID(_id));
             bool result1 = false;
             bool result2 = false;
@@ -265,7 +266,7 @@ namespace Glass.Mapper.Sc.Integration
             for (var i = 0; i < 10000; i++)
             {
                 var sitecoreItem = _db.GetItem(new ID(_id));
-                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
             }
             _glassWatch.Stop();
             Console.WriteLine(_glassWatch.ElapsedMilliseconds);
@@ -275,7 +276,7 @@ namespace Glass.Mapper.Sc.Integration
             for (var i = 0; i < 10000; i++)
             {
                 var sitecoreItem = _db.GetItem(new ID(_id));
-                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
             }
             _glassWatch.Stop();
             Console.WriteLine(_glassWatch.ElapsedMilliseconds);
@@ -290,8 +291,8 @@ namespace Glass.Mapper.Sc.Integration
         {
             //Arrange
             var config = new Config();
-            IItemVersionHandler versionHandler = new ItemVersionHandler();
-            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new NetMemoryCacheManager(), config);
             var warmupItem = _db.GetItem(new ID(_id));
             bool result1 = false;
             bool result2 = false;
@@ -302,7 +303,7 @@ namespace Glass.Mapper.Sc.Integration
             for (var i = 0; i < 10000; i++)
             {
                 var sitecoreItem = _db.GetItem(new ID(_id), Language.Parse("de-DE"));
-                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
             }
             _glassWatch.Stop();
             Console.WriteLine(_glassWatch.ElapsedMilliseconds);
@@ -312,7 +313,7 @@ namespace Glass.Mapper.Sc.Integration
             for (var i = 0; i < 10000; i++)
             {
                 var sitecoreItem = _db.GetItem(new ID(_id), Language.Parse("de-DE"));
-                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem, config);
+                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
             }
             _glassWatch.Stop();
             Console.WriteLine(_glassWatch.ElapsedMilliseconds);
@@ -634,6 +635,10 @@ namespace Glass.Mapper.Sc.Integration
 
         public class TestCachedItemVersionHandler : CachedItemVersionHandler
         {
+            public TestCachedItemVersionHandler(ICacheManager cacheManager, Config config) : base(cacheManager, config)
+            {
+            }
+
             protected override bool CanCache()
             {
                 return true;
