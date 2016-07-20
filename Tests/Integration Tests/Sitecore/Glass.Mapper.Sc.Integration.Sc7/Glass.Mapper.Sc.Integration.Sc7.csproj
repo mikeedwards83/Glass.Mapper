@@ -90,9 +90,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\ConnectionStrings.config">
+    <None Include="App_Config\ConnectionStrings.config.example">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\ConnectionStringsOracle.config">
