@@ -126,6 +126,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source", language);
             var target = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target", language);
             var service = Substitute.For<ISitecoreService>();
+            var itemVersionHandler = Substitute.For<IItemVersionHandler>();
+            itemVersionHandler.VersionCountEnabledAndHasVersions(Arg.Any<Item>()).Returns(true);
+            service.ItemVersionHandler.Returns(itemVersionHandler);
+
             var expected = new StubMapped();
 
             config.PropertyInfo = typeof (Stub).GetProperty("StubMapped");
@@ -163,6 +167,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source", language);
             var target = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target", language);
             var service = Substitute.For<ISitecoreService>();
+            var itemVersionHandler = Substitute.For<IItemVersionHandler>();
+            itemVersionHandler.VersionCountEnabledAndHasVersions(Arg.Any<Item>()).Returns(true);
+            service.ItemVersionHandler.Returns(itemVersionHandler);
+
             var expected = new StubMapped();
 
             config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
@@ -274,6 +282,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source", language);
             var target = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target", language);
             var service = Substitute.For<ISitecoreService>();
+
+            var itemVersionHandler = Substitute.For<IItemVersionHandler>();
+            itemVersionHandler.VersionCountEnabledAndHasVersions(Arg.Any<Item>()).Returns(true);
+            service.ItemVersionHandler.Returns(itemVersionHandler);
+
             var expected = new StubMapped();
 
             config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
@@ -346,6 +359,11 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source", language);
             var target = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target", language);
             var service = Substitute.For<ISitecoreService>();
+
+            var itemVersionHandler = Substitute.For<IItemVersionHandler>();
+            itemVersionHandler.VersionCountEnabledAndHasVersions(Arg.Any<Item>()).Returns(true);
+            service.ItemVersionHandler.Returns(itemVersionHandler);
+
             var expected = new StubMapped();
 
             config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
@@ -383,6 +401,10 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
             var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Source", language);
             var target = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target", language);
             var service = Substitute.For<ISitecoreService>();
+            var itemVersionHandler = Substitute.For<IItemVersionHandler>();
+            itemVersionHandler.VersionCountEnabledAndHasVersions(Arg.Any<Item>()).Returns(true);
+            service.ItemVersionHandler.Returns(itemVersionHandler);
+
             var expected = new StubMapped();
 
             config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
