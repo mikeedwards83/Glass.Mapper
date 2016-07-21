@@ -97,6 +97,7 @@
     <Compile Include="Configuration\NodeConfiguration.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
+    <Compile Include="Configuration\SelfConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Diagnostics\GlassModelCounter.cs" />
     <Compile Include="DisableCache.cs" />
