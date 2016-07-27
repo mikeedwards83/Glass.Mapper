@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             if (_sitecoreContext == null)
             {
                 _sitecoreContext = ConfigurationFactory.Default.SitecoreContextFactory.GetSitecoreContext();
-                _glassHtml = ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(_sitecoreContext);
+                _glassHtml = _sitecoreContext.GlassHtml;
             }
            
             base.OnInit(e);

@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         }
 
-        protected AbstractGlassUserControl(ISitecoreContext context) : this(context, ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(context))
+        protected AbstractGlassUserControl(ISitecoreContext context) : this(context, ((Sc.IoC.DependencyResolver)context.GlassContext.DependencyResolver).GlassHtmlFactory.GetGlassHtml(context))
         {
         }
 
@@ -107,7 +107,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The glass HTML.</value>
         public virtual IGlassHtml GlassHtml
         {
-            get { return _glassHtml ?? (_glassHtml = _configurationFactory.GlassHtmlFactory.GetGlassHtml(SitecoreContext)); }
+            get { return _glassHtml ??( _glassHtml = SitecoreContext.GlassHtml); }
             set { _glassHtml = value; }
         }
 

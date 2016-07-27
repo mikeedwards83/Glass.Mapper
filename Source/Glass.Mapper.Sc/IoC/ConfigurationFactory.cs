@@ -20,13 +20,12 @@ namespace Glass.Mapper.Sc.IoC
         {
             GlassContextProvider = new GlassContextProvider();
             SitecoreContextFactory = new SitecoreContextFactory(GlassContextProvider);
-            GlassHtmlFactory = new GlassHtmlFactory();
+           
         }
 
         public ISitecoreContextFactory SitecoreContextFactory { get; set; }
 
         public IGlassContextProvider GlassContextProvider { get; set; }
 
-        public IGlassHtmlFactory GlassHtmlFactory { get; set; }
     }
 }

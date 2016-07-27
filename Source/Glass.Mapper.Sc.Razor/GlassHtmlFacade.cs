@@ -71,16 +71,16 @@ namespace Glass.Mapper.Sc.Razor
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="writer">The writer.</param>
-        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase) : this(context, ConfigurationFactory.Default)
+        public GlassHtmlFacade(ISitecoreContext context, HtmlTextWriter writer, ITemplateBase templateBase) : this(context)
 
         {
             _writer = writer;
             TemplateBase = templateBase;
         }
 
-        protected GlassHtmlFacade(ISitecoreContext context, IConfigurationFactory configurationFactory)
+        protected GlassHtmlFacade(ISitecoreContext context)
         {
-            _glassHtml = configurationFactory.GlassHtmlFactory.GetGlassHtml(context);
+            _glassHtml = context.GlassHtml;
         }
 
         /// <summary>

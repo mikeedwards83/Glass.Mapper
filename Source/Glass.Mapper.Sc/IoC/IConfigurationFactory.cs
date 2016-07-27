@@ -5,7 +5,5 @@
         ISitecoreContextFactory SitecoreContextFactory { get; set; }
 
         IGlassContextProvider GlassContextProvider { get; set; }
-
-        IGlassHtmlFactory GlassHtmlFactory { get; set; }
     }
 }

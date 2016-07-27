@@ -151,7 +151,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             base.InitHelpers();
             SitecoreContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext();
-            GlassHtml = ConfigurationFactory.GlassHtmlFactory.GetGlassHtml(SitecoreContext);
+            GlassHtml = SitecoreContext.GlassHtml;
             RenderingContext = new RenderingContextMvcWrapper();
 
             if (Model == null && this.ViewData.Model == null)

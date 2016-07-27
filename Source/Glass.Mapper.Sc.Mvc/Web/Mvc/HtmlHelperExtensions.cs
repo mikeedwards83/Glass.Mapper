@@ -187,7 +187,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             var configurationFactory = ConfigurationFactory.Default;
             ISitecoreContext sitecoreContext = configurationFactory.SitecoreContextFactory.GetSitecoreContext();
-            var html = configurationFactory.GlassHtmlFactory.GetGlassHtml(sitecoreContext);
+            var html = sitecoreContext.GlassHtml;
             return new GlassHtmlMvc<T>(html, htmlHelper.ViewContext.Writer, htmlHelper.ViewData.Model);
         }
     }

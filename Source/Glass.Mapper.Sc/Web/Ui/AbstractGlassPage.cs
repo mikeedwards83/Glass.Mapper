@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.Web.Ui
             }
 
             _sitecoreContext = context;
-            _glassHtml = configurationFactory.GlassHtmlFactory.GetGlassHtml(context);
+            _glassHtml = context.GlassHtml;
         }
 
 

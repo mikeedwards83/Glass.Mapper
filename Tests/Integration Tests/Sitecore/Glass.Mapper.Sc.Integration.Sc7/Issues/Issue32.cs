@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc.Integration.Sc7.Issues
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var scContext = new SitecoreContext(db);
 
-            var glassHtml = ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(scContext);
+            var glassHtml = scContext.GlassHtml;
             var instance = scContext.GetItem<Sc7SitecoreItem>("/sitecore");
 
             //Act

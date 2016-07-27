@@ -89,14 +89,17 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
         protected GlassController(ISitecoreContext sitecoreContext) 
-            : this(sitecoreContext, ConfigurationFactory.Default, new RenderingContextMvcWrapper(), null)
+            : this(sitecoreContext, new RenderingContextMvcWrapper(), null)
         {
             
         }
 
-        protected GlassController(ISitecoreContext sitecoreContext, IConfigurationFactory configurationFactory,
+        protected GlassController(ISitecoreContext sitecoreContext,
             IRenderingContext renderingContext, HttpContextBase httpContextBase) 
-            : this(sitecoreContext, configurationFactory.GlassHtmlFactory.GetGlassHtml(sitecoreContext), renderingContext, httpContextBase)
+            : this(sitecoreContext,
+                  sitecoreContext.GlassHtml, 
+                  renderingContext, 
+                  httpContextBase)
         {
             
         }

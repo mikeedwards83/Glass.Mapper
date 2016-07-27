@@ -151,16 +151,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractRazorControl{T}"/> class.
         /// </summary>
-        public AbstractRazorControl() : this(ConfigurationFactory.Default)
-        {
+        public AbstractRazorControl() { 
             ViewData = new ViewDataDictionary();
             ViewManager = new ViewManager();
         }
 
-        protected AbstractRazorControl(IConfigurationFactory configurationFactory)
-        {
-            GlassHtml = configurationFactory.GlassHtmlFactory.GetGlassHtml(SitecoreContext);
-        } 
 
         /// <summary>
         /// Put your logic to create your model here
