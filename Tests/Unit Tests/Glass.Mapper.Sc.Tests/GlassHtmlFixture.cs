@@ -731,7 +731,7 @@ namespace Glass.Mapper.Sc.Tests
 
         private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
         {
-            return sitecoreContext.GlassHtml;
+            return new GlassHtml(sitecoreContext);
         }
 
     }
