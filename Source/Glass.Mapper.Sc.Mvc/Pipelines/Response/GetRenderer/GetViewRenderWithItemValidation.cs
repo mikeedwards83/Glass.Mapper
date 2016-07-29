@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.Mvc.Pipelines.Response.GetRenderer
                 return null;
 
             // Ignore item check when in page editor
-            if (Sitecore.Context.PageMode.IsPageEditor || Sitecore.Context.PageMode.IsPageEditorEditing)
+            if (Utilities.IsPageEditor || Utilities.IsPageEditorEditing)
                 return viewRenderer;
 
             // Override renderer to null when there is an unpublished item refererenced by underlying view

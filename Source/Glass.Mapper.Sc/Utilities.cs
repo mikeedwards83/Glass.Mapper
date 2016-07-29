@@ -43,6 +43,28 @@ namespace Glass.Mapper.Sc
     public class Utilities : Mapper.Utilities
     {
 
+        public static bool IsPageEditor
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditor;
+#else
+                return Sitecore.Context.PageMode.IsPageEditor;
+#endif
+            }
+        }
+        public static bool IsPageEditorEditing
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditorEditing;
+#else
+                return Sitecore.Context.PageMode.IsPageEditorEditing;
+#endif
+            }
+        }
 
         /// <summary>
         /// Converts a NameValueCollection into HTML attributes
