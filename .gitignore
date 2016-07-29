@@ -146,3 +146,4 @@ Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Tds/Package_Release
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Sc7/App_Config/ConnectionStrings.config
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.ThirdParty/App_Config/ConnectionStrings.config
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/App_Config/ConnectionStrings.config
+Depends/Sitecore/bin82/*.dll

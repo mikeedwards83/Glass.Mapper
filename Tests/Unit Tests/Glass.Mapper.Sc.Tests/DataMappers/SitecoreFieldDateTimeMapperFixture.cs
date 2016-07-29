@@ -74,7 +74,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             Assert.AreEqual(expected, result);
         }
 
-#if (SC80 || SC81)
+#if (SC80 || SC81 || SC82)
 
         [Test]
         public void SitecoreTimeZoneDemo()
@@ -189,7 +189,7 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         public void SetField_DateTimePassed_SetsFieldValue()
         {
             //Assign
-#if (SC80 || SC81)
+#if (SC80 || SC81 || SC82)
             string expected = "20120101T010101Z";
 #else
             string expected = "20120101T010101";
