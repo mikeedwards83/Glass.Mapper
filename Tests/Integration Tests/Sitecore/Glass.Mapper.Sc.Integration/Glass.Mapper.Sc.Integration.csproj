@@ -132,9 +132,9 @@
     <Content Include="App_Config\Commands.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="App_Config\ConnectionStrings.config">
+    <Content Include="App_Config\ConnectionStrings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="App_Config\ConnectionStrings.config.example">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
