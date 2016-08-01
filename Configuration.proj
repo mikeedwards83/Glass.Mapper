@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC82</DefineConstants>
