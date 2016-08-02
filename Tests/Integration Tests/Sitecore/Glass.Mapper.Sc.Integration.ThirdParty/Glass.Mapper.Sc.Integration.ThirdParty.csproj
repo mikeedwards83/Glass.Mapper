@@ -90,9 +90,12 @@
     <Content Include="App_Config\Commands.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Config\ConnectionStrings.config">
+    <None Include="App_Config\ConnectionStrings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="App_Config\ConnectionStrings.config.example">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="App_Config\ConnectionStringsOracle.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

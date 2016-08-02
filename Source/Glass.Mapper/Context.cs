@@ -169,7 +169,7 @@ namespace Glass.Mapper
 
                     //don't load generic types or specifically the object type
                     //see https://github.com/mikeedwards83/Glass.Mapper/issues/85
-                    if (typeConfig.Type.IsGenericTypeDefinition || typeConfig.Type == typeof(object))
+                    if (typeConfig.Type.IsGenericTypeDefinition || typeConfig.Type == typeof(System.Object))
                     {
                         continue;
                     }

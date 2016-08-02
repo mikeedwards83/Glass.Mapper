@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -50,6 +51,20 @@
     <DebugSymbols>false</DebugSymbols>
     <OutputPath>.\Release\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <PackageName>Glass.Mapper.Sc.Integration.Tds</PackageName>
+    <GeneratePackage>True</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <PackageExcludeCode>True</PackageExcludeCode>
+    <AddDateTimeToPackageName>True</AddDateTimeToPackageName>
+    <PackageAuthor>Michael Edwards, Nathanael Mann</PackageAuthor>
+    <PackagePublisher>Glass.lu</PackagePublisher>
+    <PackageReadme>
+    </PackageReadme>
+    <PackageVersion>
+    </PackageVersion>
+    <SitecoreAssemblyPath>.\..\..\..\..\Depends\Sitecore\bin80</SitecoreAssemblyPath>
+    <NuGetGenerateNuGetPackage>False</NuGetGenerateNuGetPackage>
+    <NuGetRequireLicenseAcceptance>False</NuGetRequireLicenseAcceptance>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'CI' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,8 +218,9 @@
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\20121222_001405.item">
-      <Icon>/sitecore/shell/themes/standard/~/media/C10794CE624F4F72A2B914336F3FB582.ashx?h=16&amp;thn=1&amp;w=16&amp;db=master</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldFileMapper\GetField.item">
@@ -238,8 +254,9 @@
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\20121222_001405.item">
-      <Icon>/sitecore/shell/themes/standard/~/media/C10794CE624F4F72A2B914336F3FB582.ashx?h=16&amp;thn=1&amp;w=16&amp;db=master</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldImageMapper\GetField.item">
@@ -258,8 +275,9 @@
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldLinkMapper\20121222_001405.item">
-      <Icon>/sitecore/shell/themes/standard/~/media/C10794CE624F4F72A2B914336F3FB582.ashx?h=16&amp;thn=1&amp;w=16&amp;db=master</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ExcludeItemFrom>
+      </ExcludeItemFrom>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Tests\DataMappers\SitecoreFieldLinkMapper\GetField.item">
@@ -1456,5 +1474,5 @@
   <ItemGroup>
     <ExcludedAssemblies Include="Sitecore.%2a.dll" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" Condition="Exists('$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets')" />
 </Project>

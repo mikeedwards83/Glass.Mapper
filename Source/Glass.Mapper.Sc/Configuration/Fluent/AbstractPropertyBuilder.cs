@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// Gets the configuration.
         /// </summary>
         /// <value>The configuration.</value>
-        public TK Configuration { get; private set; }
+        public TK Configuration { get; protected set; }
         /// <summary>
         /// Gets the expression.
         /// </summary>

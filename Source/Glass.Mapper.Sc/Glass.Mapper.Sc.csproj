@@ -71,6 +71,7 @@
     <Compile Include="Configuration\Attributes\SitecoreIgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreItemAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreSelfAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Configuration\SitecoreInfoMediaUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreInfoType.cs" />
     <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
+    <Compile Include="Configuration\SitecoreSelfConfiguration.cs" />
     <Compile Include="Configuration\SitecoreItemConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
     <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
+    <Compile Include="DataMappers\SitecoreSelfMapper.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />

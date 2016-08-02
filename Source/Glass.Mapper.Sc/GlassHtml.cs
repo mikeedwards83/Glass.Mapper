@@ -438,8 +438,7 @@ namespace Glass.Mapper.Sc
         {
             get
             {
-                return
-                            Sitecore.Context.PageMode.IsPageEditorEditing;
+                return Utilities.IsPageEditorEditing;
             }
         }
 
@@ -870,14 +869,14 @@ namespace Glass.Mapper.Sc
 
             string mediaUrl = builder.ToString();
 
-#if (SC81 || SC80 || SC75)
+#if (SC81 || SC80 || SC75 || SC82)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
             mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
-#if (SC81 || SC80 || SC75)
+#if (SC81 || SC80 || SC75 || SC82)
         public virtual string ProtectMediaUrl(string url)
         {
             return Sitecore.Resources.Media.HashingUtils.ProtectAssetUrl(url);

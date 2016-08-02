@@ -79,6 +79,35 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             Assert.IsNotNull(finalStubMap.GlassType.Config.IdConfig);
         }
 
+        [Test]
+        public void ConfigMapProperties_ImportMap_CanOverrideExistingPropertyConfig()
+        {
+            //Assign
+            FinalStubMap finalStubMap = new FinalStubMap();
+            FinalStubSubClassMap finalStubSubClassMap = new FinalStubSubClassMap();
+            PartialStub1Map partialStub1Map = new PartialStub1Map();
+            PartialStub2Map partialStub2Map = new PartialStub2Map();
+            StubBaseMap stubBaseMap = new StubBaseMap();
+
+            SitecoreFluentConfigurationLoader loader = new SitecoreFluentConfigurationLoader();
+            ConfigurationMap configMap = new ConfigurationMap(new IGlassMap[] { partialStub1Map, stubBaseMap, partialStub2Map, finalStubMap, finalStubSubClassMap });
+            configMap.Load(loader);
+
+            //Act
+            finalStubMap.PerformMap(loader);
+            finalStubSubClassMap.PerformMap(loader);
+
+            //Assert
+            Assert.AreEqual(5, finalStubSubClassMap.GlassType.Config.Properties.Count());
+            SitecoreFieldConfiguration fieldNameProperty = finalStubSubClassMap.GlassType.Config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == "FieldName") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Field Other Name", fieldNameProperty.FieldName);
+
+            SitecoreInfoConfiguration qwertyProperty = finalStubSubClassMap.GlassType.Config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == "Qwerty") as SitecoreInfoConfiguration;
+            Assert.AreEqual(SitecoreInfoType.Name, qwertyProperty.Type);
+
+            Assert.IsNotNull(finalStubSubClassMap.GlassType.Config.IdConfig);
+        }
+
         #region Stubs
 
         public class StubBaseMap : SitecoreGlassMap<IStubBase>
@@ -129,6 +158,19 @@ namespace Glass.Mapper.Sc.Tests.Configuration
             }
         }
 
+        public class FinalStubSubClassMap : SitecoreGlassMap<IFinalSubClassStub>
+        {
+            public override void Configure()
+            {
+                Map(
+                    x =>
+                    {
+                        ImportMap<IFinalStub>();
+                        x.Field(y => y.FieldName).FieldName("Field Other Name");
+                    });
+            }
+        }
+
         public interface IStubBase
         {
             string Id { get; set; }
@@ -136,6 +178,12 @@ namespace Glass.Mapper.Sc.Tests.Configuration
 
 
         public interface IFinalStub : IPartialStub1, IPartialStub2
+        {
+            string Children { get; set; }
+            string FieldName { get; set; }
+        }
+
+        public interface IFinalSubClassStub : IPartialStub1, IPartialStub2
         {
             string Children { get; set; }
             string FieldName { get; set; }

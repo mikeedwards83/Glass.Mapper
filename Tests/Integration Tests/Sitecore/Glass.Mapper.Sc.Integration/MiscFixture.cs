@@ -193,12 +193,7 @@ namespace Glass.Mapper.Sc.Integration
         [Test]
         public void FieldWithSpacesAutoMap()
         {
-            /*
-             * This test is in response to issue 53 raised on the Glass.Sitecore.Mapper
-             * project. When two interfaces have similar names are created as proxies
-             * the method GetTypeConfiguration returns the wrong config.
-             */
-
+          
 
             //Assign
             string path = "/sitecore/content/Tests/Misc/FieldWithSpace";
