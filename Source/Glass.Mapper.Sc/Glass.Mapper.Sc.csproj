@@ -184,10 +184,16 @@
     <Compile Include="IoC\DataMapperConfigFactory.cs" />
     <Compile Include="IoC\DataMapperTaskConfigFactory.cs" />
     <Compile Include="IoC\DependencyResolver.cs" />
+    <Compile Include="IoC\GlassContextProvider.cs" />
+    <Compile Include="IoC\GlassHtmlFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
+    <Compile Include="IoC\IGlassContextProvider.cs" />
+    <Compile Include="IoC\IGlassHtmlFactory.cs" />
+    <Compile Include="IoC\ISitecoreContextFactory.cs" />
     <Compile Include="IoC\ObjectConstructionTaskConfigFactory.cs" />
     <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
     <Compile Include="IoC\QueryParameterConfigFactory.cs" />
+    <Compile Include="IoC\SitecoreContextFactory.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreFieldResolver.cs" />
     <Compile Include="ISitecoreService.cs" />

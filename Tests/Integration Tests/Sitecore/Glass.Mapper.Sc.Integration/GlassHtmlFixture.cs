@@ -35,6 +35,7 @@ using System.Web.UI;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.IoC;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -58,7 +59,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
 
             string fieldValue = "<link text='text' linktype='anchor' anchor='footer' title='' class='' />";
@@ -109,7 +110,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var item = db.GetItem(targetPath);
 
@@ -168,7 +169,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
 
             string fieldValue= "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
@@ -225,7 +226,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
 
             string fieldValue = "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
@@ -284,7 +285,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
 
             string fieldValue = "<image mediaid=\"{D897833C-1F53-4FAE-B54B-BB5B11B8F851}\" mediapath=\"/Files/20121222_001405\" src=\"~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx\" hspace=\"15\" vspace=\"20\" />";
@@ -345,7 +346,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
             
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -400,7 +401,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -450,7 +451,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -661,7 +662,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -709,7 +710,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -863,7 +864,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -912,7 +913,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -963,7 +964,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -1011,7 +1012,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -1062,7 +1063,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -1110,7 +1111,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -1161,7 +1162,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<IStubClass>(targetPath);
 
@@ -1213,7 +1214,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -1266,7 +1267,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -1318,7 +1319,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -1369,7 +1370,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             var model = service.GetItem<StubClass>(targetPath);
 
@@ -1430,7 +1431,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             //Act
             var result = html.GetRenderingParameters<RenderingTest>(parameters, templateId);
@@ -1463,7 +1464,7 @@ namespace Glass.Mapper.Sc.Integration
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
             var service = new SitecoreContext(db);
 
-            var html = new GlassHtml(service);
+            var html = GetGlassHtml(service);
 
             //Act
             var result = html.GetRenderingParameters<RenderingTestWithAttribute>(parameters);
@@ -1602,7 +1603,10 @@ namespace Glass.Mapper.Sc.Integration
 
         #endregion
 
-
+        private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        {
+            return sitecoreContext.GlassHtml;
+        }
     }
 }
 

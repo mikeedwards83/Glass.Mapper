@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.RenderField;
 using NSubstitute;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
         
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -49,7 +50,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -77,7 +78,7 @@ namespace Glass.Mapper.Sc.Tests
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -100,7 +101,7 @@ namespace Glass.Mapper.Sc.Tests
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -124,7 +125,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450&amp;w=600' alt='someAlt' height='450' />";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -148,7 +149,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='someClass' width='200' />";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -172,7 +173,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=472&amp;as=True&amp;w=900' alt='someAlt' width='900' />";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -198,7 +199,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -222,7 +223,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -246,7 +247,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -270,7 +271,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -295,7 +296,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -321,7 +322,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -348,7 +349,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -376,7 +377,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -404,7 +405,7 @@ namespace Glass.Mapper.Sc.Tests
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -437,7 +438,7 @@ namespace Glass.Mapper.Sc.Tests
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange=999&amp;workType=0&amp;industry=&amp;occupation=&amp;graduateSearch=false&amp;salaryFrom=0&amp;salaryTo=999999&amp;salaryType=annual&amp;advertiserID=&amp;advertiserGroup=&amp;keywords=sitecore+developer&amp;page=1&amp;displaySuburb=&amp;seoSuburb=&amp;isAreaUnspecified=false&amp;location=&amp;area=&amp;nation=3000&amp;sortMode=KeywordRelevance&amp;searchFrom=filters&amp;searchType=' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
             
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "http://www.seek.com.au/jobs/in-australia/#dateRange=999&workType=0&industry=&occupation=&graduateSearch=false&salaryFrom=0&salaryTo=999999&salaryType=annual&advertiserID=&advertiserGroup=&keywords=sitecore+developer&page=1&displaySuburb=&seoSuburb=&isAreaUnspecified=false&location=&area=&nation=3000&sortMode=KeywordRelevance&searchFrom=filters&searchType=";
@@ -460,7 +461,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "http://www.seek.com.au/jobs/in-australia/#dateRange";
@@ -483,7 +484,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "http://www.seek.com.au/jobs/in-australia/?dateRange=test&value1=test2";
@@ -506,7 +507,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2#anchor' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "http://www.seek.com.au/jobs/in-australia/?dateRange=test&value1=test2#anchor";
@@ -526,7 +527,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -546,7 +547,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -571,7 +572,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred#anOther' target='_blank' class='myclass' title='mytitle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -597,7 +598,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -619,7 +620,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' >hello &amp; world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello & world";
             link.Url = "/somewhere.aspx";
@@ -640,7 +641,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello & world";
             link.Url = "/somewhere.aspx";
@@ -662,7 +663,7 @@ namespace Glass.Mapper.Sc.Tests
             //This test checks that a value already encoded does not get accidentally double HTML encoded.
             var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello &amp; world";
             link.Url = "/somewhere.aspx";
@@ -683,7 +684,7 @@ namespace Glass.Mapper.Sc.Tests
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >my other content</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -709,7 +710,7 @@ namespace Glass.Mapper.Sc.Tests
             var expected =
                 "<a href='/somewhere.aspx?temp=fred&amp;temp=fred2&amp;temp=fred3&amp;temp1=jane' class='myclass' >my other content</a>";
             var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
+            var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
             link.Url = "/somewhere.aspx";
@@ -727,6 +728,11 @@ namespace Glass.Mapper.Sc.Tests
         }
 
         #endregion
+
+        private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        {
+            return new GlassHtml(sitecoreContext);
+        }
 
     }
 }

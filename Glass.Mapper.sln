@@ -47,8 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Powershell\BuildScripts\build-debug.proj = Powershell\BuildScripts\build-debug.proj
 		Powershell\BuildScripts\build-release.proj = Powershell\BuildScripts\build-release.proj
 		Powershell\BuildScripts\Glass.Mapper.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.CastleWindsor.symbols.nuspec
-		Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec = Powershell\BuildScripts\Glass.Mapper.Umb.symbols.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glass.Mapper.Sc.CastleWindsor", "Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj", "{54A63D42-1614-4B8F-9DF5-8F1D2998DB9D}"
@@ -166,6 +164,8 @@ Global
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc75|Any CPU.Build.0 = Sc75|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc80|Any CPU.ActiveCfg = Sc80|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc80|Any CPU.Build.0 = Sc80|Any CPU
+		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.ActiveCfg = Sc80|Any CPU
+		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.Build.0 = Sc80|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.ActiveCfg = Sc81|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.Build.0 = Sc81|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc82|Any CPU.ActiveCfg = Sc82|Any CPU

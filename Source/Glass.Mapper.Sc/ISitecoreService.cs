@@ -980,6 +980,8 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         Item ResolveItem(object target);
 
+
+
     }
 }
 

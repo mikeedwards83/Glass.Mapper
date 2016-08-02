@@ -26,6 +26,7 @@ using Sitecore.Web.UI;
 using System.Web.UI;
 using Sitecore.Data.Items;
 using System.Web.Mvc;
+using Glass.Mapper.Sc.IoC;
 
 namespace Glass.Mapper.Sc.Razor.Web.Ui
 {
@@ -150,12 +151,11 @@ namespace Glass.Mapper.Sc.Razor.Web.Ui
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractRazorControl{T}"/> class.
         /// </summary>
-        public AbstractRazorControl()
-        {
+        public AbstractRazorControl() { 
             ViewData = new ViewDataDictionary();
             ViewManager = new ViewManager();
-            GlassHtml = new GlassHtml(SitecoreContext);
         }
+
 
         /// <summary>
         /// Put your logic to create your model here
