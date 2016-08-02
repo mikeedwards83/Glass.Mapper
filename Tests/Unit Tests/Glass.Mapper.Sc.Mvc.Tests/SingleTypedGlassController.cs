@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using FluentAssertions;
 using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Mvc;
@@ -183,6 +185,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                 RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
                 GlassController = new GlassController<StubClass>(SitecoreContext, RenderingContextWrapper);
+                GlassController.ControllerContext = new ControllerContext(HttpContext, new RouteData(), GlassController);
             }
 
             public HttpContextBase HttpContext { get; private set; }

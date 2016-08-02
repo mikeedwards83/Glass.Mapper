@@ -44,7 +44,13 @@ namespace Glass.Mapper.Sc.IoC
         {
             if (context == null)
             {
-                context = GlassContextProvider.GetContext();
+                Context providerContext = GlassContextProvider.GetContext();
+                if (providerContext == null)
+                {
+                    throw new NotSupportedException("Sitecore Context Requires a Glass Context");
+                }
+
+                context = providerContext;
             }
 
             string cacheKey = String.Format("GlassContext_{0}_{1}", context.Name, CachedContextsKey);
