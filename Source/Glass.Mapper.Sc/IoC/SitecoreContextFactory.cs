@@ -66,26 +66,5 @@ namespace Glass.Mapper.Sc.IoC
 
             return sitecoreContext;
         }
-
-        protected Dictionary<string, SitecoreContext> CachedContexts
-        {
-            get
-            {
-                if (Sitecore.Context.Items == null)
-                {
-                    return null;
-                }
-
-                var dictionary = Sitecore.Context.Items[CachedContextsKey] as Dictionary<string, SitecoreContext>;
-                if (dictionary != null)
-                {
-                    return dictionary;
-                }
-
-                dictionary = new Dictionary<string, SitecoreContext>();
-                Sitecore.Context.Items[CachedContextsKey] = dictionary;
-                return dictionary;
-            }
-        }
     }
 }
