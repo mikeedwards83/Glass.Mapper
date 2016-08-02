@@ -15,34 +15,17 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private readonly IModelCacheManager modelCacheManager;
 
         public GetModelFromView()
-            : this(new ModelCacheManager(), IoC.ConfigurationFactory.Default)
+            : this(new ModelCacheManager(), IoC.SitecoreContextFactory.Default)
         {
         }
 
-        public GetModelFromView(IModelCacheManager modelCacheManager, IConfigurationFactory configurationFactory)
+        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory)
         {
-            ConfigurationFactory = configurationFactory;
+            SitecoreContextFactory = sitecoreContextFactory;
             this.modelCacheManager = modelCacheManager;
         }
 
-        protected IConfigurationFactory ConfigurationFactory { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the name of the context.
-        /// </summary>
-        /// <value>
-        /// The name of the context.
-        /// </value>
-        public virtual Context Context
-        {
-            get
-            {
-                var context = ConfigurationFactory.GlassContextProvider.GetContext();
-                Sitecore.Diagnostics.Log.Debug("using context " + context.Name, this);
-                return context;
-            }
-        }
-
+        protected virtual ISitecoreContextFactory SitecoreContextFactory { get; private set; }
 
         public override void Process(GetModelArgs args)
         {
@@ -81,7 +64,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            ISitecoreContext scContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext(Context);
+            ISitecoreContext scContext = SitecoreContextFactory.GetSitecoreContext();
 
             Rendering renderingItem = args.Rendering;
 

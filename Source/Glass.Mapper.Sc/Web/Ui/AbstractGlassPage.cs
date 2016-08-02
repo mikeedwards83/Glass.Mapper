@@ -46,11 +46,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         }
 
 
-        protected AbstractGlassPage(IConfigurationFactory configurationFactory, ISitecoreContext context)
+        protected AbstractGlassPage(ISitecoreContextFactory sitecoreContextFactory, ISitecoreContext context)
         {
             if (context == null)
             {
-                context = configurationFactory.SitecoreContextFactory.GetSitecoreContext();
+                context = sitecoreContextFactory.GetSitecoreContext();
             }
 
             _sitecoreContext = context;
@@ -62,7 +62,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-         public AbstractGlassPage(ISitecoreContext context) : this(ConfigurationFactory.Default, context)
+         public AbstractGlassPage(ISitecoreContext context) : this(SitecoreContextFactory.Default, context)
         {
             
         }
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc.Web.Ui
          /// Initializes a new instance of the <see cref="AbstractGlassPage"/> class.
          /// </summary>
          public AbstractGlassPage()
-             : this(ConfigurationFactory.Default, null)
+             : this(SitecoreContextFactory.Default, null)
         {
 
         }

@@ -185,8 +185,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public static GlassHtmlMvc<T> Glass<T>(this HtmlHelper<T> htmlHelper)
         {
-            var configurationFactory = ConfigurationFactory.Default;
-            ISitecoreContext sitecoreContext = configurationFactory.SitecoreContextFactory.GetSitecoreContext();
+            ISitecoreContext sitecoreContext = SitecoreContextFactory.Default.GetSitecoreContext();
             var html = sitecoreContext.GlassHtml;
             return new GlassHtmlMvc<T>(html, htmlHelper.ViewContext.Writer, htmlHelper.ViewData.Model);
         }
