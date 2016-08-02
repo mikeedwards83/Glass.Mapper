@@ -169,7 +169,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="db">The db.</param>
         /// <returns></returns>
         /// <exception cref="Glass.Mapper.MapperException">Failed to find context {0}.Formatted(ContextName)</exception>
-        public object GetObject(string model, Database db, Rendering renderingItem)
+        public virtual object GetObject(string model, Database db, Rendering renderingItem)
         {
 
             if (model.IsNullOrEmpty())

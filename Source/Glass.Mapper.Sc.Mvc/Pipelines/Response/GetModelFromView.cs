@@ -96,7 +96,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             args.Result = model;
         }
 
-        private string GetPathFromLayout(
+        protected virtual string GetPathFromLayout(
             Database db,
             ID layoutId)
         {
@@ -107,7 +107,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 : null;
         }
 
-        private string GetViewPath(GetModelArgs args)
+        protected virtual string GetViewPath(GetModelArgs args)
         {
             string path = args.Rendering.RenderingItem.InnerItem["path"];
 
@@ -118,7 +118,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             return path;
         }
 
-        private Type GetModel(GetModelArgs args, string path)
+        protected virtual Type GetModel(GetModelArgs args, string path)
         {
             Type compiledViewType = BuildManager.GetCompiledType(path);
             Type baseType = compiledViewType.BaseType;
@@ -139,7 +139,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 : proposedType;
         }
 
-        private static bool IsValidForProcessing(GetModelArgs args)
+        protected virtual bool IsValidForProcessing(GetModelArgs args)
         {
             if (args.Result != null)
             {
