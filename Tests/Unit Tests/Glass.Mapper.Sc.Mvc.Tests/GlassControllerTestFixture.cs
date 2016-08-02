@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using FluentAssertions;
+using Glass.Mapper.IoC;
 using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Mvc;
 using NSubstitute;
@@ -167,7 +170,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             var testHarness = new GlassControllerTestHarness();
             const string renderingParameters = "p=1&r=2";
             testHarness.RenderingContextWrapper.GetRenderingParameters().Returns(renderingParameters);
-            testHarness.GlassHtml.GetRenderingParameters<StubClass>(renderingParameters).Returns(classToReturn);
+            testHarness.SitecoreContext.GlassHtml.GetRenderingParameters<StubClass>(renderingParameters).Returns(classToReturn);
 
             // Act
             var result = testHarness.GlassController.GetRenderingParameters<StubClass>();
@@ -204,7 +207,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             // Assert
             result.Should().BeNull();
 
-            testHarness.GlassHtml.Received(0).GetRenderingParameters<StubClass>(Arg.Any<string>());
+            testHarness.SitecoreContext.GlassHtml.Received(0).GetRenderingParameters<StubClass>(Arg.Any<string>());
         }
 
         [Test]
@@ -222,7 +225,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             // Assert
             result.Should().BeNull();
 
-            testHarness.GlassHtml.Received(0).GetRenderingParameters<StubClass>(Arg.Any<string>());
+            testHarness.SitecoreContext.GlassHtml.Received(0).GetRenderingParameters<StubClass>(Arg.Any<string>());
         }
 
         #endregion
@@ -257,17 +260,15 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             public GlassControllerTestHarness()
             {
                 SitecoreContext = Substitute.For<ISitecoreContext>();
-                GlassHtml = Substitute.For<IGlassHtml>();
                 RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
-                GlassController = new StubController(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
+                GlassController = new StubController(SitecoreContext, RenderingContextWrapper);
+                GlassController.ControllerContext = new ControllerContext(HttpContext, new RouteData(), GlassController);
             }
 
             public HttpContextBase HttpContext { get; private set; }
 
             public IRenderingContext RenderingContextWrapper { get; private set; }
-
-            public IGlassHtml GlassHtml { get; private set; }
 
             public ISitecoreContext SitecoreContext { get; private set; }
 
@@ -277,15 +278,13 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         public class StubController : GlassController
         {
 
-            public StubController(ISitecoreContext sitecoreContext):base(sitecoreContext)
+            public StubController(ISitecoreContext sitecoreContext) : base(sitecoreContext, new RenderingContextMvcWrapper())
             {
                 
             }
             public StubController(
                 ISitecoreContext sitecoreContext,
-                IGlassHtml glassHtml,
-                IRenderingContext renderingContextWrapper,
-                HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+                IRenderingContext renderingContextWrapper) : base(sitecoreContext, renderingContextWrapper)
             {
 
             }

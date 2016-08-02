@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
         /// </summary>
         public SitecoreContext()
-            : this(Sitecore.Context.Database, ConfigurationFactory.Default)
+            : this(Sitecore.Context.Database, GlassContextProvider.Default)
         {
             
         }
@@ -62,21 +62,21 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="database"></param>
         public SitecoreContext(Database database):
-            this(database, ConfigurationFactory.Default)
+            this(database, GlassContextProvider.Default)
         {
             
         }
 
-        protected SitecoreContext(Database database, IConfigurationFactory configurationFactory) : 
-            base(database, configurationFactory.GlassContextProvider.GetContext())
+        protected SitecoreContext(Database database, IGlassContextProvider glassContextProvider) : 
+            base(database, glassContextProvider.GetContext())
         {
             
         }
 
-        [Obsolete("User ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(sitecoreContext) instead.")]
+        [Obsolete("Use SitecoreContextFactory.Default.GetSitecoreContext(contextName) instead.")]
         public static ISitecoreContext GetFromHttpContext(string contextName = null)
         {
-            return ConfigurationFactory.Default.SitecoreContextFactory.GetSitecoreContext(contextName);
+            return SitecoreContextFactory.Default.GetSitecoreContext(contextName);
         }
     }
 }

@@ -136,13 +136,18 @@ namespace Glass.Mapper.Sc
         }
 
         private IGlassHtml _glassHtml = null;
+
         public IGlassHtml GlassHtml
         {
             get
             {
                 if (_glassHtml == null)
                 {
-                    _glassHtml = ((IDependencyResolver) GlassContext.DependencyResolver).GlassHtmlFactory.GetGlassHtml(this);
+                    IDependencyResolver dependencyResolver = GlassContext.DependencyResolver as IDependencyResolver;
+                    if (dependencyResolver != null)
+                    {
+                        _glassHtml = dependencyResolver.GlassHtmlFactory.GetGlassHtml(this);
+                    }
                 }
                 return _glassHtml;
             } 

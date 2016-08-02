@@ -141,17 +141,14 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             public DifferentTypedGlassControllerTestHarness()
             {
                 SitecoreContext = Substitute.For<ISitecoreContext>();
-                GlassHtml = Substitute.For<IGlassHtml>();
                 RenderingContextWrapper = Substitute.For<IRenderingContext>();
                 HttpContext = Substitute.For<HttpContextBase>();
-                GlassController = new GlassController<ContextStubClass, DataSourceStubClass>(SitecoreContext, GlassHtml, RenderingContextWrapper, HttpContext);
+                GlassController = new GlassController<ContextStubClass, DataSourceStubClass>(SitecoreContext, RenderingContextWrapper);
             }
 
             public HttpContextBase HttpContext { get; private set; }
 
             public IRenderingContext RenderingContextWrapper { get; private set; }
-
-            public IGlassHtml GlassHtml { get; private set; }
 
             public ISitecoreContext SitecoreContext { get; private set; }
 
