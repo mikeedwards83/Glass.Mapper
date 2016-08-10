@@ -25,6 +25,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.IoC;
+using Glass.Mapper.Sc.Pipelines.DataMapper;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -202,10 +203,13 @@ namespace Glass.Mapper.Sc.Integration
             //Assign
             string path = "/sitecore/content/Tests/Misc/FieldWithSpace";
             string expected = "Hello space";
+            string expectedSpace1 = "Hello space";
             string imageValue =
                 "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
-            var context = Context.Create(Utilities.CreateStandardResolver());
+            var resolver = Utilities.CreateStandardResolver();
+            resolver.DataMapperResolverFactory.Add(() => new DataMapperFieldsWithSpace());
+            var context = Context.Create(resolver);
             context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
 
             var db = Factory.GetDatabase("master");
@@ -215,6 +219,7 @@ namespace Glass.Mapper.Sc.Integration
             using (new ItemEditing(item, true))
             {
                 item["Field With Space"] = expected;
+                item["Field With Space 1"] = expectedSpace1;
                 item["Image Field"] = imageValue;
             }
 
@@ -234,6 +239,9 @@ namespace Glass.Mapper.Sc.Integration
 
             SitecoreFieldConfiguration stringFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "FieldWithSpace") as SitecoreFieldConfiguration;
             Assert.AreEqual("Field With Space", stringFieldTypeConfig.FieldName);
+
+            SitecoreFieldConfiguration stringNumberFieldTypeConfig = scContext.GlassContext.TypeConfigurations[typeof(FieldWithSpaceAutoMap)].Properties.First(x => x.PropertyInfo.Name == "FieldWithSpace1") as SitecoreFieldConfiguration;
+            Assert.AreEqual("Field With Space 1", stringNumberFieldTypeConfig.FieldName);
         }
 
         [Test]
@@ -432,7 +440,7 @@ namespace Glass.Mapper.Sc.Integration
 
         private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
         {
-            return ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(sitecoreContext);
+            return sitecoreContext.GlassHtml;
         }
 
         #region Stubs
@@ -484,6 +492,8 @@ namespace Glass.Mapper.Sc.Integration
         public class FieldWithSpaceAutoMap
         {
             public virtual string FieldWithSpace { get; set; }
+
+            public virtual string FieldWithSpace1 { get; set; }
 
             public virtual Image ImageSpace { get; set; }
         }

@@ -15,34 +15,17 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private readonly IModelCacheManager modelCacheManager;
 
         public GetModelFromView()
-            : this(new ModelCacheManager(), IoC.ConfigurationFactory.Default)
+            : this(new ModelCacheManager(), IoC.SitecoreContextFactory.Default)
         {
         }
 
-        public GetModelFromView(IModelCacheManager modelCacheManager, IConfigurationFactory configurationFactory)
+        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory)
         {
-            ConfigurationFactory = configurationFactory;
+            SitecoreContextFactory = sitecoreContextFactory;
             this.modelCacheManager = modelCacheManager;
         }
 
-        protected IConfigurationFactory ConfigurationFactory { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the name of the context.
-        /// </summary>
-        /// <value>
-        /// The name of the context.
-        /// </value>
-        public virtual Context Context
-        {
-            get
-            {
-                var context = ConfigurationFactory.GlassContextProvider.GetContext();
-                Sitecore.Diagnostics.Log.Debug("using context " + context.Name, this);
-                return context;
-            }
-        }
-
+        protected virtual ISitecoreContextFactory SitecoreContextFactory { get; private set; }
 
         public override void Process(GetModelArgs args)
         {
@@ -81,7 +64,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            ISitecoreContext scContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext(Context);
+            ISitecoreContext scContext = SitecoreContextFactory.GetSitecoreContext();
 
             Rendering renderingItem = args.Rendering;
 
@@ -113,7 +96,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             args.Result = model;
         }
 
-        private string GetPathFromLayout(
+        protected virtual string GetPathFromLayout(
             Database db,
             ID layoutId)
         {
@@ -124,7 +107,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 : null;
         }
 
-        private string GetViewPath(GetModelArgs args)
+        protected virtual string GetViewPath(GetModelArgs args)
         {
             string path = args.Rendering.RenderingItem.InnerItem["path"];
 
@@ -135,7 +118,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             return path;
         }
 
-        private Type GetModel(GetModelArgs args, string path)
+        protected virtual Type GetModel(GetModelArgs args, string path)
         {
             Type compiledViewType = BuildManager.GetCompiledType(path);
             Type baseType = compiledViewType.BaseType;
@@ -156,7 +139,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 : proposedType;
         }
 
-        private static bool IsValidForProcessing(GetModelArgs args)
+        protected virtual bool IsValidForProcessing(GetModelArgs args)
         {
             if (args.Result != null)
             {

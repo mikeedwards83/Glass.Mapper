@@ -80,8 +80,8 @@ namespace Glass.Mapper.Sc.Web.Ui
             //some weird lifecycle stuff in the page editor
             if (_sitecoreContext == null)
             {
-                _sitecoreContext = ConfigurationFactory.Default.SitecoreContextFactory.GetSitecoreContext();
-                _glassHtml = ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(_sitecoreContext);
+                _sitecoreContext = SitecoreContextFactory.Default.GetSitecoreContext();
+                _glassHtml = _sitecoreContext.GlassHtml;
             }
            
             base.OnInit(e);

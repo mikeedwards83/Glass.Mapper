@@ -51,32 +51,16 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <summary>
         /// Initializes a new instance of the <see cref="GetModel"/> class.
         /// </summary>
-        public GetModel() : this(IoC.ConfigurationFactory.Default)
+        public GetModel() : this(IoC.SitecoreContextFactory.Default)
         {
         }
 
-        public GetModel(IConfigurationFactory configurationFactory)
+        public GetModel(ISitecoreContextFactory sitecoreContextFactory)
         {
-            ConfigurationFactory = configurationFactory;
+            SitecoreContextFactory = sitecoreContextFactory;
         }
 
-        public IConfigurationFactory ConfigurationFactory { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the context.
-        /// </summary>
-        /// <value>
-        /// The name of the context.
-        /// </value>
-        public virtual Context Context
-        {
-            get
-            {
-                var context = ConfigurationFactory.GlassContextProvider.GetContext();
-                Sitecore.Diagnostics.Log.Debug("using context " + context.Name, this);
-                return context;
-            }
-        }
+        protected virtual ISitecoreContextFactory SitecoreContextFactory { get; private set; }
 
 
         /// <summary>
@@ -85,33 +69,32 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="args">The args.</param>
         public override void Process(GetModelArgs args)
         {
-            Sitecore.Diagnostics.Log.Debug("Glass GetModel Process " + Context.Name, this);
-
-            if (args.Result == null)
+            if (args.Result != null)
             {
-                Rendering rendering = args.Rendering;
-                if (rendering.RenderingType == "Layout")
-                {
-                    args.Result = GetFromItem(rendering, args);
-                    if (args.Result == null)
-                    {
-                        args.Result = GetFromLayout(rendering, args);
-                    }
-                }
-                if (args.Result == null)
-                {
-                    args.Result = GetFromPropertyValue(rendering, args);
-                }
-                if (args.Result == null)
-                {
-                    args.Result = GetFromField(rendering, args);
-                }
-                if (args.Result != null)
-                {
-                    args.AbortPipeline();
-                }
+                return;
             }
 
+            Rendering rendering = args.Rendering;
+            if (rendering.RenderingType == "Layout")
+            {
+                args.Result = GetFromItem(rendering, args);
+                if (args.Result == null)
+                {
+                    args.Result = GetFromLayout(rendering, args);
+                }
+            }
+            if (args.Result == null)
+            {
+                args.Result = GetFromPropertyValue(rendering, args);
+            }
+            if (args.Result == null)
+            {
+                args.Result = GetFromField(rendering, args);
+            }
+            if (args.Result != null)
+            {
+                args.AbortPipeline();
+            }
         }
 
         /// <summary>
@@ -186,7 +169,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// <param name="db">The db.</param>
         /// <returns></returns>
         /// <exception cref="Glass.Mapper.MapperException">Failed to find context {0}.Formatted(ContextName)</exception>
-        public object GetObject(string model, Database db, Rendering renderingItem)
+        public virtual object GetObject(string model, Database db, Rendering renderingItem)
         {
 
             if (model.IsNullOrEmpty())
@@ -220,7 +203,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             if (type == null || renderingModelType.IsAssignableFrom(type))
                 return null;
            
-            ISitecoreContext scContext = ConfigurationFactory.SitecoreContextFactory.GetSitecoreContext(Context);
+            ISitecoreContext scContext = SitecoreContextFactory.GetSitecoreContext();
 
 
             //this is really aggressive

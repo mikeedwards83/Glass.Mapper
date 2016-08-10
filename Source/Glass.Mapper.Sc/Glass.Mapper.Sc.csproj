@@ -178,7 +178,6 @@
     <Compile Include="IItemVersionHandler.cs" />
     <Compile Include="IMediaUrlOptionsResolver.cs" />
     <Compile Include="IoC\AbstractDependencyResolver.cs" />
-    <Compile Include="IoC\ConfigurationFactory.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
     <Compile Include="IoC\ConfigurationResolverConfigFactory.cs" />
     <Compile Include="IoC\DataMapperConfigFactory.cs" />
@@ -186,7 +185,6 @@
     <Compile Include="IoC\DependencyResolver.cs" />
     <Compile Include="IoC\GlassContextProvider.cs" />
     <Compile Include="IoC\GlassHtmlFactory.cs" />
-    <Compile Include="IoC\IConfigurationFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IoC\IGlassContextProvider.cs" />
     <Compile Include="IoC\IGlassHtmlFactory.cs" />

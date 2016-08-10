@@ -34,14 +34,13 @@ namespace Glass.Mapper.Sc.Web.Ui
         private IRenderingContext _renderingContext;
         private ISitecoreContext _sitecoreContext;
         private IGlassHtml _glassHtml;
-        private IConfigurationFactory _configurationFactory;
 
-        protected AbstractGlassUserControl(IConfigurationFactory configurationFactory)
+        protected AbstractGlassUserControl(ISitecoreContextFactory sitecoreContextFactory)
         {
-            _configurationFactory = configurationFactory;
+            SitecoreContextFactory = sitecoreContextFactory;
         }
 
-        protected AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext) : this(ConfigurationFactory.Default)
+        protected AbstractGlassUserControl(ISitecoreContext context, IGlassHtml glassHtml, IRenderingContext renderingContext) : this(IoC.SitecoreContextFactory.Default)
         {
             _renderingContext = renderingContext;
             _glassHtml = glassHtml;
@@ -60,16 +59,18 @@ namespace Glass.Mapper.Sc.Web.Ui
 
         }
 
-        protected AbstractGlassUserControl(ISitecoreContext context) : this(context, ConfigurationFactory.Default.GlassHtmlFactory.GetGlassHtml(context))
+        protected AbstractGlassUserControl(ISitecoreContext context) : this(context, ((Sc.IoC.DependencyResolver)context.GlassContext.DependencyResolver).GlassHtmlFactory.GetGlassHtml(context))
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractGlassUserControl"/> class.
         /// </summary>
-        protected AbstractGlassUserControl() : this(ConfigurationFactory.Default)
+        protected AbstractGlassUserControl() : this(IoC.SitecoreContextFactory.Default)
         {
         }
+
+        public ISitecoreContextFactory SitecoreContextFactory { get; protected set; }
 
         public virtual IRenderingContext RenderingContext
         {
@@ -97,7 +98,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The sitecore context.</value>
         public virtual ISitecoreContext SitecoreContext
         {
-            get { return _sitecoreContext ?? ( _sitecoreContext = _configurationFactory.SitecoreContextFactory.GetSitecoreContext()); }
+            get { return _sitecoreContext ?? ( _sitecoreContext = SitecoreContextFactory.GetSitecoreContext()); }
             set { _sitecoreContext = value; }
         }
 
@@ -107,7 +108,7 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// <value>The glass HTML.</value>
         public virtual IGlassHtml GlassHtml
         {
-            get { return _glassHtml ?? (_glassHtml = _configurationFactory.GlassHtmlFactory.GetGlassHtml(SitecoreContext)); }
+            get { return _glassHtml ??( _glassHtml = SitecoreContext.GlassHtml); }
             set { _glassHtml = value; }
         }
 

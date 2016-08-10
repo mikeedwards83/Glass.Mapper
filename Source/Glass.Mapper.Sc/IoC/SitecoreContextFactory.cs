@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 
 namespace Glass.Mapper.Sc.IoC
 {
     public class SitecoreContextFactory : ISitecoreContextFactory
     {
         private const string CachedContextsKey = "CEC8A395-F2AE-48BD-A24F-4F40598094BD";
+
+        private static ISitecoreContextFactory _defaultSitecoreContextFactory = new SitecoreContextFactory();
+
+        public static ISitecoreContextFactory Default
+        {
+            get { return _defaultSitecoreContextFactory; }
+            set { _defaultSitecoreContextFactory = value; }
+        }
+
+        public SitecoreContextFactory() : this(IoC.GlassContextProvider.Default)
+        {
+        }
 
         public SitecoreContextFactory(IGlassContextProvider glassContextProvider)
         {
@@ -33,57 +44,27 @@ namespace Glass.Mapper.Sc.IoC
         {
             if (context == null)
             {
-                context = GlassContextProvider.GetContext();
+                Context providerContext = GlassContextProvider.GetContext();
+                if (providerContext == null)
+                {
+                    throw new NotSupportedException("Sitecore Context Requires a Glass Context");
+                }
+
+                context = providerContext;
             }
 
-            Dictionary<string, SitecoreContext> cachedContexts = CachedContexts;
-            if (cachedContexts == null)
+            string cacheKey = String.Format("GlassContext_{0}_{1}", context.Name, CachedContextsKey);
+            
+            SitecoreContext sitecoreContext = Sitecore.Context.Items[cacheKey] as SitecoreContext;
+
+            if (sitecoreContext == null)
             {
-                return new SitecoreContext(context);
+                string contextName = context.Name;
+                sitecoreContext = new SitecoreContext(contextName);
+                Sitecore.Context.Items[cacheKey] = sitecoreContext;
             }
 
-            SitecoreContext sitecoreContext = null;
-
-            string contextName = context.Name;
-            if (cachedContexts.ContainsKey(contextName))
-            {
-                sitecoreContext = cachedContexts[contextName];
-            }
-
-            if (sitecoreContext != null)
-            {
-                return sitecoreContext;
-            }
-
-            sitecoreContext = new SitecoreContext(contextName);
-            cachedContexts[contextName] = sitecoreContext;
             return sitecoreContext;
-        }
-
-        protected Dictionary<string, SitecoreContext> CachedContexts
-        {
-            get
-            {
-                if (HttpContext.Current == null)
-                {
-                    throw new NotSupportedException("Cached Contexts are stored in the http context items collection, the http context is currently null");
-                }
-
-                if (Sitecore.Context.Items == null)
-                {
-                    return null;
-                }
-
-                var dictionary = HttpContext.Current.Items[CachedContextsKey] as Dictionary<string, SitecoreContext>;
-                if (dictionary != null)
-                {
-                    return dictionary;
-                }
-
-                dictionary = new Dictionary<string, SitecoreContext>();
-                HttpContext.Current.Items[CachedContextsKey] = dictionary;
-                return dictionary;
-            }
         }
     }
 }

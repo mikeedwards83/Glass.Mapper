@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContentContext"/> class.
         /// </summary>
         public SitecoreContentContext()
-            : this(Sitecore.Context.ContentDatabase, ConfigurationFactory.Default)
+            : this(Sitecore.Context.ContentDatabase, GlassContextProvider.Default)
         {
 
         }
@@ -60,12 +60,12 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="database"></param>
         public SitecoreContentContext(Database database):
-            this(database, ConfigurationFactory.Default)
+            this(database, GlassContextProvider.Default)
         {
 
         }
 
-        protected SitecoreContentContext(Database database, IConfigurationFactory configurationFactory) : base(database, configurationFactory.GlassContextProvider.GetContext())
+        protected SitecoreContentContext(Database database, IGlassContextProvider glassContextProvider) : base(database, glassContextProvider.GetContext())
         {
             
         }

@@ -4,6 +4,14 @@ namespace Glass.Mapper.Sc.IoC
 {
     public class GlassContextProvider : IGlassContextProvider
     {
+        private static IGlassContextProvider _defaultGlassContextProvider = new GlassContextProvider();
+
+        public static IGlassContextProvider Default
+        {
+            get { return _defaultGlassContextProvider; }
+            set { _defaultGlassContextProvider = value; }
+        }
+
         public Context GetContext()
         {
             string contextName = GetContextFromSite();

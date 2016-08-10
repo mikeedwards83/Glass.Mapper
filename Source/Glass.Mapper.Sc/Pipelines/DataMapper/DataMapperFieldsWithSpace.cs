@@ -34,7 +34,7 @@ namespace Glass.Mapper.Sc.Pipelines.DataMapper
         {
             foreach (char c in input)
             {
-                if (char.IsUpper(c))
+                if (char.IsUpper(c) || char.IsNumber(c))
                 {
                     yield return ' ';
                 }
