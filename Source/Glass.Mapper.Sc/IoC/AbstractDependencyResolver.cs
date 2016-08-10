@@ -25,6 +25,8 @@ namespace Glass.Mapper.Sc.IoC
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
         public abstract ICacheManager GetCacheManager();
 
+        public IItemVersionHandler ItemVersionHandler { get; set; }
+
         public abstract Mapper.Config GetConfig();
         public abstract ILog GetLog();
     }
