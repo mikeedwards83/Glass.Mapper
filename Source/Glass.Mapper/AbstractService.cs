@@ -70,6 +70,7 @@ namespace Glass.Mapper
 
         private ObjectSaving _objectSaving;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService"/> class.
         /// </summary>

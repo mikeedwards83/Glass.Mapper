@@ -50,6 +50,26 @@ namespace Glass.Mapper.Sc.Integration.Caching
         }
 
         [Test]
+        public void Can_get_integer_from_cache_and_expires_sliding()
+        {
+            // Arrange
+            const string cacheKey = "TestSlidingKey";
+            NetMemoryCacheManager memoryCacheManager = new NetMemoryCacheManager { SlidingExpiry = 2 };
+
+            // Act
+            memoryCacheManager.AddOrUpdate(cacheKey, 1);
+
+            // Assert
+            Assert.AreEqual(1, memoryCacheManager.GetValue<int>(cacheKey));
+            Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+            Assert.AreEqual(1, memoryCacheManager.GetValue<int>(cacheKey));
+            Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+            Assert.AreEqual(1, memoryCacheManager.GetValue<int>(cacheKey));
+            Thread.Sleep(new TimeSpan(0, 0, 0, 3));
+            Assert.AreEqual(0, memoryCacheManager.GetValue<int>(cacheKey));
+        }
+
+        [Test]
         public void Cache_destroyed_and_recreated()
         {
             // Arrange

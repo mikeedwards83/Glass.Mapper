@@ -42,6 +42,8 @@ namespace Glass.Mapper.Sc
         /// </summary>
         Config Config { get; set; }
 
+        IItemVersionHandler ItemVersionHandler { get;  }
+
         #region  AddVersion
 
         /// <summary>

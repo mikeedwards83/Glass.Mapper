@@ -8,5 +8,7 @@ namespace Glass.Mapper.Sc.IoC
         IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; }
         IGlassHtmlFactory GlassHtmlFactory { get; set; }
 
+        IItemVersionHandler ItemVersionHandler { get; set; }
+
     }
 }

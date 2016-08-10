@@ -17,6 +17,7 @@ namespace Glass.Mapper.Sc.IoC
             ObjectSavingFactory = new ObjectSavingTaskConfigFactory();
             ConfigurationMapFactory = new ConfigurationMapConfigFactory();
             GlassHtmlFactory = new GlassHtmlFactory();
+            ItemVersionHandler = new ItemVersionHandler(config);
         }
 
         public override Mapper.Config GetConfig()
