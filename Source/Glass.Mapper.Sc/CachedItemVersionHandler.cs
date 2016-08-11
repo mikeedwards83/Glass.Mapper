@@ -30,7 +30,7 @@ namespace Glass.Mapper.Sc
 
             if (item == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException("item"));
             }
 
             string cacheKey = String.Format("GlassVersionCount_{0}", item.GetUniqueId());

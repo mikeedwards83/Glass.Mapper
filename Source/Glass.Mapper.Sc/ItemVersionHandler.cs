@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc
            
             if (_config == null)
             {
-                throw new ArgumentNullException(nameof(_config));
+                throw new ArgumentNullException("_config");
             }
 
             if (_config.DisableVersionCount)
@@ -39,7 +39,7 @@ namespace Glass.Mapper.Sc
         {
             if (item == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException("item");
             }
 
             return item.Versions.Count > 0;
