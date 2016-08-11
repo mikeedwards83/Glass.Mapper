@@ -83,6 +83,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         public GlassController(
+            ISitecoreContext sitecoreContext):this(sitecoreContext, new RenderingContextMvcWrapper())
+        {
+            
+        }
+        public GlassController(
             ISitecoreContext sitecoreContext, 
             IRenderingContext renderingContextWrapper)
         {
