@@ -54,15 +54,15 @@ namespace Glass.Mapper.Diagnostics
                 int endCacheMissCount = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CacheMissKey);
 
                 int diffRequest = endRequestCount - _requestedCountBefore;
-                int diffCache = endCacheMissCount - _cacheMissCountBefore;
+                int diffCacheMiss = endCacheMissCount - _cacheMissCountBefore;
 
                 RequestCount = diffRequest;
-                CacheCount = diffCache;
+                CacheCount = diffRequest - diffCacheMiss;
 
-                if (diffRequest > _threshold || diffCache > _threshold)
+                if (diffRequest > _threshold || diffCacheMiss > _threshold)
                 {
                     _log.Debug("Glass Counter {0} - Requests: {1} Cache Misses: {2}".Formatted(_identifier, diffRequest,
-                        diffCache));
+                        diffCacheMiss));
                 }
             }
         }
