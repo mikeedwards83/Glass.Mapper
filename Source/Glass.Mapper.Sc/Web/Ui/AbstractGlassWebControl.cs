@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Linq.Expressions;
 using System.Web.UI;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI;
 
@@ -79,8 +80,8 @@ namespace Glass.Mapper.Sc.Web.Ui
             //some weird lifecycle stuff in the page editor
             if (_sitecoreContext == null)
             {
-                _sitecoreContext = Sc.SitecoreContext.GetFromHttpContext();
-                _glassHtml = new GlassHtml(_sitecoreContext);
+                _sitecoreContext = SitecoreContextFactory.Default.GetSitecoreContext();
+                _glassHtml = _sitecoreContext.GlassHtml;
             }
            
             base.OnInit(e);

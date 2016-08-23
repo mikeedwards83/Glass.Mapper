@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Common;
 using Sitecore.Configuration;
 using Sitecore.Collections;
@@ -43,6 +44,28 @@ namespace Glass.Mapper.Sc
     public class Utilities : Mapper.Utilities
     {
 
+        public static bool IsPageEditor
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditor;
+#else
+                return Sitecore.Context.PageMode.IsPageEditor;
+#endif
+            }
+        }
+        public static bool IsPageEditorEditing
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditorEditing;
+#else
+                return Sitecore.Context.PageMode.IsPageEditorEditing;
+#endif
+            }
+        }
 
         /// <summary>
         /// Converts a NameValueCollection into HTML attributes
@@ -181,37 +204,19 @@ namespace Glass.Mapper.Sc
         /// <param name="foundItem">The found item.</param>
         /// <param name="language">The language.</param>
         /// <returns>Item.</returns>
-        public static Item GetLanguageItem(Item foundItem, Language language, Config config)
+        public static Item GetLanguageItem(Item foundItem, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItem == null) return null;
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
 
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(config)))
+            if (item == null || !versionHandler.VersionCountEnabledAndHasVersions(item))
             {
                 return null;
             }
 
             return item;
         }
-
-        public static bool DoVersionCheck(Config config)
-        {
-            if (config.DisableVersionCount)
-            {
-                return false;
-            }
-
-            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
-            {
-                return false;
-            }
-
-            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
-
-        }
-
-
 
         /// <summary>
         /// Gets the language items.
@@ -220,11 +225,11 @@ namespace Glass.Mapper.Sc
         /// <param name="language">The language.</param>
         /// <param name="config"></param>
         /// <returns>IEnumerable{Item}.</returns>
-        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language, versionHandler)).Where(x => x != null);
         }
 
         public class GlassImageRender : ImageRenderer

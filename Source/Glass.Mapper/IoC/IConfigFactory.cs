@@ -13,6 +13,8 @@ namespace Glass.Mapper.IoC
 
         void Replace<TK>(int index, Func<TK> replace) where TK : T;
 
+        void Replace<TReplace, TK>(Func<TK> func) where TReplace : T where TK : T;
+
         void InsertBefore<TBefore, TK>(Func<TK> func) where TBefore : T where TK : T;
 
         void InsertAfter<TAfter, TK>(Func<TK> func) where TAfter : T where TK : T;

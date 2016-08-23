@@ -25,7 +25,7 @@ namespace Glass.Mapper.Sc.Maps
             if (map == null)
             {
                 // todo: unit test this
-                throw new Exception(string.Format("Could not find the configuration for type {0}", typeof(T)));
+                throw new Exception(string.Format("Could not find the configuration for type {0}", typeof(TK)));
             }
 
             return map.GlassType;

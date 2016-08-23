@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc.DataMappers
             var references = new Func<IEnumerable<Item>>(() =>{
                         var itemLinks = global::Sitecore.Configuration.Factory.GetLinkDatabase().GetReferences(item);
                         var items = itemLinks.Select(x => x.GetTargetItem());
-                        return Utilities.GetLanguageItems(items, LanguageManager.DefaultLanguage, scContext.Service.Config);
+                        return Utilities.GetLanguageItems(items, LanguageManager.DefaultLanguage, scContext.Service.ItemVersionHandler);
                 });
 
             var getItems = new Func<IEnumerable<Item>>(() =>

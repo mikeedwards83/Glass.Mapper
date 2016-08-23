@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachedItemVersionHandler.cs" />
     <Compile Include="Caching\CacheKeyGenerator.cs" />
     <Compile Include="CodeFirst\FieldInfo.cs" />
     <Compile Include="CodeFirst\GlassDataProvider.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Configuration\Attributes\SitecoreIgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreItemAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreQueryAttribute.cs" />
+    <Compile Include="Configuration\Attributes\SitecoreSelfAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreTypeAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreFieldAttribute.cs" />
     <Compile Include="Configuration\Attributes\SitecoreIdAttribute.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Configuration\SitecoreInfoMediaUrlOptions.cs" />
     <Compile Include="Configuration\SitecoreInfoType.cs" />
     <Compile Include="Configuration\SitecoreInfoUrlOptions.cs" />
+    <Compile Include="Configuration\SitecoreSelfConfiguration.cs" />
     <Compile Include="Configuration\SitecoreItemConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedConfiguration.cs" />
     <Compile Include="Configuration\SitecoreLinkedOptions.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameter.cs" />
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
     <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
+    <Compile Include="DataMappers\SitecoreSelfMapper.cs" />
     <Compile Include="Dynamic\Dy.cs" />
     <Compile Include="Dynamic\DynamicCollection.cs" />
     <Compile Include="Dynamic\DynamicField.cs" />
@@ -174,6 +178,7 @@
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
+    <Compile Include="IItemVersionHandler.cs" />
     <Compile Include="IMediaUrlOptionsResolver.cs" />
     <Compile Include="IoC\AbstractDependencyResolver.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
@@ -181,10 +186,16 @@
     <Compile Include="IoC\DataMapperConfigFactory.cs" />
     <Compile Include="IoC\DataMapperTaskConfigFactory.cs" />
     <Compile Include="IoC\DependencyResolver.cs" />
+    <Compile Include="IoC\GlassContextProvider.cs" />
+    <Compile Include="IoC\GlassHtmlFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
+    <Compile Include="IoC\IGlassContextProvider.cs" />
+    <Compile Include="IoC\IGlassHtmlFactory.cs" />
+    <Compile Include="IoC\ISitecoreContextFactory.cs" />
     <Compile Include="IoC\ObjectConstructionTaskConfigFactory.cs" />
     <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
     <Compile Include="IoC\QueryParameterConfigFactory.cs" />
+    <Compile Include="IoC\SitecoreContextFactory.cs" />
     <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreFieldResolver.cs" />
     <Compile Include="ISitecoreService.cs" />
@@ -219,6 +230,7 @@
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VersionCountDisabler.cs" />
+    <Compile Include="ItemVersionHandler.cs" />
     <Compile Include="Web\IRenderingContext.cs" />
     <Compile Include="Web\Ui\AbstractGlassPage.cs">
       <SubType>ASPXCodeBehind</SubType>

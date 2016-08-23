@@ -10,9 +10,12 @@ namespace Glass.Mapper.Diagnostics
         private readonly int _threshold;
         private readonly string _key;
 
-        private int _requestedCount = 0;
-        private int _cacheMissCount = 0;
-        private bool _enabled;
+        public int _requestedCountBefore = 0;
+        public int _cacheMissCountBefore = 0;
+        public bool _enabled;
+
+        public int RequestCount { get; private set; }
+        public int CacheCount { get; private set; }
 
         public GlassModelCounter(IAbstractService service, string identifier, int threshold)
             :this(service.GlassContext, identifier, threshold)
@@ -27,10 +30,13 @@ namespace Glass.Mapper.Diagnostics
             _threshold = threshold;
             _enabled = context.Config.Debug.Enabled;
 
+            RequestCount = -1;
+            CacheCount = -1;
+
             if (_enabled)
             {
-                _requestedCount = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CalledKey);
-                _cacheMissCount = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CacheMissKey);
+                _requestedCountBefore = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CalledKey);
+                _cacheMissCountBefore = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CacheMissKey);
             }
         }
 
@@ -47,13 +53,16 @@ namespace Glass.Mapper.Diagnostics
                 int endRequestCount = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CalledKey);
                 int endCacheMissCount = ConstructionMonitorTask.GetCounter(ConstructionMonitorTask.CacheMissKey);
 
-                int diffRequest = endRequestCount - _requestedCount;
-                int diffCache = endCacheMissCount - _cacheMissCount;
+                int diffRequest = endRequestCount - _requestedCountBefore;
+                int diffCacheMiss = endCacheMissCount - _cacheMissCountBefore;
 
-                if (diffRequest > _threshold || diffCache > _threshold)
+                RequestCount = diffRequest;
+                CacheCount = diffRequest - diffCacheMiss;
+
+                if (diffRequest > _threshold || diffCacheMiss > _threshold)
                 {
                     _log.Debug("Glass Counter {0} - Requests: {1} Cache Misses: {2}".Formatted(_identifier, diffRequest,
-                        diffCache));
+                        diffCacheMiss));
                 }
             }
         }

@@ -36,6 +36,12 @@ namespace Glass.Mapper.Sc.CastleWindsor
 
         }
 
+        public void Replace<TReplace, TK>(Func<TK> func) where TReplace : T where TK : T
+        {
+            throw new NotSupportedException("Configuration cannot be added to container based config factories");
+
+        }
+
         public void InsertBefore<TBefore, TK>(Func<TK> func) where TBefore : T where TK : T
         {
             throw new NotSupportedException("Configuration cannot be added to container based config factories");

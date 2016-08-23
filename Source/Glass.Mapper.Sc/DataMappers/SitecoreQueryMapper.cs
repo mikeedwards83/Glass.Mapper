@@ -67,6 +67,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             var scConfig = Configuration as SitecoreQueryConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
+            var itemVersionHandler = scContext.Service.ItemVersionHandler;
 
             string query = ParseQuery(scConfig.Query, scContext.Item);
 
@@ -86,7 +87,7 @@ namespace Glass.Mapper.Sc.DataMappers
                             try
                             {
                                 return Utilities.GetLanguageItems(scContext.Item.Axes.SelectItems(query),
-                                                                  scContext.Item.Language, scContext.Service.Config);
+                                                                  scContext.Item.Language, scContext.Service.ItemVersionHandler);
                             }
                             catch (Exception ex)
                             {
@@ -111,10 +112,10 @@ namespace Glass.Mapper.Sc.DataMappers
                                 if (contextArray == null)
                                     contextArray = new QueryContext[] { context };
 
-                                return Utilities.GetLanguageItems(contextArray.Select(x => scContext.Item.Database.GetItem(x.ID)), scContext.Item.Language,  scContext.Service.Config);
+                                return Utilities.GetLanguageItems(contextArray.Select(x => scContext.Item.Database.GetItem(x.ID)), scContext.Item.Language, itemVersionHandler);
                             }
                             else
-                                return Utilities.GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language, scContext.Service.Config);
+                                return Utilities.GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language, itemVersionHandler);
                         });
                     }
 
@@ -131,11 +132,11 @@ namespace Glass.Mapper.Sc.DataMappers
                 Item result = null;
                 if (scConfig.IsRelative)
                 {
-                    result = Utilities.GetLanguageItem(scContext.Item.Axes.SelectSingleItem(query), scContext.Item.Language, scContext.Service.Config);
+                    result = Utilities.GetLanguageItem(scContext.Item.Axes.SelectSingleItem(query), scContext.Item.Language, itemVersionHandler);
                 }
                 else
                 {
-                    result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language, scContext.Service.Config);
+                    result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language, itemVersionHandler);
                 }
                 return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType, null);
             }

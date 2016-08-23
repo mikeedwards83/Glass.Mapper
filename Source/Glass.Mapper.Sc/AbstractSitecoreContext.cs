@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 
@@ -40,20 +41,10 @@ namespace Glass.Mapper.Sc
         }
 
         protected AbstractSitecoreContext(Database database, string contextName)
-    : base(database, contextName)
+            : base(database, contextName)
         {
 
         }
-
-        public static string GetContextFromSite()
-        {
-            if (Sitecore.Context.Site == null)
-                return Context.DefaultContextName;
-
-            return Sitecore.Context.Site.Properties["glassContext"] ?? Context.DefaultContextName;
-        }
-
-
 
         #region AbstractSitecoreContext Members
 
@@ -142,6 +133,24 @@ namespace Glass.Mapper.Sc
         public object GetCurrentItem(Type type, bool isLazy = false, bool inferType = false)
         {
             return CreateType(type, Sitecore.Context.Item, isLazy, inferType, null);
+        }
+
+        private IGlassHtml _glassHtml = null;
+
+        public IGlassHtml GlassHtml
+        {
+            get
+            {
+                if (_glassHtml == null)
+                {
+                    IDependencyResolver dependencyResolver = GlassContext.DependencyResolver as IDependencyResolver;
+                    if (dependencyResolver != null)
+                    {
+                        _glassHtml = dependencyResolver.GlassHtmlFactory.GetGlassHtml(this);
+                    }
+                }
+                return _glassHtml;
+            } 
         }
 
         /// <summary>

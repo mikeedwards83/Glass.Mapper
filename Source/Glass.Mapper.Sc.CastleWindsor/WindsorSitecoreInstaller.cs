@@ -190,8 +190,10 @@ namespace Glass.Mapper.Sc.CastleWindsor
                     {
                         d["parameters"] = k.ResolveAll<ISitecoreQueryParameter>();
                     })
-                    .LifestyleCustom<NoTrackLifestyleManager>()
-                );
+                    .LifestyleCustom<NoTrackLifestyleManager>(),
+                Component.For<AbstractDataMapper>()
+                    .ImplementedBy<SitecoreDelegateMapper>()
+                    .LifestyleCustom<NoTrackLifestyleManager>());
 
 
             #endregion

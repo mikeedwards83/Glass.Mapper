@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82' ">
+    <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>
+    <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>SC82</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\82\</OutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == 'sc81' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin81\</ScDir>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>

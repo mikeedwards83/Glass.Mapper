@@ -53,6 +53,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             Values = new Dictionary<string, object>();
 
             _mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
+
+            //if lazy loading diabled load all values now
+            if (!args.AbstractTypeCreationContext.IsLazy)
+            {
+                LoadAllValues();
+            }
         }
 
         public InterfacePropertyInterceptor(SerializationInfo info, StreamingContext context)
@@ -119,17 +125,27 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
         private void LoadValue(AbstractPropertyConfiguration propertyConfiguration)
         {
-            var result = propertyConfiguration.Mapper.MapToProperty(_mappingContext) ?? Utilities.GetDefault(propertyConfiguration.PropertyInfo.PropertyType);
-            Values[propertyConfiguration.PropertyInfo.Name] = result;
+            if (!Values.ContainsKey(propertyConfiguration.PropertyInfo.Name))
+            {
+                var result = propertyConfiguration.Mapper.MapToProperty(_mappingContext) ??
+                             Utilities.GetDefault(propertyConfiguration.PropertyInfo.PropertyType);
+                Values[propertyConfiguration.PropertyInfo.Name] = result;
+            }
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+
+        private void LoadAllValues()
         {
             foreach (var property in _args.Configuration.Properties)
             {
                 LoadValue(property);
             }
+        }
 
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            LoadAllValues();
             info.AddValue("Values", Values, typeof(Dictionary<string, object>));
           
         }

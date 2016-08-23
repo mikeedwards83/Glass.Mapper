@@ -63,6 +63,7 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheKeyGenerator.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Configuration\NodeConfiguration.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
+    <Compile Include="Configuration\SelfConfiguration.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Diagnostics\GlassModelCounter.cs" />
     <Compile Include="DisableCache.cs" />

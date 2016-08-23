@@ -42,6 +42,8 @@ namespace Glass.Mapper.Sc
         /// </summary>
         Config Config { get; set; }
 
+        IItemVersionHandler ItemVersionHandler { get;  }
+
         #region  AddVersion
 
         /// <summary>
@@ -979,6 +981,8 @@ namespace Glass.Mapper.Sc
         /// <param name="target"></param>
         /// <returns></returns>
         Item ResolveItem(object target);
+
+
 
     }
 }

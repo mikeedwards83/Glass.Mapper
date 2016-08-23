@@ -27,6 +27,8 @@ namespace Glass.Mapper.Sc
     /// </summary>
    public interface ISitecoreContext : ISitecoreService
     {
+
+        IGlassHtml GlassHtml { get; }
         /// <summary>
         /// Retrieves the current item as the specified type
         /// </summary>

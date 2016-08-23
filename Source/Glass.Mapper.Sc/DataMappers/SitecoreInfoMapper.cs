@@ -192,7 +192,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     return template.GetBaseTemplates().Select(x => x.ID.Guid);
                 case SitecoreInfoType.ItemUri:
                     return new ItemUri(item.ID, item.Language, item.Version, item.Database);
-#if SC81
+#if (SC81|| SC82)
                 case SitecoreInfoType.OriginalLanguage:
                     return item.OriginalLanguage;
                 case SitecoreInfoType.OriginatorId:
