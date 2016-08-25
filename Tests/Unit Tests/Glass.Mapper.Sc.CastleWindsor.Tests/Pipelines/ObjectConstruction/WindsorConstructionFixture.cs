@@ -38,8 +38,12 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Register(
+                Component.For<Mapper.Config>().Instance(new Mapper.Config())
+                );
+            var context = Context.Create(resolver);
+           
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof (StubClass);
 
@@ -66,7 +70,12 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var task = new WindsorConstruction();
 
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Register(
+                Component.For<Mapper.Config>().Instance(new Mapper.Config())
+                );
+            var context = Context.Create(resolver);
+
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
@@ -93,7 +102,12 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var task = new WindsorConstruction();
 
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Register(
+                Component.For<Mapper.Config>().Instance(new Mapper.Config())
+                );
+            var context = Context.Create(resolver);
+
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubInterface);
 
@@ -119,8 +133,13 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             //Assign
             var task = new WindsorConstruction();
 
-            var resolver = DependencyResolver.CreateStandardResolver() as DependencyResolver;
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Register(
+                Component.For<Mapper.Config>().Instance(new Mapper.Config())
+                );
             var context = Context.Create(resolver);
+
+      
             var service = Substitute.For<AbstractService>();
 
             resolver.Container.Register(
@@ -158,7 +177,12 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var task = new WindsorConstruction();
 
 
-            var context = Context.Create(DependencyResolver.CreateStandardResolver());
+            var resolver = DependencyResolver.CreateStandardResolver();
+            resolver.Container.Register(
+                Component.For<Mapper.Config>().Instance(new Mapper.Config())
+                );
+            var context = Context.Create(resolver);
+
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClassWithParameters);
 

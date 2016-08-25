@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Common;
 using Sitecore.Configuration;
 using Sitecore.Collections;
@@ -32,6 +33,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Links;
+using Sitecore.Resources.Media;
 using Sitecore.Xml.Xsl;
 
 namespace Glass.Mapper.Sc
@@ -41,6 +43,30 @@ namespace Glass.Mapper.Sc
     /// </summary>
     public class Utilities : Mapper.Utilities
     {
+
+        public static bool IsPageEditor
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditor;
+#else
+                return Sitecore.Context.PageMode.IsPageEditor;
+#endif
+            }
+        }
+        public static bool IsPageEditorEditing
+        {
+            get
+            {
+#if SC82
+                return Sitecore.Context.PageMode.IsExperienceEditorEditing;
+#else
+                return Sitecore.Context.PageMode.IsPageEditorEditing;
+#endif
+            }
+        }
+
         /// <summary>
         /// Converts a NameValueCollection into HTML attributes
         /// </summary>
@@ -76,6 +102,31 @@ namespace Glass.Mapper.Sc
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="fieldId">The field id.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns>Field.</returns>
+        public static Field GetField(Item item, ID fieldId, string fieldName = "")
+        {
+            if (item == null)
+                throw new NullReferenceException("Item is null");
+
+            Field field;
+            if (ID.IsNullOrEmpty(fieldId))
+            {
+                field = item.Fields[fieldName];
+            }
+            else
+            {
+                field = item.Fields[fieldId];
+            }
+
+            return field;
+        }
+
 
 
         public static Item CreateFakeItem(Dictionary<Guid, string> fields, string name = "itemName")
@@ -105,8 +156,6 @@ namespace Glass.Mapper.Sc
             return item;
         }
 
-        
-
         public static Size ResizeImage(int imageW, int imageH, float imageScale, int w, int h, int maxW, int maxH)
         {
 
@@ -119,77 +168,6 @@ namespace Glass.Mapper.Sc
 
             return new GlassImageRender().GetFinalImageSize(imageSize, imageScale, size, maxSize);
 
-        }
-
-        /// <summary>
-        /// Creates the URL options.
-        /// </summary>
-        /// <param name="urlOptions">The URL options.</param>
-        /// <returns>UrlOptions.</returns>
-        public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
-        {
-            UrlOptions defaultUrl = UrlOptions.DefaultOptions;
-
-            return CreateUrlOptions(urlOptions, defaultUrl);
-        }
-        public static UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions)
-        {
-            if (urlOptions == 0) return defaultOptions;
-
-            Func<SitecoreInfoUrlOptions, bool> flagCheck =
-                option => (urlOptions & option) == option;
-
-
-            //check for any default overrides
-            defaultOptions.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) ? true : defaultOptions.AddAspxExtension;
-            defaultOptions.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) ? true : defaultOptions.AlwaysIncludeServerUrl;
-            defaultOptions.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) ? true : defaultOptions.EncodeNames;
-            defaultOptions.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) ? true : defaultOptions.ShortenUrls;
-            defaultOptions.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) ? true : defaultOptions.SiteResolving;
-            defaultOptions.UseDisplayName =flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) ? true : defaultOptions.UseDisplayName;
-
-
-            if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAlways))
-                defaultOptions.LanguageEmbedding = LanguageEmbedding.Always;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded))
-                defaultOptions.LanguageEmbedding = LanguageEmbedding.AsNeeded;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingNever))
-                defaultOptions.LanguageEmbedding = LanguageEmbedding.Never;
-
-            if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationFilePath))
-                defaultOptions.LanguageLocation = LanguageLocation.FilePath;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationQueryString))
-                defaultOptions.LanguageLocation = LanguageLocation.QueryString;
-
-            return defaultOptions;
-
-        }
-
-      
-
-        /// <summary>
-        /// Gets the field.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="fieldId">The field id.</param>
-        /// <param name="fieldName">Name of the field.</param>
-        /// <returns>Field.</returns>
-        public static Field GetField(Item item, ID fieldId, string fieldName = "")
-        {
-            if(item == null)
-                throw new NullReferenceException("Item is null");
-
-            Field field;
-            if (ID.IsNullOrEmpty(fieldId))
-            {
-                field = item.Fields[fieldName];
-            }
-            else
-            {
-                field = item.Fields[fieldId];
-            }
-
-            return field;
         }
 
         /// <summary>
@@ -226,31 +204,19 @@ namespace Glass.Mapper.Sc
         /// <param name="foundItem">The found item.</param>
         /// <param name="language">The language.</param>
         /// <returns>Item.</returns>
-        public static Item GetLanguageItem(Item foundItem, Language language, Config config)
+        public static Item GetLanguageItem(Item foundItem, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItem == null) return null;
 
             var item = foundItem.Database.GetItem(foundItem.ID, language);
 
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(config)))
+            if (item == null || !versionHandler.VersionCountEnabledAndHasVersions(item))
             {
                 return null;
             }
 
             return item;
         }
-
-        public static bool DoVersionCheck(Config config)
-        {
-            if (config != null && config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
-                return false;
-
-
-            return Switcher<VersionCountState>.CurrentValue != VersionCountState.Disabled;
-
-        }
-
-
 
         /// <summary>
         /// Gets the language items.
@@ -259,11 +225,11 @@ namespace Glass.Mapper.Sc
         /// <param name="language">The language.</param>
         /// <param name="config"></param>
         /// <returns>IEnumerable{Item}.</returns>
-        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, Config config)
+        public static IEnumerable<Item> GetLanguageItems(IEnumerable<Item> foundItems, Language language, IItemVersionHandler versionHandler)
         {
             if (foundItems == null) return Enumerable.Empty<Item>();
 
-            return foundItems.Select(x => GetLanguageItem(x, language, config)).Where(x => x != null);
+            return foundItems.Select(x => GetLanguageItem(x, language, versionHandler)).Where(x => x != null);
         }
 
         public class GlassImageRender : ImageRenderer

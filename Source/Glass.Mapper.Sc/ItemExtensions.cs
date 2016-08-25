@@ -55,7 +55,7 @@ namespace Glass.Mapper.Sc
         public static T GlassCast<T>(this Item item, bool isLazy = false, bool inferType = false) where T : class
         {
             var service = new SitecoreService(item.Database);
-            return item.GlassCast<T>(service, isLazy, inferType);
+            return service.Cast<T>(item, isLazy, inferType);
         }
 
 

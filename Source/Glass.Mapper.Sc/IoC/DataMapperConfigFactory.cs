@@ -16,6 +16,7 @@ namespace Glass.Mapper.Sc.IoC
 
         protected void Init()
         {
+            Add(() => new SitecoreLazyMapper());
             Add(() => new SitecoreIgnoreMapper());
             Add(() => new SitecoreChildrenCastMapper());
             Add(() => new SitecoreChildrenMapper());
@@ -54,6 +55,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreParentMapper());
             Add(() => new SitecoreDelegateMapper());
             Add(() => new SitecoreQueryMapper(queryParameterFactory.GetItems()));
+            Add(() => new SitecoreSelfMapper());
         }
     }
 }

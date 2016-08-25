@@ -162,14 +162,14 @@ namespace Glass.Mapper.Sc
             {
                 if (fields.Any())
                 {
-                    var fieldNames = fields.Select(x => Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
+                    var fieldIdsOrNames = fields.Select(x => Mapper.Utilities.GetGlassProperty<T, SitecoreTypeConfiguration>(x, this.SitecoreContext.GlassContext, model))
                         .Cast<SitecoreFieldConfiguration>()
                         .Where(x => x != null)
-                        .Select(x => x.FieldName);
+                        .Select(x => x.FieldId != (ID)null ? x.FieldId.ToString() : x.FieldName);
 
                     var buttonPath = "{0}{1}".Formatted(
                         EditFrameBuilder.BuildToken,
-                        fieldNames.Aggregate((x, y) => x + "|" + y));
+                        string.Join("|", fieldIdsOrNames));
 
                     if (title.IsNotNullOrEmpty())
                     {
@@ -261,7 +261,7 @@ namespace Glass.Mapper.Sc
                             item[key] = parameters[key];
                         }
 
-                        T obj = item.GlassCast<T>(this.SitecoreContext);
+                        T obj = SitecoreContext.Cast<T>(item);
 
                         item.Editing.EndEdit();
                         item.Delete(); //added for clean up
@@ -457,8 +457,7 @@ namespace Glass.Mapper.Sc
         {
             get
             {
-                return
-                            Sitecore.Context.PageMode.IsPageEditorEditing;
+                return Utilities.IsPageEditorEditing;
             }
         }
 
@@ -504,12 +503,17 @@ namespace Glass.Mapper.Sc
 
             contents = contents == null ? link.Text ?? link.Title : contents;
 
-            AttributeCheck(attributes, "class", link.Class);
-            AttributeCheck(attributes, "target", link.Target);
-            AttributeCheck(attributes, "title", link.Title);
-
             var url = link.BuildUrl(attributes);
             url = HttpUtility.HtmlEncode(url);
+
+            //we decode and then encode the HTML to avoid a double encoding of HTML characters.
+            //some versions of Sitecore save '&' as '&amp;' and others as '&'.
+            contents = HttpUtility.HtmlEncode(HttpUtility.HtmlDecode(contents));
+            var title = HttpUtility.HtmlEncode(HttpUtility.HtmlDecode(link.Title));
+
+            AttributeCheck(attributes, "class", link.Class);
+            AttributeCheck(attributes, "target", link.Target);
+            AttributeCheck(attributes, "title", title);
 
             string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
@@ -657,7 +661,7 @@ namespace Glass.Mapper.Sc
             catch (Exception ex)
             {
                 firstPart = "<p>{0}</p><pre>{1}</pre>".Formatted(ex.Message, ex.StackTrace);
-                Log.Error("Failed to render field", ex, typeof(IGlassHtml));
+                Sitecore.Diagnostics.Log.Error("Failed to render field", ex, typeof(IGlassHtml));
             }
 
             return new RenderingResult(writer, firstPart, lastPart);
@@ -845,10 +849,15 @@ namespace Glass.Mapper.Sc
                 urlParams[ImageParameterKeys.MAX_WIDTH].ToInt(),
                 urlParams[ImageParameterKeys.MAX_HEIGHT].ToInt());
 
-          
 
-            urlParams[ImageParameterKeys.HEIGHT] = finalSize.Height.ToString();
-            urlParams[ImageParameterKeys.WIDTH] = finalSize.Width.ToString();
+            if (finalSize.Height > 0)
+            {
+                urlParams[ImageParameterKeys.HEIGHT] = finalSize.Height.ToString();
+            }
+            if (finalSize.Width > 0)
+            {
+                urlParams[ImageParameterKeys.WIDTH] = finalSize.Width.ToString();
+            }
 
             Action<string, string> originalAttributeClean = (exists, missing) =>
             {
@@ -879,14 +888,14 @@ namespace Glass.Mapper.Sc
 
             string mediaUrl = builder.ToString();
 
-#if (SC81 || SC80 || SC75)
+#if (SC81 || SC80 || SC75 || SC82)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
             mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
-#if (SC81 || SC80 || SC75)
+#if (SC81 || SC80 || SC75 || SC82)
         public virtual string ProtectMediaUrl(string url)
         {
             return Sitecore.Resources.Media.HashingUtils.ProtectAssetUrl(url);

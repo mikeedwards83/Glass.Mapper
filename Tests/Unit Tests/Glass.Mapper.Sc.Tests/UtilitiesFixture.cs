@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,8 @@ using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Sitecore.Links;
+using Sitecore.Shell.Applications.ContentEditor;
+using Sitecore.Web.UI.XamlSharp.Xaml.Extensions;
 
 namespace Glass.Mapper.Sc.Tests
 {
@@ -52,7 +54,7 @@ namespace Glass.Mapper.Sc.Tests
 
             //Assert
             Assert.IsNotNull(result);
-            
+
         }
 
         [Test]
@@ -147,10 +149,11 @@ namespace Glass.Mapper.Sc.Tests
             defaultOptions.ShortenUrls = false;
             defaultOptions.SiteResolving = false;
             defaultOptions.UseDisplayName = false;
+            var urlOptionsResolver = new UrlOptionsResolver();
 
 
             //Act
-            Utilities.CreateUrlOptions(options, defaultOptions);
+            urlOptionsResolver.CreateUrlOptions(options, defaultOptions);
 
             //Assert
             Assert.AreEqual(addAspx, defaultOptions.AddAspxExtension);
@@ -166,6 +169,110 @@ namespace Glass.Mapper.Sc.Tests
 
         #endregion
 
+        #region GetMediaUrlOptions
+        [Test]
+        [TestCase(SitecoreInfoMediaUrlOptions.Default, true, false, false, false, false, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.DisableAbsolutePath, false, false, false, false, false, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.AllowStretch, true, true, false, false, false, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl, true, false, true, false, false, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.DisableBrowserCache, true, false, false, true, false, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.DisableMediaCache, true, false, false, false, true, false, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.IgnoreAspectRatio, true, false, false, false, false, true, true, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.RemoveExtension, true, false, false, false, false, false, false, false, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.LowercaseUrls, true, false, false, false, false, false, true, true, false, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.Thumbnail, true, false, false, false, false, false, true, false, true, false, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.UseDefaultIcon, true, false, false, false, false, false, true, false, false, true, true)]
+        [TestCase(SitecoreInfoMediaUrlOptions.UseItemPath, true, false, false, false, false, false, true, false, false, false, true)]
+        public void GetMediaUrlOptions(
+            SitecoreInfoMediaUrlOptions option,
+            bool absolutePath,
+            bool allowStretch,
+            bool alwaysIncludeServerUrl,
+            bool disableBrowserCache,
+            bool disableMediaCache,
+            bool ignoreAspectRatio,
+            bool includeExtension,
+            bool lowercaseUrls,
+            bool thumbnail,
+            bool useDefaultIcon,
+            bool useItemPath)
+        {
+            //Arrange
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, absolutePath);
+            Assert.AreEqual(result.AllowStretch, allowStretch);
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, alwaysIncludeServerUrl);
+            Assert.AreEqual(result.DisableBrowserCache, disableBrowserCache);
+            Assert.AreEqual(result.DisableMediaCache, disableMediaCache);
+            Assert.AreEqual(result.IgnoreAspectRatio, ignoreAspectRatio);
+            Assert.AreEqual(result.IncludeExtension, includeExtension);
+            Assert.AreEqual(result.LowercaseUrls, lowercaseUrls);
+            Assert.AreEqual(result.Thumbnail, thumbnail);
+            Assert.AreEqual(result.UseDefaultIcon, useDefaultIcon);
+            Assert.AreEqual(result.UseItemPath, useItemPath);
+
+        }
+
+        #endregion
+
+        #region DoVersionCheck
+
+        [Test]
+        public void DoVersionCheck_DefaultValues_ReturnTrue()
+        {
+            //Arrange
+            var config = new Config();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+
+            //Act
+            var result = versionHandler.VersionCountEnabled();
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void DoVersionCheck_DisableVersionCount_ReturnFalse()
+        {
+            //Arrange
+            var config = new Config();
+            config.DisableVersionCount = true;
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+
+            //Act
+            var result = versionHandler.VersionCountEnabled();
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void DoVersionCheck_VersionCountDisabler_ReturnFalse()
+        {
+            //Arrange
+            var config = new Config();
+            config.DisableVersionCount = true;
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+
+            var result = true;
+
+            //Act
+            using (new VersionCountDisabler())
+            {
+                result = versionHandler.VersionCountEnabled();
+            }
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        #endregion
+
         #region Stubs
 
         public class StubClass
@@ -173,7 +280,7 @@ namespace Glass.Mapper.Sc.Tests
             public string GetPublicSetPublic { get; set; }
             protected string GetProtectedSetProtected { get; set; }
             private string GetPrivateSetPrivate { get; set; }
-            
+
             public string GetPublicSetProtected { get; protected set; }
             public string GetPublicSetPrivate { get; private set; }
 

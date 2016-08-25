@@ -97,6 +97,36 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
+        [TestCase(SitecoreInfoMediaUrlOptions.Default, "/~/media/031501A9C7F24596BD659276DA3A627A.ashx")]
+        [TestCase(SitecoreInfoMediaUrlOptions.RemoveExtension, "/~/media/031501A9C7F24596BD659276DA3A627A")]
+        [TestCase(SitecoreInfoMediaUrlOptions.LowercaseUrls, "/~/media/031501a9c7f24596bd659276da3a627a.ashx?as=0&dmc=0&thn=0")]
+        public void MapToProperty_MediaUrlWithFlag_ReturnsModifiedUrl(
+            SitecoreInfoMediaUrlOptions option,
+            string expected
+            )
+        {
+            //Assign
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = SitecoreInfoType.MediaUrl;
+            config.MediaUrlOptions = option;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            Sitecore.Context.Site = null;
+
+            var item = _db.GetItem("/sitecore/Content/Tests/DataMappers/SitecoreInfoMapper/DataMappersEmptyItem");
+
+            Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+            var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+            //Act
+            var value = mapper.MapToProperty(dataContext);
+
+            //Assert
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
         [ExpectedException(typeof (MapperException))]
         public void MapToProperty_SitecoreInfoTypeNotSet_ThrowsException()
         {

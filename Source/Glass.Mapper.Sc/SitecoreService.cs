@@ -22,15 +22,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Dynamic;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
+using IDependencyResolver = Glass.Mapper.IoC.IDependencyResolver;
 using Version = Sitecore.Data.Version;
 
 namespace Glass.Mapper.Sc
@@ -49,6 +50,8 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <value>The database.</value>
         public  Database Database { get; private set; }
+
+        public IItemVersionHandler ItemVersionHandler { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreService"/> class.
@@ -99,13 +102,18 @@ namespace Glass.Mapper.Sc
         public override void Initiate(IDependencyResolver resolver)
         {
             Config = resolver.GetConfig() as Config;
-            
+
+            var scDependencyResolver = resolver as Mapper.Sc.IoC.IDependencyResolver;
+
+            ItemVersionHandler = scDependencyResolver.ItemVersionHandler;
+
+
             base.Initiate(resolver);
             
             CacheEnabled = Sitecore.Context.Site == null ||
-                           (!Sitecore.Context.PageMode.IsPageEditor &&
-                            !Sitecore.Context.PageMode.IsPageEditorEditing &&
-                            (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] == "true"));
+                           (!Utilities.IsPageEditor &&
+                            !Utilities.IsPageEditorEditing &&
+                            (Sitecore.Context.Site != null && Sitecore.Context.Site.Properties["glassCache"] != "false"));
         }
 
 
@@ -478,7 +486,7 @@ namespace Glass.Mapper.Sc
         
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, Dictionary<string, object> parameters, params object[] constructorParameters)
         {
-            if (item == null || (item.Versions.Count == 0 && Utilities.DoVersionCheck(Config))) return null;
+            if (item == null || !ItemVersionHandler.VersionCountEnabledAndHasVersions(item)) return null;
 
 
             if (constructorParameters != null && constructorParameters.Length > 10)
@@ -1555,7 +1563,7 @@ namespace Glass.Mapper.Sc
         {
             var scTypeContext =  abstractTypeCreationContext as SitecoreTypeCreationContext;
 
-            Debug.Assert(scTypeContext != null, "Creation context is null");
+           System.Diagnostics.Debug.Assert(scTypeContext != null, "Creation context is null");
 
             return new SitecoreDataMappingContext(obj, scTypeContext.Item, this);
         }
@@ -1569,7 +1577,7 @@ namespace Glass.Mapper.Sc
         {
             var scContext = creationContext as SitecoreTypeSavingContext;
 
-            Debug.Assert(scContext != null, "Saving context is null");
+            System.Diagnostics.Debug.Assert(scContext != null, "Saving context is null");
 
             return new SitecoreDataMappingContext(scContext.Object, scContext.Item, this);
         }

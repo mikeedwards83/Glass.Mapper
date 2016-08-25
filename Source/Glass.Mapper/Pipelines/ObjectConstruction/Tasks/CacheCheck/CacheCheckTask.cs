@@ -4,23 +4,33 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
     public class CacheCheckTask : IObjectConstructionTask
     {
-        private readonly ICacheManager _cacheManager;
-
-        public CacheCheckTask(ICacheManager cacheManager)
+        protected ICacheManager CacheManager
         {
-            _cacheManager = cacheManager;
+            get; private set;
         }
 
-        public void Execute(ObjectConstructionArgs args)
+        protected ICacheKeyGenerator CacheKeyGenerator
+        {
+            get; private set;
+        }
+
+        public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
+        {
+            CacheManager = cacheManager;
+            CacheKeyGenerator = cacheKeyGenerator;
+        }
+
+        public virtual void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null 
                 && args.Configuration.Cachable 
-                && args.AbstractTypeCreationContext.CacheEnabled 
-                && DisableCache.Current == CacheSetting.Enabled)
+                && DisableCache.Current == CacheSetting.Enabled
+                && args.AbstractTypeCreationContext.CacheEnabled
+                )
             {
-                var key = args.Context.Name + args.AbstractTypeCreationContext.GetUniqueKey();
+                var key = CacheKeyGenerator.Generate(args);
 
-                var cacheItem = _cacheManager.Get<object>(key);
+                var cacheItem = CacheManager.Get<object>(key);
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;

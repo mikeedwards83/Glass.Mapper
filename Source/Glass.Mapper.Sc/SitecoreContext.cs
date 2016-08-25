@@ -18,8 +18,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Web;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc
@@ -33,10 +32,11 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContext"/> class.
         /// </summary>
         public SitecoreContext()
-            : base(Sitecore.Context.Database, GetContextFromSite())
+            : this(Sitecore.Context.Database, GlassContextProvider.Default)
         {
             
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractService" /> class.
         /// </summary>
@@ -62,69 +62,21 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="database"></param>
         public SitecoreContext(Database database):
-            base(database, GetContextFromSite())
+            this(database, GlassContextProvider.Default)
         {
             
         }
 
-        public static SitecoreContext GetFromHttpContext(string contextName = null)
+        protected SitecoreContext(Database database, IGlassContextProvider glassContextProvider) : 
+            base(database, glassContextProvider.GetContext())
         {
-            if (string.IsNullOrEmpty(contextName))
-            {
-                contextName = GetContextFromSite();
-            }
-
-            var cachedContexts = CachedContexts;
-            if (cachedContexts == null)
-            {
-                return new SitecoreContext(contextName);
-            }
-            else
-            {
-                SitecoreContext context = null;
-                if (cachedContexts.ContainsKey(contextName))
-                {
-                    context = cachedContexts[contextName];
-                }
-
-                if (context == null)
-                {
-                    context = new SitecoreContext(contextName);
-                    cachedContexts[contextName] = context;
-                }
-                return context;
-            }
-
+            
         }
 
-        private const string CachedContextsKey = "CEC8A395-F2AE-48BD-A24F-4F40598094BD";
-
-        protected static Dictionary<string, SitecoreContext> CachedContexts
+        [Obsolete("Use SitecoreContextFactory.Default.GetSitecoreContext(contextName) instead.")]
+        public static ISitecoreContext GetFromHttpContext(string contextName = null)
         {
-            get
-            {
-                if (HttpContext.Current == null)
-                {
-                    throw new NotSupportedException("Cached Contexts are stored in the http context items collection, the http context is currently null");
-                }
-
-                if (Sitecore.Context.Items != null)
-                {
-                    var dictionary = HttpContext.Current.Items[CachedContextsKey] as Dictionary<string, SitecoreContext>;
-                    if (dictionary == null)
-                    {
-                        dictionary = new Dictionary<string, SitecoreContext>();
-                        HttpContext.Current.Items[CachedContextsKey] = dictionary;
-                    }
-                    return dictionary;
-                }
-                else
-                {
-                    return null;
-                }
-
-
-            }
+            return SitecoreContextFactory.Default.GetSitecoreContext(contextName);
         }
     }
 }

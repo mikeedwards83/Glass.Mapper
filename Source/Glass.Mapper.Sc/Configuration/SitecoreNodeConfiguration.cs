@@ -25,7 +25,17 @@ namespace Glass.Mapper.Sc.Configuration
     /// </summary>
     public class SitecoreNodeConfiguration : NodeConfiguration
     {
+        protected override AbstractPropertyConfiguration CreateCopy()
+        {
+            return new SitecoreNodeConfiguration();
+        }
 
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreNodeConfiguration;
+           
+            base.Copy(copy);
+        }
     }
 }
 

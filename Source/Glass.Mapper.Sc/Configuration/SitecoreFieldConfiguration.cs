@@ -139,28 +139,27 @@ namespace Glass.Mapper.Sc.Configuration
 
         #endregion
 
-        /// <summary>
-        /// Makes a copy of the SitecoreFieldConfiguration
-        /// </summary>
-        /// <returns>SitecoreFieldConfiguration.</returns>
-        public virtual SitecoreFieldConfiguration Copy()
+
+        protected override AbstractPropertyConfiguration CreateCopy()
         {
-            return new SitecoreFieldConfiguration()
-                       {
-                           CodeFirst = this.CodeFirst,
-                           FieldId = this.FieldId,
-                           FieldName = this.FieldName,
-                           FieldSource = this.FieldSource,
-                           FieldTitle = this.FieldTitle,
-                           FieldType = this.FieldType,
-                           IsShared = this.IsShared,
-                           IsUnversioned = this.IsUnversioned,
-                           PropertyInfo = this.PropertyInfo,
-                           ReadOnly = this.ReadOnly,
-                           SectionName = this.SectionName,
-                           Setting = this.Setting,
-                           CustomFieldType = this.CustomFieldType
-                       };
+            return new SitecoreFieldConfiguration();
+        }
+
+        protected override void Copy(AbstractPropertyConfiguration copy)
+        {
+            var config = copy as SitecoreFieldConfiguration;
+            config.CodeFirst = this.CodeFirst;
+            config.FieldId = this.FieldId;
+            config.FieldName = this.FieldName;
+            config.FieldSource = this.FieldSource;
+            config.FieldTitle = this.FieldTitle;
+            config.FieldType = this.FieldType;
+            config.IsShared = this.IsShared;
+            config.IsUnversioned = this.IsUnversioned;
+            config.SectionName = this.SectionName;
+            config.Setting = this.Setting;
+            config.CustomFieldType = this.CustomFieldType;
+            base.Copy(copy);
         }
 
     }

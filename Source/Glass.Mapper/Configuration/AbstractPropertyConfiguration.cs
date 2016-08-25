@@ -74,6 +74,19 @@ namespace Glass.Mapper.Configuration
                                                                      PropertyInfo.ReflectedType.FullName,
                                                                      PropertyInfo.ReflectedType.Assembly.FullName);
         }
+
+        protected  abstract AbstractPropertyConfiguration CreateCopy();
+
+        protected virtual void Copy(AbstractPropertyConfiguration copy)
+        {
+            copy.PropertyInfo = PropertyInfo;
+        }
+        public  AbstractPropertyConfiguration Copy()
+        {
+            var configCopy = CreateCopy();
+            Copy(configCopy);
+            return configCopy;
+        }
     }
 }
 

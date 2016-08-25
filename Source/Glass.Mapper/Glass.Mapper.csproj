@@ -73,6 +73,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -86,9 +87,12 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
+    <Compile Include="Caching\ICacheKeyGenerator.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Caching\NetMemoryCacheManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
     <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
@@ -118,11 +122,15 @@
     <Compile Include="Configuration\NodeConfiguration.cs" />
     <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
+    <Compile Include="Configuration\SelfConfiguration.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Diagnostics\GlassModelCounter.cs" />
     <Compile Include="DisableCache.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
     <Compile Include="FakePropertyInfo.cs" />
+    <Compile Include="GlassLazy.cs" />
+    <Compile Include="ILog.cs" />
     <Compile Include="IoC\AbstractConfigFactory.cs" />
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
@@ -132,13 +140,17 @@
     <Compile Include="Maps\IConfigurationMap.cs" />
     <Compile Include="Maps\IGlassMap.cs" />
     <Compile Include="Maps\IMapProvider.cs" />
+    <Compile Include="NullLogger.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionMonitorTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAdd\CacheAddTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerEnd.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\LazyObjectInterceptor.cs" />
     <Compile Include="Profilers\ChainedProfiler.cs" />
@@ -189,7 +201,6 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-
     <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

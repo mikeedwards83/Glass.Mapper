@@ -1,30 +1,42 @@
 ﻿using System;
+using System.Net;
 using Glass.Mapper.Caching;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
 {
     public class CacheAddTask : IObjectConstructionTask
     {
-        private readonly ICacheManager _cacheManager;
-
-        public CacheAddTask(ICacheManager cacheManager)
+        protected  ICacheManager CacheManager
         {
-            _cacheManager = cacheManager;
+            get; private set;
         }
 
-        public void Execute(ObjectConstructionArgs args)
+        protected  ICacheKeyGenerator CacheKeyGenerator
+        {
+            get; private set;
+        }
+
+        public CacheAddTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
+        {
+            CacheManager = cacheManager;
+            CacheKeyGenerator = cacheKeyGenerator;
+        }
+
+        public virtual void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null 
                 && args.Configuration.Cachable 
-                && args.AbstractTypeCreationContext.CacheEnabled 
-                && DisableCache.Current == CacheSetting.Enabled)
+                && DisableCache.Current == CacheSetting.Enabled
+                && args.AbstractTypeCreationContext.CacheEnabled
+                )
             {
-                var key = args.Context.Name + args.AbstractTypeCreationContext.GetUniqueKey();
-
+                var key = CacheKeyGenerator.Generate(args);
                 // This will also OVERRIDE any existing item that may already be cached (to be consistent across different cache impls)
                 // Will allow for multiple threads to update the cached object on first load, when they are all racing to cache the item for the first time
-                _cacheManager.AddOrUpdate(key, args.Result);
+                CacheManager.AddOrUpdate(key, args.Result);
             }
         }
+
+      
     }
 }

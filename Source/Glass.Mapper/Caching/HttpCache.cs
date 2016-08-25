@@ -6,6 +6,7 @@ using System.Web.Caching;
 
 namespace Glass.Mapper.Caching
 {
+    [Obsolete("Use the NetMemoryCache instead.")]
     public class HttpCache : ICacheManager
     {
         private static ConcurrentBag<string> _keys = new ConcurrentBag<string>();
@@ -56,7 +57,7 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public void AddOrUpdate<T>(string key, T value) where T : class
+        public void AddOrUpdate<T>(string key, T value)
         {
             var cache = Cache;
             if (cache == null) return;
@@ -82,6 +83,14 @@ namespace Glass.Mapper.Caching
             return cache != null
                 ? cache[key] as T
                 : null;
+        }
+
+        public T GetValue<T>(string key) where T : struct
+        {
+            var cache = Cache;
+            return cache != null
+                ? (T)cache[key]
+                : default(T);
         }
 
         public bool Contains(string key)

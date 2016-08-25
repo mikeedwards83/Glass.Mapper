@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc
@@ -30,7 +31,7 @@ namespace Glass.Mapper.Sc
         /// Initializes a new instance of the <see cref="SitecoreContentContext"/> class.
         /// </summary>
         public SitecoreContentContext()
-            : base(Sitecore.Context.Database, GetContextFromSite())
+            : this(Sitecore.Context.ContentDatabase, GlassContextProvider.Default)
         {
 
         }
@@ -59,9 +60,14 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="database"></param>
         public SitecoreContentContext(Database database):
-            base(database, GetContextFromSite())
+            this(database, GlassContextProvider.Default)
         {
 
+        }
+
+        protected SitecoreContentContext(Database database, IGlassContextProvider glassContextProvider) : base(database, glassContextProvider.GetContext())
+        {
+            
         }
     }
 }

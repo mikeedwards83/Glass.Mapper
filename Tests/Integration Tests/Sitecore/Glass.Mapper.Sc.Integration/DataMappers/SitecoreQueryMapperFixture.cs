@@ -184,6 +184,34 @@ namespace Glass.Mapper.Sc.Integration.DataMappers
         }
 
         [Test]
+        public void MapToProperty_RelativeQuerySelf_ReturnsSelf()
+        {
+            //Assign
+            //Assign
+            var config = new SitecoreQueryConfiguration();
+            config.PropertyInfo = typeof(StubClass).GetProperty("StubMapped");
+
+            config.Query = "ancestor-or-self::*";
+            config.IsRelative = true;
+
+            var context = Context.Create(Utilities.CreateStandardResolver());
+            context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Integration"));
+
+            var mapper = new SitecoreQueryMapper(null);
+            mapper.Setup(new DataMapperResolverArgs(context, config));
+
+            var source = Database.GetItem("/sitecore/content/Tests/DataMappers/SitecoreQueryMapper/Source");
+            var service = new SitecoreService(Database, context);
+
+            //Act
+            var result =
+                mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as StubMapped;
+
+            //Assert
+            Assert.AreEqual(source.ID.Guid, result.Id);
+        }
+
+        [Test]
         public void MapToProperty_RelativeQuery_ReturnsResults()
         {
             //Assign

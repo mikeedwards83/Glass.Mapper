@@ -59,8 +59,6 @@ namespace Glass.Mapper
 
         public abstract bool CacheEnabled { get; }
 
-        public abstract string GetUniqueKey();
-
         public virtual string DataSummary()
         {
             return string.Empty;

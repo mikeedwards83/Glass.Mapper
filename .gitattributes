@@ -22,3 +22,8 @@ core.eol crlf
 *.fsproj merge=union 
 *.dbproj merge=union 
 *.sln merge=union 
+
+
+
+# Do not adjust line endings on Sitecore .item files
+*.item -text

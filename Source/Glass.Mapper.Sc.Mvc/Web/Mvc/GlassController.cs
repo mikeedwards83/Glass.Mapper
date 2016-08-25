@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Glass.Mapper.Sc.IoC;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Controllers;
@@ -19,12 +20,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         }
 
-        public GlassController(
-            ISitecoreContext sitecoreContext, 
-            IGlassHtml glassHtml,
-            IRenderingContext renderingContextWrapper, 
-            HttpContextBase httpContext)
-            : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+        public GlassController(ISitecoreContext sitecoreContext, IRenderingContext renderingContextWrapper)
+            : base(sitecoreContext, renderingContextWrapper)
         {
         }
 
@@ -49,8 +46,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
             
         }
 
-        public GlassController(ISitecoreContext sitecoreContext, IGlassHtml glassHtml,
-            IRenderingContext renderingContextWrapper, HttpContextBase httpContext) : base(sitecoreContext, glassHtml, renderingContextWrapper, httpContext)
+        public GlassController(ISitecoreContext sitecoreContext, IRenderingContext renderingContextWrapper) : 
+            base(sitecoreContext, renderingContextWrapper)
         {
         }
 
@@ -72,52 +69,33 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
     public class GlassController : SitecoreController
     {
-
         public ISitecoreContext SitecoreContext { get; set; }
+
         public IGlassHtml GlassHtml { get; set; }
+
         public IRenderingContext RenderingContextWrapper { get; set; }
 
         [ExcludeFromCodeCoverage] // Chained constructor - no logic
         public GlassController() 
-            : this(GetContextFromHttp())
+            : this(GetContextFromFactory(), new RenderingContextMvcWrapper())
         {
 
-        }
-
-        [ExcludeFromCodeCoverage] // Chained constructor - no logic
-        protected GlassController(ISitecoreContext sitecoreContext) 
-            : this(sitecoreContext, sitecoreContext == null? null : new GlassHtml(sitecoreContext), new RenderingContextMvcWrapper(), null)
-        {
-            
         }
 
         public GlassController(
+            ISitecoreContext sitecoreContext):this(sitecoreContext, new RenderingContextMvcWrapper())
+        {
+            
+        }
+        public GlassController(
             ISitecoreContext sitecoreContext, 
-            IGlassHtml glassHtml, 
-            IRenderingContext renderingContextWrapper,
-            HttpContextBase httpContext)
+            IRenderingContext renderingContextWrapper)
         {
             SitecoreContext = sitecoreContext;
-            GlassHtml = glassHtml;
+            GlassHtml = sitecoreContext != null ? sitecoreContext.GlassHtml : null;
             RenderingContextWrapper = renderingContextWrapper;
-            if (httpContext == null)
-            {
-                return;
-            }
-
-            if (ControllerContext != null)
-            {
-                ControllerContext.HttpContext = httpContext;
-            }
-            else
-            {
-                ControllerContext = new ControllerContext(httpContext, new RouteData(), this);
-            }
         }
-
-       
-
-
+     
         /// <summary>
         /// Returns either the item specified by the DataSource or the current context item
         /// </summary>
@@ -226,15 +204,15 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         [ExcludeFromCodeCoverage] // Specific to live implementation
-        private static ISitecoreContext GetContextFromHttp()
+        private static ISitecoreContext GetContextFromFactory()
         {
             try
             {
-                return Sc.SitecoreContext.GetFromHttpContext();
+                return SitecoreContextFactory.Default.GetSitecoreContext();
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to create SitecoreContext", ex, typeof(GlassController));
+                Sitecore.Diagnostics.Log.Error("Failed to create SitecoreContext", ex, typeof(GlassController));
                 return null;
             }
         }

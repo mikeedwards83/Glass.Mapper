@@ -1,4 +1,5 @@
-﻿/*************************************
+﻿#region GlassMapperSc generated code
+/*************************************
 
 DO NOT CHANGE THIS FILE - UPDATE GlassMapperScCustom.cs
 
@@ -57,3 +58,4 @@ namespace $rootnamespace$.App_Start
         }
 	}
 }
+#endregion

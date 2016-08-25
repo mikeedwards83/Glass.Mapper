@@ -20,12 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Glass.Mapper.Caching;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.Integration
 {
@@ -248,6 +250,80 @@ namespace Glass.Mapper.Sc.Integration
         }
 
         [Test]
+        public void VersionCountsTest()
+        {
+            //Arrange
+            var config = new Config();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new ConcurrentDictionaryCacheManager(), config);
+            var warmupItem = _db.GetItem(new ID(_id));
+            bool result1 = false;
+            bool result2 = false;
+
+
+            //Act
+            _glassWatch.Start();
+            var sitecoreItem = _db.GetItem(new ID(_id));
+
+            for (var i = 0; i < 10000; i++)
+            {
+                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            //Assert
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
+        }
+
+        [Test]
+        public void VersionCountsTest_IncorrectLanguage()
+        {
+            //Arrange
+            var config = new Config();
+            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
+            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new NetMemoryCacheManager(), config);
+            var warmupItem = _db.GetItem(new ID(_id));
+            bool result1 = false;
+            bool result2 = false;
+
+
+            //Act
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var sitecoreItem = _db.GetItem(new ID(_id), Language.Parse("de-DE"));
+                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            _glassWatch.Reset();
+            _glassWatch.Start();
+            for (var i = 0; i < 10000; i++)
+            {
+                var sitecoreItem = _db.GetItem(new ID(_id), Language.Parse("de-DE"));
+                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
+            }
+            _glassWatch.Stop();
+            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
+
+            //Assert
+            Assert.IsFalse(result1);
+            Assert.IsFalse(result2);
+        }
+
+        [Test]
         [Timeout(120000)]
         public void GetItems_InheritanceTest(
             [Values(100, 200, 300)] int count
@@ -278,6 +354,77 @@ namespace Glass.Mapper.Sc.Integration
 
             double total = _glassTotal / _rawTotal;
             Console.WriteLine("Performance inheritance Test Count: {0},  Single: {1}, 5 Levels: {2}, Ratio: {3}".Formatted(count, _rawTotal, _glassTotal, total));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void CastItems_LotsOfProperties(
+            [Values(1000, 10000, 50000)] int count
+        )
+        {
+
+            _glassWatch.Reset();
+
+            var sitecoreItem = _db.GetItem(new ID(_id));
+            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var glassItem = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+
+            }
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
+        }
+
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10000)]
+        public void CastItems_LotsOfProperties_ServiceEveryTime(
+            [Values(1000, 10000, 50000)] int count)
+        {
+
+            _glassWatch.Reset();
+
+            var sitecoreItem = _db.GetItem(new ID(_id));
+            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var service = new SitecoreService(_db);
+                var glassItem = service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+
+            }
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
+        }
+
+        [Test]
+        public void CreateService_Lots(
+            [Values(1000, 10000, 50000)] int count)
+        {
+            _glassWatch.Reset();
+
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var service = new SitecoreService(_db);
+                _glassWatch.Stop();
+            }
+
+            _glassTotal = _glassWatch.ElapsedTicks;
+
+            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
         }
 
         #region Stubs
@@ -486,6 +633,17 @@ namespace Glass.Mapper.Sc.Integration
 
 
 
+        public class TestCachedItemVersionHandler : CachedItemVersionHandler
+        {
+            public TestCachedItemVersionHandler(ICacheManager cacheManager, Config config) : base(cacheManager, config)
+            {
+            }
+
+            protected override bool CanCache()
+            {
+                return true;
+            }
+        }
     }
 }
 

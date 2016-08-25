@@ -152,7 +152,10 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
         public class StubPropertyConfiguration : AbstractPropertyConfiguration
         {
-           
+            protected override AbstractPropertyConfiguration CreateCopy()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class StubAttributeConfigurationLoader : AttributeConfigurationLoader

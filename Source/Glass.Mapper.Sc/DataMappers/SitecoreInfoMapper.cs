@@ -36,14 +36,27 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreInfoMapper : AbstractDataMapper
     {
+        private readonly IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
+        private readonly IUrlOptionsResolver _urlOptionsResolver;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
         /// </summary>
-        public SitecoreInfoMapper()
+        public SitecoreInfoMapper():
+            this(
+                new MediaUrlOptionsResolver(),
+                new UrlOptionsResolver()
+                )
         {
             ReadOnly = true;
+
         }
 
+        public SitecoreInfoMapper(IMediaUrlOptionsResolver mediaUrlOptionsResolver, IUrlOptionsResolver urlOptionsResolver)
+        {
+            _mediaUrlOptionsResolver = mediaUrlOptionsResolver;
+            _urlOptionsResolver = urlOptionsResolver;
+        }
 
         /// <summary>
         /// Maps data from the .Net property value to the CMS value
@@ -128,7 +141,6 @@ namespace Glass.Mapper.Sc.DataMappers
                 throw new NullReferenceException("Configuration has not been set.");
             }
             //TODO: move this to the config?
-            var urlOptions = Utilities.CreateUrlOptions(scConfig.UrlOptions);
             switch (scConfig.Type)
             {
 
@@ -145,8 +157,9 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.Key:
                     return item.Key;
                 case SitecoreInfoType.MediaUrl:
+                    var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                     var media = new MediaItem(item);
-                    return MediaManager.GetMediaUrl(media);
+                    return MediaManager.GetMediaUrl(media, mediaUrlOptions);
                 case SitecoreInfoType.Path:
                     return item.Paths.Path;
                 case SitecoreInfoType.TemplateId:
@@ -156,6 +169,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.TemplateName:
                     return item.TemplateName;
                 case SitecoreInfoType.Url:
+                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
                     urlOptions.Language = null;
                     return LinkManager.GetItemUrl(item, urlOptions);
                 case SitecoreInfoType.Version:
@@ -180,7 +194,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     return template.GetBaseTemplates().Select(x => x.ID.Guid);
                 case SitecoreInfoType.ItemUri:
                     return new ItemUri(item.ID, item.Language, item.Version, item.Database);
-#if SC81
+#if (SC81|| SC82)
                 case SitecoreInfoType.OriginalLanguage:
                     return item.OriginalLanguage;
                 case SitecoreInfoType.OriginatorId:

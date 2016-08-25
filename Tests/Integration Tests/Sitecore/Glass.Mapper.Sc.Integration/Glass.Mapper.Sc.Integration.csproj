@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\NetMemoryCacheManagerTestFixture.cs" />
     <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
@@ -134,6 +135,9 @@
     <Content Include="App_Config\ConnectionStrings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="App_Config\ConnectionStrings.config.example">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="App_Config\ConnectionStringsOracle.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿#region GlassMapperScCustom generated code
+using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Maps;
@@ -53,3 +54,4 @@ namespace $rootnamespace$.App_Start
         }
     }
 }
+#endregion
