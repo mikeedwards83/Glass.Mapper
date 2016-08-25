@@ -3,8 +3,8 @@
   <metadata>
     <id>BoC.Glass.Mapper.Sc.ContentSearch.LuceneProvider</id>
     <version>$version$</version>
-    <authors>Chris van de Steeg Michael Edwards, Nathanael Mann</authors>
-    <owners>Michael Edwards</owners>
+    <authors>Chris van de Steeg, Michael Edwards, Nathanael Mann</authors>
+    <owners>Chris van de Steeg</owners>
     <licenseUrl>https://github.com/csteeg/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>https://github.com/csteeg/Glass.Mapper/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -22,7 +22,7 @@
     <language>en-GB</language>
     <dependencies>
       <dependency id="Castle.Core" version="3.3.3" />
-      <dependency id="BoC.Glass.Mapper.Sc" version="$version$" />
+      <dependency id="BoC.Glass.Mapper.Sc.Core" version="$version$" />
     </dependencies>
   </metadata>
   <files>

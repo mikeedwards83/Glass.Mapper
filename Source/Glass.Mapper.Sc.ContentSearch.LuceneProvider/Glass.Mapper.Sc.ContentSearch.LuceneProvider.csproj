@@ -56,7 +56,6 @@
     <Reference Include="Sitecore.ContentSearch.Linq.Lucene">
       <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.Lucene.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
     <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ScDir)Sitecore.ContentSearch.dll</HintPath>
@@ -111,6 +110,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Target Name="BeforeBuild">
     <Message Importance="high" Text="ScVersion: $(ScVersion)" />
