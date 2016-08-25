@@ -24,7 +24,15 @@ namespace Glass.Mapper.Configuration.Attributes
         {
             AbstractTypeConfiguration config = null;
 
-            IEnumerable<object> attrs = type.GetCustomAttributes(true);
+            IEnumerable<object> attrs;
+            try
+            {
+              attrs = type.GetCustomAttributes(true);
+            }
+            catch
+            {
+              return null;
+            }
             var attr = attrs.FirstOrDefault(y => y is AbstractTypeAttribute) as AbstractTypeAttribute;
 
             if (attr != null)
