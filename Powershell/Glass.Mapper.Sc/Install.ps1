@@ -53,8 +53,16 @@ if($scVersion){
 
 	$gmsPath = "{0}\lib\{1}\{2}" -f $installPath, $scVersion, "Glass.Mapper.Sc.dll";
 	
-	RemovingExisting "Glass.Mapper.Sc";
-	AddReference $gmsPath "Glass.Mapper.Sc";
+	$gmcExists = Test-Path $gmsPath
+	
+	if ($gmsExists -eq $true){
+    	RemovingExisting "Glass.Mapper.Sc";
+    	AddReference $gmsPath "Glass.Mapper.Sc";
+	}
+	else{
+	   Write-Host ("Glass Mapper doesn't currently support this Sitecore Version: {0}" -f $scVersion);
+	   Write-Host "ERROR: Cannot add reference to Glass.Mapper.Sc";
+	}
 
 	$mvcVersion = GetVersion "System.Web.Mvc" 2;
 	
