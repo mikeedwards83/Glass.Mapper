@@ -66,6 +66,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NugetDefinitions", "NugetDefinitions", "{A48E54A2-1300-41BC-8508-89A174C2CDB0}"
 	ProjectSection(SolutionItems) = preProject
 		NugetDefinitions\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.CastleWindsor.symbols.nuspec
+		NugetDefinitions\Glass.Mapper.Sc.Core.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.Core.symbols.nuspec
 		NugetDefinitions\Glass.Mapper.Sc.symbols.nuspec = NugetDefinitions\Glass.Mapper.Sc.symbols.nuspec
 		NugetDefinitions\readme.txt = NugetDefinitions\readme.txt
 	EndProjectSection
@@ -164,8 +165,6 @@ Global
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc75|Any CPU.Build.0 = Sc75|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc80|Any CPU.ActiveCfg = Sc80|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc80|Any CPU.Build.0 = Sc80|Any CPU
-		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.ActiveCfg = Sc80|Any CPU
-		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.Build.0 = Sc80|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.ActiveCfg = Sc81|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc81|Any CPU.Build.0 = Sc81|Any CPU
 		{ED059096-C6AC-42AA-B0B2-74104E1AF861}.Sc82|Any CPU.ActiveCfg = Sc82|Any CPU

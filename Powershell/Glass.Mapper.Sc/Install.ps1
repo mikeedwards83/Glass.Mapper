@@ -16,12 +16,8 @@ Function GetVersion{
 		Write-Host ("Check {0} File Version is {1}" -f $name, $fileVersion);
 	
 		if($length -eq 2){
-		    if($fileVersion.Split(".")[0].Length -eq 2){
-		        return $fileVersion.Split(".")[0];
-		    }
-		    else{
-			    return $versionString = "{0}{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
-			}
+		   			    return $versionString = "{0}{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
+			
 		}
 		else{
 			return $fileVersion.Split(".")[0];
@@ -57,9 +53,6 @@ $scVersion = GetVersion "Sitecore.Kernel" 2;
 if($scVersion){	
 
 	# Conversion of Kernel DLL version in Sitecore 8.2 to folder
-	if($scVersion -eq "10"){
-		$scVersion = "82";
-	}
 
 	$gmsPath = "{0}\lib\{1}\{2}" -f $installPath, $scVersion, "Glass.Mapper.Sc.dll";
 	Write-Host ("Checking path: {0}" -f $gmsPath);
