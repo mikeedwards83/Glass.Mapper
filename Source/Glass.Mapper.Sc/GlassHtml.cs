@@ -255,10 +255,10 @@ namespace Glass.Mapper.Sc
                     using (new VersionCountDisabler())
                     {
                         item.Editing.BeginEdit();
-
+                          item.RuntimeSettings.Temporary = true;
                         foreach (var key in parameters.AllKeys)
                         {
-                            item[key] = parameters[key];
+                            item.Fields[key].SetValue(parameters[key], true);
                         }
 
                         T obj = SitecoreContext.Cast<T>(item);

@@ -153,6 +153,7 @@ namespace Glass.Mapper.Sc
 
             var itemData = new ItemData(itemDefinition, language, version, fieldList);
             var item = new Item(id, itemData, database);
+            item.RuntimeSettings.Temporary = true;
             return item;
         }
 
