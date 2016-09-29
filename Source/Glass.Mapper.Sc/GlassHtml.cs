@@ -254,12 +254,21 @@ namespace Glass.Mapper.Sc
                 {
                     using (new VersionCountDisabler())
                     {
-                        item.Editing.BeginEdit();
-                          item.RuntimeSettings.Temporary = true;
-                        foreach (var key in parameters.AllKeys)
+
+                        if (parameters != null)
                         {
-                            item.Fields[key].SetValue(parameters[key], true);
+                            item.Editing.BeginEdit();
+                            item.RuntimeSettings.Temporary = true;
+                            foreach (var key in parameters.AllKeys)
+                            {
+                                var fld = item.Fields[key];
+                                if (fld != null)
+                                {
+                                    fld.SetValue(parameters[key], true); 
+                                }
+                            }
                         }
+
 
                         T obj = SitecoreContext.Cast<T>(item);
 
