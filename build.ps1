@@ -3,7 +3,7 @@ Param(
    [Parameter(Mandatory=$True,Position=1)]
    [string]$releaseNumber)
  
-$msbuild = $env:windir+"\Microsoft.NET\Framework\v4.0.30319\msbuild "
+$msbuild = $env:windir+"\Microsoft.NET\Framework\v4.0.30319\msbuild /property:Configuration=release "
 
 Function LogWrite
 {

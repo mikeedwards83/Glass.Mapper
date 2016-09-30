@@ -44,12 +44,6 @@
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
   <!--End: Must come after all PropertyGroups -->
-  <ItemGroup Condition="'$(TargetFrameworkVersion)' != 'v4.5' ">
-    <Reference Include="Rackspace.Collections.Immutable, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8acff7051142f28d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rackspace.Collections.Immutable.1.1.36\lib\net40-client\Rackspace.Collections.Immutable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFrameworkVersion)' == 'v4.5' ">
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

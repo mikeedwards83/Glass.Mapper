@@ -38,7 +38,7 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
         public object CreateElementInstance(Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
         {
             var typeConfig = Context.Default.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType);
-            if (typeConfig == null || typeConfig.TemplateId == (ID)null)
+            if (typeConfig == null || typeConfig.TemplateId == (ID)null || !fieldValues.ContainsKey(BuiltinFields.Template) || !fieldValues.ContainsKey(BuiltinFields.Group))
                 return _defaultDocumentMapper.CreateElementInstance(baseType, fieldValues, executionContexts);
 
             var sitecoreService = new SitecoreContext();
