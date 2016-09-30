@@ -19,6 +19,7 @@
 
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Glass.Mapper.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -344,7 +345,8 @@ namespace Glass.Mapper.Sc.Configuration
             }
 
             SitecoreFieldConfiguration fieldConfig = new SitecoreFieldConfiguration();
-            fieldConfig.FieldName = name;
+			//convert camelcase to spaces
+			fieldConfig.FieldName = Regex.Replace(name, @"(\B[A-Z]+?(?=[A-Z][^A-Z])|\B[A-Z]+?(?=[^A-Z]))", match => " " + match.Value.ToLower());
             fieldConfig.PropertyInfo = property;
             return fieldConfig;
         }
