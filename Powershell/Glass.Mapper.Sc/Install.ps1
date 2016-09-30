@@ -16,7 +16,8 @@ Function GetVersion{
 		Write-Host ("Check {0} File Version is {1}" -f $name, $fileVersion);
 	
 		if($length -eq 2){
-			return $versionString = "{0}{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
+		   			    return $versionString = "{0}{1}" -f $fileVersion.Split(".")[0], $fileVersion.Split(".")[1];
+			
 		}
 		else{
 			return $fileVersion.Split(".")[0];
@@ -51,11 +52,22 @@ $scVersion = GetVersion "Sitecore.Kernel" 2;
 
 if($scVersion){	
 
-	$gmsPath = "{0}\lib\{1}\{2}" -f $installPath, $scVersion, "Glass.Mapper.Sc.dll";
-	
-	RemovingExisting "Glass.Mapper.Sc";
-	AddReference $gmsPath "Glass.Mapper.Sc";
+	# Conversion of Kernel DLL version in Sitecore 8.2 to folder
 
+	$gmsPath = "{0}\lib\{1}\{2}" -f $installPath, $scVersion, "Glass.Mapper.Sc.dll";
+	Write-Host ("Checking path: {0}" -f $gmsPath);
+	
+	$gmcExists = Test-Path $gmsPath
+	
+	if ($gmsExists -eq $false ){
+	   Write-Host ("Glass Mapper doesn't currently support this Sitecore Version: {0}" -f $scVersion);
+	   Write-Host "ERROR: Cannot add reference to Glass.Mapper.Sc";
+	}
+	else{
+	    RemovingExisting "Glass.Mapper.Sc";
+    	AddReference $gmsPath "Glass.Mapper.Sc";
+	}
+	
 	$mvcVersion = GetVersion "System.Web.Mvc" 2;
 	
 	if($mvcVersion){

@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -50,7 +51,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         {
             _args = args;
             _fullName = _args.Configuration.Type.FullName;
-            Values = new Dictionary<string, object>();
+            Values = new ConcurrentDictionary<string, object>();
 
             _mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 
@@ -63,7 +64,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
         public InterfacePropertyInterceptor(SerializationInfo info, StreamingContext context)
         {
-           Values = (Dictionary<string, object>) info.GetValue("Values", typeof(Dictionary<string, object>));
+           Values = (ConcurrentDictionary<string, object>) info.GetValue("Values", typeof(ConcurrentDictionary<string, object>));
 
         }
 
@@ -87,13 +88,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
                     if (method == "get_")//&& Values.ContainsKey(name))
                     {
-                        if (Values.ContainsKey(name))
+                        object result;
+                        if (Values.TryGetValue(name, out result))
                         {
-                            var result = Values[name];
                             invocation.ReturnValue = result;
                             return;
                         }
-
 
                         var property = _args == null ? null: _args.Configuration.Properties.FirstOrDefault(x => x.PropertyInfo.Name == name);
                         if (property != null)
