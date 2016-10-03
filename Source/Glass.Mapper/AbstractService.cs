@@ -69,6 +69,7 @@ namespace Glass.Mapper
         private ObjectConstruction _objectConstruction;
 
         private ObjectSaving _objectSaving;
+        private bool _disposed;
 
 
         /// <summary>
@@ -128,6 +129,10 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
+            if (this._disposed)
+            {
+                throw new MapperException("Service has been disposed, cannot create object");
+            }
             //run the pipeline to get the configuration to load
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
@@ -187,6 +192,7 @@ namespace Glass.Mapper
         {
             if (disposing)
             {
+                this._disposed = true;
                 if (_configurationResolver != null)
                 {
                     _configurationResolver.Dispose();

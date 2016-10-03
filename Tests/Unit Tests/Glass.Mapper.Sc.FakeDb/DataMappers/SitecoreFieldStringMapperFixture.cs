@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             //Assign
 
             var fieldValue = SimpleRenderField.ReplacementKey + "<p>hello world</p>";
-            var expected = SimpleRenderField.ReplacementValue+fieldValue;
+            var expected = SimpleRenderField.ReplacementValue + "<p>hello world</p>";
 
             using (Db database = new Db
             {
@@ -169,9 +169,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         public void GetField_RichText_ValueGoesByRenderFieldPipeline()
         {
             //Assign
-            var fieldValue = SimpleRenderField.ReplacementKey+
+            var fieldBase =
                 "<p>Test with <a href=\"~/link.aspx?_id=BFD7975DF42F41E19DDA9A38E971555F&amp;_z=z\">link</a></p>";
-            var expected = SimpleRenderField.ReplacementValue + fieldValue;
+            var fieldValue = SimpleRenderField.ReplacementKey + fieldBase;
+               ;
+            var expected = SimpleRenderField.ReplacementValue + fieldBase;
 
             using (Db database = new Db
             {
