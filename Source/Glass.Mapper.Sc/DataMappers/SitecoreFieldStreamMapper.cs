@@ -48,18 +48,25 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             var data = field.GetBlobStream();
 
-            var stream = new MemoryStream();
+            MemoryStream stream = null;
 
-            byte[] buffer = new byte[2048];
-            int bytesRead;
-            while ((bytesRead = data.Read(buffer, 0, buffer.Length)) > 0)
+            if (data.CanRead)
             {
-                stream.Write(buffer, 0, bytesRead);
+                 stream = new MemoryStream();
+
+                byte[] buffer = new byte[2048];
+                int bytesRead;
+
+
+                while ((bytesRead = data.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    stream.Write(buffer, 0, bytesRead);
+                }
+
+                data.Close();
+
+                stream.Seek(0, SeekOrigin.Begin);
             }
-
-            data.Close();
-
-            stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
 

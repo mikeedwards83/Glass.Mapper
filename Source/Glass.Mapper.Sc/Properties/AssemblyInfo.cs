@@ -56,6 +56,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyInformationalVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Tests")]
+[assembly: InternalsVisibleTo("Glass.Mapper.Sc.FakeDb")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Integration.Sc7")]
 [assembly: InternalsVisibleTo("Glass.Mapper.Sc.Explorables")]

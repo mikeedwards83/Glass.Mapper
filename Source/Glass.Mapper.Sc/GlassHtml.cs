@@ -272,7 +272,7 @@ namespace Glass.Mapper.Sc
 
                         T obj = SitecoreContext.Cast<T>(item);
 
-                        item.Editing.EndEdit();
+                        item.Editing.CancelEdit();
                         item.Delete(); //added for clean up
                         return obj;
                     }
