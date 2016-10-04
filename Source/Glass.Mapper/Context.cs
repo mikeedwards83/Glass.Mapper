@@ -24,6 +24,7 @@ using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using System.Collections.Concurrent;
+using Castle.DynamicProxy.Internal;
 using Glass.Mapper.IoC;
 
 namespace Glass.Mapper
@@ -111,6 +112,8 @@ namespace Glass.Mapper
 
         public string Name { get; private set; }
 
+		public bool AutoImportBaseClasses { get; set; }
+
         /// <summary>
         /// List of the type configurations loaded by this context
         /// </summary>
@@ -190,6 +193,23 @@ namespace Glass.Mapper
                     }
                 }
             }
+
+	        if (AutoImportBaseClasses)
+	        {
+		        foreach (var typeconfig in TypeConfigurations)
+		        {
+			        var type = typeconfig.Key;
+					var baseTypes = type.GetBaseClassesAndInterfaces();
+			        foreach (var baseType in baseTypes)
+			        {
+				        AbstractTypeConfiguration config;
+				        if (TypeConfigurations.TryGetValue(baseType, out config))
+				        {
+					        typeconfig.Value.Import(config);
+				        }
+			        }
+		        }
+	        }
         }
 
         /// <summary>

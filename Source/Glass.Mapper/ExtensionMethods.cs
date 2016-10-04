@@ -18,6 +18,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Castle.DynamicProxy.Internal;
 
 namespace Glass.Mapper
 {
@@ -166,10 +168,22 @@ namespace Glass.Mapper
             return (T)target;
         }
 
+		public static IEnumerable<Type> GetBaseClassesAndInterfaces(this Type type)
+		{
+			if (type == null)
+				return Enumerable.Empty<Type>();
+			return type.BaseType == typeof(object)
+				? type.GetAllInterfaces().Where(t => t != null)
+				: Enumerable
+					.Repeat(type.BaseType, 1)
+					.Concat(type.GetAllInterfaces())
+					.Concat(type.BaseType.GetBaseClassesAndInterfaces())
+					.Where(t => t != null)
+					.Distinct();
+		}
 
-
-        #endregion
-    }
+		#endregion
+	}
 }
 
 

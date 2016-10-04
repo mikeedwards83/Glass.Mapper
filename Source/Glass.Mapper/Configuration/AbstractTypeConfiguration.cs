@@ -222,12 +222,20 @@ namespace Glass.Mapper.Configuration
             return propList;
         }
 
-        /// <summary>
-        /// Called to map each property automatically
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
-        protected virtual AbstractPropertyConfiguration AutoMapProperty(PropertyInfo property)
+		public void Import(AbstractTypeConfiguration typeConfig)
+		{
+			typeConfig.Properties
+				.Where(x => this.Properties.All(y => y.PropertyInfo.Name != x.PropertyInfo.Name))
+				.ForEach(x => this.AddProperty(x));
+		}
+
+
+		/// <summary>
+		/// Called to map each property automatically
+		/// </summary>
+		/// <param name="property"></param>
+		/// <returns></returns>
+		protected virtual AbstractPropertyConfiguration AutoMapProperty(PropertyInfo property)
         {
             return null;
         }
