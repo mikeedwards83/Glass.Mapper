@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -60,7 +61,12 @@ namespace Glass.Mapper.Sc.DataMappers
             var scContext = mappingContext as SitecoreDataMappingContext;
             var scConfig = Configuration as SitecoreParentConfiguration;
 
-            return scContext.Service.CreateType(
+			if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
+				return scContext.Item.Parent.ID.Guid;
+			else if (scConfig.PropertyInfo.PropertyType == typeof(ID))
+				return scContext.Item.Parent.ID;
+
+			return scContext.Service.CreateType(
                 scConfig.PropertyInfo.PropertyType,
                 scContext.Item.Parent,
                 scConfig.IsLazy,
