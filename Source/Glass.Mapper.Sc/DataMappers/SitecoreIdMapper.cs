@@ -66,17 +66,13 @@ namespace Glass.Mapper.Sc.DataMappers
 
             var scConfig = Configuration;
 
-            if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
+            if (scConfig.PropertyInfo.PropertyType.IsAssignableFrom(typeof(Guid)))
                 return item.ID.Guid;
-            else if (scConfig.PropertyInfo.PropertyType == typeof(ID))
+            if (scConfig.PropertyInfo.PropertyType.IsAssignableFrom(typeof(ID)))
                 return item.ID;
-            else
-            {
-                throw new NotSupportedException("The type {0} on {0}.{1} is not supported by SitecoreIdMapper".Formatted
-                                                    (scConfig.PropertyInfo.ReflectedType.FullName,
-                                                        scConfig.PropertyInfo.Name));
-            }
 
+			throw new NotSupportedException("The type {0} on {0}.{1} is not supported by SitecoreIdMapper".Formatted
+				(scConfig.PropertyInfo.ReflectedType.FullName, scConfig.PropertyInfo.Name));
         }
 
 
