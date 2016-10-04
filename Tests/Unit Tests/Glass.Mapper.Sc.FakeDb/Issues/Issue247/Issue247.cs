@@ -65,7 +65,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue247
 
 
                 //Assert
-                Assert.AreEqual(4, count);
+                Assert.AreEqual(3, count);
 
             }
 

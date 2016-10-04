@@ -157,7 +157,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
 
                     var expected =
-                        "<file mediaid=\"{C10794CE-624F-4F72-A2B9-14336F3FB582}\" src=\"~/media/C10794CE624F4F72A2B914336F3FB582.ashx\" />";
+                        "<file mediaid=\"{C10794CE-624F-4F72-A2B9-14336F3FB582}\" src=\"~/media/Test.ashx\" />";
 
                     var item = database.GetItem("/sitecore/content/Target");
                     var field = item.Fields["Field"];
@@ -173,15 +173,21 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                         field.Value = string.Empty;
                     }
 
+                Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+                mediaProvider
+                      .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
+                      .Returns("~/media/Test.ashx");
 
+                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
+                {
                     //Act
                     using (new ItemEditing(item, true))
                     {
                         mapper.SetField(field, file, null, null);
                     }
                     //Assert
-
-                    Assert.AreEqual(expected, item["Field"]);
+                }
+                Assert.AreEqual(expected, item["Field"]);
             }
         }
 

@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         [TestCase(SitecoreInfoType.DisplayName, "DataMappersEmptyItem DisplayName")]
         [TestCase(SitecoreInfoType.FullPath, "/sitecore/content/TestItem")]
         [TestCase(SitecoreInfoType.Key, "testitem")]
-        [TestCase(SitecoreInfoType.MediaUrl, "/~/media/031501A9C7F24596BD659276DA3A627A.ashx")]
+        [TestCase(SitecoreInfoType.MediaUrl, "/~/media/Test.ashx")]
         [TestCase(SitecoreInfoType.Name, "TestItem")]
         [TestCase(SitecoreInfoType.Path, "/sitecore/content/TestItem")]
         [TestCase(SitecoreInfoType.TemplateName, "TestTemplate")]
@@ -77,16 +77,10 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
             })
             {
-
-                Func<MediaItem, bool> pred = x =>
-                {
-                    return x.ID == itemId;
-                };
-
-                MediaProvider mediaProvider = Substitute.For<MediaProvider>();
+                Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
-                      .GetMediaUrl(Arg.Is<MediaItem>(x=> pred(x)))
-                      .Returns(expected.ToString());
+                      .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == itemId), Arg.Any<MediaUrlOptions>())
+                      .Returns("/~/media/Test.ashx");
 
                 using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
                 {

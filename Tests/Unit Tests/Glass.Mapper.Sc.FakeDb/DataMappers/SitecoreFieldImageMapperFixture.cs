@@ -65,7 +65,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
                       .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId))
-                      .Returns("/~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx");
+                      .Returns("/~/media/Test.ashx");
 
                 using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
                 {
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Assert.AreEqual(15, result.HSpace);
                     Assert.AreEqual(480, result.Height);
                     Assert.AreEqual(new Guid("{D897833C-1F53-4FAE-B54B-BB5B11B8F851}"), result.MediaId);
-                    Assert.IsTrue(result.Src.EndsWith("/~/media/D897833C1F534FAEB54BBB5B11B8F851.ashx"));
+                    Assert.IsTrue(result.Src.EndsWith("/~/media/Test.ashx"));
                     Assert.AreEqual(20, result.VSpace);
                     Assert.AreEqual(640, result.Width);
                 }
