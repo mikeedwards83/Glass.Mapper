@@ -63,10 +63,10 @@ namespace Glass.Mapper.Sc.DataMappers
 
 			if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
 				return scContext.Item.Parent.ID.Guid;
-			else if (scConfig.PropertyInfo.PropertyType == typeof(ID))
-				return scContext.Item.Parent.ID;
+	        if (scConfig.PropertyInfo.PropertyType == typeof(ID))
+		        return scContext.Item.Parent.ID;
 
-			return scContext.Service.CreateType(
+	        return scContext.Service.CreateType(
                 scConfig.PropertyInfo.PropertyType,
                 scContext.Item.Parent,
                 scConfig.IsLazy,
