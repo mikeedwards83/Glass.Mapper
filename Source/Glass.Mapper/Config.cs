@@ -18,8 +18,12 @@ namespace Glass.Mapper
         /// </value>
         public bool UseIoCConstructor { get; set; }
 
+		/// <summary>
+		/// Indicates that all mapped classes should import the base class' mappings as well
+		/// </summary>
+		public bool AutoImportBaseClasses { get; set; }
 
-        public DebugSettings Debug { get; private set; }
+		public DebugSettings Debug { get; private set; }
 
         public Config()
         {

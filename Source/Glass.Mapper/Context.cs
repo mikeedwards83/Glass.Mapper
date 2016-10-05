@@ -112,8 +112,6 @@ namespace Glass.Mapper
 
         public string Name { get; private set; }
 
-		public bool AutoImportBaseClasses { get; set; }
-
         /// <summary>
         /// List of the type configurations loaded by this context
         /// </summary>
@@ -161,42 +159,45 @@ namespace Glass.Mapper
         /// <param name="loaders">The list of configuration loaders to load into the context.</param>
         public void Load(params IConfigurationLoader[] loaders)
         {
-            if (loaders.Any())
-            {
-                var typeConfigurations = loaders
-                    .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
-
-                //first we have to add each type config to the collection
-                foreach (var typeConfig in typeConfigurations)
-                {
-
-                    //don't load generic types or specifically the object type
-                    //see https://github.com/mikeedwards83/Glass.Mapper/issues/85
-                    if (typeConfig.Type.IsGenericTypeDefinition || typeConfig.Type == typeof(System.Object))
-                    {
-                        continue;
-                    }
-
-
-                    if (TypeConfigurations.ContainsKey(typeConfig.Type)){
-                        Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
-                        continue;
-                    }
-                    
-                    typeConfig.PerformAutoMap();
-
-                    ProcessProperties(typeConfig.Properties);
-
-                    if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
-                    {
-                        Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type)); 
-                    }
-                }
-            }
-
-	        if (AutoImportBaseClasses)
+	        if (!loaders.Any())
 	        {
-		        foreach (var typeconfig in TypeConfigurations)
+		        return;
+	        }
+
+			var typeConfigurations = loaders
+		        .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
+
+	        //first we have to add each type config to the collection
+	        foreach (var typeConfig in typeConfigurations)
+	        {
+		        //don't load generic types or specifically the object type
+		        //see https://github.com/mikeedwards83/Glass.Mapper/issues/85
+		        if (typeConfig.Type.IsGenericTypeDefinition || typeConfig.Type == typeof(System.Object))
+		        {
+			        continue;
+		        }
+
+
+		        if (TypeConfigurations.ContainsKey(typeConfig.Type))
+		        {
+			        Log.Warn("Tried to add type {0} to TypeConfigurationDictioary twice".Formatted(typeConfig.Type));
+			        continue;
+		        }
+
+		        typeConfig.PerformAutoMap();
+
+				if (!Config.AutoImportBaseClasses) //if we have to import baseclasses... wait for it
+					ProcessProperties(typeConfig.Properties);
+
+				if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
+		        {
+			        Log.Warn("Failed to add type {0} to TypeConfigurationDictionary".Formatted(typeConfig.Type));
+		        }
+	        }
+
+	        if (Config.AutoImportBaseClasses)
+	        {
+		        foreach (var typeconfig in TypeConfigurations)//go through all typeconfigs, one can be changed now
 		        {
 			        var type = typeconfig.Key;
 					var baseTypes = type.GetBaseClassesAndInterfaces();
@@ -209,16 +210,19 @@ namespace Glass.Mapper
 				        }
 			        }
 		        }
-	        }
-        }
+				foreach (var typeConfig in TypeConfigurations.Values)
+					ProcessProperties(typeConfig.Properties);
+			}
 
-        /// <summary>
-        /// Processes the properties.
-        /// </summary>
-        /// <param name="properties">The properties.</param>
-        /// <exception cref="System.NullReferenceException">Could not find data mapper for property {0} on type {1}
-        ///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
-        private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
+		}
+
+		/// <summary>
+		/// Processes the properties.
+		/// </summary>
+		/// <param name="properties">The properties.</param>
+		/// <exception cref="System.NullReferenceException">Could not find data mapper for property {0} on type {1}
+		///                         .Formatted(property.PropertyInfo.Name,property.PropertyInfo.ReflectedType.FullName)</exception>
+		private void ProcessProperties(IEnumerable<AbstractPropertyConfiguration> properties )
         {
             DataMapperResolver runner = new DataMapperResolver(DependencyResolver.DataMapperResolverFactory.GetItems());
 
