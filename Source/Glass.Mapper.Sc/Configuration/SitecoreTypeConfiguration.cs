@@ -345,10 +345,9 @@ namespace Glass.Mapper.Sc.Configuration
             }
 
             SitecoreFieldConfiguration fieldConfig = new SitecoreFieldConfiguration();
-			//convert camelcase to spaces
-			fieldConfig.FieldName = Regex.Replace(name, @"(\B[A-Z]+?(?=[A-Z][^A-Z])|\B[A-Z]+?(?=[^A-Z]))", match => " " + match.Value.ToLower());
-	        if (string.IsNullOrEmpty(fieldConfig.FieldName))
-		        fieldConfig.FieldName = name;//if no matches, just take the name
+	        if (name.Contains(".")) //explicit interface implementation
+		        name = name.Split('.', StringSplitOptions.RemoveEmptyEntries).Last();
+		    fieldConfig.FieldName = name;
             fieldConfig.PropertyInfo = property;
             return fieldConfig;
         }
