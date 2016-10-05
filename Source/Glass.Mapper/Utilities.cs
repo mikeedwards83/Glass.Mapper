@@ -190,18 +190,7 @@ namespace Glass.Mapper
                 typeList.AddRange(type.GetInterfaces());
             }
 
-            List<PropertyInfo> propertyList = new List<PropertyInfo>();
-
-            foreach (Type interfaceType in typeList)
-            {
-                foreach (PropertyInfo property in interfaceType.GetProperties(Flags))
-                {
-                    var finalProperty = GetProperty(property.DeclaringType, property.Name);
-                    propertyList.Add(finalProperty);
-                }
-            }
-
-            return propertyList;
+	        return typeList.SelectMany(t => t.GetProperties(Flags));
         }
 
 
@@ -323,7 +312,7 @@ namespace Glass.Mapper
             if (name.IsNullOrEmpty())
                 throw new MapperException("Unable to get property name from lambda expression");
 
-            PropertyInfo info = type.GetProperty(name);
+            PropertyInfo info = GetProperty(type, name);
 
             //if we don't find the property straight away then it is probably an interface
             //and we need to check all inherited interfaces.

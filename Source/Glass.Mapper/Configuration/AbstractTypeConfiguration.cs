@@ -178,17 +178,7 @@ namespace Glass.Mapper.Configuration
         /// <returns></returns>
         public virtual IEnumerable<AbstractPropertyConfiguration> AutoMapProperties(Type type)
         {
-            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
-                                    BindingFlags.FlattenHierarchy;
-            IEnumerable<PropertyInfo> properties = type.GetProperties(flags);
-
-            if (type.IsInterface)
-            {
-                foreach (var inter in type.GetInterfaces())
-                {
-                    properties = properties.Union(inter.GetProperties(flags));
-                }
-            }
+            IEnumerable<PropertyInfo> properties = Utilities.GetAllProperties(type);
 
             var propList = new List<AbstractPropertyConfiguration>();
 
