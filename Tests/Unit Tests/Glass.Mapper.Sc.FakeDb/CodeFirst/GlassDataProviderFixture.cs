@@ -48,12 +48,16 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         [SetUp]
         public void Setup()
         {
-            _db = new Db();
+            _db = new Db
+            {
+            };
 
             _disabler = new SecurityDisabler();
             _datebase = _db.Database;
 
             _dataProvider = new GlassDataProvider("master", Context.DefaultContextName);
+            GlassDataProvider.GetSqlProviderFunc = providers => providers.FirstOrDefault(x => x is FakeDataProvider);
+
             _context = Context.Create(Utilities.CreateStandardResolver());
             //GlassDataProvider._setupComplete = false;
             InjectionDataProvider(_datebase, _dataProvider);
@@ -83,8 +87,8 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         public void GlassDataProvider_ReturnsGlassTemplateFolder()
         {
             //Assign
-            _dataProvider.Initialise(_datebase);
 
+            _dataProvider.Initialise(_datebase);
 
             var path = "/sitecore/templates/glasstemplates";
 
@@ -114,6 +118,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
             _context.Load(loader);
 
             var path = "/sitecore/templates/glasstemplates/CodeFirstClass1";
+
 
             _dataProvider.Initialise(_datebase);
 
