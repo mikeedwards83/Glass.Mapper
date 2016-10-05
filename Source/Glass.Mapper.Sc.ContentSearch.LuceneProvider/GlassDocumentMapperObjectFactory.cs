@@ -18,7 +18,10 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public List<string> GetTypeIdentifyingFields(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {
-            var typeConfig = Context.Default.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType);
+			var typeConfig = Context.Contexts.Any() ?
+				Context.Contexts.Select(c => c.Value).Select(c => c.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType)).FirstOrDefault(c => c!=null)
+				: null;
+
             if (typeConfig == null || typeConfig.TemplateId == (ID)null)
                 return _defaultDocumentMapper.GetTypeIdentifyingFields(baseType, executionContexts);
 
@@ -28,8 +31,10 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public List<Type> GetPotentialCreatedTypes(Type baseType, IEnumerable<IExecutionContext> executionContexts)
         {
-            var typeConfig = Context.Default.TypeConfigurations.Where(tc => baseType.IsAssignableFrom(tc.Value.Type) && ((SitecoreTypeConfiguration)tc.Value).TemplateId != (ID)null);
-            if (!typeConfig.Any())
+            var typeConfig = Context.Contexts.Any() ?
+				Context.Contexts.SelectMany(c => c.Value.TypeConfigurations).Where(tc => baseType.IsAssignableFrom(tc.Value.Type) && ((SitecoreTypeConfiguration)tc.Value).TemplateId != (ID)null)
+				: null;
+            if (typeConfig == null || !typeConfig.Any())
                 return _defaultDocumentMapper.GetPotentialCreatedTypes(baseType, executionContexts);
 
             return typeConfig.Select(tc => tc.Value.Type).ToList();
@@ -37,8 +42,11 @@ namespace Glass.Mapper.Sc.ContentSearch.LuceneProvider
 
         public object CreateElementInstance(Type baseType, IDictionary<string, object> fieldValues, IEnumerable<IExecutionContext> executionContexts)
         {
-            var typeConfig = Context.Default.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType);
-            if (typeConfig == null || typeConfig.TemplateId == (ID)null || !fieldValues.ContainsKey(BuiltinFields.Template) || !fieldValues.ContainsKey(BuiltinFields.Group))
+			var typeConfig = Context.Contexts.Any() ?
+				Context.Contexts.Select(c => c.Value).Select(c => c.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType)).FirstOrDefault(c => c != null)
+				: null;
+
+			if (typeConfig == null || typeConfig.TemplateId == (ID)null || !fieldValues.ContainsKey(BuiltinFields.Template) || !fieldValues.ContainsKey(BuiltinFields.Group))
                 return _defaultDocumentMapper.CreateElementInstance(baseType, fieldValues, executionContexts);
 
             var sitecoreService = new SitecoreContext();
