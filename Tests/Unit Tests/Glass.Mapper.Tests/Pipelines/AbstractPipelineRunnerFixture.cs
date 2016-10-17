@@ -136,7 +136,8 @@ namespace Glass.Mapper.Tests.Pipelines
 
         public class StubPipelineTask : IPipelineTask<StubAbstractPipelineArgs>
         {
-            public Action<StubAbstractPipelineArgs> TaskToPerform { get; set; } 
+            public Action<StubAbstractPipelineArgs> TaskToPerform { get; set; }
+            public string Name { get { return "StubPipelineTask"; } }
 
             public void Execute(StubAbstractPipelineArgs args)
             {

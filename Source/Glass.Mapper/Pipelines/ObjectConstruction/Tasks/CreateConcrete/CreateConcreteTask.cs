@@ -32,6 +32,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
         private static volatile  ProxyGenerator _generator;
         private static volatile  ProxyGenerationOptions _options;
+        public string Name { get { return "CreateConcreteTask"; } }
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateConcreteTask"/> class.
@@ -66,6 +67,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             {
                 //here we create a concrete version of the class
                 args.Result = CreateObject(args);
+                args.CreatedCallback();
                 //args.AbortPipeline();
             }
         }

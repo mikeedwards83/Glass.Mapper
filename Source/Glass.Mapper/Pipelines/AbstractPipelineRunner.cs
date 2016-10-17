@@ -65,7 +65,7 @@ namespace Glass.Mapper.Pipelines
                 }
             }
 
-            Profiler = new NullProfiler();
+            Profiler = NullProfiler.Instance;
         }
 
         protected virtual Func<T, T> CreateTaskExpression(K task)
@@ -74,7 +74,9 @@ namespace Glass.Mapper.Pipelines
 
             return (args) =>
             {
+                Profiler.Start(task.Name);
                 task.Execute(args);
+                Profiler.End(task.Name);
 
                 if (!args.IsAborted)
                     nextTask(args);

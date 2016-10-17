@@ -65,6 +65,16 @@ namespace Glass.Mapper.Profilers
             if (Profilers != null)
                 Profilers.ForEach(x => x.End(key));
         }
+
+        public void IndentIncrease()
+        {
+            Profilers.ForEach(x => x.IndentIncrease());
+        }
+
+        public void IndentDecrease()
+        {
+            Profilers.ForEach(x => x.IndentDecrease());
+        }
     }
 }
 

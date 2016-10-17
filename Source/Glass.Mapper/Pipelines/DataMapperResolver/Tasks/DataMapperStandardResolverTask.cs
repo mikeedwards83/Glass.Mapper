@@ -26,6 +26,8 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
     /// </summary>
     public class DataMapperStandardResolverTask : IDataMapperResolverTask
     {
+        public string Name { get { return "DataMapperStandardResolverTask"; } }
+
         /// <summary>
         /// Executes the specified args.
         /// </summary>

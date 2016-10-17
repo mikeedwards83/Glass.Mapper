@@ -18,7 +18,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
@@ -127,8 +130,61 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
+        [Test]
+        public void CustomProfiler_OutputsTimingsInTasks()
+        {
+            /*
+             * Tests that we can save to an item property.
+             */
+
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    {fieldName, ""}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId)
+                {
+                    new Sitecore.FakeDb.DbItem("Tests")
+                },
+
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+
+                var db = database.Database;
+                var scContext = new SitecoreService(db);
+                var sb = new StringBuilder();
+
+                scContext.Profiler = new AccmulatorProfiler(new StringWriter(sb));
+                string path = "/sitecore/content/Target";
+
+
+
+                //Act
+                var instance1 = scContext.GetItem<ParentNotLazy<Child1>>(path);
+                var instance2 = scContext.GetItem<ParentNotLazy<Child1>>(path);
+
+
+                //Assert
+                Assert.Greater(sb.Length, 0);
+               Console.Write(sb.ToString());
+            }
+        }
+
         public class Parent<T>
         {
+            public virtual IEnumerable<T> Children { get; set; }
+        }
+
+        public class ParentNotLazy<T>
+        {
+            [SitecoreChildren(IsLazy = false)]
             public virtual IEnumerable<T> Children { get; set; }
         }
 

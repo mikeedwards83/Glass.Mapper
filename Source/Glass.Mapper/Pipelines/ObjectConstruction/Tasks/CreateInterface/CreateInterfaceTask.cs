@@ -29,6 +29,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
     {
         private static volatile  ProxyGenerator _generator;
         private static volatile  ProxyGenerationOptions _options;
+        public string Name { get { return "CreateInterfaceTask"; } }
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateInterfaceTask"/> class.

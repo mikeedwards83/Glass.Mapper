@@ -28,6 +28,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
     /// <typeparam name="T"></typeparam>
     public class ConfigurationOnDemandResolverTask<T> : IConfigurationResolverTask where T: AbstractTypeConfiguration, new ()
     {
+        public string Name { get { return "ConfigurationOnDemandResolverTask"; } }
+
+       
         /// <summary>
         /// Executes the specified args.
         /// </summary>

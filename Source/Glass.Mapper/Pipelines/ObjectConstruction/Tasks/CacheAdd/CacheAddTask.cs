@@ -16,6 +16,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
             get; private set;
         }
 
+        public string Name { get { return "CacheAddTask"; } }
+
         public CacheAddTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {
             CacheManager = cacheManager;

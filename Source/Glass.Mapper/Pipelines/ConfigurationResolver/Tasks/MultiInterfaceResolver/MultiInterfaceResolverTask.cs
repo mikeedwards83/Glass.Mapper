@@ -12,6 +12,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResol
     /// </summary>
     public class MultiInterfaceResolverTask : IConfigurationResolverTask
     {
+        public string Name { get { return "MultiInterfaceResolverTask"; } }
+
+      
         /// <summary>
         /// Key used to add multi interface types to the parameters dictionary
         /// </summary>

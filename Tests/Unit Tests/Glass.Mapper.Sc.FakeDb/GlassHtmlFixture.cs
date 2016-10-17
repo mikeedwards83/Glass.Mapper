@@ -1807,7 +1807,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     //this is the webedit class
                     Assert.IsFalse(result.Contains("scWebEditInput"));
                     Console.WriteLine("result " + result);
-                }
+                }    
             }
         }
 
@@ -1833,7 +1833,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     { new ID(StubClass.StringFieldWithIdId), ""}
                 }
             })
-            {
+            { 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
@@ -1874,7 +1874,7 @@ namespace Glass.Mapper.Sc.FakeDb
                         using (new SecurityDisabler())
                         {
                             result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
-                        }
+                        } 
                         //Assert
                         Assert.IsTrue(result.Contains(fieldValue));
                         //this is the webedit class
@@ -1941,6 +1941,85 @@ namespace Glass.Mapper.Sc.FakeDb
 
                     //Act
                     var result = html.Editable(model, x => x.StringFieldWithId, x => x.StringFieldWithId);
+
+                    //Assert
+                    Assert.AreEqual(fieldValue, result);
+                    //this is the webedit class
+                    Assert.IsFalse(result.Contains("scWebEditInput"));
+                    Console.WriteLine("result " + result);
+                }
+            }
+        }
+
+        [Test]
+        public void Editable_DifferentLambdaExpressions_NoExceptionThrown()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/target";
+
+            var templateId = ID.NewID;
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    new DbField("StringField")
+                    {
+                        Type = "text"
+                    }
+                },
+                new Sitecore.FakeDb.DbItem("Target", ID.NewID, templateId)
+                {
+                    {"StringField", ""}
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+                var service = new SitecoreContext(database.Database);
+
+                var html = GetGlassHtml(service);
+
+                var model1 = service.GetItem<StubClass>(targetPath);
+
+                var fieldValue = "test content field";
+
+                model1.StringField = fieldValue;
+
+                using (new SecurityDisabler())
+                {
+                    service.Save(model1);
+                }
+
+                var doc = new XmlDocument();
+                doc.LoadXml(
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+                var siteContext = new SiteContextStub(
+                    new SiteInfo(
+                        doc.FirstChild
+                        )
+                    );
+
+
+
+                using (new SiteContextSwitcher(siteContext))
+                {
+                    //Act
+                    string result;
+
+                    using (new SecurityDisabler())
+                    {
+                        var temp = service.GetItem<StubClass>(targetPath);
+                        result = html.Editable(temp, model => model.StringField);
+                    }
+
+                    using (new SecurityDisabler())
+                    {
+                        var model = service.GetItem<StubClass>(targetPath);
+                        model = null;
+                        result = html.Editable(model, x=> model.StringField);
+                    }
 
                     //Assert
                     Assert.AreEqual(fieldValue, result);

@@ -13,6 +13,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
         {
             get; private set;
         }
+        public string Name { get { return "CacheCheckTask"; } }
 
         public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {

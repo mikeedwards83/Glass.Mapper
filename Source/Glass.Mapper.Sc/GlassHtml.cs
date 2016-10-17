@@ -101,11 +101,11 @@ namespace Glass.Mapper.Sc
 
 
             var compiled = expression.Compile();
-            if (compiled is Func<T, string>)
+           if (compiled is Func<T, string>)
             {
                 _compileCache.TryAdd(key, compiled);
             }
-            else
+              else
             {
                 throw new MapperException("Failed to compile lambda to correct type.");
             }

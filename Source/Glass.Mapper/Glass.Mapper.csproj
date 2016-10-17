@@ -129,6 +129,8 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\LazyObjectInterceptor.cs" />
+    <Compile Include="Profilers\AccmulatorProfiler.cs" />
+    <Compile Include="Profilers\BaseIndentingProfiler.cs" />
     <Compile Include="Profilers\ChainedProfiler.cs" />
     <Compile Include="Profilers\IPerformanceProfiler.cs" />
     <Compile Include="MapperException.cs" />

@@ -11,6 +11,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
     public class EnforcedTemplateCheck : IObjectConstructionTask
     {
         private static ConcurrentDictionary<string, bool> _cache;
+        public string Name { get { return "EnforcedTemplateCheck"; } }
 
         static EnforcedTemplateCheck()
         {
