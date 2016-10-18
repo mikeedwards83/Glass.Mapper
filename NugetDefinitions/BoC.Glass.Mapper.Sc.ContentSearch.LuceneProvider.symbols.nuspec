@@ -33,14 +33,19 @@
     
     <!-- Glass.Mapper -->
     <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
-	  <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
     <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\80\Glass.Mapper.Sc.ContentSearch.dll" target="lib\80\Glass.Mapper.Sc.ContentSearch.dll" />
-	  <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\80\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.pdb" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch\bin\80\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\80\Glass.Mapper.Sc.ContentSearch.pdb" />
 
     <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
-	  <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
     <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\81\Glass.Mapper.Sc.ContentSearch.dll" target="lib\81\Glass.Mapper.Sc.ContentSearch.dll" />
-	  <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\81\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\81\Glass.Mapper.Sc.ContentSearch.pdb" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch\bin\81\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\81\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\100\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\81\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\100\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\81\Glass.Mapper.Sc.ContentSearch.dll" target="lib\100\Glass.Mapper.Sc.ContentSearch.dll" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch\bin\81\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\100\Glass.Mapper.Sc.ContentSearch.pdb" />
 
     <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
     <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\bin\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\75\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
