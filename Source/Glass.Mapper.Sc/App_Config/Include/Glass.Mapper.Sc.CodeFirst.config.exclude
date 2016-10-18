@@ -8,7 +8,8 @@
         <ContextName>Default</ContextName>
         <DatabaseName>$(1)</DatabaseName>
         <disable>*</disable>
-        <enable>GetChildIDs</enable>
+		<enable>HasChildren</enable>
+		<enable>GetChildIDs</enable>
         <enable>GetParentID</enable>
         <enable>GetItemDefinition</enable>
         <enable>GetItemVersions</enable>
