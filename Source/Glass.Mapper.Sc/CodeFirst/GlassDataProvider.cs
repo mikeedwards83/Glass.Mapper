@@ -335,9 +335,9 @@ namespace Glass.Mapper.Sc.CodeFirst
             var fields = new IDList();
             var processed = new List<string>();
             var sections = template.Properties
-                .Where(x => x.PropertyInfo.DeclaringType == template.Type)
                 .OfType<SitecoreFieldConfiguration>()
-                .Select(x => new { x.SectionName, x.SectionSortOrder });
+				.Where(x => x.CodeFirst && x.PropertyInfo.DeclaringType == template.Type)
+				.Select(x => new { SectionName = x.SectionName ?? "Data", x.SectionSortOrder });
 
             //If sitecore contains a section with the same name in the database, use that one instead of creating a new one
             var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context))
@@ -391,7 +391,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             var config = TypeConfigurations.First(x => x.Value.TemplateId == section.TemplateId);
             var cls = config.Value;
 
-            var fields = cls.Properties.OfType<SitecoreFieldConfiguration>();
+            var fields = cls.Properties.OfType<SitecoreFieldConfiguration>().Where(f => f.CodeFirst);
 
             IDList fieldIds = new IDList();
 
@@ -405,8 +405,9 @@ namespace Glass.Mapper.Sc.CodeFirst
                 if (field.PropertyInfo.DeclaringType != cls.Type || propertyFromInterface != null)
                     continue;
 
-                if (field.CodeFirst && field.SectionName == section.Name && !ID.IsNullOrEmpty(field.FieldId))
-                {
+                if (field.CodeFirst && !ID.IsNullOrEmpty(field.FieldId) && 
+					((field.SectionName == section.Name) || string.IsNullOrEmpty(field.SectionName) && section.Name == "Data"))
+				{
                     var fieldtable = FieldTable.ToList();//prevent "Collection was modified"
                     var record = fieldtable.FirstOrDefault(x => x.FieldId == field.FieldId);
                     //test if the fields exists in the database: if so, we're using codefirst now, so remove it.
