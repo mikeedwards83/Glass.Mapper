@@ -29,14 +29,14 @@ foreach($assInfo  in $assInfos){
     $content | Out-File $assInfo 
 }
 
-$build = $msbuild + '"Glass.Mapper - Release.sln"'
-$build70 = $build+' /property:ScVersion=sc70'
-$build71 = $build+' /property:ScVersion=sc71'
-$build72 = $build+' /property:ScVersion=sc72'
-$build75 = $build+' /property:ScVersion=sc75'
-$build80 = $build+' /property:ScVersion=sc80'
-$build81 = $build+' /property:ScVersion=sc81'
-$build82 = $build+' /property:ScVersion=sc82'
+$build = $msbuild + '"Glass.Mapper - Release.sln" /t:rebuild'
+$build70 = $build+' /property:ScVersion=sc70 /p:DefineConstants="SC70"'
+$build71 = $build+' /property:ScVersion=sc71 /p:DefineConstants="SC71"'
+$build72 = $build+' /property:ScVersion=sc72 /p:DefineConstants="SC72"'
+$build75 = $build+' /property:ScVersion=sc75 /p:DefineConstants="SC75"'
+$build80 = $build+' /property:ScVersion=sc80 /p:DefineConstants="SC80"'
+$build81 = $build+' /property:ScVersion=sc81 /p:DefineConstants="SC81"'
+$build82 = $build+' /property:ScVersion=sc82 /p:DefineConstants="SC82"'
 
 Invoke-Expression $build70
 Invoke-Expression $build71
