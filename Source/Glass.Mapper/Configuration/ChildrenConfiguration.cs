@@ -26,7 +26,9 @@ namespace Glass.Mapper.Configuration
 
         public ChildrenConfiguration()
         {
-            IsLazy = true;
+            IsLazy = Defaults.ChildrenConfiguration.IsLazy;
+	        InferType = Defaults.ChildrenConfiguration.InferType;
+
         }
 
         /// <summary>

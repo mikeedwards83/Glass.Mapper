@@ -23,11 +23,17 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public class LinkedConfiguration : AbstractPropertyConfiguration
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is lazy.
-        /// </summary>
-        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
-        public bool IsLazy { get; set; }
+	    public LinkedConfiguration()
+	    {
+			IsLazy = Defaults.QueryConfiguration.IsLazy;
+			InferType = Defaults.QueryConfiguration.InferType;
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is lazy.
+		/// </summary>
+		/// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+		public bool IsLazy { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [infer type].

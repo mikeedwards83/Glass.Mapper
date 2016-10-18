@@ -4,7 +4,8 @@
     {
         public SelfConfiguration()
         {
-            IsLazy = true;
+            IsLazy = Defaults.SelfConfiguration.IsLazy;
+			InferType = Defaults.SelfConfiguration.InferType;
         }
         /// <summary>
         /// Gets or sets a value indicating whether this instance is lazy.

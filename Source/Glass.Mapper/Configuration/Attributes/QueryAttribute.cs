@@ -55,7 +55,9 @@ namespace Glass.Mapper.Configuration.Attributes
         /// <param name="query">The query.</param>
         public QueryAttribute(string query)
         {
-            IsLazy = true;
+            IsLazy = Defaults.QueryConfiguration.IsLazy;
+            InferType = Defaults.QueryConfiguration.InferType;
+            IsRelative = Defaults.QueryConfiguration.IsRelative;
             Query = query;
         }
 

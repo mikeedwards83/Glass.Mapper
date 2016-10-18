@@ -23,7 +23,14 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public class QueryConfiguration : AbstractPropertyConfiguration
     {
-        /// <summary>
+	    public QueryConfiguration()
+	    {
+		    IsLazy = Defaults.QueryConfiguration.IsLazy;
+			IsRelative = Defaults.QueryConfiguration.IsRelative;
+		    InferType = Defaults.QueryConfiguration.InferType;
+	    }
+
+	    /// <summary>
         /// Gets or sets the query.
         /// </summary>
         /// <value>The query.</value>

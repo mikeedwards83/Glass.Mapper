@@ -30,14 +30,15 @@ namespace Glass.Mapper.Configuration.Attributes
         /// </summary>
         public ChildrenAttribute()
         {
-            IsLazy = true;
-        }
+			IsLazy = Defaults.ChildrenConfiguration.IsLazy;
+			InferType = Defaults.ChildrenConfiguration.InferType;
+		}
 
-        /// <summary>
-        /// Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
-        /// </summary>
-        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
-        public virtual bool IsLazy
+		/// <summary>
+		/// Indicates if children should be loaded lazily. Default value is true. If false all children will be loaded when the containing object is created.
+		/// </summary>
+		/// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+		public virtual bool IsLazy
         {
             get;
             set;

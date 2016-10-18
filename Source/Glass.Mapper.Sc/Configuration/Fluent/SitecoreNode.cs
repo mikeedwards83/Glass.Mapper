@@ -19,6 +19,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -39,6 +40,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreNode(Expression<Func<T, object>> ex)
             : base(ex)
         {
+	        Configuration.IsLazy = Defaults.NodeConfiguration.IsLazy;
         }
 
         /// <summary>

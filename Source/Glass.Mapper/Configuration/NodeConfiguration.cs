@@ -23,7 +23,12 @@ namespace Glass.Mapper.Configuration
     /// </summary>
     public class NodeConfiguration : AbstractPropertyConfiguration
     {
-        /// <summary>
+	    public NodeConfiguration()
+	    {
+		    IsLazy = Defaults.NodeConfiguration.IsLazy;
+	    }
+
+	    /// <summary>
         /// Gets or sets the id.
         /// </summary>
         /// <value>The id.</value>

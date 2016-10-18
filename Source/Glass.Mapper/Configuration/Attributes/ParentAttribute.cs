@@ -31,14 +31,14 @@ namespace Glass.Mapper.Configuration.Attributes
         /// </summary>
         public ParentAttribute()
         {
-            IsLazy = true;
-            InferType = false;
-        }
-        /// <summary>
-        /// Indicates if the parent should be loaded lazily. Default value is true. If false parent will be loaded when the contain object is created.
-        /// </summary>
-        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
-        public bool IsLazy
+			IsLazy = Defaults.ParentConfiguration.IsLazy;
+			InferType = Defaults.ParentConfiguration.InferType;
+		}
+		/// <summary>
+		/// Indicates if the parent should be loaded lazily. Default value is true. If false parent will be loaded when the contain object is created.
+		/// </summary>
+		/// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+		public bool IsLazy
         {
             get;
             set;

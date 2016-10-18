@@ -25,7 +25,8 @@ namespace Glass.Mapper.Configuration
     {
         public ParentConfiguration()
         {
-            IsLazy = true;
+            IsLazy = Defaults.ParentConfiguration.IsLazy;
+	        InferType = Defaults.ParentConfiguration.InferType;
         }
         /// <summary>
         /// Gets or sets a value indicating whether this instance is lazy.

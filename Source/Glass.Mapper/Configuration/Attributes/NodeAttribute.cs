@@ -30,14 +30,14 @@ namespace Glass.Mapper.Configuration.Attributes
         /// </summary>
         public NodeAttribute()
         {
-            IsLazy = true;
-        }
+			IsLazy = Defaults.NodeConfiguration.IsLazy;
+		}
 
-        /// <summary>
-        /// Indicates that the item should be loaded lazily. Default value is true. If false the item will be loaded when the containing object is created.
-        /// </summary>
-        /// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
-        public bool IsLazy
+		/// <summary>
+		/// Indicates that the item should be loaded lazily. Default value is true. If false the item will be loaded when the containing object is created.
+		/// </summary>
+		/// <value><c>true</c> if this instance is lazy; otherwise, <c>false</c>.</value>
+		public bool IsLazy
         {
             get;
             set;

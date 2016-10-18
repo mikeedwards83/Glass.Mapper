@@ -18,6 +18,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -35,13 +36,15 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreLinked(Expression<Func<T, object>> ex)
             : base(ex)
         {
-        }
+			Configuration.IsLazy = Defaults.NodeConfiguration.IsLazy;
+			Configuration.InferType = Defaults.NodeConfiguration.InferType;
+		}
 
 
-        /// <summary>
-        /// Indicates if linked items should not be  loaded lazily. Default value is true. If set linked items will be loaded when the contain object is created.
-        /// </summary>
-        public SitecoreLinked<T> IsNotLazy()
+		/// <summary>
+		/// Indicates if linked items should not be  loaded lazily. Default value is true. If set linked items will be loaded when the contain object is created.
+		/// </summary>
+		public SitecoreLinked<T> IsNotLazy()
         {
             Configuration.IsLazy = false;
             return this;

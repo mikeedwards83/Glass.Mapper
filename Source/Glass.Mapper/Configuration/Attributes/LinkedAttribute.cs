@@ -30,7 +30,8 @@ namespace Glass.Mapper.Configuration.Attributes
         /// </summary>
         public LinkedAttribute()
         {
-            IsLazy = true;
+            IsLazy = Defaults.LinkedConfiguration.IsLazy;
+			InferType = Defaults.LinkedConfiguration.InferType;
         }
         /// <summary>
         /// Indicates if linked items should be loaded lazily. Default value is true. If false linked items will be loaded when the contain object is created.

@@ -20,6 +20,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -37,13 +38,15 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         public SitecoreQuery(Expression<Func<T, object>> ex):base(ex)
         {
-            Configuration.IsLazy = true;
-        }
+			Configuration.IsLazy = Defaults.QueryConfiguration.IsLazy;
+			Configuration.InferType = Defaults.QueryConfiguration.InferType;
+			Configuration.IsRelative = Defaults.QueryConfiguration.IsRelative;
+		}
 
-        /// <summary>
-        /// Indicates that the results should be loaded lazily
-        /// </summary>
-        public SitecoreQuery<T> IsNotLazy()
+		/// <summary>
+		/// Indicates that the results should be loaded lazily
+		/// </summary>
+		public SitecoreQuery<T> IsNotLazy()
         {
             Configuration.IsLazy = false;
             return this;

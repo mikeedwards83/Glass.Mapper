@@ -34,6 +34,7 @@
 */
 using System;
 using System.Linq.Expressions;
+using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -52,7 +53,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreChildren(Expression<Func<T, object>> ex)
             : base(ex)
         {
-            Configuration.IsLazy = true;
+            Configuration.IsLazy = Defaults.ChildrenConfiguration.IsLazy;
+	        Configuration.InferType = Defaults.ChildrenConfiguration.InferType;
         }
         /// <summary>
         /// Indicates if children should not be loaded lazily.  If false all children will be loaded when the containing object is created.
