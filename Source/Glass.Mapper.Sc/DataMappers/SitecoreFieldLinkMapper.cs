@@ -221,7 +221,8 @@ namespace Glass.Mapper.Sc.DataMappers
                                 linkField.TargetID = newId;
                                 ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                                 linkField.UpdateLink(nLink);
-                                linkField.Url = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                                var mediaUrl = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                                linkField.Url = mediaUrl;
                             }
                             else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
                         }

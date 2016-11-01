@@ -23,6 +23,16 @@ namespace Glass.Mapper.Profilers
     /// </summary>
     public class NullProfiler : IPerformanceProfiler
     {
+        
+        public static NullProfiler Instance { get; private set; }
+
+        static NullProfiler()
+        {
+            Instance = new NullProfiler();
+        }
+
+        private NullProfiler() { }
+
         /// <summary>
         /// Starts the specified key.
         /// </summary>
@@ -36,6 +46,14 @@ namespace Glass.Mapper.Profilers
         /// </summary>
         /// <param name="key">The key.</param>
         public void End(string key)
+        {
+        }
+
+        public void IndentIncrease()
+        {
+        }
+
+        public void IndentDecrease()
         {
         }
     }

@@ -31,6 +31,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
     /// </summary>
     public class TemplateInferredTypeTask : IConfigurationResolverTask
     {
+        public string Name { get { return "TemplateInferredTypeTask"; } }
 
         static ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>
             _inferredCache = new ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>();

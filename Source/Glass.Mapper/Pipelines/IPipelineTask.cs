@@ -29,6 +29,9 @@ namespace Glass.Mapper.Pipelines
         /// </summary>
         /// <param name="args">The args.</param>
         void Execute(T args);
+
+        string Name { get; }
+       
     }
 }
 

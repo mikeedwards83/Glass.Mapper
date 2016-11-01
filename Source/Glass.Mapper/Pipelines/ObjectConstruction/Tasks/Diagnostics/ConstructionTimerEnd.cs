@@ -8,6 +8,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
         private ICacheKeyGenerator _cacheKeyGenerator;
         private readonly Config.DebugSettings _debugSettings;
         private readonly ILog _log;
+        public string Name { get { return "ConstructionTimerEnd"; } }
 
 
         public ConstructionTimerEnd(

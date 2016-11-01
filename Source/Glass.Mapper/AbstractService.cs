@@ -69,6 +69,7 @@ namespace Glass.Mapper
         private ObjectConstruction _objectConstruction;
 
         private ObjectSaving _objectSaving;
+        private bool _disposed;
 
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Context is null</exception>
         protected AbstractService(Context glassContext)
         {
-
+            
             GlassContext = glassContext;
             if (GlassContext == null) 
                 throw new NullReferenceException("Context is null");
@@ -110,7 +111,7 @@ namespace Glass.Mapper
             var objectSavingTasks = glassContext.DependencyResolver.ObjectSavingFactory.GetItems();
             _objectSaving = new ObjectSaving(objectSavingTasks);
 
-            Profiler = new NullProfiler();
+            Profiler = NullProfiler.Instance;
 
             Initiate(glassContext.DependencyResolver);
         }
@@ -128,6 +129,14 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
+            string profilerKey = "Creating {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName);
+            Profiler.IndentIncrease();
+            Profiler.Start(profilerKey);
+
+            if (this._disposed)
+            {
+                throw new MapperException("Service has been disposed, cannot create object");
+            }
             //run the pipeline to get the configuration to load
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
@@ -137,6 +146,9 @@ namespace Glass.Mapper
             var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
             objectArgs.Parameters = configurationArgs.Parameters;
             _objectConstruction.Run(objectArgs);
+
+            Profiler.End(profilerKey);
+            Profiler.IndentDecrease();
 
             return objectArgs.Result;
         }
@@ -187,6 +199,7 @@ namespace Glass.Mapper
         {
             if (disposing)
             {
+                this._disposed = true;
                 if (_configurationResolver != null)
                 {
                     _configurationResolver.Dispose();

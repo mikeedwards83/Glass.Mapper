@@ -8,6 +8,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
     public class SitecoreItemTask : IObjectConstructionTask
     {
+        public string Name { get { return "SitecoreItemTask"; } }
         public void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null && args.Configuration == Sc.Pipelines.ConfigurationResolver.SitecoreItemResolverTask.Config)

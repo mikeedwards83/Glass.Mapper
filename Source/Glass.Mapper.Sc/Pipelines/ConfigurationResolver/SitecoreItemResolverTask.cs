@@ -7,6 +7,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 {
     public class SitecoreItemResolverTask : IConfigurationResolverTask
     {
+        public string Name { get { return "SitecoreItemResolverTask"; } }
 
         static SitecoreItemResolverTask()
         {

@@ -29,6 +29,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
     /// </summary>
     public class CreateDynamicTask : IObjectConstructionTask
     {
+        public string Name { get { return "CreateDynamicTask"; } }
         private static readonly Type _dynamicType;
 
            static CreateDynamicTask()

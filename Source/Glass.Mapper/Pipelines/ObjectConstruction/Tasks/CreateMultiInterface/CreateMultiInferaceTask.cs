@@ -16,8 +16,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
         /// </summary>
         public const string MultiInterfaceConfigsKey = "9F1A4CFC-3DC5-4CD5-939B-A928D8D6A3B6";
         private static volatile ProxyGenerator _generator;
+        public string Name { get { return "CreateMultiInferaceTask"; } }
 
-              /// <summary>
+        /// <summary>
         /// Initializes static members of the <see cref="CreateMultiInferaceTask"/> class.
         /// </summary>
         static CreateMultiInferaceTask()

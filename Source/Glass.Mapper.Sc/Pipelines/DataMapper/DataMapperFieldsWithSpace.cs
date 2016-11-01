@@ -11,6 +11,7 @@ namespace Glass.Mapper.Sc.Pipelines.DataMapper
 {
     public class DataMapperFieldsWithSpace : IDataMapperResolverTask
     {
+        public string Name { get { return "DataMapperFieldsWithSpace"; } }
         public void Execute(DataMapperResolverArgs args)
         {
             if (args.Result != null)

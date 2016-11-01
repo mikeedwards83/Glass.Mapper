@@ -17,6 +17,7 @@
 //-CRE-
 
 
+using System;
 using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 
@@ -59,8 +60,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// <param name="configuration">The configuration.</param>
         /// <param name="service">The service.</param>
         public ObjectConstructionArgs(
-            Context context, 
-            AbstractTypeCreationContext  abstractTypeCreationContext,
+            Context context,
+            AbstractTypeCreationContext abstractTypeCreationContext,
             AbstractTypeConfiguration configuration,
             IAbstractService service)
             : base(context)
@@ -70,11 +71,14 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
             Service = service;
         }
 
-       
+        public Action CreatedCallback = () =>
+        {
+        };
 
-     
 
-      
+
+
+
 
     }
 }

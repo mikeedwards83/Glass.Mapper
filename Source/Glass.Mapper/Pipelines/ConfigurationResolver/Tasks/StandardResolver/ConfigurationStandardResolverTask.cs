@@ -26,6 +26,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.StandardResolver
     /// </summary>
     public class ConfigurationStandardResolverTask : IConfigurationResolverTask
     {
+
+        public string Name { get { return "ConfigurationStandardResolverTask"; } }
+
         /// <summary>
         /// Executes the specified args.
         /// </summary>

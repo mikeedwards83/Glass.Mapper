@@ -8,6 +8,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
     {
         private static volatile ProxyGenerator _generator = new ProxyGenerator();
 
+        public string Name { get { return "SearchProxyWrapperTask"; } }
         static SearchProxyWrapperTask()
         {
         }

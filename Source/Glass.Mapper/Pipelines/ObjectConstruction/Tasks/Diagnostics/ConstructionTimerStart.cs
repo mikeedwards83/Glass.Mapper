@@ -6,6 +6,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
     public class ConstructionTimerStart : IObjectConstructionTask
     {
         private ICacheKeyGenerator _cacheKeyGenerator;
+        public string Name { get { return "ConstructionTimerStart"; } }
 
         public ConstructionTimerStart(ICacheKeyGenerator cacheKeyGenerator)
         {

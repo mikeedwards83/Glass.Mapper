@@ -57,15 +57,18 @@ namespace Glass.Mapper.Sc
         }
         public static bool IsPageEditorEditing
         {
-            get
-            {
+            get { return GetIsPageEditorEditing(); }
+        }
+
+        internal static Func<bool> GetIsPageEditorEditing = () =>
+        {
 #if SC82
                 return Sitecore.Context.PageMode.IsExperienceEditorEditing;
 #else
-                return Sitecore.Context.PageMode.IsPageEditorEditing;
+            return Sitecore.Context.PageMode.IsPageEditorEditing;
 #endif
-            }
-        }
+        };
+
 
         /// <summary>
         /// Converts a NameValueCollection into HTML attributes

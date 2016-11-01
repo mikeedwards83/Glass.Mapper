@@ -16,6 +16,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 
         protected static ProxyGenerator Generator { get { return _generator; } }
         protected static ProxyGenerationOptions Options { get { return _options; } }
+        public string Name { get { return "IocTaskBase"; } }
 
         static IocTaskBase()
         {

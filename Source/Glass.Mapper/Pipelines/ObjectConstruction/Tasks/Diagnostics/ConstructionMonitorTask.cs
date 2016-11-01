@@ -7,6 +7,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
 
         public const string CalledKey = "GlassCalledKey";
         public const string CacheMissKey = "GlassCacheMissKey";
+        public string Name { get { return "ConstructionMonitorTask"; } }
 
         private readonly string _key;
 
@@ -19,9 +20,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
         {
             if (HttpContext.Current != null)
             {
-                var counter = GetCounter(_key);
-                counter++;
-                HttpContext.Current.Items[_key] = counter;
+                var innerCallback = args.CreatedCallback;
+                args.CreatedCallback = () =>
+                {
+                    var counter = GetCounter(_key);
+                    counter++;
+                    HttpContext.Current.Items[_key] = counter;
+
+                    innerCallback();
+                };
             }
         }
 

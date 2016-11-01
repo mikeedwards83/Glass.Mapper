@@ -23,6 +23,8 @@ namespace Glass.Mapper.Pipelines.ObjectSaving.Tasks
     /// </summary>
     public class StandardSavingTask : IObjectSavingTask
     {
+        public string Name { get { return "StandardSavingTask"; } }
+
         /// <summary>
         /// Executes the specified args.
         /// </summary>
