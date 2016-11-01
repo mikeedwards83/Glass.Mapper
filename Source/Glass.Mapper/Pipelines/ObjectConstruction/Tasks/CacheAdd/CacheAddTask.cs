@@ -32,6 +32,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd
                 && args.AbstractTypeCreationContext.CacheEnabled
                 )
             {
+
+                DisableLazyLoad.Pop();
+
                 var key = CacheKeyGenerator.Generate(args);
                 // This will also OVERRIDE any existing item that may already be cached (to be consistent across different cache impls)
                 // Will allow for multiple threads to update the cached object on first load, when they are all racing to cache the item for the first time

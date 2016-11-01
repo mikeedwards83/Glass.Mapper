@@ -10,8 +10,15 @@ namespace Glass.Mapper
 {
     public class DisableCache :SettingStack<CacheSetting>
     {
-        public DisableCache() : base(CacheSetting.Disabled)
+        const string Key = "AADBFF1C-2EE9-475A-B5CA-3D0F32A1CECC";
+
+        public DisableCache() : base(CacheSetting.Disabled, Key)
         {
+        }
+
+        public static CacheSetting Current
+        {
+            get { return GetCurrent(Key); }
         }
     }
 

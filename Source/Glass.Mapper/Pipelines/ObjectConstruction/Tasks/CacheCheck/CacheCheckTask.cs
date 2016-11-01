@@ -9,6 +9,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
             get; private set;
         }
 
+        private string _lazyLoadStackKey = "FEEED83A-6894-482A-AEFE-15F4EE79F0A4";
+
         protected ICacheKeyGenerator CacheKeyGenerator
         {
             get; private set;
@@ -29,6 +31,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 && args.AbstractTypeCreationContext.CacheEnabled
                 )
             {
+
+
                 var key = CacheKeyGenerator.Generate(args);
 
                 var cacheItem = CacheManager.Get<object>(key);
@@ -37,6 +41,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                     args.Result = cacheItem;
                     args.AbortPipeline();
                 }
+
+                DisableLazyLoad.Push();
             }
         }
     }

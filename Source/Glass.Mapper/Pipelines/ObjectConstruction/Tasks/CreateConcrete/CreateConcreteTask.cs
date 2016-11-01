@@ -56,7 +56,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 		        || args.Configuration.Type.IsSealed)
                 return;
 
-            if(args.AbstractTypeCreationContext.IsLazy)
+            if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoad.Current == LazyLoadSetting.Enabled)
             {
                 //here we create a lazy loaded version of the class
                 args.Result = CreateLazyObject(args);
