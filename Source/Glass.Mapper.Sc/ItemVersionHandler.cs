@@ -9,6 +9,7 @@ namespace Glass.Mapper.Sc
     {
         private readonly Config _config;
 
+        private static int count = 0;
         public ItemVersionHandler(Config config)
         {
             _config = config;
@@ -27,6 +28,11 @@ namespace Glass.Mapper.Sc
                 return false;
             }
 
+            if (count > 200)
+            {
+                
+            }
+            count++;
             if (_config != null && _config.ForceItemInPageEditor && GlassHtml.IsInEditingMode)
             {
                 return false;

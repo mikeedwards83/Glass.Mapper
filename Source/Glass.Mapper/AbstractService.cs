@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -62,7 +62,7 @@ namespace Glass.Mapper
         /// <value>
         /// The glass context.
         /// </value>
-        public  Context GlassContext { get; private set; }
+        public Context GlassContext { get; private set; }
 
         private ConfigurationResolver _configurationResolver;
 
@@ -78,7 +78,7 @@ namespace Glass.Mapper
         protected AbstractService()
             : this(Context.Default)
         {
-            
+
         }
 
         /// <summary>
@@ -97,13 +97,13 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Context is null</exception>
         protected AbstractService(Context glassContext)
         {
-            
+
             GlassContext = glassContext;
-            if (GlassContext == null) 
+            if (GlassContext == null)
                 throw new NullReferenceException("Context is null");
 
             var objectConstructionTasks = glassContext.DependencyResolver.ObjectConstructionFactory.GetItems();
-            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
+            _objectConstruction = new ObjectConstruction(objectConstructionTasks);
 
             var configurationResolverTasks = glassContext.DependencyResolver.ConfigurationResolverFactory.GetItems();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
@@ -118,7 +118,7 @@ namespace Glass.Mapper
 
         public virtual void Initiate(IDependencyResolver resolver)
         {
-            CacheEnabled = true;            
+            CacheEnabled = true;
         }
 
         /// <summary>
@@ -129,6 +129,7 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
+
             string profilerKey = "Creating {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName);
             Profiler.IndentIncrease();
             Profiler.Start(profilerKey);
@@ -140,17 +141,34 @@ namespace Glass.Mapper
             //run the pipeline to get the configuration to load
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
-                throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType));
+                throw new NullReferenceException(
+                    "Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}"
+                        .Formatted(abstractTypeCreationContext.RequestedType));
 
             //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
+            var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext,
+                configurationArgs.Result, this);
             objectArgs.Parameters = configurationArgs.Parameters;
-            _objectConstruction.Run(objectArgs);
 
-            Profiler.End(profilerKey);
-            Profiler.IndentDecrease();
 
-            return objectArgs.Result;
+            try
+            {
+                _objectConstruction.Run(objectArgs);
+                return objectArgs.Result;
+            }
+            catch (Exception ex)
+            {
+               
+                throw ex;
+            }
+            finally
+            {
+                //we clear the lazy loader disable to avoid problems with
+                //stack overflows on the next request
+                DisableLazyLoad.Pop(objectArgs.Parameters);
+                Profiler.End(profilerKey);
+                Profiler.IndentDecrease();
+            }
         }
 
         public ConfigurationResolverArgs RunConfigurationPipeline(AbstractTypeCreationContext abstractTypeCreationContext)
@@ -235,7 +253,7 @@ namespace Glass.Mapper
         /// <value>
         /// The glass context.
         /// </value>
-        Context GlassContext { get;  }
+        Context GlassContext { get; }
 
         /// <summary>
         /// Instantiates the object.
