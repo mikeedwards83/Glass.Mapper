@@ -141,18 +141,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 config.PropertyInfo = property;
 
-                mapper.Setup(new DataMapperResolverArgs(null, config));
-
+                
                 var item = database.GetItem("/sitecore/content/target");
 
                 Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-                var dataContext = new SitecoreDataMappingContext(null, item, null);
-                var expected = item.ID;
 
                 //Act
                 Assert.Throws<NotSupportedException>(() =>
                 {
-                    var value = mapper.MapToProperty(dataContext);
+                    mapper.Setup(new DataMapperResolverArgs(null, config));
+
                 });
 
                 //Assert

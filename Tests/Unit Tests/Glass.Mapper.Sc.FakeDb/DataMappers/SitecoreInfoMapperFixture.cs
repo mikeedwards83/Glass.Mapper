@@ -183,7 +183,6 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
                 config.Type = type;
-                mapper.Setup(new DataMapperResolverArgs(null, config));
 
                 var item = database.GetItem("/sitecore/Content/TestItem");
 
@@ -191,7 +190,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var dataContext = new SitecoreDataMappingContext(null, item, null);
 
                 //Act
-                Assert.Throws<MapperException>(() => mapper.MapToProperty(dataContext));
+                Assert.Throws<MapperException>(() => mapper.Setup(new DataMapperResolverArgs(null, config)));
 
                 //Assert
                 //No asserts expect exception

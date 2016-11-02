@@ -2017,7 +2017,6 @@ namespace Glass.Mapper.Sc.FakeDb
                     using (new SecurityDisabler())
                     {
                         var model = service.GetItem<StubClass>(targetPath);
-                        model = null;
                         result = html.Editable(model, x=> model.StringField);
                     }
 

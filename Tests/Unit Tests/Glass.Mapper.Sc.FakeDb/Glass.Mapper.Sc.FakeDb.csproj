@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheFixtures.cs" />
     <Compile Include="Caching\NetMemoryCacheManagerTestFixture.cs" />
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />

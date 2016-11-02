@@ -42,7 +42,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                     args.AbortPipeline();
                 }
 
-                DisableLazyLoad.Push();
+                DisableLazyLoad.Push(args.Parameters);
             }
         }
     }
