@@ -64,11 +64,12 @@ namespace Glass.Mapper.Sc.Tests
             //Act
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
+            GlassHtml.QuotationMark = "'";
+
             //Assert
             Assert.AreEqual(expected, result);
 
             //reset GlassHtml
-            GlassHtml.QuotationMark = "'";
 
         }
 
