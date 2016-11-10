@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc
         /// Processes the items.
         /// </summary>
         /// <returns>IEnumerable{`0}.</returns>
-        public List<T> ProcessItems()
+        public virtual List<T> ProcessItems()
         {
             if (_service == null)
             {
