@@ -2,28 +2,26 @@
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
-    public class CacheCheckTask : IObjectConstructionTask
+    public class CacheCheckTask : AbstractObjectConstructionTask
     {
         protected ICacheManager CacheManager
         {
             get; private set;
         }
 
-        private string _lazyLoadStackKey = "FEEED83A-6894-482A-AEFE-15F4EE79F0A4";
-
         protected ICacheKeyGenerator CacheKeyGenerator
         {
             get; private set;
         }
-        public string Name { get { return "CacheCheckTask"; } }
 
         public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {
             CacheManager = cacheManager;
             CacheKeyGenerator = cacheKeyGenerator;
+            Name = "CacheCheckTask";
         }
 
-        public virtual void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null 
                 && args.Configuration.Cachable 
@@ -31,19 +29,32 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 && args.AbstractTypeCreationContext.CacheEnabled
                 )
             {
-
-
                 var key = CacheKeyGenerator.Generate(args);
 
                 var cacheItem = CacheManager.Get<object>(key);
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;
-                    args.AbortPipeline();
                 }
 
                 DisableLazyLoad.Push(args.Parameters);
+                try
+                {
+                    base.Execute(args);
+
+                    CacheManager.AddOrUpdate(key, args.Result);
+                }
+                finally
+                {
+                    DisableLazyLoad.Pop(args.Parameters);
+                }
             }
+            else 
+            {
+                base.Execute(args);
+            }
+
+
         }
     }
 }

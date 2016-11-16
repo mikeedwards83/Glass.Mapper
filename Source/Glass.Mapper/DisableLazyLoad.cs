@@ -38,9 +38,9 @@ namespace Glass.Mapper
             }
         }
 
-        public static void Push(Dictionary<string, object>  args)
+        public static void Push(Dictionary<string, object> args)
         {
-        
+
             Stack.Push(LazyLoadSetting.Disabled);
             args[Key] = LazyLoadSetting.Disabled;
 
@@ -50,10 +50,10 @@ namespace Glass.Mapper
                 throw new MapperException(Constants.Errors.ErrorLazyLoop);
             }
         }
-        
+
         public static void Pop(Dictionary<string, object> args)
         {
-            if (args.ContainsKey(Key) 
+            if (args.ContainsKey(Key)
                 && args[Key] != null
                 && (LazyLoadSetting)args[Key] == LazyLoadSetting.Disabled)
             {

@@ -278,7 +278,7 @@
     <Content Include="App_Start\GlassMapperSc.cs.pp" />
     <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
     <Content Include="App_Config\Include\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
-    <Compile Include="Pipelines\DataMapper\DataMapperFieldsWithSpace.cs" />
+    <Compile Include="Pipelines\DataMapper\AbstractDataMapperFieldsWithSpace.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

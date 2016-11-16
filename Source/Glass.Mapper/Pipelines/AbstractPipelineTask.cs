@@ -16,22 +16,42 @@
 */ 
 //-CRE-
 
+using System;
+
 namespace Glass.Mapper.Pipelines
 {
     /// <summary>
     /// Interface IPipelineTask
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IPipelineTask<T>  where T: AbstractPipelineArgs
+    public abstract class AbstractPipelineTask<T>  where T: AbstractPipelineArgs
     {
+
+        public string Name { get; protected set; }
+
+        protected Action<T> Next { get; private set; }
+
+        public void SetNext(Action<T> next)
+        {
+            Next = next;
+        }
+
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        void Execute(T args);
+        public virtual void Execute(T args)
+        {
+            CallNext(args);
+        }
 
-        string Name { get; }
-       
+        public void CallNext(T args)
+        {
+            if (Next != null)
+            {
+                Next(args);
+            }
+        }
     }
 }
 

@@ -37,7 +37,7 @@ namespace Glass.Mapper.Pipelines
         /// Gets a value indicating whether this instance is aborted.
         /// </summary>
         /// <value><c>true</c> if this instance is aborted; otherwise, <c>false</c>.</value>
-        public bool IsAborted { get; private set; }
+       // public bool IsAborted { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractPipelineArgs"/> class.
@@ -53,11 +53,11 @@ namespace Glass.Mapper.Pipelines
         /// Aborts the pipeline.
         /// </summary>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
-        public bool AbortPipeline ()
-        {
-            IsAborted = true;
-            return IsAborted;
-        }
+        //public bool AbortPipeline ()
+        //{
+        //    IsAborted = true;
+        //    return IsAborted;
+        //}
 
        
     }

@@ -120,14 +120,6 @@ namespace Glass.Mapper.Configuration
                 //create properties 
                 AbstractDataMappingContext dataMappingContext = service.CreateDataMappingContext(context, obj);
 
-                //var tasks = Properties.Select(x =>
-                //    {
-                //        var t = new Task(() => x.Mapper.MapCmsToProperty(dataMappingContext));
-                //        t.Start();
-                //        return t;
-                //    });
-
-                //Task.WaitAll(tasks.ToArray());
 
                 for (int i = Properties.Length - 1; i >= 0; i--)
                 {

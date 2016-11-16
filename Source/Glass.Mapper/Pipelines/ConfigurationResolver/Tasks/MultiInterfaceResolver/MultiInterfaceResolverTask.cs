@@ -10,17 +10,19 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResol
     /// <summary>
     /// Used to resolve all configurations for multiple interface proxy type
     /// </summary>
-    public class MultiInterfaceResolverTask : IConfigurationResolverTask
+    public class MultiInterfaceResolverTask : AbstractConfigurationResolverTask
     {
-        public string Name { get { return "MultiInterfaceResolverTask"; } }
-
-      
         /// <summary>
         /// Key used to add multi interface types to the parameters dictionary
         /// </summary>
         public const string MultiInterfaceTypesKey = "A2453E13-1EAA-47A9-9F42-6BCF8D645188";
 
-        public void Execute(ConfigurationResolverArgs args)
+        public MultiInterfaceResolverTask()
+        {
+            Name = "MultiInterfaceResolverTask";
+        }
+
+        public override void Execute(ConfigurationResolverArgs args)
         {
             if (args.Parameters != null && args.Parameters.ContainsKey(MultiInterfaceTypesKey) && args.RequestedType.IsInterface)
             {
@@ -43,6 +45,9 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.MultiInterfaceResol
                     typeContext.RequestedType = originalType;
                 }
             }
+
+            base.Execute(args);
+
         }
     }
 }

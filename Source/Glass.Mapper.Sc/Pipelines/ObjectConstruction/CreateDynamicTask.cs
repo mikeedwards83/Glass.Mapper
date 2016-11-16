@@ -27,20 +27,24 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
     /// <summary>
     /// CreateDynamicTask
     /// </summary>
-    public class CreateDynamicTask : IObjectConstructionTask
+    public class CreateDynamicTask : AbstractObjectConstructionTask
     {
-        public string Name { get { return "CreateDynamicTask"; } }
         private static readonly Type _dynamicType;
 
            static CreateDynamicTask()
         {
             _dynamicType = typeof(IDynamicMetaObjectProvider);
         }
+
+        public CreateDynamicTask()
+        {
+            Name = "CreateDynamicTask";
+        }
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null &&
                 args.Configuration != null &&
@@ -50,6 +54,8 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                   args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
                 args.Result = new DynamicItem(typeContext.Item);
             }
+
+            base.Execute(args);
         }
     }
 }

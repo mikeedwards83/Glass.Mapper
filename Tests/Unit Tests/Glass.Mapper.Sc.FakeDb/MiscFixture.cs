@@ -341,7 +341,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
                 var resolver = Utilities.CreateStandardResolver();
-                resolver.DataMapperResolverFactory.Add(() => new DataMapperFieldsWithSpace());
+                resolver.DataMapperResolverFactory.Add(() => new AbstractDataMapperFieldsWithSpace());
                 var context = Context.Create(resolver);
                 context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.FakeDb"));
 

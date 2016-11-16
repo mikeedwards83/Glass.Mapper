@@ -5,9 +5,9 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 {
-    public class SitecoreItemResolverTask : IConfigurationResolverTask
+    public class SitecoreItemResolverTask : AbstractConfigurationResolverTask
     {
-        public string Name { get { return "SitecoreItemResolverTask"; } }
+      
 
         static SitecoreItemResolverTask()
         {
@@ -16,16 +16,24 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
             {
                 Type = ItemType
             };
+          
         }
         public static Type ItemType { get; private set; }
         public  static SitecoreTypeConfiguration Config { get; private set; }
 
-        public void Execute(ConfigurationResolverArgs args)
+        public SitecoreItemResolverTask()
+        {
+             Name = "SitecoreItemResolverTask"; 
+        }
+
+        public override void Execute(ConfigurationResolverArgs args)
         {
             if (args.Result == null && args.RequestedType == ItemType)
             {
                 args.Result = Config;
             }
+
+            base.Execute(args);
         }
     }
 }

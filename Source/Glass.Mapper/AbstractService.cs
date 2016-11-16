@@ -165,7 +165,6 @@ namespace Glass.Mapper
             {
                 //we clear the lazy loader disable to avoid problems with
                 //stack overflows on the next request
-                DisableLazyLoad.Pop(objectArgs.Parameters);
                 Profiler.End(profilerKey);
                 Profiler.IndentDecrease();
             }

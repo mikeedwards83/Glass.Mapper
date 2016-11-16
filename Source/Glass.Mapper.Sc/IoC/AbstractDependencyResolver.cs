@@ -15,11 +15,11 @@ namespace Glass.Mapper.Sc.IoC
         public Mapper.Config Config { get; set; }
         public ILog Log { get; set; }
         public Func<ICacheManager> CacheManager { get; set; }
-        public IConfigFactory<IDataMapperResolverTask> DataMapperResolverFactory { get; set; }
+        public IConfigFactory<AbstractDataMapperResolverTask> DataMapperResolverFactory { get; set; }
         public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; set; }
-        public IConfigFactory<IConfigurationResolverTask> ConfigurationResolverFactory { get; set; }
-        public IConfigFactory<IObjectConstructionTask> ObjectConstructionFactory { get; set; }
-        public IConfigFactory<IObjectSavingTask> ObjectSavingFactory { get; set; }
+        public IConfigFactory<AbstractConfigurationResolverTask> ConfigurationResolverFactory { get; set; }
+        public IConfigFactory<AbstractObjectConstructionTask> ObjectConstructionFactory { get; set; }
+        public IConfigFactory<AbstractObjectSavingTask> ObjectSavingFactory { get; set; }
         public IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; set; }
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }

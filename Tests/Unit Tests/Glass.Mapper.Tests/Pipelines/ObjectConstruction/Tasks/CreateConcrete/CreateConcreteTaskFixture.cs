@@ -18,9 +18,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NUnit.Framework;
@@ -63,7 +60,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNull(args.Result);
 
         }
@@ -92,7 +88,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is StubClass);
             Assert.IsFalse(args.Result.GetType() == typeof(StubClass));
@@ -121,7 +116,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is StubClass);
             Assert.IsTrue(args.Result.GetType() == typeof(StubClass));
@@ -151,7 +145,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is string);
         }

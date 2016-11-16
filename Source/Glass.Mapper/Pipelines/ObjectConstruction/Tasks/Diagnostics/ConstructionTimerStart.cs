@@ -3,24 +3,45 @@ using Glass.Mapper.Caching;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
 {
-    public class ConstructionTimerStart : IObjectConstructionTask
+    public class ConstructionTimerStart : AbstractObjectConstructionTask
     {
         private ICacheKeyGenerator _cacheKeyGenerator;
-        public string Name { get { return "ConstructionTimerStart"; } }
+        private readonly ILog _log;
+        private readonly Config.DebugSettings _debugSettings;
 
-        public ConstructionTimerStart(ICacheKeyGenerator cacheKeyGenerator)
+        public ConstructionTimerStart(
+            ICacheKeyGenerator cacheKeyGenerator, 
+            ILog log,
+               Config.DebugSettings debugSettings)
         {
             _cacheKeyGenerator = cacheKeyGenerator;
+            _log = log;
+            _debugSettings = debugSettings;
+            Name = "ConstructionTimerStart";
         }
 
-        public void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
-            var key = _cacheKeyGenerator.Generate(args) + "stopwatch";
             var stopwatch = new Stopwatch();
 
-            args.Parameters[key] = stopwatch;
             stopwatch.Start();
 
+            try
+            {
+                base.Execute(args);
+            }
+            finally
+            {
+                stopwatch.Stop();
+                if (stopwatch.ElapsedMilliseconds > _debugSettings.SlowModelThreshold)
+                {
+
+                    var key = _cacheKeyGenerator.Generate(args) + "stopwatch";
+                    var finaltType = args.Result.GetType();
+
+                    _log.Warn("Slow Glass Model - Time: {0} Cachable: {1} Type: {2} Key: {3}".Formatted(stopwatch.ElapsedMilliseconds, args.Configuration.Cachable, finaltType.FullName, key));
+                }
+            }
         }
     }
 }

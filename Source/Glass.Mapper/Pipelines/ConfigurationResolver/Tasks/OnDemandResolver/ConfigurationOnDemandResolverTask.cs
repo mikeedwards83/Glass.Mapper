@@ -26,16 +26,18 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
     /// ConfigurationOnDemandResolverTask
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ConfigurationOnDemandResolverTask<T> : IConfigurationResolverTask where T: AbstractTypeConfiguration, new ()
+    public class ConfigurationOnDemandResolverTask<T> : AbstractConfigurationResolverTask where T: AbstractTypeConfiguration, new ()
     {
-        public string Name { get { return "ConfigurationOnDemandResolverTask"; } }
+        public ConfigurationOnDemandResolverTask()
+        {
+            Name = "ConfigurationOnDemandResolverTask";
+        }
 
-       
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ConfigurationResolverArgs args)
+        public override void Execute(ConfigurationResolverArgs args)
         {
 
             if (args.Result == null)
@@ -44,7 +46,7 @@ namespace Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver
                 args.Context.Load(loader);
                 args.Result = args.Context[args.RequestedType];
             }
-
+            base.Execute(args);
         }
     }
 }

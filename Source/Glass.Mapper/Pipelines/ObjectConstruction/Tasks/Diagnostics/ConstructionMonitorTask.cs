@@ -2,21 +2,21 @@
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
 {
-    public class ConstructionMonitorTask : IObjectConstructionTask
+    public class ConstructionMonitorTask : AbstractObjectConstructionTask
     {
 
         public const string CalledKey = "GlassCalledKey";
         public const string CacheMissKey = "GlassCacheMissKey";
-        public string Name { get { return "ConstructionMonitorTask"; } }
 
         private readonly string _key;
 
         public ConstructionMonitorTask(string key)
         {
             _key = key;
+            Name = "ConstructionMonitorTask";
         }
 
-        public void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (HttpContext.Current != null)
             {
@@ -30,6 +30,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
                     innerCallback();
                 };
             }
+
+            base.Execute(args);
         }
 
         public static int GetCounter(string key)

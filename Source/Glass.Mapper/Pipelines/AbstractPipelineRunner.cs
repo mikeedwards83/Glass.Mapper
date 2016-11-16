@@ -30,16 +30,16 @@ namespace Glass.Mapper.Pipelines
     /// <typeparam name="K"></typeparam>
     public abstract class AbstractPipelineRunner<T, K> : IDisposable
         where T : AbstractPipelineArgs
-        where K : IPipelineTask<T>
+        where K : AbstractPipelineTask<T>
     {
 
-        private readonly Func<T, T> _excuteTasks = args => { return args; };
+        private readonly Action<T> _excuteTasks = args => { };
 
         /// <summary>
         /// Gets the tasks.
         /// </summary>
         /// <value>The tasks.</value>
-        public IEnumerable<K> Tasks { get; private set; }
+        public IEnumerable<K> Tasks { get;  set; }
 
         /// <summary>
         /// Gets or sets the profiler.
@@ -54,36 +54,37 @@ namespace Glass.Mapper.Pipelines
         protected AbstractPipelineRunner(IEnumerable<K> tasks)
         {
             //Tasks = tasks.Reverse().ToArray();
+            Tasks = tasks;
 
-            if (tasks != null)
+            K previous = null;
+            K first = null;
+            foreach(var current in tasks)
             {
-                Tasks = tasks;
-
-                foreach (var task in Tasks.Reverse())
+                if (first == null)
                 {
-                    _excuteTasks = CreateTaskExpression(task);
+                    first = current;
                 }
+
+                if (previous == null)
+                {
+                    previous = current;
+                }
+                else
+                {
+                    previous.SetNext(args=> current.Execute(args));
+                    previous = current;
+                }
+                    
             }
 
             Profiler = NullProfiler.Instance;
-        }
 
-        protected virtual Func<T, T> CreateTaskExpression(K task)
-        {
-            var nextTask = _excuteTasks;
-
-            return (args) =>
+            if (first != null)
             {
-                Profiler.Start(task.Name);
-                task.Execute(args);
-                Profiler.End(task.Name);
-
-                if (!args.IsAborted)
-                    nextTask(args);
-
-                return args;
-            };
+                _excuteTasks = (args) => first.Execute(args);
+            }
         }
+       
 
         /// <summary>
         /// Runs a pipeline and returns the resultant arguments
@@ -92,24 +93,8 @@ namespace Glass.Mapper.Pipelines
         /// <returns>`0.</returns>
         public virtual T Run(T args)
         {
-            //            if (Tasks != null)
-            //            {
-            //                for (int i = Tasks.Length-1; i >= 0; i--)
-            //                {
-            //                    var task = Tasks[i];
-            //#if DEBUG
-            //                    Profiler.Start(task.GetType().FullName);
-            //#endif
-            //                    task.Execute(args);
-            //#if DEBUG
-            //                    Profiler.End(task.GetType().FullName);
-            //#endif
-            //                    if (args.IsAborted)
-            //                        break;
-            //                }
-            //            }
-
-            return _excuteTasks(args);
+            _excuteTasks(args);
+            return args;
         }
 
         public void Dispose()

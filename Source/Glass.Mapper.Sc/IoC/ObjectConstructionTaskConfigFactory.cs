@@ -1,7 +1,6 @@
 ﻿using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks;
-using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheAdd;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
@@ -13,7 +12,7 @@ using Sitecore.Diagnostics;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class ObjectConstructionTaskConfigFactory : AbstractConfigFactory<IObjectConstructionTask>
+    public class ObjectConstructionTaskConfigFactory : AbstractConfigFactory<AbstractObjectConstructionTask>
     {
         private readonly IDependencyResolver dependencyResolver;
 
@@ -36,18 +35,13 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new CacheCheckTask(dependencyResolver.GetCacheManager(), new CacheKeyGenerator()));
             if (config.Debug.Enabled)
             {
-                Add(() => new ConstructionTimerStart(new CacheKeyGenerator()));
+                Add(() => new ConstructionTimerStart(new CacheKeyGenerator(), dependencyResolver.GetLog(), dependencyResolver.GetConfig().Debug));
                 Add(() => new ConstructionMonitorTask(ConstructionMonitorTask.CacheMissKey));
             }
             Add(() => new EnforcedTemplateCheck());
             Add(() => new CreateMultiInferaceTask());
             Add(() => new CreateConcreteTask());
             Add(() => new CreateInterfaceTask());
-            Add(() => new CacheAddTask(dependencyResolver.GetCacheManager(), new CacheKeyGenerator()));
-            if (config.Debug.Enabled)
-            {
-                Add(() => new ConstructionTimerEnd(new CacheKeyGenerator(), dependencyResolver.GetConfig().Debug, dependencyResolver.GetLog()));
-            }
         }
     }
 }

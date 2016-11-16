@@ -8,17 +8,20 @@ using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
-    public class EnforcedTemplateCheck : IObjectConstructionTask
+    public class EnforcedTemplateCheck : AbstractObjectConstructionTask
     {
         private static ConcurrentDictionary<string, bool> _cache;
-        public string Name { get { return "EnforcedTemplateCheck"; } }
 
         static EnforcedTemplateCheck()
         {
             _cache= new ConcurrentDictionary<string, bool>();
         }
 
-        public void Execute(ObjectConstructionArgs args)
+        public EnforcedTemplateCheck()
+        {
+            Name = "EnforcedTemplateCheck";
+        }
+        public override void Execute(ObjectConstructionArgs args)
         {
 
             if (args.Result == null)
@@ -29,7 +32,8 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                 {
                     var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
-                    var key = "{0} {1} {2}".Formatted(scConfig.TemplateId, scArgs.Item.TemplateID, scConfig.EnforceTemplate);
+                    var key = "{0} {1} {2}".Formatted(scConfig.TemplateId, scArgs.Item.TemplateID,
+                        scConfig.EnforceTemplate);
                     var result = false;
 
                     if (_cache.ContainsKey(key))
@@ -44,7 +48,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                         {
                             result = TemplateAndBaseCheck(item.Template, scConfig.TemplateId);
                         }
-                        else if(scConfig.EnforceTemplate == SitecoreEnforceTemplate.Template)
+                        else if (scConfig.EnforceTemplate == SitecoreEnforceTemplate.Template)
                         {
                             result = item.TemplateID == scConfig.TemplateId;
                         }
@@ -54,11 +58,13 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 
                     if (!result)
                     {
-                        args.AbortPipeline();
+                        base.Execute(args);
                     }
-
                 }
-
+                else
+                {
+                    base.Execute(args);
+                }
             }
         }
 

@@ -47,7 +47,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
             //Assert
             Assert.IsNull(args.Result);
-            Assert.IsFalse(args.IsAborted);
 
         }
 
@@ -79,8 +78,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsTrue(args.IsAborted);
-
             }
         }
 
@@ -116,7 +113,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsFalse(args.IsAborted);
             }
         }
 
@@ -157,7 +153,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsTrue(args.IsAborted);
 
             }
         }
@@ -194,7 +189,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsFalse(args.IsAborted);
             }
         }
 
@@ -232,7 +226,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                     //Assert
                     Assert.IsNull(args.Result);
-                    Assert.IsFalse(args.IsAborted);
                 }
             }
         }
@@ -289,7 +282,6 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                     //Assert
                     Assert.IsNull(args.Result);
-                    Assert.IsFalse(args.IsAborted);
                 }
             }
         }

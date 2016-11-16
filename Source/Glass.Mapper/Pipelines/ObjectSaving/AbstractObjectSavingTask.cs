@@ -16,13 +16,16 @@
 */ 
 //-CRE-
 
-namespace Glass.Mapper.Pipelines.ConfigurationResolver
+using System;
+
+namespace Glass.Mapper.Pipelines.ObjectSaving
 {
     /// <summary>
-    /// Interface IConfigurationResolverTask
+    /// Interface IObjectSavingTask
     /// </summary>
-    public interface IConfigurationResolverTask : IPipelineTask<ConfigurationResolverArgs>
+    public abstract class AbstractObjectSavingTask : AbstractPipelineTask<ObjectSavingArgs>
     {
+      
     }
 }
 
