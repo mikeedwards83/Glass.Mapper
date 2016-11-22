@@ -29,6 +29,21 @@ namespace Glass.Mapper
             }
         }
 
+        public static bool Contains(string key)
+        {
+
+            string fullKey = ItemsKey + key;
+
+            if (HttpContext.Current == null)
+            {
+
+                return ThreadStack.ContainsKey(fullKey);
+            }
+
+            return HttpContext.Current.Items.Contains(fullKey);
+        }
+
+
         public static T GetClass<T>(string key) where T:class
         {
 

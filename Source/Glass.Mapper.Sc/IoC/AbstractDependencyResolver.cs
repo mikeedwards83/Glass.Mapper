@@ -1,5 +1,6 @@
 ﻿using System;
 using Glass.Mapper.Caching;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
@@ -23,6 +24,9 @@ namespace Glass.Mapper.Sc.IoC
         public IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; set; }
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
+        public abstract ModelCounter GetModelCounter();
+        
+
         public abstract ICacheManager GetCacheManager();
 
         public IItemVersionHandler ItemVersionHandler { get; set; }

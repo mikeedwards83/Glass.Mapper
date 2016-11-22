@@ -23,6 +23,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NUnit.Framework;
 using NSubstitute;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
@@ -54,7 +55,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -82,7 +83,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.Type = type;
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -110,7 +111,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -138,7 +139,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
             args.Result = string.Empty;
 
             //Act

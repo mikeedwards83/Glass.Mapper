@@ -54,16 +54,19 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 && !args.Configuration.Type.IsInterface
                 && !args.Configuration.Type.IsSealed)
             {
-                if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoad.Current == LazyLoadSetting.Enabled)
+                if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoading.Current == LazyLoadSetting.Enabled)
                 {
                     //here we create a lazy loaded version of the class
                     args.Result = CreateLazyObject(args);
+                    args.Counters.ProxyModelsCreated++;
+
                 }
                 else
                 {
                     //here we create a concrete version of the class
                     args.Result = CreateObject(args);
-                    args.CreatedCallback();
+                    args.Counters.ModelsMapped++;
+                    args.Counters.ConcreteModelCreated++;
                 }
             }
 
@@ -108,6 +111,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 }
 
                 args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+            }
+            catch (MapperStackException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

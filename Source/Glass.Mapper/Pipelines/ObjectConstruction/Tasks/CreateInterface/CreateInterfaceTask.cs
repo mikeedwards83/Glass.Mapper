@@ -51,6 +51,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
                 && args.Configuration.Type.IsInterface) 
             {
                 args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new InterfacePropertyInterceptor(args));
+                args.Counters.ProxyModelsCreated++;
             }
 
             base.Execute(args);

@@ -59,6 +59,10 @@ namespace Glass.Mapper
             {
                  result = MapToProperty(mappingContext);
             }
+            catch (MapperStackException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new MapperException("Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);

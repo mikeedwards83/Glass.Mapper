@@ -129,6 +129,10 @@ namespace Glass.Mapper.Configuration
                     {
                         prop.Mapper.MapCmsToProperty(dataMappingContext);
                     }
+                    catch (MapperStackException)
+                    {
+                        throw;
+                    }
                     catch (Exception e)
                     {
                         throw new MapperException(
@@ -137,6 +141,10 @@ namespace Glass.Mapper.Configuration
                     }
 
                 }
+            }
+            catch (MapperStackException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

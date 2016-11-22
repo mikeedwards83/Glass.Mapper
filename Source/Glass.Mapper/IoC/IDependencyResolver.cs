@@ -17,6 +17,7 @@
 //-CRE-
 
 using Glass.Mapper.Caching;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -39,7 +40,7 @@ namespace Glass.Mapper.IoC
         IConfigFactory<AbstractObjectConstructionTask> ObjectConstructionFactory { get; }
         IConfigFactory<AbstractObjectSavingTask> ObjectSavingFactory { get; }
         IConfigFactory<IGlassMap> ConfigurationMapFactory { get; }
-       
+        ModelCounter GetModelCounter();
     }
 }
 

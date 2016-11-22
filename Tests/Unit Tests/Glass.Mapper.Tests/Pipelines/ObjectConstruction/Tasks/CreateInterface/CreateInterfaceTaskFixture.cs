@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
@@ -58,7 +59,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -84,7 +85,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -110,7 +111,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration1 = Substitute.For<AbstractTypeConfiguration>();
             configuration1.Type = typeof(NS1.ProxyTest1);
 
-            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service);
+            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service, new ModelCounter());
 
             AbstractTypeCreationContext abstractTypeCreationContext2 = Substitute.For<AbstractTypeCreationContext>();
             abstractTypeCreationContext2.RequestedType = typeof(NS2.ProxyTest1);
@@ -118,7 +119,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration2 = Substitute.For<AbstractTypeConfiguration>();
             configuration2.Type = typeof(NS2.ProxyTest1); ;
 
-            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service);
+            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service, new ModelCounter());
 
             //Act
             _task.Execute(args1);
@@ -151,7 +152,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
             args.Result = string.Empty;
 
             //Act

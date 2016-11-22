@@ -66,8 +66,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
                         var resolved = GetConstructorParameters(configuration);
 
                         var proxy = _generator.CreateClassProxy(configuration.Type, resolved,
-                                                                new LazyObjectInterceptor(mappingAction));
+                                                                new LazyObjectInterceptor(mappingAction, args));
                         args.Result = proxy;
+                        args.Counters.ProxyModelsCreated++;
                     }
                     else
                     {
@@ -78,6 +79,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 
                         //set the new object as the returned result
                         args.Result = obj;
+                        args.Counters.ConcreteModelCreated++;
+                        args.Counters.ModelsMapped++;
+
                     }
                 }
             }

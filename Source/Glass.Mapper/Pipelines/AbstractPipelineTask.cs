@@ -44,7 +44,6 @@ namespace Glass.Mapper.Pipelines
         {
             CallNext(args);
         }
-
         public void CallNext(T args)
         {
             if (Next != null)

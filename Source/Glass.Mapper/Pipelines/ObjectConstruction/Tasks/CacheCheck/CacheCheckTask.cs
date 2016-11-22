@@ -35,18 +35,27 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;
+                    args.Counters.CachedModels++;
                 }
 
-                DisableLazyLoad.Push(args.Parameters);
+                DisableLazyLoading disableLazyLoading = null;
+
+                if (args.Service.GlassContext.Config.EnableLazyLoadingForCachableModels == false)
+                {
+                    disableLazyLoading = new DisableLazyLoading();
+                }
+
                 try
                 {
                     base.Execute(args);
-
                     CacheManager.AddOrUpdate(key, args.Result);
                 }
                 finally
                 {
-                    DisableLazyLoad.Pop(args.Parameters);
+                    if (disableLazyLoading != null)
+                    {
+                        disableLazyLoading.Dispose();
+                    }
                 }
             }
             else 

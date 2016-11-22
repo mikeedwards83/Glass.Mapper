@@ -102,7 +102,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Diagnostics\GlassModelCounter.cs" />
-    <Compile Include="DisableLazyLoad.cs" />
+    <Compile Include="Diagnostics\ModelCounter.cs" />
+    <Compile Include="DisableLazyLoading.cs" />
     <Compile Include="DisableCache.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
     <Compile Include="LazyLoadSetting.cs" />
+    <Compile Include="MapperStackException.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />
@@ -123,11 +125,12 @@
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionMonitorTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\DepthCheck\ModelDepthCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ModelRequestedTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\LazyObjectInterceptor.cs" />
     <Compile Include="Profilers\AccmulatorProfiler.cs" />

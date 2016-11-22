@@ -45,6 +45,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
                         args.Configuration.Type,
                         configs.Select(x => x.Type).ToArray(),
                         new MultiInterfacePropertyInterceptor(args));
+                    args.Counters.ProxyModelsCreated++;
                 }
             }
 
