@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
             var result = dataMapperResolverConfigFactory.GetItems();
 
             // Assert
-            Assert.AreEqual(7, result.Count());
+            Assert.AreEqual(8, result.Count());
         }
 
         [Test]

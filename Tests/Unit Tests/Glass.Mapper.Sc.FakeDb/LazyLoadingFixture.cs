@@ -255,7 +255,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                Exception ex = Assert.Throws<MapperException>(() =>
+                Exception ex = Assert.Throws<MapperStackException>(() =>
                 {
                     var target = service.GetItem<Stub4>("/sitecore/content/parent/target");
                 });
