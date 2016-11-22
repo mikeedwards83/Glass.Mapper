@@ -126,7 +126,7 @@
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTaskFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ConstructionCreatedMonitorTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ConstructionCalledMonitorTaskFixture.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\ModelCounterFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheckFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTaskFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
