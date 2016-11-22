@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Web.Compilation;
 using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.ModelCache;
+using Sitecore.ApplicationCenter.Applications;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -41,6 +44,8 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return;
             }
 
+
+
             string cacheKey = modelCacheManager.GetKey(path);
             Type modelType = modelCacheManager.Get(cacheKey);
 
@@ -50,10 +55,20 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 return;
             }
 
+
+
             // The model type hasn't been found before or has been cleared.
             if (modelType == null)
             {
-                modelType = GetModel(args, path);
+                var fullPath = HttpContext.Current.Server.MapPath(path);
+                if (File.Exists(fullPath))
+                {
+                    modelType = GetModel(args, path);
+                }
+                else
+                {
+                    modelType = typeof(NullModel);
+                }
 
                 modelCacheManager.Add(cacheKey, modelType);
 
