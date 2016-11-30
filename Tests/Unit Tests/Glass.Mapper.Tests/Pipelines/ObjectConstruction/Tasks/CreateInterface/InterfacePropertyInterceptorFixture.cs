@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using NSubstitute;
@@ -26,7 +27,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             config.Type = typeof(IStubTarget);
             context.IsLazy = true;
 
-            var args = new ObjectConstructionArgs(null, context, config, service)
+            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
             {
                 Parameters = new Dictionary<string, object>()
             };
@@ -72,7 +73,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             mapper.Value = expected;
 
-            var args = new ObjectConstructionArgs(null, context, config, service)
+            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
             {
                 Parameters = new Dictionary<string, object>()
             };
@@ -111,7 +112,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             property.Mapper = mapper;
             property.PropertyInfo = info1;
 
-            var args = new ObjectConstructionArgs(null, context, config, service)
+            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
             {
                 Parameters = new Dictionary<string, object>()
             };

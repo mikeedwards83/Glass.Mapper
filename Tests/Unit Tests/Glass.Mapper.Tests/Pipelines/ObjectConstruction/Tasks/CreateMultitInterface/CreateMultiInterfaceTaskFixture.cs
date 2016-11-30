@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
         public void Execute_ArgsNotNull_ReturnsAndDoesNothing()
         {
             //Arrange
-            var args = new ObjectConstructionArgs(null,null, null, null);
+            var args = new ObjectConstructionArgs(null,null, null, null, new ModelCounter());
             var expected = new object();
             args.Result = expected;
 
@@ -43,7 +44,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             config2.Type = typeof(IStubTarget2);
 
           //  var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
-            var args = new ObjectConstructionArgs(null, null, config1,  null);
+            var args = new ObjectConstructionArgs(null, null, config1,  null, new ModelCounter());
             args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] {config2};
             var task = new CreateMultiInferaceTask();
 
@@ -65,7 +66,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
 
             config1.Type = typeof(IStubTarget);
 
-            var args = new ObjectConstructionArgs(null, null,  config1 , null);
+            var args = new ObjectConstructionArgs(null, null,  config1 , null, new ModelCounter());
 
             var task = new CreateMultiInferaceTask();
 
@@ -87,7 +88,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             config1.Type = typeof(IStubTarget);
             config2.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(null, null, config2 , null);
+            var args = new ObjectConstructionArgs(null, null, config2 , null, new ModelCounter());
             //var args = new ObjectConstructionArgs(null, null, new[] { config1, config2 }, null);
 
             var task = new CreateMultiInferaceTask();

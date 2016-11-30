@@ -146,26 +146,27 @@ namespace Glass.Mapper
                         .Formatted(abstractTypeCreationContext.RequestedType));
 
             //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext,
-                configurationArgs.Result, this);
-            objectArgs.Parameters = configurationArgs.Parameters;
+            var objectArgs = new ObjectConstructionArgs(
+                GlassContext, 
+                abstractTypeCreationContext,
+                configurationArgs.Result, 
+                this,
+                GlassContext.DependencyResolver.GetModelCounter());
 
+            objectArgs.Parameters = configurationArgs.Parameters;
 
             try
             {
                 _objectConstruction.Run(objectArgs);
+                objectArgs.Counters.ModelsRequested++;
+
                 return objectArgs.Result;
             }
-            catch (Exception ex)
-            {
-               
-                throw ex;
-            }
+
             finally
             {
                 //we clear the lazy loader disable to avoid problems with
                 //stack overflows on the next request
-                DisableLazyLoad.Pop(objectArgs.Parameters);
                 Profiler.End(profilerKey);
                 Profiler.IndentDecrease();
             }

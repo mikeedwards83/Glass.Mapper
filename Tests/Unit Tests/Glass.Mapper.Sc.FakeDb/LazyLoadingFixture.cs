@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
-using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Fluent;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 using Sitecore.FakeDb;
 
@@ -234,7 +228,7 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 
         [Test]
-        public void LazyLoadingWithCaching_LazyLoadingLoop_ReturnsProxy()
+        public void LazyLoadingWithCaching_LazyLoadingLoop_ThrowsException()
         {
             //Arrange
             using (Db database = new Db
@@ -261,7 +255,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                Exception ex = Assert.Throws<MapperException>(() =>
+                Exception ex = Assert.Throws<MapperStackException>(() =>
                 {
                     var target = service.GetItem<Stub4>("/sitecore/content/parent/target");
                 });

@@ -121,7 +121,6 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
                     item["Field2"] = field2;
                 }
 
-
                 //Act
                 var result = service.GetItem<StubClassWithService>(path);
 

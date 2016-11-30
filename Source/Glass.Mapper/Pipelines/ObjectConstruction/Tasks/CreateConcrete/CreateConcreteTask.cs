@@ -26,13 +26,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     /// <summary>
     /// Class CreateConcreteTask
     /// </summary>
-    public class CreateConcreteTask : IObjectConstructionTask
+    public class CreateConcreteTask : AbstractObjectConstructionTask
     {
-        private const string ConstructorErrorMessage = "No constructor for class {0} with parameters {1}";
-
         private static volatile  ProxyGenerator _generator;
-        private static volatile  ProxyGenerationOptions _options;
-        public string Name { get { return "CreateConcreteTask"; } }
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateConcreteTask"/> class.
@@ -40,36 +36,41 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         static CreateConcreteTask()
         {
             _generator = new ProxyGenerator();
-            var hook = new LazyObjectProxyHook();
-            _options = new ProxyGenerationOptions(hook);
+        }
+
+        public CreateConcreteTask()
+        {
+            Name = "CreateConcreteTask";
         }
 
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result != null 
-                || args.Configuration == null 
-                || args.Configuration.Type.IsInterface
-		        || args.Configuration.Type.IsSealed)
-                return;
-
-            if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoad.Current == LazyLoadSetting.Enabled)
+            if (args.Result == null
+                && args.Configuration != null
+                && !args.Configuration.Type.IsInterface
+                && !args.Configuration.Type.IsSealed)
             {
-                //here we create a lazy loaded version of the class
-                args.Result = CreateLazyObject(args);
-               // args.AbortPipeline();
+                if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoading.Current == LazyLoadSetting.Enabled)
+                {
+                    //here we create a lazy loaded version of the class
+                    args.Result = CreateLazyObject(args);
+                    args.Counters.ProxyModelsCreated++;
 
+                }
+                else
+                {
+                    //here we create a concrete version of the class
+                    args.Result = CreateObject(args);
+                    args.Counters.ModelsMapped++;
+                    args.Counters.ConcreteModelCreated++;
+                }
             }
-            else
-            {
-                //here we create a concrete version of the class
-                args.Result = CreateObject(args);
-                args.CreatedCallback();
-                //args.AbortPipeline();
-            }
+
+            base.Execute(args);
         }
 
         /// <summary>
@@ -105,12 +106,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 {
                     var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
                     var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
-                    Delegate conMethod = null;
-                    conMethod = args.Configuration.ConstructorMethods[constructorInfo];
+                    var conMethod = args.Configuration.ConstructorMethods[constructorInfo];
                     obj = conMethod.DynamicInvoke(constructorParameters);
                 }
 
                 args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+            }
+            catch (MapperStackException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

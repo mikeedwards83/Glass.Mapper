@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
@@ -21,7 +22,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
 
-            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null);
+            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null, new ModelCounter());
             var expected = "some value";
             args.Result = expected;
 
@@ -39,7 +40,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
 
-            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null);
+            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null, new ModelCounter());
         
             //Act
             task.Execute(args);
@@ -55,7 +56,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
             context.Item = Mapper.Sc.Utilities.CreateFakeItem(new Dictionary<Guid, string>(), "test");
-            var args = new ObjectConstructionArgs(null, context, SitecoreItemResolverTask.Config, null);
+            var args = new ObjectConstructionArgs(null, context, SitecoreItemResolverTask.Config, null, new ModelCounter());
             
             //Act
             task.Execute(args);

@@ -16,12 +16,14 @@
 */ 
 //-CRE-
 
-namespace Glass.Mapper.Pipelines.DataMapperResolver
+using System;
+
+namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
     /// <summary>
-    /// Interface IDataMapperResolverTask
+    /// Interface IObjectConstructionTask
     /// </summary>
-    public interface IDataMapperResolverTask : IPipelineTask<DataMapperResolverArgs>
+    public abstract class AbstractObjectConstructionTask : AbstractPipelineTask<ObjectConstructionArgs>
     {
     }
 }

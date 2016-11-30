@@ -16,13 +16,16 @@
 */ 
 //-CRE-
 
-namespace Glass.Mapper.Pipelines.ObjectConstruction
+using System;
+
+namespace Glass.Mapper.Pipelines.ConfigurationResolver
 {
     /// <summary>
-    /// Interface IObjectConstructionTask
+    /// Interface IConfigurationResolverTask
     /// </summary>
-    public interface IObjectConstructionTask : IPipelineTask<ObjectConstructionArgs>
+    public abstract class AbstractConfigurationResolverTask : AbstractPipelineTask<ConfigurationResolverArgs>
     {
+      
     }
 }
 

@@ -28,7 +28,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
     /// <summary>
     /// WindsorConstruction
     /// </summary>
-    public class WindsorConstruction : IObjectConstructionTask
+    public class WindsorConstruction : AbstractObjectConstructionTask
     {
         public static volatile object _key = new object();
 

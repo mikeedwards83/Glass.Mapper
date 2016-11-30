@@ -9,10 +9,14 @@ using Glass.Mapper.Sc.DataMappers;
 
 namespace Glass.Mapper.Sc.Pipelines.DataMapper
 {
-    public class DataMapperFieldsWithSpace : IDataMapperResolverTask
+    public class AbstractDataMapperFieldsWithSpace : AbstractDataMapperResolverTask
     {
-        public string Name { get { return "DataMapperFieldsWithSpace"; } }
-        public void Execute(DataMapperResolverArgs args)
+
+        public AbstractDataMapperFieldsWithSpace()
+        {
+            Name = "DataMapperFieldsWithSpace"; 
+        }
+        public override void Execute(DataMapperResolverArgs args)
         {
             if (args.Result != null)
             {
@@ -24,6 +28,7 @@ namespace Glass.Mapper.Sc.Pipelines.DataMapper
                     scConfig.FieldName = GetFieldName(scConfig.FieldName);
                 }
             }
+            base.Execute(args);
         }
 
         protected virtual string GetFieldName(string fieldName)

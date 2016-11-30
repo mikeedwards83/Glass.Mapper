@@ -24,16 +24,18 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
     /// <summary>
     /// Class DataMapperStandardResolverTask
     /// </summary>
-    public class DataMapperStandardResolverTask : IDataMapperResolverTask
+    public class DataMapperStandardResolverTask : AbstractDataMapperResolverTask
     {
-        public string Name { get { return "DataMapperStandardResolverTask"; } }
-
+        public DataMapperStandardResolverTask()
+        {
+            Name = "DataMapperStandardResolverTask";
+        }
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
         /// <exception cref="Glass.Mapper.MapperException">Could not find data mapper to handler property {0}.Formatted(args.PropertyConfiguration)</exception>
-        public virtual void Execute(DataMapperResolverArgs args)
+        public override void Execute(DataMapperResolverArgs args)
         {
             if (args.Result == null)
             {
@@ -45,6 +47,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
                 mapper.Setup(args);
                 args.Result = mapper;
             }
+            base.Execute(args);
         }
     }
 }

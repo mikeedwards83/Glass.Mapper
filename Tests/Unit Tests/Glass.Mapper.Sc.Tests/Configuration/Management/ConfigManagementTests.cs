@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         public void GetConfigurationResolvers()
         {
             // Assign
-            IConfigFactory<IConfigurationResolverTask> queryParameterFactory = new ConfigurationResolverConfigFactory();
+            IConfigFactory<AbstractConfigurationResolverTask> queryParameterFactory = new ConfigurationResolverConfigFactory();
 
             // Act
             var result = queryParameterFactory.GetItems();
@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         public void GetDataMapperResolverTasks()
         {
             // Assign
-            IConfigFactory<IDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
+            IConfigFactory<AbstractDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -74,7 +74,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         {
             // Assign
             IDependencyResolver dependencyResolver = new DependencyResolver(new Config());
-            IConfigFactory<IObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
+            IConfigFactory<AbstractObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Management
         public void GetObjectSavingTasks()
         {
             // Assign
-            IConfigFactory<IObjectSavingTask> objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
+            IConfigFactory<AbstractObjectSavingTask> objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
 
             // Act
             var result = objectSavingTaskConfigFactory.GetItems();

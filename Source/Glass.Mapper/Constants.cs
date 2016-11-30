@@ -10,7 +10,7 @@ namespace Glass.Mapper
     {
         public class Errors
         {
-            public const string ErrorLazyLoop = "Lazy loading too deep. Potential lazy loading loop.";
+            public const string ErrorLazyLoop = "Model too deep. Potential lazy loading loop.";
         }
     }
 }

@@ -23,9 +23,11 @@ namespace Glass.Mapper.Sc.FakeDb
 {
     public static class Utilities
     {
-        public static IDependencyResolver CreateStandardResolver(bool useWindsorContainer = false)
+        public static IDependencyResolver CreateStandardResolver(Config config =null)
         {
-            var config = new Config {UseIoCConstructor = useWindsorContainer};
+            if (config == null)
+                config = new Config();
+
             var resolver = new DependencyResolver(config);
             return resolver;
         }

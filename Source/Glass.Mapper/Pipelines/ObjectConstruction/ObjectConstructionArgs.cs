@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
@@ -63,20 +64,20 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
             Context context,
             AbstractTypeCreationContext abstractTypeCreationContext,
             AbstractTypeConfiguration configuration,
-            IAbstractService service)
+            IAbstractService service,
+            ModelCounter counters)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
             Configuration = configuration;
             Service = service;
+            Counters = counters;
         }
 
-        public Action CreatedCallback = () =>
-        {
-        };
+       public ModelCounter Counters { get; private set; }
 
 
-
+         
 
 
 
