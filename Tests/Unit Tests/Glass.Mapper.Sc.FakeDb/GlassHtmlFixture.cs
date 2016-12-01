@@ -1588,6 +1588,7 @@ namespace Glass.Mapper.Sc.FakeDb
                             result = html.Editable(model, x => x.EnumerableSubStub.First().StringField);
                         }
                         //Assert
+                        Assert.Equals("dd", "result " + result);
                         Assert.IsTrue(result.Contains(fieldValue));
                         //this is the webedit class
                         Assert.IsTrue(result.Contains("scWebEditInput"), "result " + result);
