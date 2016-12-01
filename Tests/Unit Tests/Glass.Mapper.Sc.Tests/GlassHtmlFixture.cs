@@ -580,7 +580,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderLink(model, x => x.Link);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            
+            AssertHtml.AreAEqual(expected, result);
         }
 
         [Test]
@@ -606,7 +607,7 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderLink(model, x => x.Link, parameters);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreAEqual(expected, result);
         }
 
         [Test]

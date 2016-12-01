@@ -12,6 +12,47 @@ namespace Glass.Mapper.Sc.Tests
 {
     public static class AssertHtml
     {
+        public static  void AreAEqual(string expected, string actual)
+        {
+            try
+            {
+                XmlDocument xmlExpected = new XmlDocument();
+                xmlExpected.LoadXml(expected);
+
+                XmlDocument xmlActual = new XmlDocument();
+                xmlActual.LoadXml(actual);
+
+                var imgExpected = xmlExpected.SelectSingleNode("/a");
+                var imgActual = xmlActual.SelectSingleNode("/a");
+
+                if (imgExpected.Attributes.Count != imgActual.Attributes.Count)
+                {
+                        throw new AssertionException("Attributes count do not match");
+
+                }
+                foreach (XmlAttribute attrExpected in imgExpected.Attributes)
+                {
+                    var attrActual = imgActual.Attributes[attrExpected.Name];
+
+                    if (attrActual.Value != attrExpected.Value)
+                    {
+                        throw new AssertionException("Attributes do not match '{0}'".Formatted(attrActual.Name));
+                    }
+                }
+
+
+            }
+            catch (AssertionException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+               throw new AssertionException("HTML elements are different", ex);
+
+            }
+
+        }
         public static  void AreImgEqual(string expected, string actual)
         {
             try
