@@ -68,7 +68,8 @@ namespace Glass.Mapper.Sc.Tests
             GlassHtml.QuotationMark = "'";
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
 
             //reset GlassHtml
 
@@ -95,7 +96,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, false);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -118,7 +120,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, false);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -142,7 +145,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -166,7 +170,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -190,7 +195,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -214,7 +220,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, false);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -238,7 +245,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, false);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -262,7 +270,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -286,7 +295,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, null, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -313,7 +323,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, null, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
         [Test]
         public void RenderImage_ValidImageWithBorderHSpaceVSpaceW_RendersCorrectHtml()
@@ -339,7 +350,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -367,7 +379,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -395,7 +408,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
         [Test]
@@ -422,7 +436,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, false);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreImgEqual(expected, result);
+
         }
 
 
