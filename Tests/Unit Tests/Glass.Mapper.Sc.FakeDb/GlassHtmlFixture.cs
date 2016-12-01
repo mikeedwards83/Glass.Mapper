@@ -1590,6 +1590,7 @@ namespace Glass.Mapper.Sc.FakeDb
                         //Assert
                         Assert.IsTrue(result.Contains(fieldValue));
                         //this is the webedit class
+                        Console.WriteLine("result " + result);
                         Assert.IsTrue(result.Contains("scWebEditInput"), "result " + result);
                     }
                 }
