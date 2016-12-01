@@ -41,8 +41,6 @@ namespace Glass.Mapper.Sc.Tests
 
             //Assert
             AssertHtml.AreImgEqual(expected, result);
-
-            Assert.AreEqual(expected, result);
         }
 
         [Test]
