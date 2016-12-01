@@ -204,17 +204,17 @@ namespace Glass.Mapper.Sc.Tests
             var result = urlOptionsResolver.GetMediaUrlOptions(option);
 
             //Assert
-            Assert.AreEqual(result.AbsolutePath, absolutePath);
-            Assert.AreEqual(result.AllowStretch, allowStretch);
-            Assert.AreEqual(result.AlwaysIncludeServerUrl, alwaysIncludeServerUrl);
-            Assert.AreEqual(result.DisableBrowserCache, disableBrowserCache);
-            Assert.AreEqual(result.DisableMediaCache, disableMediaCache);
-            Assert.AreEqual(result.IgnoreAspectRatio, ignoreAspectRatio);
-            Assert.AreEqual(result.IncludeExtension, includeExtension);
-            Assert.AreEqual(result.LowercaseUrls, lowercaseUrls);
-            Assert.AreEqual(result.Thumbnail, thumbnail);
-            Assert.AreEqual(result.UseDefaultIcon, useDefaultIcon);
-            Assert.AreEqual(result.UseItemPath, useItemPath);
+            Assert.AreEqual(result.AbsolutePath, absolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, allowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, alwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, disableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, disableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, ignoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, includeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, lowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, useDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, useItemPath, "UseItemPath");
 
         }
 
