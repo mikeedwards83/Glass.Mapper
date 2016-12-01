@@ -25,6 +25,7 @@ using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Sitecore.Links;
+using Sitecore.Resources.Media;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Web.UI.XamlSharp.Xaml.Extensions;
 
@@ -170,51 +171,288 @@ namespace Glass.Mapper.Sc.Tests
         #endregion
 
         #region GetMediaUrlOptions
+
         [Test]
-        [TestCase(SitecoreInfoMediaUrlOptions.Default, true, false, false, false, false, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.DisableAbsolutePath, false, false, false, false, false, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.AllowStretch, true, true, false, false, false, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl, true, false, true, false, false, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.DisableBrowserCache, true, false, false, true, false, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.DisableMediaCache, true, false, false, false, true, false, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.IgnoreAspectRatio, true, false, false, false, false, true, true, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.RemoveExtension, true, false, false, false, false, false, false, false, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.LowercaseUrls, true, false, false, false, false, false, true, true, false, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.Thumbnail, true, false, false, false, false, false, true, false, true, false, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.UseDefaultIcon, true, false, false, false, false, false, true, false, false, true, true)]
-        [TestCase(SitecoreInfoMediaUrlOptions.UseItemPath, true, false, false, false, false, false, true, false, false, false, true)]
-        public void GetMediaUrlOptions(
-            SitecoreInfoMediaUrlOptions option,
-            bool absolutePath,
-            bool allowStretch,
-            bool alwaysIncludeServerUrl,
-            bool disableBrowserCache,
-            bool disableMediaCache,
-            bool ignoreAspectRatio,
-            bool includeExtension,
-            bool lowercaseUrls,
-            bool thumbnail,
-            bool useDefaultIcon,
-            bool useItemPath)
+        public void GetMediaUrlOptions_AbsolutePath()
         {
             //Arrange
+            var option = SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl;
             var urlOptionsResolver = new MediaUrlOptionsResolver();
 
             //Act
             var result = urlOptionsResolver.GetMediaUrlOptions(option);
 
             //Assert
-            Assert.AreEqual(result.AbsolutePath, absolutePath, "AbsolutePath");
-            Assert.AreEqual(result.AllowStretch, allowStretch, "AllowStretch");
-            Assert.AreEqual(result.AlwaysIncludeServerUrl, alwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
-            Assert.AreEqual(result.DisableBrowserCache, disableBrowserCache, "DisableBrowserCache");
-            Assert.AreEqual(result.DisableMediaCache, disableMediaCache, "DisableMediaCache");
-            Assert.AreEqual(result.IgnoreAspectRatio, ignoreAspectRatio, "IgnoreAspectRatio");
-            Assert.AreEqual(result.IncludeExtension, includeExtension, "IncludeExtension");
-            Assert.AreEqual(result.LowercaseUrls, lowercaseUrls, "LowercaseUrls");
-            Assert.AreEqual(result.Thumbnail, thumbnail, "Thumbnail");
-            Assert.AreEqual(result.UseDefaultIcon, useDefaultIcon, "UseDefaultIcon");
-            Assert.AreEqual(result.UseItemPath, useItemPath, "UseItemPath");
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.IsTrue(result.AlwaysIncludeServerUrl,"AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_AllowStretch()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.AllowStretch;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.IsTrue(result.AllowStretch,"AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_AlwaysIncludeServerUrl()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.IsTrue(result.AlwaysIncludeServerUrl,"AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_DisableBrowserCache()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.DisableBrowserCache;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.IsTrue(result.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_DisableMediaCache()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.DisableMediaCache;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.IsTrue(result.DisableMediaCache,  "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_IgnoreAspectRatio()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.IgnoreAspectRatio;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.IsTrue(result.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_IncludeExtension()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.RemoveExtension;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.IsFalse(result.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_LowercaseUrls()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.LowercaseUrls;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.IsTrue(result.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_Thumbnail()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.Thumbnail;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.IsTrue(result.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+        [Test]
+        public void GetMediaUrlOptions_UseDefaultIcon()
+
+
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.UseDefaultIcon;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.IsTrue(result.UseDefaultIcon, "UseDefaultIcon");
+            Assert.AreEqual(result.UseItemPath, MediaUrlOptions.Empty.UseItemPath, "UseItemPath");
+
+        }
+
+        [Test]
+        public void GetMediaUrlOptions_UseItemPath()
+        {
+            //Arrange
+            var option = SitecoreInfoMediaUrlOptions.UseItemPath;
+            var urlOptionsResolver = new MediaUrlOptionsResolver();
+
+            //Act
+            var result = urlOptionsResolver.GetMediaUrlOptions(option);
+
+            //Assert
+            Assert.AreEqual(result.AbsolutePath, MediaUrlOptions.Empty.AbsolutePath, "AbsolutePath");
+            Assert.AreEqual(result.AllowStretch, MediaUrlOptions.Empty.AllowStretch, "AllowStretch");
+            Assert.AreEqual(result.AlwaysIncludeServerUrl, MediaUrlOptions.Empty.AlwaysIncludeServerUrl, "AlwaysIncludeServerUrl");
+            Assert.AreEqual(result.DisableBrowserCache, MediaUrlOptions.Empty.DisableBrowserCache, "DisableBrowserCache");
+            Assert.AreEqual(result.DisableMediaCache, MediaUrlOptions.Empty.DisableMediaCache, "DisableMediaCache");
+            Assert.AreEqual(result.IgnoreAspectRatio, MediaUrlOptions.Empty.IgnoreAspectRatio, "IgnoreAspectRatio");
+            Assert.AreEqual(result.IncludeExtension, MediaUrlOptions.Empty.IncludeExtension, "IncludeExtension");
+            Assert.AreEqual(result.LowercaseUrls, MediaUrlOptions.Empty.LowercaseUrls, "LowercaseUrls");
+            Assert.AreEqual(result.Thumbnail, MediaUrlOptions.Empty.Thumbnail, "Thumbnail");
+            Assert.AreEqual(result.UseDefaultIcon, MediaUrlOptions.Empty.UseDefaultIcon, "UseDefaultIcon");
+            Assert.IsTrue(result.UseItemPath,  "UseItemPath");
 
         }
 
