@@ -95,7 +95,15 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
             if (args.DisableWebEdit)
                 return false;
             SiteContext site = Sitecore.Context.Site;
-            return site != null && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary") && Sitecore.Context.PageMode.IsPageEditorEditing);
+
+            return site != null 
+                && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary")
+#if SC82
+                && Sitecore.Context.PageMode.IsExperienceEditorEditing);
+#else
+                && Sitecore.Context.PageMode.IsPageEditorEditing);
+#endif
+
         }
 
         /// <summary>Renders the field without a wrapper.</summary>
