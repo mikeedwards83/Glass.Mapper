@@ -239,7 +239,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     mapper.SetField(field, image, null, null);
                 }
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "image");
+
             }
         }
 
@@ -278,7 +279,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     mapper.SetField(field, image, null, null);
                 }
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "image");
+
             }
         }
 
