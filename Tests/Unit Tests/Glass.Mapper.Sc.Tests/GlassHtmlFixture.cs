@@ -16,6 +16,7 @@ namespace Glass.Mapper.Sc.Tests
     public class GlassHtmlFixture
     {
 
+
         #region Method - RenderImage
 
         [Test]
@@ -39,6 +40,8 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
             Assert.AreEqual(expected, result);
         }
 
