@@ -1032,9 +1032,11 @@ namespace Glass.Mapper.Sc.FakeDb
                         }
                         //Assert
                         Assert.IsTrue(result.Contains(fieldValue));
+
+                        Console.WriteLine("result " + result);
+
                         //this is the webedit class
                         Assert.IsTrue(result.Contains("scWebEditInput"));
-                        Console.WriteLine("result " + result);
                     }
                 }
             }
@@ -1453,8 +1455,7 @@ namespace Glass.Mapper.Sc.FakeDb
                         //Assert
                         Assert.IsTrue(result.Contains(fieldValue));
                         //this is the webedit class
-                        Assert.IsTrue(result.Contains("scWebEditInput"));
-                        Console.WriteLine("result " + result);
+                        Assert.IsTrue(result.Contains("scWebEditInput"), "result " + result);
                     }
                 }
             }
@@ -1519,8 +1520,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     //Assert
                     Assert.IsTrue(result.Contains(fieldValue));
                     //this is the webedit class
-                    Assert.IsFalse(result.Contains("scWebEditInput"));
-                    Console.WriteLine("result " + result);
+                    Assert.IsFalse(result.Contains("scWebEditInput"), "result " + result);
                 }
             }
         }
@@ -1590,8 +1590,7 @@ namespace Glass.Mapper.Sc.FakeDb
                         //Assert
                         Assert.IsTrue(result.Contains(fieldValue));
                         //this is the webedit class
-                        Assert.IsTrue(result.Contains("scWebEditInput"));
-                        Console.WriteLine("result " + result);
+                        Assert.IsTrue(result.Contains("scWebEditInput"), "result " + result);
                     }
                 }
             }
