@@ -47,6 +47,9 @@
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
@@ -63,6 +66,7 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="AssertHtml.cs" />
     <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheKeyGenerator.cs" />

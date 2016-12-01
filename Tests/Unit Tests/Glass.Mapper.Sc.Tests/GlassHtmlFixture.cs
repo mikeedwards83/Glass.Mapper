@@ -581,7 +581,7 @@ namespace Glass.Mapper.Sc.Tests
 
             //Assert
             
-            AssertHtml.AreAEqual(expected, result);
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
         [Test]
@@ -607,7 +607,7 @@ namespace Glass.Mapper.Sc.Tests
             var result = html.RenderLink(model, x => x.Link, parameters);
 
             //Assert
-            AssertHtml.AreAEqual(expected, result);
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
         [Test]

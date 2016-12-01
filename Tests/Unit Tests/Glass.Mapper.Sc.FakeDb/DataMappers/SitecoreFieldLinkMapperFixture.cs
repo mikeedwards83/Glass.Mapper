@@ -598,7 +598,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -653,7 +653,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value,"link");
             }
         }
 
@@ -708,7 +708,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -763,7 +763,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -819,7 +819,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                Assert.AreEqual(expected, field.Value);
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -943,7 +943,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     }
 
                     //Assert
-                    Assert.AreEqual(expected, field.Value);
+                    AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
                 }
             }
         }
