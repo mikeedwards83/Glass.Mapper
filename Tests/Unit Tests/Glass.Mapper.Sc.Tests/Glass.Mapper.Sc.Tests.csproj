@@ -86,10 +86,8 @@
     <Compile Include="Configuration\SitecoreMapConfigurationFixture.cs" />
     <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
-    <Compile Include="GlassHtmlFixture.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SitecoreFieldNameValueCollectionMapperFixture.cs" />
     <Compile Include="UtilitiesFixture.cs" />
     <Compile Include="Web\Ui\GlassUserControlTestFixture.cs" />
     <Compile Include="Web\Ui\RenderingContextUserControlWrapperFixture.cs" />
