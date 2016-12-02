@@ -19,13 +19,11 @@
 
 using System;
 using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Tests.DataMappers
+namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldDateTimeMapperFixture : AbstractMapperFixture
@@ -214,7 +212,6 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof (NotSupportedException))]
         public void SetField_NonDateTimePassed_ExceptionThrown()
         {
             //Assign
@@ -231,7 +228,10 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
 
             //Act
 
-            mapper.SetField(field, objectValue, null, null);
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                mapper.SetField(field, objectValue, null, null);
+            });
 
 
 

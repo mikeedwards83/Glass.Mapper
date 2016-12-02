@@ -23,7 +23,7 @@ using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Tests.DataMappers
+namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldEnumMapperFixture : AbstractMapperFixture
@@ -122,7 +122,6 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof (MapperException))]
         public void GetField_FieldContainsInvalidValidEnum_ThrowsException()
         {
             //Assign
@@ -137,9 +136,12 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
 
             var mapper = new SitecoreFieldEnumMapper();
 
-         //Act
-            var result = (StubEnum)mapper.GetField(field, config, null);
+            //Act
 
+            Assert.Throws<MapperException>(() =>
+            {
+                var result = (StubEnum) mapper.GetField(field, config, null);
+            });
             //Assert
         }
 
@@ -177,7 +179,6 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentException))]
         public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
@@ -191,12 +192,13 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             config.PropertyInfo = typeof(Stub).GetProperty("Property");
 
             var mapper = new SitecoreFieldEnumMapper();
-            
-            //Act
-           
-                mapper.SetField(field, objectValue, config, null);
-            
 
+            //Act
+            Assert.Throws<ArgumentException>(() =>
+            {
+                mapper.SetField(field, objectValue, config, null);
+
+            });
 
             //Assert
         }

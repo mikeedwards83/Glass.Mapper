@@ -22,70 +22,54 @@ using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Tests.DataMappers
+namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
-    public  class SitecoreFieldDoubleMapperFixture : AbstractMapperFixture
+    public class SitecoreFieldGuidMapperFixture : AbstractMapperFixture 
     {
         #region Method - GetField
 
         [Test]
-        public void GetField_FieldContainsValidDouble_ReturnsDouble()
+        public void GetField_ContainsGuid_GuidObjectReturned()
         {
             //Assign
-            string fieldValue = "3.141592";
-            double expected = 3.141592D;
+            var fieldValue = "{FC1D0AFD-71CC-47e2-84B3-7F1A2973248B}";
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldDoubleMapper();
+            var expected = new Guid(fieldValue);
+
+            var mapper = new SitecoreFieldGuidMapper();
+
+           
+
+            //Act
+            var result = (Guid)mapper.GetField(field, null, null);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void GetField_FieldEmpty_EmptyGuidReturned()
+        {
+            //Assign
+            var fieldValue = string.Empty;
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
+            var field = item.Fields[new ID(fieldId)];
+
+            var expected = Guid.Empty;
+
+            var mapper = new SitecoreFieldGuidMapper();
 
           
-            //Act
-            var result = (Double)mapper.GetField(field, null, null);
-
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void GetField_FieldContainsEmptyString_ReturnsDoubleZero()
-        {
-            //Assign
-            string fieldValue = string.Empty;
-            Double expected = 0;
-            var fieldId = Guid.NewGuid();
-
-            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
-            var field = item.Fields[new ID(fieldId)];
-
-            var mapper = new SitecoreFieldDoubleMapper();
 
             //Act
-            var result = (double)mapper.GetField(field, null, null);
-
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        [ExpectedException(typeof(MapperException))]
-        public void GetField_FieldContainsInvalidValidDouble_ReturnsDouble()
-        {
-            //Assign
-            string fieldValue = "hello world";
-            double expected = 3.141592D;
-            var fieldId = Guid.NewGuid();
-
-            var item = Helpers.CreateFakeItem(fieldId, fieldValue);
-            var field = item.Fields[new ID(fieldId)];
-
-            var mapper = new SitecoreFieldDoubleMapper();
-
-            //Act
-            var result = (double)mapper.GetField(field, null, null);
+            var result = (Guid)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -93,57 +77,84 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
 
         #endregion
 
-
-        #region Method - GetField
+        #region Method - SetField
 
         [Test]
-        public void SetField_ObjectisValidDouble_SetsFieldValue()
+        public void SetField_Guidpassed_ValueSetOnField()
         {
             //Assign
-            string expected = "3.141592";
-            double objectValue = 3.141592D;
+            var expected = "{FC1D0AFD-71CC-47E2-84B3-7F1A2973248B}";
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldDoubleMapper();
+            var value = new Guid(expected);
 
-            item.Editing.BeginEdit();
+            var mapper = new SitecoreFieldGuidMapper();
+
+          item.Editing.BeginEdit();
 
             //Act
          
-                mapper.SetField(field, objectValue, null, null);
+                mapper.SetField(field, value, null, null);
             
-
-
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
 
         [Test]
-        [ExpectedException(typeof(NotSupportedException))]
-        public void SetField_ObjectIsInt_ThrowsException()
+        public void SetField_EmptyGuidPassed_ValueSetOnField()
         {
             //Assign
-            int objectValue = 3;
+            var expected = "{00000000-0000-0000-0000-000000000000}";
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldDoubleMapper();
+            var value = new Guid(expected);
+
+            var mapper = new SitecoreFieldGuidMapper();
+            
+            item.Editing.BeginEdit();
+
+            //Act
+            
+                mapper.SetField(field, value, null, null);
+            
+            //Assert
+            Assert.AreEqual(expected, field.Value);
+        }
+
+        [Test]
+        public void SetField_IntegerPassed_ValueSetOnField()
+        {
+            //Assign
+            var fieldId = Guid.NewGuid();
+
+            var item = Helpers.CreateFakeItem(fieldId, string.Empty);
+            var field = item.Fields[new ID(fieldId)];
+
+            var value = 1;
+
+            var mapper = new SitecoreFieldGuidMapper();
 
             item.Editing.BeginEdit();
+
             //Act
-                mapper.SetField(field, objectValue, null, null);
 
-
+            Assert.Throws<MapperException>(() =>
+            {
+                mapper.SetField(field, value, null, null);
+            });
             //Assert
         }
 
         #endregion
     }
+
+   
 }
 
 

@@ -22,72 +22,74 @@ using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Tests.DataMappers
+namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
-    public  class SitecoreFieldFloatMapperFixture : AbstractMapperFixture
+    public  class SitecoreFieldDecimalMapperFixture : AbstractMapperFixture
     {
         #region Method - GetField
 
         [Test]
-        public void GetField_FieldContainsValidFloat_ReturnsFloat()
+        public void GetField_FieldContainsValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "3.141592";
-            float expected = 3.141592F;
+            decimal expected = 3.141592M;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldFloatMapper();
+            var mapper = new SitecoreFieldDecimalMapper();
+
 
             //Act
-            var result = (float)mapper.GetField(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
-        [Test]
-        public void GetField_FieldContainsEmptyString_ReturnsFloatZero()
+        public void GetField_FieldContainsEmptyString_ReturnsDecimalZero()
         {
             //Assign
             string fieldValue = string.Empty;
-            float expected = 0f;
+            decimal expected = 0;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldFloatMapper();
-
+            var mapper = new SitecoreFieldDecimalMapper();
+            
             //Act
-            var result = (float)mapper.GetField(field, null, null);
+            var result = (decimal)mapper.GetField(field, null, null);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
 
         [Test]
-        [ExpectedException(typeof(MapperException))]
-        public void GetField_FieldContainsInvalidValidFloat_ReturnsFloat()
+       
+        public void GetField_FieldContainsInvalidValidDecimal_ReturnsDecimal()
         {
             //Assign
             string fieldValue = "hello world";
-            float expected = 3.141592f;
+            decimal expected = 3.141592M;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, fieldValue);
             var field = item.Fields[new ID(fieldId)];
-            var mapper = new SitecoreFieldFloatMapper();
 
-        
+            var mapper = new SitecoreFieldDecimalMapper();
+
             //Act
-            var result = (float)mapper.GetField(field, null, null);
+            Assert.Throws<MapperException>(() =>
+            {
+                var result = (decimal) mapper.GetField(field, null, null);
+            });
 
-            //Assert
-            Assert.AreEqual(expected, result);
+
         }
 
         #endregion
@@ -96,30 +98,31 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
         #region Method - GetField
 
         [Test]
-        public void SetField_ObjectisValidFloat_SetsFieldValue()
+        public void SetField_ObjectisValidDecimal_SetsFieldValue()
         {
             //Assign
             string expected = "3.141592";
-            float objectValue = 3.141592f;
+            decimal objectValue = 3.141592M;
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldFloatMapper();
-
+            var mapper = new SitecoreFieldDecimalMapper();
+            
             item.Editing.BeginEdit();
 
             //Act
-            
+          
             mapper.SetField(field, objectValue, null, null);
             
+
+
             //Assert
             Assert.AreEqual(expected, field.Value);
         }
 
         [Test]
-        [ExpectedException(typeof (NotSupportedException))]
         public void SetField_ObjectIsInt_ThrowsException()
         {
             //Assign
@@ -129,14 +132,16 @@ namespace Glass.Mapper.Sc.Tests.DataMappers
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
             var field = item.Fields[new ID(fieldId)];
 
-            var mapper = new SitecoreFieldFloatMapper();
+            var mapper = new SitecoreFieldDecimalMapper();
 
             item.Editing.BeginEdit();
 
             //Act
 
-            mapper.SetField(field, objectValue, null, null);
-
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                mapper.SetField(field, objectValue, null, null);
+            });
             //Assert
         }
 
