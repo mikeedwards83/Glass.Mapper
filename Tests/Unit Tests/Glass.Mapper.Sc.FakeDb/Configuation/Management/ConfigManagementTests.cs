@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Glass.Mapper.Caching;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -7,11 +6,10 @@ using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.IoC;
-using NSubstitute;
 using NUnit.Framework;
 using IDependencyResolver = Glass.Mapper.Sc.IoC.IDependencyResolver;
 
-namespace Glass.Mapper.Sc.Tests.Configuration.Management
+namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
 {
     [TestFixture]
     public class ConfigManagementTests

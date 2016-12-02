@@ -72,19 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHtml.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoaderFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreChildrenAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreQueryAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreTypeAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreFieldAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreIdAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreInfoAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreLinkedAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreNodeAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\SitecoreParentAttributeFixture.cs" />
-    <Compile Include="Configuration\Management\ConfigManagementTests.cs" />
-    <Compile Include="Configuration\SitecoreMapConfigurationFixture.cs" />
-    <Compile Include="Configuration\SitecoreTypeConfigurationFixture.cs" />
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

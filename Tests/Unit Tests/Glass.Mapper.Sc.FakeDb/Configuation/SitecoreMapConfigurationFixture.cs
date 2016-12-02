@@ -17,16 +17,13 @@
 //-CRE-
 
 using System.Linq;
-using Glass.Mapper.Configuration;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Fluent;
-using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.Maps;
-using NSubstitute;
 using NUnit.Framework;
 
-namespace Glass.Mapper.Sc.Tests.Configuration
+namespace Glass.Mapper.Sc.FakeDb.Configuation
 {
     [TestFixture]
     public class SitecoreMapConfigurationFixture

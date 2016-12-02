@@ -18,18 +18,14 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Glass.Mapper.Configuration;
-using Glass.Mapper.Sc.Configuration;
-using NSubstitute;
-using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using NUnit.Framework;
 using Sitecore.Data;
 
-namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
+namespace Glass.Mapper.Sc.FakeDb.Configuation.Attributes
 {
     [TestFixture]
     public class SitecoreTypeAttributeFixture
@@ -113,7 +109,6 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
         }
 
         [Test]
-        [ExpectedException(typeof(MapperException))]
         public void Configure_AttributeHasInvalidTemplateId_ExceptionThrown()
         {
             //Assign
@@ -126,14 +121,16 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.TemplateId = "not a guid";
 
             //Act
-            var config =  attr.Configure(type) as SitecoreTypeConfiguration;
 
+            Assert.Throws<MapperException>(() =>
+            {
+                var config = attr.Configure(type) as SitecoreTypeConfiguration;
+            });
             //Assert
-  
+
         }
 
         [Test]
-        [ExpectedException(typeof(MapperException))]
         public void Configure_AttributeHasInvalidBranchId_ExceptionThrown()
         {
             //Assign
@@ -146,10 +143,12 @@ namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
             attr.BranchId = "not a guid";
 
             //Act
-            var config = attr.Configure(type) as SitecoreTypeConfiguration;
-
+            Assert.Throws<MapperException>(() =>
+            {
+                var config = attr.Configure(type) as SitecoreTypeConfiguration;
+            });
             //Assert
-          
+
         }
 
         #endregion

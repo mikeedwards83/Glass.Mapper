@@ -17,16 +17,13 @@
 //-CRE-
 
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using Glass.Mapper.Configuration.Attributes;
-using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration;
+using Glass.Mapper.Sc.Configuration.Attributes;
+using NUnit.Framework;
 
-namespace Glass.Mapper.Sc.Tests.Configuration.Attributes
+namespace Glass.Mapper.Sc.FakeDb.Configuation.Attributes
 {
     [TestFixture]
     public class SitecoreInfoAttributeFixture

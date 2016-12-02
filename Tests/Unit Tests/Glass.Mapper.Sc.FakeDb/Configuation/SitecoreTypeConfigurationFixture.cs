@@ -15,16 +15,14 @@
  
 */ 
 //-CRE-
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
 
-namespace Glass.Mapper.Sc.Tests.Configuration
+namespace Glass.Mapper.Sc.FakeDb.Configuation
 {
     [TestFixture]
     public class SitecoreTypeConfigurationFixture
