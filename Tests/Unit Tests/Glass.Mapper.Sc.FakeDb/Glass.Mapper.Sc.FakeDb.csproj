@@ -85,8 +85,10 @@
     <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
     <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
     <Compile Include="ContextFixture.cs" />
+    <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="EnableWebEditMode.cs" />
     <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
     <Compile Include="GlassHtmlFixture.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Infrastructure\FakeDbField.cs" />
     <Compile Include="Infrastructure\Pipelines\RenderField\RenderWebEdit.cs" />
     <Compile Include="Infrastructure\Pipelines\RenderField\SimpleRenderField.cs" />

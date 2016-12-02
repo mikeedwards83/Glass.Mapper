@@ -21,9 +21,8 @@ using System;
 using Glass.Mapper.Sc.DataMappers;
 using NUnit.Framework;
 using Sitecore.Data;
-using Sitecore.SecurityModel;
 
-namespace Glass.Mapper.Sc.Tests.DataMappers
+namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
     public class SitecoreFieldBooleanMapperFixture : AbstractMapperFixture
