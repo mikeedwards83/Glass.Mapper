@@ -66,7 +66,8 @@ namespace Glass.Mapper.Sc.FakeDb
             })
             {
                 var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.FakeDb"));
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IBase)));
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IBasePage)));
 
                 var db = database.Database;
                 var scContext = new SitecoreContext(db);
