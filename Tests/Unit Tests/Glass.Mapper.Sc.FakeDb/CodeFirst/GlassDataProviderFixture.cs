@@ -84,6 +84,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
 
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_ReturnsGlassTemplateFolder()
         {
             //Assign
@@ -105,6 +106,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_ReturnsTemplate()
         {
             //Assign
@@ -131,6 +133,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_TemplateInNamespace_ReturnsTemplate()
         {
             //Assign
@@ -157,6 +160,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_TemplateInNamespaceTwoDeep_ReturnsTemplate()
         {
             //Assign
@@ -183,6 +187,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_TemplateInNamespaceTwoDeep_ReturnsTemplateTwoTemplates()
         {
             //Assign
@@ -216,6 +221,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_ReturnsTemplateWithSectionAndField()
         {
             //Assign
@@ -251,6 +257,7 @@ namespace Glass.Mapper.Sc.FakeDb.CodeFirst
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void GlassDataProvider_ReturnsTemplateWithSectionAndField_AllPropertiesSet()
         {
             //Assign
