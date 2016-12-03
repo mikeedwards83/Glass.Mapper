@@ -489,6 +489,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         }
 
         [Test]
+        [Category("LocalOnly")]
         public void MapToProperty_AbsoluteQueryWithParameter_ReturnsResults()
         {
             //Assign
