@@ -2196,7 +2196,7 @@ namespace Glass.Mapper.Sc.FakeDb
                  NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
             using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
             {
-                var config = new MediaConfig(Sitecore.Configuration.Factory.GetConfigNode("mediaLibrary"););
+                var config = new MediaConfig(Sitecore.Configuration.Factory.GetConfigNode("mediaLibrary"));
                 MediaManager.Config = config;
                
                 //Act
