@@ -32,9 +32,11 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
+using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.FakeDb;
+using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
@@ -105,7 +107,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var result = html.RenderLink(model, x => x.Link);
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                AssertHtml.AreHtmlElementsEqual(expected, result,"a");
             }
         }
 
@@ -168,7 +170,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var result = html.RenderLink(model, x => x.Link);
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                AssertHtml.AreHtmlElementsEqual(expected, result, "a");
             }
         }
 
@@ -2190,17 +2192,22 @@ namespace Glass.Mapper.Sc.FakeDb
 
             GlassHtml.QuotationMark = "\"";
 
-            //Act
-            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+            using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
+            {
+                var config = new MediaConfig(Sitecore.Configuration.Factory.GetConfigNode("mediaLibrary"););
+                MediaManager.Config = config;
+               
+                //Act
+                var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
-            GlassHtml.QuotationMark = "'";
+                GlassHtml.QuotationMark = "'";
 
-            //Assert
-            AssertHtml.AreImgEqual(expected, result);
+                //Assert
+                AssertHtml.AreImgEqual(expected, result);
 
-
-            //reset GlassHtml
-
+            }
         }
 
 
@@ -3003,7 +3010,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
         private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
         {
-            return sitecoreContext.GlassHtml;
+            return new GlassHtml(sitecoreContext);
         }
     }
 }
