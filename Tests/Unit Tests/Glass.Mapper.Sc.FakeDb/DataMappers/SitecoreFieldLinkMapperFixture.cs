@@ -221,6 +221,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         }
 
         [Test]
+        [Category("Exclude80")]
         public void GetField_FieldContainsInternal_ReturnsInternalLink()
         {
             //Assign
@@ -331,6 +332,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         }
 
         [Test]
+        [Category("Exclude80")]
         public void GetField_FieldContainsInternalAbsoluteUrl_ReturnsInternalLink()
         {
             //Assign

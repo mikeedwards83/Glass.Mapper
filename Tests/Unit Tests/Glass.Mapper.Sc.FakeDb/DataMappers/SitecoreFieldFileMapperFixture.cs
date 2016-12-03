@@ -187,7 +187,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     }
                     //Assert
                 }
-                Assert.AreEqual(expected, item["Field"]);
+                AssertHtml.AreHtmlElementsEqual(expected, item["Field"], "file");
             }
         }
 

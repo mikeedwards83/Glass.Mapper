@@ -136,7 +136,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             item.Editing.BeginEdit();
 
             //Act
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<NotSupportedException>(() =>
             {
                 mapper.SetField(field, objectValue, null, null);
             });
