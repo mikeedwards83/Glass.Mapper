@@ -47,12 +47,30 @@ namespace Glass.Mapper.Sc.FakeDb
     [TestFixture]
     public class GlassHtmlFixture
     {
+        private Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher _switcher;
+
+        [SetUp]
+        public void Setup()
+        {
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+            _switcher = new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+
+            var config = new MediaConfig(Sitecore.Configuration.Factory.GetConfigNode("mediaLibrary"));
+            MediaManager.Config = config;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _switcher.Dispose();
+        }
 
         #region Method - RenderLink
 
-        /// <summary>
-        /// https://github.com/mikeedwards83/Glass.Mapper/issues/155
-        /// </summary>
+            /// <summary>
+            /// https://github.com/mikeedwards83/Glass.Mapper/issues/155
+            /// </summary>
         [Test]
         public void RenderLink_LinkContainsAnchor_Issue155()
         {
@@ -2194,10 +2212,8 @@ namespace Glass.Mapper.Sc.FakeDb
 
             Sitecore.Resources.Media.MediaProvider mediaProvider =
                  NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
-            using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-            {
-                var config = new MediaConfig(Sitecore.Configuration.Factory.GetConfigNode("mediaLibrary"));
-                MediaManager.Config = config;
+           
+              
                
                 //Act
                 var result = html.RenderImage(model, x => x.Image, parameters, true, true);
@@ -2207,7 +2223,6 @@ namespace Glass.Mapper.Sc.FakeDb
                 //Assert
                 AssertHtml.AreImgEqual(expected, result);
 
-            }
         }
 
 

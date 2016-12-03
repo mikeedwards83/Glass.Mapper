@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+﻿using System.Web.UI.HtmlControls;
 using Glass.Mapper.Sc.Web.Ui;
 using NUnit.Framework;
 using Sitecore.Web.UI.WebControls;
 
-namespace Glass.Mapper.Sc.Tests.Web.Ui
+namespace Glass.Mapper.Sc.FakeDb.Web.Ui
 {
     [TestFixture]
     public class RenderingContextUserControlWrapperFixture

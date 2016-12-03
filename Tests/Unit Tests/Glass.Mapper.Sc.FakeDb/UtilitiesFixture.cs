@@ -15,21 +15,14 @@
  
 */
 //-CRE-
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
-using System.Security.Permissions;
-using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
-using Sitecore.Shell.Applications.ContentEditor;
-using Sitecore.Web.UI.XamlSharp.Xaml.Extensions;
 
-namespace Glass.Mapper.Sc.Tests
+namespace Glass.Mapper.Sc.FakeDb
 {
     [TestFixture]
     public class UtilitiesFixture
@@ -47,11 +40,11 @@ namespace Glass.Mapper.Sc.Tests
         )
         {
             //Assign
-            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Utilities.Flags);
+            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Sc.Utilities.Flags);
             Assert.IsNotNull(info);
 
             //Act
-            var result = Utilities.GetPropertyFunc(info);
+            var result = Sc.Utilities.GetPropertyFunc(info);
 
             //Assert
             Assert.IsNotNull(result);
@@ -71,11 +64,11 @@ namespace Glass.Mapper.Sc.Tests
         )
         {
             //Assign
-            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Utilities.Flags);
+            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Sc.Utilities.Flags);
             Assert.IsNotNull(info);
 
             //Act
-            var result = Utilities.SetPropertyAction(info);
+            var result = Sc.Utilities.SetPropertyAction(info);
 
             //Assert
             Assert.IsNotNull(result);
@@ -104,10 +97,10 @@ namespace Glass.Mapper.Sc.Tests
         )
         {
             //Assign
-            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Utilities.Flags);
+            PropertyInfo info = typeof(StubClass).GetProperty(propertyName, Sc.Utilities.Flags);
 
-            var getFunc = Utilities.GetPropertyFunc(info);
-            var setActi = Utilities.SetPropertyAction(info);
+            var getFunc = Sc.Utilities.GetPropertyFunc(info);
+            var setActi = Sc.Utilities.SetPropertyAction(info);
             var stub = new StubClass();
 
             //Act

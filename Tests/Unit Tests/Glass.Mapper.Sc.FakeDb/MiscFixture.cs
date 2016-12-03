@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Profilers;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -284,7 +285,8 @@ namespace Glass.Mapper.Sc.FakeDb
                     "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.FakeDb"));
+               
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(FieldWithSpaceIssue)));
 
                 var db = database.Database;
 
@@ -343,7 +345,8 @@ namespace Glass.Mapper.Sc.FakeDb
                 var resolver = Utilities.CreateStandardResolver();
                 resolver.DataMapperResolverFactory.Add(() => new AbstractDataMapperFieldsWithSpace());
                 var context = Context.Create(resolver);
-                context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.FakeDb"));
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(FieldWithSpaceAutoMap)));
+                ;  
 
                 var db = Factory.GetDatabase("master");
 

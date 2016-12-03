@@ -75,9 +75,6 @@
     <Compile Include="DataMappers\AbstractMapperFixture.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UtilitiesFixture.cs" />
-    <Compile Include="Web\Ui\GlassUserControlTestFixture.cs" />
-    <Compile Include="Web\Ui\RenderingContextUserControlWrapperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">

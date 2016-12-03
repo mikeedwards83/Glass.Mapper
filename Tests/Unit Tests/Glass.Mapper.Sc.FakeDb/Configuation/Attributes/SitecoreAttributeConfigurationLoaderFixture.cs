@@ -18,6 +18,8 @@
 
 
 using System.Linq;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
+using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
 using Sitecore.Data;
@@ -32,7 +34,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Attributes
         public void Load_StubClassConfigured_ReturnsStubClassAndProperties()
         {
             //Assign
-            var loader = new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.Tests");
+            var loader = new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass));
 
             //Act
             var results = loader.Load();

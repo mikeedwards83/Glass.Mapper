@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
-using FluentAssertions;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.Web;
 using Glass.Mapper.Sc.Web.Ui;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Glass.Mapper.Sc.Tests.Web.Ui
+namespace Glass.Mapper.Sc.FakeDb.Web.Ui
 {
     [TestFixture]
     public class GlassUserControlTestFixture
@@ -24,7 +23,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.Model;
 
             // Assert
-            result.Should().Be(expected);
+            Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -42,7 +41,9 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.Model;
 
             // Assert
-            result.Should().Be(expected);
+            Assert.AreEqual(expected, result);
+
+           
         }
 
         [Test]
@@ -61,7 +62,8 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.Editable(fieldExpression);
 
             // Assert
-            result.Should().Be(expected);
+            Assert.AreEqual(expected, result);
+
         }
 
         [Test]
@@ -82,7 +84,8 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.Editable(fieldExpression, defaultExpression);
 
             // Assert
-            result.Should().Be(expected);
+            Assert.AreEqual(expected, result);
+
         }
 
         [Test]
@@ -101,7 +104,8 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.RenderImage(fieldExpression);
 
             // Assert
-            result.Should().Be(expected);
+            Assert.AreEqual(expected, result);
+
         }
 
         [Test]
@@ -116,7 +120,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.DataSource;
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -131,7 +135,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.RenderingParameters;
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -148,7 +152,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -162,7 +166,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
 
             // Assert
-            result.Should().BeNull();
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -176,7 +180,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetRenderingParameters<StubClass>();
 
             // Assert
-            result.Should().BeNull();
+            Assert.IsNull(result);
         }
 
         [Test]
@@ -195,7 +199,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.RenderLink(fieldExpression);
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test] // Most DI frameworks use property injection since the construction is done via the webforms framework
@@ -213,35 +217,40 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             // Act - no actions to perform
 
             // Assert
-            glassUserControl.SitecoreContext.Should().Be(sitecoreContext);
-            glassUserControl.RenderingContext.Should().Be(renderingContext);
-            glassUserControl.GlassHtml.Should().Be(glassHtml);
+            Assert.AreEqual(sitecoreContext, glassUserControl.SitecoreContext);
+            Assert.AreEqual(renderingContext, glassUserControl.RenderingContext);
+            Assert.AreEqual(glassHtml, glassUserControl.GlassHtml);
         }
 
         [Test]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Not_setting_sitecore_context_results_in_original_behaviour()
         {
-            // Arrange
-            var glassUserControl = new GlassUserControl<StubClass>();
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                // Arrange
+                var glassUserControl = new GlassUserControl<StubClass>();
 
-            // Act
-            var result = glassUserControl.SitecoreContext;
+                // Act
+                var result = glassUserControl.SitecoreContext;
 
-            // Assert - expected NotSupportedException from SitecoreContext cache
+                // Assert - expected NotSupportedException from SitecoreContext cache
+            });
+
         }
 
         [Test]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Not_setting_glass_html_results_in_original_behaviour()
         {
-            // Arrange
-            var glassUserControl = new GlassUserControl<StubClass>();
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                // Arrange
+                var glassUserControl = new GlassUserControl<StubClass>();
 
             // Act
             var result = glassUserControl.GlassHtml;
 
-            // Assert - expected NotSupportedException from SitecoreContext cache
+                // Assert - expected NotSupportedException from SitecoreContext cache
+            });
         }
 
         [Test]
@@ -254,8 +263,8 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             IRenderingContext result = glassUserControl.RenderingContext;
 
             // Assert
-            result.Should().NotBeNull();
-            result.GetType().Should().Be(typeof (RenderingContextUserControlWrapper));
+            Assert.NotNull(result);
+            Assert.AreEqual(typeof(RenderingContextUserControlWrapper), result.GetType());
         }
 
         [Test]
@@ -270,7 +279,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetContextItem<StubClass>();
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -286,7 +295,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetDataSourceItem<StubClass>();
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -299,7 +308,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetDataSourceItem<StubClass>();
 
             // Assert
-            result.Should().BeNull();
+            Assert.IsNull(result);
             testHarness.SitecoreContext.Received(0).GetItem<StubClass>(Arg.Any<string>());
         }
 
@@ -316,7 +325,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetLayoutItem<StubClass>();
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -331,7 +340,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.GetLayoutItem<StubClass>();
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         [Test]
@@ -346,7 +355,7 @@ namespace Glass.Mapper.Sc.Tests.Web.Ui
             var result = testHarness.GlassUserControl.Model;
 
             // Assert
-            result.Should().Be(expected);
+                        Assert.AreEqual(expected, result);
         }
 
         public class StubClass

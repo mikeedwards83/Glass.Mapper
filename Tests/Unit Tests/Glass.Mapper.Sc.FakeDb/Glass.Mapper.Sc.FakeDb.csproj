@@ -164,9 +164,14 @@
     <Compile Include="SitecoreServiceFixture.cs" />
     <Compile Include="Ui\Web\AbstractGlassUserControlFixture.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="UtilitiesFixture.cs" />
+    <Compile Include="Web\Ui\GlassUserControlTestFixture.cs" />
+    <Compile Include="Web\Ui\RenderingContextUserControlWrapperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
