@@ -192,7 +192,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 #else
             string expected = "20120101T010101";
 #endif
-            DateTime objectValue = new DateTime(2012, 01, 01, 01, 01, 01);
+            DateTime objectValue = new DateTime(2012, 01, 01, 01, 01, 01, DateTimeKind.Utc);
             var fieldId = Guid.NewGuid();
 
             var item = Helpers.CreateFakeItem(fieldId, string.Empty);
