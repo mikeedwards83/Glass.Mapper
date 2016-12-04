@@ -37,7 +37,7 @@
     <!-- DATABASE TYPE
          For Sitecore versions prior to 8.2 should be 'Sitecore.Data.Database, Sitecore.Kernel'.
          For Sitecore 8.2 and later should be 'Sitecore.Data.DefaultDatabase, Sitecore.Kernel'. -->
-    <sc.variable name="databaseType" value="Sitecore.Data.Database, Sitecore.Kernel"/>
+    <sc.variable name="databaseType" value="Sitecore.Data.DefaultDatabase, Sitecore.Kernel"/>
     <pipelines>
       <renderField>
         <processor type="Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField.SimpleRenderField,Glass.Mapper.Sc.FakeDb"/>
