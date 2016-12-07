@@ -18,6 +18,7 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
         private readonly TemplateID _folderTemplateId = new TemplateID(new ID("{B0666CFE-8C7B-4CC1-8E32-8253742EBFA9}"));
         private readonly TemplateID _editTemplateId = new TemplateID(new ID("{1AB4F9AD-B004-413C-8924-3E07143A614B}"));
 
+        public const string EditFrameItemPrefix = "Glass-";
         private const string EditName = "Edit Fields";
         private const string HeaderField = "Header";
         private const string FieldsField = "Fields";
@@ -69,6 +70,7 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
                     name = hash.ToString();
                 }
 
+                name = EditFrameItemPrefix + name;
                 str = "/sitecore/content/Applications/WebEdit/Edit Frame Buttons/" + name;
                 Database database = Factory.GetDatabase("core");
                 Assert.IsNotNull((object)database, "core");
