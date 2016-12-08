@@ -29,11 +29,11 @@ namespace Glass.Mapper.Pipelines
 
         public string Name { get; protected set; }
 
-        protected Action<T> Next { get; private set; }
+        protected Action<T> NextAction { get; private set; }
 
         public void SetNext(Action<T> next)
         {
-            Next = next;
+            NextAction = next;
         }
 
         /// <summary>
@@ -42,13 +42,13 @@ namespace Glass.Mapper.Pipelines
         /// <param name="args">The args.</param>
         public virtual void Execute(T args)
         {
-            CallNext(args);
+            Next(args);
         }
-        public void CallNext(T args)
+        public void Next(T args)
         {
-            if (Next != null)
+            if (NextAction != null)
             {
-                Next(args);
+                NextAction(args);
             }
         }
     }
