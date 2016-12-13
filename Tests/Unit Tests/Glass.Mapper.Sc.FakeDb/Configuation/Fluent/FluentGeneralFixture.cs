@@ -18,6 +18,8 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.IoC;
@@ -30,6 +32,35 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Fluent
     [TestFixture]
     public class FluentGeneralFixture
     {
+
+        [Test]
+        public void Issue254_LoadingChildrenWithFluent()
+        {
+            
+            //Arrange
+            var loader = new SitecoreFluentConfigurationLoader();
+
+
+            //Act
+            var stubChildren = loader.Add<StubWithChildren>();
+            stubChildren.Children(x => x.BaseChildren);
+
+            var stubInherit1 = loader.Add<StubInherit1>();
+            stubInherit1.Import(stubChildren);
+            stubInherit1.AutoMap();
+
+            var stubInherit2 = loader.Add<StubInherit1>();
+            stubInherit2.Import(stubInherit1);
+            stubInherit2.AutoMap();
+
+            //Assert
+            Assert.IsTrue(stubChildren.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+            Assert.IsTrue(stubInherit1.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+            Assert.IsTrue(stubInherit2.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+
+
+        }
+
 
         [Test]
         public void General_RetrieveItemAndFieldsFromSitecore_ReturnPopulatedClass()
@@ -101,6 +132,21 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Fluent
             public virtual string Field { get; set; }
             public virtual string Name { get; set; }
             public virtual string Delegated { get; set; }
+
+        }
+
+
+        public class StubWithChildren
+        {
+            public virtual IEnumerable<Stub> BaseChildren { get; set; }
+        }
+
+        public class StubInherit1 : StubWithChildren
+        {
+            
+        }
+        public class StubInherit2 : StubInherit1
+        {
 
         }
 

@@ -16,6 +16,7 @@
 */ 
 //-CRE-
 
+using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Sc.Configuration;
@@ -104,6 +105,25 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation
 
             Assert.IsNotNull(finalStubSubClassMap.GlassType.Config.IdConfig);
         }
+        [Test]
+        public void Issue254_Test()
+        {
+            MapStubWithChildren mapStubWithChildren = new MapStubWithChildren();
+            MapStubInherit1 mapStubInherit1 = new MapStubInherit1();
+            MapStubInherit2 mapStubInherit2 = new MapStubInherit2();
+
+            SitecoreFluentConfigurationLoader loader = new SitecoreFluentConfigurationLoader();
+            ConfigurationMap configMap = new ConfigurationMap(new IGlassMap[] { mapStubWithChildren, mapStubInherit1, mapStubInherit2 });
+            configMap.Load(loader);
+
+            //Assert
+            //Assert
+            Assert.IsTrue(mapStubWithChildren.GlassType.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+            Assert.IsTrue(mapStubInherit1.GlassType.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+            Assert.IsTrue(mapStubInherit2.GlassType.Config.Properties.Any(x => x is SitecoreChildrenConfiguration));
+
+
+        }
 
         #region Stubs
 
@@ -168,6 +188,43 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation
             }
         }
 
+        public class MapStubWithChildren : SitecoreGlassMap<StubWithChildren>
+        {
+            public override void Configure()
+            {
+                Map(
+                    x =>
+                    {
+                        x.Children(y => y.BaseChildren);
+                    });
+            }
+        }
+        public class MapStubInherit1 : SitecoreGlassMap<StubInherit1>
+        {
+            public override void Configure()
+            {
+                Map(
+                    x =>
+                    {
+                        ImportMap<StubWithChildren>();
+                        x.AutoMap();
+                    });
+            }
+        }
+
+        public class MapStubInherit2 : SitecoreGlassMap<StubInherit2>
+        {
+            public override void Configure()
+            {
+                Map(
+                    x =>
+                    {
+                        ImportMap<StubInherit1>();
+                        x.AutoMap();
+                    });
+            }
+        }
+
         public interface IStubBase
         {
             string Id { get; set; }
@@ -195,6 +252,24 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation
         {
             string Parent { get; set; }
         }
+
+
+        public class StubWithChildren
+        {
+            public virtual IEnumerable<IStubBase> BaseChildren { get; set; }
+        }
+
+        public class StubInherit1 : StubWithChildren
+        {
+
+        }
+        public class StubInherit2 : StubInherit1
+        {
+
+        }
+
+
+
 
         #endregion
 
