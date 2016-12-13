@@ -125,7 +125,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             if (baseType == null || !baseType.IsGenericType)
             {
-                Sitecore.Diagnostics.Log.Error(string.Format(
+                Sitecore.Diagnostics.Log.Warn(string.Format(
                     "View {0} compiled type {1} base type {2} does not have a single generic argument.",
                     args.Rendering.RenderingItem.InnerItem["path"],
                     compiledViewType,
