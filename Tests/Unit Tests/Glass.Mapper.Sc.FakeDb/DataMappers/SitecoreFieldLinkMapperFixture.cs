@@ -281,6 +281,67 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
             }
         }
+        [Test]
+        [Category("Exclude80")]
+        [Category("Exclude82")] //Requires fake db fix
+        public void GetField_FieldContainsInternalWithSpecialCharacters_ReturnsInternalLink()
+        {
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    {fieldName, ""}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
+                var fieldValue =
+                    "<link text=\"Test description\" linktype=\"internal\" url=\"/Target.aspx\" anchor=\"testAnchor\" querystring=\"q%3ds%253d\" title=\"test alternative\" class=\"testClass\" target=\"testTarget\" id=\"{0}\" />"
+                        .Formatted(targetId);
+
+                Sitecore.Context.Site = null;
+
+
+                var item = database.GetItem("/sitecore/content/Target");
+                var field = item.Fields[fieldName];
+
+                using (new ItemEditing(item, true))
+                {
+                    field.Value = fieldValue;
+                }
+
+                Sitecore.Links.LinkProvider provider =
+                     Substitute.For<Sitecore.Links.LinkProvider>();
+                provider
+                  .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
+                  .Returns("/target.aspx");
+
+
+                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
+                {
+                    //Act
+                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+                    //Assert
+                    Assert.AreEqual("testAnchor", result.Anchor);
+                    Assert.AreEqual("testClass", result.Class);
+                    Assert.AreEqual("q=s%3d", result.Query);
+                    Assert.AreEqual("testTarget", result.Target);
+                    Assert.AreEqual(targetId.Guid, result.TargetId);
+                    Assert.AreEqual("Test description", result.Text);
+                    Assert.AreEqual("test alternative", result.Title);
+                    Assert.AreEqual(LinkType.Internal, result.Type);
+                    Assert.AreEqual("/target.aspx", result.Url);
+                }
+            }
+        }
 
         [Test]
         public void GetField_FieldContainsInternalButItemMissing_ReturnsEmptyUrl()
@@ -791,7 +852,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
                 var expected =
-                    "<link target=\"testTarget\" title=\"test alternative\" querystring=\"q=s\" linktype=\"internal\" id=\"{0}\" anchor=\"testAnchor\" url=\"/en/sitecore/content/Target.aspx\" class=\"testClass\" text=\"Test description\" />"
+                    "<link target=\"testTarget\" title=\"test alternative\" querystring=\"q%3ds\" linktype=\"internal\" id=\"{0}\" anchor=\"testAnchor\" url=\"/en/sitecore/content/Target.aspx\" class=\"testClass\" text=\"Test description\" />"
                         .Formatted(targetId.Guid.ToString("B").ToUpperInvariant());
 
                 var item = database.GetItem("/sitecore/content/Target");
@@ -802,6 +863,62 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Anchor = "testAnchor",
                     Class = "testClass",
                     Query = "q=s",
+                    Target = "testTarget",
+                    TargetId = targetId.Guid,
+                    Text = "Test description",
+                    Title = "test alternative",
+                    Type = LinkType.Internal,
+                    Url = ""
+                };
+
+
+                using (new ItemEditing(item, true))
+                {
+                    field.Value = string.Empty;
+                }
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, value, null, null);
+                }
+
+                //Assert
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
+            }
+        }
+
+        [Test]
+        public void SetField_InternalLinkWithSpecialCharacters_InternalLinkSetOnField()
+        {
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    {fieldName, ""}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
+                var expected =
+                    "<link target=\"testTarget\" title=\"test alternative\" querystring=\"q%3ds%253d\" linktype=\"internal\" id=\"{0}\" anchor=\"testAnchor\" url=\"/en/sitecore/content/Target.aspx\" class=\"testClass\" text=\"Test description\" />"
+                        .Formatted(targetId.Guid.ToString("B").ToUpperInvariant());
+
+                var item = database.GetItem("/sitecore/content/Target");
+                var field = item.Fields[fieldName];
+
+                var value = new Link()
+                {
+                    Anchor = "testAnchor",
+                    Class = "testClass",
+                    Query = "q=s%3d",
                     Target = "testTarget",
                     TargetId = targetId.Guid,
                     Text = "Test description",

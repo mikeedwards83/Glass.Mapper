@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
 using Sitecore.Data;
@@ -95,7 +96,7 @@ namespace Glass.Mapper.Sc.DataMappers
             link.Text = linkField.Text;
             link.Title = linkField.Title;
             link.Target = linkField.Target;
-            link.Query = linkField.QueryString;
+            link.Query = HttpUtility.UrlDecode(linkField.QueryString);
 
             switch (linkField.LinkType)
             {
@@ -260,7 +261,7 @@ namespace Glass.Mapper.Sc.DataMappers
             if (!link.Title.IsNullOrEmpty())
                 linkField.Title = link.Title;
             if (!link.Query.IsNullOrEmpty())
-                linkField.QueryString = link.Query;
+                linkField.QueryString = HttpUtility.UrlEncode(link.Query);
             if (!link.Target.IsNullOrEmpty())
                 linkField.Target = link.Target;
         }

@@ -41,8 +41,7 @@ namespace Glass.Mapper
             var pairs = query.Split('&', StringSplitOptions.RemoveEmptyEntries);
             foreach (var pair in pairs)
             {
-                string tempValue = pair.Replace("%3D", "=").Replace("%3d", "=");
-                string[] keyValue = tempValue.Split('=');
+                string[] keyValue = pair.Split('=');
                 if (keyValue.Length == 2)
                 {
                     QueryString.Add(new KeyValuePair<string, string>(keyValue[0] ?? string.Empty,

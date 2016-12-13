@@ -2822,6 +2822,27 @@ namespace Glass.Mapper.Sc.FakeDb
             AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
+        [Test]
+        public void RenderLink_ContainsSpecialCharacters()
+        {
+            //Arrange
+            var expected = "<a href='http://na2.se.voxco.com/se/?st=6M9NIk9SWq9dkYTuJI2wewuV3b3bWrDQMwgCt2aBnWDGTaoxLYNESg%3D%3D' title='hello &amp; world' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello & world";
+            link.Url = "http://na2.se.voxco.com/se/?st=6M9NIk9SWq9dkYTuJI2wewuV3b3bWrDQMwgCt2aBnWDGTaoxLYNESg%3D%3D";
+            link.Title = "hello & world";
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
+        }
+
+
 
         [Test]
         public void RenderLink_HtmlTitleAlreadyEncoded_DoesNotDoubleEncode()
