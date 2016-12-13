@@ -2808,6 +2808,52 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
+
+
+        [Test]
+        public void Map_ClassWithItemUri_MapsFieldValues()
+        {
+            //Assign#
+
+            var id = Guid.NewGuid();
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+                {
+                    {"StringField", ""},
+                    {"DateField", ""}
+                },
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var service = new SitecoreService(database.Database);
+
+                string text = "test text 1";
+                DateTime date = new DateTime(2013, 04, 03, 12, 15, 10);
+                var item = database.GetItem(id.ToString());
+                using (new ItemEditing(item, true))
+                {
+                    item["StringField"] = text;
+                    item["DateField"] = date.ToString("yyyyMMddThhmmss");
+                }
+
+
+
+                var model = new MapItemUriStub();;
+                model.Uri =new ItemUri(new ID(id), Language.Parse("en"), database.Database);
+
+
+                //Act
+                service.Map(model);
+
+                //Assert
+                Assert.AreEqual(text, model.StringField);
+                Assert.AreEqual(date, model.DateField);
+
+            }
+        }
+
         #endregion
 
         #region Stubs
@@ -2822,6 +2868,19 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             [SitecoreId]
             public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual string StringField { get; set; }
+
+            [SitecoreField]
+            public virtual DateTime DateField { get; set; }
+
+        }
+        [SitecoreType]
+        public class MapItemUriStub
+        {
+            [SitecoreInfo(SitecoreInfoType.ItemUri)]
+            public virtual ItemUri Uri { get; set; }
 
             [SitecoreField]
             public virtual string StringField { get; set; }
