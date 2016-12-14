@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="ModelCache\IModelCacheManager.cs" />
     <Compile Include="ModelCache\ModelCacheManager.cs" />
+    <Compile Include="ModelCache\ModelFinder.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Pipelines\Response\GetModelFromView.cs" />
     <Compile Include="Pipelines\Response\GetRenderer\GetViewRenderWithItemValidation.cs" />

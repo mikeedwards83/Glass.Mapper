@@ -1,0 +1,24 @@
+﻿@model Glass.Mapper.Sc.Mvc.Tests.StubModel
+@using Glass.Mapper.Sc.Web.Mvc
+@using Sitecore.Mvc
+
+<!--Css-->
+<link rel="stylesheet" href="~/Content/menu/headerMenu.css" />
+<!--JS-->
+<script src="~/Scripts/custom/menu/open.ChildMenu.js"></script>
+
+<div class="header-container">
+    <div class="logo">
+        <a href="/">@Html.Glass().Editable(x => x.Logo)</a>
+    </div>
+    <div class="header-link">
+        <div class="container">
+            <div class="left-section">
+                @Html.Sitecore().Placeholder("Left Header Menu")
+            </div>
+            <div class="right-section">
+                @Html.Sitecore().Placeholder("Right Header Menu")
+            </div>
+        </div>
+    </div>
+</div>

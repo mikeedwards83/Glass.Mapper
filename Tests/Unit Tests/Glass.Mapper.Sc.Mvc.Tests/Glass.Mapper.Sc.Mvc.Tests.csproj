@@ -80,11 +80,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DifferentTypedGlassController.cs" />
+    <Compile Include="ModelFinderTestFixture.cs" />
     <Compile Include="SingleTypedGlassController.cs" />
     <Compile Include="GlassControllerTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StubModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Example2.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Example1.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

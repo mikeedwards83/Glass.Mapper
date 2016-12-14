@@ -15,17 +15,20 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private readonly IModelCacheManager modelCacheManager;
 
         public GetModelFromView()
-            : this(new ModelCacheManager(), IoC.SitecoreContextFactory.Default)
+            : this(new ModelCacheManager(), IoC.SitecoreContextFactory.Default, new ModelFinder())
         {
         }
 
-        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory)
+        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory, ModelFinder modelFinder)
         {
             SitecoreContextFactory = sitecoreContextFactory;
             this.modelCacheManager = modelCacheManager;
+            ModelFinder = modelFinder;
         }
 
         protected virtual ISitecoreContextFactory SitecoreContextFactory { get; private set; }
+
+        protected virtual ModelFinder ModelFinder { get; private set; }
 
         public override void Process(GetModelArgs args)
         {
@@ -35,6 +38,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             }
 
             string path = GetViewPath(args);
+
+            Sitecore.Diagnostics.Log.Info($"Finding model for {path}", this);
+
+            if (path.StartsWith("/sitecore/shell", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -53,7 +63,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             // The model type hasn't been found before or has been cleared.
             if (modelType == null)
             {
-                modelType = GetModel(args, path);
+                modelType = ModelFinder.GetModel(args.Rendering.RenderingItem.InnerItem["path"], path);
 
                 modelCacheManager.Add(cacheKey, modelType);
 
@@ -116,27 +126,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 path = GetPathFromLayout(args.PageContext.Database, new ID(args.Rendering.LayoutId));
             }
             return path;
-        }
-
-        protected virtual Type GetModel(GetModelArgs args, string path)
-        {
-            Type compiledViewType = BuildManager.GetCompiledType(path);
-            Type baseType = compiledViewType.BaseType;
-
-            if (baseType == null || !baseType.IsGenericType)
-            {
-                Sitecore.Diagnostics.Log.Warn(string.Format(
-                    "View {0} compiled type {1} base type {2} does not have a single generic argument.",
-                    args.Rendering.RenderingItem.InnerItem["path"],
-                    compiledViewType,
-                    baseType), this);
-                return typeof(NullModel);
-            }
-
-            Type proposedType = baseType.GetGenericArguments()[0];
-            return proposedType == typeof(object)
-                ? typeof(NullModel)
-                : proposedType;
         }
 
         protected virtual bool IsValidForProcessing(GetModelArgs args)
