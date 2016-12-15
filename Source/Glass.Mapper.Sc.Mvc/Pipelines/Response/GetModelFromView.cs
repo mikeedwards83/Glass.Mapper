@@ -22,20 +22,25 @@ namespace Glass.Mapper.Sc.Pipelines.Response
     public class GetModelFromView : GetModelProcessor
     {
         private readonly IModelCacheManager modelCacheManager;
-        public ITypeFinder TypeFinder { get; set; }
+        public static ITypeFinder TypeFinder { get; set; }
 
+
+
+        static GetModelFromView()
+        {
+            TypeFinder = new RegexTypeFinder();
+        }
         public GetModelFromView()
             : this(
                   new ModelCacheManager(), 
-                  IoC.SitecoreContextFactory.Default,
-                  new RegexTypeFinder())
+                  IoC.SitecoreContextFactory.Default
+                  )
         {
         }
 
-        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory,ITypeFinder typeFinder)
+        public GetModelFromView(IModelCacheManager modelCacheManager, ISitecoreContextFactory sitecoreContextFactory)
         {
             SitecoreContextFactory = sitecoreContextFactory;
-            TypeFinder = typeFinder;
             this.modelCacheManager = modelCacheManager;
         }
 
