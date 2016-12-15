@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DifferentTypedGlassController.cs" />
+    <Compile Include="RegexTypeFinderFixture.cs" />
     <Compile Include="SingleTypedGlassController.cs" />
     <Compile Include="GlassControllerTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
