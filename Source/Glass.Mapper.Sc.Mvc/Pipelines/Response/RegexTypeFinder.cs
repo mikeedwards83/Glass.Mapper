@@ -13,13 +13,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 {
     public class RegexTypeFinder : ITypeFinder
     {
-        private readonly IEnumerable<Regex> _regexPatterns;
+        private readonly IEnumerable<Regex> _modelPatterns;
+        private readonly IEnumerable<Regex> _usingPatterns;
 
-        private static ConcurrentDictionary<string, Type> definedTypes;
 
+        public static readonly Regex UsingRegex = new Regex(@"@using\s+(?<namespace>[\w\._]*)");
         public static readonly Regex ModelRegex = new Regex(@"@model\s+(?<type>.*)\s?");
         public static readonly Regex InheritsRegex = new Regex("@inherits.*<(?<type>[^>]*)>");
-        // public static readonly Regex StandardPattern = new Regex("GlassView<(?<type>.*)>|@model (?<type>[\\w\\.\\d]*)");
         private static IEnumerable<Assembly> _assemblies;
 
 
@@ -28,13 +28,19 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             _assemblies = AppDomain.CurrentDomain.GetAssemblies();
         }
 
-        public RegexTypeFinder() : this(new[] { ModelRegex, InheritsRegex })
+        public RegexTypeFinder() : this(
+            new[] { ModelRegex, InheritsRegex },
+            new [] {UsingRegex})
         {
 
         }
-        public RegexTypeFinder(IEnumerable<Regex> regexPatterns)
+        public RegexTypeFinder(
+            IEnumerable<Regex> modelPatterns,
+            IEnumerable<Regex> usingPatterns)
+
         {
-            _regexPatterns = regexPatterns;
+            _modelPatterns = modelPatterns;
+            _usingPatterns = usingPatterns;
         }
 
         public virtual string GetContents(string path)
@@ -52,7 +58,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             string typeName = String.Empty;
 
 
-            foreach (var regex in _regexPatterns)
+            foreach (var regex in _modelPatterns)
             {
                 var modelMatch = regex.Match(contents);
                 if (modelMatch != null && modelMatch.Success)
@@ -62,6 +68,43 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
+            var foundTypes = FindTypes(typeName);
+
+            if (!foundTypes.Any())
+            {
+                foreach (var regex in _usingPatterns)
+                {
+                    var matches = regex.Matches(contents);
+                    foreach (Match match  in matches)
+                    {
+                        var ns = match.Groups["namespace"].Value;
+
+                        var nsType = "{0}.{1}".Formatted(ns, typeName);
+                        foundTypes = FindTypes(nsType);
+                        if (foundTypes.Any())
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (foundTypes.Count() > 1)
+            {
+                throw new AmbiguousMatchException("The type {0} exists in multiple assemblies".Formatted(typeName));
+            }
+
+            if (foundTypes.Any())
+            {
+                return foundTypes.First();
+            }
+
+            return typeof(NullModel);
+
+        }
+
+        private IEnumerable<Type> FindTypes(string typeName)
+        {
             List<Type> foundTypes = new List<Type>();
             if (!typeName.IsNullOrWhiteSpace())
             {
@@ -75,17 +118,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
             }
 
-            if (foundTypes.Count > 1)
-            {
-                throw new AmbiguousMatchException("The type {0} exists in multiple assemblies".Formatted(typeName));
-            }
-            if (foundTypes.Count == 1)
-            {
-                return foundTypes.First();
-            }
-
-            return typeof(NullModel);
-
+            return foundTypes;
         }
     }
 
