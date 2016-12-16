@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
             var result = configFactory.GetItems();
 
             // Assert
-            Assert.AreEqual(40, result.Count());
+            Assert.AreEqual(41, result.Count());
         }
 
         [Test]
