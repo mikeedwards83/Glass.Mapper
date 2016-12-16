@@ -104,7 +104,7 @@
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Pipelines\Response\GetModelFromView.cs" />
     <Compile Include="Pipelines\Response\GetRenderer\GetViewRenderWithItemValidation.cs" />
-    <Compile Include="Pipelines\Response\ITypeFinder.cs" />
+    <Compile Include="Pipelines\Response\IViewTypeResolver.cs" />
     <Compile Include="Pipelines\Response\RegexTypeFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Mvc\GlassController.cs" />

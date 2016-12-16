@@ -7,7 +7,7 @@ using System.Web.Compilation;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
-    public class BuildManagerTypeFinder : ITypeFinder
+    public class BuildManagerViewTypeResolver : IViewTypeResolver
     {
         public Type GetType(string path)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
-    public interface ITypeFinder
+    public interface IViewTypeResolver
     {
         Type GetType(string path);
     }

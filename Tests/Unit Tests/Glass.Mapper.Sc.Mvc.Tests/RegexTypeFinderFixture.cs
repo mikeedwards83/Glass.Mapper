@@ -15,7 +15,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         public void InheritsRegex_ReturnsType(string contents, string expected)
         {
             //Act
-            var result = RegexTypeFinder.InheritsRegex.Match(contents);
+            var result = RegexViewTypeResolver.InheritsRegex.Match(contents);
 
             //Assert
             Assert.AreEqual(expected, result.Groups["type"].Value);
@@ -26,7 +26,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         public void ModelRegex_ReturnsType(string contents, string expected)
         {
             //Act
-            var result = RegexTypeFinder.ModelRegex.Match(contents);
+            var result = RegexViewTypeResolver.ModelRegex.Match(contents);
 
             //Assert
             Assert.AreEqual(expected, result.Groups["type"].Value);
@@ -40,7 +40,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                     "@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<RegexTypeFinderFixture>\n\r";
 
             //Act
-            var result = RegexTypeFinder.InheritsRegex.Match(contents);
+            var result = RegexViewTypeResolver.InheritsRegex.Match(contents);
 
             //Assert
             Assert.AreEqual("RegexTypeFinderFixture", result.Groups["type"].Value);
@@ -116,7 +116,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         }
 
      
-        public class StubFinder : RegexTypeFinder
+        public class StubFinder : RegexViewTypeResolver
         {
             public override string GetContents(string path)
             {

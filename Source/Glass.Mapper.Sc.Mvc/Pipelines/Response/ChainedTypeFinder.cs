@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
-    public class ChainedTypeFinder : ITypeFinder
+    public class ChainedViewTypeResolver : IViewTypeResolver
     {
-        private readonly IEnumerable<ITypeFinder> _finders;
-        public ChainedTypeFinder(IEnumerable<ITypeFinder> finders)
+        private readonly IEnumerable<IViewTypeResolver> _resolvers;
+        public ChainedViewTypeResolver(IEnumerable<IViewTypeResolver> resolvers)
         {
-            _finders = finders;
+            _resolvers = resolvers;
         }
 
         public Type GetType(string path)
         {
             var found = typeof(NullModel);
-            foreach (var finder in _finders)
+            foreach (var resolver in _resolvers)
             {
                 if (found != typeof(NullModel))
                 {
                     break;
                 }
-                found = finder.GetType(path);
+                found = resolver.GetType(path);
             }
             return found;
         }

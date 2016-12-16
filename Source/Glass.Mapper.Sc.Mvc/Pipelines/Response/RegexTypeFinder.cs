@@ -11,7 +11,7 @@ using System.Web;
 
 namespace Glass.Mapper.Sc.Pipelines.Response
 {
-    public class RegexTypeFinder : ITypeFinder
+    public class RegexViewTypeResolver : IViewTypeResolver
     {
         private readonly IEnumerable<Regex> _modelPatterns;
         private readonly IEnumerable<Regex> _usingPatterns;
@@ -23,18 +23,18 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private static IEnumerable<Assembly> _assemblies;
 
 
-        static RegexTypeFinder()
+        static RegexViewTypeResolver()
         {
             _assemblies = AppDomain.CurrentDomain.GetAssemblies();
         }
 
-        public RegexTypeFinder() : this(
+        public RegexViewTypeResolver() : this(
             new[] { ModelRegex, InheritsRegex },
             new [] {UsingRegex})
         {
 
         }
-        public RegexTypeFinder(
+        public RegexViewTypeResolver(
             IEnumerable<Regex> modelPatterns,
             IEnumerable<Regex> usingPatterns)
 

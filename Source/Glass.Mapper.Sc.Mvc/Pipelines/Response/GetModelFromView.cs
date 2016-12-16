@@ -22,13 +22,13 @@ namespace Glass.Mapper.Sc.Pipelines.Response
     public class GetModelFromView : GetModelProcessor
     {
         private readonly IModelCacheManager modelCacheManager;
-        public static ITypeFinder TypeFinder { get; set; }
+        public static IViewTypeResolver ViewTypeResolver { get; set; }
 
 
 
         static GetModelFromView()
         {
-            TypeFinder = new RegexTypeFinder();
+            ViewTypeResolver = new RegexViewTypeResolver();
         }
         public GetModelFromView()
             : this(
@@ -149,7 +149,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
         protected virtual Type GetModel(GetModelArgs args, string path)
         {
-            return TypeFinder.GetType(path);
+            return ViewTypeResolver.GetType(path);
         }
 
 
