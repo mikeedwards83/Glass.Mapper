@@ -29,12 +29,10 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
     /// </summary>
     public class DataMapperStandardResolverTask : AbstractDataMapperResolverTask
     {
-        private Dictionary<PropertyInfo, AbstractDataMapper> AttributeMappers { get; }
 
         public DataMapperStandardResolverTask()
         {
             Name = "DataMapperStandardResolverTask";
-            AttributeMappers = new Dictionary<PropertyInfo, AbstractDataMapper>();
         }
 
         /// <summary>
@@ -46,8 +44,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
         {
             if (args.Result == null)
             {
-                var mapper = LoadFromDataMapperAttribute(args) ??
-                             args.DataMappers.FirstOrDefault(x => x.CanHandle(args.PropertyConfiguration, args.Context));
+                var mapper = args.DataMappers.FirstOrDefault(x => x.CanHandle(args.PropertyConfiguration, args.Context));
 
                 if(mapper == null)
                     throw new MapperException("Could not find a data mapper to handle property {0}".Formatted(args.PropertyConfiguration));
@@ -58,58 +55,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
             base.Execute(args);
         }
 
-        /// <summary>
-        /// Loads a data mapper specifed with the <see cref="DataMapperAttribute"/> if it has been applied to the current property.
-        /// </summary>
-        private AbstractDataMapper LoadFromDataMapperAttribute(DataMapperResolverArgs args)
-        {
-            var propertyInfo = args.PropertyConfiguration.PropertyInfo;
-
-            AbstractDataMapper mapper;
-            if (AttributeMappers.TryGetValue(propertyInfo, out mapper))
-                return mapper;
-
-            var mapperType = propertyInfo.GetCustomAttribute<DataMapperAttribute>()?.DataMapperType;
-
-            if (mapperType == null)
-            {
-                AttributeMappers.Add(propertyInfo, null);
-                return null;
-            }
-
-            var isAbstractDataMapper = typeof (AbstractDataMapper).IsAssignableFrom(mapperType);
-            if (!isAbstractDataMapper)
-            {
-                throw new MapperException(
-                    "Specified data mapper {0} does not inherit from AbstractDataMapper. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
-            }
-
-            // Look through registered mappers first
-            mapper = args.DataMappers.FirstOrDefault(x => x.GetType() == mapperType);
-
-            if (mapper == null)
-            {
-                // Create new instance using the default constructor
-                var constructor = mapperType.GetConstructor(Type.EmptyTypes);
-                if (constructor == null)
-                {
-                    throw new MapperException(
-                        "Specified data mapper {0} does not have a default constructor. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
-                }
-
-                mapper = (AbstractDataMapper) Activator.CreateInstance(mapperType);
-            }
-
-            if (!mapper.CanHandle(args.PropertyConfiguration, args.Context))
-            {
-                throw new MapperException(
-                    "Specified data mapper {0} cannot handle this property. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
-            }
-
-            AttributeMappers.Add(propertyInfo, mapper);
-
-            return mapper;
-        }
+      
     }
 }
 

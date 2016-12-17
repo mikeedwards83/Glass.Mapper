@@ -80,23 +80,7 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
             //Assert
         }
 
-        [Test]
-        public void Execute_DataMapperAttribute_SetsResultToSpecifiedMapper()
-        {
-            //Assign
-            var configuration = Substitute.For<AbstractPropertyConfiguration>();
-            configuration.PropertyInfo = typeof (StubClass).GetProperty("StubMapperProperty");
-
-            var args = new DataMapperResolverArgs(null, configuration);
-            args.DataMappers = Enumerable.Empty<AbstractDataMapper>();
-
-            //Act
-            _task.Execute(args);
-
-            //Assert
-            Assert.IsNotNull(args.Result);
-            Assert.IsTrue(args.Result.GetType() == typeof(StubMapper));
-        }
+      
 
         [Test]
         public void Execute_DataMapperAttribute_SetsResultToMatchingRegisteredMapper()
@@ -117,28 +101,6 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
             Assert.AreEqual(mapper, args.Result);
         }
 
-        [Test]
-        public void Execute_DataMapperAttribute_ResusesMapperInstance()
-        {
-            //Assign
-            var configuration = Substitute.For<AbstractPropertyConfiguration>();
-            configuration.PropertyInfo = typeof (StubClass).GetProperty("StubMapperProperty");
-
-            var args = new DataMapperResolverArgs(null, configuration);
-            args.DataMappers = Enumerable.Empty<AbstractDataMapper>();
-
-            var args2 = new DataMapperResolverArgs(null, configuration);
-            args2.DataMappers = Enumerable.Empty<AbstractDataMapper>();
-
-            //Act
-            _task.Execute(args);
-            _task.Execute(args2);
-
-            //Assert
-            Assert.IsNotNull(args.Result);
-            Assert.IsNotNull(args2.Result);
-            Assert.AreEqual(args.Result, args2.Result);
-        }
 
         [Test]
         public void Execute_DataMapperAttribute_CannotHandle_ThrowsMapperException()
@@ -194,16 +156,12 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
 
         public class StubClass
         {
-            [DataMapper(typeof(StubMapper))]
             public string StubMapperProperty { get; set; }
 
-            [DataMapper(typeof(StubMapperCannotHandle))]
             public string CannotHandleProperty { get; set; }
 
-            [DataMapper(typeof(MissingConstructorStubMapper))]
             public string MissingConstructorStubMapperProperty { get; set; }
 
-            [DataMapper(typeof(object))]
             public string InvalidMapperTypeProperty { get; set; }
 
             public string NoAttributeProperty { get; set; }

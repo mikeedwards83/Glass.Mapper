@@ -13,6 +13,7 @@ namespace Glass.Mapper.Sc.IoC
 
         protected  void Init()
         {
+            Add(() => new DataMapperAttributeResolverTask());
             Add(() => new DataMapperStandardResolverTask());
         }
     }
