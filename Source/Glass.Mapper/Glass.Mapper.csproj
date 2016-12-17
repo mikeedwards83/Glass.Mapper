@@ -77,6 +77,7 @@
     <Compile Include="Configuration\Attributes\AttributeTypeLoader.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\DataMapperAttribute.cs" />
     <Compile Include="Configuration\Attributes\IdAttribute.cs" />
     <Compile Include="Configuration\Attributes\IgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
