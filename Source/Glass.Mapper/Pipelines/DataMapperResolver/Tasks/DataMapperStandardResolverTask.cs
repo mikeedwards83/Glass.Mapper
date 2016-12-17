@@ -100,6 +100,12 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
                 mapper = (AbstractDataMapper) Activator.CreateInstance(mapperType);
             }
 
+            if (!mapper.CanHandle(args.PropertyConfiguration, args.Context))
+            {
+                throw new MapperException(
+                    "Specified data mapper {0} cannot handle this property. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
+            }
+
             AttributeMappers.Add(propertyInfo, mapper);
 
             return mapper;
