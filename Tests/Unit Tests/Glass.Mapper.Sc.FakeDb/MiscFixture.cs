@@ -83,6 +83,45 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/261
+        /// </summary>
+        [Test]
+        public void Interface_LazyLoadDisabledWithIgnoreAttrubute_RetursnModel()
+        {
+           
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    {fieldName, ""}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var fluentLoader = new SitecoreFluentConfigurationLoader();
+                var stub = fluentLoader.Add<IBase>();
+                stub.Ignore(x => x.Id);
+                context.Load(fluentLoader);
+                
+                var db = database.Database;
+                var scContext = new SitecoreService(db, context);
+
+                //Act
+                var instance = scContext.GetItem<IBase>("/sitecore", isLazy:false);
+
+                //Assert
+                Assert.IsNotNull(stub);
+            }
+        }
+
         [Test]
         public void GenericModelTest_CanRetrieveAGenericModel_WithGenericChildren()
         {

@@ -67,7 +67,7 @@ namespace Glass.Mapper.Sc.DataMappers
         /// <exception cref="System.NotImplementedException"></exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>
