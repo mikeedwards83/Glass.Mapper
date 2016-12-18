@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -29,19 +28,22 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
     /// <summary>
     /// TemplateInferredTypeTask
     /// </summary>
-    public class TemplateInferredTypeTask : IConfigurationResolverTask
+    public class TemplateInferredTypeTask : AbstractConfigurationResolverTask
     {
-
         static ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>
             _inferredCache = new ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>();
 
-        #region IPipelineTask<ConfigurationResolverArgs> Members
+
+        public TemplateInferredTypeTask()
+        {
+            Name = "TemplateInferredTypeTask";
+        }
 
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ConfigurationResolverArgs args)
+        public override void Execute(ConfigurationResolverArgs args)
         {
             if (args.Result == null && args.AbstractTypeCreationContext.InferType)
             {
@@ -71,9 +73,10 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     }
                 }
             }
+
+            base.Execute(args);
         }
 
-        #endregion
     }
 }
 

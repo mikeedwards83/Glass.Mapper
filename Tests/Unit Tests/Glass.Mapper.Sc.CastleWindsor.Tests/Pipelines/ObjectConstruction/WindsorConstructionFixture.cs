@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction;
 using NSubstitute;
@@ -50,7 +51,12 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
             var service = Substitute.For<AbstractService>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext,  typeConfig, service);
+            var args = new ObjectConstructionArgs(
+                context, 
+                typeCreationContext,  
+                typeConfig, 
+                service,
+                new ModelCounter());
 
             Assert.IsNull(args.Result);
 
@@ -79,7 +85,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeConfig = Substitute.For<AbstractTypeConfiguration>();
             typeConfig.Type = typeof(StubClass);
 
-            var args = new ObjectConstructionArgs(context, null,  typeConfig , null);
+            var args = new ObjectConstructionArgs(context, null,  typeConfig , null, new ModelCounter());
             var result = new StubClass2();
             args.Result = result;
 
@@ -113,7 +119,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
 
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , null, new ModelCounter());
 
 
 
@@ -152,7 +158,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             var typeCreationContext = Substitute.For<AbstractTypeCreationContext>();
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , service);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , service, new ModelCounter());
 
             Assert.IsNull(args.Result);
 
@@ -195,7 +201,7 @@ namespace Glass.Mapper.Sc.CastleWindsor.Tests.Pipelines.ObjectConstruction
             typeCreationContext.ConstructorParameters = new object[]{param1, param2, param3, param4};
 
 
-            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , null);
+            var args = new ObjectConstructionArgs(context, typeCreationContext, typeConfig , null, new ModelCounter());
 
             Assert.IsNull(args.Result);
 

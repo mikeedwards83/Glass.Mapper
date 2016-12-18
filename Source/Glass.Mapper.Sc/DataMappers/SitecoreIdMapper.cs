@@ -20,8 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -30,6 +32,7 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreIdMapper : AbstractDataMapper
     {
+        private Func<Item, object> _getValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreIdMapper"/> class.
@@ -60,25 +63,26 @@ namespace Glass.Mapper.Sc.DataMappers
         ///                                                         scConfig.PropertyInfo.Name)</exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-
             SitecoreDataMappingContext context = (SitecoreDataMappingContext)mappingContext;
             var item = context.Item;
+            return _getValue(item);
+        }
 
-            var scConfig = Configuration;
-
-            if (scConfig.PropertyInfo.PropertyType == typeof(Guid))
-                return item.ID.Guid;
-            else if (scConfig.PropertyInfo.PropertyType == typeof(ID))
-                return item.ID;
+        public override void Setup(DataMapperResolverArgs args)
+        {
+            if (args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(Guid))
+                _getValue = (item) => item.ID.Guid;
+            else if (args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(ID))
+                _getValue = (item) => item.ID;
             else
             {
                 throw new NotSupportedException("The type {0} on {0}.{1} is not supported by SitecoreIdMapper".Formatted
-                                                    (scConfig.PropertyInfo.ReflectedType.FullName,
-                                                        scConfig.PropertyInfo.Name));
+                                                    (args.PropertyConfiguration.PropertyInfo.ReflectedType.FullName,
+                                                        args.PropertyConfiguration.PropertyInfo.Name));
             }
 
+            base.Setup(args);
         }
-
 
 
         /// <summary>

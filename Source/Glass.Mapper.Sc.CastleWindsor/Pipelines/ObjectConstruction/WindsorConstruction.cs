@@ -28,10 +28,11 @@ namespace Glass.Mapper.Sc.CastleWindsor.Pipelines.ObjectConstruction
     /// <summary>
     /// WindsorConstruction
     /// </summary>
-    public class WindsorConstruction : IObjectConstructionTask
+    public class WindsorConstruction : AbstractObjectConstructionTask
     {
         public static volatile object _key = new object();
-        
+
+        public string Name { get { return "WindsorConstruction"; } }
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateConcreteTask"/> class.

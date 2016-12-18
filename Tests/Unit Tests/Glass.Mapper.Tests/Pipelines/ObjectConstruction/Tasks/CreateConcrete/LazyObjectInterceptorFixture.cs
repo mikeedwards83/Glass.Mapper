@@ -19,6 +19,7 @@
 
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NSubstitute;
@@ -43,7 +44,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 null,
                 typeContext, 
                 config,
-                service
+                service, new ModelCounter()
                 );
 
             var invocation = Substitute.For<IInvocation>();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
@@ -39,7 +40,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
@@ -52,7 +53,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             //Assert
             Assert.IsNotNull(args.Result);
-            Assert.IsTrue(args.IsAborted);
             Assert.IsTrue(args.Result is IStubInterface);
             Assert.IsFalse(args.Result.GetType() == typeof(IStubInterface));
         }

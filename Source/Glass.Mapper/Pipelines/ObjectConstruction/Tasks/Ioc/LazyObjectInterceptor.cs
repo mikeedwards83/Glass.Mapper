@@ -34,9 +34,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 
 
      
-        public LazyObjectInterceptor(Action<object> mappingAction)
+        public LazyObjectInterceptor(Action<object> mappingAction, ObjectConstructionArgs args)
         {
-            MappingAction = mappingAction;
+            MappingAction = (obj) =>
+            {
+                args.Counters.ProxyModelsCreated++;
+                mappingAction(obj);
+            };
         }
 
         #region IInterceptor Members

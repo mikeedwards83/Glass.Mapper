@@ -25,6 +25,7 @@ namespace Glass.Mapper.Sc.Profilers
     /// </summary>
     public class SitecoreProfiler : IPerformanceProfiler
     {
+
         /// <summary>
         /// Starts the specified key.
         /// </summary>
@@ -41,6 +42,15 @@ namespace Glass.Mapper.Sc.Profilers
         public void End(string key)
         {
             Sitecore.Diagnostics.Profiler.EndOperation(key);
+        }
+
+
+        public void IndentIncrease()
+        {
+        }
+
+        public void IndentDecrease()
+        {
         }
     }
 }

@@ -16,9 +16,11 @@
 */
 //-CRE-
 
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Glass.Mapper.Caching;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Maps;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -55,12 +57,16 @@ namespace Glass.Mapper.Sc.CastleWindsor
         {
             Container = container;
             QueryParameterFactory = new WindsorConfigFactory<ISitecoreQueryParameter>(Container);
-            DataMapperResolverFactory = new WindsorConfigFactory<IDataMapperResolverTask>(Container);
+            DataMapperResolverFactory = new WindsorConfigFactory<AbstractDataMapperResolverTask>(Container);
             DataMapperFactory = new WindsorConfigFactory<AbstractDataMapper>(Container);
-            ConfigurationResolverFactory = new WindsorConfigFactory<IConfigurationResolverTask>(Container);
-            ObjectConstructionFactory = new WindsorConfigFactory<IObjectConstructionTask>(Container);
-            ObjectSavingFactory = new WindsorConfigFactory<IObjectSavingTask>(Container);
+            ConfigurationResolverFactory = new WindsorConfigFactory<AbstractConfigurationResolverTask>(Container);
+            ObjectConstructionFactory = new WindsorConfigFactory<AbstractObjectConstructionTask>(Container);
+            ObjectSavingFactory = new WindsorConfigFactory<AbstractObjectSavingTask>(Container);
             ConfigurationMapFactory = new WindsorConfigFactory<IGlassMap>(Container);
+
+            Container.Register(
+                Component.For<ModelCounter>().ImplementedBy<ModelCounter>().LifestylePerWebRequest()
+                );
         }
 
         /// <summary>
@@ -77,6 +83,11 @@ namespace Glass.Mapper.Sc.CastleWindsor
         public override ILog GetLog()
         {
             return Container.Resolve<ILog>();
+        }
+
+        public override ModelCounter GetModelCounter()
+        {
+            return Container.Resolve<ModelCounter>();
         }
 
         public override ICacheManager GetCacheManager()

@@ -55,6 +55,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface
 
 		private IDictionary<string, object> LoadValues()
 		{
+		    _args.Counters.ModelsMapped++;
+
 			var values = new Dictionary<string, object>();
 			var mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
 

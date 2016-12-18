@@ -42,6 +42,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,9 +99,13 @@
   <ItemGroup>
     <Compile Include="ModelCache\IModelCacheManager.cs" />
     <Compile Include="ModelCache\ModelCacheManager.cs" />
+    <Compile Include="Pipelines\Response\BuildManagerViewTypeResolver.cs" />
+    <Compile Include="Pipelines\Response\ChainedViewTypeResolverr.cs" />
     <Compile Include="Pipelines\Response\GetModel.cs" />
     <Compile Include="Pipelines\Response\GetModelFromView.cs" />
     <Compile Include="Pipelines\Response\GetRenderer\GetViewRenderWithItemValidation.cs" />
+    <Compile Include="Pipelines\Response\IViewTypeResolver.cs" />
+    <Compile Include="Pipelines\Response\RegexViewTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Mvc\GlassController.cs" />
     <Compile Include="Web\Mvc\GlassHtmlMvc.cs" />

@@ -17,8 +17,10 @@
 //-CRE-
 
 
+using System;
 using System.Collections.Generic;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction
 {
@@ -59,22 +61,25 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// <param name="configuration">The configuration.</param>
         /// <param name="service">The service.</param>
         public ObjectConstructionArgs(
-            Context context, 
-            AbstractTypeCreationContext  abstractTypeCreationContext,
+            Context context,
+            AbstractTypeCreationContext abstractTypeCreationContext,
             AbstractTypeConfiguration configuration,
-            IAbstractService service)
+            IAbstractService service,
+            ModelCounter counters)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
             Configuration = configuration;
             Service = service;
+            Counters = counters;
         }
 
-       
+       public ModelCounter Counters { get; private set; }
 
-     
 
-      
+         
+
+
 
     }
 }

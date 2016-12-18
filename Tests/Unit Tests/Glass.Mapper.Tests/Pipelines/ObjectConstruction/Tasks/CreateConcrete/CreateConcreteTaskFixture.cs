@@ -18,14 +18,12 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
 using NUnit.Framework;
 using NSubstitute;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 
 namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
@@ -57,13 +55,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNull(args.Result);
 
         }
@@ -86,13 +83,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.Type = type;
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is StubClass);
             Assert.IsFalse(args.Result.GetType() == typeof(StubClass));
@@ -115,13 +111,12 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is StubClass);
             Assert.IsTrue(args.Result.GetType() == typeof(StubClass));
@@ -144,14 +139,13 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
             args.Result = string.Empty;
 
             //Act
             _task.Execute(args);
 
             //Assert
-            Assert.IsFalse(args.IsAborted);
             Assert.IsNotNull(args.Result);
             Assert.IsTrue(args.Result is string);
         }

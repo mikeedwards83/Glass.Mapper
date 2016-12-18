@@ -21,6 +21,7 @@ namespace Glass.Mapper.Sc
         /// <returns>UrlOptions.</returns>
         public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
         {
+            //We can test this because it throws an error due to config being missing
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
 
             return CreateUrlOptions(urlOptions, defaultUrl);

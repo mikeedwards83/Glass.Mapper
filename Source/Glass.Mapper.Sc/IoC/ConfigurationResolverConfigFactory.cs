@@ -8,7 +8,7 @@ using Glass.Mapper.Sc.Pipelines.ConfigurationResolver;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class ConfigurationResolverConfigFactory : AbstractConfigFactory<IConfigurationResolverTask>
+    public class ConfigurationResolverConfigFactory : AbstractConfigFactory<AbstractConfigurationResolverTask>
     {
         public ConfigurationResolverConfigFactory()
         {

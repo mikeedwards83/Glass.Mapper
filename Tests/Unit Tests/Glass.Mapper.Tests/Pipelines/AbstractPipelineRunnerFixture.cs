@@ -42,7 +42,7 @@ namespace Glass.Mapper.Tests.Pipelines
         {
             //Assign
             var args = new StubAbstractPipelineArgs(null);
-            var runner = new StubAbstractPipelineRunner(new List<IPipelineTask<StubAbstractPipelineArgs>>());
+            var runner = new StubAbstractPipelineRunner(new List<AbstractPipelineTask<StubAbstractPipelineArgs>>());
             
             //Act
             var result = runner.Run(args);
@@ -92,26 +92,6 @@ namespace Glass.Mapper.Tests.Pipelines
             Assert.IsTrue(result.CalledTasks.Any(x => x == task2));
         }
 
-        [Test]
-        public void Run_PipelineAborted_RunsOnlyOneTask()
-        {
-            //Assign
-            var task1 = new StubPipelineTask();
-            task1.TaskToPerform = (tArgs) => tArgs.AbortPipeline();
-            
-            var task2 = new StubPipelineTask();
-
-            var runner = new StubAbstractPipelineRunner(new[] { task1, task2 });
-
-            var args = new StubAbstractPipelineArgs(null);
-
-            //Act
-            var result = runner.Run(args);
-
-            //Assert
-            Assert.AreEqual(1, result.CalledTasks.Count);
-            Assert.IsTrue(result.CalledTasks.Any(x => x == task1));
-        }
 
         #endregion
 
@@ -127,24 +107,25 @@ namespace Glass.Mapper.Tests.Pipelines
         }
 
 
-        public class StubAbstractPipelineRunner : AbstractPipelineRunner<StubAbstractPipelineArgs, IPipelineTask<StubAbstractPipelineArgs>>
+        public class StubAbstractPipelineRunner : AbstractPipelineRunner<StubAbstractPipelineArgs, AbstractPipelineTask<StubAbstractPipelineArgs>>
         {
-            public StubAbstractPipelineRunner(IEnumerable<IPipelineTask<StubAbstractPipelineArgs>> tasks  ):base(tasks)
+            public StubAbstractPipelineRunner(IEnumerable<AbstractPipelineTask<StubAbstractPipelineArgs>> tasks  ):base(tasks)
             {
             }
         }
 
-        public class StubPipelineTask : IPipelineTask<StubAbstractPipelineArgs>
+        public class StubPipelineTask : AbstractPipelineTask<StubAbstractPipelineArgs>
         {
-            public Action<StubAbstractPipelineArgs> TaskToPerform { get; set; } 
+            public Action<StubAbstractPipelineArgs> TaskToPerform { get; set; }
 
-            public void Execute(StubAbstractPipelineArgs args)
+            public override void Execute(StubAbstractPipelineArgs args)
             {
                 if (TaskToPerform != null) 
                     TaskToPerform(args);
 
                 args.CalledTasks.Add(this);
                 HasExecuted = true;
+                base.Execute(args);
             }
 
             public bool HasExecuted { get; set; }

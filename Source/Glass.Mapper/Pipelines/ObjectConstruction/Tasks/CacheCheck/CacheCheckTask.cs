@@ -2,7 +2,7 @@
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
-    public class CacheCheckTask : IObjectConstructionTask
+    public class CacheCheckTask : AbstractObjectConstructionTask
     {
         protected ICacheManager CacheManager
         {
@@ -18,9 +18,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
         {
             CacheManager = cacheManager;
             CacheKeyGenerator = cacheKeyGenerator;
+            Name = "CacheCheckTask";
         }
 
-        public virtual void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null 
                 && args.Configuration.Cachable 
@@ -34,9 +35,35 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;
-                    args.AbortPipeline();
+                    args.Counters.CachedModels++;
+                }
+
+                DisableLazyLoading disableLazyLoading = null;
+
+                if (args.Service.GlassContext.Config.EnableLazyLoadingForCachableModels == false)
+                {
+                    disableLazyLoading = new DisableLazyLoading();
+                }
+
+                try
+                {
+                    base.Execute(args);
+                    CacheManager.AddOrUpdate(key, args.Result);
+                }
+                finally
+                {
+                    if (disableLazyLoading != null)
+                    {
+                        disableLazyLoading.Dispose();
+                    }
                 }
             }
+            else 
+            {
+                base.Execute(args);
+            }
+
+
         }
     }
 }

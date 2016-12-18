@@ -122,6 +122,8 @@
     <Compile Include="IoC\AbstractConfigFactoryFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTaskFixture.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTaskFixture.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\DataMapperAttributeResolverTaskFixture.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\DataMapperStandardResolverTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTaskFixture.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptorFixture.cs" />

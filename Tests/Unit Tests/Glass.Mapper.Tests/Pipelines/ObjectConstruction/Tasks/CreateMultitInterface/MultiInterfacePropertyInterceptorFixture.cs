@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateMultiInterface;
 using NSubstitute;
@@ -51,7 +52,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             mapper1.Value = expected1;
             mapper2.Value = expected2;
 
-            var args = new ObjectConstructionArgs(null, null, config1, service);
+            var args = new ObjectConstructionArgs(null, null, config1, service, new ModelCounter());
             args.Parameters = new Dictionary<string, object>();
             args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] {config2};
             var interceptor = new MultiInterfacePropertyInterceptor(args);
@@ -104,7 +105,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateMulitInter
             property1.PropertyInfo = info1;
             property2.PropertyInfo = info2;
 
-            var args = new ObjectConstructionArgs(null, null,  config1 , service);
+            var args = new ObjectConstructionArgs(null, null,  config1 , service, new ModelCounter());
             args.Parameters = new Dictionary<string, object>();
             args.Parameters[CreateMultiInferaceTask.MultiInterfaceConfigsKey] = new[] { config2 };
             var interceptor = new MultiInterfacePropertyInterceptor(args);

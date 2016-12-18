@@ -38,6 +38,7 @@ namespace Glass.Mapper.Sc.DataMappers
     {
         private readonly IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
         private readonly IUrlOptionsResolver _urlOptionsResolver;
+        private Func<Item, object> _getValue = item => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
@@ -134,73 +135,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             var item = context.Item;
-            var scConfig = Configuration as SitecoreInfoConfiguration;
-
-            if (scConfig == null)
-            {
-                throw new NullReferenceException("Configuration has not been set.");
-            }
-            //TODO: move this to the config?
-            switch (scConfig.Type)
-            {
-
-
-
-                case SitecoreInfoType.ContentPath:
-                    return item.Paths.ContentPath;
-                case SitecoreInfoType.DisplayName:
-                    return item[Global.Fields.DisplayName];
-                case SitecoreInfoType.FullPath:
-                    return item.Paths.FullPath;
-                case SitecoreInfoType.Name:
-                    return item.Name;
-                case SitecoreInfoType.Key:
-                    return item.Key;
-                case SitecoreInfoType.MediaUrl:
-                    var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
-                    var media = new MediaItem(item);
-                    return MediaManager.GetMediaUrl(media, mediaUrlOptions);
-                case SitecoreInfoType.Path:
-                    return item.Paths.Path;
-                case SitecoreInfoType.TemplateId:
-                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (ID))
-                        return item.TemplateID;
-                    return item.TemplateID.Guid;
-                case SitecoreInfoType.TemplateName:
-                    return item.TemplateName;
-                case SitecoreInfoType.Url:
-                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
-                    urlOptions.Language = null;
-                    return LinkManager.GetItemUrl(item, urlOptions);
-                case SitecoreInfoType.Version:
-                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (string))
-                    {
-                        return item.Version.Number.ToString();
-                    }
-                    return item.Version.Number;
-                case SitecoreInfoType.Language:
-                    if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof (string))
-                    {
-                        return item.Language.Name;
-                    }
-                    return item.Language;
-                case SitecoreInfoType.BaseTemplateIds:
-                    Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
-                    if (scConfig.PropertyInfo != null &&
-                        scConfig.PropertyInfo.PropertyType == typeof (IEnumerable<ID>))
-                        return template.GetBaseTemplates().Select(x => x.ID);
-                    return template.GetBaseTemplates().Select(x => x.ID.Guid);
-                case SitecoreInfoType.ItemUri:
-                    return new ItemUri(item.ID, item.Language, item.Version, item.Database);
-#if (SC81|| SC82)
-                case SitecoreInfoType.OriginalLanguage:
-                    return item.OriginalLanguage;
-                case SitecoreInfoType.OriginatorId:
-                    return item.OriginatorId;
-#endif
-                default:
-                    throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
-            }
+            return _getValue(item);
         }
 
         /// <summary>
@@ -217,6 +152,108 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             ReadOnly = scConfig.Type != SitecoreInfoType.DisplayName && scConfig.Type != SitecoreInfoType.Name;
+
+
+            switch (scConfig.Type)
+            {
+                case SitecoreInfoType.ContentPath:
+                    _getValue = item => item.Paths.ContentPath;
+                    break;
+                case SitecoreInfoType.DisplayName:
+                    _getValue = item => item[Global.Fields.DisplayName];
+                    break;
+                case SitecoreInfoType.FullPath:
+                    _getValue = item => item.Paths.FullPath;
+                    break;
+                case SitecoreInfoType.Name:
+                    _getValue = item => item.Name;
+                    break;
+                case SitecoreInfoType.Key:
+                    _getValue = item => item.Key;
+                    break;
+                case SitecoreInfoType.MediaUrl:
+                    _getValue = item =>
+                    {
+                        var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
+                        var media = new MediaItem(item);
+                        return MediaManager.GetMediaUrl(media, mediaUrlOptions);
+                    };
+                    break;
+                case SitecoreInfoType.Path:
+                    _getValue = item => item.Paths.Path;
+                    break;
+                case SitecoreInfoType.TemplateId:
+                    _getValue = item =>
+                    {
+                        if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(ID))
+                            return item.TemplateID;
+                        return item.TemplateID.Guid;
+                    };
+                    break;
+                case SitecoreInfoType.TemplateName:
+                    _getValue = item => item.TemplateName;
+                    break;
+                case SitecoreInfoType.Url:
+                    _getValue = item =>
+                    {
+                        var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
+                        if (scConfig.UrlOptions == SitecoreInfoUrlOptions.UseItemLanguage)
+                        {
+                            urlOptions.Language = item.Language;
+                        }
+                        else
+                        {
+                            urlOptions.Language = null;
+                        }
+                        return LinkManager.GetItemUrl(item, urlOptions);
+                    };
+                    break;
+                case SitecoreInfoType.Version:
+                    _getValue = item =>
+                    {
+                        if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(string))
+                        {
+                            return item.Version.Number.ToString();
+                        }
+                        return item.Version.Number;
+                    };
+                    break;
+                case SitecoreInfoType.Language:
+                    _getValue = item =>
+                    {
+                        if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(string))
+                        {
+                            return item.Language.Name;
+                        }
+                        return item.Language;
+                    };
+                    break;
+                case SitecoreInfoType.BaseTemplateIds:
+                    _getValue = item =>
+                    {
+                        Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
+                        if (scConfig.PropertyInfo != null &&
+                            scConfig.PropertyInfo.PropertyType == typeof(IEnumerable<ID>))
+                            return template.GetBaseTemplates().Select(x => x.ID);
+                        return template.GetBaseTemplates().Select(x => x.ID.Guid);
+                    };
+                    break;
+                case SitecoreInfoType.ItemUri:
+                    _getValue = item => new ItemUri(item.ID, item.Language, item.Version, item.Database);
+                    break;
+#if (SC81|| SC82)
+                case SitecoreInfoType.OriginalLanguage:
+                    _getValue = item => item.OriginalLanguage;
+                    break;
+                case SitecoreInfoType.OriginatorId:
+                    _getValue = item => item.OriginatorId;
+                    break;
+#endif
+                default:
+                    throw new MapperException("SitecoreInfoType {0} not supported".Formatted(scConfig.Type));
+            }
+
+
             base.Setup(args);
         }
 

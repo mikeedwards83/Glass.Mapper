@@ -23,13 +23,13 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
     /// <summary>
     /// Class ObjectConstruction
     /// </summary>
-    public class ObjectConstruction : AbstractPipelineRunner<ObjectConstructionArgs, IObjectConstructionTask>
+    public class ObjectConstruction : AbstractPipelineRunner<ObjectConstructionArgs, AbstractObjectConstructionTask>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectConstruction"/> class.
         /// </summary>
         /// <param name="tasks">The tasks.</param>
-        public ObjectConstruction(IEnumerable<IObjectConstructionTask> tasks ):base(tasks)
+        public ObjectConstruction(IEnumerable<AbstractObjectConstructionTask> tasks ):base(tasks)
         {
         }
 

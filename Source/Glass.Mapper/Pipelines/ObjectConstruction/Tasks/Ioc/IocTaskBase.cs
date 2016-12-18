@@ -8,7 +8,7 @@ using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 {
-    public abstract class IocTaskBase : Glass.Mapper.Pipelines.ObjectConstruction.IObjectConstructionTask
+    public abstract class IocTaskBase : Glass.Mapper.Pipelines.ObjectConstruction.AbstractObjectConstructionTask
     {
         private static object _lock = new object();
         private static volatile ProxyGenerator _generator;
@@ -24,7 +24,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
             _options = new ProxyGenerationOptions(hook);
         }
 
-        public void Execute(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs args)
+        protected IocTaskBase()
+        {
+            Name = "IocTaskBase";
+        }
+
+        public override void Execute(Glass.Mapper.Pipelines.ObjectConstruction.ObjectConstructionArgs args)
         {
             //check that no other task has created an object
             //also check that this is a dynamic object
@@ -61,8 +66,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
                         var resolved = GetConstructorParameters(configuration);
 
                         var proxy = _generator.CreateClassProxy(configuration.Type, resolved,
-                                                                new LazyObjectInterceptor(mappingAction));
+                                                                new LazyObjectInterceptor(mappingAction, args));
                         args.Result = proxy;
+                        args.Counters.ProxyModelsCreated++;
                     }
                     else
                     {
@@ -73,9 +79,14 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 
                         //set the new object as the returned result
                         args.Result = obj;
+                        args.Counters.ConcreteModelCreated++;
+                        args.Counters.ModelsMapped++;
+
                     }
                 }
             }
+
+            base.Execute(args);
         }
 
         protected abstract bool IsRegistered(Type type);
