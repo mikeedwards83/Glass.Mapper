@@ -27,7 +27,7 @@ namespace Glass.Mapper.Configuration.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class DataMapperAttribute : Attribute
     {
-        public Type DataMapperType { get; }
+        public Type DataMapperType { get; set; }
 
         public DataMapperAttribute(Type dataMapperType)
         {
