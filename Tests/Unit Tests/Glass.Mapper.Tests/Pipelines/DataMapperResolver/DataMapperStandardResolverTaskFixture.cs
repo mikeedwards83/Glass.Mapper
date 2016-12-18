@@ -167,28 +167,6 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
             public string NoAttributeProperty { get; set; }
         }
 
-        public class MissingConstructorStubMapper : AbstractDataMapper
-        {
-            public MissingConstructorStubMapper(object obj)
-            {
-            }
-
-            public override void MapToCms(AbstractDataMappingContext mappingContext)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override object MapToProperty(AbstractDataMappingContext mappingContext)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public class StubMapper : AbstractDataMapper
         {
             public AbstractDataMappingContext MappingContext { get; set; }

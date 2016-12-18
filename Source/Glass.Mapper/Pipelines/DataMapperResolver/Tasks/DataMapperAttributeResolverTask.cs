@@ -10,6 +10,9 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
 {
     public class DataMapperAttributeResolverTask : AbstractDataMapperResolverTask
     {
+
+        public const string ErrorNoConstructor = "Specified data mapper {0} does not have a default constructor. {1}";
+
         public DataMapperAttributeResolverTask()
         {
             Name = "DataMapperAttributeResolverTask";
@@ -49,8 +52,8 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
                     var constructor = mapperType.GetConstructor(Type.EmptyTypes);
                     if (constructor == null)
                     {
-                        throw new MapperException(
-                            "Specified data mapper {0} does not have a default constructor. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
+                        throw new NotSupportedException(
+                            ErrorNoConstructor.Formatted(mapperType.FullName, args.PropertyConfiguration));
                     }
 
                     mapper = (AbstractDataMapper)Activator.CreateInstance(mapperType);
