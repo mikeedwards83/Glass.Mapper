@@ -197,7 +197,14 @@ namespace Glass.Mapper.Sc.DataMappers
                     _getValue = item =>
                     {
                         var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
-                        urlOptions.Language = null;
+                        if (scConfig.UrlOptions == SitecoreInfoUrlOptions.UseItemLanguage)
+                        {
+                            urlOptions.Language = item.Language;
+                        }
+                        else
+                        {
+                            urlOptions.Language = null;
+                        }
                         return LinkManager.GetItemUrl(item, urlOptions);
                     };
                     break;

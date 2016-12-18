@@ -97,6 +97,99 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             }
         }
 
+
+        [Test]
+        public void MapToProperty_GetUrlInContextLanguage_ReturnsUrlWithEN()
+        {
+            //Assign
+            var type = SitecoreInfoType.Url;
+            string expected = "/en/sitecore/content/TestItem.aspx";
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            Sitecore.Context.Site = null;
+            var templateId = ID.NewID;
+            var itemId = new ID("031501A9C7F24596BD659276DA3A627A");
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("TestItem", itemId)
+                {
+                    Fields =
+                    {
+                        new DbField("title")
+                        {
+                            {"fr-fr", 1, "test"}
+                        }
+                    },
+                }
+            })
+            {
+
+                var item = database.GetItem("/sitecore/content/TestItem", "fr-fr");
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
+        }
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/249
+        /// </summary>
+        [Test]
+        public void MapToProperty_GetUrlInItemLanguage_ReturnsUrlWithFr()
+        {
+            //Assign
+            var type = SitecoreInfoType.Url;
+            string expected = "/fr-FR/sitecore/content/TestItem.aspx";
+
+            var mapper = new SitecoreInfoMapper();
+            var config = new SitecoreInfoConfiguration();
+            config.Type = type;
+            config.UrlOptions = SitecoreInfoUrlOptions.UseItemLanguage;
+            mapper.Setup(new DataMapperResolverArgs(null, config));
+
+            Sitecore.Context.Site = null;
+            var templateId = ID.NewID;
+            var itemId = new ID("031501A9C7F24596BD659276DA3A627A");
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("TestItem", itemId)
+                {
+                    Fields =
+                    {
+                        new DbField("title")
+                        {
+                            {"fr-fr", 1, "test"}
+                        }
+                    },
+                }
+            })
+            {
+
+                var item = database.GetItem("/sitecore/content/TestItem", "fr-fr");
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
+            }
+        }
+
+
+
         [Test]
         [TestCase(SitecoreInfoMediaUrlOptions.Default)]
         [TestCase(SitecoreInfoMediaUrlOptions.RemoveExtension)]

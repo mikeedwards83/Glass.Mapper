@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.FakeDb
         /// https://github.com/mikeedwards83/Glass.Mapper/issues/261
         /// </summary>
         [Test]
-        public void Interface_LazyLoadDisabledWithIgnoreAttrubute_RetursnModel()
+        public void Interface_LazyLoadDisabledWithIgnoreAttrubute_ReturnsModel()
         {
            
             //Assign
