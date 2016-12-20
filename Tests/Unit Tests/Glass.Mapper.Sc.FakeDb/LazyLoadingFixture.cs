@@ -264,7 +264,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 {
                     ex = ex.InnerException;
                 }
-                Assert.AreEqual(Constants.Errors.ErrorLazyLoop, ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith(Constants.Errors.ErrorLazyLoop.Replace("{0}","")));
                 //Assert
 
             }
