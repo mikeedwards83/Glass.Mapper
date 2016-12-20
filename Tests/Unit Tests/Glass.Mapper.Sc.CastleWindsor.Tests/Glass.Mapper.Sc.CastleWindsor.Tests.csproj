@@ -70,10 +70,6 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.CastleWindsor\Glass.Mapper.Sc.CastleWindsor.csproj">
-      <Project>{54a63d42-1614-4b8f-9df5-8f1d2998db9d}</Project>
-      <Name>Glass.Mapper.Sc.CastleWindsor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
       <Project>{0B8E0B06-46B8-4794-862F-73B391F8B1A1}</Project>
       <Name>Glass.Mapper.Sc</Name>

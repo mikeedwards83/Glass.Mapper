@@ -12,6 +12,8 @@ namespace Glass.Mapper.Sc.Mvc.Tests
     {
         [Test]
         [TestCase("@inherits Glass.Mapper.Sc.Razor.Web.Ui.TypedTemplate<Glass.Website.Kernel.View.Common.Menu>", "Glass.Website.Kernel.View.Common.Menu")]
+        [TestCase("@inherits Glass.Mapper.Sc.Razor.Web.Ui.TypedTemplate<Glass.Website.Kernel.View.Common.Menu>\r", "Glass.Website.Kernel.View.Common.Menu")]
+        [TestCase("@inherits Glass.Mapper.Sc.Razor.Web.Ui.TypedTemplate<Glass.Website.Kernel.View.Common.Menu>\r\n", "Glass.Website.Kernel.View.Common.Menu")]
         public void InheritsRegex_ReturnsType(string contents, string expected)
         {
             //Act
@@ -23,6 +25,9 @@ namespace Glass.Mapper.Sc.Mvc.Tests
 
         [Test]
         [TestCase("@model Glass.Website.Kernel.View.Common.Menu", "Glass.Website.Kernel.View.Common.Menu")]
+        [TestCase("@model Glass.Website.Kernel.View.Common.Menu\r", "Glass.Website.Kernel.View.Common.Menu")]
+        [TestCase("@model Glass.Website.Kernel.View.Common.Menu\r\n", "Glass.Website.Kernel.View.Common.Menu")]
+        [TestCase("@model Glass.Website.Kernel.View.Common.Menu ", "Glass.Website.Kernel.View.Common.Menu")]
         public void ModelRegex_ReturnsType(string contents, string expected)
         {
             //Act
@@ -32,7 +37,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             Assert.AreEqual(expected, result.Groups["type"].Value);
         }
         [Test]
-        public void InheritsRegex_MultiLine_ReturnsType()
+        public void InheritsRegex_MultiLine1_ReturnsType()
         {
             //Arrange
             var contents = "@using  Glass.Mapper.Sc.Mvc.Tests\n\r" +
@@ -45,10 +50,21 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             //Assert
             Assert.AreEqual("RegexTypeFinderFixture", result.Groups["type"].Value);
         }
+        [Test]
+        public void InheritsRegex_MultiLine2_ReturnsType()
+        {
+            //Arrange
+            var contents = "@using  Glass.Mapper.Sc.Mvc.Tests  " +
+                    "@using Glass.Website.Kernel.Data.sitecore.templates.GlassWebsite.Components " +
+                    "@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<RegexTypeFinderFixture>\n\r";
 
+            //Act
+            var result = RegexViewTypeResolver.InheritsRegex.Match(contents);
 
+            //Assert
+            Assert.AreEqual("RegexTypeFinderFixture", result.Groups["type"].Value);
+        }
 
-   
         [Test]
         public void GetType_ReturnsType()
         {
