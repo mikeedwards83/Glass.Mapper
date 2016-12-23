@@ -34,28 +34,34 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
         }
 
         [Test]
-        public void Execute_EnforeTemplateNo_PipelineNotAborted()
+        public void Execute_EnforeTemplateNo_NextCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
             var config = new SitecoreTypeConfiguration();
             config.EnforceTemplate = SitecoreEnforceTemplate.No;
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
 
             var args = new ObjectConstructionArgs(null, null, config, null, new ModelCounter());
-
+           
             //Act
             task.Execute(args);
 
             //Assert
             Assert.IsNull(args.Result);
-
+            Assert.IsTrue(nextCalled);
         }
 
         [Test]
-        public void Execute_EnforeTemplateOnlyDoesNotInheritTemplate_AbortsPipeline()
+        public void Execute_EnforeTemplateOnlyDoesNotInheritTemplate_NextNotCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
+
+
             using (Db database = new Db
             {
                 new DbTemplate(new ID(TemplateInferredTypeTaskFixture.StubInferred.TemplateId)),
@@ -79,15 +85,18 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
+                Assert.IsFalse(nextCalled);
             }
         }
 
 
         [Test]
-        public void Execute_EnforeTemplateOnlyInheritsTemplate_PipelineContinues()
+        public void Execute_EnforeTemplateOnlyInheritsTemplate_NextCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
 
 
             using (Db database = new Db
@@ -114,16 +123,20 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
+                Assert.IsTrue(nextCalled);
             }
         }
 
 
 
         [Test]
-        public void Execute_EnforeTemplateAndBaseDoesNotInheritTemplate_AbortsPipeline()
+        public void Execute_EnforeTemplateAndBaseDoesNotInheritTemplate_NextNotCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
+
 
 
             using (Db database = new Db
@@ -154,16 +167,18 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-
+                Assert.IsFalse(nextCalled);
             }
         }
 
 
         [Test]
-        public void Execute_EnforeTemplateAndBaseInheritsTemplate_PipelineContinues()
+        public void Execute_EnforeTemplateAndBaseInheritsTemplate_NextCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
 
 
             using (Db database = new Db
@@ -190,14 +205,17 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
+                Assert.IsTrue(nextCalled);
             }
         }
 
         [Test]
-        public void Execute_EnforeTemplateAndBaseInheritsTemplateFromBase_PipelineContinues()
+        public void Execute_EnforeTemplateAndBaseInheritsTemplateFromBase_NextCalled()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
 
 
             using (Db database = new Db
@@ -227,6 +245,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                     //Assert
                     Assert.IsNull(args.Result);
+                    Assert.IsTrue(nextCalled);
                 }
             }
         }
@@ -236,6 +255,8 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
+            bool nextCalled = false;
+            task.SetNext(x => nextCalled = true);
 
 
             ID baseTemplateId1 = ID.NewID;
@@ -283,6 +304,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                     //Assert
                     Assert.IsNull(args.Result);
+                    Assert.IsTrue(nextCalled);
                 }
             }
         }
