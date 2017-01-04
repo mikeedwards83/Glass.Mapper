@@ -729,6 +729,44 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
+        [Test]
+        public void GetItem_ClassHasItemField_ReturnsItem()
+        {
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            using (Db database = new Db
+            {
+               
+                new Sitecore.FakeDb.DbItem("Parent") {
+                    new Sitecore.FakeDb.DbItem("Target", targetId, templateId)
+                    {
+                        
+                    },
+                    new DbField("Field") {Value = targetId.ToString()}
+                }
+
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+
+
+                var path = "/sitecore/content/Parent";
+
+                var db = database.Database;
+                var service = new SitecoreService(db);
+
+                var item = db.GetItem(path);
+
+                //Act
+                var result = service.GetItem<ItemWithItemField>(path);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(targetId, result.Field.ID);
+            }
+        }
+
         private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
         {
             return sitecoreContext.GlassHtml;
@@ -754,6 +792,12 @@ namespace Glass.Mapper.Sc.FakeDb
             public Item Parent { get; set; }
             public IEnumerable<Item> Children { get; set; }
         }
+
+        public class ItemWithItemField
+        {
+            public Item Field { get; set; }
+        }
+
 
         [SitecoreType]
         public interface IBase

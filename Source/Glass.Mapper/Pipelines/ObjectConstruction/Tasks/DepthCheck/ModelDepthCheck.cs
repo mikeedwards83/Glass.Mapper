@@ -21,7 +21,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.DepthCheck
 
         public class DepthCheck : IDisposable
         {
-            private readonly Type _type;
             const string Key = "1C983BD1-4642-48EA-BB41-C3CBB1B0376D";
 
             public DepthCheck(Type type)
@@ -31,7 +30,6 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.DepthCheck
             }
             public DepthCheck(int maxDepth, Type type)
             {
-                _type = type;
                 Stack<string> stack = new Stack<string>();
                 if (ThreadData.Contains(Key))
                 {

@@ -82,7 +82,7 @@ namespace Glass.Mapper.Sc
             StringBuilder sb = new StringBuilder();
             foreach (var key in attributes.AllKeys)
             {
-                sb.AppendFormat("{0}='{1}' ".Formatted(key, attributes[key] ?? ""));
+                sb.AppendFormat("{0}='{1}' ",key, attributes[key] ?? "");
             }
 
             return sb.ToString();

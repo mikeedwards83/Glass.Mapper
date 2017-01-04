@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                         _cache.TryAdd(key, result);
                     }
 
-                    if (!result)
+                    if (result)
                     {
                         base.Execute(args);
                     }

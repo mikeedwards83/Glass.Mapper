@@ -32,9 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
+  
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\..\Configuration.proj" />
   <!--End: Must come after all PropertyGroups -->

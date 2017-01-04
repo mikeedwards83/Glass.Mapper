@@ -16,6 +16,7 @@
 */
 //-CRE-
 
+using System.Collections.Specialized;
 using System.Reflection;
 using Glass.Mapper.Sc.Configuration;
 using NUnit.Framework;
@@ -502,6 +503,52 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.IsFalse(result);
         }
 
+        #endregion
+
+        #region ConvertAttributes
+
+        [Test]
+        public void ConvertAttributes_NameValueCollection_ReturnsString()
+        {
+            //Arrange
+            var collection = new NameValueCollection();
+            collection["key1"] = "value1";
+            collection["key2"] = "value2";
+            collection["key3"] = "value3";
+
+            var expected = "key1='value1' key2='value2' key3='value3' ";
+
+            //Act
+
+            var result = Sc.Utilities.ConvertAttributes(collection);
+
+
+            //Assert
+            Assert.AreEqual(expected,result);
+        }
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/272
+        /// </summary>
+        [Test]
+        public void ConvertAttributes_NameValueCollection1_ReturnsString()
+        {
+            //Arrange
+            var collection = new NameValueCollection();
+            collection["key1"] = "value1";
+            collection["key2"] = "{value2}";
+            collection["key3"] = "value3";
+
+            var expected = "key1='value1' key2='{value2}' key3='value3' ";
+
+            //Act
+
+            var result = Sc.Utilities.ConvertAttributes(collection);
+
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
         #endregion
 
         #region Stubs
