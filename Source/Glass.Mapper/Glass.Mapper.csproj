@@ -101,6 +101,7 @@
     <Compile Include="Configuration\Attributes\AttributeTypeLoader.cs" />
     <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
     <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
+    <Compile Include="Configuration\Attributes\DataMapperAttribute.cs" />
     <Compile Include="Configuration\Attributes\IdAttribute.cs" />
     <Compile Include="Configuration\Attributes\IgnoreAttribute.cs" />
     <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
@@ -124,8 +125,11 @@
     <Compile Include="Configuration\ParentConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Configuration\SelfConfiguration.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Diagnostics\GlassModelCounter.cs" />
+    <Compile Include="Diagnostics\ModelCounter.cs" />
+    <Compile Include="DisableLazyLoading.cs" />
     <Compile Include="DisableCache.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="AbstractTypeCreationContext.cs" />
@@ -136,6 +140,8 @@
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
+    <Compile Include="LazyLoadSetting.cs" />
+    <Compile Include="MapperStackException.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />
@@ -145,15 +151,17 @@
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\MultiInterfaceResolver\MultiInterfaceResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionMonitorTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAdd\CacheAddTask.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperAttributeResolverTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\CreateMultiInferaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateMultiInterface\MultiInterfacePropertyInterceptor.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerEnd.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\DepthCheck\ModelDepthCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ModelRequestedTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\LazyObjectInterceptor.cs" />
+    <Compile Include="Profilers\AccmulatorProfiler.cs" />
+    <Compile Include="Profilers\BaseIndentingProfiler.cs" />
     <Compile Include="Profilers\ChainedProfiler.cs" />
     <Compile Include="Profilers\IPerformanceProfiler.cs" />
     <Compile Include="MapperException.cs" />
@@ -161,14 +169,14 @@
     <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolver.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\IConfigurationResolverTask.cs" />
+    <Compile Include="Pipelines\ConfigurationResolver\AbstractConfigurationResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTask.cs" />
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverArgs.cs" />
     <Compile Include="Pipelines\DataMapperResolver\DataMapperResolver.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\IDataMapperResolverTask.cs" />
+    <Compile Include="Pipelines\DataMapperResolver\AbstractDataMapperResolverTask.cs" />
     <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperStandardResolverTask.cs" />
-    <Compile Include="Pipelines\IPipelineTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\IObjectConstructionTask.cs" />
+    <Compile Include="Pipelines\AbstractPipelineTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\AbstractObjectConstructionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstruction.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
@@ -178,7 +186,7 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceProxyHook.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />
-    <Compile Include="Pipelines\ObjectSaving\IObjectSavingTask.cs" />
+    <Compile Include="Pipelines\ObjectSaving\AbstractObjectSavingTask.cs" />
     <Compile Include="Pipelines\ObjectSaving\ObjectSaving.cs" />
     <Compile Include="Pipelines\ObjectSaving\ObjectSavingArgs.cs" />
     <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTask.cs" />
@@ -187,12 +195,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Profilers\SimpleProfiler.cs" />
     <Compile Include="SettingStack.cs" />
+    <Compile Include="ThreadData.cs" />
     <Compile Include="UrlBuilder.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

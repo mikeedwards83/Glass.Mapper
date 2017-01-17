@@ -66,7 +66,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// /sitecore/templates/System/Templates/Template section
         /// </summary>
-        private static readonly ID SectionTemplateId = new ID("{E269FBB5-3750-427A-9149-7AA950B49301}");
+        internal static readonly ID SectionTemplateId = new ID("{E269FBB5-3750-427A-9149-7AA950B49301}");
         /// <summary>
         /// The field template id
         /// </summary>
@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         /// <summary>
         /// The folder template id
         /// </summary>
-        private static readonly ID FolderTemplateId = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");
+        internal static readonly ID FolderTemplateId = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");
 
         /// <summary>
         /// The ID of the base templates field
@@ -340,7 +340,7 @@ namespace Glass.Mapper.Sc.CodeFirst
 				.Select(x => new { SectionName = x.SectionName ?? "Data", x.SectionSortOrder });
 
             //If sitecore contains a section with the same name in the database, use that one instead of creating a new one
-            var existing = sqlProvider.GetChildIDs(itemDefinition, context).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context))
+            var existing = (sqlProvider.GetChildIDs(itemDefinition, context) ?? new IDList()).OfType<ID>().Select(id => sqlProvider.GetItemDefinition(id, context))
                 .Where(item => item.TemplateID == SectionTemplateId).ToList();
 
             foreach (var section in sections)
@@ -699,7 +699,7 @@ namespace Glass.Mapper.Sc.CodeFirst
         private DataProvider GetSqlProvider(Database db)
         {
             var providers = db.GetDataProviders();
-            var provider = providers.FirstOrDefault(x => x is SqlDataProvider);
+            var provider = GetSqlProviderFunc(providers);
 
             if (provider == null)
             {
@@ -710,6 +710,7 @@ namespace Glass.Mapper.Sc.CodeFirst
             return provider;
         }
 
+        internal static Func<DataProvider[], DataProvider> GetSqlProviderFunc = providers =>  providers.FirstOrDefault(x => x is SqlDataProvider);
         /// <summary>
         /// Creates the item /sitecore/templates/glasstemplates
         /// </summary>
@@ -723,7 +724,11 @@ namespace Glass.Mapper.Sc.CodeFirst
 
             if (glassFolder == ItemDefinition.Empty || glassFolder == null)
             {
-                provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
+                var result = provider.CreateItem(GlassFolderId, "GlassTemplates", FolderTemplateId, templateFolder, context);
+                if (result == false)
+                {
+                    throw new MapperException("Failed to create Glass Template");
+                }
                 glassFolder = provider.GetItemDefinition(GlassFolderId, context);
             }
 

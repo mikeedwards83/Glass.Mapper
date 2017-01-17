@@ -33,7 +33,12 @@ namespace Glass.Mapper.Profilers
         /// </summary>
         /// <param name="key">The key.</param>
         void End(string key);
+
+        void IndentIncrease();
+        void IndentDecrease();
     }
+
+    
 }
 
 

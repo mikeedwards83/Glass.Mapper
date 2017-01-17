@@ -43,6 +43,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         [NonSerialized]
         private AbstractDataMappingContext _mappingContext;
 
+        private bool _mapRequested = false;
         /// <summary>
         /// Initializes a new instance of the <see cref="InterfacePropertyInterceptor"/> class.
         /// </summary>
@@ -125,6 +126,12 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
         private void LoadValue(AbstractPropertyConfiguration propertyConfiguration)
         {
+            if (_mapRequested == false)
+            {
+                _mapRequested = true;
+                _args.Counters.ModelsMapped++;
+            }
+
             if (!Values.ContainsKey(propertyConfiguration.PropertyInfo.Name))
             {
                 var result = propertyConfiguration.Mapper.MapToProperty(_mappingContext) ??

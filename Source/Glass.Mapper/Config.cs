@@ -25,10 +25,17 @@ namespace Glass.Mapper
 
 		public DebugSettings Debug { get; private set; }
 
+        /// <summary>
+        /// When set to false lazy loading will be disabled for all properties that reference other Glass models. This 
+        /// applies to all models that are also generated as part of the parent model. 
+        /// Default: false
+        /// </summary>
+        public bool EnableLazyLoadingForCachableModels { get; set; }
+
         public Config()
         {
             Debug = new DebugSettings();
-
+            EnableLazyLoadingForCachableModels = false;
         }
         public class DebugSettings
         {

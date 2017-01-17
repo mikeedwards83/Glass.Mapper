@@ -53,8 +53,10 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             //create class
             if (_actual == null)
             {
+
                 _args.AbstractTypeCreationContext.IsLazy = false;
                 _actual = _args.Service.InstantiateObject(_args.AbstractTypeCreationContext);
+                _args.Counters.ModelsMapped++;
             }
 
             invocation.ReturnValue = invocation.Method.Invoke(_actual, invocation.Arguments);

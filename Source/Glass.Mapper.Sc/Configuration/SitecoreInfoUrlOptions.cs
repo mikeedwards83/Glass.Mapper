@@ -79,8 +79,11 @@ namespace Glass.Mapper.Sc.Configuration
         /// <summary>
         /// The use use display name
         /// </summary>
-        UseUseDisplayName = 1024
-
+        UseUseDisplayName = 1024,
+        /// <summary>
+        /// Use the item language to generate the URL and not the context language
+        /// </summary>
+        UseItemLanguage = 2048
 
     }
 }

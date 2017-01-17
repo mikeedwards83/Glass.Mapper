@@ -31,15 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU'">
-    <OutputPath>bin\Sc82\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+  <!--Start: Must come after all PropertyGroups -->
+  <Import Project="..\..\..\Configuration.proj" />
+  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
@@ -70,7 +64,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Depends\Sitecore\bin81\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Depends\System.Web.Mvc\v52\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -80,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DifferentTypedGlassController.cs" />
+    <Compile Include="RegexTypeFinderFixture.cs" />
     <Compile Include="SingleTypedGlassController.cs" />
     <Compile Include="GlassControllerTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

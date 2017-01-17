@@ -19,45 +19,48 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace Glass.Mapper.Profilers
 {
     /// <summary>
     /// Class SimpleProfiler
     /// </summary>
-    public class SimpleProfiler : IPerformanceProfiler
+    public class SimpleProfiler : BaseIndentingProfiler
     {
-        private Dictionary<string, Stopwatch> _watches = new Dictionary<string, Stopwatch>();
+        protected TextWriter Writer { get; private set; }
 
-        /// <summary>
-        /// Starts the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <exception cref="System.NotSupportedException">Watch with key {0} already started.Formatted(key)</exception>
-        public void Start(string key)
+      
+        public SimpleProfiler(TextWriter writer)
         {
-            if (_watches.ContainsKey(key))
-                throw new NotSupportedException("Watch with key {0} already started".Formatted(key));
-            
+            Writer = writer;
+        }
+
+        private Stack<Tuple<string, Stopwatch>> _watches = new Stack<Tuple<string, Stopwatch>>();
+
+        protected override void Start(string key, string indent)
+        {
             var watch = new Stopwatch();
-            _watches.Add(key, watch);
+            _watches.Push(new Tuple<string, Stopwatch>(key, watch));
             watch.Start();
         }
 
-        /// <summary>
-        /// Ends the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <exception cref="System.NotSupportedException">No Watch with key {0} found.Formatted(key)</exception>
-        public void End(string key)
+        protected override void End(string key, string indent)
         {
-            if (!_watches.ContainsKey(key))
-                throw new NotSupportedException("No Watch with key {0} found".Formatted(key));
-
-            var watch = _watches[key];
+            var tuple = _watches.Pop();
+            if (tuple.Item1 != key)
+            {
+                throw new Exception("Failed to pop watch with key {0}. Have you ended all profiling in the correct order?".Formatted(key));
+            }
+            var watch = tuple.Item2;
             watch.Stop();
-            _watches.Remove(key);
-            Console.WriteLine("Watch {0}: Elapsed Ticks {1}".Formatted(key, watch.ElapsedTicks));
+            End(key, indent, watch);
+        }
+
+        protected virtual void End(string key, string indent, Stopwatch watch)
+        {
+            Writer.WriteLine("{3} Timer for {0}: Elapsed Ticks {1} Elapsed Ms {2}".Formatted(key, watch.ElapsedTicks, watch.ElapsedMilliseconds, indent));
         }
     }
 }

@@ -6,15 +6,21 @@ using Glass.Mapper.Pipelines.ObjectConstruction;
 
 namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 {
-    public class SitecoreItemTask : IObjectConstructionTask
+    public class SitecoreItemTask : AbstractObjectConstructionTask
     {
-        public void Execute(ObjectConstructionArgs args)
+        public SitecoreItemTask()
+        {
+            Name = "SitecoreItemTask";
+        }
+
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null && args.Configuration == Sc.Pipelines.ConfigurationResolver.SitecoreItemResolverTask.Config)
             {
                 var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
                 args.Result = scArgs.Item;
             }
+            base.Execute(args);
         }
     }
 }

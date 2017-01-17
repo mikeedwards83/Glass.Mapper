@@ -95,8 +95,14 @@ namespace Glass.Mapper.Sc.DataMappers
                 FieldName = field.Name,
                 DisableWebEdit = true
             };
-
-            CorePipeline.Run("renderField", renderFieldArgs);
+            try
+            {
+                CorePipeline.Run("renderField", renderFieldArgs);
+            }
+            catch (Exception ex)
+            {
+                throw new MapperException("Failed to render field {0} on item {1}".Formatted(field.ID, field.Item.ID), ex);
+            }
 
             return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
         }

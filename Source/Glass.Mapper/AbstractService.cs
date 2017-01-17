@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  
-*/ 
+*/
 //-CRE-
 
 
@@ -62,13 +62,14 @@ namespace Glass.Mapper
         /// <value>
         /// The glass context.
         /// </value>
-        public  Context GlassContext { get; private set; }
+        public Context GlassContext { get; private set; }
 
         private ConfigurationResolver _configurationResolver;
 
         private ObjectConstruction _objectConstruction;
 
         private ObjectSaving _objectSaving;
+        private bool _disposed;
 
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace Glass.Mapper
         protected AbstractService()
             : this(Context.Default)
         {
-            
+
         }
 
         /// <summary>
@@ -98,11 +99,11 @@ namespace Glass.Mapper
         {
 
             GlassContext = glassContext;
-            if (GlassContext == null) 
+            if (GlassContext == null)
                 throw new NullReferenceException("Context is null");
 
             var objectConstructionTasks = glassContext.DependencyResolver.ObjectConstructionFactory.GetItems();
-            _objectConstruction = new ObjectConstruction(objectConstructionTasks); 
+            _objectConstruction = new ObjectConstruction(objectConstructionTasks);
 
             var configurationResolverTasks = glassContext.DependencyResolver.ConfigurationResolverFactory.GetItems();
             _configurationResolver = new ConfigurationResolver(configurationResolverTasks);
@@ -110,14 +111,14 @@ namespace Glass.Mapper
             var objectSavingTasks = glassContext.DependencyResolver.ObjectSavingFactory.GetItems();
             _objectSaving = new ObjectSaving(objectSavingTasks);
 
-            Profiler = new NullProfiler();
+            Profiler = NullProfiler.Instance;
 
             Initiate(glassContext.DependencyResolver);
         }
 
         public virtual void Initiate(IDependencyResolver resolver)
         {
-            CacheEnabled = true;            
+            CacheEnabled = true;
         }
 
         /// <summary>
@@ -128,17 +129,47 @@ namespace Glass.Mapper
         /// <exception cref="System.NullReferenceException">Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}.Formatted(abstractTypeCreationContext.RequestedType.FullName)</exception>
         public object InstantiateObject(AbstractTypeCreationContext abstractTypeCreationContext)
         {
+
+            string profilerKey = "Creating {0}".Formatted(abstractTypeCreationContext.RequestedType.FullName);
+            Profiler.IndentIncrease();
+            Profiler.Start(profilerKey);
+
+            if (this._disposed)
+            {
+                throw new MapperException("Service has been disposed, cannot create object");
+            }
             //run the pipeline to get the configuration to load
             var configurationArgs = RunConfigurationPipeline(abstractTypeCreationContext);
             if (configurationArgs.Result == null)
-                throw new NullReferenceException("Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}".Formatted(abstractTypeCreationContext.RequestedType));
+                throw new NullReferenceException(
+                    "Configuration Resolver pipeline did not return a type. Has the type been loaded by Glass.Mapper. Type: {0}"
+                        .Formatted(abstractTypeCreationContext.RequestedType));
 
             //Run the object construction
-            var objectArgs = new ObjectConstructionArgs(GlassContext, abstractTypeCreationContext, configurationArgs.Result, this);
-            objectArgs.Parameters = configurationArgs.Parameters;
-            _objectConstruction.Run(objectArgs);
+            var objectArgs = new ObjectConstructionArgs(
+                GlassContext, 
+                abstractTypeCreationContext,
+                configurationArgs.Result, 
+                this,
+                GlassContext.DependencyResolver.GetModelCounter());
 
-            return objectArgs.Result;
+            objectArgs.Parameters = configurationArgs.Parameters;
+
+            try
+            {
+                _objectConstruction.Run(objectArgs);
+                objectArgs.Counters.ModelsRequested++;
+
+                return objectArgs.Result;
+            }
+
+            finally
+            {
+                //we clear the lazy loader disable to avoid problems with
+                //stack overflows on the next request
+                Profiler.End(profilerKey);
+                Profiler.IndentDecrease();
+            }
         }
 
         public ConfigurationResolverArgs RunConfigurationPipeline(AbstractTypeCreationContext abstractTypeCreationContext)
@@ -187,6 +218,7 @@ namespace Glass.Mapper
         {
             if (disposing)
             {
+                this._disposed = true;
                 if (_configurationResolver != null)
                 {
                     _configurationResolver.Dispose();
@@ -222,7 +254,7 @@ namespace Glass.Mapper
         /// <value>
         /// The glass context.
         /// </value>
-        Context GlassContext { get;  }
+        Context GlassContext { get; }
 
         /// <summary>
         /// Instantiates the object.

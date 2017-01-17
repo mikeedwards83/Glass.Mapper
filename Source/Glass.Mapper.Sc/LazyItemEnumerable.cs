@@ -60,7 +60,7 @@ namespace Glass.Mapper.Sc
             
             _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems());
 
-            if (isLazy == false)
+            if (isLazy == false || DisableLazyLoading.Current == LazyLoadSetting.Disabled)
             {
                 // Force the loading of the items into the list so this occurs in the current security scope.
                 var dummy = _lazyItemList.Value;
@@ -71,7 +71,7 @@ namespace Glass.Mapper.Sc
         /// Processes the items.
         /// </summary>
         /// <returns>IEnumerable{`0}.</returns>
-        public List<T> ProcessItems()
+        public virtual List<T> ProcessItems()
         {
             if (_service == null)
             {

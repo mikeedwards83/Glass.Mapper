@@ -1,4 +1,5 @@
 ﻿using Glass.Mapper.Caching;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Sc.IoC
 {
@@ -28,6 +29,18 @@ namespace Glass.Mapper.Sc.IoC
         public override ILog GetLog()
         {
             return Log;
+        }
+
+        const string _modelCounterKey = "71E98635-D8C9-4A36-913C-7DCFD2B7BD49";
+        public override ModelCounter GetModelCounter()
+        {
+            ModelCounter counter;
+            if (!ThreadData.Contains(_modelCounterKey))
+            {
+               ThreadData.SetValue(_modelCounterKey, new ModelCounter());
+            }
+            counter = ThreadData.GetValue<ModelCounter>(_modelCounterKey);
+            return counter;
         }
 
         public override ICacheManager GetCacheManager()

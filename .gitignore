@@ -147,3 +147,7 @@ Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.Sc7/App_Config/Conn
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration.ThirdParty/App_Config/ConnectionStrings.config
 Tests/Integration Tests/Sitecore/Glass.Mapper.Sc.Integration/App_Config/ConnectionStrings.config
 Depends/Sitecore/bin82/*.dll
+Tests/Unit Tests/Glass.Mapper.Sc.FakeDb.ThirdParty/license.xml
+Tests/Unit Tests/Glass.Mapper.Sc.FakeDb/license.xml
+licence.xml
+Depends/Sitecore/bin82/

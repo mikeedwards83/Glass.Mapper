@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -88,11 +89,27 @@ namespace Glass.Mapper.Sc
 
             if (_compileCache.ContainsKey(key))
             {
-                return (Func<T, string>)_compileCache[key];
+                try
+                {
+                    return (Func<T, string>) _compileCache[key];
+                }
+                catch (Exception ex)
+                {
+                   // Debugger.Launch();
+                }
             }
 
+
             var compiled = expression.Compile();
-            _compileCache.TryAdd(key, compiled);
+           if (compiled is Func<T, string>)
+            {
+                _compileCache.TryAdd(key, compiled);
+            }
+              else
+            {
+                throw new MapperException("Failed to compile lambda to correct type.");
+            }
+
             return compiled;
         }
 
@@ -272,7 +289,7 @@ namespace Glass.Mapper.Sc
 
                         T obj = SitecoreContext.Cast<T>(item);
 
-                        item.Editing.EndEdit();
+                        item.Editing.CancelEdit();
                         item.Delete(); //added for clean up
                         return obj;
                     }

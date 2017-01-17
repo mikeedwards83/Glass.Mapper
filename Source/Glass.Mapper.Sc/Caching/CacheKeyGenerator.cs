@@ -14,11 +14,12 @@ namespace Glass.Mapper.Sc.Caching
         {
             var context = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
-            return string.Format("{0}{1}{2}{3}{4}{5}{6}",
+            return string.Format("{0}{1}{2}{3}{4}{5}{6}{7}",
                 context.SitecoreService.GlassContext.Name,
                 Sitecore.Context.Site == null ? string.Empty : Sitecore.Context.Site.Name,
                 context.Item.ID,
                 context.Item["__Revision"],
+                context.Item.Language.Name,
                 context.Item.Database.Name,
                 context.RequestedType.FullName,
                 context.IsLazy

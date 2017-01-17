@@ -17,7 +17,6 @@
 //-CRE-
 
 
-using System.Linq;
 using Castle.DynamicProxy;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
@@ -25,10 +24,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
     /// <summary>
     /// Creates classes based on interfaces
     /// </summary>
-    public class CreateInterfaceTask : IObjectConstructionTask
+    public class CreateInterfaceTask : AbstractObjectConstructionTask
     {
         private static volatile  ProxyGenerator _generator;
-        private static volatile  ProxyGenerationOptions _options;
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateInterfaceTask"/> class.
@@ -36,23 +34,27 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         static CreateInterfaceTask()
         {
             _generator = new ProxyGenerator();
-            var hook = new CreateInterfaceProxyHook();
-            _options = new ProxyGenerationOptions(hook);
         }
 
-
+        public CreateInterfaceTask()
+        {
+            Name = "CreateInterfaceTask";
+        }
 
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ObjectConstructionArgs args)
+        public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result== null 
                 && args.Configuration.Type.IsInterface) 
             {
                 args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new InterfacePropertyInterceptor(args));
+                args.Counters.ProxyModelsCreated++;
             }
+
+            base.Execute(args);
         }
     }
 }

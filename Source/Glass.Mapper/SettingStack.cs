@@ -10,69 +10,31 @@ namespace Glass.Mapper
 {
     public class SettingStack<T> : IDisposable 
     {
-        private const string ItemsKey = "D4F757BB-B53C-4600-8264-AA94D7D5050A";
 
         private bool _isDisposed;
 
-        /// <summary>
-        /// This is only used when a HttpContext.Items isn't available
-        /// </summary>
-        [ThreadStatic] private static Hashtable _threadStack = null;
+        private Stack<T> _cacheStack;
 
-        public static Hashtable ThreadStack
+        public SettingStack(T newPush, string key)
         {
-            get
+            _cacheStack = ThreadData.GetClass<Stack<T>>(key);
+            if (_cacheStack == null)
             {
-                if (_threadStack == null)
-                {
-                    _threadStack =new Hashtable();
-                }
-                return _threadStack;
-                
+                _cacheStack = new Stack<T>();
+                ThreadData.SetClass(key, _cacheStack);
             }
+            _cacheStack.Push(newPush);
         }
 
-        public SettingStack(T newPush)
+        protected static T GetCurrent(string key)
         {
-            CacheStack.Push(newPush);
-        }
-
-        protected static Stack<T> NewStack()
-        {
-
-            var stack = new Stack<T>();
-            stack.Push(default(T));
-            return stack;
-        }
-        protected static Stack<T> CacheStack
-        {
-            get
+            var cacheStack = ThreadData.GetClass<Stack<T>>(key);
+            if (cacheStack == null || cacheStack.Count == 0)
             {
-                string key = ItemsKey + typeof (T).FullName;
-
-                if (HttpContext.Current == null)
-                {
-                    if (ThreadStack[key] == null)
-                    {
-                        ThreadStack[key] = NewStack();
-                    }
-
-                    return ThreadStack[key] as Stack<T>;
-                }
-
-                if (HttpContext.Current.Items[key] == null)
-                {
-                    HttpContext.Current.Items[key] = NewStack();
-                }
-                return (Stack<T>)HttpContext.Current.Items[key];
+                return default(T);
             }
+            return cacheStack.Peek();
         }
-        public static T Current
-        {
-            get { return CacheStack.Peek(); }
-        }
-
-        
 
         public void Dispose()
         {
@@ -80,7 +42,7 @@ namespace Glass.Mapper
             {
                 return;
             }
-            CacheStack.Pop();
+            _cacheStack.Pop();
             _isDisposed = true;
         }
 

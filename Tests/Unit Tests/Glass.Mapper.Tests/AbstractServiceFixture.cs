@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using NUnit.Framework;
@@ -60,11 +61,12 @@ namespace Glass.Mapper.Tests
 
             var context = Context.Create(resolver);
 
-            var configTask = Substitute.For<IConfigurationResolverTask>();
-            var objTask = Substitute.For<IObjectConstructionTask>();
+            var configTask = Substitute.For<AbstractConfigurationResolverTask>();
+            var objTask = Substitute.For<AbstractObjectConstructionTask>();
 
             resolver.ConfigurationResolverFactory.GetItems().Returns(new[] { configTask });
             resolver.ObjectConstructionFactory.GetItems().Returns(new []{objTask});
+            resolver.GetModelCounter().Returns( new ModelCounter());
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());

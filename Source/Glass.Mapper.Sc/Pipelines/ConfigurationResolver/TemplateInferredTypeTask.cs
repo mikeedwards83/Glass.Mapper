@@ -30,19 +30,22 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
     /// <summary>
     /// TemplateInferredTypeTask
     /// </summary>
-    public class TemplateInferredTypeTask : IConfigurationResolverTask
+    public class TemplateInferredTypeTask : AbstractConfigurationResolverTask
     {
-
         static ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>
             _inferredCache = new ConcurrentDictionary<Tuple<Context, Type, ID>, SitecoreTypeConfiguration>();
 
-        #region IPipelineTask<ConfigurationResolverArgs> Members
+
+        public TemplateInferredTypeTask()
+        {
+            Name = "TemplateInferredTypeTask";
+        }
 
         /// <summary>
         /// Executes the specified args.
         /// </summary>
         /// <param name="args">The args.</param>
-        public void Execute(ConfigurationResolverArgs args)
+        public override void Execute(ConfigurationResolverArgs args)
         {
             if (args.Result == null && args.AbstractTypeCreationContext.InferType)
             {
@@ -59,9 +62,10 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                 }
                 else
                 {
-					
+
                     var configs = args.Context.TypeConfigurations.Select(x => x.Value as SitecoreTypeConfiguration);
-	                var bestType = FindBestType(scContext.SitecoreService.Database.Templates[templateId], configs, requestedType);
+                    var bestType = FindBestType(scContext.SitecoreService.Database.Templates[templateId], configs,
+                        requestedType);
                     if (bestType != null)
                     {
                         args.Result = bestType;
@@ -72,29 +76,29 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                     }
                 }
             }
+            base.Execute(args);
         }
 
-		private SitecoreTypeConfiguration FindBestType(TemplateItem templateItem, IEnumerable<SitecoreTypeConfiguration> configs, Type requestedType)
-		{
-			if (templateItem == null)
-				return null;
-			var types = configs.Where(x => x.TemplateId == templateItem.ID);
-		    if (types.Any())
-		    {
-			    var result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
-			    if (result != null)
-				    return result;
-		    }
-		    foreach (var btmpl in templateItem.BaseTemplates)
-		    {
-			    var result = FindBestType(btmpl, configs, requestedType);
-			    if (result != null)
-				    return result;
-		    }
-			return null;
-	    }
+        private SitecoreTypeConfiguration FindBestType(TemplateItem templateItem, IEnumerable<SitecoreTypeConfiguration> configs, Type requestedType)
+        {
+            if (templateItem == null)
+                return null;
+            var types = configs.Where(x => x.TemplateId == templateItem.ID);
+            if (types.Any())
+            {
+                var result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                if (result != null)
+                    return result;
+            }
+            foreach (var btmpl in templateItem.BaseTemplates)
+            {
+                var result = FindBestType(btmpl, configs, requestedType);
+                if (result != null)
+                    return result;
+            }
+            return null;
+        }
 
-	    #endregion
-		}
+    }
 }
 

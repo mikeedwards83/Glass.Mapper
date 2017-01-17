@@ -22,5 +22,7 @@ namespace Glass.Mapper.IoC
         IEnumerable<T> GetItems();
 
         void RemoveAt(int index);
+
+        void Remove<TRemove>() where TRemove : T;
     }
 }

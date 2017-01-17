@@ -20,8 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -30,6 +32,7 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreIdMapper : AbstractDataMapper
     {
+        private Func<Item, object> _getValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreIdMapper"/> class.
@@ -60,21 +63,27 @@ namespace Glass.Mapper.Sc.DataMappers
         ///                                                         scConfig.PropertyInfo.Name)</exception>
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
-
             SitecoreDataMappingContext context = (SitecoreDataMappingContext)mappingContext;
             var item = context.Item;
-
-            var scConfig = Configuration;
-
-            if (scConfig.PropertyInfo.PropertyType.IsAssignableFrom(typeof(Guid)))
-                return item.ID.Guid;
-            if (scConfig.PropertyInfo.PropertyType.IsAssignableFrom(typeof(ID)))
-                return item.ID;
-
-			throw new NotSupportedException("The type {0} on {0}.{1} is not supported by SitecoreIdMapper".Formatted
-				(scConfig.PropertyInfo.ReflectedType.FullName, scConfig.PropertyInfo.Name));
+            return _getValue(item);
         }
 
+        public override void Setup(DataMapperResolverArgs args)
+        {
+            if (args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(Guid))
+                _getValue = (item) => item.ID.Guid;
+            else if (args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(ID) || args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(object))
+                _getValue = (item) => item.ID;
+            else
+            {
+                throw new NotSupportedException("The type {0} on {2}.{1} is not supported by SitecoreIdMapper".Formatted
+                                                    (args.PropertyConfiguration.PropertyInfo.PropertyType.FullName,
+                                                    args.PropertyConfiguration.PropertyInfo.ReflectedType.FullName,
+                                                        args.PropertyConfiguration.PropertyInfo.Name));
+            }
+
+            base.Setup(args);
+        }
 
 
         /// <summary>
