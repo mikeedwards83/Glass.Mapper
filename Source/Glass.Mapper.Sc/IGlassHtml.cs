@@ -87,6 +87,29 @@ namespace Glass.Mapper.Sc
         string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null);
 
         /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="target">The model object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <returns>HTML output to either render the editable controls or a string</returns>
+        string RenderText<T>(T target, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false);
+
+        /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="target">The model object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <returns>HTML output to either render the editable controls or normal string</returns>
+        string RenderText<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null, bool isEditable = false);
+
+        /// <summary>
         /// Renders HTML for an image
         /// </summary>
         /// <param name="field">The image to render</param>

@@ -197,6 +197,60 @@ namespace Glass.Mapper.Sc.Web.Mvc
         }
 
         /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="model">The model object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal string</returns>
+        public HtmlString RenderText<T>(T model, Expression<Func<T, object>> field, bool isEditable = false, object parameters = null)
+        {
+            return new HtmlString(GlassHtml.RenderText<T>(model, field, parameters, isEditable));
+        }
+
+        /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="model">The model object that contains the item to be edited</param>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal string</returns>
+        public HtmlString RenderText<T>(T model, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, bool isEditable = false, object parameters = null)
+        {
+            return new HtmlString(GlassHtml.RenderText<T>(model, field, standardOutput, parameters, isEditable));
+        }
+
+        /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal string</returns>
+        public HtmlString RenderText(Expression<Func<TModel, object>> field, bool isEditable = false, object parameters = null)
+        {
+            return new HtmlString(GlassHtml.RenderText<TModel>(Model, field, parameters, isEditable));
+        }
+
+        /// <summary>
+        /// Renders the string, and makes it editable in the Sitecore Page Editor when using the editable flag.
+        /// </summary>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <param name="isEditable">Indicate if the text should be editable in the page editor</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal string</returns>
+        public HtmlString RenderText(Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, bool isEditable = false, object parameters = null)
+        {
+            return new HtmlString(GlassHtml.RenderText<TModel>(Model, field, standardOutput, parameters, isEditable));
+        }
+
+        /// <summary>
         /// Renders an image allowing simple page editor support
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
