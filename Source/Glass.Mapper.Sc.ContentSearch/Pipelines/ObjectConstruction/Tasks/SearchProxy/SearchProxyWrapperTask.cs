@@ -19,9 +19,11 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
         public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result != null || !SearchSwitcher.IsSearchContext || args.Configuration.Type.IsSealed)
+            {
+                base.Execute(args);
                 return;
+            }
 
-       
             if (args.Configuration.Type.IsInterface)
             {
                 args.Result = _generator.CreateInterfaceProxyWithoutTarget(args.Configuration.Type, new SearchInterceptor(args));
