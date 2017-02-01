@@ -87,7 +87,7 @@ namespace Glass.Mapper.Configuration
         /// Adds the property.
         /// </summary>
         /// <param name="property">The property.</param>
-        public virtual void AddProperty(AbstractPropertyConfiguration property)
+        public virtual void AddProperty(AbstractPropertyConfiguration property, bool overWrite = true)
         {
             if (property != null)
             {
@@ -95,6 +95,9 @@ namespace Glass.Mapper.Configuration
                 var currentProperty = _properties.FirstOrDefault(x => x.PropertyInfo.Name == property.PropertyInfo.Name);
                 if (currentProperty != null)
                 {
+                    if (!overWrite)
+                        return;
+
                     _properties.Remove(currentProperty);
                 }
 
@@ -187,7 +190,7 @@ namespace Glass.Mapper.Configuration
                 if (Properties.All(x => x.PropertyInfo != property))
                 {
                     //skipped already mapped properties
-                    if(_properties.Any(x=>x.PropertyInfo.Name == property.Name))
+                    if(_properties.Any(x=>x.PropertyInfo.Name == property.Name) || propList.Any(x => x.PropertyInfo.Name == property.Name))
                         continue;
 
                       //skip properties that are actually indexers
@@ -216,7 +219,7 @@ namespace Glass.Mapper.Configuration
 		{
 			typeConfig.Properties
 				.Where(x => this.Properties.All(y => y.PropertyInfo.Name != x.PropertyInfo.Name))
-				.ForEach(x => this.AddProperty(x));
+				.ForEach(x => this.AddProperty(x, false));
 		}
 
 

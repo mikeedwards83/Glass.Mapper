@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.Configuration
         /// Adds the property.
         /// </summary>
         /// <param name="property">The property.</param>
-        public override void AddProperty(AbstractPropertyConfiguration property)
+        public override void AddProperty(AbstractPropertyConfiguration property, bool overwrite = true)
         {
             if (property is SitecoreIdConfiguration)
                 IdConfig = property as SitecoreIdConfiguration;
@@ -120,7 +120,7 @@ namespace Glass.Mapper.Sc.Configuration
             if (property is SitecoreItemConfiguration)
                 ItemConfig = property as SitecoreItemConfiguration;
 
-            base.AddProperty(property);
+            base.AddProperty(property, overwrite);
         }
 
         public ID GetId(object target)
@@ -310,6 +310,9 @@ namespace Glass.Mapper.Sc.Configuration
             string name = property.Name;
             SitecoreInfoType infoType;
 
+            if (name.Contains(".")) //explicit interface implementation
+                name = name.Split('.', StringSplitOptions.RemoveEmptyEntries).Last();
+
             if (name.ToLowerInvariant() == "id")
             {
                 var idConfig = new SitecoreIdConfiguration();
@@ -345,8 +348,6 @@ namespace Glass.Mapper.Sc.Configuration
             }
 
             SitecoreFieldConfiguration fieldConfig = new SitecoreFieldConfiguration();
-	        if (name.Contains(".")) //explicit interface implementation
-		        name = name.Split('.', StringSplitOptions.RemoveEmptyEntries).Last();
 		    fieldConfig.FieldName = name;
             fieldConfig.PropertyInfo = property;
             return fieldConfig;

@@ -950,25 +950,6 @@ namespace Glass.Mapper.Sc
         /// <param name="target"></param>
         void Map<T>(T target);
         
-       
-
-   
-
-
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="abstractTypeCreationContext">The abstract type creation context.</param>
-        /// <param name="obj">The obj.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext abstractTypeCreationContext, Object obj);
-        /// <summary>
-        /// Creates the data mapping context.
-        /// </summary>
-        /// <param name="creationContext">The creation context.</param>
-        /// <returns>AbstractDataMappingContext.</returns>
-        AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext);
-
         /// <summary>
         /// Saves the object.
         /// </summary>
