@@ -4,14 +4,18 @@ using System.Threading;
 
 namespace Glass.Mapper.Caching
 {
+    /// <summary>
+    /// A cache manager implementation based on .NET memory cache.
+    /// </summary>
     public class NetMemoryCacheManager : ICacheManager
     {
         private static MemoryCache _memoryCache = new MemoryCache(CacheName);
 
         private const string CacheName = "Glass.Mapper";
 
-        //Absolute time in second
+        // Absolute time in seconds
         public int AbsoluteExpiry { get; set; }
+        
         /// <summary>
         /// Sliding time in seconds
         /// </summary>
@@ -22,11 +26,8 @@ namespace Glass.Mapper.Caching
         /// </summary>
         public NetMemoryCacheManager()
         {
-
-            //20 minute default
-            SlidingExpiry = 60*20;
+            SlidingExpiry = 60 * 20;
         }
-
 
         public object this[string key]
         {
@@ -35,7 +36,7 @@ namespace Glass.Mapper.Caching
         }
 
         /// <summary>
-        /// Destroys and recreates the cache
+        /// Destroys and recreates the cache.
         /// </summary>
         public void ClearCache()
         {
@@ -57,16 +58,19 @@ namespace Glass.Mapper.Caching
                 _memoryCache.Remove(key);
             }
 
-            CacheItemPolicy cacheItemPolicy = new CacheItemPolicy();
-            if (AbsoluteExpiry > 0)
+            if (value != null)
             {
-                cacheItemPolicy.AbsoluteExpiration = DateTime.Now.AddSeconds(AbsoluteExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
-            }
-            else
-            {
-                cacheItemPolicy.SlidingExpiration = new TimeSpan(0, 0, SlidingExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
+                CacheItemPolicy cacheItemPolicy = new CacheItemPolicy();
+                if (AbsoluteExpiry > 0)
+                {
+                    cacheItemPolicy.AbsoluteExpiration = DateTime.Now.AddSeconds(AbsoluteExpiry);
+                    _memoryCache.Add(key, value, cacheItemPolicy);
+                }
+                else
+                {
+                    cacheItemPolicy.SlidingExpiration = new TimeSpan(0, 0, SlidingExpiry);
+                    _memoryCache.Add(key, value, cacheItemPolicy);
+                }
             }
         }
 
@@ -79,9 +83,9 @@ namespace Glass.Mapper.Caching
         {
             try
             {
-                return (T) _memoryCache[key];
+                return (T)_memoryCache[key];
             }
-            catch (Exception ex)
+            catch
             {
                 return default(T);
             }
