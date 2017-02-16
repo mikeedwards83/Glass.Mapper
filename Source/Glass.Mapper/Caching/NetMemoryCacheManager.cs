@@ -40,8 +40,10 @@ namespace Glass.Mapper.Caching
         public void ClearCache()
         {
             // destroy and recreate the cache
+            var cache = _memoryCache;
             var newMemoryCache = new MemoryCache(CacheName);
             Interlocked.Exchange(ref _memoryCache, newMemoryCache);
+            cache.Dispose();
         }
 
         /// <summary>
