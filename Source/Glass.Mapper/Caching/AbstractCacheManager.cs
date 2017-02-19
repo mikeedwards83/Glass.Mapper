@@ -43,7 +43,7 @@ namespace Glass.Mapper.Caching
         public abstract T GetValue<T>(string key) where T : struct;
 
         protected abstract void InternalAddOrUpdate<T>(string key, T value);
-        public abstract object InternalGet(string key);
+        protected abstract object InternalGet(string key);
         
 
         protected class NullValue
