@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Glass.Mapper.Caching
 {
-    public class NetMemoryCacheManager : ICacheManager
+    public class NetMemoryCacheManager : AbstractCacheManager
     {
         private static MemoryCache _memoryCache = new MemoryCache(CacheName);
 
@@ -27,17 +27,10 @@ namespace Glass.Mapper.Caching
             SlidingExpiry = 60*20;
         }
 
-
-        public object this[string key]
-        {
-            get { return Get<object>(key); }
-            set { AddOrUpdate(key, value); }
-        }
-
         /// <summary>
         /// Destroys and recreates the cache
         /// </summary>
-        public void ClearCache()
+        public override void ClearCache()
         {
             // destroy and recreate the cache
             var newMemoryCache = new MemoryCache(CacheName);
@@ -50,7 +43,7 @@ namespace Glass.Mapper.Caching
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <typeparam name="T"></typeparam>
-        public void AddOrUpdate<T>(string key, T value)
+        protected override void InternalAddOrUpdate<T>(string key, T value)
         {
             if (_memoryCache.Contains(key))
             {
@@ -70,12 +63,12 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public T Get<T>(string key) where T : class
+        protected override object InternalGet(string key)
         {
-            return _memoryCache[key] as T;
+            return _memoryCache[key];
         }
 
-        public T GetValue<T>(string key) where T : struct
+        public override T GetValue<T>(string key) 
         {
             try
             {
@@ -87,7 +80,7 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public bool Contains(string key)
+        public override bool Contains(string key)
         {
             return _memoryCache.Contains(key);
         }

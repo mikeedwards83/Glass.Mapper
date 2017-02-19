@@ -7,7 +7,7 @@ using System.Web.Caching;
 namespace Glass.Mapper.Caching
 {
     [Obsolete("Use the NetMemoryCache instead.")]
-    public class HttpCache : ICacheManager
+    public class HttpCache : AbstractCacheManager
     {
         private static ConcurrentBag<string> _keys = new ConcurrentBag<string>();
 
@@ -38,13 +38,7 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public object this[string key]
-        {
-            get { return Get<object>(key); }
-            set { AddOrUpdate(key, value); }
-        }
-
-        public void ClearCache()
+        public override void ClearCache()
         {
             var cache = Cache;
             if (cache == null) return;
@@ -57,7 +51,8 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public void AddOrUpdate<T>(string key, T value)
+
+        protected override void InternalAddOrUpdate <T>(string key, T value)
         {
             var cache = Cache;
             if (cache == null) return;
@@ -77,15 +72,15 @@ namespace Glass.Mapper.Caching
             Keys.Add(key);
         }
 
-        public T Get<T>(string key) where T : class
+        protected override object InternalGet(string key) 
         {
             var cache = Cache;
             return cache != null
-                ? cache[key] as T
+                ? cache[key] 
                 : null;
         }
 
-        public T GetValue<T>(string key) where T : struct
+        public override T GetValue<T>(string key)
         {
             var cache = Cache;
             return cache != null
@@ -93,7 +88,7 @@ namespace Glass.Mapper.Caching
                 : default(T);
         }
 
-        public bool Contains(string key)
+        public override bool Contains(string key)
         {
             return Get<object>(key) != null;
         }

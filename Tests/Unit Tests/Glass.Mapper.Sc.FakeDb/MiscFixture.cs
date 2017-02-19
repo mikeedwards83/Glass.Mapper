@@ -42,6 +42,56 @@ namespace Glass.Mapper.Sc.FakeDb
     public class MiscFixture
     {
         [Test]
+        public void EnforceTemplateOnCachableItemWhenItemReturnsNull()
+        {
+            /*
+             * Test for https://github.com/mikeedwards83/Glass.Mapper/issues/283
+             */
+
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    {fieldName, ""}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var fluentLoader = new SitecoreFluentConfigurationLoader();
+                var basic = fluentLoader.Add<IBase>();
+                basic.TemplateId(ID.NewID);
+                basic.EnforceTemplate();
+                basic.Cachable();
+
+                var basicPage = fluentLoader.Add<IBasePage>();
+                basicPage.TemplateId(templateId);
+                basicPage.EnforceTemplate();
+                basicPage.Cachable();
+
+                context.Load(fluentLoader);
+
+                var db = database.Database;
+                var scContext = new SitecoreContext(db);
+
+                var instance1 = scContext.GetItem<IBase>("/sitecore/content/target");
+                var instance2 = scContext.GetItem<IBasePage>("/sitecore/content/target");
+
+                //Act
+                Assert.IsNull(instance1);
+                Assert.IsNotNull(instance2);
+
+            }
+        }
+
+
+        [Test]
         public void InterfaceIssueInPageEditorWhenInterfaceInheritsFromAnInterfaceWithSimilarName()
         {
             /*
