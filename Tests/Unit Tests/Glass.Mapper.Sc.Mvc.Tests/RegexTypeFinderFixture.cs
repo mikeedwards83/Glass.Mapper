@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,6 +123,26 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                      "@using Glass.Website.Kernel.Data.sitecore.templates.GlassWebsite.Components\n\r" +
                      "@using  Glass.Mapper.Sc.Mvc.Tests.A_test\n\r" +
                      "@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Stub>\n\r";
+
+            var finder = new StubFinder();
+            //Act
+            var result = finder.GetType(contents);
+
+            //Assert
+            Assert.AreEqual(typeof(A_test.Stub), result);
+        }
+
+        /// <summary>
+        /// Added to prevent issue 275.
+        /// </summary>
+        [Test]
+        public void GetType_with_trailing_semicolons_returns_type_correctly()
+        {
+            // Arrange
+            var contents =
+                     "@using Glass.Website.Kernel.Data.sitecore.templates.GlassWebsite.Components;\n\r" +
+                     "@using  Glass.Mapper.Sc.Mvc.Tests.A_test;\n\r" +
+                     "@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Stub>;\n\r";
 
             var finder = new StubFinder();
             //Act

@@ -17,8 +17,8 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         private readonly IEnumerable<Regex> _usingPatterns;
 
 
-        public static readonly Regex UsingRegex = new Regex(@"@using\s+(?<namespace>[^\n\s]+)");
-        public static readonly Regex ModelRegex = new Regex(@"@model\s+(?<type>[^\n\s]+)");
+        public static readonly Regex UsingRegex = new Regex(@"@using\s+(?<namespace>[^\n\s;()]+)");
+        public static readonly Regex ModelRegex = new Regex(@"@model\s+(?<type>[^\n\s;]+)");
         public static readonly Regex InheritsRegex = new Regex("@inherits.*<(?<type>[^>]*)>");
         private static IEnumerable<Assembly> _assemblies;
 
