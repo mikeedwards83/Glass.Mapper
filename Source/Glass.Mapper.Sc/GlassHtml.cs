@@ -54,7 +54,11 @@ namespace Glass.Mapper.Sc
         private static readonly Type ImageType = typeof(Image);
         private static readonly Type LinkType = typeof(Link);
         private static ConcurrentDictionary<string, object> _compileCache = new ConcurrentDictionary<string, object>();
-        public static string DisableEditable => "DisableEditable";
+
+        public static string DisableEditable
+        {
+            get { return "DisableEditable"; }
+        }
 
         private readonly Context _context;
 
