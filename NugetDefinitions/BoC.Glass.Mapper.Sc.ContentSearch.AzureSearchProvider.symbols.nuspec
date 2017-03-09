@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BoC.Glass.Mapper.Sc.ContentSearch.AzureSearchProvider</id>
+    <version>$version$</version>
+    <authors>Chris van de Steeg, Michael Edwards, Nathanael Mann</authors>
+    <owners>Chris van de Steeg</owners>
+    <licenseUrl>https://github.com/csteeg/Glass.Mapper/blob/develop/License.txt</licenseUrl>
+    <projectUrl>https://github.com/csteeg/Glass.Mapper/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      This is a fork of Glass.Mapper, maintained by Chris van de Steeg.
+      The fork contains several fixes for codefirst and contentsearch usage.
+      ----------------------------------------------------------------------
+      An ORM for Sitecore. Map item data from Sitecore straight onto objects. Allows you to map fields,
+      relationships and queries as well as supporting the Page Editor. Allows you to map data from 
+      Sitecore using the Castle Windsor DI Container.
+    </description>
+    <releaseNotes>This is a forked version of the Mike Edwards package with better support for codefirst and contentsearch integration.</releaseNotes>
+    <copyright>Copyright (C) by Michael Edwards</copyright>
+    <tags>Glass Mapper Sitecore Glass.Mapper</tags>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="Castle.Core" version="3.3.3" />
+      <dependency id="BoC.Glass.Mapper.Sc.Core" version="$version$" />
+    </dependencies>
+  </metadata>
+  <files>
+
+    <file src="NugetDefinitions\readme.txt" target="readme.txt" />
+
+    <!-- ASSEMBLIES -->
+    
+    <!-- Glass.Mapper -->
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\bin\82\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider.dll" target="lib\100\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider.dll" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\bin\82\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider.pdb" target="lib\100\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider.pdb" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\82\Glass.Mapper.Sc.ContentSearch.dll" target="lib\100\Glass.Mapper.Sc.ContentSearch.dll" />
+	<file src="Source\Glass.Mapper.Sc.ContentSearch\bin\82\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\100\Glass.Mapper.Sc.ContentSearch.pdb" />
+
+    <!-- CONFIG FILES  -->
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\App_Config\**" target="content\App_Config" />
+
+    <file src="Source\Glass.Mapper.Sc.ContentSearch\**.cs" target="src\Source\Glass.Mapper.Sc.ContentSearch" />
+    <file src="Source\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\**.cs" target="src\Source\Glass.Mapper.Sc.ContentSearch.Azure" />
+    
+    <!-- Powershell -->
+
+    <file src="Powershell\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\install.ps1" target="tools\install.ps1" />
+    <file src="Powershell\Glass.Mapper.Sc.ContentSearch.AzureSearchProvider\uninstall.ps1" target="tools\uninstall.ps1" />
+
+	  
+
+  </files>
+</package>

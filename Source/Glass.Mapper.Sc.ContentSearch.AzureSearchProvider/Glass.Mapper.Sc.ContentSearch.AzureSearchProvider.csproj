@@ -73,7 +73,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU'">
     <Compile Include="GlassDocumentMapperObjectFactory.cs" />
     <Compile Include="GlassAzureSearchFieldNameTranslator.cs" />
     <Compile Include="GlassAzureSearchIndex.cs" />
