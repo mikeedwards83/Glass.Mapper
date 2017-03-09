@@ -68,7 +68,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 string cacheKey = modelCacheManager.GetKey(path);
                 Type modelType = modelCacheManager.Get(cacheKey);
 
-                if (modelType == typeof(NullModel))
+                if (modelType == typeof(NullModel) || modelType == typeof(RenderingModel))
                 {
                     // The model has been attempted before and is not useful
                     return;
@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
                     modelCacheManager.Add(cacheKey, modelType);
 
-                    if (modelType == typeof(NullModel))
+                    if (modelType == typeof(NullModel) || modelType == typeof(RenderingModel))
                     {
                         // This is not the type we are looking for
                         return;
