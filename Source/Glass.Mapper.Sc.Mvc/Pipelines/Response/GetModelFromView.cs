@@ -121,7 +121,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
             }
             finally
             {
-                Sitecore.Diagnostics.Log.Info("GetModelFromView {0} {1}".Formatted(watch.ElapsedMilliseconds, args.Rendering.RenderingItem.ID), this);
+                Sitecore.Diagnostics.Log.Debug("GetModelFromView {0} {1}".Formatted(watch.ElapsedMilliseconds, args.Rendering.RenderingItem.ID), this);
             }
         }
 
