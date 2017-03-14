@@ -68,8 +68,5 @@
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">3</Mvc>
     <OutputPath>bin\70\</OutputPath>
-  </PropertyGroup>
-
-  
-  
+  </PropertyGroup>  
 </Project>

@@ -45,7 +45,7 @@ namespace Glass.Mapper.Sc.ContentSearch.AzureSearchProvider
                 }
             }
 
-            if (!string.IsNullOrEmpty(fieldConfig?.FieldName))
+            if (fieldConfig != null && !string.IsNullOrEmpty(fieldConfig.FieldName))
                 return base.GetIndexFieldName(fieldConfig.FieldName);
 
             if (fieldConfig == null)

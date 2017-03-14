@@ -46,7 +46,9 @@ namespace Glass.Mapper.Sc.ContentSearch.AzureSearchProvider
 				Context.Contexts.Select(c => c.Value).Select(c => c.GetTypeConfigurationFromType<SitecoreTypeConfiguration>(baseType)).FirstOrDefault(c => c != null)
 				: null;
 
-			if (typeConfig == null || typeConfig.TemplateId == (ID)null || !fieldValues.ContainsKey(BuiltinFields.Template) || !fieldValues.ContainsKey(BuiltinFields.Group))
+            var templateFieldName = _searchIndex.FieldNameTranslator.GetIndexFieldName(BuiltinFields.Template);
+            var groupFieldName = _searchIndex.FieldNameTranslator.GetIndexFieldName(BuiltinFields.Group);
+			if (typeConfig == null || typeConfig.TemplateId == (ID)null || !fieldValues.ContainsKey(templateFieldName) || !fieldValues.ContainsKey(groupFieldName))
                 return _defaultDocumentMapper.CreateElementInstance(baseType, fieldValues, executionContexts);
 
             var sitecoreService = new SitecoreContext();
@@ -56,24 +58,24 @@ namespace Glass.Mapper.Sc.ContentSearch.AzureSearchProvider
                 RequestedType = baseType,
                 InferType = true,
                 IsLazy = true,
-                TemplateId = ID.Parse(fieldValues[BuiltinFields.Template]),
+                TemplateId = ID.Parse(fieldValues[templateFieldName]),
             };
             using (new SearchSwitcher())
             {
                 var proxy = sitecoreService.InstantiateObject(typeCreationContext);
-                SetupProxy(ID.Parse(fieldValues[BuiltinFields.Group]), fieldValues, proxy as IProxyTargetAccessor);
+                SetupProxy(ID.Parse(fieldValues[groupFieldName]), fieldValues, proxy as IProxyTargetAccessor, typeConfig);
                 return proxy;
             }
         }
 
-        protected void SetupProxy(ID id, IDictionary<string, object> fieldValues, IProxyTargetAccessor target)
+        protected void SetupProxy(ID id, IDictionary<string, object> fieldValues, IProxyTargetAccessor target, SitecoreTypeConfiguration typeConfiguration)
         {
             if (target == null) return;
             var searchInterceptor = target.GetInterceptors().FirstOrDefault(x => x is SearchInterceptor) as SearchInterceptor;
             if (searchInterceptor == null) return;
 
             searchInterceptor.Id = id;
-            searchInterceptor.TypeConfiguration = new SitecoreContext().GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(target);
+            searchInterceptor.TypeConfiguration = typeConfiguration;
         }
 
 
