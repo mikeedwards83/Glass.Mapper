@@ -42,11 +42,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
                 {
                     //check to see if the type is registered with the SimpleInjector container
                     //if it isn't added it
-                    if (IsRegistered(configuration.Type))
+                    if (!IsRegistered(configuration.Type))
                     {
                         lock (_lock)
                         {
-                            if (IsRegistered(configuration.Type))
+                            if (!IsRegistered(configuration.Type))
                             {
                                 Register(configuration.Type);
                             }
