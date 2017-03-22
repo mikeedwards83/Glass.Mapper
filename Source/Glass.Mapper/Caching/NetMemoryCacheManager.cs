@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Caching;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Glass.Mapper.Caching
 {
@@ -34,7 +35,10 @@ namespace Glass.Mapper.Caching
         {
             // destroy and recreate the cache
             var newMemoryCache = new MemoryCache(CacheName);
-            Interlocked.Exchange(ref _memoryCache, newMemoryCache);
+            var oldCache = Interlocked.Exchange(ref _memoryCache, newMemoryCache);
+            /* Wait a moment before disposing in case there are any in-flight requests. */
+            Task.Delay(1000).Wait();
+            oldCache.Dispose();
         }
 
         /// <summary>
@@ -45,22 +49,17 @@ namespace Glass.Mapper.Caching
         /// <typeparam name="T"></typeparam>
         protected override void InternalAddOrUpdate<T>(string key, T value)
         {
-            if (_memoryCache.Contains(key))
-            {
-                _memoryCache.Remove(key);
-            }
-
             CacheItemPolicy cacheItemPolicy = new CacheItemPolicy();
             if (AbsoluteExpiry > 0)
             {
                 cacheItemPolicy.AbsoluteExpiration = DateTime.Now.AddSeconds(AbsoluteExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
             }
             else
             {
                 cacheItemPolicy.SlidingExpiration = new TimeSpan(0, 0, SlidingExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
             }
+
+            _memoryCache.Set(key, value, cacheItemPolicy);
         }
 
         protected override object InternalGet(string key)
