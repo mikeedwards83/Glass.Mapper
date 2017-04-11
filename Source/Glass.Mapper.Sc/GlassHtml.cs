@@ -81,7 +81,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         public static string ImageTagFormat = "<img src={2}{0}{2} {1}/>";
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
-        public static string QuotationMark = "'";
+        public static string QuotationMark = "\"";
 
         protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
@@ -925,9 +925,13 @@ namespace Glass.Mapper.Sc
                 htmlParams.Remove(ImageParameterKeys.HEIGHTHTML);
             }
 
+            foreach (var key in htmlParams.Keys.ToArray())
+            {
+                htmlParams[key] = HttpUtility.HtmlAttributeEncode(htmlParams[key]);
+            }
+
+
             var builder = new UrlBuilder(image.Src);
-
-
 
             foreach (var key in urlParams.Keys)
             {

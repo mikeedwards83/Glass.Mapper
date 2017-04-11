@@ -2346,7 +2346,8 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderImage_AlternativeQuotationMarks_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"someAlt\" width=\"380\" />";
+            var expected =
+                "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"someAlt\" width=\"380\" />";
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
@@ -2356,26 +2357,89 @@ namespace Glass.Mapper.Sc.FakeDb
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new { Width = 380, W = 240 };
-            var model = new { Image = image };
+            var parameters = new {Width = 380, W = 240};
+            var model = new {Image = image};
+
+            GlassHtml.QuotationMark = "'";
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             GlassHtml.QuotationMark = "\"";
 
-            Sitecore.Resources.Media.MediaProvider mediaProvider =
-                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
-           
-              
-               
-                //Act
-                var result = html.RenderImage(model, x => x.Image, parameters, true, true);
-
-                GlassHtml.QuotationMark = "'";
-
-                //Assert
-                AssertHtml.AreImgEqual(expected, result);
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
 
         }
 
+        [Test]
+        public void RenderImage_SingleQuotatinMarkInAltText_RendersCorrectHtml()
+        {
+            //Arrange
+            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some'Alt\" width=\"380\" />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            scContext.Config = new Config();
+
+            var html = new GlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "some'Alt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var parameters = new { Width = 380, W = 240 };
+            var model = new { Image = image };
+
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+
+
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
+        }
+
+        [Test]
+        public void RenderImage_DoubleQuotatinMarkInAltText_RendersCorrectHtml()
+        {
+            //Arrange
+            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some&quot;Alt\" width=\"380\" />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            scContext.Config = new Config();
+
+            var html = new GlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "some\"Alt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var parameters = new { Width = 380, W = 240 };
+            var model = new { Image = image };
+
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+
+
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
+        }
 
         [Test]
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtmlNoWidthHeight()
