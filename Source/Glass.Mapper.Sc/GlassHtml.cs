@@ -372,7 +372,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(field.Compile().Invoke(model) as Link, attrs, string.Empty, writer);
+                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs, string.Empty, writer);
             }
         }
 
