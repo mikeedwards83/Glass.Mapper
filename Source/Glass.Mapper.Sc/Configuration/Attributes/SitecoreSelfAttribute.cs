@@ -27,7 +27,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// <param name="config">The config.</param>
         public void Configure(PropertyInfo propertyInfo, SitecoreSelfConfiguration config)
         {
-
             base.Configure(propertyInfo, config);
         }
     }

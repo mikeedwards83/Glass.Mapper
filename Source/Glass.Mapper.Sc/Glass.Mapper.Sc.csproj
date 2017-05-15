@@ -85,6 +85,7 @@
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
     <Compile Include="Configuration\Fluent\SitecoreMapConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreSelf.cs" />
     <Compile Include="Configuration\SitecoreDelegateConfiguration.cs" />
     <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
