@@ -59,7 +59,7 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
                                              SitecoreDataMappingContext context)
         {
-            if (fieldValue.IsNullOrEmpty()) return Guid.Empty;
+            if (fieldValue.IsNullOrEmpty()) return ID.Null;
 
 
             return ID.Parse(fieldValue);
