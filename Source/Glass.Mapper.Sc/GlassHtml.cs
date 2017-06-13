@@ -891,7 +891,7 @@ namespace Glass.Mapper.Sc
             var finalSize = Utilities.ResizeImage(
                 image.Width,
                 image.Height,
-                urlParams[ImageParameterKeys.SCALE].ToFlaot(),
+                urlParams[ImageParameterKeys.SCALE].ToFloat(),
                 urlParams[ImageParameterKeys.WIDTH].ToInt(),
                 urlParams[ImageParameterKeys.HEIGHT].ToInt(),
                 urlParams[ImageParameterKeys.MAX_WIDTH].ToInt(),
