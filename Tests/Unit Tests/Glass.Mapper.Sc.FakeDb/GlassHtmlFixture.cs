@@ -1763,6 +1763,7 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
+
         [Test]
         public void Editable_NotInEditModeWithStandardOutput_StringFieldWithEditReturned()
         {
@@ -2052,6 +2053,156 @@ namespace Glass.Mapper.Sc.FakeDb
 
         #endregion
 
+        #region Method - EditableIf
+
+        [Test]
+        public void EditableIf_InEditModeWithStandardOutputPredicateTrue_StringFieldWithEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/target";
+
+            var templateId = ID.NewID;
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    new DbField("StringField")
+                    {
+                        Type = "text"
+                    }
+                },
+                new Sitecore.FakeDb.DbItem("Target", ID.NewID, templateId)
+                {
+                    {"StringField", ""}
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+                var service = new SitecoreContext(database.Database);
+
+                var html = GetGlassHtml(service);
+
+                var model = service.GetItem<StubClass>(targetPath);
+
+                var fieldValue = "test content field";
+
+                model.StringField = fieldValue;
+
+                using (new SecurityDisabler())
+                {
+                    service.Save(model);
+                }
+
+                var doc = new XmlDocument();
+                doc.LoadXml(
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+                var siteContext = new SiteContextStub(
+                    new SiteInfo(
+                        doc.FirstChild
+                        )
+                    );
+
+                using (new EnableWebEditMode())
+                {
+                    using (new SiteContextSwitcher(siteContext))
+                    {
+
+                        //Act
+
+                        string result;
+
+                        using (new SecurityDisabler())
+                        {
+                            result = html.EditableIf(model, () => true, x => x.StringField, x => x.StringField);
+                        }
+                        //Assert
+                        Assert.IsTrue(result.Contains(fieldValue));
+                        //this is the webedit class
+
+                        Assert.IsTrue(result.Contains("scWebEditInput"), "result " + result);
+                    }
+                }
+            }
+        }
+
+
+        [Test]
+        public void EditableIf_InEditModeWithStandardOutputPredicateFalse_StringFieldWithoutEditReturned()
+        {
+            //Assign
+            string targetPath = "/sitecore/content/target";
+
+            var templateId = ID.NewID;
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    new DbField("StringField")
+                    {
+                        Type = "text"
+                    }
+                },
+                new Sitecore.FakeDb.DbItem("Target", ID.NewID, templateId)
+                {
+                    {"StringField", ""}
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+                var service = new SitecoreContext(database.Database);
+
+                var html = GetGlassHtml(service);
+
+                var model = service.GetItem<StubClass>(targetPath);
+
+                var fieldValue = "test content field";
+
+                model.StringField = fieldValue;
+
+                using (new SecurityDisabler())
+                {
+                    service.Save(model);
+                }
+
+                var doc = new XmlDocument();
+                doc.LoadXml(
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+
+                var siteContext = new SiteContextStub(
+                    new SiteInfo(
+                        doc.FirstChild
+                        )
+                    );
+
+                using (new EnableWebEditMode())
+                {
+                    using (new SiteContextSwitcher(siteContext))
+                    {
+
+                        //Act
+
+                        string result;
+
+                        using (new SecurityDisabler())
+                        {
+                            result = html.EditableIf(model, () => false, x => x.StringField, x => x.StringField);
+                        }
+                        //Assert
+                        Assert.IsTrue(result.Contains(fieldValue));
+                        //this is the webedit class
+
+                        Assert.IsFalse(result.Contains("scWebEditInput"), "result " + result);
+                        Assert.AreEqual(fieldValue, result);
+                    }
+                }
+            }
+        }
+        #endregion
 
         #region RenderingParameters
 
@@ -2195,7 +2346,8 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderImage_AlternativeQuotationMarks_RendersCorrectHtml()
         {
             //Arrange
-            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"someAlt\" width=\"380\" />";
+            var expected =
+                "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"someAlt\" width=\"380\" />";
             var scContext = Substitute.For<ISitecoreContext>();
             scContext.Config = new Config();
 
@@ -2205,26 +2357,89 @@ namespace Glass.Mapper.Sc.FakeDb
             image.Width = 200;
             image.Height = 105;
             image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var parameters = new { Width = 380, W = 240 };
-            var model = new { Image = image };
+            var parameters = new {Width = 380, W = 240};
+            var model = new {Image = image};
+
+            GlassHtml.QuotationMark = "'";
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
 
             GlassHtml.QuotationMark = "\"";
 
-            Sitecore.Resources.Media.MediaProvider mediaProvider =
-                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
-           
-              
-               
-                //Act
-                var result = html.RenderImage(model, x => x.Image, parameters, true, true);
-
-                GlassHtml.QuotationMark = "'";
-
-                //Assert
-                AssertHtml.AreImgEqual(expected, result);
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
 
         }
 
+        [Test]
+        public void RenderImage_SingleQuotatinMarkInAltText_RendersCorrectHtml()
+        {
+            //Arrange
+            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some'Alt\" width=\"380\" />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            scContext.Config = new Config();
+
+            var html = new GlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "some'Alt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var parameters = new { Width = 380, W = 240 };
+            var model = new { Image = image };
+
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+
+
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
+        }
+
+        [Test]
+        public void RenderImage_DoubleQuotatinMarkInAltText_RendersCorrectHtml()
+        {
+            //Arrange
+            var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some&quot;Alt\" width=\"380\" />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            scContext.Config = new Config();
+
+            var html = new GlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "some\"Alt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var parameters = new { Width = 380, W = 240 };
+            var model = new { Image = image };
+
+
+            Sitecore.Resources.Media.MediaProvider mediaProvider =
+                 NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+
+
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+
+
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
+        }
 
         [Test]
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtmlNoWidthHeight()

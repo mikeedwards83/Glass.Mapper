@@ -63,6 +63,7 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
+    <Compile Include="Caching\AbstractCacheManager.cs" />
     <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheKeyGenerator.cs" />

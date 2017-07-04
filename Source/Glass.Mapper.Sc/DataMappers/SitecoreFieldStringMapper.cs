@@ -44,7 +44,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
         }
 
-        private const string _richTextKey = "rich text";
+        public const string RichTextKey = "rich text";
 
 
         private static ConcurrentDictionary<Guid, bool> isRichTextDictionary = new ConcurrentDictionary<Guid, bool>();
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             // we don't know - it might still be rich text
-            bool isRichText = field.TypeKey == _richTextKey;
+            bool isRichText = field.TypeKey == RichTextKey;
             isRichTextDictionary.TryAdd(fieldGuid, isRichText);
 
             // now we know it isn't rich text - return the raw result.
@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc.DataMappers
             RenderFieldArgs renderFieldArgs = new RenderFieldArgs
             {
                 Item = field.Item,
-                FieldName = field.Name,
+                FieldName = field.ID.ToString(),
                 DisableWebEdit = true
             };
             try

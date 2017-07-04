@@ -29,6 +29,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreFieldFloatMapper());
             Add(() => new SitecoreFieldGuidMapper());
             Add(() => new SitecoreFieldIdMapper());
+            Add(() => new SitecoreFieldItemMapper());
             Add(() => new SitecoreFieldHtmlEncodingMapper());
             Add(() => new SitecoreFieldIEnumerableMapper());
             Add(() => new SitecoreFieldImageMapper());

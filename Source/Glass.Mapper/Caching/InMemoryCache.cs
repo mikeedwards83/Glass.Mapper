@@ -2,43 +2,32 @@
 
 namespace Glass.Mapper.Caching
 {
-    public class InMemoryCache : ICacheManager
+    public class InMemoryCache : AbstractCacheManager
     {
         private readonly ConcurrentDictionary<string, object> _innerCache = new ConcurrentDictionary<string, object>();
 
         protected ConcurrentDictionary<string, object> Cache { get { return _innerCache; } }
 
-        public object this[string key]
-        {
-            get
-            {
-                return Get<object>(key);
-            }
-            set
-            {
-                AddOrUpdate(key, value);
-            }
-        }
 
-        public void ClearCache()
+        public override void ClearCache()
         {
             Cache.Clear();
         }
 
-        public void AddOrUpdate<T>(string key, T value)
+        protected override void InternalAddOrUpdate<T>(string key, T value)
         {
             Cache.AddOrUpdate(key, value, (s, o) => value);
         }
 
-        public T Get<T>(string key) where T : class
+        protected override object InternalGet(string key) 
         {
             object retVal;
             return Cache.TryGetValue(key, out retVal)
-                ? retVal as T
+                ? retVal
                 : null;
         }
 
-        public T GetValue<T>(string key) where T : struct
+        public override T GetValue<T>(string key)
         {
             object retVal;
             return Cache.TryGetValue(key, out retVal)
@@ -46,7 +35,7 @@ namespace Glass.Mapper.Caching
                 : default(T);
         }
 
-        public bool Contains(string key)
+        public override bool Contains(string key)
         {
             return Cache.ContainsKey(key);
         }

@@ -109,6 +109,7 @@
     <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldItemMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Issues\Issue145\Issue145.cs" />
     <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
     <Compile Include="Issues\Issue247\Issue247.cs" />
+    <Compile Include="Issues\Issue311\Issue311Fixture.cs" />
     <Compile Include="LazyLoadingFixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />

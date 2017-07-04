@@ -249,6 +249,18 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Map an item to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreSelf{`0}.</returns>
+        public SitecoreSelf<T> Self(Expression<Func<T, object>> ex)
+        {
+            SitecoreSelf<T> builder = new SitecoreSelf<T>(ex);
+            Configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
+        /// <summary>
         /// Map a Sitecore Query to a class property
         /// </summary>
         /// <param name="ex">The ex.</param>
