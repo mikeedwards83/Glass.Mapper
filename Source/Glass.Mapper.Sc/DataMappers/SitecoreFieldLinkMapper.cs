@@ -109,6 +109,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.Type = LinkType.External;
                     break;
                 case "mailto":
+                    link.Class = linkField.GetAttribute("style");
                     link.Url = linkField.Url;
                     link.Type = LinkType.MailTo;
                     break;
