@@ -76,21 +76,9 @@ namespace Glass.Mapper.Sc.DataMappers
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Gets the field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <returns>System.Object.</returns>
-        public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+
+        protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config)
         {
-
-            if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
-
-            Link link = new Link();
-            LinkField linkField = new LinkField(field);
-
             link.Anchor = linkField.Anchor;
             link.Class = linkField.Class;
             link.Text = linkField.Text;
@@ -133,46 +121,40 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.Url = linkField.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
-                    link.Text =  linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.DisplayName) : linkField.Text;
+                    link.Text = linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.DisplayName) : linkField.Text;
                     break;
                 default:
-                    return null;
+                    link = null;
+                    break;
             }
 
 
-         
+        }
+
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
+        public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config,
+            SitecoreDataMappingContext context)
+        {
+
+            if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
+
+            Link link = new Link();
+            LinkField linkField = new LinkField(field);
+
+            MapToLinkModel(link, linkField, config);
 
             return link;
         }
 
-        /// <summary>
-        /// Sets the field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <exception cref="Glass.Mapper.MapperException">
-        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
-        /// or
-        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
-        /// </exception>
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        protected void MapToLinkField(Link link, LinkField linkField, SitecoreFieldConfiguration config)
         {
-            Link link = value as Link;
-            
-
-            if (field == null) return;
-
-            var item = field.Item;
-
-            LinkField linkField = new LinkField(field);
-            if (link == null || link.Type == LinkType.NotSet)
-            {
-                linkField.Clear();
-                return;
-            }
-
+            var item = linkField.InnerField.Item;
 
             switch (link.Type)
             {
@@ -264,6 +246,36 @@ namespace Glass.Mapper.Sc.DataMappers
                 linkField.QueryString = HttpUtility.UrlEncode(link.Query);
             if (!link.Target.IsNullOrEmpty())
                 linkField.Target = link.Target;
+        }
+
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// or
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// </exception>
+        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            Link link = value as Link;
+            
+
+            if (field == null) return;
+
+
+            LinkField linkField = new LinkField(field);
+            if (link == null || link.Type == LinkType.NotSet)
+            {
+                linkField.Clear();
+                return;
+            }
+
+            MapToLinkField(link, linkField, config);
         }
     }
 }
