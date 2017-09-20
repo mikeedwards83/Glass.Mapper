@@ -44,11 +44,16 @@ namespace Glass.Mapper.Sc.DataMappers
         {
         }
 
-        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver) : base(typeof(Link))
+        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver) 
+            : this(urlOptionsResolver, typeof(Link))
+        {
+        }
+
+        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver, Type type) 
+            : base(type)
         {
             _urlOptionsResolver = urlOptionsResolver;
         }
-
 
         /// <summary>
         /// Sets the field value.
