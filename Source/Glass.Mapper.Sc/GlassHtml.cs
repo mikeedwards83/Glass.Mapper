@@ -83,7 +83,7 @@ namespace Glass.Mapper.Sc
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
         public static string QuotationMark = "\"";
 
-        protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
+        public Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
             if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
@@ -118,7 +118,7 @@ namespace Glass.Mapper.Sc
             return compiled;
         }
 
-        protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
+        public Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
             if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {

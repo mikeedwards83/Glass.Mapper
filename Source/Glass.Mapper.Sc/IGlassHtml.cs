@@ -180,6 +180,22 @@ namespace Glass.Mapper.Sc
 #if (SC81 || SC80 || SC75 || SC82)
         string ProtectMediaUrl(string url);
 #endif
+
+
+        /// <summary>
+        /// Allows you to get a compiled function form the lambda expression. Typically used with extension methods.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression);
+        /// <summary>
+        /// Allows you to get a compiled function form the lambda expression. Typically used with extension methods.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression);
     }
 
 }
