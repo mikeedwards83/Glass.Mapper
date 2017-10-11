@@ -41,10 +41,12 @@ namespace Glass.Mapper.Tests
             // Arrange
             GlassLazy<LazyTestStub> glassLazy = new GlassLazy<LazyTestStub>(
                 () => { throw new Exception("Something Went Badly Wrong"); });
-            LazyTestStub lazyStub = glassLazy;
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                LazyTestStub lazyStub = glassLazy;
+            });
 
             // Assert
-            Assert.Throws<InvalidOperationException>(() => { var result = glassLazy.Value; });
         }
 
         [Test]
