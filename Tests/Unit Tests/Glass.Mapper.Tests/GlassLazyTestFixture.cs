@@ -34,9 +34,10 @@ namespace Glass.Mapper.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+      
         public void GlassLazyString_excepts_gracefully()
         {
+
             // Arrange
             GlassLazy<LazyTestStub> glassLazy = new GlassLazy<LazyTestStub>(
                 () => { throw new Exception("Something Went Badly Wrong"); });

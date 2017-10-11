@@ -92,7 +92,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             Assert.IsTrue(config.IsLazy);
             Assert.IsFalse(config.InferType);
             Assert.IsFalse(config.IsRelative);
-            Assert.IsNullOrEmpty(config.Query);
+            Assert.IsNull(config.Query);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             Assert.IsTrue(config.IsLazy);
             Assert.IsTrue(config.InferType);
             Assert.IsFalse(config.IsRelative);
-            Assert.IsNullOrEmpty(config.Query);
+            Assert.IsNull(config.Query);
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             Assert.IsTrue(config.IsLazy);
             Assert.IsFalse(config.InferType);
             Assert.IsTrue(config.IsRelative);
-            Assert.IsNullOrEmpty(config.Query);
+            Assert.IsNull(config.Query);
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             Assert.IsFalse(config.IsLazy);
             Assert.IsFalse(config.InferType);
             Assert.IsFalse(config.IsRelative);
-            Assert.IsNullOrEmpty(config.Query);
+            Assert.IsNull(config.Query);
         }
 
         #endregion

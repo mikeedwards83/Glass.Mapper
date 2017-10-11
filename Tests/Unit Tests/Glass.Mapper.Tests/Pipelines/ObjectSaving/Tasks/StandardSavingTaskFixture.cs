@@ -40,7 +40,6 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
 
         [Test]
-        [ExpectedException(typeof (PipelineException))]
         public void Execute_ConfigurationNotSet_ThrowsException()
         {
             //Assign
@@ -52,7 +51,10 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectSaving.Tasks
 
 
             //Act
-            task.Execute(args);
+            Assert.Throws<PipelineException>(() =>
+            {
+                task.Execute(args);
+            });
 
             //Assert
 
