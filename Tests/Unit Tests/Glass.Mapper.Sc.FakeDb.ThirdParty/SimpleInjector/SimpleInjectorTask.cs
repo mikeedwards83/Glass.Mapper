@@ -13,7 +13,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 
         protected override bool IsRegistered(Type type)
         {
-            return Container.GetRegistration(type) == null;
+            return Container.GetCurrentRegistrations().Any(x => x.ServiceType == type);
         }
 
         protected override void Register(Type type)
