@@ -75,6 +75,8 @@ namespace Glass.Mapper.Sc.Fields
         /// <value>The type.</value>
         public LinkType Type { get; set; }
 
+        public string Style { get; set; }
+
 
         public const string UrlFormat = "{0}{1}";
 

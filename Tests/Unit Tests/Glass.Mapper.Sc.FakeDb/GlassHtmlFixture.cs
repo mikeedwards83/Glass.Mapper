@@ -2927,7 +2927,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderLink_LinkWithAllSetProperties()
         {
             //Arrange
-            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' >hello world</a>";
+            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' style='mystyle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
@@ -2938,6 +2938,7 @@ namespace Glass.Mapper.Sc.FakeDb
             link.Query = "temp=fred";
             link.Target = "_blank";
             link.Title = "mytitle";
+            link.Style = "mystyle";
 
             var model = new { Link = link };
 
@@ -3064,7 +3065,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var url = "http://firstsearch.oclc.org/WebZ/FSPage?pagetype=return_frameset:linktype=servicelink:sessionid=fsapp6-41637-j79jaw2f-61y8dw:entitypagenum=10:0?entityframedscrolling=yes:entityframedurl=http%3A%2F%2Fwww.example.com:entityframedtitle=:entityframedtimeout=15";
-            var expected = $"<a href=\"{url}' ></a>";
+            var expected = $"<a href=\"{url}\" ></a>";
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             Link link = null;

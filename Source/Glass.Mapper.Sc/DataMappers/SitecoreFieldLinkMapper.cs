@@ -86,6 +86,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             link.Anchor = linkField.Anchor;
             link.Class = linkField.Class;
+            link.Style = linkField.GetAttribute("style");
             link.Text = linkField.Text;
             link.Title = linkField.Title;
             link.Target = linkField.Target;

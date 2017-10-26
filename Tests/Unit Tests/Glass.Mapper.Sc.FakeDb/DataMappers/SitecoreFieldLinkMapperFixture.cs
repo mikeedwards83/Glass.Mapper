@@ -35,6 +35,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         #region Method - GetField
 
+        
+
+
         [Test]
         public void GetField_FieldContainsAnchor_ReturnsAnchorLink()
         {
@@ -56,7 +59,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreFieldLinkMapper();
                 var fieldValue =
-                    "<link text=\"Test description\" linktype=\"anchor\" url=\"testAnchor\" anchor=\"testAnchor\" title=\"test alternate\" class=\"testClass\" />";
+                    "<link text=\"Test description\" linktype=\"anchor\" url=\"testAnchor\" anchor=\"testAnchor\" title=\"test alternate\" class=\"testClass\" style=\"mystyle\" />";
 
                 var item = database.GetItem("/sitecore/content/Target");
                 var field = item.Fields[fieldName];
@@ -79,6 +82,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 Assert.AreEqual("test alternate", result.Title);
                 Assert.AreEqual(LinkType.Anchor, result.Type);
                 Assert.AreEqual("testAnchor", result.Url);
+                Assert.AreEqual("mystyle", result.Style);
             }
         }
 

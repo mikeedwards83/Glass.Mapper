@@ -564,6 +564,7 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", title);
+            AttributeCheck(attributes, "style", link.Style);
 
             string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
