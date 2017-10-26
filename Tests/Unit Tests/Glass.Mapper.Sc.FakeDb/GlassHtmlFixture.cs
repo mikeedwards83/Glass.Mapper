@@ -3017,6 +3017,9 @@ namespace Glass.Mapper.Sc.FakeDb
             AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/329
+        /// </summary>
         [Test]
         public void RenderLink_LinkNull_ReturnsEmptyString()
         {
@@ -3035,6 +3038,9 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.AreEqual(expected, result);
         }
 
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/329
+        /// </summary>
         [Test]
         public void RenderLink_LinkNullAlwayRender_ReturnsEmptyString()
         {
@@ -3048,6 +3054,28 @@ namespace Glass.Mapper.Sc.FakeDb
 
             //Act
             var result = html.RenderLink(model, x => x.Link, alwaysRender:true);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_UrlContainsTwoQuestionMarks_ReturnsAValidUrl()
+        {
+            //Arrange
+            var url = "http://firstsearch.oclc.org/WebZ/FSPage?pagetype=return_frameset:linktype=servicelink:sessionid=fsapp6-41637-j79jaw2f-61y8dw:entitypagenum=10:0?entityframedscrolling=yes:entityframedurl=http%3A%2F%2Fwww.example.com:entityframedtitle=:entityframedtimeout=15";
+            var expected = $"<a href=\"{url}' ></a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            Link link = null;
+
+            var model = new { Link = new Link
+            {
+                Url = url
+            } };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, alwaysRender: true);
 
             //Assert
             Assert.AreEqual(expected, result);

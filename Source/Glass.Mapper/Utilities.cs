@@ -38,6 +38,34 @@ namespace Glass.Mapper
             new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
 
+
+        public static string[] SplitOnFirstOccurance(string value, char separator)
+        {
+
+            string first = string.Empty;
+            var second = string.Empty;
+            if (value.HasValue())
+            {
+                var index = value.IndexOf(separator);
+
+                if (index < 0)
+                {
+                    first = value;
+                }
+                else
+                {
+                    first = value.Substring(0, index);
+                    if (index+1 < value.Length)
+                    {
+                        second = value.Substring(index + 1);
+                    }
+                }
+
+            }
+            return new[] { first, second };
+
+        }
+
         public static object GetDefault(Type type)
         {
             if (type.IsValueType)

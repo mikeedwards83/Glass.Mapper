@@ -29,6 +29,80 @@ namespace Glass.Mapper.Tests
     public class UtilitiesFixture
     {
 
+        #region SplitOnFirstOccurance
+
+        [Test]
+        public void SplitOnFirstOccurance_SplitInMiddleOfString_ReturnsTwoParts()
+        {
+            //Arrange
+            var input = "hello?world?hi";
+            var first = "hello";
+            var second = "world?hi";
+            var separator = '?';
+
+            //Act
+            var result = Utilities.SplitOnFirstOccurance(input, separator);
+
+            //Assert
+            Assert.AreEqual(first, result[0]);
+            Assert.AreEqual(second, result[1]);
+        }
+
+        [Test]
+        public void SplitOnFirstOccurance_NoSeparator_ReturnsTwoParts()
+        {
+            //Arrange
+            var input = "helloworldhi";
+            var first = "helloworldhi";
+            var second = string.Empty;
+            var separator = '?';
+
+            //Act
+            var result = Utilities.SplitOnFirstOccurance(input, separator);
+
+            //Assert
+            Assert.AreEqual(first, result[0]);
+            Assert.AreEqual(second, result[1]);
+        }
+
+        [Test]
+        public void SplitOnFirstOccurance_SeparatorAtEnd_ReturnsTwoParts()
+        {
+            //Arrange
+            var input = "helloworldhi?";
+            var first = "helloworldhi";
+            var second = string.Empty;
+            var separator = '?';
+
+            //Act
+            var result = Utilities.SplitOnFirstOccurance(input, separator);
+
+            //Assert
+            Assert.AreEqual(first, result[0]);
+            Assert.AreEqual(second, result[1]);
+        }
+
+        [Test]
+        public void SplitOnFirstOccurance_SeparatorAtStart_ReturnsTwoParts()
+        {
+            //Arrange
+            var input = "?helloworldhi?";
+            var first = string.Empty;
+            var second = "helloworldhi?";
+            var separator = '?';
+
+            //Act
+            var result = Utilities.SplitOnFirstOccurance(input, separator);
+
+            //Assert
+            Assert.AreEqual(first, result[0]);
+            Assert.AreEqual(second, result[1]);
+        }
+
+        #endregion
+
+
+
         #region Method - CreateConstructorDelegates
 
         [Test]
