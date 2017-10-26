@@ -3018,6 +3018,42 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 
         [Test]
+        public void RenderLink_LinkNull_ReturnsEmptyString()
+        {
+            //Arrange
+            var expected = string.Empty;
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            Link link = null;
+
+            var model = new {Link = link};
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void RenderLink_LinkNullAlwayRender_ReturnsEmptyString()
+        {
+            //Arrange
+            var expected = "<a href=\"\" ></a>";
+            var scContext = Substitute.For<ISitecoreContext>();
+            var html = new GlassHtml(scContext);
+            Link link = null;
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, alwaysRender:true);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void RenderLink_HtmlEncodesTitle()
         {
             //Arrange
