@@ -147,6 +147,7 @@
     <Compile Include="Issues\Issue145\Issue145.cs" />
     <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
     <Compile Include="Issues\Issue247\Issue247.cs" />
+    <Compile Include="Issues\Issue299\Issue299Fixture.cs" />
     <Compile Include="Issues\Issue311\Issue311Fixture.cs" />
     <Compile Include="LazyLoadingFixture.cs" />
     <Compile Include="MiscFixture.cs" />
