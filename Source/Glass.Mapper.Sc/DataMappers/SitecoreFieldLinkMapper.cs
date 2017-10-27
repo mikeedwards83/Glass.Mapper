@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,11 @@ namespace Glass.Mapper.Sc.DataMappers
     public class SitecoreFieldLinkMapper : AbstractSitecoreFieldMapper
     {
         private readonly IUrlOptionsResolver _urlOptionsResolver;
+
+
+        private static ConcurrentDictionary<Guid, bool> _isInternalLinkFieldDictionary = new ConcurrentDictionary<Guid, bool>();
+
+        public const string InternalLinkKey = "internal link";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldLinkMapper"/> class.
@@ -81,6 +87,15 @@ namespace Glass.Mapper.Sc.DataMappers
             throw new NotImplementedException();
         }
 
+        protected void MapToLinkModel(Link link, InternalLinkField field, SitecoreFieldConfiguration config)
+        {
+            var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
+            link.Url = field.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(field.TargetItem, urlOptions);
+            link.Type = LinkType.Internal;
+            link.TargetId = field.TargetItem == null ? Guid.Empty : field.TargetItem.ID.Guid;
+            link.Text = field.TargetItem == null ? string.Empty : field.TargetItem.DisplayName;
+
+        }
 
         protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config)
         {
@@ -150,10 +165,26 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
 
-            Link link = new Link();
-            LinkField linkField = new LinkField(field);
+            Guid fieldGuid = field.ID.Guid;
 
-            MapToLinkModel(link, linkField, config);
+            // shortest route - we know whether or not its rich text
+            var isInternalLink =
+                _isInternalLinkFieldDictionary.GetOrAdd(fieldGuid, (id) => field.TypeKey == InternalLinkKey);
+
+
+            Link link = new Link();
+            if (isInternalLink)
+            {
+                InternalLinkField internalLinkField = new Sitecore.Data.Fields.InternalLinkField(field);
+                MapToLinkModel(link, internalLinkField, config);
+            }
+            else
+            {
+                LinkField linkField = new LinkField(field);
+
+                MapToLinkModel(link, linkField, config);
+            }
+         
 
             return link;
         }
@@ -254,6 +285,29 @@ namespace Glass.Mapper.Sc.DataMappers
                 linkField.Target = link.Target;
         }
 
+        protected void MapToLinkField(Link link, InternalLinkField linkField, SitecoreFieldConfiguration config)
+        {
+            var item = linkField.InnerField.Item;
+
+            if (link.TargetId == Guid.Empty)
+            {
+                ItemLink iLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, linkField.TargetItem.Database.Name, linkField.TargetID, linkField.TargetItem.Paths.FullPath);
+                linkField.RemoveLink(iLink);
+            }
+            else
+            {
+                ID newId = new ID(link.TargetId);
+                Item target = item.Database.GetItem(newId);
+
+                if (target != null)
+                {
+                    ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                    linkField.UpdateLink(nLink);
+                }
+                else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
+            }
+        }
+
         /// <summary>
         /// Sets the field.
         /// </summary>
@@ -274,14 +328,28 @@ namespace Glass.Mapper.Sc.DataMappers
             if (field == null) return;
 
 
-            LinkField linkField = new LinkField(field);
-            if (link == null || link.Type == LinkType.NotSet)
-            {
-                linkField.Clear();
-                return;
-            }
+            Guid fieldGuid = field.ID.Guid;
 
-            MapToLinkField(link, linkField, config);
+            // shortest route - we know whether or not its rich text
+            var isInternalLink =
+                _isInternalLinkFieldDictionary.GetOrAdd(fieldGuid, (id) => field.TypeKey == InternalLinkKey);
+
+            if (isInternalLink)
+            {
+                InternalLinkField internalLinkField = new Sitecore.Data.Fields.InternalLinkField(field);
+                MapToLinkField(link, internalLinkField, config);
+            }
+            else
+            {
+                LinkField linkField = new LinkField(field);
+                if (link == null || link.Type == LinkType.NotSet)
+                {
+                    linkField.Clear();
+                    return;
+                }
+
+                MapToLinkField(link, linkField, config);
+            }
         }
     }
 }
