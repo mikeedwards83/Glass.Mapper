@@ -2777,6 +2777,36 @@ namespace Glass.Mapper.Sc.FakeDb
 
         }
 
+
+        [Test]
+        public void RenderImage_AltTextContainsQuotationMarks_RendersCorrectHtmlWithParameterLanguage()
+        {
+            //Arrange
+            var expected =
+                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;la=en&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='some&quot;Alt' />";
+            var scContext = Substitute.For<ISitecoreContext>();
+            scContext.Config = new Config();
+
+            var html = GetGlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "some\"Alt";
+            image.Width = 200;
+            image.Height = 105;
+            image.HSpace = 10;
+            image.VSpace = 15;
+            image.Border = "9";
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            image.Language = LanguageManager.GetLanguage("af-ZA");
+            var model = new { Image = image };
+            var parameters = new { w = 400, la = "en" };
+            //Act
+            var result = html.RenderImage(model, x => x.Image, parameters, true, true);
+
+            //Assert
+            AssertHtml.AreImgEqual(expected, result);
+
+        }
+
         [Test]
         public void RenderImage_RemoveHeightWidthAttributes_RendersCorrectHtml()
         {
