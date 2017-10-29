@@ -3095,7 +3095,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var url = "http://firstsearch.oclc.org/WebZ/FSPage?pagetype=return_frameset:linktype=servicelink:sessionid=fsapp6-41637-j79jaw2f-61y8dw:entitypagenum=10:0?entityframedscrolling=yes:entityframedurl=http%3A%2F%2Fwww.example.com:entityframedtitle=:entityframedtimeout=15";
-            var expected = $"<a href=\"{url}\" ></a>";
+            var expected = string.Format("<a href=\"{0}\" ></a>", url);
             var scContext = Substitute.For<ISitecoreContext>();
             var html = new GlassHtml(scContext);
             Link link = null;
