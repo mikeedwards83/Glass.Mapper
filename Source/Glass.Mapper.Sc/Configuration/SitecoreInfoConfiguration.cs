@@ -18,6 +18,7 @@
 
 
 using Glass.Mapper.Configuration;
+using Sitecore.ContentSearch;
 
 namespace Glass.Mapper.Sc.Configuration
 {
@@ -57,6 +58,42 @@ namespace Glass.Mapper.Sc.Configuration
             config.UrlOptions = UrlOptions;
             config.MediaUrlOptions = MediaUrlOptions;
             base.Copy(copy);
+        }
+
+        public virtual string BuiltInFieldName
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case SitecoreInfoType.DisplayName:
+                        return BuiltinFields.DisplayName;
+                    case SitecoreInfoType.ContentPath:
+                    case SitecoreInfoType.FullPath:
+                    case SitecoreInfoType.Path:
+                        return BuiltinFields.FullPath;
+                    case SitecoreInfoType.TemplateId:
+                        return BuiltinFields.Template;
+                    case SitecoreInfoType.TemplateName:
+                        return BuiltinFields.TemplateName;
+                    case SitecoreInfoType.MediaUrl:
+                    case SitecoreInfoType.Url:
+                        return BuiltinFields.Url;
+                    case SitecoreInfoType.Version:
+                        return BuiltinFields.Version;
+                    case SitecoreInfoType.Name:
+                        return BuiltinFields.Name;
+                    case SitecoreInfoType.Language:
+                        return BuiltinFields.Language;
+                    case SitecoreInfoType.BaseTemplateIds:
+                        return BuiltinFields.AllTemplates;
+                    case SitecoreInfoType.Key:
+                    case SitecoreInfoType.ItemUri:
+                        return BuiltinFields.UniqueId;
+                }
+
+                return null;
+            }
         }
     }
 }

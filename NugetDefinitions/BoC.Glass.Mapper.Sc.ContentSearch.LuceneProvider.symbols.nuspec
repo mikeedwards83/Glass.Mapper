@@ -57,17 +57,6 @@
     <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\72\Glass.Mapper.Sc.ContentSearch.dll" target="lib\72\Glass.Mapper.Sc.ContentSearch.dll" />
     <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\72\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\72\Glass.Mapper.Sc.ContentSearch.pdb" />
 
-    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
-    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\71\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
-    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\71\Glass.Mapper.Sc.ContentSearch.dll" target="lib\71\Glass.Mapper.Sc.ContentSearch.dll" />
-    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\71\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\71\Glass.Mapper.Sc.ContentSearch.pdb" />
-
-    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" target="lib\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.dll" />
-    <file src="Source\Glass.Mapper.Sc70.ContentSearch.LuceneProvider\bin\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" target="lib\70\Glass.Mapper.Sc.ContentSearch.LuceneProvider.pdb" />
-    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\70\Glass.Mapper.Sc.ContentSearch.dll" target="lib\70\Glass.Mapper.Sc.ContentSearch.dll" />
-    <file src="Source\Glass.Mapper.Sc.ContentSearch\bin\70\Glass.Mapper.Sc.ContentSearch.pdb" target="lib\70\Glass.Mapper.Sc.ContentSearch.pdb" />
-    
-
     <!-- CONFIG FILES  -->
     <file src="Source\Glass.Mapper.Sc.ContentSearch.LuceneProvider\App_Config\**" target="content\App_Config" />
 

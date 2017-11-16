@@ -64,6 +64,13 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.ContentSearch">
+      <HintPath>$(ScDir)Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Abstractions">
+      <HintPath>$(ScDir)Sitecore.Abstractions.dll</HintPath>
+    </Reference>
+	
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CachedItemVersionHandler.cs" />

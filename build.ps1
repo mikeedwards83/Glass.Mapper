@@ -52,9 +52,11 @@ $nuget2 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.symbols.nuspec
 $nuget3 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.ContentSearch.LuceneProvider.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
 $nuget4 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.ContentSearch.AzureSearchProvider.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
 $nuget5 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.CastleWindsor.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
+$nuget6 = ".nuget\nuget pack nugetdefinitions\BoC.Glass.Mapper.Sc.ContentSearch.SolrProvider.symbols.nuspec -Version " + $releaseNumber + " -BasePath . -NoPackageAnalysis -OutputDirectory .\nugets"
 
 Invoke-Expression $nuget1
 Invoke-Expression $nuget2
 Invoke-Expression $nuget3
 Invoke-Expression $nuget4
 Invoke-Expression $nuget5
+Invoke-Expression $nuget6

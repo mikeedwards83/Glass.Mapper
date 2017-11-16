@@ -44,6 +44,60 @@ namespace Glass.Mapper.Sc
     public class Utilities : Mapper.Utilities
     {
 
+        public static string GetFieldType(SitecoreFieldType type, string custom)
+        {
+            switch (type)
+            {
+                case SitecoreFieldType.Checkbox:
+                    return "Checkbox";
+                case SitecoreFieldType.Date:
+                    return "Date";
+                case SitecoreFieldType.DateTime:
+                    return "Datetime";
+                case SitecoreFieldType.File:
+                    return "File";
+                case SitecoreFieldType.Image:
+                    return "Image";
+                case SitecoreFieldType.Integer:
+                    return "Integer";
+                case SitecoreFieldType.MultiLineText:
+                    return "Multi-Line Text";
+                case SitecoreFieldType.Number:
+                    return "Number";
+                case SitecoreFieldType.Password:
+                    return "Password";
+                case SitecoreFieldType.RichText:
+                    return "Rich Text";
+                case SitecoreFieldType.SingleLineText:
+                    return "Single-Line Text";
+                case SitecoreFieldType.Checklist:
+                    return "Checklist";
+                case SitecoreFieldType.Droplist:
+                    return "Droplist";
+                case SitecoreFieldType.GroupedDroplink:
+                    return "Grouped Droplink";
+                case SitecoreFieldType.GroupedDroplist:
+                    return "Grouped Droplist";
+                case SitecoreFieldType.Multilist:
+                    return "Multilist";
+                case SitecoreFieldType.Treelist:
+                    return "Treelist";
+                case SitecoreFieldType.TreelistEx:
+                    return "TreelistEx";
+                case SitecoreFieldType.Droplink:
+                    return "Droplink";
+                case SitecoreFieldType.DropTree:
+                    return "Droptree";
+                case SitecoreFieldType.GeneralLink:
+                    return "General Link";
+                case SitecoreFieldType.Custom:
+                    return custom;
+                default:
+                    return "Single-Line Text";
+            }
+        }
+
+
         public static bool IsPageEditor
         {
             get
