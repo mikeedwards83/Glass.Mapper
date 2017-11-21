@@ -432,11 +432,12 @@ namespace Glass.Mapper.Sc.FakeDb
                 string imageValue =
                     "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
-                var resolver = Utilities.CreateStandardResolver();
+                var resolver = Utilities.CreateStandardResolver(finalise: false);
                 resolver.DataMapperResolverFactory.Add(() => new AbstractDataMapperFieldsWithSpace());
+                resolver.Finalise();
+
                 var context = Context.Create(resolver);
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(FieldWithSpaceAutoMap)));
-                ;  
 
                 var db = Factory.GetDatabase("master");
 

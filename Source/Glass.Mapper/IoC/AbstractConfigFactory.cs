@@ -90,7 +90,7 @@ namespace Glass.Mapper.IoC
 
         public void Finalise()
         {
-            throw new NotImplementedException();
+            _finalised = true;
         }
 
         /// <summary>
@@ -118,6 +118,11 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual void RemoveAt(int index)
         {
+            if (_finalised)
+            {
+                throw new NotSupportedException("Configuration has been finalised and cannot be changed.");
+            }
+
             TypeGenerators.RemoveAt(index);
         }
 
@@ -126,6 +131,11 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual IEnumerable<T> GetItems()
         {
+            if (!_finalised)
+            {
+                throw new NotSupportedException("Configuration has not been finalised and cannot be changed. Ensure that you call DependencyResolve.Finalise after creating and configuring the dependency resolver.");
+            }
+
             IEnumerable<Func<T>> builders;
             if (TypeGenerators == null)
             {
