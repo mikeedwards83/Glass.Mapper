@@ -14,6 +14,8 @@ namespace $rootnamespace$.App_Start
 
 			var dependencyResolver = new DependencyResolver(config);
 			// add any changes to the standard resolver here
+
+			dependencyResolver.Finalise();
 			return dependencyResolver;
 		}
 

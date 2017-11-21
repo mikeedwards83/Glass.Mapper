@@ -39,6 +39,7 @@ namespace $rootnamespace$.App_Start
 
 			GlassMapperScCustom.PostLoad();
 
+			
 			//EditFrameBuilder.EditFrameItemPrefix = "Glass-";
 
         }
