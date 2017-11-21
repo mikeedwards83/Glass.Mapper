@@ -48,15 +48,6 @@ namespace Glass.Mapper.Sc.IoC
             return CacheManager();
         }
 
-        public void Finalise()
-        {
-            QueryParameterFactory.Finalise();
-            DataMapperResolverFactory.Finalise();
-            DataMapperFactory.Finalise();
-            ConfigurationResolverFactory.Finalise();
-            ObjectConstructionFactory.Finalise();
-            ObjectSavingFactory.Finalise();
-            ConfigurationMapFactory.Finalise();
-        }
+       
     }
 }
