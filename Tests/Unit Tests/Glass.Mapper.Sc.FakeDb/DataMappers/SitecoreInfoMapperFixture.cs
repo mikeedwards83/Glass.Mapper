@@ -173,10 +173,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                         {
                             {"fr-fr", 1, "test"}
                         },
-                        new DbField(FieldIDs.DisplayName)
-                        {
-                            {"fr-fr", 1, "this is a display name"}
-                        }
+                        
                     },
                 }
             })
@@ -185,6 +182,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var item = database.GetItem("/sitecore/content/TestItem", "fr-fr");
                 Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
                 var dataContext = new SitecoreDataMappingContext(null, item, null);
+
+                item.Editing.BeginEdit();
+                item[FieldIDs.DisplayName] = "this is a display name";
 
                 //Act
                 var value = mapper.MapToProperty(dataContext);

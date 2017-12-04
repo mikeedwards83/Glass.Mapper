@@ -27,33 +27,33 @@ namespace Glass.Mapper.Sc
             return CreateUrlOptions(urlOptions, defaultUrl);
         }
 
+        public static bool FlagCheck(SitecoreInfoUrlOptions urlOptions, SitecoreInfoUrlOptions option)
+        {
+            return (urlOptions & option) == option;
+        }
         public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions)
         {
             if (urlOptions == 0) return defaultOptions;
 
-            Func<SitecoreInfoUrlOptions, bool> flagCheck =
-                option => (urlOptions & option) == option;
-
-
             //check for any default overrides
-            defaultOptions.AddAspxExtension = flagCheck(SitecoreInfoUrlOptions.AddAspxExtension) || defaultOptions.AddAspxExtension;
-            defaultOptions.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) || defaultOptions.AlwaysIncludeServerUrl;
-            defaultOptions.EncodeNames = flagCheck(SitecoreInfoUrlOptions.EncodeNames) || defaultOptions.EncodeNames;
-            defaultOptions.ShortenUrls = flagCheck(SitecoreInfoUrlOptions.ShortenUrls) || defaultOptions.ShortenUrls;
-            defaultOptions.SiteResolving = flagCheck(SitecoreInfoUrlOptions.SiteResolving) || defaultOptions.SiteResolving;
-            defaultOptions.UseDisplayName = flagCheck(SitecoreInfoUrlOptions.UseUseDisplayName) || defaultOptions.UseDisplayName;
+            defaultOptions.AddAspxExtension = FlagCheck(urlOptions, SitecoreInfoUrlOptions.AddAspxExtension) || defaultOptions.AddAspxExtension;
+            defaultOptions.AlwaysIncludeServerUrl =  FlagCheck(urlOptions, SitecoreInfoUrlOptions.AlwaysIncludeServerUrl) || defaultOptions.AlwaysIncludeServerUrl;
+            defaultOptions.EncodeNames =  FlagCheck(urlOptions, SitecoreInfoUrlOptions.EncodeNames) || defaultOptions.EncodeNames;
+            defaultOptions.ShortenUrls =  FlagCheck(urlOptions, SitecoreInfoUrlOptions.ShortenUrls) || defaultOptions.ShortenUrls;
+            defaultOptions.SiteResolving =  FlagCheck(urlOptions, SitecoreInfoUrlOptions.SiteResolving) || defaultOptions.SiteResolving;
+            defaultOptions.UseDisplayName =  FlagCheck(urlOptions, SitecoreInfoUrlOptions.UseUseDisplayName) || defaultOptions.UseDisplayName;
 
 
-            if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAlways))
+            if ( FlagCheck(urlOptions, SitecoreInfoUrlOptions.LanguageEmbeddingAlways))
                 defaultOptions.LanguageEmbedding = LanguageEmbedding.Always;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded))
+            else if ( FlagCheck(urlOptions, SitecoreInfoUrlOptions.LanguageEmbeddingAsNeeded))
                 defaultOptions.LanguageEmbedding = LanguageEmbedding.AsNeeded;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageEmbeddingNever))
+            else if ( FlagCheck(urlOptions, SitecoreInfoUrlOptions.LanguageEmbeddingNever))
                 defaultOptions.LanguageEmbedding = LanguageEmbedding.Never;
 
-            if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationFilePath))
+            if ( FlagCheck(urlOptions, SitecoreInfoUrlOptions.LanguageLocationFilePath))
                 defaultOptions.LanguageLocation = LanguageLocation.FilePath;
-            else if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationQueryString))
+            else if ( FlagCheck(urlOptions, SitecoreInfoUrlOptions.LanguageLocationQueryString))
                 defaultOptions.LanguageLocation = LanguageLocation.QueryString;
 
             return defaultOptions;
