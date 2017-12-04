@@ -211,7 +211,31 @@ namespace Glass.Mapper.Tests
             Assert.AreEqual(4, result.First().Key.GetParameters().Length);
         }
 
-       
+        [Test]
+        public void CreateConstructorDelegates_GenericClassNoGenericParam_CreatesSingleConstructor()
+        {
+            //Assign
+            Type type = typeof(StubWithGeneric<>);
+
+            //Act
+            var result = Utilities.CreateConstructorDelegates(type);
+
+            //Assert
+            Assert.AreEqual(0, result.Count);
+        }
+        [Test]
+        public void CreateConstructorDelegates_GenericClassWithGenericParam_CreatesSingleConstructor()
+        {
+            //Assign
+            Type type = typeof(StubWithGeneric<string>);
+
+            //Act
+            var result = Utilities.CreateConstructorDelegates(type);
+
+            //Assert
+            Assert.AreEqual(1, result.Count);
+        }
+
 
 
         #endregion
@@ -282,6 +306,13 @@ namespace Glass.Mapper.Tests
 
         #region Stubs
 
+        public class StubWithGeneric<T>
+        {
+            public StubWithGeneric()
+            {
+
+            }
+        }
 
         public class StubNoParameters
         {
