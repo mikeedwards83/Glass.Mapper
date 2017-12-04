@@ -83,7 +83,7 @@ namespace Glass.Mapper.Sc
         public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
         public static string QuotationMark = "\"";
 
-        protected Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
+        public Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
         {
             if (!SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
@@ -118,7 +118,7 @@ namespace Glass.Mapper.Sc
             return compiled;
         }
 
-        protected Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
+        public Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression)
         {
             if (SitecoreContext.Config == null || !SitecoreContext.Config.UseGlassHtmlLambdaCache)
             {
@@ -371,7 +371,7 @@ namespace Glass.Mapper.Sc
 
 
 
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, bool alwaysRender = false)
         {
             NameValueCollection attrs;
 
@@ -396,7 +396,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs, string.Empty, writer);
+                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs, string.Empty, writer, alwaysRender);
             }
         }
 
@@ -426,8 +426,15 @@ namespace Glass.Mapper.Sc
         /// <param name="attributes">A collection of parameters to added to the link</param>
         /// <param name="isEditable">Indicate if the link should be editable in the page editor</param>
         /// <param name="contents">Content to go in the link</param>
+        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
-        public virtual string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
+        public virtual string RenderLink<T>(
+            T model, 
+            Expression<Func<T, object>> field, 
+            object attributes = null, 
+            bool isEditable = false, 
+            string contents = null,
+            bool alwaysRender = false)
         {
             NameValueCollection attrs;
 
@@ -468,7 +475,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Link, attrs, contents, writer
+                        GetCompiled(field).Invoke(model) as Link, attrs, contents, writer, alwaysRender
                     );
             }
 
@@ -511,11 +518,12 @@ namespace Glass.Mapper.Sc
         /// <param name="link">The link to render</param>
         /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
+        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         [Obsolete("Use the SafeDictionary Overload")]
-        public static RenderingResult BeginRenderLink(Link link, NameValueCollection attributes, string contents, TextWriter writer)
+        public static RenderingResult BeginRenderLink(Link link, NameValueCollection attributes, string contents, TextWriter writer, bool alwaysRender)
         {
-            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer);
+            return BeginRenderLink(link, attributes.ToSafeDictionary(), contents, writer, alwaysRender);
         }
 
         /// <summary>
@@ -524,11 +532,22 @@ namespace Glass.Mapper.Sc
         /// <param name="link">The link to render</param>
         /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
+        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Link link, SafeDictionary<string> attributes, string contents,
-            TextWriter writer)
+            TextWriter writer, bool alwaysRender)
         {
-            if (link == null) return new RenderingResult(writer, string.Empty, string.Empty);
+            if (link == null)
+            {
+                if (alwaysRender)
+                {
+                    link = new Link();
+                }
+                else { 
+                return new RenderingResult(writer, string.Empty, string.Empty);
+                }
+            }
+
             if (attributes == null) attributes = new SafeDictionary<string>();
 
 
@@ -545,6 +564,7 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "class", link.Class);
             AttributeCheck(attributes, "target", link.Target);
             AttributeCheck(attributes, "title", title);
+            AttributeCheck(attributes, "style", link.Style);
 
             string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
@@ -668,7 +688,7 @@ namespace Glass.Mapper.Sc
                     var link = target as Link;
                     var sb = new StringBuilder();
                     var linkWriter = new StringWriter(sb);
-                    var result = BeginRenderLink(link, dictionary, null, linkWriter);
+                    var result = BeginRenderLink(link, dictionary, null, linkWriter, false);
                     result.Dispose();
                     linkWriter.Flush();
                     linkWriter.Close();
@@ -940,14 +960,14 @@ namespace Glass.Mapper.Sc
 
             string mediaUrl = builder.ToString();
 
-#if (SC81 || SC80 || SC75 || SC82)
+#if (SC81 || SC80 || SC75 || SC82 || SC90)
             mediaUrl = ProtectMediaUrl(mediaUrl);
 #endif
             mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
             return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
         }
 
-#if (SC81 || SC80 || SC75 || SC82)
+#if (SC81 || SC80 || SC75 || SC82 || SC90)
         public virtual string ProtectMediaUrl(string url)
         {
             return Sitecore.Resources.Media.HashingUtils.ProtectAssetUrl(url);

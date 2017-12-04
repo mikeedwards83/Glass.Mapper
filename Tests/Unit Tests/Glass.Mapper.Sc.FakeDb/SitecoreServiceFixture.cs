@@ -77,7 +77,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     var newVersion = service.AddVersion(oldVersion);
 
                     //clean up
-                    var item = database.Database.GetItem(path, newVersion.Language, new Version(newVersion.Version));
+                    var item = database.Database.GetItem(path, newVersion.Language,  Version.Parse(newVersion.Version));
                     item.Versions.RemoveVersion();
                     //Assert
                     Assert.AreEqual(oldVersion.Version + 1, newVersion.Version);
@@ -565,7 +565,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version = Version.Parse(1);
                 //Act
                 var result = service.GetItem<StubClass>(id, language, version);
 
@@ -597,7 +597,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
-                Version version = new Version(1);
+                Version version = Version.Parse(1);
                 var language = LanguageManager.GetLanguage("af-ZA");
                 int param1 = 1;
 
@@ -634,7 +634,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
 
@@ -672,7 +672,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
@@ -713,7 +713,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
@@ -757,7 +757,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
 
                 //Act
                 var result = service.GetItem<StubClass>(path, language, version);
@@ -793,7 +793,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
 
                 //Act
@@ -831,7 +831,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
 
@@ -871,7 +871,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
@@ -913,7 +913,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version = new Version(1);
+                Version version =  Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;

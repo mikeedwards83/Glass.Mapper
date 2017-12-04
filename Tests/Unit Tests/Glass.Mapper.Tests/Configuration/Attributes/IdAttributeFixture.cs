@@ -58,7 +58,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
         }
 
         [Test]
-        [ExpectedException(typeof(ConfigurationException))]
+       
         public void Configure_RequiredTypeDifferentFromPropertyType_ExceptionThrown()
         {
             //Assign
@@ -68,8 +68,10 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             var propertyInfo = typeof(StubClass).GetProperty("Id");
 
             //Act
-            attr.Configure(propertyInfo, config);
-
+            Assert.Throws<ConfigurationException>(() =>
+            {
+                attr.Configure(propertyInfo, config);
+            });
             //Assert
         }
 

@@ -39,6 +39,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             Configuration = new SitecoreTypeConfiguration();
             Configuration.Type = typeof(T);
+
+
             Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(Configuration.Type);
 
         }

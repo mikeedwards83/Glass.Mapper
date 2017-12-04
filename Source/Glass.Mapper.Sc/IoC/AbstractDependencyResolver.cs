@@ -25,7 +25,19 @@ namespace Glass.Mapper.Sc.IoC
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
         public abstract ModelCounter GetModelCounter();
-        
+
+
+        public virtual void Finalise()
+        {
+            QueryParameterFactory.Finalise();
+            DataMapperResolverFactory.Finalise();
+            DataMapperFactory.Finalise();
+            ConfigurationResolverFactory.Finalise();
+            ObjectConstructionFactory.Finalise();
+            ObjectSavingFactory.Finalise();
+            ConfigurationMapFactory.Finalise();
+        }
+
 
         public abstract ICacheManager GetCacheManager();
 

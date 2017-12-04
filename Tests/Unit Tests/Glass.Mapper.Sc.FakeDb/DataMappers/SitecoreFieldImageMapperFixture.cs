@@ -111,7 +111,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 		        var item = database.GetItem("/sitecore/content/TestItem");
 		        var field = item.Fields[FieldName];
 
-		        var context = Context.Create(new DependencyResolver(new Config()));
+		        var resolver = new DependencyResolver(new Config());
+
+                resolver.Finalise();
+                var context = Context.Create(resolver);
+
 		        var service = new SitecoreService(database.Database, context);
 
 		        //Act

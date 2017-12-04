@@ -35,6 +35,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         #region Method - GetField
 
+        
+
+
         [Test]
         public void GetField_FieldContainsAnchor_ReturnsAnchorLink()
         {
@@ -56,7 +59,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreFieldLinkMapper();
                 var fieldValue =
-                    "<link text=\"Test description\" linktype=\"anchor\" url=\"testAnchor\" anchor=\"testAnchor\" title=\"test alternate\" class=\"testClass\" />";
+                    "<link text=\"Test description\" linktype=\"anchor\" url=\"testAnchor\" anchor=\"testAnchor\" title=\"test alternate\" class=\"testClass\" style=\"mystyle\" />";
 
                 var item = database.GetItem("/sitecore/content/Target");
                 var field = item.Fields[fieldName];
@@ -79,6 +82,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 Assert.AreEqual("test alternate", result.Title);
                 Assert.AreEqual(LinkType.Anchor, result.Type);
                 Assert.AreEqual("testAnchor", result.Url);
+                Assert.AreEqual("mystyle", result.Style);
             }
         }
 
@@ -281,6 +285,71 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
             }
         }
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/317
+        /// </summary>
+        [Test]
+        [Category("Exclude80")]
+        [Category("Exclude82")] //Requires fake db fix
+        public void GetField__InternalLink_FieldContainsInternal_ReturnsInternalLink()
+        {
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    new DbField(fieldName){Type="internal link"}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
+                var fieldValue = "/sitecore/content/Target";
+                        
+                Sitecore.Context.Site = null;
+
+
+                var item = database.GetItem("/sitecore/content/Target");
+                var field = item.Fields[fieldName];
+
+                using (new ItemEditing(item, true))
+                {
+                    field.Value = fieldValue;
+                }
+
+                Sitecore.Links.LinkProvider provider =
+                    Substitute.For<Sitecore.Links.LinkProvider>();
+                provider
+                    .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
+                    .Returns("/target.aspx");
+
+
+                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
+                {
+                    //Act
+                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+                    //Assert
+                    Assert.AreEqual(null, result.Anchor);
+                    Assert.AreEqual(null, result.Class);
+                    Assert.AreEqual(null, result.Query);
+                    Assert.AreEqual(null, result.Target);
+                    Assert.AreEqual(targetId.Guid, result.TargetId);
+                    Assert.AreEqual("Target", result.Text);
+                    Assert.AreEqual(null, result.Title);
+                    Assert.AreEqual(LinkType.Internal, result.Type);
+                    Assert.AreEqual("/target.aspx", result.Url);
+                }
+            }
+        }
+
+
         [Test]
         [Category("Exclude80")]
         [Category("Exclude82")] //Requires fake db fix
@@ -871,7 +940,6 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Url = ""
                 };
 
-
                 using (new ItemEditing(item, true))
                 {
                     field.Value = string.Empty;
@@ -885,6 +953,64 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 //Assert
                 AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
+            }
+        }
+
+
+        /// <summary>
+        /// https://github.com/mikeedwards83/Glass.Mapper/issues/317
+        /// </summary>
+        [Test]
+        public void SetField__InternalLinkField_InternalLink_InternalLinkSetOnField()
+        {
+            //Assign
+            var templateId = ID.NewID;
+            var targetId = ID.NewID;
+            var fieldName = "Field";
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                   new DbField(fieldName){Type = "internal link"}
+                },
+                new Sitecore.FakeDb.DbItem("Target", targetId, templateId),
+
+            })
+            {
+                var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
+                var expected =
+                    "/sitecore/content/Target";
+
+                var item = database.GetItem("/sitecore/content/Target");
+                var field = item.Fields[fieldName];
+
+                var value = new Link()
+                {
+                    Anchor = "testAnchor",
+                    Class = "testClass",
+                    Query = "q=s",
+                    Target = "testTarget",
+                    TargetId = targetId.Guid,
+                    Text = "Test description",
+                    Title = "test alternative",
+                    Type = LinkType.Internal,
+                    Url = ""
+                };
+
+                using (new ItemEditing(item, true))
+                {
+                    field.Value = string.Empty;
+                }
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, value, null, null);
+                }
+
+                //Assert
+                Assert.AreEqual(expected, field.Value);
             }
         }
 

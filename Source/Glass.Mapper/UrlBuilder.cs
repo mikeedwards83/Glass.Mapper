@@ -29,7 +29,7 @@ namespace Glass.Mapper
                 return;
             }
 
-            var urlQuery = url.Split('?');
+            var urlQuery = Utilities.SplitOnFirstOccurance(url, '?');
             var query = urlQuery[1];
 
             if (!query.IsNotNullOrEmpty())
@@ -41,7 +41,7 @@ namespace Glass.Mapper
             var pairs = query.Split('&', StringSplitOptions.RemoveEmptyEntries);
             foreach (var pair in pairs)
             {
-                string[] keyValue = pair.Split('=');
+                string[] keyValue = Utilities.SplitOnFirstOccurance(pair, '='); 
                 if (keyValue.Length == 2)
                 {
                     QueryString.Add(new KeyValuePair<string, string>(keyValue[0] ?? string.Empty,
@@ -49,6 +49,8 @@ namespace Glass.Mapper
                 }
             }
         }
+
+     
 
         /// <summary>
         /// 

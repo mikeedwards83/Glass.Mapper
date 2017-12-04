@@ -41,6 +41,10 @@ namespace Glass.Mapper.IoC
         IConfigFactory<AbstractObjectSavingTask> ObjectSavingFactory { get; }
         IConfigFactory<IGlassMap> ConfigurationMapFactory { get; }
         ModelCounter GetModelCounter();
+        /// <summary>
+        /// Called after all dependency resolve configuration has been completed. Indicates that the dependency resolve will no longer be modified.
+        /// </summary>
+        void Finalise();
     }
 }
 

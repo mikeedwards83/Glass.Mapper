@@ -83,8 +83,9 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Fluent
                 }
             })
             {
-
-                var context = Context.Create(new DependencyResolver(new Config()));
+                var resolver = new DependencyResolver(new Config());
+                resolver.Finalise();
+                var context = Context.Create(resolver);
 
                 var loader = new SitecoreFluentConfigurationLoader();
 

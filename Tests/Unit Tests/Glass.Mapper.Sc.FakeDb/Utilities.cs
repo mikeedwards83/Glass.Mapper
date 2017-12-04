@@ -23,12 +23,16 @@ namespace Glass.Mapper.Sc.FakeDb
 {
     public static class Utilities
     {
-        public static IDependencyResolver CreateStandardResolver(Config config =null)
+        public static IDependencyResolver CreateStandardResolver(Config config =null, bool finalise = true)
         {
             if (config == null)
                 config = new Config();
 
             var resolver = new DependencyResolver(config);
+            if (finalise)
+            {
+                resolver.Finalise();
+            }
             return resolver;
         }
     }

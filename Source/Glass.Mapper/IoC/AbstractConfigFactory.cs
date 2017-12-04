@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,31 +7,29 @@ namespace Glass.Mapper.IoC
 {
     public abstract class AbstractConfigFactory<T> : IConfigFactory<T>
     {
-
-
-        private readonly object _lockObject = new object();
-
         protected List<Builder> TypeGenerators { get; private set; }
+
+
+        private bool _finalised;
 
         protected AbstractConfigFactory()
         {
-            lock (_lockObject)
-            {
-                TypeGenerators = new List<Builder>();
-            }
+            TypeGenerators = new List<Builder>();
         }
 
         public void Insert<TK>(int index, Func<TK> add) where TK : T
         {
+            if (_finalised)
+            {
+                throw new NotSupportedException("Configuration has been finalised and cannot be changed.");
+            }
+
             if (add == null)
             {
                 throw new NullReferenceException("Cannot insert with a null function");
             }
 
-            lock (_lockObject)
-            {
-                TypeGenerators.Insert(index, new Builder { Type = typeof(TK), Func = ()=> add() });
-            }
+            TypeGenerators.Insert(index, new Builder { Type = typeof(TK), Func = () => add() });
         }
 
         /// <summary>
@@ -39,25 +38,27 @@ namespace Glass.Mapper.IoC
         /// <param name="add"></param>
         public virtual void First<TK>(Func<TK> add) where TK : T
         {
-           Insert(0, add);
+            Insert(0, add);
         }
 
         /// <summary>
         /// Replaces the function at the given index
         /// </summary>
-        public virtual void Replace<K>(int index, Func<K> replace) where K :T
+        public virtual void Replace<K>(int index, Func<K> replace) where K : T
         {
+
+            if (_finalised)
+            {
+                throw new NotSupportedException("Configuration has been finalised and cannot be changed.");
+            }
+
             if (replace == null)
             {
                 throw new NullReferenceException("Cannot replace with a null function");
             }
 
-            lock (_lockObject)
-            {
-               
 
-                TypeGenerators[index] = new Builder { Type = replace.Method.ReturnType, Func = ()=> replace() };
-            }
+            TypeGenerators[index] = new Builder { Type = replace.Method.ReturnType, Func = () => replace() };
         }
 
 
@@ -68,23 +69,28 @@ namespace Glass.Mapper.IoC
             Insert(index, func);
         }
 
-        public virtual void InsertBefore<TBefore, TK>(Func<TK> func ) where TBefore : T where TK : T
+        public virtual void InsertBefore<TBefore, TK>(Func<TK> func) where TBefore : T where TK : T
         {
-            var index = TypeGenerators.FindIndex(x => x.Type == typeof (TBefore));
+            var index = TypeGenerators.FindIndex(x => x.Type == typeof(TBefore));
             Insert(index, func);
         }
 
         public virtual void InsertAfter<TAfter, TK>(Func<TK> func) where TAfter : T where TK : T
         {
             var index = TypeGenerators.FindIndex(x => x.Type == typeof(TAfter));
-            Insert(index+1, func);
+            Insert(index + 1, func);
         }
 
 
-        public virtual void Remove<TRemove>() where TRemove : T 
+        public virtual void Remove<TRemove>() where TRemove : T
         {
             var index = TypeGenerators.FindIndex(x => x.Type == typeof(TRemove));
             RemoveAt(index);
+        }
+
+        public void Finalise()
+        {
+            _finalised = true;
         }
 
         /// <summary>
@@ -92,18 +98,19 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual void Add<TK>(Func<TK> add) where TK : T
         {
+            if (_finalised)
+            {
+                throw new NotSupportedException("Configuration has been finalised and cannot be changed.");
+            }
+
             if (add == null)
             {
                 throw new NullReferenceException("Cannot add with a null function");
             }
 
-            lock (_lockObject)
-            {
-
-                TypeGenerators.Add(
-                    new Builder { Type = typeof(TK), Func =  ()=> add()}
-                    );
-            }
+            TypeGenerators.Add(
+                new Builder { Type = typeof(TK), Func = () => add() }
+                );
         }
 
         /// <summary>
@@ -111,10 +118,12 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual void RemoveAt(int index)
         {
-            lock (_lockObject)
+            if (_finalised)
             {
-                TypeGenerators.RemoveAt(index);
+                throw new NotSupportedException("Configuration has been finalised and cannot be changed.");
             }
+
+            TypeGenerators.RemoveAt(index);
         }
 
         /// <summary>
@@ -122,27 +131,26 @@ namespace Glass.Mapper.IoC
         /// </summary>
         public virtual IEnumerable<T> GetItems()
         {
-            IEnumerable<Func<T>> builders;
-            lock (_lockObject)
+            if (!_finalised)
             {
-                if (TypeGenerators == null)
-                {
-                    return null;
-                }
-                //we create a local copy of the generators to avoid any problems with the 
-                // list being modified during enumeration and exit the lock ASAP
-                builders = TypeGenerators.Select(x=>x.Func).ToArray();             
+                throw new NotSupportedException("Configuration has not been finalised and cannot be changed. Ensure that you call DependencyResolve.Finalise after creating and configuring the dependency resolver.");
+            }
+
+            IEnumerable<Func<T>> builders;
+            if (TypeGenerators == null)
+            {
+                return null;
             }
 
             //generate the class outside of the lock encase there are any long running operations.
             //and then force them into an array to avoid any enumeration issues.
-            return builders.Select(x => x()).ToArray();
+            return TypeGenerators.Select(x => x.Func()).ToArray();
         }
 
         protected struct Builder
         {
             public Type Type { get; set; }
-            public Func<T> Func { get; set; } 
+            public Func<T> Func { get; set; }
         }
     }
 }

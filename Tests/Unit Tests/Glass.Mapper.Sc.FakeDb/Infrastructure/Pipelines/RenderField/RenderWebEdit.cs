@@ -98,7 +98,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
 
             return site != null 
                 && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary")
-#if SC82
+#if SC82 || SC90
                 && Sitecore.Context.PageMode.IsExperienceEditorEditing);
 #else
                 && Sitecore.Context.PageMode.IsPageEditorEditing);

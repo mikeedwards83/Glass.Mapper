@@ -197,7 +197,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     _getValue = item =>
                     {
                         var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
-                        if (scConfig.UrlOptions == SitecoreInfoUrlOptions.UseItemLanguage)
+                        if (UrlOptionsResolver.FlagCheck(scConfig.UrlOptions, SitecoreInfoUrlOptions.UseItemLanguage))
                         {
                             urlOptions.Language = item.Language;
                         }
@@ -241,7 +241,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.ItemUri:
                     _getValue = item => new ItemUri(item.ID, item.Language, item.Version, item.Database);
                     break;
-#if (SC81|| SC82)
+#if (SC81|| SC82  || SC90)
                 case SitecoreInfoType.OriginalLanguage:
                     _getValue = item => item.OriginalLanguage;
                     break;
