@@ -74,9 +74,14 @@ namespace Glass.Mapper.Sc.DataMappers
                 _getValue = (item) => item.ID.Guid;
             else if (args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(ID) || args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(object))
                 _getValue = (item) => item.ID;
+            else if (typeof(Sitecore.ContentSearch.IIndexableId).IsAssignableFrom(args.PropertyConfiguration.PropertyInfo.PropertyType) ||
+                args.PropertyConfiguration.PropertyInfo.PropertyType == typeof(string))
+            {
+                _getValue = (item) => item.ID.ToShortID();
+            }
             else
             {
-                throw new NotSupportedException("The type {0} on {2}.{1} is not supported by SitecoreIdMapper".Formatted
+                throw new NotSupportedException("The type {0} on {1}.{2} is not supported by SitecoreIdMapper".Formatted
                                                     (args.PropertyConfiguration.PropertyInfo.PropertyType.FullName,
                                                     args.PropertyConfiguration.PropertyInfo.ReflectedType.FullName,
                                                         args.PropertyConfiguration.PropertyInfo.Name));
