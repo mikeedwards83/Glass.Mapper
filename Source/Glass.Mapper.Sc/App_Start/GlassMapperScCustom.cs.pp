@@ -15,7 +15,7 @@ namespace $rootnamespace$.App_Start
 			var dependencyResolver = new DependencyResolver(config);
 			// add any changes to the standard resolver here
 
-			dependencyResolver.Finalise();
+			
 			return dependencyResolver;
 		}
 
@@ -29,7 +29,7 @@ namespace $rootnamespace$.App_Start
 
 			return new IConfigurationLoader[]{};
 		}
-		public static void PostLoad(){
+		public static void PostLoad(IDependencyResolver dependencyResolver){
 			//Remove the comments to activate CodeFist
 			/* CODE FIRST START
             var dbs = Sitecore.Configuration.Factory.GetDatabases();
@@ -46,6 +46,8 @@ namespace $rootnamespace$.App_Start
             }
              * CODE FIRST END
              */
+
+			 dependencyResolver.Finalise();
 		}
 		public static void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
         {
