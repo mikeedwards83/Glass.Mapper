@@ -19,7 +19,7 @@
 namespace Glass.Mapper.Sc.RenderField
 {
     /// <summary>
-    /// Used for specifying rendering parameters for a when outputting through a field renderer.
+    /// Used for specifying rendering parameters when outputting through a field renderer.
     /// </summary>
     public class RenderParameterKeys
     {
