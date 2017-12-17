@@ -28,7 +28,7 @@ namespace Glass.Mapper.Sc.RenderField
         /// </summary>
         public const string DisableWebEdit = "DisableWebEdit";
         /// <summary>
-        /// The Enlosing Tag
+        /// The Enclosing Tag
         /// </summary>
         public const string EnclosingTag = "EnclosingTag";
         /// <summary>
