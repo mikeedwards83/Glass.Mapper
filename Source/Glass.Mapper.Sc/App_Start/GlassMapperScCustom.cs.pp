@@ -15,6 +15,7 @@ namespace $rootnamespace$.App_Start
 			var dependencyResolver = new DependencyResolver(config);
 			// add any changes to the standard resolver here
 
+			 dependencyResolver.Finalise();
 			
 			return dependencyResolver;
 		}
@@ -47,7 +48,6 @@ namespace $rootnamespace$.App_Start
              * CODE FIRST END
              */
 
-			 dependencyResolver.Finalise();
 		}
 		public static void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
         {
