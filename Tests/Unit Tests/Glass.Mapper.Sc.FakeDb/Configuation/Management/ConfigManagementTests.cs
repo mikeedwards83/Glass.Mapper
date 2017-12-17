@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetQueryParameters()
         {
             // Assign
-            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory();
+            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
             queryParameterFactory.Finalise();
 
 
@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetConfigurationResolvers()
         {
             // Assign
-            IConfigFactory<AbstractConfigurationResolverTask> queryParameterFactory = new ConfigurationResolverConfigFactory();
+            ConfigurationResolverConfigFactory queryParameterFactory = new ConfigurationResolverConfigFactory();
             queryParameterFactory.Finalise();
 
             // Act
@@ -47,8 +47,8 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetDataMappers()
         {
             // Assign
-            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory();
-            IConfigFactory<AbstractDataMapper> configFactory = new DataMapperConfigFactory(queryParameterFactory);
+            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
+            DataMapperConfigFactory configFactory = new DataMapperConfigFactory(queryParameterFactory);
             configFactory.Finalise();
             queryParameterFactory.Finalise();
 
@@ -63,7 +63,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetDataMapperResolverTasks()
         {
             // Assign
-            IConfigFactory<AbstractDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
+            DataMapperTaskConfigFactory dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
 
             dataMapperResolverConfigFactory.Finalise();
 
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
             // Assign
             DependencyResolver dependencyResolver = new DependencyResolver(new Config());
 
-            IConfigFactory<AbstractObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
+            ObjectConstructionTaskConfigFactory dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
             dataMapperResolverConfigFactory.Finalise();
 
             // Act
@@ -94,7 +94,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetObjectSavingTasks()
         {
             // Assign
-            IConfigFactory<AbstractObjectSavingTask> objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
+            ObjectSavingTaskConfigFactory objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
             objectSavingTaskConfigFactory.Finalise();
 
             // Act

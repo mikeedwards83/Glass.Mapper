@@ -4,7 +4,7 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class DataMapperConfigFactory : AbstractConfigFactory<AbstractDataMapper>
+    public class DataMapperConfigFactory : AbstractFinalisedConfigFactory<AbstractDataMapper>
     {
         private readonly IConfigFactory<ISitecoreQueryParameter> queryParameterFactory;
 

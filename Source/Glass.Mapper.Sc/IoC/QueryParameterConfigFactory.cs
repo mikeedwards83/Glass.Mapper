@@ -3,7 +3,7 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class QueryParameterConfigFactory : AbstractConfigFactory<ISitecoreQueryParameter>
+    public class QueryParameterConfigFactory : AbstractFinalisedConfigFactory<ISitecoreQueryParameter>
     {
         public QueryParameterConfigFactory()
         {

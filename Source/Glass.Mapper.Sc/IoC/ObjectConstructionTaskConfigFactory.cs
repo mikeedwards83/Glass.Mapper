@@ -13,7 +13,7 @@ using Sitecore.Diagnostics;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class ObjectConstructionTaskConfigFactory : AbstractConfigFactory<AbstractObjectConstructionTask>
+    public class ObjectConstructionTaskConfigFactory : AbstractFinalisedConfigFactory<AbstractObjectConstructionTask>
     {
         private readonly IDependencyResolver dependencyResolver;
 

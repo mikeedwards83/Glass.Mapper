@@ -29,13 +29,23 @@ namespace Glass.Mapper.Sc.IoC
 
         public virtual void Finalise()
         {
-            QueryParameterFactory.Finalise();
-            DataMapperResolverFactory.Finalise();
-            DataMapperFactory.Finalise();
-            ConfigurationResolverFactory.Finalise();
-            ObjectConstructionFactory.Finalise();
-            ObjectSavingFactory.Finalise();
-            ConfigurationMapFactory.Finalise();
+
+            TryFinalise(QueryParameterFactory);
+            TryFinalise(DataMapperResolverFactory);
+            TryFinalise(DataMapperFactory);
+            TryFinalise(ConfigurationResolverFactory);
+            TryFinalise(ObjectConstructionFactory);
+            TryFinalise(ObjectSavingFactory);
+            TryFinalise(ConfigurationMapFactory);
+        }
+
+        protected virtual void TryFinalise<T>(IConfigFactory<T> factory)
+        {
+            var finalisable = factory as AbstractFinalisedConfigFactory<T>;
+            if (finalisable != null)
+            {
+                finalisable.Finalise();
+            }
         }
 
 
