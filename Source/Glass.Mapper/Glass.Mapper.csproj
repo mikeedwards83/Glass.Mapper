@@ -112,7 +112,7 @@
     <Compile Include="FakePropertyInfo.cs" />
     <Compile Include="GlassLazy.cs" />
     <Compile Include="ILog.cs" />
-    <Compile Include="IoC\AbstractConfigFactory.cs" />
+    <Compile Include="IoC\AbstractFinalisedConfigFactory.cs" />
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
