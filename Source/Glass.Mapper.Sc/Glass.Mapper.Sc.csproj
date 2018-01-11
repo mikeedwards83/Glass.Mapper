@@ -21,8 +21,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\82\</OutputPath>
+    <DefineConstants>DEBUG;SC82</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Glass.Mapper.Sc.XML</DocumentationFile>
@@ -40,6 +40,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
     <OutputPath>bin\Sc72\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU'">
+    <DefineConstants>SC82</DefineConstants>
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
@@ -70,7 +73,6 @@
     <Reference Include="Sitecore.Abstractions">
       <HintPath>$(ScDir)Sitecore.Abstractions.dll</HintPath>
     </Reference>
-	
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CachedItemVersionHandler.cs" />

@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             // we don't know - it might still be rich text
-            bool isRichText = field.TypeKey == _richTextKey;
+            bool isRichText = field.TypeKey == RichTextKey;
             isRichTextDictionary = isRichTextDictionary.Add(fieldGuid, isRichText);
 
             // now we know it isn't rich text - return the raw result.
