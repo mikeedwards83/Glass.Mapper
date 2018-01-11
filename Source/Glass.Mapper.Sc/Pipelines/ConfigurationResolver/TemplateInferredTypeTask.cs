@@ -79,7 +79,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
             base.Execute(args);
         }
 
-        private SitecoreTypeConfiguration FindBestType(TemplateItem templateItem, IEnumerable<SitecoreTypeConfiguration> configs, Type requestedType)
+        private SitecoreTypeConfiguration FindBestType(TemplateItem templateItem, IEnumerable<SitecoreTypeConfiguration> configs, Type requestedType, bool firstLevel = true)
         {
             if (templateItem == null)
                 return null;
@@ -90,12 +90,28 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
                 if (result != null)
                     return result;
             }
+            if (firstLevel)
+            {
+                foreach (var btmpl in templateItem.BaseTemplates)
+                {
+                    //first try first level templates before bubbling up
+                    types = configs.Where(x => x.TemplateId == templateItem.ID);
+                    if (types.Any())
+                    {
+                        var result = types.FirstOrDefault(x => requestedType.IsAssignableFrom(x.Type));
+                        if (result != null)
+                            return result;
+                    }
+                }
+            }
+            //not on this level, bubble up
             foreach (var btmpl in templateItem.BaseTemplates)
             {
-                var result = FindBestType(btmpl, configs, requestedType);
+                var result = FindBestType(btmpl, configs, requestedType, false);
                 if (result != null)
                     return result;
             }
+
             return null;
         }
 
