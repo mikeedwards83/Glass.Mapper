@@ -38,6 +38,34 @@ namespace Glass.Mapper
             new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
 
+
+        public static string[] SplitOnFirstOccurance(string value, char separator)
+        {
+
+            string first = string.Empty;
+            var second = string.Empty;
+            if (value.HasValue())
+            {
+                var index = value.IndexOf(separator);
+
+                if (index < 0)
+                {
+                    first = value;
+                }
+                else
+                {
+                    first = value.Substring(0, index);
+                    if (index+1 < value.Length)
+                    {
+                        second = value.Substring(index + 1);
+                    }
+                }
+
+            }
+            return new[] { first, second };
+
+        }
+
         public static object GetDefault(Type type)
         {
             if (type.IsValueType)
@@ -55,7 +83,18 @@ namespace Glass.Mapper
         /// <exception cref="MapperException">Only supports constructors with  a maximum of 10 parameters</exception>
         public static IDictionary<ConstructorInfo, Delegate> CreateConstructorDelegates(Type type)
         {
+            if (type.IsGenericType)
+            {
+                var genericArgs = type.GetGenericArguments();
+                if (genericArgs[0].FullName == null) //this is a generic class, e.g public class MyClass<T>
+                {
+                    return new Dictionary<ConstructorInfo, Delegate>();
+                }
+            }
+
             var constructors = type.GetConstructors();
+
+
 
             var dic = new Dictionary<ConstructorInfo, Delegate>();
 

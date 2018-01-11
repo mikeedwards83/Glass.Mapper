@@ -99,6 +99,7 @@
     <Compile Include="Configuration\Fluent\SitecoreItem.cs" />
     <Compile Include="Configuration\Fluent\SitecoreIgnore.cs" />
     <Compile Include="Configuration\Fluent\SitecoreMapConfigurationLoader.cs" />
+    <Compile Include="Configuration\Fluent\SitecoreSelf.cs" />
     <Compile Include="Configuration\SitecoreDelegateConfiguration.cs" />
     <Compile Include="Configuration\SitecoreEnforceTemplate.cs" />
     <Compile Include="Configuration\SitecoreFieldFieldValueConfiguration.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
     <Compile Include="DataMappers\SitecoreDelegateMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldDictionaryMapper.cs" />
+    <Compile Include="DataMappers\SitecoreFieldItemMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldIdMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldHtmlEncodingMapper.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageEmptyMapper.cs" />
@@ -301,7 +303,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

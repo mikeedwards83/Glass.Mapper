@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             var isoDate = Sitecore.DateUtil.IsoDateToDateTime(fieldValue);
-#if (SC80 || SC81 || SC82)
+#if (SC80 || SC81 || SC82 || SC90)
             return fieldValue.EndsWith("Z", StringComparison.OrdinalIgnoreCase) 
                 ? Sitecore.DateUtil.ToServerTime(isoDate) 
                 : isoDate;
@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 DateTime date = (DateTime)value;
 
-#if (SC80 || SC81 || SC82)
+#if (SC80 || SC81 || SC82 || SC90)
                 return global::Sitecore.DateUtil.ToIsoDate(date, false, true);
 #else
                 return global::Sitecore.DateUtil.ToIsoDate(date);

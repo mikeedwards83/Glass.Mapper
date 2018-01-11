@@ -37,13 +37,15 @@ namespace Glass.Mapper.Tests
         #region Constructors
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void Contructor_ContextIsNull_ThrowsException()
         {
             //Assign
 
             //Act
-            var service = new StubAbstractService(null);
+            Assert.Throws<NullReferenceException>(() =>
+            {
+                var service = new StubAbstractService(null);
+            });
 
             //Assert
         }

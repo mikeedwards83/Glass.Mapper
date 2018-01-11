@@ -24,5 +24,6 @@ namespace Glass.Mapper.IoC
         void RemoveAt(int index);
 
         void Remove<TRemove>() where TRemove : T;
+      
     }
 }

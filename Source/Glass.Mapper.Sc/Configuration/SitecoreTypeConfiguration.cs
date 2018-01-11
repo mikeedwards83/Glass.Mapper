@@ -222,7 +222,7 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (language != null && versionNumber > 0)
             {
-                return database.GetItem(id, language, new global::Sitecore.Data.Version(versionNumber));
+                return database.GetItem(id, language, global::Sitecore.Data.Version.Parse(versionNumber));
             }
             else if (language != null)
             {

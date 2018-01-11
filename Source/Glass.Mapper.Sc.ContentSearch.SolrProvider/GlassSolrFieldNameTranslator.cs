@@ -29,9 +29,6 @@ namespace Glass.Mapper.Sc.ContentSearch.SolrProvider
             var memberAttribute = GetIndexFieldNameFormatterAttribute(member);
             if (memberAttribute != null) return base.GetIndexFieldName(member);
 
-            //try to find IndexFieldAttributes first
-            var fieldAttribute = GetIndexFieldNameFormatterAttribute(member);
-                
             //try to get fieldname from glass
             if (member.DeclaringType != null)
             {
@@ -46,22 +43,18 @@ namespace Glass.Mapper.Sc.ContentSearch.SolrProvider
                     Type returnType = fieldConfig.PropertyInfo.PropertyType;
                     if (fieldConfig is SitecoreInfoConfiguration && !string.IsNullOrEmpty(((SitecoreInfoConfiguration)fieldConfig).BuiltInFieldName))
                     {
-                        return base.GetIndexFieldName(fieldAttribute == null ? ((SitecoreInfoConfiguration)fieldConfig).BuiltInFieldName : 
-                            fieldAttribute.GetIndexFieldName(((SitecoreInfoConfiguration)fieldConfig).BuiltInFieldName), returnType);
+                        return base.GetIndexFieldName(((SitecoreInfoConfiguration)fieldConfig).BuiltInFieldName, returnType);
                     }
                     else if (fieldConfig is SitecoreFieldConfiguration)
                     {
                         //we need to check if the field is mapped on typename, but can't call base processfieldname, because it's private
-                        var fieldName = fieldAttribute == null ? ((SitecoreFieldConfiguration)fieldConfig).FieldName : fieldAttribute.GetIndexFieldName(((SitecoreFieldConfiguration)fieldConfig).FieldName);
+                        var fieldName = ((SitecoreFieldConfiguration)fieldConfig).FieldName;
                         var lowerInvariant = StripKnownExtensions(fieldName).Replace(" ", "_").ToLowerInvariant();
                         var searchFieldConfig = fieldMap.GetFieldConfiguration(lowerInvariant) as SolrSearchFieldConfiguration;
                         if (searchFieldConfig != null) //found as mapping, proceed as normal
                             return base.GetIndexFieldName(fieldName, returnType);
                         if (schema.AllFieldNames.Contains(lowerInvariant)) //field explicitly configured, proceed
                             return lowerInvariant;
-                        searchFieldConfig = fieldMap.GetFieldConfiguration(returnType) as SolrSearchFieldConfiguration;
-                        if (searchFieldConfig != null) //found as type mapping, proceed as normal
-                            return base.GetIndexFieldName(fieldName, returnType);
 
                         var fieldType = Utilities.GetFieldType(((SitecoreFieldConfiguration)fieldConfig).FieldType, ((SitecoreFieldConfiguration)fieldConfig).CustomFieldType);
                         searchFieldConfig = this.fieldMap.GetFieldConfigurationByFieldTypeName(fieldType) as SolrSearchFieldConfiguration;
@@ -71,6 +64,9 @@ namespace Glass.Mapper.Sc.ContentSearch.SolrProvider
                             return base.GetIndexFieldName(fieldName, returnType);
                         }
 
+                        searchFieldConfig = fieldMap.GetFieldConfiguration(returnType) as SolrSearchFieldConfiguration;
+                        if (searchFieldConfig != null) //found as type mapping, proceed as normal
+                            return base.GetIndexFieldName(fieldName, returnType);
                     }
                 }
             }

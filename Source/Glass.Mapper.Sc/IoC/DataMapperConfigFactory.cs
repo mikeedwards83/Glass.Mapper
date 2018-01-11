@@ -4,7 +4,7 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class DataMapperConfigFactory : AbstractConfigFactory<AbstractDataMapper>
+    public class DataMapperConfigFactory : AbstractFinalisedConfigFactory<AbstractDataMapper>
     {
         private readonly IConfigFactory<ISitecoreQueryParameter> queryParameterFactory;
 
@@ -29,6 +29,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreFieldFloatMapper());
             Add(() => new SitecoreFieldGuidMapper());
             Add(() => new SitecoreFieldIdMapper());
+            Add(() => new SitecoreFieldItemMapper());
             Add(() => new SitecoreFieldHtmlEncodingMapper());
             Add(() => new SitecoreFieldIEnumerableMapper());
             Add(() => new SitecoreFieldImageMapper());

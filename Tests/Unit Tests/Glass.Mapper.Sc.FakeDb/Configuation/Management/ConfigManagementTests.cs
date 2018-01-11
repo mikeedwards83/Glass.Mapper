@@ -18,7 +18,9 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetQueryParameters()
         {
             // Assign
-            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory();
+            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
+            queryParameterFactory.Finalise();
+
 
             // Act
             var result = queryParameterFactory.GetItems();
@@ -31,7 +33,8 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetConfigurationResolvers()
         {
             // Assign
-            IConfigFactory<AbstractConfigurationResolverTask> queryParameterFactory = new ConfigurationResolverConfigFactory();
+            ConfigurationResolverConfigFactory queryParameterFactory = new ConfigurationResolverConfigFactory();
+            queryParameterFactory.Finalise();
 
             // Act
             var result = queryParameterFactory.GetItems();
@@ -44,21 +47,25 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetDataMappers()
         {
             // Assign
-            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory();
-            IConfigFactory<AbstractDataMapper> configFactory = new DataMapperConfigFactory(queryParameterFactory);
+            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
+            DataMapperConfigFactory configFactory = new DataMapperConfigFactory(queryParameterFactory);
+            configFactory.Finalise();
+            queryParameterFactory.Finalise();
 
             // Act
             var result = configFactory.GetItems();
 
             // Assert
-            Assert.AreEqual(41, result.Count());
+            Assert.AreEqual(42, result.Count());
         }
 
         [Test]
         public void GetDataMapperResolverTasks()
         {
             // Assign
-            IConfigFactory<AbstractDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
+            DataMapperTaskConfigFactory dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
+
+            dataMapperResolverConfigFactory.Finalise();
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -71,8 +78,10 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetObjectConstructionTasks()
         {
             // Assign
-            IDependencyResolver dependencyResolver = new DependencyResolver(new Config());
-            IConfigFactory<AbstractObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
+            DependencyResolver dependencyResolver = new DependencyResolver(new Config());
+
+            ObjectConstructionTaskConfigFactory dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
+            dataMapperResolverConfigFactory.Finalise();
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -85,7 +94,8 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetObjectSavingTasks()
         {
             // Assign
-            IConfigFactory<AbstractObjectSavingTask> objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
+            ObjectSavingTaskConfigFactory objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
+            objectSavingTaskConfigFactory.Finalise();
 
             // Act
             var result = objectSavingTaskConfigFactory.GetItems();

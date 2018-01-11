@@ -109,7 +109,12 @@ namespace Glass.Mapper
             return val;
         }
 
+        [Obsolete("Use ToFloat instead")]
         public static float ToFlaot(this string target)
+        {
+            return ToFloat(target);
+        }
+        public static float ToFloat(this string target)
         {
             float val = 0;
             if (target.HasValue())

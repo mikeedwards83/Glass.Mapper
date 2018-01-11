@@ -83,7 +83,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
 
         [Test]
-        [ExpectedException(typeof(ConfigurationException))]
+       
         public void Load_AssemblyDoesntExist_ThrowsException()
         {
             //Assign
@@ -92,8 +92,10 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             _loader = new StubAttributeConfigurationLoader(assemblyName);
 
             //Act
-            var results = _loader.Load();
-
+            Assert.Throws<ConfigurationException>(() =>
+            {
+                var results = _loader.Load();
+            });
             //Exception
         }
 

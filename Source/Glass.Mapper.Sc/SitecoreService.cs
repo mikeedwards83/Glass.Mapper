@@ -321,9 +321,6 @@ namespace Glass.Mapper.Sc
 
             Item item;
 
-
-            Database.GetItem("/parent",Language.Parse("fr-FR"));
-
             if (!ID.IsNullOrEmpty(branchId))
             {
                 item = pItem.Add(newName, new BranchId(branchId));

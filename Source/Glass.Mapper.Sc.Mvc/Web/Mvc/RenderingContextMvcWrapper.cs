@@ -21,7 +21,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public string GetDataSource()
         {
-            return RenderingContext.CurrentOrNull.Rendering.DataSource;
+
+            var value =RenderingContext.CurrentOrNull.Rendering.DataSource;
+            if (value.IsNullOrWhiteSpace() && RenderingContext.Current.Rendering.Item != null)
+            {
+                value = RenderingContext.Current.Rendering.Item.ID.ToString();
+            }
+            return value;
         }
     }
 }

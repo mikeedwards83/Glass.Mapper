@@ -4,7 +4,7 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class ObjectSavingTaskConfigFactory : AbstractConfigFactory<AbstractObjectSavingTask>
+    public class ObjectSavingTaskConfigFactory : AbstractFinalisedConfigFactory<AbstractObjectSavingTask>
     {
         public ObjectSavingTaskConfigFactory()
         {

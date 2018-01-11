@@ -29,8 +29,9 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue145
                 }
             })
             {
-                var resolver = Utilities.CreateStandardResolver();
+                var resolver = Utilities.CreateStandardResolver(finalise: false);
                 resolver.DataMapperFactory.Insert(0, () => new StubDataMapper());
+                resolver.Finalise();
 
                 var context = Context.Create(resolver);
                 var service = new SitecoreService(database.Database, context);

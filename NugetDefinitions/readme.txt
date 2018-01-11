@@ -8,6 +8,8 @@ Glass.Mapper.Sc V4
 
 Thank you for downloading Glass.Mapper.Sc V4, this is the latest and greatest version of Glass.Mapper.Sc.
 
+Release notes http://www.glass.lu/Mapper/Sc/Releases
+
 //TODO: CHECK THE FOLLOWING!!!
 
 * Does your project contain a reference to Glass.Mapper.Sc.dll? If this reference is missing Glass was unable to find the Sitecore.Kernel.dll 

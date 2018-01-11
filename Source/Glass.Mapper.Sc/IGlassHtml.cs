@@ -86,25 +86,56 @@ namespace Glass.Mapper.Sc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         string Editable<T>(T target, Expression<Func<T, object>> field, Expression<Func<T, string>> standardOutput, object parameters = null);
 
+
+
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="predicate">Predicate to determine if the field should be made editable</para>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        string EditableIf<T>(T target, Func<bool> predicate, Expression<Func<T, object>> field, object parameters = null);
+
+
+        /// <summary>
+        /// Makes the field editable using the Sitecore Page Editor. Using the specifed service to write data.
+        /// </summary>
+        /// <typeparam name="T">A class loaded by Glass.Sitecore.Mapper</typeparam>
+        /// <param name="target">The target object that contains the item to be edited</param>
+        /// <param name="predicate">Predicate to determine if the field should be made editable</para>
+        /// <param name="field">The field that should be made editable</param>
+        /// <param name="standardOutput">The output to display when the Sitecore Page Editor is not being used</param>
+        /// <param name="parameters">Additional rendering parameters, e.g. ImageParameters</param>
+        /// <returns>HTML output to either render the editable controls or normal HTML</returns>
+        string EditableIf<T>(T target, Func<bool> predicate, Expression<Func<T, object>> field,
+            Expression<Func<T, string>> standardOutput, object parameters = null);
+
+
+
         /// <summary>
         /// Renders HTML for an image
         /// </summary>
         /// <param name="field">The image to render</param>
         /// <param name="parameters">Additional parameters to add. Do not include alt or src</param>
         /// <param name="outputHeightWidth">Indicates if the height and width attributes should be outputted when rendering the image</param>
+        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An img HTML element</returns>
         string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
-                                      object attributes = null, bool isEditable = false);
+                                      object attributes = null, bool isEditable = false, bool alwaysRender = false);
 
         /// <summary>
         /// Render HTML for a link
         /// </summary>
         /// <param name="field">The link to render</param>
+        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
-                             bool isEditable = false, string contents = null);
+                             bool isEditable = false, string contents = null, bool alwaysRender = false);
 
 
         /// <summary>
@@ -148,9 +179,25 @@ namespace Glass.Mapper.Sc
         T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
 
-#if (SC81 || SC80 || SC75 || SC82)
+#if (SC81 || SC80 || SC75 || SC82  || SC90)
         string ProtectMediaUrl(string url);
 #endif
+
+
+        /// <summary>
+        /// Allows you to get a compiled function form the lambda expression. Typically used with extension methods.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        Func<T, object> GetCompiled<T>(Expression<Func<T, object>> expression);
+        /// <summary>
+        /// Allows you to get a compiled function form the lambda expression. Typically used with extension methods.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression);
     }
 
 }

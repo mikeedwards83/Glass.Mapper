@@ -39,6 +39,8 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             Configuration = new SitecoreTypeConfiguration();
             Configuration.Type = typeof(T);
+
+
             Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(Configuration.Type);
 
         }
@@ -244,6 +246,18 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreParent<T> Parent(Expression<Func<T, object>> ex)
         {
             SitecoreParent<T> builder = new SitecoreParent<T>(ex);
+            Configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
+        /// <summary>
+        /// Map an item to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns>SitecoreSelf{`0}.</returns>
+        public SitecoreSelf<T> Self(Expression<Func<T, object>> ex)
+        {
+            SitecoreSelf<T> builder = new SitecoreSelf<T>(ex);
             Configuration.AddProperty(builder.Configuration);
             return builder;
         }

@@ -9,7 +9,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Sc.FakeDb</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.FakeDb</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <RestorePackages>true</RestorePackages>
@@ -43,17 +42,14 @@
       <HintPath>..\..\..\packages\NSubstitute.1.9.2.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.FakeDb, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.FakeDb.1.2.2\lib\net45\Sitecore.FakeDb.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sitecore.FakeDb, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.FakeDb.1.4.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.FakeDb.NSubstitute, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.FakeDb.NSubstitute.1.2.1\lib\net45\Sitecore.FakeDb.NSubstitute.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sitecore.FakeDb.NSubstitute, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.FakeDb.NSubstitute.1.4.1\lib\net45\Sitecore.FakeDb.NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -112,6 +108,7 @@
     <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
@@ -123,6 +120,7 @@
     <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />
+    <Compile Include="DataMappers\SitecoreFieldItemMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
     <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
@@ -152,6 +150,8 @@
     <Compile Include="Issues\Issue145\Issue145.cs" />
     <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
     <Compile Include="Issues\Issue247\Issue247.cs" />
+    <Compile Include="Issues\Issue299\Issue299Fixture.cs" />
+    <Compile Include="Issues\Issue311\Issue311Fixture.cs" />
     <Compile Include="LazyLoadingFixture.cs" />
     <Compile Include="MiscFixture.cs" />
     <Compile Include="PerformanceTests.cs" />

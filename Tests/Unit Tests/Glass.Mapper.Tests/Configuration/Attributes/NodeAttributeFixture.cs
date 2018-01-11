@@ -70,8 +70,8 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
 
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
-            Assert.IsNullOrEmpty(config.Path);
-            Assert.IsNullOrEmpty(config.Id);
+            Assert.IsNull(config.Path);
+            Assert.IsNull(config.Id);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
             Assert.AreEqual(path, config.Path);
-            Assert.IsNullOrEmpty(config.Id);
+            Assert.IsNull(config.Id);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Glass.Mapper.Tests.Configuration.Attributes
             //Assert
             Assert.AreEqual(propertyInfo, config.PropertyInfo);
             Assert.AreEqual(id, config.Id);
-            Assert.IsNullOrEmpty(config.Path);
+            Assert.IsNull(config.Path);
         }
 
       

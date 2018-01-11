@@ -45,7 +45,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
         }
 
-        private const string _richTextKey = "rich text";
+        public const string RichTextKey = "rich text";
 
         private static ImmutableDictionary<Guid, bool> isRichTextDictionary = ImmutableDictionary<Guid, bool>.Empty;
          
@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc.DataMappers
             RenderFieldArgs renderFieldArgs = new RenderFieldArgs
             {
                 Item = field.Item,
-                FieldName = field.Name,
+                FieldName = field.ID.ToString(),
                 DisableWebEdit = true
             };
             try

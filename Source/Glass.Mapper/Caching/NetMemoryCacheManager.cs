@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Caching;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Glass.Mapper.Caching
 {
-    public class NetMemoryCacheManager : ICacheManager
+    public class NetMemoryCacheManager : AbstractCacheManager
     {
         private static MemoryCache _memoryCache = new MemoryCache(CacheName);
 
@@ -27,21 +28,17 @@ namespace Glass.Mapper.Caching
             SlidingExpiry = 60*20;
         }
 
-
-        public object this[string key]
-        {
-            get { return Get<object>(key); }
-            set { AddOrUpdate(key, value); }
-        }
-
         /// <summary>
         /// Destroys and recreates the cache
         /// </summary>
-        public void ClearCache()
+        public override void ClearCache()
         {
             // destroy and recreate the cache
             var newMemoryCache = new MemoryCache(CacheName);
-            Interlocked.Exchange(ref _memoryCache, newMemoryCache);
+            var oldCache = Interlocked.Exchange(ref _memoryCache, newMemoryCache);
+            /* Wait a moment before disposing in case there are any in-flight requests. */
+            Task.Delay(1000).Wait();
+            oldCache.Dispose();
         }
 
         /// <summary>
@@ -50,32 +47,27 @@ namespace Glass.Mapper.Caching
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <typeparam name="T"></typeparam>
-        public void AddOrUpdate<T>(string key, T value)
+        protected override void InternalAddOrUpdate<T>(string key, T value)
         {
-            if (_memoryCache.Contains(key))
-            {
-                _memoryCache.Remove(key);
-            }
-
             CacheItemPolicy cacheItemPolicy = new CacheItemPolicy();
             if (AbsoluteExpiry > 0)
             {
                 cacheItemPolicy.AbsoluteExpiration = DateTime.Now.AddSeconds(AbsoluteExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
             }
             else
             {
                 cacheItemPolicy.SlidingExpiration = new TimeSpan(0, 0, SlidingExpiry);
-                _memoryCache.Add(key, value, cacheItemPolicy);
             }
+
+            _memoryCache.Set(key, value, cacheItemPolicy);
         }
 
-        public T Get<T>(string key) where T : class
+        protected override object InternalGet(string key)
         {
-            return _memoryCache[key] as T;
+            return _memoryCache[key];
         }
 
-        public T GetValue<T>(string key) where T : struct
+        public override T GetValue<T>(string key) 
         {
             try
             {
@@ -87,7 +79,7 @@ namespace Glass.Mapper.Caching
             }
         }
 
-        public bool Contains(string key)
+        public override bool Contains(string key)
         {
             return _memoryCache.Contains(key);
         }

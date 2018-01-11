@@ -36,7 +36,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 
                 var resolver = Integration.Utilities.CreateStandardResolver() as DependencyResolver;
                 resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask());
-
+                resolver.Finalise();
 
                 var context = Context.Create(resolver);
                 var db = database.Database;
@@ -104,6 +104,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
                 var path = "/sitecore/content/Target";
                 var resolver = Integration.Utilities.CreateStandardResolver() as DependencyResolver;
                 resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask());
+                resolver.Finalise();
 
                 var context = Context.Create(resolver);
 

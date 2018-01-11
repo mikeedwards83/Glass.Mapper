@@ -17,6 +17,7 @@
 //-CRE-
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,11 @@ namespace Glass.Mapper.Sc.DataMappers
     {
         private readonly IUrlOptionsResolver _urlOptionsResolver;
 
+
+        private static ConcurrentDictionary<Guid, bool> _isInternalLinkFieldDictionary = new ConcurrentDictionary<Guid, bool>();
+
+        public const string InternalLinkKey = "internal link";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldLinkMapper"/> class.
         /// </summary>
@@ -44,11 +50,16 @@ namespace Glass.Mapper.Sc.DataMappers
         {
         }
 
-        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver) : base(typeof(Link))
+        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver) 
+            : this(urlOptionsResolver, typeof(Link))
+        {
+        }
+
+        public SitecoreFieldLinkMapper(IUrlOptionsResolver urlOptionsResolver, Type type) 
+            : base(type)
         {
             _urlOptionsResolver = urlOptionsResolver;
         }
-
 
         /// <summary>
         /// Sets the field value.
@@ -76,23 +87,21 @@ namespace Glass.Mapper.Sc.DataMappers
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Gets the field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <returns>System.Object.</returns>
-        public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        protected void MapToLinkModel(Link link, InternalLinkField field, SitecoreFieldConfiguration config)
         {
+            var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
+            link.Url = field.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(field.TargetItem, urlOptions);
+            link.Type = LinkType.Internal;
+            link.TargetId = field.TargetItem == null ? Guid.Empty : field.TargetItem.ID.Guid;
+            link.Text = field.TargetItem == null ? string.Empty : field.TargetItem.DisplayName;
 
-            if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
+        }
 
-            Link link = new Link();
-            LinkField linkField = new LinkField(field);
-
+        protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config)
+        {
             link.Anchor = linkField.Anchor;
             link.Class = linkField.Class;
+            link.Style = linkField.GetAttribute("style");
             link.Text = linkField.Text;
             link.Title = linkField.Title;
             link.Target = linkField.Target;
@@ -133,46 +142,56 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.Url = linkField.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
-                    link.Text =  linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.DisplayName) : linkField.Text;
+                    link.Text = linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.DisplayName) : linkField.Text;
                     break;
                 default:
-                    return null;
+                    link = null;
+                    break;
             }
 
 
+        }
+
+        /// <summary>
+        /// Gets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>System.Object.</returns>
+        public override object GetField(Sitecore.Data.Fields.Field field, SitecoreFieldConfiguration config,
+            SitecoreDataMappingContext context)
+        {
+
+            if (field == null || field.Value.Trim().IsNullOrEmpty()) return null;
+
+            Guid fieldGuid = field.ID.Guid;
+
+            // shortest route - we know whether or not its rich text
+            var isInternalLink =
+                _isInternalLinkFieldDictionary.GetOrAdd(fieldGuid, (id) => field.TypeKey == InternalLinkKey);
+
+
+            Link link = new Link();
+            if (isInternalLink)
+            {
+                InternalLinkField internalLinkField = new Sitecore.Data.Fields.InternalLinkField(field);
+                MapToLinkModel(link, internalLinkField, config);
+            }
+            else
+            {
+                LinkField linkField = new LinkField(field);
+
+                MapToLinkModel(link, linkField, config);
+            }
          
 
             return link;
         }
 
-        /// <summary>
-        /// Sets the field.
-        /// </summary>
-        /// <param name="field">The field.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="config">The config.</param>
-        /// <param name="context">The context.</param>
-        /// <exception cref="Glass.Mapper.MapperException">
-        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
-        /// or
-        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
-        /// </exception>
-        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        protected void MapToLinkField(Link link, LinkField linkField, SitecoreFieldConfiguration config)
         {
-            Link link = value as Link;
-            
-
-            if (field == null) return;
-
-            var item = field.Item;
-
-            LinkField linkField = new LinkField(field);
-            if (link == null || link.Type == LinkType.NotSet)
-            {
-                linkField.Clear();
-                return;
-            }
-
+            var item = linkField.InnerField.Item;
 
             switch (link.Type)
             {
@@ -264,6 +283,73 @@ namespace Glass.Mapper.Sc.DataMappers
                 linkField.QueryString = HttpUtility.UrlEncode(link.Query);
             if (!link.Target.IsNullOrEmpty())
                 linkField.Target = link.Target;
+        }
+
+        protected void MapToLinkField(Link link, InternalLinkField linkField, SitecoreFieldConfiguration config)
+        {
+            var item = linkField.InnerField.Item;
+
+            if (link.TargetId == Guid.Empty)
+            {
+                ItemLink iLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, linkField.TargetItem.Database.Name, linkField.TargetID, linkField.TargetItem.Paths.FullPath);
+                linkField.RemoveLink(iLink);
+            }
+            else
+            {
+                ID newId = new ID(link.TargetId);
+                Item target = item.Database.GetItem(newId);
+
+                if (target != null)
+                {
+                    ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
+                    linkField.UpdateLink(nLink);
+                }
+                else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
+            }
+        }
+
+        /// <summary>
+        /// Sets the field.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="config">The config.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="Glass.Mapper.MapperException">
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// or
+        /// No item with ID {0}. Can not update Link linkField.Formatted(newId)
+        /// </exception>
+        public override void SetField(Field field, object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            Link link = value as Link;
+            
+
+            if (field == null) return;
+
+
+            Guid fieldGuid = field.ID.Guid;
+
+            // shortest route - we know whether or not its rich text
+            var isInternalLink =
+                _isInternalLinkFieldDictionary.GetOrAdd(fieldGuid, (id) => field.TypeKey == InternalLinkKey);
+
+            if (isInternalLink)
+            {
+                InternalLinkField internalLinkField = new Sitecore.Data.Fields.InternalLinkField(field);
+                MapToLinkField(link, internalLinkField, config);
+            }
+            else
+            {
+                LinkField linkField = new LinkField(field);
+                if (link == null || link.Type == LinkType.NotSet)
+                {
+                    linkField.Clear();
+                    return;
+                }
+
+                MapToLinkField(link, linkField, config);
+            }
         }
     }
 }

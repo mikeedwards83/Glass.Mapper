@@ -47,5 +47,7 @@ namespace Glass.Mapper.Sc.IoC
         {
             return CacheManager();
         }
+
+       
     }
 }

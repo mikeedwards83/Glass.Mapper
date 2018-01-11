@@ -37,8 +37,9 @@ namespace $rootnamespace$.App_Start
 				GlassMapperScCustom.GlassLoaders()        				
 				);
 
-			GlassMapperScCustom.PostLoad();
+			GlassMapperScCustom.PostLoad(resolver);
 
+			
 			//EditFrameBuilder.EditFrameItemPrefix = "Glass-";
 
         }
