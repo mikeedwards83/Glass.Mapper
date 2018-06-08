@@ -220,6 +220,7 @@
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="RenderField\DateParameterKeys.cs" />
     <Compile Include="RenderField\ImageParameterKeys.cs" />
+    <Compile Include="RenderField\RenderParameterKeys.cs" />
     <Compile Include="RenderField\LinkParameterKeys.cs" />
     <Compile Include="RenderingResult.cs" />
     <Compile Include="SitecoreContentContext.cs" />
