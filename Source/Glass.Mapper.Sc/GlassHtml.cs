@@ -638,7 +638,7 @@ namespace Glass.Mapper.Sc
                         }
 
                         renderFieldArgs.Parameters = dictionary;
-                        renderFieldArgs.DisableWebEdit = dictionary.ContainsKey(RenderParameterKeys.DisableWebEdit) ? dictionary[RenderParameterKeys.DisableWebEdit] : false;
+                        renderFieldArgs.DisableWebEdit = dictionary.ContainsKey(RenderParameterKeys.DisableWebEdit) && bool.Parse(dictionary[RenderParameterKeys.DisableWebEdit]);
                         renderFieldArgs.EnclosingTag =
                             dictionary.ContainsKey(RenderParameterKeys.EnclosingTag) ? dictionary[RenderParameterKeys.EnclosingTag] : string.Empty;
 
