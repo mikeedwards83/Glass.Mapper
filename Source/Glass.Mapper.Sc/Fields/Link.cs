@@ -80,9 +80,12 @@ namespace Glass.Mapper.Sc.Fields
 
         public const string UrlFormat = "{0}{1}";
 
+        public string BuildUrl()
+        {
+            return BuildUrl((SafeDictionary<string>)null);
+        }
 
-
-        [Obsolete("User the SafeDictionary alternative")]
+        [Obsolete("Use the SafeDictionary alternative")]
         public string BuildUrl(NameValueCollection attributes = null)
         {
             return BuildUrl(attributes.ToSafeDictionary());
@@ -114,7 +117,7 @@ namespace Glass.Mapper.Sc.Fields
             var query = getValue("query", () => Query);
             var anchor = getValue("anchor", () => Anchor);
 
-            if (query.IsNotNullOrEmpty())
+            if (query.HasValue())
                 builder.AddToQueryString(query);
 
             return UrlFormat.Formatted(builder.ToString(), anchor.IsNullOrEmpty() ? "" : "#" + anchor);
