@@ -2,9 +2,17 @@
 {
     public class GlassHtmlFactory : IGlassHtmlFactory
     {
-        public IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        protected IDependencyResolver DependencyResolver { get; }
+
+        public GlassHtmlFactory(IDependencyResolver dependencyResolver)
         {
-            return new GlassHtml(sitecoreContext);
+            DependencyResolver = dependencyResolver;
+        }
+
+
+        public IGlassHtml GetGlassHtml(ISitecoreService sitecoreService)
+        {
+            return new GlassHtml(sitecoreService);
         }
     }
 }

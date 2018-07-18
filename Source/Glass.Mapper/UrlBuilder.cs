@@ -24,7 +24,7 @@ namespace Glass.Mapper
 
         protected void ProcessQueryString(string url, List<KeyValuePair<string, string>> queryString)
         {
-            if (!url.IsNotNullOrEmpty() || url.IndexOf("?", StringComparison.Ordinal) <= -1)
+            if (!url.HasValue() || url.IndexOf("?", StringComparison.Ordinal) <= -1)
             {
                 return;
             }
@@ -32,7 +32,7 @@ namespace Glass.Mapper
             var urlQuery = Utilities.SplitOnFirstOccurance(url, '?');
             var query = urlQuery[1];
 
-            if (!query.IsNotNullOrEmpty())
+            if (!query.HasValue())
             {
                 return;
             }
@@ -67,7 +67,7 @@ namespace Glass.Mapper
 
         public virtual void AddToQueryString(string key, string value)
         {
-            if (key.IsNotNullOrEmpty() && value.IsNotNullOrEmpty())
+            if (key.HasValue() && value.HasValue())
             {
                 QueryString.Add(new KeyValuePair<string, string>(key, value));
             }
@@ -77,7 +77,7 @@ namespace Glass.Mapper
         {
             StringBuilder sb = new StringBuilder();
 
-            if (_url.IsNotNullOrEmpty())
+            if (_url.HasValue())
             {
                 var urlFirst = _url.Split('?')[0];
                 sb.Append(urlFirst);
@@ -88,7 +88,7 @@ namespace Glass.Mapper
             }
             foreach (var keyValuePair in QueryString)
             {
-                if (keyValuePair.Key.IsNotNullOrEmpty())
+                if (keyValuePair.Key.HasValue())
                 {
                     sb.AppendFormat("{0}={1}{2}", keyValuePair.Key ?? string.Empty, keyValuePair.Value ?? string.Empty,QuerySeparator);
                 }

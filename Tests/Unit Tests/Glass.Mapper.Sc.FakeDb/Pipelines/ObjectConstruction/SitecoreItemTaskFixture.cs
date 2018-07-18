@@ -22,7 +22,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
 
-            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null, new ModelCounter());
+            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null);
             var expected = "some value";
             args.Result = expected;
 
@@ -40,7 +40,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
 
-            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null, new ModelCounter());
+            var args = new ObjectConstructionArgs(null, context, new SitecoreTypeConfiguration(), null);
         
             //Act
             task.Execute(args);
@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             var task = new SitecoreItemTask();
             var context = new SitecoreTypeCreationContext();
             context.Item = Mapper.Sc.Utilities.CreateFakeItem(new Dictionary<Guid, string>(), "test");
-            var args = new ObjectConstructionArgs(null, context, SitecoreItemResolverTask.Config, null, new ModelCounter());
+            var args = new ObjectConstructionArgs(null, context, SitecoreItemResolverTask.Config, null);
             
             //Act
             task.Execute(args);

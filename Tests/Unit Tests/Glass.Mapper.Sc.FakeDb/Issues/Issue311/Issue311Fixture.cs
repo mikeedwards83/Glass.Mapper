@@ -69,10 +69,8 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue311
                 stub.Field(x => x.Test2).FieldName(fieldName);
 
 
-                var resolver = Utilities.CreateStandardResolver(finalise:false);
+                var resolver = Utilities.CreateStandardResolver();
                 resolver.DataMapperFactory.Insert(0, () => new Issue145.Issue145.StubDataMapper());
-                resolver.Finalise();
-
 
                 var context = Context.Create(resolver);
 
@@ -141,10 +139,8 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue311
                 stub.Field(x => x.Test2).FieldId(filedId12);
 
 
-                var resolver = Utilities.CreateStandardResolver(finalise: false);
-                
+                var resolver = Utilities.CreateStandardResolver();
                 resolver.DataMapperFactory.Insert(0, () => new Issue145.Issue145.StubDataMapper());
-                resolver.Finalise();
 
                 var context = Context.Create(resolver);
 

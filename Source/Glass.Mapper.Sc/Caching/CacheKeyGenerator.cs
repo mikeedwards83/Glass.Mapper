@@ -21,8 +21,8 @@ namespace Glass.Mapper.Sc.Caching
                 context.Item["__Revision"],
                 context.Item.Language.Name,
                 context.Item.Database.Name,
-                context.RequestedType.FullName,
-                context.IsLazy
+                context.Options.Type.FullName,
+                context.Options.Lazy
                 );
         }
     }

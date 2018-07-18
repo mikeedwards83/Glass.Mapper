@@ -49,7 +49,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
                     SitecoreTypeCreationContext typeCreationContext = _args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
                     typeCreationContext.Item = typeCreationContext.SitecoreService.Database.GetItem(Id);
                     SitecoreTypeConfiguration typeConfiguration = TypeConfiguration;
-                    AbstractDataMappingContext dataMappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
+                    AbstractDataMappingContext dataMappingContext = _args.AbstractTypeCreationContext.CreateDataMappingContext(null);
 
                     //todo filter fieldnames from FieldConfigs!
                     foreach (AbstractPropertyConfiguration propertyConfiguration in typeConfiguration.Properties.Where(x=> IndexFields.All(y=> y != x.PropertyInfo.Name)))

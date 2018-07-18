@@ -9,7 +9,10 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
     public class SimpleInjectorTask : IocTaskBase
     {
         public static Container Container { get;  set; }
-       
+
+        public SimpleInjectorTask(LazyLoadingHelper lazyLoadingHelper) : base(lazyLoadingHelper)
+        {
+        }
 
         protected override bool IsRegistered(Type type)
         {
@@ -35,5 +38,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
             var resolved = parameters.Select(x => Container.GetInstance(x.ParameterType));
             return resolved.ToArray();
         }
+
+       
     }
 }

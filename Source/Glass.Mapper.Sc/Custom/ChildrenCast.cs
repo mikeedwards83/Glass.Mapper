@@ -10,20 +10,22 @@ namespace Glass.Mapper.Sc.Custom
     {
         private readonly ISitecoreService _service;
         private readonly Item _item;
-        private readonly bool _isLazy;
-        private readonly bool _inferType;
+        private readonly GetItemOptions _getModelOptions;
+        private readonly LazyLoadingHelper _lazyLoadingHelper;
 
-        public ChildrenCast(ISitecoreService service, Item item, bool isLazy, bool inferType)
+        public ChildrenCast(ISitecoreService service, Item item, GetItemOptions getModelOptions, LazyLoadingHelper lazyLoadingHelper)
         {
             _service = service;
             _item = item;
-            _isLazy = isLazy;
-            _inferType = inferType;
+            _getModelOptions = getModelOptions;
+            _lazyLoadingHelper = lazyLoadingHelper;
         }
 
         public IEnumerable<T> As<T>() where T : class
         {
-            return new LazyItemEnumerable<T>(() => _item.Children, _isLazy, _inferType, _service);
+            var options = new GetItemsByFuncOptions((database) => _item.Children);
+            options.Copy(_getModelOptions);
+            return new LazyItemEnumerable<T>(options, _service, _lazyLoadingHelper);
         } 
     }
 }

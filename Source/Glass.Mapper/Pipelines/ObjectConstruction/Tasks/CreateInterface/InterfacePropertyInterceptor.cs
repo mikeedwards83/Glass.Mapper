@@ -1,21 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -23,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
 {
@@ -48,17 +31,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         /// Initializes a new instance of the <see cref="InterfacePropertyInterceptor"/> class.
         /// </summary>
         /// <param name="args">The args.</param>
-        public InterfacePropertyInterceptor(ObjectConstructionArgs args)
+        public InterfacePropertyInterceptor(ObjectConstructionArgs args, LazyLoadingHelper lazyLoadingHelper)
         {
             _args = args;
             _fullName = _args.Configuration.Type.FullName;
             Values = new ConcurrentDictionary<string, object>();
 
-            _mappingContext = _args.Service.CreateDataMappingContext(_args.AbstractTypeCreationContext, null);
-
+            _mappingContext = _args.AbstractTypeCreationContext.CreateDataMappingContext(null);
             //if lazy loading diabled load all values now
-            if (!args.AbstractTypeCreationContext.IsLazy)
-            {
+            if (!lazyLoadingHelper.IsEnabled(args.Options)) { 
                 LoadAllValues();
             }
         }
@@ -77,48 +58,50 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
         /// <exception cref="Glass.Mapper.MapperException">Method with name {0}{1} on type {2} not supported..Formatted(method, name, _args.Configuration.Type.FullName)</exception>
         public void Intercept(IInvocation invocation)
         {
-
-            if (invocation.Method.IsSpecialName)
+            using (new Monitor())
             {
-                if (invocation.Method.Name.StartsWith("get_") || invocation.Method.Name.StartsWith("set_"))
+                if (invocation.Method.IsSpecialName)
                 {
-
-                    string method = invocation.Method.Name.Substring(0, 4);
-                    string name = invocation.Method.Name.Substring(4);
-
-
-                    if (method == "get_")//&& Values.ContainsKey(name))
+                    if (invocation.Method.Name.StartsWith("get_") || invocation.Method.Name.StartsWith("set_"))
                     {
-                        object result;
-                        if (Values.TryGetValue(name, out result))
-                        {
-                            invocation.ReturnValue = result;
-                            return;
-                        }
 
-                        var property = _args == null ? null: _args.Configuration.Properties.FirstOrDefault(x => x.PropertyInfo.Name == name);
-                        if (property != null)
+                        string method = invocation.Method.Name.Substring(0, 4);
+                        string name = invocation.Method.Name.Substring(4);
+
+
+                        if (method == "get_") //&& Values.ContainsKey(name))
                         {
-                            LoadValue(property);
-                            invocation.ReturnValue = Values[name]; 
-                            return;
+                            object result;
+                            if (Values.TryGetValue(name, out result))
+                            {
+                                invocation.ReturnValue = result;
+                                return;
+                            }
+
+                            var property = _args == null ? null : _args.Configuration[name];
+                            if (property != null)
+                            {
+                                LoadValue(property);
+                                invocation.ReturnValue = Values[name];
+                                return;
+                            }
+                            else
+                            {
+                                invocation.ReturnValue = Utilities.GetDefault(invocation.Method.ReturnType);
+                                return;
+                            }
+
+                        }
+                        else if (method == "set_")
+                        {
+                            Values[name] = invocation.Arguments[0];
                         }
                         else
                         {
-                            invocation.ReturnValue = Utilities.GetDefault(invocation.Method.ReturnType);
-                            return;
+
+                            throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(
+                                method, name, _fullName));
                         }
-
-                    }
-                    else if (method == "set_")
-                    {
-                        Values[name] = invocation.Arguments[0];
-                    }
-                    else
-                    {
-
-                        throw new MapperException("Method with name {0}{1} on type {2} not supported.".Formatted(
-                            method, name, _fullName));
                     }
                 }
             }
@@ -129,9 +112,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             if (_mapRequested == false)
             {
                 _mapRequested = true;
-                _args.Counters.ModelsMapped++;
+                ModelCounter.Instance.ModelsMapped++;
             }
-
+                
             if (!Values.ContainsKey(propertyConfiguration.PropertyInfo.Name))
             {
                 var result = propertyConfiguration.Mapper.MapToProperty(_mappingContext) ??

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 {
     public abstract class IocTaskBase : Glass.Mapper.Pipelines.ObjectConstruction.AbstractObjectConstructionTask
     {
+        private readonly LazyLoadingHelper _lazyLoadingHelper;
         private static object _lock = new object();
         private static volatile ProxyGenerator _generator;
         private static volatile ProxyGenerationOptions _options;
@@ -24,8 +26,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
             _options = new ProxyGenerationOptions(hook);
         }
 
-        protected IocTaskBase()
+        protected IocTaskBase(LazyLoadingHelper lazyLoadingHelper)
         {
+            _lazyLoadingHelper = lazyLoadingHelper;
             Name = "IocTaskBase";
         }
 
@@ -61,14 +64,14 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
                                                                                                 .AbstractTypeCreationContext);
 
 
-                    if (args.AbstractTypeCreationContext.IsLazy)
+                    if (_lazyLoadingHelper.IsEnabled(args.Options))
                     {
                         var resolved = GetConstructorParameters(configuration);
 
                         var proxy = _generator.CreateClassProxy(configuration.Type, resolved,
                                                                 new LazyObjectInterceptor(mappingAction, args));
                         args.Result = proxy;
-                        args.Counters.ProxyModelsCreated++;
+                        ModelCounter.Instance.ProxyModelsCreated++;
                     }
                     else
                     {
@@ -79,8 +82,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
 
                         //set the new object as the returned result
                         args.Result = obj;
-                        args.Counters.ConcreteModelCreated++;
-                        args.Counters.ModelsMapped++;
+                        ModelCounter.Instance.ConcreteModelCreated++;
+                        ModelCounter.Instance.ModelsMapped++;
 
                     }
                 }

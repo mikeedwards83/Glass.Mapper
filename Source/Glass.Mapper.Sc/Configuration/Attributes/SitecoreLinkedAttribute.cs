@@ -1,23 +1,6 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 using System.Reflection;
 using Glass.Mapper.Configuration.Attributes;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Attributes
 {
@@ -26,6 +9,23 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
     /// </summary>
     public class SitecoreLinkedAttribute : LinkedAttribute
     {
+
+        /// <summary>
+        /// A template ID to enforce when mapping the property.EnforceTemplate must also be set.
+        /// </summary>
+        public string TemplateId { get; set; }
+        /// <summary>
+        /// The type of template check to perform when mapping the property. The TemplateId must also be set.
+        /// </summary>
+        public SitecoreEnforceTemplate EnforceTemplate { get; set; }
+
+        /// <summary>
+        /// Indicate weather All, References or Referred should be loaded
+        /// </summary>
+        /// <value>The option.</value>
+        public SitecoreLinkedOptions Option { get; set; }
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreLinkedAttribute"/> class.
         /// </summary>
@@ -33,13 +33,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         {
             Option = SitecoreLinkedOptions.All;
         }
-
-
-        /// <summary>
-        /// Indicate weather All, References or Referred should be loaded
-        /// </summary>
-        /// <value>The option.</value>
-        public SitecoreLinkedOptions Option { get; set; }
 
         /// <summary>
         /// Configures the specified property info.
@@ -61,6 +54,11 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         public void Configure(PropertyInfo propertyInfo, SitecoreLinkedConfiguration config)
         {
             config.Option = this.Option;
+            if (TemplateId.HasValue())
+            {
+                config.TemplateId = new ID(TemplateId);
+            }
+            config.EnforceTemplate = EnforceTemplate;
 
             base.Configure(propertyInfo, config);
         }

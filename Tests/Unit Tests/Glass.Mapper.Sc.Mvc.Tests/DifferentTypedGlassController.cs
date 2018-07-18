@@ -9,6 +9,7 @@ using Glass.Mapper.Sc.Web.Mvc;
 using NSubstitute;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace Glass.Mapper.Sc.Mvc.Tests
 {
@@ -17,41 +18,21 @@ namespace Glass.Mapper.Sc.Mvc.Tests
     {
         #region [ Data Source Tests ]
 
-        [Test]
-        public void GlassController_can_set_and_get_datasource()
-        {
-            // Arrange
-            ID expectedId = new ID(Guid.NewGuid());
-            DataSourceStubClass classToReturn = new DataSourceStubClass();
-            var testHarness = new DifferentTypedGlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.HasDataSource.Returns(true);
-            testHarness.RenderingContextWrapper.GetDataSource().Returns(expectedId.ToString());
-            testHarness.SitecoreContext.GetItem<DataSourceStubClass>(expectedId.ToString()).Returns(classToReturn);
-
-            // Act
-            var result1 = testHarness.GlassController.DataSource;
-            var result2 = testHarness.GlassController.DataSource;
-
-            // Assert
-            result1.Should().Be(classToReturn);
-            result2.Should().BeSameAs(result1);
-            testHarness.SitecoreContext.Received(1).GetItem<DataSourceStubClass>(expectedId.ToString());
-        }
+       
 
         [Test]
         public void GlassController_has_no_datasource()
         {
             // Arrange
             var testHarness = new DifferentTypedGlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.HasDataSource.Returns(true);
-            testHarness.RenderingContextWrapper.GetDataSource().Returns(String.Empty);
+            testHarness.MvcContext.HasDataSource.Returns(true);
+            testHarness.MvcContext.GetDataSourceItem<DataSourceStubClass>(Arg.Any<GetKnownOptions>()).Returns((DataSourceStubClass) null);
 
             // Act
-            var result = testHarness.GlassController.DataSource;
-
+            var result = testHarness.GlassController.GetDataSource<DataSourceStubClass>();
             // Assert
             result.Should().BeNull();
-            testHarness.SitecoreContext.Received(0).GetItem<DataSourceStubClass>(Arg.Any<string>());
+            testHarness.MvcContext.Received(1).GetDataSourceItem<DataSourceStubClass>(Arg.Any<GetKnownOptions>());
         }
 
         [Test]
@@ -59,14 +40,14 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         {
             // Arrange
             var testHarness = new DifferentTypedGlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.GetDataSource().Returns(String.Empty);
+            testHarness.MvcContext.DataSourceItem.Returns((Item) null);
 
             // Act
-            var result = testHarness.GlassController.DataSource;
+            var result = testHarness.GlassController.GetDataSource<DataSourceStubClass>();
 
             // Assert
             result.Should().BeNull();
-            testHarness.SitecoreContext.Received(0).GetItem<DataSourceStubClass>(Arg.Any<string>());
+            testHarness.MvcContext.Received(0).GetDataSourceItem<DataSourceStubClass>(Arg.Any<GetKnownOptions>());
         }
 
         [Test]
@@ -74,14 +55,14 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         {
             // Arrange
             var testHarness = new DifferentTypedGlassControllerTestHarness();
-            testHarness.RenderingContextWrapper.GetDataSource().Returns(null as string);
+            testHarness.MvcContext.DataSourceItem.Returns((Item)null);
 
             // Act
-            var result = testHarness.GlassController.DataSource;
+            var result = testHarness.GlassController.GetDataSource<DataSourceStubClass>();
 
             // Assert
             result.Should().BeNull();
-            testHarness.SitecoreContext.Received(0).GetItem<DataSourceStubClass>(Arg.Any<string>());
+            testHarness.MvcContext.Received(0).GetDataSourceItem<DataSourceStubClass>(Arg.Any<GetKnownOptions>());
         }
 
         #endregion
@@ -94,16 +75,16 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             // Arrange
             ContextStubClass classToReturn = new ContextStubClass();
             var testHarness = new DifferentTypedGlassControllerTestHarness();
-            testHarness.SitecoreContext.GetCurrentItem<ContextStubClass>().Returns(classToReturn);
+            testHarness.MvcContext.GetContextItem<ContextStubClass>(Arg.Any<GetKnownOptions>()).Returns(classToReturn);
 
             // Act
-            var result1 = testHarness.GlassController.Context;
-            var result2 = testHarness.GlassController.Context;
+            var result1 = testHarness.GlassController.GetContext<ContextStubClass>();
+            var result2 = testHarness.GlassController.GetContext<ContextStubClass>();
 
             // Assert
             result1.Should().Be(classToReturn);
             result2.Should().BeSameAs(result1);
-            testHarness.SitecoreContext.Received(1).GetCurrentItem<ContextStubClass>();
+            testHarness.MvcContext.Received(2).GetContextItem<ContextStubClass>(Arg.Any<GetKnownOptions>());
         }
 
         #endregion
@@ -142,20 +123,35 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         {
             public DifferentTypedGlassControllerTestHarness()
             {
-                SitecoreContext = Substitute.For<ISitecoreContext>();
-                RenderingContextWrapper = Substitute.For<IRenderingContext>();
+                MvcContext = Substitute.For<IMvcContext>();
+                SitecoreService = Substitute.For<ISitecoreService>();
                 HttpContext = Substitute.For<HttpContextBase>();
-                GlassController = new GlassController<ContextStubClass, DataSourceStubClass>(SitecoreContext, RenderingContextWrapper);
+                GlassController = new StubGlassController(MvcContext);
                 GlassController.ControllerContext = new ControllerContext(HttpContext, new RouteData(), GlassController);
             }
 
+            public IMvcContext MvcContext { get; set; }
+            public ISitecoreService SitecoreService { get; set; }
             public HttpContextBase HttpContext { get; private set; }
 
-            public IRenderingContext RenderingContextWrapper { get; private set; }
+            public StubGlassController GlassController { get; private set; }
 
-            public ISitecoreContext SitecoreContext { get; private set; }
+            public class StubGlassController : GlassController
+            {
+                public StubGlassController(
+                    IMvcContext mvcContext):base(mvcContext, null)
+                {
+                }
 
-            public GlassController<ContextStubClass, DataSourceStubClass> GlassController { get; private set; }
+                public new T GetContext<T>(GetKnownOptions options = null) where T : class
+                {
+                    return base.GetContext<T>(options);
+                }
+                public new T GetDataSource<T>(GetKnownOptions options = null) where T : class
+                {
+                    return base.GetDataSource<T>(options);
+                }
+            }
         }
     }
 }

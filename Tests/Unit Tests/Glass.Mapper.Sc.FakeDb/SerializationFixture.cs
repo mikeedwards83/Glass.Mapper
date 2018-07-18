@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Castle.DynamicProxy;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
@@ -7,7 +9,6 @@ using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
-using Sitecore.Configuration;
 using Sitecore.FakeDb;
 
 namespace Glass.Mapper.Sc.FakeDb
@@ -20,7 +21,7 @@ namespace Glass.Mapper.Sc.FakeDb
         [SetUp]
         public void Setup()
         {
-            _task = new CreateInterfaceTask();
+            _task = new CreateInterfaceTask(new LazyLoadingHelper());
         }
 
         [Test]
@@ -66,13 +67,13 @@ namespace Glass.Mapper.Sc.FakeDb
             })
             {
                 var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IStubInterface)));
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(Stub)));
 
                 var service = new SitecoreService(database.Database);
 
                 //Act
-                Stub result = service.GetItem<Stub>(path);
-                // Console.Write(result.Path);
+                Stub result = service.GetItem<Stub>(path, x=>x.LazyDisabled());
+                 Console.Write(result.Path);
                 byte[] serialized = Serialize(result);
 
                 Stub deserialized = Deserialize<Stub>(serialized);
@@ -83,6 +84,45 @@ namespace Glass.Mapper.Sc.FakeDb
                 Assert.AreEqual(path, deserialized.Path);
             }
         }
+
+        //[Test]
+        //public void CanSerializeAndDeserializeGeneratedClassWithChild()
+        //{
+        //    //Assign
+        //    string path = "/sitecore/content/Target";
+        //    string childPath = "/sitecore/content/Target";
+
+        //    using (Db database = new Db
+        //    {
+        //        new Sitecore.FakeDb.DbItem("Target")
+        //        {
+        //            new Sitecore.FakeDb.DbItem("Child")
+
+        //        }
+        //    })
+        //    {
+        //        var context = Context.Create(Utilities.CreateStandardResolver());
+        //        context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(Stub)));
+
+        //        var service = new SitecoreService(database.Database);
+
+        //        //Act
+        //        StubWithChild result = service.GetItem<StubWithChild>(path);
+        //        Console.Write(result.Path);
+        //        byte[] serialized = Serialize(result);
+
+        //        StubWithChild deserialized = Deserialize<StubWithChild>(serialized);
+
+        //        //Assert
+        //        Assert.IsNotNull(deserialized);
+        //        Assert.AreNotEqual(result, deserialized);
+        //        Assert.AreEqual(path, deserialized.Path);
+
+        //        Assert.AreEqual(childPath, deserialized.Child.First().Path);
+        //    }
+        //}
+
+
 
         [Test]
         public void CanSerializeAndDeserializeStandardProxy()
@@ -141,7 +181,18 @@ namespace Glass.Mapper.Sc.FakeDb
         public class Stub
         {
             [SitecoreInfo(SitecoreInfoType.Path)]
-            public string Path { get; set; }
+            public virtual string Path { get; set; }
+        }
+
+        [SitecoreType(TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}")]
+        [Serializable]
+        public class StubWithChild
+        {
+            [SitecoreInfo(SitecoreInfoType.Path)]
+            public virtual string Path { get; set; }
+
+            [SitecoreChildren]
+            public virtual IEnumerable<Stub> Child { get; set; }
         }
     }
 }

@@ -1,24 +1,6 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 
 namespace Glass.Mapper
@@ -39,7 +21,7 @@ namespace Glass.Mapper
         /// Gets or sets a value indicating whether [read only].
         /// </summary>
         /// <value><c>true</c> if [read only]; otherwise, <c>false</c>.</value>
-        public bool ReadOnly { get;  set; }
+        public bool ReadOnly { get; set; }
 
         /// <summary>
         /// The property this Data Mapper will populate
@@ -53,24 +35,30 @@ namespace Glass.Mapper
         /// <param name="mappingContext">The mapping context.</param>
         public virtual void MapCmsToProperty(AbstractDataMappingContext mappingContext)
         {
-            object result;
+            using (new Monitor())
+            {
+                object result;
 
-            try
-            {
-                 result = MapToProperty(mappingContext);
-            }
-            catch (MapperStackException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new MapperException("Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
-            }
-           
+                try
+                {
+                    result = MapToProperty(mappingContext);
 
-            if (result != null)
-				Configuration.PropertySetter(mappingContext.Object, result);
+                }
+                catch (MapperStackException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw new MapperException(
+                        "Failed to map to property '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name,
+                            Configuration.PropertyInfo.ReflectedType.FullName), ex);
+                }
+
+                if (result != null)
+                    Configuration.PropertySetter(mappingContext.Object, result);
+
+            }
         }
 
         /// <summary>
@@ -79,18 +67,23 @@ namespace Glass.Mapper
         /// <param name="mappingContext">The mapping context.</param>
         public virtual void MapPropertyToCms(AbstractDataMappingContext mappingContext)
         {
-            if (ReadOnly) return;
-
-            try
+            using (new Monitor())
             {
-                mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
-            }
-            catch (Exception ex)
-            {
-                throw new MapperException("Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name, Configuration.PropertyInfo.ReflectedType.FullName), ex);
-            }
+                if (ReadOnly) return;
 
-            MapToCms(mappingContext);
+                try
+                {
+                    mappingContext.PropertyValue = Configuration.PropertyGetter(mappingContext.Object);
+                }
+                catch (Exception ex)
+                {
+                    throw new MapperException(
+                        "Failed to map to CMS '{0}' on type '{1}'".Formatted(Configuration.PropertyInfo.Name,
+                            Configuration.PropertyInfo.ReflectedType.FullName), ex);
+                }
+
+                MapToCms(mappingContext);
+            }
         }
 
 
@@ -128,7 +121,7 @@ namespace Glass.Mapper
         /// <returns><c>true</c> if this instance can handle the specified configuration; otherwise, <c>false</c>.</returns>
         public abstract bool CanHandle(AbstractPropertyConfiguration configuration, Context context);
 
-        
+
     }
 }
 

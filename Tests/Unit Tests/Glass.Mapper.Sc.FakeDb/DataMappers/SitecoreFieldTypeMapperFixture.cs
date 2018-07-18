@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -97,6 +78,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
                 var config = new SitecoreFieldConfiguration();
+                var options = new GetItemOptionsParams();
+
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
@@ -105,7 +88,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var service = new SitecoreService(database.Database, context);
 
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -145,6 +128,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
                 var config = new SitecoreFieldConfiguration();
+                var options = new GetItemOptionsParams();
+
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
@@ -153,7 +138,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var service = new SitecoreService(database.Database, context);
 
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -192,6 +177,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
                 var config = new SitecoreFieldConfiguration();
+                var options = new GetItemOptionsParams();
+
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
@@ -200,7 +187,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var service = new SitecoreService(database.Database, context);
 
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -245,6 +232,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var field = item.Fields["Field"];
 
                 var config = new SitecoreFieldConfiguration();
+                var options = new GetItemOptionsParams();
+
+
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
@@ -255,7 +245,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var propertyValue = new Stub();
                 propertyValue.Id = targetId;
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -296,6 +286,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var targetId = Guid.Parse("{BB01B0A5-A3F0-410E-8A6D-07FF3A1E78C3}");
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreFieldConfiguration();
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
@@ -307,7 +298,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var propertyValue = new StubNoId();
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -352,6 +343,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var item = database.GetItem("/sitecore/content/Target");
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreFieldConfiguration();
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
@@ -363,7 +355,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var propertyValue = new StubNoId();
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -456,6 +448,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var item = database.GetItem("/sitecore/content/Target");
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreFieldConfiguration();
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyNoId");
@@ -466,7 +459,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var propertyValue = new StubNoId();
 
-                var scContext = new SitecoreDataMappingContext(null, item, null);
+                var scContext = new SitecoreDataMappingContext(null, item, null, options);
 
                 using (new ItemEditing(item, true))
                 {
@@ -510,6 +503,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var targetId = Guid.Parse("{11111111-A3F0-410E-8A6D-07FF3A1E78C3}");
                 var mapper = new SitecoreFieldTypeMapper();
                 var field = item.Fields["Field"];
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreFieldConfiguration();
                 config.PropertyInfo = typeof(StubContaining).GetProperty("PropertyTrue");
@@ -522,7 +516,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var propertyValue = new Stub();
                 propertyValue.Id = targetId;
 
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 using (new ItemEditing(item, true))
                 {

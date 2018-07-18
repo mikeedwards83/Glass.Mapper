@@ -15,7 +15,7 @@ namespace Glass.Mapper.Tests.IoC
         public void InsertBefore_InsertBeforeSpecifiedType()
         {
             //Arrange
-            var factory = new StubAbstractFinalisedConfigFactory();
+            var factory = new StubAbstractConfigFactory();
             factory.Add(() => new Task1());
             factory.Add(()=>new Task2());
 
@@ -34,7 +34,7 @@ namespace Glass.Mapper.Tests.IoC
         public void InsertAfter_InsertAfterSpecifiedType()
         {
             //Arrange
-            var factory = new StubAbstractFinalisedConfigFactory();
+            var factory = new StubAbstractConfigFactory();
             factory.Add(() => new Task1());
             factory.Add(() => new Task2());
 
@@ -52,7 +52,7 @@ namespace Glass.Mapper.Tests.IoC
         public void Replace_ReplaceSpecifiedType()
         {
             //Arrange
-            var factory = new StubAbstractFinalisedConfigFactory();
+            var factory = new StubAbstractConfigFactory();
             factory.Add(() => new Task1());
             factory.Add(() => new Task2());
 
@@ -69,7 +69,7 @@ namespace Glass.Mapper.Tests.IoC
         public void Remove_RemoveSpecifiedType()
         {
             //Arrange
-            var factory = new StubAbstractFinalisedConfigFactory();
+            var factory = new StubAbstractConfigFactory();
             factory.Add(() => new Task1());
             factory.Add(() => new Task2());
 
@@ -84,7 +84,7 @@ namespace Glass.Mapper.Tests.IoC
         #region Stubs
 
 
-        public class StubAbstractFinalisedConfigFactory : AbstractFinalisedConfigFactory<ITask>
+        public class StubAbstractConfigFactory : AbstractConfigFactory<ITask>
         {
             public new IEnumerable<Type> Types
             {

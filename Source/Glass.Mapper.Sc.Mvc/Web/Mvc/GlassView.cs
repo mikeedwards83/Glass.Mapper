@@ -1,20 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
 using System;
 using System.Linq.Expressions;
 using System.Web;
@@ -30,21 +14,23 @@ namespace Glass.Mapper.Sc.Web.Mvc
     /// 
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
+    [Obsolete("GlassView is now obsolete. Use @html.Glass() helper methods")]
     public abstract class GlassView<TModel> : WebViewPage<TModel> where TModel : class
     {
-        protected GlassView() : this(IoC.SitecoreContextFactory.Default)
+        public IMvcContext MvcContext { get; set; }
+
+        public GlassView() 
+            : this(new MvcContext(new SitecoreService(Sitecore.Context.Database)))
         {
-            
+
         }
 
-        protected GlassView(ISitecoreContextFactory sitecoreContextFactory)
+        public GlassView(
+            IMvcContext mvcContext
+        )
         {
-            SitecoreContextFactory = sitecoreContextFactory;
+            MvcContext = mvcContext;
         }
-
-        protected IRenderingContext RenderingContext { get; set; }
-
-        public ISitecoreContextFactory SitecoreContextFactory { get; set; }
 
 
         public static bool HasDataSource<T>() where T : class
@@ -54,20 +40,10 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
             //this has been taken from Sitecore.Mvc.Presentation.Rendering class
 
-#if (SC70)
-            return Sitecore.Context.Database.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
-#else
+
             return MvcSettings.ItemLocator.GetItem(Sitecore.Mvc.Presentation.RenderingContext.CurrentOrNull.Rendering.DataSource) != null;
-#endif
 
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public IGlassHtml GlassHtml { get; private set; }
-
-        public ISitecoreContext SitecoreContext { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
@@ -104,10 +80,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         public Item DataSourceItem
         {
-            get
-            {
-                return RenderingContext.HasDataSource ? Sitecore.Context.Database.GetItem(RenderingContext.GetDataSource()) : null;
-            }
+            get { return MvcContext.DataSourceItem; }
         }
 
         /// <summary>
@@ -115,9 +88,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetContextItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        public T GetContext<T>(GetKnownOptions options = null) where T : class
         {
-            return SitecoreContext.Cast<T>(ContextItem, isLazy, inferType);
+            return MvcContext.GetContextItem<T>(options ?? new GetKnownOptions());
         }
 
         /// <summary>
@@ -125,9 +98,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetDataSourceItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        public T GetDataSource<T>(GetKnownOptions options = null ) where T : class
         {
-            return SitecoreContext.Cast<T>(DataSourceItem, isLazy, inferType);
+            return MvcContext.GetDataSourceItem<T>(options ?? new GetKnownOptions());
         }
 
         /// <summary>
@@ -135,39 +108,28 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetLayoutItem<T>(bool isLazy = false, bool inferType = false) where T : class
+        protected T GetLayout<T>(GetKnownOptions options = null) where T : class
         {
-            return SitecoreContext.Cast<T>(LayoutItem, isLazy, inferType);
+            return MvcContext.HasDataSource
+                ? GetDataSource<T>(options ?? new GetKnownOptions())
+                : GetContext<T>(options ?? new GetKnownOptions());
         }
-
 
         /// <summary>
         /// Inits the helpers.
         /// </summary>
         public override void InitHelpers()
         {
-            base.InitHelpers();
-            SitecoreContext = IoC.SitecoreContextFactory.Default.GetSitecoreContext();
-            GlassHtml = SitecoreContext.GlassHtml;
-            RenderingContext = new RenderingContextMvcWrapper();
-
             if (Model == null && this.ViewData.Model == null)
             {
                 this.ViewData.Model = GetModel();
             }
+            base.InitHelpers();
         }
 
-
-        protected virtual TModel GetModel()
+        protected virtual TModel GetModel(GetKnownOptions options = null)
         {
-            if (RenderingContext.HasDataSource)
-            {
-                return SitecoreContext.Cast<TModel>(DataSourceItem);
-            }
-            else
-            {
-                return SitecoreContext.Cast<TModel>(ContextItem);
-            }
+                return GetLayout<TModel>(options ?? new GetKnownOptions());
         }
 
         /// <summary>
@@ -179,7 +141,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public HtmlString Editable<T>(T model, Expression<Func<T, object>> field, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(model, field, parameters));
+            return new HtmlString(MvcContext.GlassHtml.Editable(model, field, parameters));
         }
 
         /// <summary>
@@ -193,7 +155,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public HtmlString Editable<T>(T model, Expression<Func<T, object>> field,
                                       Expression<Func<T, string>> standardOutput, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(model, field, standardOutput, parameters));
+            return new HtmlString(MvcContext.GlassHtml.Editable(model, field, standardOutput, parameters));
         }
 
         /// <summary>
@@ -211,7 +173,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             bool isEditable = false,
             bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage<T>(model, field, parameters, isEditable, outputHeightWidth));
+            return new HtmlString(MvcContext.GlassHtml.RenderImage<T>(model, field, parameters, isEditable, outputHeightWidth));
         }
 
         /// <summary>
@@ -226,7 +188,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
                                                      object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
+            return MvcContext.GlassHtml.BeginRenderLink(model, field, this.Output, attributes, isEditable);
 
         }
 
@@ -243,7 +205,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual HtmlString RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return new HtmlString(GlassHtml.RenderLink(model, field, attributes, isEditable, contents));
+            return new HtmlString(MvcContext.GlassHtml.RenderLink(model, field, attributes, isEditable, contents));
         }
 
 
@@ -255,7 +217,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns>HTML output to either render the editable controls or normal HTML</returns>
         public HtmlString Editable(Expression<Func<TModel, object>> field, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(Model, field, parameters));
+            return new HtmlString(MvcContext.GlassHtml.Editable(Model, field, parameters));
         }
 
         /// <summary>
@@ -267,7 +229,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public HtmlString Editable(
             Expression<Func<TModel, object>> field, Expression<Func<TModel, string>> standardOutput, object parameters = null)
         {
-            return new HtmlString(GlassHtml.Editable(Model, field, standardOutput, parameters));
+            return new HtmlString(MvcContext.GlassHtml.Editable(Model, field, standardOutput, parameters));
         }
 
         /// <summary>
@@ -283,7 +245,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
                                            bool isEditable = false,
                                            bool outputHeightWidth = false)
         {
-            return new HtmlString(GlassHtml.RenderImage(Model, field, parameters, isEditable, outputHeightWidth ));
+            return new HtmlString(MvcContext.GlassHtml.RenderImage(Model, field, parameters, isEditable, outputHeightWidth ));
         }
 
         /// <summary>
@@ -297,7 +259,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual RenderingResult BeginRenderLink(Expression<Func<TModel, object>> field,
                                                      object attributes = null, bool isEditable = false)
         {
-            return GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
+            return MvcContext.GlassHtml.BeginRenderLink(this.Model, field, this.Output, attributes, isEditable);
 
         }
 
@@ -313,7 +275,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public virtual HtmlString RenderLink(Expression<Func<TModel, object>> field, object attributes = null, bool isEditable = false, string contents = null)
         {
 
-            return new HtmlString(GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents));
+            return new HtmlString(MvcContext.GlassHtml.RenderLink(this.Model, field, attributes, isEditable, contents));
         }
 
 
@@ -331,7 +293,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         public GlassEditFrame BeginEditFrame<T>(T model, string title = null, params Expression<Func<T, object>>[] fields)
             where T : class
         {
-           return GlassHtml.EditFrame(model, title, this.Output, fields);
+           return MvcContext.GlassHtml.EditFrame(model, title, this.Output, fields);
         }
 
         
@@ -344,7 +306,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource)
         {
-            return GlassHtml.EditFrame(string.Empty, buttons, dataSource, this.Output);
+            return MvcContext.GlassHtml.EditFrame(string.Empty, buttons, dataSource, this.Output);
         }
 
         /// <summary>
@@ -355,7 +317,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string buttons, string dataSource, string title)
         {
-            return GlassHtml.EditFrame(title, buttons, dataSource, this.Output);
+            return MvcContext.GlassHtml.EditFrame(title, buttons, dataSource, this.Output);
         }
 
 
@@ -366,7 +328,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public GlassEditFrame BeginEditFrame(string dataSource)
         {
-            return GlassHtml.EditFrame(string.Empty, GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
+            return MvcContext.GlassHtml.EditFrame(string.Empty, GlassEditFrame.DefaultEditButtons, dataSource, this.Output);
         }
 
         /// <summary>
@@ -382,8 +344,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
         public T GetRenderingParameters<T>() where T : class
         {
-            string renderingParameters = RenderingContext.GetRenderingParameters();
-            return renderingParameters.HasValue() ? GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
+            string renderingParameters = MvcContext.RenderingParameters;
+            return renderingParameters.HasValue() ? MvcContext.GlassHtml.GetRenderingParameters<T>(renderingParameters) : null;
         }
 
     }

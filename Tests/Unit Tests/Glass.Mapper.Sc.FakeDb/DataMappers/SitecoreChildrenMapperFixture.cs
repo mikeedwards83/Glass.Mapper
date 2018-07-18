@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Pipelines.DataMapperResolver;
@@ -54,24 +35,19 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var mapper = new SitecoreChildrenMapper();
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreChildrenConfiguration();
                 config.InferType = false;
-                config.IsLazy = false;
                 config.PropertyInfo = typeof(Stub).GetProperty("Children");
 
                 var service = Substitute.For<ISitecoreService>();
-                var predicate = Arg.Is<Item>(x => item.Children.Any(y => x.ID == y.ID));
 
-                //ME - Although this looks correct I am not sure it is
-                service.CreateType(typeof(StubChild), predicate, false, false, null)
-                    .ReturnsForAnyArgs(info => new StubChild()
-                    {
-                        Id = info.Arg<Item>().ID
-                    });
+                service.GetItems(Arg.Any<GetItemsByFuncOptions>()).Returns(info => ((GetItemsByFuncOptions)info.Args()[0]).ItemsFunc(item.Database).Select(child => new StubChild { Id = child.ID }));
+
                 service.Config.Returns(new Config());
 
-                var context = new SitecoreDataMappingContext(null, item, service);
+                var context = new SitecoreDataMappingContext(null, item, service, options);
 
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
@@ -90,6 +66,67 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         }
 
+
+        [Test]
+        public void MapToProperty_EnforceTemplate_OneObjectAreCreated()
+        {
+            //Assign
+
+
+            ID templateId = ID.NewID;
+            ID childId = ID.NewID;
+
+            using (Db database = new Db
+            {
+                new DbTemplate(templateId)
+                {
+                    
+                },
+                new Sitecore.FakeDb.DbItem("TestItem")
+                {
+                    new Sitecore.FakeDb.DbItem("Child1", childId, templateId),
+                    new Sitecore.FakeDb.DbItem("Child2"),
+                    new Sitecore.FakeDb.DbItem("Child3")
+
+                }
+            })
+            {
+
+                var item = database.GetItem("/sitecore/content/TestItem");
+                var mapper = new SitecoreChildrenMapper();
+                var options = new GetItemOptionsParams();
+
+                var config = new SitecoreChildrenConfiguration();
+                config.InferType = false;
+                config.PropertyInfo = typeof(Stub).GetProperty("Children");
+                config.TemplateId = templateId;
+                config.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+
+                var scContext = Context.Create(Utilities.CreateStandardResolver());
+
+                var service = new SitecoreService(database.Database, scContext);
+
+
+                var context = new SitecoreDataMappingContext(null, item, service, options);
+
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                //Act
+                var result = mapper.MapToProperty(context) as IEnumerable<StubChild>;
+
+                //Assert
+
+                Assert.AreEqual(1, result.Count());
+
+                Assert.AreEqual(childId, result.First().Id);
+
+                
+            }
+
+        }
+
+
+
         [Test]
         public void MapToProperty_ItemHasNoChildren_NoObjectsCreated()
         {
@@ -105,24 +142,19 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var mapper = new SitecoreChildrenMapper();
+                var options = new GetItemOptionsParams();
 
                 var config = new SitecoreChildrenConfiguration();
                 config.InferType = false;
-                config.IsLazy = false;
                 config.PropertyInfo = typeof(Stub).GetProperty("Children");
 
-                var service = Substitute.For<ISitecoreService>();
-                var predicate = Arg.Is<Item>(x => item.Children.Any(y => x.ID == y.ID));
+                var scContext = Context.Create(Utilities.CreateStandardResolver());
 
-                //ME - Although this looks correct I am not sure it is
-                service.CreateType(typeof(StubChild), predicate, false, false, null)
-                    .ReturnsForAnyArgs(info => new StubChild()
-                    {
-                        Id = info.Arg<Item>().ID
-                    });
+                var service = new SitecoreService(database.Database, scContext);
+
                 service.Config = new Config();
 
-                var context = new SitecoreDataMappingContext(null, item, service);
+                var context = new SitecoreDataMappingContext(null, item, service, options);
 
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 

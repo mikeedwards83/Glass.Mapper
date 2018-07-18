@@ -1,25 +1,8 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 
 using System;
 using System.Linq;
 using Castle.DynamicProxy;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 {
@@ -28,6 +11,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     /// </summary>
     public class CreateConcreteTask : AbstractObjectConstructionTask
     {
+        private readonly LazyLoadingHelper _lazyLoadingHelper;
         private static volatile  ProxyGenerator _generator;
 
         /// <summary>
@@ -38,8 +22,9 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             _generator = new ProxyGenerator();
         }
 
-        public CreateConcreteTask()
+        public CreateConcreteTask(LazyLoadingHelper lazyLoadingHelper)
         {
+            _lazyLoadingHelper = lazyLoadingHelper;
             Name = "CreateConcreteTask";
         }
 
@@ -54,19 +39,18 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 && !args.Configuration.Type.IsInterface
                 && !args.Configuration.Type.IsSealed)
             {
-                if(args.AbstractTypeCreationContext.IsLazy && DisableLazyLoading.Current == LazyLoadSetting.Enabled)
+                if(_lazyLoadingHelper.IsEnabled(args.Options))
                 {
                     //here we create a lazy loaded version of the class
                     args.Result = CreateLazyObject(args);
-                    args.Counters.ProxyModelsCreated++;
-
+                    ModelCounter.Instance.ProxyModelsCreated++;
                 }
                 else
                 {
                     //here we create a concrete version of the class
-                    args.Result = CreateObject(args);
-                    args.Counters.ModelsMapped++;
-                    args.Counters.ConcreteModelCreated++;
+                    args.Result = CreateObjectAndMapProperties(args);
+                    ModelCounter.Instance.ModelsMapped++;
+                    ModelCounter.Instance.ConcreteModelCreated++;
                 }
             }
 
@@ -80,7 +64,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// <returns>System.Object.</returns>
         protected virtual object CreateLazyObject(ObjectConstructionArgs args)
         {
-            return  _generator.CreateClassProxy(args.Configuration.Type, new LazyObjectInterceptor(args));
+            var proxy =   _generator.CreateClassProxy(
+                args.Configuration.Type, 
+                new ProxyGenerationOptions(), 
+                args.Options.ConstructorParameters.Select(x=>x.Value).ToArray(), 
+                new LazyObjectInterceptor(args, _lazyLoadingHelper));
+
+            args.Configuration.MapPrivatePropertiesToObject(proxy, args.Service, args.AbstractTypeCreationContext);
+
+            return proxy;
         }
 
         /// <summary>
@@ -88,29 +80,16 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         /// </summary>
         /// <param name="args">The args.</param>
         /// <returns>System.Object.</returns>
-        protected virtual object CreateObject(ObjectConstructionArgs args)
+        protected virtual object CreateObjectAndMapProperties(ObjectConstructionArgs args)
         {
-
-            var constructorParameters = args.AbstractTypeCreationContext.ConstructorParameters;
-
-            object obj;
+            var constructorParameters = args.Options.ConstructorParameters;
 
             try
             {
-                if (constructorParameters == null || constructorParameters.Length == 0)
-                {
-                    //conMethod = args.Configuration.DefaultConstructor;
-                    obj = Activator.CreateInstance(args.Configuration.Type);
-                }
-                else
-                {
-                    var parameters = constructorParameters.Select(x => x.GetType()).ToArray();
-                    var constructorInfo = args.Configuration.Type.GetConstructor(parameters);
-                    var conMethod = args.Configuration.ConstructorMethods[constructorInfo];
-                    obj = conMethod.DynamicInvoke(constructorParameters);
-                }
-
+                object obj = CreateConcreteObject(args);
                 args.Configuration.MapPropertiesToObject(obj, args.Service, args.AbstractTypeCreationContext);
+                return obj;
+
             }
             catch (MapperStackException)
             {
@@ -119,6 +98,27 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             catch (Exception ex)
             {
                 throw new MapperException("Failed to create type {0}".Formatted(args.Configuration.Type), ex);
+            }
+        }
+
+        private object CreateConcreteObject(ObjectConstructionArgs args)
+        {
+            object obj;
+
+            var constructorParameters = args.Options.ConstructorParameters;
+
+            if (constructorParameters == null || !constructorParameters.Any())
+            {
+                //conMethod = args.Configuration.DefaultConstructor;
+                obj = Activator.CreateInstance(args.Configuration.Type);
+            }
+            else
+            {
+                var parameterTypes = constructorParameters.Select(x => x.Type).ToArray();
+                var parameters = constructorParameters.Select(x => x.Value).ToArray();
+                var constructorInfo = args.Configuration.Type.GetConstructor(parameterTypes);
+                var conMethod = args.Configuration.ConstructorMethods[constructorInfo];
+                obj = conMethod.DynamicInvoke(parameters);
             }
             return obj;
         }

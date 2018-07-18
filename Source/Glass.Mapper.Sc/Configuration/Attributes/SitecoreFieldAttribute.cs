@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Configuration;
@@ -90,6 +71,8 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
         /// </summary>
         /// <value>The setting.</value>
         public SitecoreFieldSettings Setting { get; set; }
+
+        public SitecoreMediaUrlOptions MediaUrlOptions { get; set; }
 
         #region Code First Properties
 
@@ -198,26 +181,13 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             if (config.FieldName.IsNullOrEmpty())
                 config.FieldName = propertyInfo.Name;
 
-            config.Setting = this.Setting;
-            config.CodeFirst = this.CodeFirst;
-            
-            if(FieldId.IsNotNullOrEmpty())
+            if(FieldId.HasValue())
                 config.FieldId = new ID(this.FieldId);
             
-            config.FieldSource = this.FieldSource;
-            config.FieldTitle = this.FieldTitle;
-            config.FieldType = this.FieldType;
-            config.CustomFieldType = this.CustomFieldType;
-            config.IsShared = this.IsShared;
-            config.IsUnversioned = this.IsUnversioned;
-            config.SectionName = this.SectionName;
+         
             config.Setting = this.Setting;
-            config.FieldSortOrder = this.FieldSortOrder;
-            config.SectionSortOrder = this.SectionSortOrder;
-            config.ValidationErrorText = this.ValidationErrorText;
-            config.ValidationRegularExpression = this.ValidationRegularExpression;
-            config.IsRequired = this.IsRequired;
-            config.UrlOptions = this.UrlOptions;
+            config.MediaUrlOptions = MediaUrlOptions;
+           
 
 
             //code first configuration
@@ -230,8 +200,6 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
                 fieldFieldValues = interfaceFromProperty.GetProperty(propertyInfo.Name).GetCustomAttributes(typeof(SitecoreFieldFieldValueAttribute), true).Cast<SitecoreFieldFieldValueAttribute>(); ;
             }
                  
-            var ffvConfigs = fieldFieldValues.Select(x => x.Configure(propertyInfo, config));
-            config.FieldValueConfigs = ffvConfigs.ToList();
             base.Configure(propertyInfo, config);
         }
     }

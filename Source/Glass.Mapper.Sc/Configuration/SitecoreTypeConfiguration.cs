@@ -1,29 +1,10 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
-using System;
-using System.Linq;
 using Glass.Mapper.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
+using System;
+using System.Linq;
 
 namespace Glass.Mapper.Sc.Configuration
 {
@@ -69,12 +50,16 @@ namespace Glass.Mapper.Sc.Configuration
         /// Gets or sets the ItemUri config
         /// </summary>
         public SitecoreInfoConfiguration ItemUriConfig { get; set; }
+        /// <summary>
+        /// Gets or sets the Name config
+        /// </summary>
+        public SitecoreInfoConfiguration NameConfig { get; set; }
 
         /// <summary>
-        /// Indicates that the class is used in a code first scenario.
+        /// Gets or sets the Path config
         /// </summary>
-        /// <value><c>true</c> if [code first]; otherwise, <c>false</c>.</value>
-        public bool CodeFirst { get; set; }
+        public SitecoreInfoConfiguration PathConfig { get; set; }
+
 
         /// <summary>
         /// Overrides the default template name when using code first
@@ -102,18 +87,7 @@ namespace Glass.Mapper.Sc.Configuration
 
             if (infoProperty != null)
             {
-                switch (infoProperty.Type)
-                {
-                    case SitecoreInfoType.Language:
-                        LanguageConfig = infoProperty;
-                        break;
-                    case SitecoreInfoType.Version:
-                        VersionConfig = infoProperty;
-                        break;
-                    case SitecoreInfoType.ItemUri:
-                        ItemUriConfig = infoProperty;
-                        break;
-                }
+                AssignInfoToKnownProperty(this, infoProperty);
             }
 
             if (property is SitecoreItemConfiguration)
@@ -121,6 +95,31 @@ namespace Glass.Mapper.Sc.Configuration
 
             base.AddProperty(property);
         }
+
+        public static void AssignInfoToKnownProperty(SitecoreTypeConfiguration typeConfig,
+            SitecoreInfoConfiguration infoProperty)
+        {
+            switch (infoProperty.Type)
+            {
+                case SitecoreInfoType.Language:
+                    typeConfig.LanguageConfig = infoProperty;
+                    break;
+                case SitecoreInfoType.Version:
+                    typeConfig.VersionConfig = infoProperty;
+                    break;
+                case SitecoreInfoType.ItemUri:
+                    typeConfig. ItemUriConfig = infoProperty;
+                    break;
+                case SitecoreInfoType.Name:
+                    typeConfig.NameConfig = infoProperty;
+                    break;
+                case SitecoreInfoType.Path:
+                    typeConfig.PathConfig = infoProperty;
+                    break;
+            }
+        }
+
+
 
         public ID GetId(object target)
         {
@@ -299,6 +298,25 @@ namespace Glass.Mapper.Sc.Configuration
             return language;
         }
 
+        public string GetName(object target)
+        {
+
+            if (NameConfig == null)
+                throw new MapperException("The type {0} does not have a property with attribute SitecoreInfo(SitecoreInfoType.Name)".Formatted(target.GetType().FullName));
+
+            string name = string.Empty;
+
+            try
+            {
+                name = NameConfig.PropertyInfo.GetValue(target, null).ToString();
+                return name;
+            }
+            catch
+            {
+                throw new MapperException("Failed to get item name");
+            }
+        }
+
         /// <summary>
         /// Called to map each property automatically
         /// </summary>
@@ -347,6 +365,24 @@ namespace Glass.Mapper.Sc.Configuration
             fieldConfig.FieldName = name;
             fieldConfig.PropertyInfo = property;
             return fieldConfig;
+        }
+
+        public override void GetTypeOptions(GetOptions options)
+        {
+
+            base.GetTypeOptions(options);
+            
+            var scOptions = options as GetItemOptions;
+
+            if (scOptions.EnforceTemplate == SitecoreEnforceTemplate.Default)
+            {
+                scOptions.EnforceTemplate = this.EnforceTemplate;
+            }
+
+            if (ID.IsNullOrEmpty(scOptions.TemplateId))
+            {
+                scOptions.TemplateId = this.TemplateId;
+            }
         }
     }
 }

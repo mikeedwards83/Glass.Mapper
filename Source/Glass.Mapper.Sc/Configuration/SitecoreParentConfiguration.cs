@@ -1,22 +1,5 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 using Glass.Mapper.Configuration;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration
 {
@@ -25,6 +8,10 @@ namespace Glass.Mapper.Sc.Configuration
     /// </summary>
     public class SitecoreParentConfiguration : ParentConfiguration
     {
+        public SitecoreEnforceTemplate EnforceTemplate { get; set; }
+
+        public ID TemplateId { get; set; }
+
         protected override AbstractPropertyConfiguration CreateCopy()
         {
             return new SitecoreParentConfiguration();
@@ -34,7 +21,22 @@ namespace Glass.Mapper.Sc.Configuration
         {
             var config = copy as SitecoreParentConfiguration;
 
+            config.EnforceTemplate = EnforceTemplate;
+            config.TemplateId = TemplateId;
+
             base.Copy(copy);
+        }
+
+        public virtual void GetPropertyOptions(GetOptions propertyOptions)
+        {
+            var local = propertyOptions as GetItemOptions;
+
+            if (local != null)
+            {
+                local.EnforceTemplate = EnforceTemplate;
+                local.TemplateId = TemplateId;
+            }
+            base.GetPropertyOptions(propertyOptions);
         }
     }
 }

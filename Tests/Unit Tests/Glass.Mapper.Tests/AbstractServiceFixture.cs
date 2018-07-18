@@ -1,26 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Diagnostics;
 using Glass.Mapper.IoC;
@@ -68,7 +46,6 @@ namespace Glass.Mapper.Tests
 
             resolver.ConfigurationResolverFactory.GetItems().Returns(new[] { configTask });
             resolver.ObjectConstructionFactory.GetItems().Returns(new []{objTask});
-            resolver.GetModelCounter().Returns( new ModelCounter());
 
             configTask.When(x => x.Execute(Arg.Any<ConfigurationResolverArgs>()))
                 .Do(x => x.Arg<ConfigurationResolverArgs>().Result = Substitute.For<AbstractTypeConfiguration>());
@@ -80,8 +57,11 @@ namespace Glass.Mapper.Tests
 
             var service = new StubAbstractService(context);
 
-            var typeContext = Substitute.For<AbstractTypeCreationContext>();
-            typeContext.RequestedType = typeof(object);
+            var typeContext = new TestTypeCreationContext();
+            typeContext.Options = new TestGetOptions()
+            {
+                Type = typeof(object)
+            };
 
             //Act
             var result = service.InstantiateObject(typeContext);
@@ -105,15 +85,7 @@ namespace Glass.Mapper.Tests
             {
             }
 
-            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeCreationContext creationContext, object obj)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override AbstractDataMappingContext CreateDataMappingContext(AbstractTypeSavingContext creationContext)
-            {
-                throw new NotImplementedException();
-            }
+          
         }
 
         public class StubAbstractTypeCreationContext : AbstractTypeCreationContext
@@ -122,11 +94,16 @@ namespace Glass.Mapper.Tests
             {
                 get { return true; }
             }
+
+            public override AbstractDataMappingContext CreateDataMappingContext(object obj)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class StubAbstractDataMappingContext : AbstractDataMappingContext
         {
-            public StubAbstractDataMappingContext(object obj) : base(obj)
+            public StubAbstractDataMappingContext(object obj, GetOptions options) : base(obj, options)
             {
 
             }

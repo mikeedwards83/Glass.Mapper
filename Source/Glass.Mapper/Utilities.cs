@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -83,18 +64,7 @@ namespace Glass.Mapper
         /// <exception cref="MapperException">Only supports constructors with  a maximum of 10 parameters</exception>
         public static IDictionary<ConstructorInfo, Delegate> CreateConstructorDelegates(Type type)
         {
-            if (type.IsGenericType)
-            {
-                var genericArgs = type.GetGenericArguments();
-                if (genericArgs[0].FullName == null) //this is a generic class, e.g public class MyClass<T>
-                {
-                    return new Dictionary<ConstructorInfo, Delegate>();
-                }
-            }
-
             var constructors = type.GetConstructors();
-
-
 
             var dic = new Dictionary<ConstructorInfo, Delegate>();
 
@@ -521,7 +491,7 @@ namespace Glass.Mapper
                         memberExpression.Member.Name, config.Type.FullName));
 
             //ME - changed this to work by name because properties on interfaces do not show up as declared types.
-            var dataHandler = config.Properties.FirstOrDefault(x => x.PropertyInfo.Name == prop.Name);
+            var dataHandler = config[prop.Name];
             if (dataHandler == null)
             {
                 throw new MapperException(

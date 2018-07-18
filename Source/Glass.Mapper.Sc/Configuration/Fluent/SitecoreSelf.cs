@@ -1,23 +1,6 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 using System;
 using System.Linq.Expressions;
+using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
 {
@@ -36,14 +19,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
         }
 
-        /// <summary>
-        /// Indicates if the composite item shouldn't be loaded lazily.
-        /// </summary>
-        public SitecoreSelf<T> IsNotLazy()
-        {
-            Configuration.IsLazy = false;
-            return this;
-        }
+     
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
@@ -53,6 +29,20 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             Configuration.InferType = true;
             return this;
         }
+
+        /// <summary>
+        /// Enforce a template when mapping the property.
+        /// </summary>
+        /// <param name="templateId">The ID of the template that the item must use.</param>
+        /// <param name="enforceTemplate">The type of template check to perform.</param>
+        /// <returns></returns>
+        public SitecoreSelf<T> TemplateId(ID templateId, SitecoreEnforceTemplate enforceTemplate)
+        {
+            Configuration.TemplateId = templateId;
+            Configuration.EnforceTemplate = enforceTemplate;
+            return this;
+        }
+
     }
 }
 

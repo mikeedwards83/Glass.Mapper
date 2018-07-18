@@ -1,30 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+﻿using Glass.Mapper.Configuration;
 
 namespace Glass.Mapper
 {
-    public class DisableCache :SettingStack<CacheSetting>
+    public class DisableCache : SettingStack<Cache>
     {
         const string Key = "AADBFF1C-2EE9-475A-B5CA-3D0F32A1CECC";
 
-        public DisableCache() : base(CacheSetting.Disabled, Key)
+        public DisableCache() : base(Cache.Disabled, Key)
         {
         }
 
-        public static CacheSetting Current
+        public static Cache Current
         {
             get { return GetCurrent(Key); }
         }
     }
-
-    public enum CacheSetting
-    {
-        Enabled,
-        Disabled
-    }
+    
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.DepthCheck
 {
@@ -39,7 +37,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.DepthCheck
                 stack.Push(type.FullName);
                 if (stack.Count > maxDepth)
                 {
-                    throw new MapperStackException(Constants.Errors.ErrorLazyLoop.Formatted(
+                    throw new MapperStackException(Constants.Errors.LazyLoop.Formatted(
                         stack.Aggregate((x,y)=> "{0}{1}\n\r".Formatted(x,y))
                         ));
                 }

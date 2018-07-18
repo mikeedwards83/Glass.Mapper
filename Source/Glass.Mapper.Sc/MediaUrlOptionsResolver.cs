@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Glass.Mapper.Sc.Configuration;
+﻿using Glass.Mapper.Sc.Configuration;
 using Sitecore.Resources.Media;
 
 namespace Glass.Mapper.Sc
@@ -17,20 +12,19 @@ namespace Glass.Mapper.Sc
 
             if (mediaUrlOptions == 0) return defaultMediaUrl;
 
-            Func<SitecoreInfoMediaUrlOptions, bool> flagCheck =
-                option => (mediaUrlOptions & option) == option;
+            bool FlagCheck(SitecoreInfoMediaUrlOptions option) => (mediaUrlOptions & option) == option;
 
-            defaultMediaUrl.AbsolutePath = !flagCheck(SitecoreInfoMediaUrlOptions.DisableAbsolutePath) && defaultMediaUrl.AbsolutePath;
-            defaultMediaUrl.AllowStretch = flagCheck(SitecoreInfoMediaUrlOptions.AllowStretch) || defaultMediaUrl.AllowStretch;
-            defaultMediaUrl.AlwaysIncludeServerUrl = flagCheck(SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl) || defaultMediaUrl.AlwaysIncludeServerUrl;
-            defaultMediaUrl.DisableBrowserCache = flagCheck(SitecoreInfoMediaUrlOptions.DisableBrowserCache) || defaultMediaUrl.DisableBrowserCache;
-            defaultMediaUrl.DisableMediaCache = flagCheck(SitecoreInfoMediaUrlOptions.DisableMediaCache) || defaultMediaUrl.DisableMediaCache;
-            defaultMediaUrl.IgnoreAspectRatio = flagCheck(SitecoreInfoMediaUrlOptions.IgnoreAspectRatio) || defaultMediaUrl.IgnoreAspectRatio;
-            defaultMediaUrl.IncludeExtension = !flagCheck(SitecoreInfoMediaUrlOptions.RemoveExtension) && defaultMediaUrl.IncludeExtension;
-            defaultMediaUrl.LowercaseUrls = flagCheck(SitecoreInfoMediaUrlOptions.LowercaseUrls) || defaultMediaUrl.LowercaseUrls;
-            defaultMediaUrl.Thumbnail = flagCheck(SitecoreInfoMediaUrlOptions.Thumbnail) || defaultMediaUrl.Thumbnail;
-            defaultMediaUrl.UseDefaultIcon = flagCheck(SitecoreInfoMediaUrlOptions.UseDefaultIcon) || defaultMediaUrl.UseDefaultIcon;
-            defaultMediaUrl.UseItemPath = flagCheck(SitecoreInfoMediaUrlOptions.UseItemPath) || defaultMediaUrl.UseItemPath;
+            defaultMediaUrl.AbsolutePath = !FlagCheck(SitecoreInfoMediaUrlOptions.DisableAbsolutePath) && defaultMediaUrl.AbsolutePath;
+            defaultMediaUrl.AllowStretch = FlagCheck(SitecoreInfoMediaUrlOptions.AllowStretch) || defaultMediaUrl.AllowStretch;
+            defaultMediaUrl.AlwaysIncludeServerUrl = FlagCheck(SitecoreInfoMediaUrlOptions.AlwaysIncludeServerUrl) || defaultMediaUrl.AlwaysIncludeServerUrl;
+            defaultMediaUrl.DisableBrowserCache = FlagCheck(SitecoreInfoMediaUrlOptions.DisableBrowserCache) || defaultMediaUrl.DisableBrowserCache;
+            defaultMediaUrl.DisableMediaCache = FlagCheck(SitecoreInfoMediaUrlOptions.DisableMediaCache) || defaultMediaUrl.DisableMediaCache;
+            defaultMediaUrl.IgnoreAspectRatio = FlagCheck(SitecoreInfoMediaUrlOptions.IgnoreAspectRatio) || defaultMediaUrl.IgnoreAspectRatio;
+            defaultMediaUrl.IncludeExtension = !FlagCheck(SitecoreInfoMediaUrlOptions.RemoveExtension) && defaultMediaUrl.IncludeExtension;
+            defaultMediaUrl.LowercaseUrls = FlagCheck(SitecoreInfoMediaUrlOptions.LowercaseUrls) || defaultMediaUrl.LowercaseUrls;
+            defaultMediaUrl.Thumbnail = FlagCheck(SitecoreInfoMediaUrlOptions.Thumbnail) || defaultMediaUrl.Thumbnail;
+            defaultMediaUrl.UseDefaultIcon = FlagCheck(SitecoreInfoMediaUrlOptions.UseDefaultIcon) || defaultMediaUrl.UseDefaultIcon;
+            defaultMediaUrl.UseItemPath = FlagCheck(SitecoreInfoMediaUrlOptions.UseItemPath) || defaultMediaUrl.UseItemPath;
 
             // defaultMediaUrl.BackgroundColor 
             // defaultMediaUrl.Database 
@@ -49,6 +43,42 @@ namespace Glass.Mapper.Sc
 
             return defaultMediaUrl;
         }
+        public virtual MediaUrlOptions GetMediaUrlOptions(SitecoreMediaUrlOptions mediaUrlOptions)
+        {
+            var defaultMediaUrl = MediaUrlOptions.Empty;
 
+            if (mediaUrlOptions == 0) return defaultMediaUrl;
+
+            bool FlagCheck(SitecoreMediaUrlOptions option) => (mediaUrlOptions & option) == option;
+
+            defaultMediaUrl.AbsolutePath = !FlagCheck(SitecoreMediaUrlOptions.DisableAbsolutePath) && defaultMediaUrl.AbsolutePath;
+            defaultMediaUrl.AllowStretch = FlagCheck(SitecoreMediaUrlOptions.AllowStretch) || defaultMediaUrl.AllowStretch;
+            defaultMediaUrl.AlwaysIncludeServerUrl = FlagCheck(SitecoreMediaUrlOptions.AlwaysIncludeServerUrl) || defaultMediaUrl.AlwaysIncludeServerUrl;
+            defaultMediaUrl.DisableBrowserCache = FlagCheck(SitecoreMediaUrlOptions.DisableBrowserCache) || defaultMediaUrl.DisableBrowserCache;
+            defaultMediaUrl.DisableMediaCache = FlagCheck(SitecoreMediaUrlOptions.DisableMediaCache) || defaultMediaUrl.DisableMediaCache;
+            defaultMediaUrl.IgnoreAspectRatio = FlagCheck(SitecoreMediaUrlOptions.IgnoreAspectRatio) || defaultMediaUrl.IgnoreAspectRatio;
+            defaultMediaUrl.IncludeExtension = !FlagCheck(SitecoreMediaUrlOptions.RemoveExtension) && defaultMediaUrl.IncludeExtension;
+            defaultMediaUrl.LowercaseUrls = FlagCheck(SitecoreMediaUrlOptions.LowercaseUrls) || defaultMediaUrl.LowercaseUrls;
+            defaultMediaUrl.Thumbnail = FlagCheck(SitecoreMediaUrlOptions.Thumbnail) || defaultMediaUrl.Thumbnail;
+            defaultMediaUrl.UseDefaultIcon = FlagCheck(SitecoreMediaUrlOptions.UseDefaultIcon) || defaultMediaUrl.UseDefaultIcon;
+            defaultMediaUrl.UseItemPath = FlagCheck(SitecoreMediaUrlOptions.UseItemPath) || defaultMediaUrl.UseItemPath;
+
+            // defaultMediaUrl.BackgroundColor 
+            // defaultMediaUrl.Database 
+            // defaultMediaUrl.Height 
+            // defaultMediaUrl.DefaultIcon
+            // defaultMediaUrl.ItemRevision 
+            //defaultMediaUrl.Language;
+            //defaultMediaUrl.MaxHeight;
+            //defaultMediaUrl.MaxWidth;
+            //defaultMediaUrl.MediaLinkServerUrl;
+            //defaultMediaUrl.RequestExtension;
+            //defaultMediaUrl.Scale;
+            //defaultMediaUrl.Version;
+            //defaultMediaUrl.VirtualFolder;
+            //defaultMediaUrl.Width;
+
+            return defaultMediaUrl;
+        }
     }
 }

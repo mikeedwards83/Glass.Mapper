@@ -1,20 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
 
 using System;
 using System.Collections.Generic;
@@ -67,83 +50,45 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             var scConfig = Configuration as SitecoreQueryConfiguration;
             var scContext = mappingContext as SitecoreDataMappingContext;
-            var itemVersionHandler = scContext.Service.ItemVersionHandler;
 
             string query = ParseQuery(scConfig.Query, scContext.Item);
 
+           
+
             if (scConfig.PropertyInfo.PropertyType.IsGenericType)
             {
-                Type outerType = Utilities.GetGenericOuter(scConfig.PropertyInfo.PropertyType);
+                var options = new GetItemsByQueryOptions();
 
-                if (typeof(IEnumerable<>) == outerType)
+                options.Copy(mappingContext.Options);
+
+                options.Query = Sc.Query.New(query);
+
+                scConfig.GetPropertyOptions(options);
+
+                if (scConfig.IsRelative)
                 {
-                    Type genericType = Mapper.Utilities.GetGenericArgument(scConfig.PropertyInfo.PropertyType);
-
-                    Func<IEnumerable<Item>> getItems = null;
-                    if (scConfig.IsRelative)
-                    {
-                        getItems = new Func<IEnumerable<Item>>(() =>
-                        {
-                            try
-                            {
-                                return Utilities.GetLanguageItems(scContext.Item.Axes.SelectItems(query),
-                                                                  scContext.Item.Language, scContext.Service.ItemVersionHandler);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new MapperException("Failed to perform query {0}".Formatted(query), ex);
-                            }
-                        
-                        });
-                    }
-                    else
-                    {
-                        getItems = new Func<IEnumerable<Item>>(() =>
-                        {
-                            if (scConfig.UseQueryContext)
-                            {
-                                Query conQuery = new Query(query);
-                                QueryContext queryContext = new QueryContext(scContext.Item.Database.DataManager);
-
-                                object obj = conQuery.Execute(queryContext);
-                                QueryContext[] contextArray = obj as QueryContext[];
-                                QueryContext context = obj as QueryContext;
-
-                                if (contextArray == null)
-                                    contextArray = new QueryContext[] { context };
-
-                                return Utilities.GetLanguageItems(contextArray.Select(x => scContext.Item.Database.GetItem(x.ID)), scContext.Item.Language, itemVersionHandler);
-                            }
-                            else
-                                return Utilities.GetLanguageItems(scContext.Item.Database.SelectItems(query), scContext.Item.Language, itemVersionHandler);
-                        });
-                    }
-
-                    var result =  Utilities.CreateGenericType(typeof (LazyItemEnumerable<>), new []{genericType}, getItems, scConfig.IsLazy,
-                                                scConfig.InferType, scContext.Service);
-                    return result;
-
-                    //return scContext.Service.CreateTypes(scConfig.IsLazy, scConfig.InferType, genericType, getItems);
+                    options.RelativeItem =scContext.Item;
                 }
-                else throw new NotSupportedException("Generic type not supported {0}. Must be IEnumerable<>.".Formatted(outerType.FullName));
+
+                var result = scContext.Service.GetItems(options);
+                return result;
             }
             else
             {
-                Item result = null;
+                var options = new GetItemByQueryOptions();
+                options.Copy(mappingContext.Options);
+
+                options.Query = Sc.Query.New(query);
+                scConfig.GetPropertyOptions(options);
+
                 if (scConfig.IsRelative)
                 {
-                    result = Utilities.GetLanguageItem(scContext.Item.Axes.SelectSingleItem(query), scContext.Item.Language, itemVersionHandler);
+                    options.RelativeItem = scContext.Item;
                 }
-                else
-                {
-                    result = Utilities.GetLanguageItem(scContext.Item.Database.SelectSingleItem(query), scContext.Item.Language, itemVersionHandler);
-                }
-                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, result, scConfig.IsLazy, scConfig.InferType, null);
+
+                return scContext.Service.GetItem(options);
             }
         }
-
-
-
 
         /// <summary>
         /// Indicates that the data mapper will mapper to and from the property

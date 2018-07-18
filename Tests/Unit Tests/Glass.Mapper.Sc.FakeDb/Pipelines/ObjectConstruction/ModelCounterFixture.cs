@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Glass.Mapper.Diagnostics;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics;
 using Glass.Mapper.Sc.Configuration;
@@ -33,11 +34,11 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
                 var service = new SitecoreService(database.Database);
-                var modelCounter = context.DependencyResolver.GetModelCounter();
+                var modelCounter = ModelCounter.Instance;
                 modelCounter.Reset();
 
                 //Act
-                var item = service.GetItem<StubClass>("/sitecore/content/target");
+                var item = service.GetItem<StubClass>("/sitecore/content/target",x=>x.LazyDisabled());
 
 
                 
@@ -67,17 +68,16 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var context = Context.Create(Utilities.CreateStandardResolver(config));
                 var fluentloader = new SitecoreFluentConfigurationLoader();
                 var stubLoader = fluentloader.Add<StubClass>();
-                stubLoader.Cachable();
 
                 context.Load(fluentloader);
 
                 var service = new SitecoreService(database.Database);
-                var modelCounter = context.DependencyResolver.GetModelCounter();
+                var modelCounter = ModelCounter.Instance;
                 modelCounter.Reset();
 
                 //Act
-                var item1 = service.GetItem<StubClass>("/sitecore/content/target");
-                var item2 = service.GetItem<StubClass>("/sitecore/content/target");
+                var item1 = service.GetItem<StubClass>("/sitecore/content/target",x=>x.CacheEnabled());
+                var item2 = service.GetItem<StubClass>("/sitecore/content/target",x=>x.CacheEnabled());
 
 
 
@@ -108,17 +108,18 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IStubClass)));
 
                 var service = new SitecoreService(database.Database);
-                var modelCounter = context.DependencyResolver.GetModelCounter();
+                var modelCounter = ModelCounter.Instance;
                 modelCounter.Reset();
 
                 //Act
-                var item = service.GetItem<IStubClass>("/sitecore/content/target", isLazy:true);
+                var item = service.GetItem<IStubClass>("/sitecore/content/target");
+                var id = item.Id;
 
                 //Assert
                 Assert.AreEqual(0, modelCounter.ConcreteModelCreated);
                 Assert.AreEqual(1, modelCounter.ProxyModelsCreated);
                 Assert.AreEqual(0, modelCounter.CachedModels);
-                Assert.AreEqual(0, modelCounter.ModelsMapped);
+                Assert.AreEqual(1, modelCounter.ModelsMapped);
                 Assert.AreEqual(1, modelCounter.ModelsRequested);
             }
         }
@@ -140,7 +141,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IStubClass)));
 
                 var service = new SitecoreService(database.Database);
-                var modelCounter = context.DependencyResolver.GetModelCounter();
+                var modelCounter = ModelCounter.Instance;
                 modelCounter.Reset();
 
                 //Act
@@ -175,20 +176,19 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var context = Context.Create(Utilities.CreateStandardResolver(config));
                 var fluentloader = new SitecoreFluentConfigurationLoader();
                 var stubLoader = fluentloader.Add<IStubClass>();
-                stubLoader.Cachable();
                 stubLoader.Id(x => x.Id);
 
                 context.Load(fluentloader);
 
 
                 var service = new SitecoreService(database.Database);
-                var modelCounter = context.DependencyResolver.GetModelCounter();
+                var modelCounter = ModelCounter.Instance;
                 modelCounter.Reset();
 
                 //Act
-                var item1 = service.GetItem<IStubClass>("/sitecore/content/target");
+                var item1 = service.GetItem<IStubClass>("/sitecore/content/target",x=>x.CacheEnabled());
                 var id1 = item1.Id;
-                var item2 = service.GetItem<IStubClass>("/sitecore/content/target");
+                var item2 = service.GetItem<IStubClass>("/sitecore/content/target",x=>x.CacheEnabled());
                 var id2 = item2.Id;
 
 
