@@ -15,12 +15,12 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 {
 	public class GlassMapperSc
 	{
-		public void Process(PipelineArgs args)
+		public virtual void Process(PipelineArgs args)
 		{
-			GlassMapperSc.Start();
+			Start();
 		}
 
-		public static void Start()
+		public virtual void Start()
 		{
 			//install the custom services
 			var resolver = CreateResolver();
@@ -37,7 +37,7 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 			//EditFrameBuilder.EditFrameItemPrefix = "Glass-";
         }
 
-		public static IDependencyResolver CreateResolver()
+		public virtual IDependencyResolver CreateResolver()
 		{
 			var createResolverArgs = new CreateResolverPipelineArgs
 			{
@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 			return createResolverArgs.DependencyResolver;
 		}
 
-		public static IConfigurationLoader[] GetGlassLoaders()
+		public virtual IConfigurationLoader[] GetGlassLoaders()
 		{
 			var getGlassLoadersArgs = new GetGlassLoadersPipelineArgs
 			{
@@ -57,7 +57,7 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 			return getGlassLoadersArgs.GlassLoaders.ToArray();
 		}
 
-		public static void LoadConfigurationMaps(IDependencyResolver resolver, Glass.Mapper.Context context)
+		public virtual void LoadConfigurationMaps(IDependencyResolver resolver, Glass.Mapper.Context context)
         {
             var dependencyResolver = resolver as DependencyResolver;
             if (dependencyResolver == null)
@@ -75,13 +75,13 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
             context.Load(configurationLoader);
         }
 
-		public static void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
+		public virtual void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
 		{
 			var pipelineArgs = new AddMapsPipelineArgs { MapsConfigFactory = mapsConfigFactory };
 			AddMapsPipeline.Run(pipelineArgs);
 		}
 
-		public static void PostLoad(IDependencyResolver dependencyResolver)
+		public virtual void PostLoad(IDependencyResolver dependencyResolver)
 		{
 			var postLoadArgs = new PostLoadPipelineArgs
 			{
