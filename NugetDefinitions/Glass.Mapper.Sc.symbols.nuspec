@@ -22,17 +22,14 @@
       <dependency id="Glass.Mapper.Sc.$scVersion$.Core" version="$version$" />
       <dependency id="Glass.Mapper.Sc.$scVersion$.Mvc" version="$version$" />
       <dependency id="Glass.Mapper.Sc.$scVersion$.WebForms" version="$version$" />
-	</dependencies>
+    </dependencies>
   </metadata>
   <files>
 
     <file src="readme.txt" target="readme.txt" />
-  
+
     <!-- CONFIG FILES  -->
     <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
-
-    <!-- PP FILES  -->
-    <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
   </files>
 </package>

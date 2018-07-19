@@ -223,6 +223,15 @@
     <Compile Include="OptionsGetItems.cs" />
     <Compile Include="OptionsMove.cs" />
     <Compile Include="OptionsSave.cs" />
+    <Compile Include="Pipelines\AddMaps\AddMapsPipeline.cs" />
+    <Compile Include="Pipelines\AddMaps\AddMapsPipelineArgs.cs" />
+    <Compile Include="Pipelines\AddMaps\AddMapsProcessor.cs" />
+    <Compile Include="Pipelines\CreateResolver\CreateResolverPipeline.cs" />
+    <Compile Include="Pipelines\CreateResolver\CreateResolverPipelineArgs.cs" />
+    <Compile Include="Pipelines\CreateResolver\CreateResolverProcessor.cs" />
+    <Compile Include="Pipelines\GetGlassLoaders\GetGlassLoadersPipeline.cs" />
+    <Compile Include="Pipelines\GetGlassLoaders\GetGlassLoadersPipelineArgs.cs" />
+    <Compile Include="Pipelines\GetGlassLoaders\GetGlassLoadersProcessor.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountAlwaysTrueTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountByRevisionTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountTask.cs" />
@@ -232,6 +241,9 @@
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\NullItemTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
+    <Compile Include="Pipelines\PostLoad\PostLoadPipeline.cs" />
+    <Compile Include="Pipelines\PostLoad\PostLoadPipelineArgs.cs" />
+    <Compile Include="Pipelines\PostLoad\PostLoadProcessor.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="RenderField\DateParameterKeys.cs" />
@@ -274,9 +286,7 @@
     <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
-    <Content Include="App_Start\GlassMapperSc.cs.pp" />
-    <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
+    <Compile Include="Pipelines\Initialize\GlassMapperSc.cs" />
     <Content Include="App_Config\Include\Glass\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
     <Compile Include="Pipelines\DataMapper\AbstractDataMapperFieldsWithSpace.cs" />
     <None Include="packages.config" />
