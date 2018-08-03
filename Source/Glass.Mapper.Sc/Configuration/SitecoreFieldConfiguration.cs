@@ -45,6 +45,7 @@ namespace Glass.Mapper.Sc.Configuration
             config.FieldName = FieldName;
             config.Setting = Setting;
             config.MediaUrlOptions = MediaUrlOptions;
+            config.UrlOptions = UrlOptions;
             base.Copy(copy);
         }
       

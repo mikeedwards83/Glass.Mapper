@@ -187,6 +187,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
          
             config.Setting = this.Setting;
             config.MediaUrlOptions = MediaUrlOptions;
+            config.UrlOptions = UrlOptions;
            
 
 
