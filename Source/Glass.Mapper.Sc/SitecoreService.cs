@@ -579,7 +579,7 @@ namespace Glass.Mapper.Sc
         /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
         /// <param name="silent">If set to true, no events will be raised due to saving.</param>
         /// <returns>``0.</returns>
-        [Obsolete("User ISitecorethis.CreateItem")]
+        [Obsolete("Use this.CreateItem<T>()")]
         public T Create<T, TK>(TK parent, T newItem, bool updateStatistics = true, bool silent = false)
             where T : class
             where TK : class
@@ -607,7 +607,7 @@ namespace Glass.Mapper.Sc
         /// <param name="updateStatistics">Indicates if the items stats should be updated when the item is saved</param>
         /// <param name="silent">If set to true, no events will be raised due to saving.</param>
         /// <returns>``0.</returns>
-        [Obsolete("User ISitecorethis.CreateItem")]
+        [Obsolete("Use this.CreateItem<T, TK>()")]
         public T Create<T, TK>(TK parent, string newName, Language language = null, bool updateStatistics = true,
             bool silent = false)
             where T : class
@@ -640,7 +640,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem()")]
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
         {
             var options = new GetItemByItemOptions
@@ -663,7 +663,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T>()")]
         public T CreateType<T>(Item item, bool isLazy = false,
             bool inferType = false) where T : class
         {
@@ -686,7 +686,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T>()")]
         public T Cast<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -708,7 +708,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T, TK>()")]
         public T CreateType<T, TK>(Item item, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -733,7 +733,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T, TK, TL>()")]
         public T CreateType<T, TK, TL>(Item item, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -759,7 +759,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T, TK, TL, TM>()")]
         public T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -787,7 +787,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T, TK, TL, TM, TN>()")]
         public T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -817,7 +817,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T, TK, TL, TM, TN, TO>()")]
         public T CreateType<T, TK, TL, TM, TN, TO>(Item item, TK param1,
             TL param2, TM param3, TN param4, TO param5, bool isLazy = false, bool inferType = false) where T : class
         {
@@ -839,7 +839,7 @@ namespace Glass.Mapper.Sc
         /// <param name="constructorParameters">The constructor parameters - maximum 10</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItem")]
+        [Obsolete("Use this.GetItem<T>()")]
         public T CreateType<T>(Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters) where T : class
         {
             var options = new GetItemByItemOptions
@@ -863,7 +863,7 @@ namespace Glass.Mapper.Sc
         /// <param name="type">The type to return</param>
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        [Obsolete("User ISitecorethis.GetItems")]
+        [Obsolete("Use this.GetItems()")]
         public IEnumerable CreateTypes(Type type, Func<IEnumerable<Item>> getItems, bool isLazy = false,
             bool inferType = false)
         {
@@ -888,7 +888,7 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <typeparam name="T">The type being deleted. The type must have a property with the SitecoreIdAttribute.</typeparam>
         /// <param name="item">The class to delete</param>
-        [Obsolete("User ISitecorethis.DeleteItem")]
+        [Obsolete("Use this.DeleteItem<T>()")]
         public void Delete<T>(T item) where T : class
         {
             var options = new DeleteByModelOptions()
