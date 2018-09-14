@@ -50,7 +50,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     var newVersion = service.AddVersion(oldVersion);
 
                     //clean up
-                    var item = database.Database.GetItem(path, newVersion.Language,  Version.Parse(newVersion.Version));
+                    var item = database.Database.GetItem(path, newVersion.Language, Version.Parse(newVersion.Version));
                     item.Versions.RemoveVersion();
                     //Assert
                     Assert.AreEqual(oldVersion.Version + 1, newVersion.Version);
@@ -80,7 +80,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
                 var service = new SitecoreService(database.Database);
-                var options = new GetItemByItemOptions() {Item = null};
+                var options = new GetItemByItemOptions() { Item = null };
 
                 //Act
                 var result = service.GetItem<Item>(options);
@@ -195,7 +195,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
                 //Act
-                var result = service.GetItem<StubClass>(id, x=>x.Language(language));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -229,7 +229,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 int param1 = 1;
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).AddParam(param1));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).AddParam(param1));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -265,7 +265,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 string param2 = "2param";
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).AddParams(param1, param2));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).AddParams(param1, param2));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -303,7 +303,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 DateTime param3 = DateTime.Now;
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).AddParams(param1, param2, param3));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).AddParams(param1, param2, param3));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -343,7 +343,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 bool param4 = true;
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).AddParams(param1, param2, param3, param4));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).AddParams(param1, param2, param3, param4));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -381,7 +381,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var language = LanguageManager.GetLanguage("af-ZA");
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -415,7 +415,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 int param1 = 1;
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).AddParams(param1));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).AddParams(param1));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -451,7 +451,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 string param2 = "2param";
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).AddParams(param1, param2));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).AddParams(param1, param2));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -489,7 +489,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 DateTime param3 = DateTime.Now;
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).AddParams(param1, param2, param3));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).AddParams(param1, param2, param3));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -529,7 +529,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 bool param4 = true;
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).AddParams(param1, param2, param3, param4));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).AddParams(param1, param2, param3, param4));
 
 
                 //Assert
@@ -566,7 +566,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var language = LanguageManager.GetLanguage("af-ZA");
                 Version version = Version.Parse(1);
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).Version(version));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).Version(version));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -601,7 +601,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 int param1 = 1;
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).Version(version).AddParams(param1));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).Version(version).AddParams(param1));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -633,12 +633,12 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
 
                 //Act
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).Version(version).AddParams(param1, param2));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).Version(version).AddParams(param1, param2));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -671,14 +671,14 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
 
                 //Act
 
-                var result = service.GetItem<StubClass>(id,x=>x.Language(language).Version(version).AddParams(param1, param2, param3));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).Version(version).AddParams(param1, param2, param3));
 
 
                 //Assert
@@ -713,14 +713,14 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
                 bool param4 = true;
 
                 //Act
-                var result = service.GetItem<StubClass>(id, x=>x.Language(language).Version(version).AddParams(param1, param2, param3, param4));
+                var result = service.GetItem<StubClass>(id, x => x.Language(language).Version(version).AddParams(param1, param2, param3, param4));
 
 
                 //Assert
@@ -757,11 +757,11 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
 
                 //Act
 
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).Version(version));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).Version(version));
 
 
                 //Assert
@@ -795,12 +795,12 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
 
                 //Act
 
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).Version(version).AddParams(param1));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).Version(version).AddParams(param1));
 
 
                 //Assert
@@ -835,12 +835,12 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
 
                 //Act
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).Version(version).AddParams(param1, param2));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).Version(version).AddParams(param1, param2));
 
 
                 //Assert
@@ -876,14 +876,14 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
 
                 //Act
 
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).Version(version).AddParams(param1, param2, param3));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).Version(version).AddParams(param1, param2, param3));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -918,7 +918,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 string path = "/sitecore/content/Target";
                 var language = LanguageManager.GetLanguage("af-ZA");
-                Version version =  Version.Parse(1);
+                Version version = Version.Parse(1);
                 int param1 = 1;
                 string param2 = "2param";
                 DateTime param3 = DateTime.Now;
@@ -926,7 +926,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 //Act
 
-                var result = service.GetItem<StubClass>(path,x=>x.Language(language).Version(version).AddParams(param1, param2, param3, param4));
+                var result = service.GetItem<StubClass>(path, x => x.Language(language).Version(version).AddParams(param1, param2, param3, param4));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -1010,15 +1010,15 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
 
                 //this is forced on to avoid other test leaving the disabler in the incorrect state
-                    string query = "/sitecore/content/Target/*";
-                    var language = LanguageManager.GetLanguage("af-ZA");
+                string query = "/sitecore/content/Target/*";
+                var language = LanguageManager.GetLanguage("af-ZA");
 
-                    //Act
-                    var result = service.GetItems<StubClass>(Query.New(query), x=>x.Language(language));
+                //Act
+                var result = service.GetItems<StubClass>(Query.New(query), x => x.Language(language));
 
-                    //Assert
-                    Assert.IsNotNull(result);
-                    Assert.AreEqual(2, result.Count());
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(2, result.Count());
             }
         }
 
@@ -1958,6 +1958,67 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 
         [Test]
+        public void Create_CreatesANewItem_WithReferenceToAnotherItem()
+        {
+            //Assign
+
+            var otherId = Guid.NewGuid();
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target"),
+                new Sitecore.FakeDb.DbItem("Target", new ID(otherId)),
+                new DbTemplate(new ID(ModelWithSub.TemplateId))
+                {
+                {"Sub",""}
+            }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(ModelWithSub)));
+                var service = new SitecoreService(database.Database);
+
+                string parentPath = "/sitecore/content/Target";
+                string childPath = "/sitecore/content/Target/newChild";
+
+                using (new SecurityDisabler())
+                {
+                    var parentItem = database.GetItem(parentPath);
+                    parentItem.DeleteChildren();
+                }
+
+                var parent = service.GetItem<StubClass>(parentPath);
+                var sub = service.GetItem<ModelSub>(otherId);
+
+                var child = new ModelWithSub();
+                child.Name = "newChild";
+                child.Sub = sub;
+
+                //Act
+                using (new SecurityDisabler())
+                {
+                    service.CreateItem(new CreateByModelOptions() { Model = child, Parent = parent, Type = typeof(ModelWithSub) });
+                }
+
+                //Assert
+                var newItem = database.GetItem(childPath);
+                var sub2 = child.Sub.Id;
+
+                var child2 = service.GetItem<ModelWithSub>(child.Id);
+                var sub3 = child2.Sub.Id;
+
+                using (new SecurityDisabler())
+                {
+                    newItem.Delete();
+                }
+
+                Assert.AreEqual(child.Name, newItem.Name);
+                Assert.AreEqual(child.Id, newItem.ID.Guid);
+
+
+            }
+        }
+
+        [Test]
         public void Create_CreatesANewItem_WithSpecificId()
         {
             //Assign
@@ -2115,7 +2176,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             Language lang = LanguageManager.GetLanguage("af-ZA");
             ID templateId = ID.NewID;
-            
+
             using (Db database = new Db
             {
                 new Sitecore.FakeDb.DbItem("Target", ID.NewID),
@@ -2124,7 +2185,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var dependencyResolver = Utilities.CreateStandardResolver();
 
                 //we have to replace the standard version check with the versioncounttask because FakeDB isn't creating a revision number
-                dependencyResolver.ObjectConstructionFactory.Replace<ItemVersionCountByRevisionTask, ItemVersionCountTask>(()=> new ItemVersionCountTask());
+                dependencyResolver.ObjectConstructionFactory.Replace<ItemVersionCountByRevisionTask, ItemVersionCountTask>(() => new ItemVersionCountTask());
                 var context = Context.Create(dependencyResolver);
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
                 var service = new SitecoreService(database.Database);
@@ -2145,7 +2206,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 StubClass child = null;
                 using (new SecurityDisabler())
                 {
-                    child = service.CreateItem<StubClass>(parent, name, x=>x.Language(lang));
+                    child = service.CreateItem<StubClass>(parent, name, x => x.Language(lang));
                 }
 
                 //Assert
@@ -2157,7 +2218,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 Assert.AreEqual(1, newItem.Versions.Count);
                 Assert.AreEqual(1, newItem.Versions.Count);
                 Assert.AreEqual(lang, child.Language);
-               
+
 
                 using (new SecurityDisabler())
                 {
@@ -2846,8 +2907,8 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
 
-                var model = new MapItemUriStub();;
-                model.Uri =new ItemUri(new ID(id), Language.Parse("en"), database.Database);
+                var model = new MapItemUriStub(); ;
+                model.Uri = new ItemUri(new ID(id), Language.Parse("en"), database.Database);
 
 
                 //Act
@@ -3020,7 +3081,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
         public class StubInterfaceAutoMappedConst
         {
-            
+
             public const string TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}";
         }
         [SitecoreType(TemplateId = StubInterfaceAutoMappedConst.TemplateId, AutoMap = true)]
@@ -3059,6 +3120,23 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             DateTime DateField { get; set; }
         }
+
+        [SitecoreType(TemplateId = TemplateId,AutoMap = true)]
+        public class ModelWithSub
+        {
+            public const string TemplateId = "{ABE81623-6250-46F3-914C-6926697B9A86}";
+            public virtual Guid Id { get; set; }
+            public virtual string Name { get; set; }
+            [SitecoreField("sub")]
+            public virtual ModelSub Sub { get; set; }
+        }
+
+        public class ModelSub
+        {
+            public virtual Guid Id { get; set; }
+        }
+
+
         #endregion
 
 

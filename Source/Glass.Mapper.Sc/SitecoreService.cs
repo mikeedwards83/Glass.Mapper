@@ -65,7 +65,7 @@ namespace Glass.Mapper.Sc
         public SitecoreService(string databaseName, string contextName = "Default")
             : this(Factory.GetDatabase(databaseName), Context.Contexts[contextName])
         {
-            
+
         }
         public override void Initiate(IDependencyResolver resolver)
         {
@@ -458,7 +458,7 @@ namespace Glass.Mapper.Sc
             if (item == null) throw new MapperException("Failed to create item");
 
 
-            return this.GetItem(new GetItemByItemOptions() { Item = item, Type = options.Type});
+            return this.GetItem(new GetItemByItemOptions() { Item = item, Type = options.Type });
 
         }
 
@@ -468,29 +468,34 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">The type of model to return the created item as.</typeparam>
         /// <param name="options">Options for how the model will be created</param>
         /// <returns>The new item mapped to the requested type</returns>
-        protected object CreateFromNewModel(CreateByModelOptions options) 
+        protected object CreateFromNewModel(CreateByModelOptions options)
         {
             Assert.IsNotNull(options, "options must no be  null");
 
             SitecoreTypeConfiguration newItemConfig;
             try
             {
-                newItemConfig = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Model, checkBase: true) as SitecoreTypeConfiguration;
+                newItemConfig =
+                    GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Model, checkBase: true) as
+                        SitecoreTypeConfiguration;
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to find configuration for new item type {0}".Formatted(options.Type.FullName), ex);
+                throw new MapperException(
+                    "Failed to find configuration for new item type {0}".Formatted(options.Type.FullName), ex);
             }
 
 
             SitecoreTypeConfiguration parentItemConfig;
             try
             {
-                parentItemConfig = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Parent, checkBase: true);
+                parentItemConfig =
+                    GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Parent, checkBase: true);
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to find configuration for parent item type {0}".Formatted(options.ParentType.FullName), ex);
+                throw new MapperException(
+                    "Failed to find configuration for parent item type {0}".Formatted(options.ParentType.FullName), ex);
             }
 
             Item parentItem = parentItemConfig.ResolveItem(options.Parent, Database);
@@ -549,6 +554,10 @@ namespace Glass.Mapper.Sc
             SitecoreTypeCreationContext typeContext = new SitecoreTypeCreationContext();
             typeContext.Item = item;
             typeContext.SitecoreService = this;
+            typeContext.Options = new GetItemOptions()
+            {
+                Type = options.Type
+            };
 
             newItemConfig.MapPropertiesToObject(options.Model, this, typeContext);
 
@@ -1378,7 +1387,7 @@ namespace Glass.Mapper.Sc
         /// The Sitecore item as the specified type
         /// </returns>
         [Obsolete("Use ISitecorethis.GetItem with builder")]
-        public T GetItem<T>(Guid id, bool isLazy =false, bool inferType  =false) where T : class
+        public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
             {
