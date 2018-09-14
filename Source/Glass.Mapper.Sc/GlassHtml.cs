@@ -598,6 +598,15 @@ namespace Glass.Mapper.Sc
             return new RenderingResult(writer, firstPart, lastPart);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field"></param>
+        /// <param name="standardOutput"></param>
+        /// <param name="model"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
         protected virtual string NormalModeOutput<T>(
             Expression<Func<T, object>> field,
             Expression<Func<T, string>> standardOutput,
