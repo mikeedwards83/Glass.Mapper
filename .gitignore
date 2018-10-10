@@ -155,3 +155,5 @@ Depends/Sitecore/license.xml
 /Depends/Sitecore/bin90/
 /Tests/Unit Tests/Glass.Mapper.Sc.Legacy.FakeDb/license.xml
 /Tests/Unit Tests/Glass.Mapper.Sc.WebForms.FakeDb/license.xml
+/.vs
+license.xml
