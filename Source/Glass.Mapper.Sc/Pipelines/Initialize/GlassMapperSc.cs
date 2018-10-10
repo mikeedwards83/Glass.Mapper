@@ -23,22 +23,28 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 
 		public virtual void Start()
 		{
-			//install the custom services
-			var resolver = CreateResolver();
-
-			//create a context
-			var context = Context.Create(resolver);
-
-			LoadConfigurationMaps(resolver, context);
-
-			context.Load(GetGlassLoaders());
-
-			PostLoad(resolver);
-
-			//EditFrameBuilder.EditFrameItemPrefix = "Glass-";
+            Start(Context.DefaultContextName);
+		    //EditFrameBuilder.EditFrameItemPrefix = "Glass-";
         }
 
-		public virtual IDependencyResolver CreateResolver()
+        protected virtual void Start(string contextName)
+	    {
+	        //install the custom services
+	        var resolver = CreateResolver();
+
+	        //create a context
+	        var context = Context.Create(resolver, contextName, true);
+
+	        LoadConfigurationMaps(resolver, context);
+
+	        context.Load(GetGlassLoaders(context));
+
+	        PostLoad(resolver);
+
+
+        }
+
+        public virtual IDependencyResolver CreateResolver()
 		{
 		    return CreateResolver(new DependencyResolver(new Config()));
 		}
@@ -54,10 +60,11 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
         }
 
 
-		public virtual IConfigurationLoader[] GetGlassLoaders()
+		public virtual IConfigurationLoader[] GetGlassLoaders(Context context)
 		{
 			var getGlassLoadersArgs = new GetGlassLoadersPipelineArgs
 			{
+                Context = context,
 				GlassLoaders = new List<IConfigurationLoader>()
 			};
 			GetGlassLoadersPipeline.Run(getGlassLoadersArgs);

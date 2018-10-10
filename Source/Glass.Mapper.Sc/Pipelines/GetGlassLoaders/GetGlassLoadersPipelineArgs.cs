@@ -7,8 +7,9 @@ namespace Glass.Mapper.Sc.Pipelines.GetGlassLoaders
 	public class GetGlassLoadersPipelineArgs : PipelineArgs
 	{
 		public List<IConfigurationLoader> GlassLoaders { get; set; }
+	    public Context Context { get; set; }
 
-		public GetGlassLoadersPipelineArgs()
+	    public GetGlassLoadersPipelineArgs()
 		{
 			GlassLoaders = new List<IConfigurationLoader>();
 		}
