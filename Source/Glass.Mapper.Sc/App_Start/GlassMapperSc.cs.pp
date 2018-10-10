@@ -12,7 +12,7 @@ using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Pipelines.GetChromeData;
 using Sitecore.Pipelines;
-
+using System.Linq;
 
 namespace $rootnamespace$.App_Start
 {
@@ -25,7 +25,7 @@ namespace $rootnamespace$.App_Start
             return resolver;
         }
         
-        public virtual IConfigurationLoader[] GetGlassLoaders(Context context)
+        public override IConfigurationLoader[] GetGlassLoaders(Context context)
         { 
 
 
