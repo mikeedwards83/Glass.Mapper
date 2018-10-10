@@ -65,10 +65,10 @@ namespace Glass.Mapper.Sc.Pipelines.Initialize
 			var getGlassLoadersArgs = new GetGlassLoadersPipelineArgs
 			{
                 Context = context,
-				GlassLoaders = new List<IConfigurationLoader>()
+				Loaders = new List<IConfigurationLoader>()
 			};
 			GetGlassLoadersPipeline.Run(getGlassLoadersArgs);
-			return getGlassLoadersArgs.GlassLoaders.ToArray();
+			return getGlassLoadersArgs.Loaders.ToArray();
 
             
 		}

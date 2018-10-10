@@ -122,6 +122,7 @@
     <Compile Include="MapperStackException.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />
+    <Compile Include="Maps\GlassMapLoader.cs" />
     <Compile Include="Maps\IConfigurationMap.cs" />
     <Compile Include="Maps\IGlassMap.cs" />
     <Compile Include="Maps\IMapProvider.cs" />

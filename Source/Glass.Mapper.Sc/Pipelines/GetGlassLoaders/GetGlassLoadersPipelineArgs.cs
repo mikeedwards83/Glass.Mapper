@@ -6,12 +6,12 @@ namespace Glass.Mapper.Sc.Pipelines.GetGlassLoaders
 {
 	public class GetGlassLoadersPipelineArgs : PipelineArgs
 	{
-		public List<IConfigurationLoader> GlassLoaders { get; set; }
+		public List<IConfigurationLoader> Loaders { get; set; }
 	    public Context Context { get; set; }
 
 	    public GetGlassLoadersPipelineArgs()
 		{
-			GlassLoaders = new List<IConfigurationLoader>();
+			Loaders = new List<IConfigurationLoader>();
 		}
 	}
 }
