@@ -12,7 +12,7 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
     {
 
         public const string ErrorNoConstructor = "Specified data mapper {0} does not have a default constructor. {1}";
-
+        
         public DataMapperAttributeResolverTask()
         {
             Name = "DataMapperAttributeResolverTask";

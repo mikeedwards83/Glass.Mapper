@@ -1,28 +1,10 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 
@@ -61,7 +43,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var service = Substitute.For<ISitecoreService>();
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options = new GetItemOptionsParams();
+                options.Lazy = LazyLoading.Enabled;
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 var config = new SitecoreParentConfiguration();
                 config.PropertyInfo = typeof(Stub).GetProperty("Property");
@@ -75,9 +59,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 //Assert
 
                 //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-                service.Received()
-                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false,
-                        null);
+                service.Received().GetItem(Arg.Is<GetItemByItemOptions>(x=>x.Item.Uri == item.Parent.Uri && x.Lazy == LazyLoading.Enabled));
             }
         }
 
@@ -92,11 +74,12 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var service = Substitute.For<ISitecoreService>();
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options = new GetItemOptionsParams();
+                options.Lazy = LazyLoading.Enabled;
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 var config = new SitecoreParentConfiguration();
                 config.PropertyInfo = typeof(Stub).GetProperty("Property");
-                config.IsLazy = true;
 
                 var mapper = new SitecoreParentMapper();
                 mapper.Setup(new DataMapperResolverArgs(null, config));
@@ -106,10 +89,88 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 //Assert
 
-                //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
                 service.Received()
-                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, false,
-                        null);
+                    .GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == item.Parent.Uri &&
+                                                           x.Lazy == LazyLoading.Enabled));
+            }
+        }
+
+
+        [Test]
+        public void MapToProperty_EnforceTemplate_ReturnsParentItem()
+        {
+            //Assign
+
+            ID templateId = ID.NewID;
+            ID parentID = ID.NewID;
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Parent", parentID, templateId){
+                    new Sitecore.FakeDb.DbItem("TestItem")
+                }
+            })
+            {
+                var item = database.GetItem("/sitecore/content/Parent/TestItem");
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
+                options.Lazy = LazyLoading.Enabled;
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
+
+                var config = new SitecoreParentConfiguration();
+                config.PropertyInfo = typeof(Stub).GetProperty("Property");
+                config.TemplateId = templateId;
+                config.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+
+                var mapper = new SitecoreParentMapper();
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                //Act
+                var result = mapper.MapToProperty(scContext) as Stub;
+
+                //Assert
+                Assert.NotNull(result);
+                Assert.AreEqual(parentID, result.Id);
+            }
+        }
+
+        [Test]
+        public void MapToProperty_EnforceTemplate_ReturnsNoItem()
+        {
+            //Assign
+
+            ID templateId = ID.NewID;
+            ID templateIdOther = ID.NewID;
+            ID parentID = ID.NewID;
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Parent", parentID, templateId){
+                    new Sitecore.FakeDb.DbItem("TestItem")
+                }
+            })
+            {
+                var item = database.GetItem("/sitecore/content/Parent/TestItem");
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
+                options.Lazy = LazyLoading.Enabled;
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
+
+                var config = new SitecoreParentConfiguration();
+                config.PropertyInfo = typeof(Stub).GetProperty("Property");
+                config.TemplateId = templateIdOther;
+                config.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+
+                var mapper = new SitecoreParentMapper();
+                mapper.Setup(new DataMapperResolverArgs(null, config));
+
+                //Act
+                var result = mapper.MapToProperty(scContext) as Stub;
+
+                //Assert
+                Assert.Null(result);
             }
         }
 
@@ -124,7 +185,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var service = Substitute.For<ISitecoreService>();
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options = new GetItemOptionsParams();;
+                options.Lazy = LazyLoading.Enabled;
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 var config = new SitecoreParentConfiguration();
                 config.PropertyInfo = typeof(Stub).GetProperty("Property");
@@ -138,10 +201,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 //Assert
 
-                //ME - I am not sure why I have to use the Arg.Is but just using item.Parent as the argument fails.
-                service.Received()
-                    .CreateType(config.PropertyInfo.PropertyType, Arg.Is<Item>(x => x.ID == item.Parent.ID), true, true,
-                        null);
+                service.Received().GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == item.Parent.Uri && x.Lazy == LazyLoading.Enabled));
+
             }
         }
 
@@ -197,7 +258,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         public class Stub
         {
-            public string Property { get; set; }
+            public virtual ID Id { get; set; }
+            public virtual Stub Property { get; set; }
         }
 
         #endregion

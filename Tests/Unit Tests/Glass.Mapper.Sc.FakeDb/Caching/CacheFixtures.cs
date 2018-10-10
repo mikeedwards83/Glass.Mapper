@@ -35,11 +35,9 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 var lang3 = Language.Parse("en");
 
                 //Act
-                using (new VersionCountDisabler())
-                {
-                    var langItem1 = service.GetItem<StubClass>("/sitecore/content/target", lang1);
-                    var langItem2 = service.GetItem<StubClass>("/sitecore/content/target", lang2);
-                    var langItem3 = service.GetItem<StubClass>("/sitecore/content/target", lang3);
+                    var langItem1 = service.GetItem<StubClass>(path, x=>x.Language(lang1).CacheEnabled().VersionCountDisable());
+                    var langItem2 = service.GetItem<StubClass>(path, x=>x.Language(lang2).CacheEnabled().VersionCountDisable());
+                    var langItem3 = service.GetItem<StubClass>(path, x=>x.Language(lang3).CacheEnabled().VersionCountDisable());
                 
 
                 //Assert
@@ -48,7 +46,6 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 Assert.NotNull(langItem3);
                 Assert.AreNotEqual(langItem2, langItem3);
                 Assert.AreNotEqual(langItem2, langItem1);
-                }
             }
         }
 
@@ -71,8 +68,8 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
 
 
                 //Act
-                var item1 = service.GetItem<StubClass>("/sitecore/content/target", lang1);
-                var item2 = service.GetItem<StubClass>("/sitecore/content/target", lang1);
+                var item1 = service.GetItem<StubClass>(path, x=>x.Language(lang1).CacheEnabled());
+                var item2 = service.GetItem<StubClass>(path, x=>x.Language(lang1).CacheEnabled());
 
                 //Assert
                 Assert.AreEqual(item1, item2);
@@ -80,9 +77,7 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
             }
         }
 
-
-
-        [SitecoreType(Cachable = true)]
+        [SitecoreType]
         public class StubClass
         {
 

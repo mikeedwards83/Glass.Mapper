@@ -1,25 +1,7 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Glass.Mapper.Configuration;
 using Sitecore.Data;
 
 namespace Glass.Mapper.Sc.Configuration.Fluent
@@ -39,8 +21,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         {
             Configuration = new SitecoreTypeConfiguration();
             Configuration.Type = typeof(T);
-
-
             Configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(Configuration.Type);
 
         }
@@ -98,6 +78,38 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
         /// <summary>
+        /// Enable the cache for this type
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreType<T>  CacheEnabled()
+        {
+            Configuration.Cache = Mapper.Configuration.Cache.Enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Disable the cache for this type
+        /// </summary>
+        /// <returns></returns>
+        public SitecoreType<T> CacheDisabled()
+        {
+            Configuration.Cache = Mapper.Configuration.Cache.Disabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the cache option for this type
+        /// </summary>
+        /// <param name="cache"></param>
+        /// <returns></returns>
+        public SitecoreType<T> Cache(Cache cache)
+        {
+            Configuration.Cache = cache;
+            return this;
+        }
+
+
+        /// <summary>
         /// Indicates the branch to use when trying to create and item. If a template id is also specified the template Id will be use instead.
         /// </summary>
         /// <param name="id">The id.</param>
@@ -126,27 +138,6 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         public SitecoreType<T> BranchId(ID id)
         {
             Configuration.BranchId = id;
-            return this;
-        }
-
-
-        /// <summary>
-        /// Codes the first.
-        /// </summary>
-        /// <returns>SitecoreType{`0}.</returns>
-        public SitecoreType<T> CodeFirst()
-        {
-            Configuration.CodeFirst = true;
-            return this;
-        }
-
-        /// <summary>
-        /// Indicates if the model can be cached.
-        /// </summary>
-        /// <returns>SitecoreType{`0}.</returns>
-        public SitecoreType<T> Cachable()
-        {
-            Configuration.Cachable = true;
             return this;
         }
 
@@ -225,6 +216,21 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             Configuration.AddProperty(builder.Configuration);
             return builder;
         }
+
+        /// <summary>
+        /// Map item information  to a class property
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <param name="infoType">The type of info to map</param>
+        /// <returns>SitecoreInfo{`0}.</returns>
+        public SitecoreInfo<T> Info(Expression<Func<T, object>> ex, SitecoreInfoType infoType)
+        {
+            SitecoreInfo<T> builder = new SitecoreInfo<T>(ex, Configuration);
+            builder.InfoType(infoType);
+            Configuration.AddProperty(builder.Configuration);
+            return builder;
+        }
+
 
         /// <summary>
         /// Map the item being mapped to a class property

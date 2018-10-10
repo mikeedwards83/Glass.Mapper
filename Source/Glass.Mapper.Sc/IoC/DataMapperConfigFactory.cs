@@ -4,21 +4,20 @@ using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class DataMapperConfigFactory : AbstractFinalisedConfigFactory<AbstractDataMapper>
+    public class DataMapperConfigFactory : AbstractConfigFactory<AbstractDataMapper>
     {
-        private readonly IConfigFactory<ISitecoreQueryParameter> queryParameterFactory;
+        protected IDependencyResolver DependencyResolver { get; }
 
-        public DataMapperConfigFactory(IConfigFactory<ISitecoreQueryParameter> queryParameterFactory)
+        public DataMapperConfigFactory(IDependencyResolver dependencyResolver)
         {
-            this.queryParameterFactory = queryParameterFactory;
+            DependencyResolver = dependencyResolver;
             Init();
         }
-
         protected void Init()
         {
             Add(() => new SitecoreLazyMapper());
             Add(() => new SitecoreIgnoreMapper());
-            Add(() => new SitecoreChildrenCastMapper());
+            Add(() => new SitecoreChildrenCastMapper(new LazyLoadingHelper()));
             Add(() => new SitecoreChildrenMapper());
             Add(() => new SitecoreFieldBooleanMapper());
             Add(() => new SitecoreFieldDateTimeMapper());
@@ -56,7 +55,7 @@ namespace Glass.Mapper.Sc.IoC
             Add(() => new SitecoreLinkedMapper());
             Add(() => new SitecoreParentMapper());
             Add(() => new SitecoreDelegateMapper());
-            Add(() => new SitecoreQueryMapper(queryParameterFactory.GetItems()));
+            Add(() => new SitecoreQueryMapper(DependencyResolver.QueryParameterFactory.GetItems()));
             Add(() => new SitecoreSelfMapper());
         }
     }

@@ -21,7 +21,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             //Arrange
 
             var task = new EnforcedTemplateCheck();
-            var args = new ObjectConstructionArgs(null, null, null, null, null);
+            var args = new ObjectConstructionArgs(null, null, null, null);
             var expected = new object();
             args.Result = expected;
 
@@ -43,7 +43,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
             bool nextCalled = false;
             task.SetNext(x => nextCalled = true);
 
-            var args = new ObjectConstructionArgs(null, null, config, null, new ModelCounter());
+            var args = new ObjectConstructionArgs(null, new StubAbstractTypeCreationContext(), config, null);
            
             //Act
             task.Execute(args);
@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
         }
 
         [Test]
-        public void Execute_EnforeTemplateOnlyDoesNotInheritTemplate_NextNotCalled()
+        public void Execute_EnforeTemplateOnlyDoesNotInheritTemplate_NextCalledResultNull()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
@@ -78,14 +78,14 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var typeContext = new SitecoreTypeCreationContext();
                 typeContext.Item = item;
 
-                var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                 //Act
                 task.Execute(args);
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsFalse(nextCalled);
+                Assert.IsTrue(nextCalled);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var typeContext = new SitecoreTypeCreationContext();
                 typeContext.Item = item;
 
-                var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                 //Act
                 task.Execute(args);
@@ -130,7 +130,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
 
         [Test]
-        public void Execute_EnforeTemplateAndBaseDoesNotInheritTemplate_NextNotCalled()
+        public void Execute_EnforeTemplateAndBaseDoesNotInheritTemplate_NextCalledResultNull()
         {
             //Arrange
             var task = new EnforcedTemplateCheck();
@@ -156,7 +156,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var typeContext = new SitecoreTypeCreationContext();
                 typeContext.Item = item;
 
-                var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                 //Act
 
@@ -167,7 +167,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
 
                 //Assert
                 Assert.IsNull(args.Result);
-                Assert.IsFalse(nextCalled);
+                Assert.IsTrue(nextCalled);
             }
         }
 
@@ -198,7 +198,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                 var typeContext = new SitecoreTypeCreationContext();
                 typeContext.Item = item;
 
-                var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                 //Act
                 task.Execute(args);
@@ -238,7 +238,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                     var typeContext = new SitecoreTypeCreationContext();
                     typeContext.Item = item;
 
-                    var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                    var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                     //Act
                     task.Execute(args);
@@ -297,7 +297,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                     var typeContext = new SitecoreTypeCreationContext();
                     typeContext.Item = item;
 
-                    var args = new ObjectConstructionArgs(null, typeContext, config, null, new ModelCounter());
+                    var args = new ObjectConstructionArgs(null, typeContext, config, null);
 
                     //Act
                     task.Execute(args);
@@ -306,6 +306,19 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ObjectConstruction
                     Assert.IsNull(args.Result);
                     Assert.IsTrue(nextCalled);
                 }
+            }
+        }
+
+        public class StubAbstractTypeCreationContext : AbstractTypeCreationContext
+        {
+            public override bool CacheEnabled
+            {
+                get { return true; }
+            }
+
+            public override AbstractDataMappingContext CreateDataMappingContext(object obj)
+            {
+                throw new NotImplementedException();
             }
         }
 

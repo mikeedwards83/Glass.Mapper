@@ -17,7 +17,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
             //Arrange
             var expected = new SitecoreTypeConfiguration();
             var task = new SitecoreItemResolverTask();
-            var args = new ConfigurationResolverArgs(null, null, null, null);
+            var args = new ConfigurationResolverArgs(null, null , null);
             args.Result = expected;
 
             //Act
@@ -33,8 +33,10 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
             //Arrange
             SitecoreTypeConfiguration expected = null;
             var task = new SitecoreItemResolverTask();
-            var args = new ConfigurationResolverArgs(null, null, typeof(string), null);
+            var context = new SitecoreTypeCreationContext();
+            context.Options = new GetItemOptions() { Type = typeof(string) };
 
+            var args = new ConfigurationResolverArgs(null, context, null);
             //Act
             task.Execute(args);
 
@@ -48,7 +50,10 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
             //Arrange
             SitecoreTypeConfiguration expected = SitecoreItemResolverTask.Config;
             var task = new SitecoreItemResolverTask();
-            var args = new ConfigurationResolverArgs(null, null, typeof(Item), null);
+            var context = new SitecoreTypeCreationContext();
+            context.Options = new GetItemOptions() { Type = typeof(Item) };
+
+            var args = new ConfigurationResolverArgs(null, context, null);
 
             //Act
             task.Execute(args);

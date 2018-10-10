@@ -1,26 +1,8 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Glass.Mapper.Caching;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -41,25 +23,35 @@ namespace Glass.Mapper.Sc.FakeDb
         private Guid _id;
         private Context _context;
         private Database _database;
-        private SitecoreService _service;
+        private ISitecoreService _service;
         private bool _hasRun = false;
         private Stopwatch _glassWatch;
         private Stopwatch _rawWatch;
-        private double _glassTotal;
+        private long _glassTotal;
         private double _rawTotal;
         private Db _db;
+        //not thread safe;
 
+        public static long _total;
         [SetUp]
         public void Setup()
         {
             _id = new Guid("{59784F74-F830-4BCD-B1F0-1A08616EF726}");
+            _expected = "hello world";
 
             _db = new Db
             {
                 new DbItem("Target", new ID(_id))
+                {
+                    new DbField("Field")
+                    {
+                        Value =  _expected
+                    }
+                    }
+
             };
 
-            
+            _total = 0;
 
             if (_hasRun)
             {
@@ -72,22 +64,24 @@ namespace Glass.Mapper.Sc.FakeDb
             _rawWatch= new Stopwatch();
             
 
-            _expected = "hello world";
 
             _context = Context.Create(Utilities.CreateStandardResolver());
 
 
-            _context.Load(new SitecoreAttributeConfigurationLoader("Glass.Mapper.Sc.FakeDb"));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassLevel1)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassLevel2)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassLevel3)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassLevel4)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassLevel5)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassWithLotsOfProperties)));
+            _context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubForWholeDb)));
 
             _database = _db.Database;
 
             _service = new SitecoreService(_database);
 
-            var item = _database.GetItem(new ID(_id));
-            using (new ItemEditing(item, true))
-            {
-                item["Field"] = _expected;
-            }
+          
         }
 
         [Test]
@@ -205,7 +199,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             List<Item> items = new List<Item>();
             var rawItem = _database.GetItem("/sitecore");
-            _service.Cast<StubForWholeDb>(rawItem);
+            _service.GetItem<StubForWholeDb>(rawItem);
 
             foreach (Item child in rawItem.GetChildren())
             {
@@ -226,7 +220,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 _rawWatch.Stop();
 
                 _glassWatch.Start();
-                var glassItem = _service.Cast<StubForWholeDb>(item);
+                var glassItem = _service.GetItem<StubForWholeDb>(item);
                 if (glassItem != null)
                 {
                     var value2 = glassItem.Field;
@@ -259,81 +253,7 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        [Test]
-        [Ignore("Performance Test Run Manually")]
-        public void VersionCountsTest()
-        {
-            //Arrange
-            var config = new Config();
-            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
-            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new ConcurrentDictionaryCacheManager(), config);
-            var warmupItem = _database.GetItem(new ID(_id));
-            bool result1 = false;
-            bool result2 = false;
-
-
-            //Act
-            _glassWatch.Start();
-            var sitecoreItem = _database.GetItem(new ID(_id));
-
-            for (var i = 0; i < 10000; i++)
-            {
-                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
-            }
-            _glassWatch.Stop();
-            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
-
-            _glassWatch.Reset();
-            _glassWatch.Start();
-            for (var i = 0; i < 10000; i++)
-            {
-                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
-            }
-            _glassWatch.Stop();
-            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
-
-            //Assert
-            Assert.IsTrue(result1);
-            Assert.IsTrue(result2);
-        }
-
-        [Test]
-        [Ignore("Performance Test Run Manually")]
-        public void VersionCountsTest_IncorrectLanguage()
-        {
-            //Arrange
-            var config = new Config();
-            IItemVersionHandler versionHandler = new ItemVersionHandler(config);
-            IItemVersionHandler cachedVersionHandler = new TestCachedItemVersionHandler(new NetMemoryCacheManager(), config);
-            var warmupItem = _database.GetItem(new ID(_id));
-            bool result1 = false;
-            bool result2 = false;
-
-
-            //Act
-            _glassWatch.Start();
-            for (var i = 0; i < 10000; i++)
-            {
-                var sitecoreItem = _database.GetItem(new ID(_id), Language.Parse("de-DE"));
-                result1 = versionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
-            }
-            _glassWatch.Stop();
-            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
-
-            _glassWatch.Reset();
-            _glassWatch.Start();
-            for (var i = 0; i < 10000; i++)
-            {
-                var sitecoreItem = _database.GetItem(new ID(_id), Language.Parse("de-DE"));
-                result2 = cachedVersionHandler.VersionCountEnabledAndHasVersions(sitecoreItem);
-            }
-            _glassWatch.Stop();
-            Console.WriteLine(_glassWatch.ElapsedMilliseconds);
-
-            //Assert
-            Assert.IsFalse(result1);
-            Assert.IsFalse(result2);
-        }
+    
 
         [Test]
         [Timeout(120000)]
@@ -371,8 +291,8 @@ namespace Glass.Mapper.Sc.FakeDb
 
         [Test]
         [Timeout(120000)]
-        [Repeat(10000)]
-        [Ignore("Performance Test Run Manually")]
+        [Repeat(10)]
+       [Ignore("Performance Test Run Manually")]
         public void CastItems_LotsOfProperties(
             [Values(1000, 10000, 50000)] int count
         )
@@ -381,21 +301,51 @@ namespace Glass.Mapper.Sc.FakeDb
             _glassWatch.Reset();
 
             var sitecoreItem = _database.GetItem(new ID(_id));
-            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+            var warmup = _service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem);
 
             for (int i = 0; i < count; i++)
             {
                 _glassWatch.Start();
-                var glassItem = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+                var glassItem = _service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem);
                 var value2 = glassItem.Field1;
                 _glassWatch.Stop();
 
             }
-            _glassTotal = _glassWatch.ElapsedTicks;
+            _glassTotal += _glassWatch.ElapsedTicks;
 
-            Console.WriteLine("Performance Test Count: {0}".Formatted(_glassTotal));
+
+
+            Console.WriteLine($"Performance Test Count: {_glassWatch.ElapsedTicks} ({_glassWatch.ElapsedMilliseconds}ms)  Running Total: {_glassTotal} ");
         }
+        [Test]
+        [Timeout(120000)]
+        [Repeat(10)]
+        [Ignore("Performance Test Run Manually")]
+        public void CastItems_LotsOfProperties_Lazy(
+            [Values(1000, 10000, 50000)] int count
+        )
+        {
 
+            _glassWatch.Reset();
+
+            var sitecoreItem = _database.GetItem(new ID(_id));
+            var warmup = _service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem);
+
+            for (int i = 0; i < count; i++)
+            {
+                _glassWatch.Start();
+                var glassItem = _service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem,x=>x.LazyEnabled());
+                var value2 = glassItem.Field1;
+                _glassWatch.Stop();
+
+            }
+            _glassTotal += _glassWatch.ElapsedTicks;
+
+
+
+            Console.WriteLine($"Performance Test Count: {_glassWatch.ElapsedTicks} ({_glassWatch.ElapsedMilliseconds}ms)  Running Total: {_glassTotal} ");
+
+        }
         [Test]
         [Timeout(120000)]
         [Repeat(10000)]
@@ -407,13 +357,13 @@ namespace Glass.Mapper.Sc.FakeDb
             _glassWatch.Reset();
 
             var sitecoreItem = _database.GetItem(new ID(_id));
-            var warmup = _service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+            var warmup = _service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem);
 
             for (int i = 0; i < count; i++)
             {
                 _glassWatch.Start();
                 var service = new SitecoreService(_database);
-                var glassItem = service.Cast<StubClassWithLotsOfProperties>(sitecoreItem);
+                var glassItem = service.GetItem<StubClassWithLotsOfProperties>(sitecoreItem);
                 var value2 = glassItem.Field1;
                 _glassWatch.Stop();
 
@@ -649,17 +599,6 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
 
-        public class TestCachedItemVersionHandler : CachedItemVersionHandler
-        {
-            public TestCachedItemVersionHandler(ICacheManager cacheManager, Config config) : base(cacheManager, config)
-            {
-            }
-
-            protected override bool CanCache()
-            {
-                return true;
-            }
-        }
     }
 }
 

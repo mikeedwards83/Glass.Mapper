@@ -1,20 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
-//-CRE-
 
 using System;
 using Glass.Mapper.Sc.Configuration;
@@ -51,7 +35,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreFieldConfiguration();
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 var service = new SitecoreService(database.Database, context);
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options = new GetItemOptionsParams();
+
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 //Act
                 var result = mapper.GetFieldValue(field.Value, config, scContext) as Item;
@@ -83,7 +69,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreFieldConfiguration();
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 var service = new SitecoreService(database.Database, context);
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options = new GetItemOptionsParams();
+
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 //Act
                 var result = mapper.GetFieldValue(field.Value, config, scContext) as Item;
@@ -111,7 +99,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreFieldConfiguration();
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 var service = new SitecoreService(database.Database, context);
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options= new GetItemOptionsParams();
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 //Act
                 var result = mapper.SetFieldValue(null, config, scContext);
@@ -140,7 +129,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreFieldConfiguration();
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 var service = new SitecoreService(database.Database, context);
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options= new GetItemOptionsParams();
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 //Act
                 Assert.Throws<MapperException>(() =>
@@ -166,7 +156,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreFieldConfiguration();
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 var service = new SitecoreService(database.Database, context);
-                var scContext = new SitecoreDataMappingContext(null, item, service);
+                var options= new GetItemOptionsParams();
+                var scContext = new SitecoreDataMappingContext(null, item, service, options);
 
                 //Act
                 var result = mapper.SetFieldValue(item, config, scContext);

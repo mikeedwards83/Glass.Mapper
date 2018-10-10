@@ -1,26 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Fields;
 using Sitecore.Data;
@@ -36,13 +14,20 @@ namespace Glass.Mapper.Sc.DataMappers
     /// </summary>
     public class SitecoreFieldImageMapper : AbstractSitecoreFieldMapper
     {
+        private IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreFieldImageMapper"/> class.
         /// </summary>
-        public SitecoreFieldImageMapper()
-            : base(typeof(Image))
+        public SitecoreFieldImageMapper(): this (new MediaUrlOptionsResolver())
         {
         }
+        public SitecoreFieldImageMapper(IMediaUrlOptionsResolver mediaUrlOptionsResolver)
+            :  base(typeof(Image))
+        {
+            _mediaUrlOptionsResolver = mediaUrlOptionsResolver;
+        }
+
 
         /// <summary>
         /// Gets the field.
@@ -61,13 +46,13 @@ namespace Glass.Mapper.Sc.DataMappers
 
             Image img = new Image();
             ImageField scImg = new ImageField(field);
-
-            MapToImage(img, scImg);
+            var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(config.MediaUrlOptions);
+            MapToImage(img, scImg, mediaUrlOptions);
 
             return img;
         }
 
-        public static void MapToImage(Image img, ImageField field)
+        public static void MapToImage(Image img, ImageField field, MediaUrlOptions mediaUrlOptions)
         {
             int height = 0;
             int.TryParse(field.Height, out height);
@@ -84,13 +69,16 @@ namespace Glass.Mapper.Sc.DataMappers
             img.Height = height;
             img.HSpace = hSpace;
             img.MediaId = field.MediaID.Guid;
+            img.MediaExists = field.MediaItem != null;
+
             if (field.MediaItem != null)
             {
-                img.Src = MediaManager.GetMediaUrl(field.MediaItem);
+                img.Src = MediaManager.GetMediaUrl(field.MediaItem, mediaUrlOptions);
                 var fieldTitle = field.MediaItem.Fields["Title"];
                 if (fieldTitle != null)
                     img.Title = fieldTitle.Value;
             }
+
             img.VSpace = vSpace;
             img.Width = width;
             img.Language = field.MediaLanguage;
@@ -179,11 +167,11 @@ namespace Glass.Mapper.Sc.DataMappers
             if (image.VSpace > 0)
                 field.VSpace = image.VSpace.ToString();
 
-            if (field.Alt.IsNotNullOrEmpty() || image.Alt.IsNotNullOrEmpty())
+            if (field.Alt.HasValue() || image.Alt.HasValue())
                 field.Alt = image.Alt ?? string.Empty;
-            if (field.Border.IsNotNullOrEmpty() || image.Border.IsNotNullOrEmpty())
+            if (field.Border.HasValue() || image.Border.HasValue())
                 field.Border = image.Border ?? string.Empty;
-            if (field.Class.IsNotNullOrEmpty() || image.Class.IsNotNullOrEmpty())
+            if (field.Class.HasValue() || image.Class.HasValue())
                 field.Class = image.Class ?? string.Empty;
         }
         /// <summary>

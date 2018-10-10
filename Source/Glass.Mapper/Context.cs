@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +62,7 @@ namespace Glass.Mapper
         {
 
             if (resolver == null)
-                throw new NullReferenceException("No dependency resolver set.");
+                throw new NullReferenceException(Constants.Errors.NoDependencyResolver);
 
             var context = new Context();
             context.DependencyResolver = resolver;
@@ -94,6 +75,7 @@ namespace Glass.Mapper
 
             return context;
         }
+
 
         public Config Config { get; set; }
 
@@ -160,6 +142,15 @@ namespace Glass.Mapper
         {
             if (loaders.Any())
             {
+                if (Config.OnDemandMappingEnabled == false 
+                    &&  loaders
+                            .Select(loader=>loader.GetType())
+                            .Any(type => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(OnDemandLoader<>) )
+                    )
+                {
+                    throw new MapperException(Constants.Errors.OnDemandDisabled);
+                }
+
                 var typeConfigurations = loaders
                     .Select(loader => loader.Load()).Aggregate((x, y) => x.Union(y));
 
@@ -183,6 +174,7 @@ namespace Glass.Mapper
                     typeConfig.PerformAutoMap();
 
                     ProcessProperties(typeConfig.Properties);
+                    ProcessProperties(typeConfig.PrivateProperties);
 
                     if (!TypeConfigurations.TryAdd(typeConfig.Type, typeConfig))
                     {

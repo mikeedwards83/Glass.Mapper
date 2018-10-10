@@ -11,6 +11,7 @@
     <AssemblyName>Glass.Mapper.Sc.Mvc</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <DocumentationFile>bin\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,7 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
@@ -97,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Web\Mvc\IMvcContext.cs" />
     <Compile Include="ModelCache\IModelCacheManager.cs" />
     <Compile Include="ModelCache\ModelCacheManager.cs" />
     <Compile Include="Pipelines\Response\BuildManagerViewTypeResolver.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="Web\Mvc\GlassHtmlMvc.cs" />
     <Compile Include="Web\Mvc\GlassView.cs" />
     <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
-    <Compile Include="Web\Mvc\RenderingContextMvcWrapper.cs" />
+    <Compile Include="Web\Mvc\IMvcContextExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

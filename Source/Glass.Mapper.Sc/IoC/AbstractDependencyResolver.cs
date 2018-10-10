@@ -24,34 +24,10 @@ namespace Glass.Mapper.Sc.IoC
         public IConfigFactory<ISitecoreQueryParameter> QueryParameterFactory { get; set; }
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
-        public abstract ModelCounter GetModelCounter();
-
-
-        public virtual void Finalise()
-        {
-
-            TryFinalise(QueryParameterFactory);
-            TryFinalise(DataMapperResolverFactory);
-            TryFinalise(DataMapperFactory);
-            TryFinalise(ConfigurationResolverFactory);
-            TryFinalise(ObjectConstructionFactory);
-            TryFinalise(ObjectSavingFactory);
-            TryFinalise(ConfigurationMapFactory);
-        }
-
-        protected virtual void TryFinalise<T>(IConfigFactory<T> factory)
-        {
-            var finalisable = factory as AbstractFinalisedConfigFactory<T>;
-            if (finalisable != null)
-            {
-                finalisable.Finalise();
-            }
-        }
-
+        public LazyLoadingHelper LazyLoadingHelper { get; set; }
 
         public abstract ICacheManager GetCacheManager();
 
-        public IItemVersionHandler ItemVersionHandler { get; set; }
 
         public abstract Mapper.Config GetConfig();
         public abstract ILog GetLog();

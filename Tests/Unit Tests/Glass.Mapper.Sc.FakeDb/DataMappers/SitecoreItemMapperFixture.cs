@@ -24,8 +24,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var item = database.GetItem("/sitecore/content/TestItem");
                 var mapper = new SitecoreItemMapper();
                 var obj = new StubClass();
+                var options = new GetItemOptionsParams();
 
-                var mappingContext = new SitecoreDataMappingContext(obj, item, null);
+                var mappingContext = new SitecoreDataMappingContext(obj, item, null, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);

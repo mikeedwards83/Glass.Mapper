@@ -1,24 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
-using System;
-using System.Collections.Generic;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Diagnostics;
 
@@ -51,7 +30,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
         /// Gets or sets the result.
         /// </summary>
         /// <value>The result.</value>
-        public object Result { get; set; }
+        public object Result
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectConstructionArgs"/> class.
@@ -64,22 +47,19 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction
             Context context,
             AbstractTypeCreationContext abstractTypeCreationContext,
             AbstractTypeConfiguration configuration,
-            IAbstractService service,
-            ModelCounter counters)
+            IAbstractService service)
             : base(context)
         {
             AbstractTypeCreationContext = abstractTypeCreationContext;
             Configuration = configuration;
             Service = service;
-            Counters = counters;
         }
 
-       public ModelCounter Counters { get; private set; }
 
-
-         
-
-
+        public GetOptions Options
+        {
+            get { return AbstractTypeCreationContext.Options; }
+        }
 
     }
 }

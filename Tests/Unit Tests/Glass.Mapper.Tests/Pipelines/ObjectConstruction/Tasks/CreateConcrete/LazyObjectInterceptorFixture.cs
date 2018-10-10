@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using Castle.DynamicProxy;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Diagnostics;
@@ -37,6 +18,9 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         {
             //Assign
             var typeContext = Substitute.For<AbstractTypeCreationContext>();
+            var options = new GetOptions();
+            typeContext.Options = options;
+
             var config = Substitute.For<AbstractTypeConfiguration>();
             var service = Substitute.For<IAbstractService>();
 
@@ -44,20 +28,21 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
                 null,
                 typeContext, 
                 config,
-                service, new ModelCounter()
+                service
                 );
 
             var invocation = Substitute.For<IInvocation>();
             invocation.Method.Returns(typeof (StubClass).GetMethod("CalledMe"));
             service.InstantiateObject(typeContext).Returns(new StubClass());
 
-            var interceptor = new LazyObjectInterceptor(args);
+            var interceptor = new LazyObjectInterceptor( args, new LazyLoadingHelper());
 
             //Act
             interceptor.Intercept(invocation);
 
             //Assert
-            Assert.IsTrue((bool)invocation.ReturnValue);
+            invocation.Received(1).Proceed();
+
 
 
         }

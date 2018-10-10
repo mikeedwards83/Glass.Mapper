@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -88,7 +69,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -104,11 +85,11 @@ namespace Glass.Mapper.Sc.FakeDb
                     field.Value = fieldValue;
                 }
 
-                var model = service.GetItem<IStubLinkClass>(path);
+                var model = service.GetItem<IStubLinkClass>(path); ;
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -149,7 +130,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
                 var item = database.GetItem(targetPath);
@@ -171,7 +152,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -232,7 +213,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -267,7 +248,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                     var doc = new XmlDocument();
                     doc.LoadXml(
-                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                     var siteContext = new SiteContextStub(
                         new SiteInfo(
@@ -324,7 +305,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
                 Sitecore.Resources.Media.MediaProvider mediaProvider =
@@ -357,7 +338,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                     var doc = new XmlDocument();
                     doc.LoadXml(
-                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                     var siteContext = new SiteContextStub(
                         new SiteInfo(
@@ -413,7 +394,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
                 Sitecore.Resources.Media.MediaProvider mediaProvider =
@@ -448,7 +429,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                     var doc = new XmlDocument();
                     doc.LoadXml(
-                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                        "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                     var siteContext = new SiteContextStub(
                         new SiteInfo(
@@ -502,7 +483,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -514,12 +495,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -577,7 +558,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -589,12 +570,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -645,7 +626,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -657,12 +638,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -720,7 +701,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
 
                 var html = new GlassHtml(service);
@@ -733,12 +714,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -793,7 +774,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = new GlassHtml(service);
 
@@ -806,13 +787,13 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -874,7 +855,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = new GlassHtml(service);
 
@@ -886,12 +867,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -946,7 +927,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
                 var model = service.GetItem<StubClass>(targetPath);
@@ -957,7 +938,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 model = service.GetItem<StubClass>(targetPath);
@@ -965,7 +946,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1015,7 +996,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1027,12 +1008,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1089,7 +1070,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = new GlassHtml(service);
 
@@ -1101,12 +1082,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1161,7 +1142,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = new GlassHtml(service);
 
@@ -1173,12 +1154,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1234,7 +1215,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1246,12 +1227,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1300,7 +1281,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1312,12 +1293,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1371,7 +1352,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1383,12 +1364,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1437,7 +1418,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1449,12 +1430,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1508,7 +1489,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
                 var model = service.GetItem<IStubClass>(targetPath);
@@ -1519,13 +1500,14 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
+
                 model = service.GetItem<IStubClass>(targetPath);
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1572,7 +1554,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1584,12 +1566,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1646,7 +1628,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1658,12 +1640,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1715,7 +1697,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1727,12 +1709,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1789,7 +1771,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1801,12 +1783,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1860,7 +1842,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1872,13 +1854,13 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1933,7 +1915,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -1945,12 +1927,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -1998,7 +1980,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -2010,12 +1992,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model1);
+                    service.SaveItem(model1);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -2080,7 +2062,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -2092,12 +2074,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -2154,7 +2136,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -2166,12 +2148,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    service.Save(model);
+                    service.SaveItem(model);
                 }
 
                 var doc = new XmlDocument();
                 doc.LoadXml(
-                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreContext/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
+                    "<site name='GetHomeItem' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content/Tests/SitecoreService/GetHomeItem' startItem='/Target1' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
 
                 var siteContext = new SiteContextStub(
                     new SiteInfo(
@@ -2244,7 +2226,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -2298,7 +2280,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
-                var service = new SitecoreContext(database.Database);
+                var service = new SitecoreService(database.Database);
 
                 var html = GetGlassHtml(service);
 
@@ -2323,7 +2305,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240' alt='someAlt' width='380' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = new GlassHtml(scContext);
@@ -2348,7 +2330,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"someAlt\" width=\"380\" />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = new GlassHtml(scContext);
@@ -2382,7 +2364,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some'Alt\" width=\"380\" />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = new GlassHtml(scContext);
@@ -2414,7 +2396,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src=\"~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240\" alt=\"some&quot;Alt\" width=\"380\" />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = new GlassHtml(scContext);
@@ -2445,7 +2427,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtmlNoWidthHeight()
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             scContext.Config = new Config();
 
@@ -2469,7 +2451,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderImage_ValidImageWithNullParameterForWidth_RendersCorrectHtmlWidthSentHeight()
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             scContext.Config = new Config();
 
@@ -2494,7 +2476,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450&amp;w=600' alt='someAlt' height='450' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             scContext.Config = new Config();
 
@@ -2519,7 +2501,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='someClass' width='200' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             scContext.Config = new Config();
 
@@ -2544,7 +2526,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=472&amp;as=True&amp;w=900' alt='someAlt' width='900' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             scContext.Config = new Config();
 
@@ -2569,7 +2551,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?mw=100&amp;h=52&amp;as=True&amp;w=100' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = new GlassHtml(scContext);
@@ -2594,7 +2576,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?mw=300&amp;h=105&amp;as=True&amp;w=200' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2619,7 +2601,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=300&amp;as=True&amp;w=900' alt='someAlt' height='300' width='900' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2644,7 +2626,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='AClass' width='200' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2670,7 +2652,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2697,7 +2679,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2725,7 +2707,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;la=af-ZA&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2754,7 +2736,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;la=en&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2784,7 +2766,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;la=en&amp;w=400' width='200' vspace='15' height='105' hspace='10' border='9' alt='some&quot;Alt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2813,7 +2795,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<img src='~/media/Images/Carousel/carousel-example.ashx?h=210&amp;w=400' vspace='15' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
             var html = GetGlassHtml(scContext);
@@ -2848,7 +2830,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange=999&amp;workType=0&amp;industry=&amp;occupation=&amp;graduateSearch=false&amp;salaryFrom=0&amp;salaryTo=999999&amp;salaryType=annual&amp;advertiserID=&amp;advertiserGroup=&amp;keywords=sitecore+developer&amp;page=1&amp;displaySuburb=&amp;seoSuburb=&amp;isAreaUnspecified=false&amp;location=&amp;area=&amp;nation=3000&amp;sortMode=KeywordRelevance&amp;searchFrom=filters&amp;searchType=' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
 
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
@@ -2872,7 +2854,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/#dateRange' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -2895,7 +2877,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -2918,7 +2900,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='http://www.seek.com.au/jobs/in-australia/?dateRange=test&amp;value1=test2#anchor' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -2938,7 +2920,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -2958,7 +2940,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' style='mystyle' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -2985,7 +2967,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred#anOther' target='_blank' class='myclass' title='mytitle' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = GetGlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -3010,7 +2992,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >hello world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -3032,7 +3014,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' >hello &amp; world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello & world";
@@ -3052,39 +3034,18 @@ namespace Glass.Mapper.Sc.FakeDb
         /// https://github.com/mikeedwards83/Glass.Mapper/issues/329
         /// </summary>
         [Test]
-        public void RenderLink_LinkNull_ReturnsEmptyString()
-        {
-            //Arrange
-            var expected = string.Empty;
-            var scContext = Substitute.For<ISitecoreContext>();
-            var html = new GlassHtml(scContext);
-            Link link = null;
-
-            var model = new {Link = link};
-
-            //Act
-            var result = html.RenderLink(model, x => x.Link);
-
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
-
-        /// <summary>
-        /// https://github.com/mikeedwards83/Glass.Mapper/issues/329
-        /// </summary>
-        [Test]
         public void RenderLink_LinkNullAlwayRender_ReturnsEmptyString()
         {
             //Arrange
             var expected = "<a href=\"\" ></a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             Link link = null;
 
             var model = new { Link = link };
 
             //Act
-            var result = html.RenderLink(model, x => x.Link, alwaysRender:true);
+            var result = html.RenderLink(model, x => x.Link);
 
             //Assert
             Assert.AreEqual(expected, result);
@@ -3096,7 +3057,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var url = "http://firstsearch.oclc.org/WebZ/FSPage?pagetype=return_frameset:linktype=servicelink:sessionid=fsapp6-41637-j79jaw2f-61y8dw:entitypagenum=10:0?entityframedscrolling=yes:entityframedurl=http%3A%2F%2Fwww.example.com:entityframedtitle=:entityframedtimeout=15";
             var expected = string.Format("<a href=\"{0}\" ></a>", url);
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             Link link = null;
 
@@ -3106,18 +3067,42 @@ namespace Glass.Mapper.Sc.FakeDb
             } };
 
             //Act
-            var result = html.RenderLink(model, x => x.Link, alwaysRender: true);
+            var result = html.RenderLink(model, x => x.Link);
 
             //Assert
             Assert.AreEqual(expected, result);
         }
+
+#if SC90
+        [Test]
+        public void RenderLink_BlankTarget_AddsNoOpener()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx' title='hello &amp; world' rel='noopener noreferrer' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreService>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello & world";
+            link.Url = "/somewhere.aspx";
+            link.Title = "hello & world";
+            link.Target = "_blank";
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link);
+
+            //Assert
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
+        }
+
+#endif
 
         [Test]
         public void RenderLink_HtmlEncodesTitle()
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello & world";
@@ -3137,7 +3122,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='http://na2.se.voxco.com/se/?st=6M9NIk9SWq9dkYTuJI2wewuV3b3bWrDQMwgCt2aBnWDGTaoxLYNESg%3D%3D' title='hello &amp; world' >hello &amp; world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello & world";
@@ -3160,7 +3145,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             //This test checks that a value already encoded does not get accidentally double HTML encoded.
             var expected = "<a href='/somewhere.aspx' title='hello &amp; world' >hello &amp; world</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello &amp; world";
@@ -3181,7 +3166,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {
             //Arrange
             var expected = "<a href='/somewhere.aspx?temp=fred' class='myclass' >my other content</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -3207,7 +3192,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected =
                 "<a href='/somewhere.aspx?temp=fred&amp;temp=fred2&amp;temp=fred3&amp;temp1=jane' class='myclass' >my other content</a>";
-            var scContext = Substitute.For<ISitecoreContext>();
+            var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
             link.Text = "hello world";
@@ -3225,9 +3210,9 @@ namespace Glass.Mapper.Sc.FakeDb
             AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
-        #endregion
+#endregion
 
-        #region Stubs
+#region Stubs
 
         public class RenderingTest
         {
@@ -3352,11 +3337,11 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        #endregion
+#endregion
 
-        private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        private IGlassHtml GetGlassHtml(ISitecoreService SitecoreService)
         {
-            return new GlassHtml(sitecoreContext);
+            return new GlassHtml(SitecoreService);
         }
     }
 }

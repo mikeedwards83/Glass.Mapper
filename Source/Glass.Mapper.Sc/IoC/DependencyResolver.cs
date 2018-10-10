@@ -8,17 +8,18 @@ namespace Glass.Mapper.Sc.IoC
         public DependencyResolver(Config config)
         {
             Config = config;
+            LazyLoadingHelper = new LazyLoadingHelper();
             Log = new Log();
             CacheManager = () => new NetMemoryCacheManager();
-            QueryParameterFactory = new QueryParameterConfigFactory();
-            DataMapperResolverFactory = new DataMapperTaskConfigFactory();
-            DataMapperFactory = new DataMapperConfigFactory(QueryParameterFactory);
-            ConfigurationResolverFactory = new ConfigurationResolverConfigFactory();
+            QueryParameterFactory = new QueryParameterConfigFactory(this);
+            DataMapperResolverFactory = new DataMapperTaskConfigFactory(this);
+            DataMapperFactory = new DataMapperConfigFactory(this);
+            ConfigurationResolverFactory = new ConfigurationResolverConfigFactory(this);
             ObjectConstructionFactory = new ObjectConstructionTaskConfigFactory(this);
-            ObjectSavingFactory = new ObjectSavingTaskConfigFactory();
-            ConfigurationMapFactory = new ConfigurationMapConfigFactory();
-            GlassHtmlFactory = new GlassHtmlFactory();
-            ItemVersionHandler = new ItemVersionHandler(config);
+            ObjectSavingFactory = new ObjectSavingTaskConfigFactory(this);
+            ConfigurationMapFactory = new ConfigurationMapConfigFactory(this);
+            GlassHtmlFactory = new GlassHtmlFactory(this);
+            LazyLoadingHelper = new LazyLoadingHelper();
         }
 
         public override Mapper.Config GetConfig()
@@ -31,23 +32,10 @@ namespace Glass.Mapper.Sc.IoC
             return Log;
         }
 
-        const string _modelCounterKey = "71E98635-D8C9-4A36-913C-7DCFD2B7BD49";
-        public override ModelCounter GetModelCounter()
-        {
-            ModelCounter counter;
-            if (!ThreadData.Contains(_modelCounterKey))
-            {
-               ThreadData.SetValue(_modelCounterKey, new ModelCounter());
-            }
-            counter = ThreadData.GetValue<ModelCounter>(_modelCounterKey);
-            return counter;
-        }
-
+        
         public override ICacheManager GetCacheManager()
         {
             return CacheManager();
         }
-
-       
     }
 }

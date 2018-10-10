@@ -14,26 +14,50 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
 
         static EnforcedTemplateCheck()
         {
-            _cache= new ConcurrentDictionary<string, bool>();
+            _cache = new ConcurrentDictionary<string, bool>();
         }
 
         public EnforcedTemplateCheck()
         {
             Name = "EnforcedTemplateCheck";
         }
+
         public override void Execute(ObjectConstructionArgs args)
         {
-
             if (args.Result == null)
             {
-                var scConfig = args.Configuration as SitecoreTypeConfiguration;
+                var options = args.Options as GetItemOptions;
 
-                if (scConfig != null && scConfig.EnforceTemplate != SitecoreEnforceTemplate.No)
+                if (options != null)
                 {
+                    PerformTemplateCheck(args, options.TemplateId, options.EnforceTemplate);
+                }
+                else
+                {
+                    base.Execute(args);
+                }
+            }
+        }
+
+        protected virtual void PerformTemplateCheck(ObjectConstructionArgs args, ID templateId, SitecoreEnforceTemplate enforceTemplate)
+        {
+            if (!enforceTemplate.IsEnabled())
+            {
+                base.Execute(args);
+            }
+            else
+            {
+                if (ID.IsNullOrEmpty(templateId))
+                {
+                    throw new MapperException("Cannot EnforceTemplate with Null TemplateID");
+                }
+                else
+                {
+
                     var scArgs = args.AbstractTypeCreationContext as SitecoreTypeCreationContext;
 
-                    var key = "{0} {1} {2}".Formatted(scConfig.TemplateId, scArgs.Item.TemplateID,
-                        scConfig.EnforceTemplate);
+                    var key = "{0} {1} {2}".Formatted(templateId, scArgs.Item.TemplateID,
+                        enforceTemplate);
                     var result = false;
 
                     if (_cache.ContainsKey(key))
@@ -44,13 +68,13 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                     {
                         var item = scArgs.Item;
 
-                        if (scConfig.EnforceTemplate == SitecoreEnforceTemplate.TemplateAndBase)
+                        if (enforceTemplate == SitecoreEnforceTemplate.TemplateAndBase)
                         {
-                            result = TemplateAndBaseCheck(item.Template, scConfig.TemplateId);
+                            result = TemplateAndBaseCheck(item.Template, templateId);
                         }
-                        else if (scConfig.EnforceTemplate == SitecoreEnforceTemplate.Template)
+                        else if (enforceTemplate == SitecoreEnforceTemplate.Template)
                         {
-                            result = item.TemplateID == scConfig.TemplateId;
+                            result = item.TemplateID == templateId;
                         }
 
                         _cache.TryAdd(key, result);
@@ -60,10 +84,6 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                     {
                         base.Execute(args);
                     }
-                }
-                else
-                {
-                    base.Execute(args);
                 }
             }
         }

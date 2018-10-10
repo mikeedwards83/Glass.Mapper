@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
-
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -24,8 +5,6 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
-using Sitecore.Data;
-using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.FakeDb;
 
@@ -110,17 +89,14 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Path = "/sitecore/content/Target";
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    false, null).Returns(expected);
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri)).Returns(expected);
+                  
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -130,6 +106,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             }
 
         }
+
+    
 
         [Test]
         public void MapToProperty_GetItemByPathDifferentLanguage_ReturnsItem()
@@ -166,18 +144,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Path = "/sitecore/content/Target";
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    false, null).Returns(expected);
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
 
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri)).Returns(expected);
+            
+
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -218,20 +194,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     "/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/TargetOneLanguage", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Path = "/sitecore/content/Tests/DataMappers/SitecoreNodeMapper/Target";
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => 
-                        x.Paths.FullPath == target.Paths.FullPath 
-                        && x.Language == language
-                        && x.Versions.Count == 0),
-                    false,
-                    false, null).Returns(expected);
 
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri && x.Item.Versions.Count == 0)).Returns(expected);
+
+
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service,options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -264,21 +236,17 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Id = target.ID.Guid.ToString();
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    false, null).Returns(expected);
+
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri )).Returns(expected);
 
 
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
 
-
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -315,19 +283,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Id = target.ID.Guid.ToString();
 
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri)).Returns(expected);
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    false, null).Returns(expected);
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
+                
 
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -345,6 +310,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             var context = Context.Create(FakeDb.Utilities.CreateStandardResolver());
             var mapper = new SitecoreNodeMapper();
             var language = LanguageManager.GetLanguage("af-ZA");
+
+
+
             context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
 
 
@@ -360,21 +328,13 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var source = database.Database.GetItem("/sitecore/content/Source", language);
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
-                var service = Substitute.For<ISitecoreService>();
-                var expected = new StubMapped();
+                var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Id = target.ID.Guid.ToString();
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    false, null).Returns(expected);
-
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(false);
-
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -407,22 +367,18 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams
+                {
+                    Lazy = LazyLoading.Enabled
+                };
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Path = "/sitecore/content/Target";
-                config.IsLazy = true;
-
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    true,
-                    false, null).Returns(expected);
-
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
 
 
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri && x.Lazy == LazyLoading.Enabled)).Returns(expected);
 
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
@@ -456,25 +412,63 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var target = database.Database.GetItem("/sitecore/content/Target", language);
                 var service = Substitute.For<ISitecoreService>();
                 var expected = new StubMapped();
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
                 config.Path = "/sitecore/content/Target";
                 config.InferType = true;
 
-                service.CreateType(
-                    typeof(StubMapped),
-                    Arg.Is<Item>(x => x.Paths.FullPath == target.Paths.FullPath && x.Language == language),
-                    false,
-                    true, null).Returns(expected);
+                service.GetItem(Arg.Is<GetItemByItemOptions>(x => x.Item.Uri == target.Uri)).Returns(expected);
 
-                var mappingContext = new SitecoreDataMappingContext(obj, source, service);
-                service.ItemVersionHandler.VersionCountEnabledAndHasVersions(target).Returns(true);
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
 
                 //Act
                 var result = mapper.MapToProperty(mappingContext);
 
                 //Assert
                 Assert.AreEqual(expected, result);
+            }
+        }
+
+
+        [Test]
+        public void MapToProperty_GetItemByPathIsLazyIntegrationTest_ReturnsItem()
+        {
+            //Assign
+            var config = new SitecoreNodeConfiguration();
+            var context = Context.Create(FakeDb.Utilities.CreateStandardResolver());
+            var mapper = new SitecoreNodeMapper();
+            var language = LanguageManager.GetLanguage("en");
+            context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
+
+            mapper.Setup(new DataMapperResolverArgs(context, config));
+
+            var obj = new Stub();
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Source"),
+                new Sitecore.FakeDb.DbItem("Target")
+            })
+            {
+                var source = database.Database.GetItem("/sitecore/content/Source", language);
+                var target = database.Database.GetItem("/sitecore/content/Target", language);
+                var service = new SitecoreService(database.Database);
+                var expected = new StubMapped();
+                var options = new GetItemOptionsParams
+                {
+                    Lazy = LazyLoading.Enabled
+                };
+
+                config.PropertyInfo = typeof(Stub).GetProperty("StubMapped");
+                config.Path = "/sitecore/content/Target";
+
+                var mappingContext = new SitecoreDataMappingContext(obj, source, service, options);
+
+                //Act
+                var result = mapper.MapToProperty(mappingContext);
+
+                //Assert
+                Assert.True(result is StubMapped);
             }
         }
         #endregion

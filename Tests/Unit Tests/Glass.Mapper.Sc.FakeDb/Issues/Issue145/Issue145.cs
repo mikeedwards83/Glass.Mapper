@@ -29,15 +29,14 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue145
                 }
             })
             {
-                var resolver = Utilities.CreateStandardResolver(finalise: false);
+                var resolver = Utilities.CreateStandardResolver();
                 resolver.DataMapperFactory.Insert(0, () => new StubDataMapper());
-                resolver.Finalise();
 
                 var context = Context.Create(resolver);
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                var result = service.GetItem<Stub>("/sitecore");
+                var result = service.GetItem<Stub>("/sitecore/content/target");
 
                 //Assert
                 Assert.AreEqual("property test", result.Property1.Value);

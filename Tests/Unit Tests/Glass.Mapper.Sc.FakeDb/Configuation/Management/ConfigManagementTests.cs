@@ -6,6 +6,7 @@ using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectSaving;
 using Glass.Mapper.Sc.DataMappers.SitecoreQueryParameters;
 using Glass.Mapper.Sc.IoC;
+using NSubstitute;
 using NUnit.Framework;
 using IDependencyResolver = Glass.Mapper.Sc.IoC.IDependencyResolver;
 
@@ -18,9 +19,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetQueryParameters()
         {
             // Assign
-            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
-            queryParameterFactory.Finalise();
-
+            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory(null);
 
             // Act
             var result = queryParameterFactory.GetItems();
@@ -33,8 +32,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetConfigurationResolvers()
         {
             // Assign
-            ConfigurationResolverConfigFactory queryParameterFactory = new ConfigurationResolverConfigFactory();
-            queryParameterFactory.Finalise();
+            IConfigFactory<AbstractConfigurationResolverTask> queryParameterFactory = new ConfigurationResolverConfigFactory(null);
 
             // Act
             var result = queryParameterFactory.GetItems();
@@ -47,10 +45,11 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetDataMappers()
         {
             // Assign
-            QueryParameterConfigFactory queryParameterFactory = new QueryParameterConfigFactory();
-            DataMapperConfigFactory configFactory = new DataMapperConfigFactory(queryParameterFactory);
-            configFactory.Finalise();
-            queryParameterFactory.Finalise();
+            IDependencyResolver dependencyResolver = Substitute.For<IDependencyResolver>();
+            IConfigFactory<ISitecoreQueryParameter> queryParameterFactory = new QueryParameterConfigFactory(null);
+            dependencyResolver.QueryParameterFactory.Returns(queryParameterFactory);
+
+            IConfigFactory<AbstractDataMapper> configFactory = new DataMapperConfigFactory(dependencyResolver);
 
             // Act
             var result = configFactory.GetItems();
@@ -63,9 +62,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetDataMapperResolverTasks()
         {
             // Assign
-            DataMapperTaskConfigFactory dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory();
-
-            dataMapperResolverConfigFactory.Finalise();
+            IConfigFactory<AbstractDataMapperResolverTask> dataMapperResolverConfigFactory = new DataMapperTaskConfigFactory(null);
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -78,10 +75,8 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetObjectConstructionTasks()
         {
             // Assign
-            DependencyResolver dependencyResolver = new DependencyResolver(new Config());
-
-            ObjectConstructionTaskConfigFactory dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
-            dataMapperResolverConfigFactory.Finalise();
+            IDependencyResolver dependencyResolver = new DependencyResolver(new Config());
+            IConfigFactory<AbstractObjectConstructionTask> dataMapperResolverConfigFactory = new ObjectConstructionTaskConfigFactory(dependencyResolver);
 
             // Act
             var result = dataMapperResolverConfigFactory.GetItems();
@@ -94,8 +89,7 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Management
         public void GetObjectSavingTasks()
         {
             // Assign
-            ObjectSavingTaskConfigFactory objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory();
-            objectSavingTaskConfigFactory.Finalise();
+            IConfigFactory<AbstractObjectSavingTask> objectSavingTaskConfigFactory = new ObjectSavingTaskConfigFactory(null);
 
             // Act
             var result = objectSavingTaskConfigFactory.GetItems();

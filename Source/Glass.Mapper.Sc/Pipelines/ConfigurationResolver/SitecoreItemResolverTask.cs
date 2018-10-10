@@ -28,7 +28,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 
         public override void Execute(ConfigurationResolverArgs args)
         {
-            if (args.Result == null && args.RequestedType == ItemType)
+            if (args.Result == null && args.Options.Type == ItemType)
             {
                 args.Result = Config;
             }

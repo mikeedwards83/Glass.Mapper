@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Custom;
@@ -10,8 +7,11 @@ namespace Glass.Mapper.Sc.DataMappers
 {
     public class SitecoreChildrenCastMapper : AbstractDataMapper
     {
-        public SitecoreChildrenCastMapper()
+        private readonly LazyLoadingHelper _lazyLoadingHelper;
+
+        public SitecoreChildrenCastMapper(LazyLoadingHelper lazyLoadingHelper)
         {
+            _lazyLoadingHelper = lazyLoadingHelper;
             ReadOnly = true;
         }
 
@@ -23,10 +23,15 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object MapToProperty(AbstractDataMappingContext mappingContext)
         {
             var scContext = mappingContext as SitecoreDataMappingContext;
-              var scConfig = Configuration as SitecoreChildrenConfiguration;
+            var scConfig = Configuration as SitecoreChildrenConfiguration;
+
             if (scContext != null && scConfig != null)
             {
-                return new ChildrenCast(scContext.Service, scContext.Item, scConfig.IsLazy, scConfig.InferType);
+                var options = new GetItemOptions();
+                options.Copy(mappingContext.Options);
+                scConfig.GetPropertyOptions(options);
+
+                return new ChildrenCast(scContext.Service, scContext.Item, options, _lazyLoadingHelper);
             }
             return null;
         }

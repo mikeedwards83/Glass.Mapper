@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.AlexGriciucCreateItemIssue
                 newClass.Name = "Child1";
                 using (new SecurityDisabler())
                 {
-                    scContext.Create(parent, newClass);
+                    scContext.CreateItem(parent, newClass);
                 }
 
                 //Asset

@@ -1,27 +1,5 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using NUnit.Framework;
 using Glass.Mapper.Configuration;
@@ -118,6 +96,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Config = new Config();
             context.Load(loader1, loader2);
 
             //Assert
@@ -141,6 +120,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Config = new Config();
             context.Load(loader1);
 
             //Assert
@@ -164,6 +144,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Config = new Config();
             context.Load(loader1);
 
             //Assert
@@ -189,6 +170,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(resolver);
+            context.Config = new Config();
             context.Load(loader1);
 
             //Assert
@@ -215,6 +197,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Config = new Config();
             context.Load(loader1);
 
             //Assert
@@ -230,6 +213,7 @@ namespace Glass.Mapper.Tests
 
             //Act
             var context = Context.Create(Substitute.For<IDependencyResolver>());
+            context.Config = new Config();
             context.Load(loader1);
 
             //Assert
@@ -251,6 +235,7 @@ namespace Glass.Mapper.Tests
             var type = typeof (IStubInterface1);
             Context.Create(Substitute.For<IDependencyResolver>(), contextName, isDefault);
             var context = Context.Contexts[contextName];
+            context.Config = new Config();
 
             //Act
             var config = context.GetTypeConfigurationFromType<StubAbstractTypeConfiguration>(type);
@@ -268,27 +253,33 @@ namespace Glass.Mapper.Tests
             bool isDefault = true;
             var type = typeof (NS1.ProxyTest1);
             var service = Substitute.For<IAbstractService>();
-            var task = new CreateInterfaceTask();
+            var task = new CreateInterfaceTask(new LazyLoadingHelper());
             
             #region CreateTypes
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
-
-            AbstractTypeCreationContext abstractTypeCreationContext1 = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext1.RequestedType = typeof(NS1.ProxyTest1);
+            context.Config = new Config();
+            AbstractTypeCreationContext abstractTypeCreationContext1 = new TestTypeCreationContext();
+            abstractTypeCreationContext1.Options = new TestGetOptions()
+            {
+                Type = typeof(NS1.ProxyTest1)
+            };
 
             var configuration1 = Substitute.For<AbstractTypeConfiguration>();
             configuration1.Type = typeof(NS1.ProxyTest1);
 
-            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service, new ModelCounter());
+            ObjectConstructionArgs args1 = new ObjectConstructionArgs(context, abstractTypeCreationContext1, configuration1, service);
 
-            AbstractTypeCreationContext abstractTypeCreationContext2 = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext2.RequestedType = typeof(NS2.ProxyTest1);
+            AbstractTypeCreationContext abstractTypeCreationContext2 = new TestTypeCreationContext();
 
+            abstractTypeCreationContext2.Options = new TestGetOptions()
+            {
+                Type = typeof(NS2.ProxyTest1)
+            };
             var configuration2 = Substitute.For<AbstractTypeConfiguration>();
             configuration2.Type = typeof(NS2.ProxyTest1); 
 
-            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service, new ModelCounter());
+            ObjectConstructionArgs args2 = new ObjectConstructionArgs(context, abstractTypeCreationContext2, configuration2, service);
 
             //Act
             task.Execute(args1);
@@ -314,13 +305,28 @@ namespace Glass.Mapper.Tests
 
 
 
-       
+
         #endregion
 
         #region Stubs
 
 
-        
+        public class StubAbstractDataMappingContext : AbstractDataMappingContext
+        {
+            public StubAbstractDataMappingContext(object obj, GetOptions options)
+                : base(obj, options)
+            {
+            }
+        }
+
+        public class TestTypeCreationContext : AbstractTypeCreationContext
+        {
+            public override bool CacheEnabled { get; }
+            public override AbstractDataMappingContext CreateDataMappingContext(object obj)
+            {
+                return new StubAbstractDataMappingContext(obj, Options);
+            }
+        }
 
         public interface IStubInterface1
         {

@@ -16,6 +16,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <DocumentationFile>bin\Glass.Mapper.Sc.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Glass.Mapper.Sc.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -35,7 +35,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Glass.Mapper.Sc.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
@@ -58,13 +57,26 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq">
+      <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CachedItemVersionHandler.cs" />
+    <Compile Include="AbstractSitecoreContext.cs" />
+    <Compile Include="Builders\CreateBuilders.cs" />
+    <Compile Include="Builders\DeleteBuilders.cs" />
+    <Compile Include="Builders\GetBuilders.cs" />
+    <Compile Include="Builders\GetsBuilder.cs" />
+    <Compile Include="Builders\IBuilder.cs" />
+    <Compile Include="Builders\ICreateItemBuilder.cs" />
+    <Compile Include="Builders\IDeleteItemBuilder.cs" />
+    <Compile Include="Builders\IGetItemBuilder.cs" />
+    <Compile Include="Builders\IGetItemsBuilder.cs" />
+    <Compile Include="Builders\IMoveItemBuilder.cs" />
+    <Compile Include="Builders\ISaveItemBuilder.cs" />
+    <Compile Include="Builders\MoveBuilders.cs" />
+    <Compile Include="Builders\SaveBuilders.cs" />
     <Compile Include="Caching\CacheKeyGenerator.cs" />
-    <Compile Include="CodeFirst\FieldInfo.cs" />
-    <Compile Include="CodeFirst\GlassDataProvider.cs" />
-    <Compile Include="CodeFirst\SectionInfo.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configuration\Attributes\SitecoreAttributeConfigurationLoader.cs" />
     <Compile Include="Configuration\Attributes\SitecoreChildrenAttribute.cs" />
@@ -118,6 +130,12 @@
     <Compile Include="Configuration\SitecoreParentConfiguration.cs" />
     <Compile Include="Configuration\SitecoreQueryConfiguration.cs" />
     <Compile Include="Configuration\SitecoreTypeConfiguration.cs" />
+    <Compile Include="ISitecoreContext.cs" />
+    <Compile Include="ISitecoreServiceExtensions.cs" />
+    <Compile Include="ISitecoreServiceLegacy.cs" />
+    <Compile Include="OptionsGet.cs" />
+    <Compile Include="OptionWriteToItem.cs" />
+    <Compile Include="OptionsCreate.cs" />
     <Compile Include="Custom\ChildrenCast.cs" />
     <Compile Include="DataMappers\AbstractSitecoreFieldMapper.cs" />
     <Compile Include="DataMappers\SitecoreChildrenCastMapper.cs" />
@@ -165,11 +183,6 @@
     <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameter.cs" />
     <Compile Include="DataMappers\SitecoreFieldScWrapperMappers.cs" />
     <Compile Include="DataMappers\SitecoreSelfMapper.cs" />
-    <Compile Include="Dynamic\Dy.cs" />
-    <Compile Include="Dynamic\DynamicCollection.cs" />
-    <Compile Include="Dynamic\DynamicField.cs" />
-    <Compile Include="Dynamic\DynamicItem.cs" />
-    <Compile Include="Dynamic\IDynamicItem.cs" />
     <Compile Include="Events\PublishEnd\GlassCacheClear.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Fields\File.cs" />
@@ -178,10 +191,11 @@
     <Compile Include="Fields\Link.cs" />
     <Compile Include="Fields\LinkType.cs" />
     <Compile Include="Fields\TriState.cs" />
+    <Compile Include="OptionsDelete.cs" />
+    <Compile Include="OptionsGetItem.cs" />
     <Compile Include="GlassHtml.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IGlassHtml.cs" />
-    <Compile Include="IItemVersionHandler.cs" />
     <Compile Include="IMediaUrlOptionsResolver.cs" />
     <Compile Include="IoC\AbstractDependencyResolver.cs" />
     <Compile Include="IoC\ConfigurationMapConfigFactory.cs" />
@@ -194,70 +208,51 @@
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IoC\IGlassContextProvider.cs" />
     <Compile Include="IoC\IGlassHtmlFactory.cs" />
-    <Compile Include="IoC\ISitecoreContextFactory.cs" />
     <Compile Include="IoC\ObjectConstructionTaskConfigFactory.cs" />
     <Compile Include="IoC\ObjectSavingTaskConfigFactory.cs" />
     <Compile Include="IoC\QueryParameterConfigFactory.cs" />
-    <Compile Include="IoC\SitecoreContextFactory.cs" />
-    <Compile Include="ISitecoreContext.cs" />
     <Compile Include="ISitecoreFieldResolver.cs" />
     <Compile Include="ISitecoreService.cs" />
     <Compile Include="ItemEditing.cs" />
-    <Compile Include="ItemExtensions.cs" />
     <Compile Include="DisableItemHandler.cs" />
     <Compile Include="IUrlOptionsResolver.cs" />
     <Compile Include="LazyItemEnumerable.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Maps\SitecoreGlassMap.cs" />
     <Compile Include="MediaUrlOptionsResolver.cs" />
+    <Compile Include="OptionsGetItems.cs" />
+    <Compile Include="OptionsMove.cs" />
+    <Compile Include="OptionsSave.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountAlwaysTrueTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountByRevisionTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTask.cs" />
     <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
-    <Compile Include="Pipelines\Initialise\CodeFirstInitialise.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\CreateDynamicTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\NullItemTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
     <Compile Include="Profilers\SitecoreProfiler.cs" />
+    <Compile Include="Query.cs" />
     <Compile Include="RenderField\DateParameterKeys.cs" />
     <Compile Include="RenderField\ImageParameterKeys.cs" />
-    <Compile Include="RenderField\RenderParameterKeys.cs" />
     <Compile Include="RenderField\LinkParameterKeys.cs" />
+    <Compile Include="RenderingParametersModelFactory.cs" />
     <Compile Include="RenderingResult.cs" />
     <Compile Include="SitecoreContentContext.cs" />
-    <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
+    <Compile Include="Web\IRequestContextExtensionMethods.cs" />
+    <Compile Include="Web\IRequestContext.cs" />
+    <Compile Include="Web\RequestContext.cs" />
+    <Compile Include="Web\Ui\GlassEditFrame.cs" />
+    <Compile Include="WriteOptions.cs" />
     <Compile Include="UrlOptionsResolver.cs" />
     <Compile Include="SitecoreTypeCreationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreService.cs" />
     <Compile Include="SitecoreTypeSavingContext.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="VersionCountDisabler.cs" />
-    <Compile Include="ItemVersionHandler.cs" />
-    <Compile Include="Web\IRenderingContext.cs" />
-    <Compile Include="Web\Ui\AbstractGlassPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\AbstractGlassUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\AbstractGlassWebControl.cs" />
-    <Compile Include="Web\Ui\GlassWebControl.cs" />
-    <Compile Include="Web\Ui\GlassDynamicPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\GlassDynamicUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\GlassEditFrame.cs" />
-    <Compile Include="Web\Ui\GlassPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\GlassUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Web\Ui\RenderingContextUserControlWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />
@@ -276,12 +271,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
-    <Content Include="App_Config\Include\Glass.Mapper.Sc.config" />
-    <Content Include="App_Config\Include\Glass.Mapper.Sc.Start.config.pp" />
+    <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
     <Content Include="App_Start\GlassMapperSc.cs.pp" />
     <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
-    <Content Include="App_Config\Include\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
+    <Content Include="App_Config\Include\Glass\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
     <Compile Include="Pipelines\DataMapper\AbstractDataMapperFieldsWithSpace.cs" />
     <None Include="packages.config" />
   </ItemGroup>

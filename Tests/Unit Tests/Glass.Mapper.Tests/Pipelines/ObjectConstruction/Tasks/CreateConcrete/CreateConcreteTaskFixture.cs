@@ -1,22 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using Glass.Mapper.Pipelines.ObjectConstruction;
 using Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete;
@@ -36,7 +17,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         [SetUp]
         public void Setup()
         {
-            _task = new CreateConcreteTask();
+            _task = new CreateConcreteTask(new LazyLoadingHelper());
         }
 
         #region Method - Execute
@@ -49,13 +30,16 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
             var service = Substitute.For<IAbstractService>();
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
-            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType= type;
+            AbstractTypeCreationContext abstractTypeCreationContext = new TestTypeCreationContext();
+            abstractTypeCreationContext.Options = new TestGetOptions()
+            {
+                Type = type
+            };
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
 
             //Act
             _task.Execute(args);
@@ -73,17 +57,21 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
           
             var service = Substitute.For<IAbstractService>();
 
-            Context context = Context.Create(Substitute.For<IDependencyResolver>());
+            var dependencyResolver = Substitute.For<IDependencyResolver>();
+            Context context = Context.Create(dependencyResolver);
 
-            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType = typeof (StubClass);
-            abstractTypeCreationContext.IsLazy = true;
+            AbstractTypeCreationContext abstractTypeCreationContext = new TestTypeCreationContext();
+            abstractTypeCreationContext.Options = new TestGetOptions()
+            {
+                Type = typeof(StubClass),
+                Lazy = LazyLoading.Enabled
+            };
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
 
             //Act
             _task.Execute(args);
@@ -104,14 +92,21 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
-            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType = typeof (StubClass);
+            AbstractTypeCreationContext abstractTypeCreationContext = new TestTypeCreationContext();
+            abstractTypeCreationContext.Options = new TestGetOptions()
+            {
+                Type = typeof(StubClass),
+                Lazy = LazyLoading.Disabled
+            };
+
+
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
+
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
 
             //Act
             _task.Execute(args);
@@ -132,14 +127,17 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
-            AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType =typeof (StubClass);
+            AbstractTypeCreationContext abstractTypeCreationContext = new TestTypeCreationContext();
+            abstractTypeCreationContext.Options = new TestGetOptions()
+            {
+                Type = typeof(StubClass),
+            };
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.ConstructorMethods = Utilities.CreateConstructorDelegates(type);
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service, new ModelCounter());
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext,configuration, service);
             args.Result = string.Empty;
 
             //Act
@@ -161,6 +159,23 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateConcrete
         public class StubClass
         {
 
+        }
+
+        public class StubAbstractDataMappingContext : AbstractDataMappingContext
+        {
+            public StubAbstractDataMappingContext(object obj, GetOptions options) 
+                : base(obj, options)
+            {
+            }
+        }
+
+        public class TestTypeCreationContext : AbstractTypeCreationContext
+        {
+            public override bool CacheEnabled { get; }
+            public override AbstractDataMappingContext CreateDataMappingContext(object obj)
+            {
+                return new StubAbstractDataMappingContext(obj, Options);
+            }
         }
     }
 }

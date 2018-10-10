@@ -23,15 +23,15 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var service = Substitute.For<IAbstractService>();
             var config = new StubAbstractTypeConfiguration();
             var context = Substitute.For<AbstractTypeCreationContext>();
-
+            context.Options = new GetOptions {Lazy = LazyLoading.Enabled};
             config.Type = typeof(IStubTarget);
-            context.IsLazy = true;
 
-            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
+            var args = new ObjectConstructionArgs(null, context, config, service)
             {
-                Parameters = new Dictionary<string, object>()
+                Parameters = new Dictionary<string, object>(),
+                
             };
-            var interceptor = new InterfacePropertyInterceptor(args);
+            var interceptor = new InterfacePropertyInterceptor(args, new LazyLoadingHelper());
             var invocations = new List<IInvocation>();
 
             for (var i = 0; i < 100; i++)
@@ -56,14 +56,18 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var service = Substitute.For<IAbstractService>();
             var config = new StubAbstractTypeConfiguration();
             var context = Substitute.For<AbstractTypeCreationContext>();
+            context.Options = new GetOptions { Lazy = LazyLoading.Enabled };
+
+            var propertyName = "Property1";
+
+            var info = typeof(IStubTarget).GetProperty(propertyName);
 
             var property = new StubAbstractPropertyConfiguration();
+            property.PropertyInfo = info;
+
             var mapper = new StubAbstractDataMapper();
 
             var expected = "test random 1";
-            var propertyName = "Property1";
-
-            var info = new FakePropertyInfo(typeof(string), propertyName, typeof(IStubTarget));
 
             config.AddProperty(property);
             config.Type = typeof(IStubTarget);
@@ -73,11 +77,11 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
 
             mapper.Value = expected;
 
-            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
+            var args = new ObjectConstructionArgs(null, context, config, service)
             {
                 Parameters = new Dictionary<string, object>()
             };
-            var interceptor = new InterfacePropertyInterceptor(args);
+            var interceptor = new InterfacePropertyInterceptor(args, new LazyLoadingHelper());
 
             var invocation = Substitute.For<IInvocation>();
 
@@ -97,12 +101,17 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             var service = Substitute.For<IAbstractService>();
             var config = new StubAbstractTypeConfiguration();
             var context = Substitute.For<AbstractTypeCreationContext>();
+            context.Options = new GetOptions { Lazy = LazyLoading.Enabled };
+
+            var propertyName = "Property1";
+
+            var info = typeof(IStubTarget).GetProperty(propertyName);
 
             var property = new StubAbstractPropertyConfiguration();
+            property.PropertyInfo = info;
             var mapper = new StubAbstractDataMapper();
 
             var expected = "test random 1";
-            var propertyName = "Property1";
 
             var info1 = new FakePropertyInfo(typeof(string), propertyName, typeof(IStubTarget));
 
@@ -112,11 +121,11 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             property.Mapper = mapper;
             property.PropertyInfo = info1;
 
-            var args = new ObjectConstructionArgs(null, context, config, service, new ModelCounter())
+            var args = new ObjectConstructionArgs(null, context, config, service)
             {
                 Parameters = new Dictionary<string, object>()
             };
-            var interceptor = new InterfacePropertyInterceptor(args);
+            var interceptor = new InterfacePropertyInterceptor(args, new LazyLoadingHelper());
 
             var setInvocation = Substitute.For<IInvocation>();
             setInvocation.Arguments.Returns(new[] { expected });

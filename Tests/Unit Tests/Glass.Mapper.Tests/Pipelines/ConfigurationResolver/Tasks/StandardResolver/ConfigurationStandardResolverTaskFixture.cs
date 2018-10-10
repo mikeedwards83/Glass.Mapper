@@ -1,21 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 
 using System;
 using System.Linq;
@@ -49,13 +31,14 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             loader.Load().Returns(new [] {configuration});
 
             var context = Context.Create(Substitute.For<IDependencyResolver>());
-            
+            context.Config = new Config();
+
             context.Load(loader);
 
             var args = new ConfigurationResolverArgs(context, new StubAbstractTypeCreationContext()
                 {
-                    RequestedType = type
-                }, type, null);
+                    Options =  new TestGetOptions { Type = type}
+                }, null);
 
             var task = new ConfigurationStandardResolverTask();
 
@@ -82,6 +65,11 @@ namespace Glass.Mapper.Tests.Pipelines.ConfigurationResolver.Tasks.StandardResol
             public override bool CacheEnabled
             {
                 get { return true; }
+            }
+
+            public override AbstractDataMappingContext CreateDataMappingContext(object obj)
+            {
+                throw new NotImplementedException();
             }
         }
         #endregion

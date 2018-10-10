@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SimpleInjector;
 using Sitecore.Data;
 using Sitecore.FakeDb;
+using Sitecore.Globalization;
 
 namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 {
@@ -31,12 +32,15 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
             {
                 SimpleInjectorTask.Container = new Container();
                 SimpleInjectorTask.Container.Register<StubServiceInterface, StubService>();
+                SimpleInjectorTask.Container.Register<StubClassWithService, StubClassWithService>();
+                SimpleInjectorTask.Container.Register<StubClassWithService2, StubClassWithService2>();
+
 
                 var path = "/sitecore/content/Target";
 
                 var resolver = Integration.Utilities.CreateStandardResolver() as DependencyResolver;
-                resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask());
-                resolver.Finalise();
+                resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask(new LazyLoadingHelper()));
+
 
                 var context = Context.Create(resolver);
                 var db = database.Database;
@@ -55,7 +59,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 
 
                 //Act
-                var result = service.GetItem<StubClassWithService>(path, true);
+                var result = service.GetItem<StubClassWithService>(path, x=>x.LazyEnabled());
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -71,7 +75,6 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 
 
                 var field2Class = stub.Field2;
-                Assert.AreEqual(field1Expected, field2Class.Field1);
                 Assert.IsNotNull(field2Class.Service);
                 Assert.IsTrue(field2Class.Service is StubService);
             }
@@ -100,11 +103,12 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
             {
                 SimpleInjectorTask.Container = new Container();
                 SimpleInjectorTask.Container.Register<StubServiceInterface, StubService>();
+                SimpleInjectorTask.Container.Register<StubClassWithService, StubClassWithService>();
+                SimpleInjectorTask.Container.Register<StubClassWithService2, StubClassWithService2>();
 
                 var path = "/sitecore/content/Target";
                 var resolver = Integration.Utilities.CreateStandardResolver() as DependencyResolver;
-                resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask());
-                resolver.Finalise();
+                resolver.ObjectConstructionFactory.Insert(0, () => new SimpleInjectorTask(new LazyLoadingHelper()));
 
                 var context = Context.Create(resolver);
 
@@ -123,7 +127,9 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
                 }
 
                 //Act
-                var result = service.GetItem<StubClassWithService>(path);
+                var result = service.GetItem<StubClassWithService>(path, x=>x.LazyDisabled());
+
+
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -139,7 +145,7 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
 
 
                 var field2Class = stub.Field2;
-                Assert.AreEqual(field1Expected, field2Class.Field1);
+                Assert.AreNotEqual(typeof(StubClassWithService), field2Class.GetType());
                 Assert.IsNotNull(field2Class.Service);
                 Assert.IsTrue(field2Class.Service is StubService);
             }
@@ -168,8 +174,19 @@ namespace Glass.Mapper.Sc.FakeDb.ThirdParty.SimpleInjector
             }
 
             public virtual string Field1 { get; set; }
-            public virtual StubClassWithService Field2 { get; set; }
+            public virtual StubClassWithService2 Field2 { get; set; }
         }
+
+        public class StubClassWithService2
+        {
+            public StubServiceInterface Service { get; set; }
+
+            public StubClassWithService2(StubServiceInterface service)
+            {
+                Service = service;
+            }
+        }
+
         #endregion
-    }
+        }
 }

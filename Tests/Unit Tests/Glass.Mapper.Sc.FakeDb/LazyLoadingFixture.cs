@@ -58,13 +58,13 @@ namespace Glass.Mapper.Sc.FakeDb
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var parentConfig = fluent.Add<Stub2>();
                 var lazy1Config = fluent.Add<Stub1>();
-                lazy1Config.Parent(x => x.Stub2).IsNotLazy();
+                lazy1Config.Parent(x => x.Stub2);
                 context.Load(fluent);
 
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                var target = service.GetItem<Stub1>("/sitecore/content/parent/target");
+                var target = service.GetItem<Stub1>("/sitecore/content/parent/target",x=>x.LazyDisabled());
                 var parent = target.Stub2;
 
                 //Assert
@@ -91,7 +91,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var stub1Config = fluent.Add<Stub1>();
-                stub1Config.Children(x => x.Stub3s).IsNotLazy();
+                stub1Config.Children(x => x.Stub3s);
                 var stub2Config = fluent.Add<Stub2>();
                 var stub3Config = fluent.Add<Stub3>();
                 stub3Config.Parent(x => x.Stub2);
@@ -108,7 +108,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 foreach (var child in target.Stub3s)
                 {
                     Assert.IsTrue(child is Stub3);
-                    Assert.AreEqual(typeof(Stub3), child.GetType());
+                    Assert.AreNotEqual(typeof(Stub3), child.GetType());
                     Assert.IsTrue(child.Stub2 is Stub2);
                     Assert.AreNotEqual(typeof(Stub2), child.Stub2.GetType());
                 }
@@ -136,14 +136,13 @@ namespace Glass.Mapper.Sc.FakeDb
                 var stub2Config = fluent.Add<Stub2>();
                 var stub1Config = fluent.Add<Stub1>();
                 stub1Config.Parent(x => x.Stub2);
-                stub1Config.Cachable();
 
                 context.Load(fluent);
 
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                var target = service.GetItem<Stub1>("/sitecore/content/parent/target");
+                var target = service.GetItem<Stub1>("/sitecore/content/parent/target",x=>x.CacheEnabled());
                 var parent = target.Stub2;
 
                 //Assert
@@ -168,14 +167,13 @@ namespace Glass.Mapper.Sc.FakeDb
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var stub2Config = fluent.Add<Stub2>();
                 var stub1Config = fluent.Add<Stub1>();
-                stub1Config.Parent(x => x.Stub2).IsNotLazy();
-                stub1Config.Cachable();
+                stub1Config.Parent(x => x.Stub2);
                 context.Load(fluent);
 
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                var target = service.GetItem<Stub1>("/sitecore/content/parent/target");
+                var target = service.GetItem<Stub1>("/sitecore/content/parent/target",x=>x.CacheEnabled());
                 var parent = target.Stub2;
 
                 //Assert
@@ -202,8 +200,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var stub1Config = fluent.Add<Stub1>();
-                stub1Config.Children(x => x.Stub3s).IsNotLazy();
-                stub1Config.Cachable();
+                stub1Config.Children(x => x.Stub3s);
                 var stub2Config = fluent.Add<Stub2>();
                 var stub3Config = fluent.Add<Stub3>();
                 stub3Config.Parent(x => x.Stub2);
@@ -214,7 +211,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database, context);
 
                 //Act
-                var target = service.GetItem<Stub1>("/sitecore/content/parent/target");
+                var target = service.GetItem<Stub1>("/sitecore/content/parent/target",x=>x.CacheEnabled());
 
                 //Assert
                 foreach (var child in target.Stub3s)
@@ -245,8 +242,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var stub4Config = fluent.Add<Stub4>();
-                stub4Config.Parent(x => x.Stub5).IsNotLazy();
-                stub4Config.Cachable();
+                stub4Config.Parent(x => x.Stub5);
                 var stub5Config = fluent.Add<Stub5>();
                 stub5Config.Children(x => x.Stub4s);
 
@@ -257,14 +253,14 @@ namespace Glass.Mapper.Sc.FakeDb
                 //Act
                 Exception ex = Assert.Throws<MapperStackException>(() =>
                 {
-                    var target = service.GetItem<Stub4>("/sitecore/content/parent/target");
+                    var target = service.GetItem<Stub4>("/sitecore/content/parent/target",x=>x.CacheEnabled());
                 });
 
                 while (ex.InnerException != null)
                 {
                     ex = ex.InnerException;
                 }
-                Assert.IsTrue(ex.Message.StartsWith(Constants.Errors.ErrorLazyLoop.Replace("{0}","")));
+                Assert.IsTrue(ex.Message.StartsWith(Constants.Errors.LazyLoop.Replace("{0}","")));
                 //Assert
 
             }

@@ -1,18 +1,14 @@
 ﻿using Glass.Mapper.Caching;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Diagnostics;
 
 namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
     public class CacheCheckTask : AbstractObjectConstructionTask
     {
-        protected ICacheManager CacheManager
-        {
-            get; private set;
-        }
+        protected ICacheManager CacheManager { get; private set; }
 
-        protected ICacheKeyGenerator CacheKeyGenerator
-        {
-            get; private set;
-        }
+        protected ICacheKeyGenerator CacheKeyGenerator { get; private set; }
 
         public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
         {
@@ -23,11 +19,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 
         public override void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result == null 
-                && args.Configuration.Cachable 
-                && DisableCache.Current == CacheSetting.Enabled
+            if (args.Result == null
+                && args.AbstractTypeCreationContext.Options.Cache.IsEnabled()
+                && DisableCache.Current != Cache.Disabled
                 && args.AbstractTypeCreationContext.CacheEnabled
-                )
+            )
             {
                 var key = CacheKeyGenerator.Generate(args);
 
@@ -35,35 +31,19 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;
-                    args.Counters.CachedModels++;
+                    ModelCounter.Instance.CachedModels++;
                 }
-
-                DisableLazyLoading disableLazyLoading = null;
-
-                if (args.Service.GlassContext.Config.EnableLazyLoadingForCachableModels == false)
-                {
-                    disableLazyLoading = new DisableLazyLoading();
-                }
-
-                try
+                else
                 {
                     base.Execute(args);
-                    CacheManager.AddOrUpdate(key, args.Result);
                 }
-                finally
-                {
-                    if (disableLazyLoading != null)
-                    {
-                        disableLazyLoading.Dispose();
-                    }
-                }
+
+                CacheManager.AddOrUpdate(key, args.Result);
             }
-            else 
+            else
             {
                 base.Execute(args);
             }
-
-
         }
     }
 }

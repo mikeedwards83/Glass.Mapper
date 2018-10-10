@@ -1,20 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
 
 
 using System;
@@ -72,6 +56,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var config = new SitecoreIdConfiguration();
                 var property = typeof(Stub).GetProperty("GuidId");
                 var item = database.GetItem("/sitecore/content/target");
+                var options = new GetItemOptionsParams();
 
                 Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
 
@@ -79,7 +64,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
-                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var dataContext = new SitecoreDataMappingContext(null, item, null, options);
                 var expected = item.ID.Guid;
 
                 //Act
@@ -104,6 +89,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var mapper = new SitecoreIdMapper();
                 var config = new SitecoreIdConfiguration();
                 var property = typeof(Stub).GetProperty("IDId");
+                var options = new GetItemOptionsParams();
 
                 config.PropertyInfo = property;
 
@@ -112,7 +98,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var item = database.GetItem("/sitecore/content/Target");
 
                 Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-                var dataContext = new SitecoreDataMappingContext(null, item, null);
+                var dataContext = new SitecoreDataMappingContext(null, item, null, options);
                 var expected = item.ID;
 
                 //Act

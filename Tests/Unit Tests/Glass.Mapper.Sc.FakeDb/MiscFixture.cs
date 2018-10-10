@@ -1,20 +1,4 @@
-﻿/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
+﻿
 
 using System;
 using System.Collections.Generic;
@@ -68,20 +52,18 @@ namespace Glass.Mapper.Sc.FakeDb
                 var basic = fluentLoader.Add<IBase>();
                 basic.TemplateId(ID.NewID);
                 basic.EnforceTemplate();
-                basic.Cachable();
 
                 var basicPage = fluentLoader.Add<IBasePage>();
                 basicPage.TemplateId(templateId);
                 basicPage.EnforceTemplate();
-                basicPage.Cachable();
 
                 context.Load(fluentLoader);
 
                 var db = database.Database;
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
-                var instance1 = scContext.GetItem<IBase>("/sitecore/content/target");
-                var instance2 = scContext.GetItem<IBasePage>("/sitecore/content/target");
+                var instance1 = scContext.GetItem<IBase>("/sitecore/content/target",x=>x.CacheEnabled());
+                var instance2 = scContext.GetItem<IBasePage>("/sitecore/content/target",x=>x.CacheEnabled());
 
                 //Act
                 Assert.IsNull(instance1);
@@ -120,7 +102,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(IBasePage)));
 
                 var db = database.Database;
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
                 var glassHtml = GetGlassHtml(scContext);
                 var instance = scContext.GetItem<IBasePage>("/sitecore");
@@ -165,7 +147,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var scContext = new SitecoreService(db, context);
 
                 //Act
-                var instance = scContext.GetItem<IBase>("/sitecore", isLazy:false);
+                var instance = scContext.GetItem<IBase>("/sitecore",x=>x.LazyDisabled());
 
                 //Assert
                 Assert.IsNotNull(stub);
@@ -258,8 +240,8 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
                 //Act
-                var instance1 = scContext.GetItem<ParentNotLazy<Child1>>(path);
-                var instance2 = scContext.GetItem<ParentNotLazy<Child1>>(path);
+                var instance1 = scContext.GetItem<ParentNotLazy<Child1>>(path,x=>x.LazyDisabled());
+                var instance2 = scContext.GetItem<ParentNotLazy<Child1>>(path, x => x.LazyDisabled());
 
 
                 //Assert
@@ -275,7 +257,6 @@ namespace Glass.Mapper.Sc.FakeDb
 
         public class ParentNotLazy<T>
         {
-            [SitecoreChildren(IsLazy = false)]
             public virtual IEnumerable<T> Children { get; set; }
         }
 
@@ -314,7 +295,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var context = Context.Create(Utilities.CreateStandardResolver());
 
                 var db = database.Database;
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
                 string path = "/sitecore/content/Target";
 
                 var expected = "some expected value";
@@ -332,7 +313,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 using (new SecurityDisabler())
                 {
-                    scContext.Save(instance);
+                    scContext.SaveItem(instance);
                 }
 
                 //Assert
@@ -388,7 +369,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     item[fieldName1] = expected;
                 }
 
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
                 var glassHtml = GetGlassHtml(scContext);
 
@@ -432,12 +413,11 @@ namespace Glass.Mapper.Sc.FakeDb
                 string imageValue =
                     "<image mediaid=\"{C2CE5623-1E36-4535-9A01-669E1541DDAF}\" mediapath=\"/Tests/Dayonta\" src=\"~/media/C2CE56231E3645359A01669E1541DDAF.ashx\" />";
 
-                var resolver = Utilities.CreateStandardResolver(finalise: false);
+                var resolver = Utilities.CreateStandardResolver();
                 resolver.DataMapperResolverFactory.Add(() => new AbstractDataMapperFieldsWithSpace());
-                resolver.Finalise();
-
                 var context = Context.Create(resolver);
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(FieldWithSpaceAutoMap)));
+                ;  
 
                 var db = Factory.GetDatabase("master");
 
@@ -450,7 +430,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     item["Image Space"] = imageValue;
                 }
 
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
                 var glassHtml = new GlassHtml(scContext);
 
@@ -505,7 +485,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var typeConfig = fluentConfig.Add<LazyLoadParent>();
                 typeConfig.AutoMap();
-                typeConfig.Children(x => x.Children).IsNotLazy();
+                typeConfig.Children(x => x.Children);
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(fluentConfig);
@@ -514,7 +494,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 //Act
                 var result =
-                    service.GetItem<LazyLoadParent>("/sitecore/content/Target");
+                    service.GetItem<LazyLoadParent>("/sitecore/content/Target", x => x.LazyDisabled());
                 service.Dispose();
 
                 //Assert
@@ -564,12 +544,12 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 //Act
                 var result =
-                    service.GetItem<LazyLoadParent>("/sitecore/content/Tests/DataMappers/SitecoreChildrenMapper/Parent");
+                    service.GetItem<LazyLoadParent>("/sitecore/content/Target");
                 service.Dispose();
 
                 //Assert
 
-                Assert.Throws<NullReferenceException>(() =>
+                Assert.Throws<MapperException>(() =>
                 {
                     Assert.AreEqual(3, result.Children.Count());
 
@@ -627,7 +607,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     item["Title"] = expected;
                 }
 
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
 
                 //Act
@@ -682,7 +662,7 @@ namespace Glass.Mapper.Sc.FakeDb
                     item["Title"] = expected;
                 }
 
-                var scContext = new SitecoreContext(db);
+                var scContext = new SitecoreService(db);
 
 
                 //Act
@@ -818,9 +798,9 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        private IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext)
+        private IGlassHtml GetGlassHtml(ISitecoreService sitecoreService)
         {
-            return sitecoreContext.GlassHtml;
+            return new GlassHtml(sitecoreService);
         }
 
         #region Stubs
@@ -840,13 +820,13 @@ namespace Glass.Mapper.Sc.FakeDb
 
         public class ItemWithItemProperties
         {
-            public Item Parent { get; set; }
-            public IEnumerable<Item> Children { get; set; }
+            public virtual Item Parent { get; set; }
+            public virtual IEnumerable<Item> Children { get; set; }
         }
 
         public class ItemWithItemField
         {
-            public Item Field { get; set; }
+            public virtual Item Field { get; set; }
         }
 
 
@@ -861,7 +841,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public interface IBasePage : IBase
         {
             [SitecoreField]
-            string Title { get; set; }
+            string  Title { get; set; }
         }
 
         [SitecoreType]

@@ -1,21 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,10 +13,7 @@ namespace Glass.Mapper.Sc
     /// <typeparam name="T"></typeparam>
     public class LazyItemEnumerable<T> : IEnumerable<T> where T:class 
     {
-        private readonly Func<IEnumerable<Item>> _getItems;
-        private readonly Type _type;
-        private readonly bool _isLazy;
-        private readonly bool _inferType;
+        private readonly GetItemsOptions _options;
         private ISitecoreService _service;
         private Lazy<IList<T>> _lazyItemList;
 
@@ -45,22 +24,19 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="service">The service.</param>
+        /// <param name="versionHandler"></param>
         public LazyItemEnumerable(
-            Func<IEnumerable<Item>> getItems,
-            bool isLazy,
-            bool inferType,
-            ISitecoreService service
+            GetItemsOptions options,
+            ISitecoreService service,
+            LazyLoadingHelper lazyLoadingHelper
             )
         {
-            _getItems = getItems;
-            _type = typeof(T);
-            _isLazy = service.Config.UseProxiesForLazyEnumerables &&  isLazy;
-            _inferType = inferType;
+            _options = options;
             _service = service;
-            
+
             _lazyItemList = new Lazy<IList<T>>(() =>ProcessItems());
 
-            if (isLazy == false || DisableLazyLoading.Current == LazyLoadSetting.Disabled)
+            if (!lazyLoadingHelper.IsEnabled(options))
             {
                 // Force the loading of the items into the list so this occurs in the current security scope.
                 var dummy = _lazyItemList.Value;
@@ -78,7 +54,9 @@ namespace Glass.Mapper.Sc
                 throw new NullReferenceException("SitecoreService has not been set");
             }
 
-            var items = _getItems();
+            var items = _options.GetItems(_service.Database);
+
+
 
             if (items == null)
             {
@@ -89,14 +67,13 @@ namespace Glass.Mapper.Sc
 
             var results = new List<T>();
 
-           
+            var options = new GetItemByItemOptions();
+            options.Copy(_options);
+
             foreach (Item child in items)
             {
-                var obj = _service.CreateType(
-                    _type,
-                    child,
-                    _isLazy,
-                    _inferType, null) as T;
+                options.Item = child;
+                var obj = _service.GetItem(options) as T;
 
                 if (obj == null)
                     continue;

@@ -1,20 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
 
 
 using System;
@@ -188,16 +172,65 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var source = database.GetItem("/sitecore/content/Target");
                 var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert
                 Assert.AreEqual(0, results.Count());
             }
         }
+
+        [Test]
+        public void MapToProperty_RelativeQueryEnforceTemplate_ReturnsNoResults()
+        {
+            //Assign
+
+            var templateId = ID.NewID;
+            var childId = ID.NewID;
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target")
+                {
+                    new Sitecore.FakeDb.DbItem("Child1", childId , templateId),
+                    new Sitecore.FakeDb.DbItem("Child2")
+                }
+            })
+            {
+
+                var config = new SitecoreQueryConfiguration();
+                config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
+
+                config.Query = "../Target/*";
+                config.IsRelative = true;
+                config.TemplateId = templateId;
+                config.EnforceTemplate = SitecoreEnforceTemplate.TemplateAndBase;
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
+
+                var mapper = new SitecoreQueryMapper(null);
+                mapper.Setup(new DataMapperResolverArgs(context, config));
+
+                var source = database.GetItem("/sitecore/content/Target");
+                var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
+
+                //Act
+                var results =
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
+                        IEnumerable<StubMapped>;
+
+                //Assert
+                Assert.AreEqual(1, results.Count());
+            }
+        }
+
+
 
         [Test]
         public void MapToProperty_RelativeQuerySelf_ReturnsSelf()
@@ -228,10 +261,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var source = database.GetItem("/sitecore/content/Target");
                 var service = new SitecoreService(database.Database, context);
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var result =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as StubMapped;
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as StubMapped;
 
                 //Assert
                 Assert.AreEqual(source.ID.Guid, result.Id);
@@ -268,10 +302,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
                 var result2 = database.GetItem("/sitecore/content/Target/Child2");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert
@@ -311,10 +346,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
                 var result2 = database.GetItem("/sitecore/content/Target/Child2");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert
@@ -352,10 +388,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var service = new SitecoreService(database.Database, context);
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var result =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as StubMapped;
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as StubMapped;
 
                 //Assert
                 Assert.AreEqual(result1.ID.Guid, result.Id);
@@ -390,10 +427,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var service = new SitecoreService(database.Database, context);
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var result =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as StubMapped;
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as StubMapped;
 
                 //Assert
                 Assert.AreEqual(result1.ID.Guid, result.Id);
@@ -418,7 +456,6 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
                 config.Query = "../Target/*";
                 config.IsRelative = true;
-                config.UseQueryContext = true;
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
@@ -431,10 +468,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
                 var result2 = database.GetItem("/sitecore/content/Target/Child2");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert
@@ -462,7 +500,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 config.Query = "/sitecore/content/Target/*";
                 config.IsRelative = false;
-                config.UseQueryContext = true;
+                
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
@@ -475,10 +513,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var result1 = database.GetItem("/sitecore/content/Target/Child1");
                 var result2 = database.GetItem("/sitecore/content/Target/Child2");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert
@@ -497,6 +536,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 new Sitecore.FakeDb.DbItem("Target")
                 {
+                    },
+                new Sitecore.FakeDb.DbItem("Results")
+                {
                     new Sitecore.FakeDb.DbItem("Child1"),
                     new Sitecore.FakeDb.DbItem("Child2")
                 }
@@ -506,7 +548,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
                 config.Query = "{path}/../Results/*";
                 config.IsRelative = false;
-                config.UseQueryContext = true;
+               
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
@@ -517,12 +559,13 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var source = database.GetItem("/sitecore/content/Target");
                 var service = new SitecoreService(database.Database, context);
 
-                var result1 = database.GetItem("/sitecore/content/Target/Child1");
-                var result2 = database.GetItem("/sitecore/content/Target/Child2");
+                var result1 = database.GetItem("/sitecore/content/Results/Child1");
+                var result2 = database.GetItem("/sitecore/content/Results/Child2");
+                var options = new GetItemOptionsParams();
 
                 //Act
                 var results =
-                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service)) as
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
                         IEnumerable<StubMapped>;
 
                 //Assert

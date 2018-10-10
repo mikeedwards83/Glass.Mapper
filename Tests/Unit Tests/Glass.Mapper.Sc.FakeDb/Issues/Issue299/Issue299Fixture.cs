@@ -44,7 +44,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue299
                 var service = new SitecoreService(db.Database, context);
 
                 //Act
-                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target");
+                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target", x => x.LazyDisabled());
 
                 Assert.AreEqual(2, result.Children.Count());
 
@@ -82,7 +82,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue299
                 var service = new SitecoreService(db.Database, context);
 
                 //Act
-                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target");
+                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target", x=>x.LazyDisabled());
 
                 service.Dispose();
 
@@ -119,7 +119,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue299
                 var service = new SitecoreService(db.Database, context);
 
                 //Act
-                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target");
+                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target", x => x.LazyDisabled());
 
                 Assert.AreEqual(2, result.Children.Count());
 
@@ -158,7 +158,7 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue299
                 var service = new SitecoreService(db.Database, context);
 
                 //Act
-                var result = service.GetItem<StubLazy>("/sitecore/content/Target");
+                var result = service.GetItem<StubNotLazy>("/sitecore/content/Target");
 
                 service.Dispose();
 
@@ -175,7 +175,6 @@ namespace Glass.Mapper.Sc.FakeDb.Issues.Issue299
 
         public class StubNotLazy
         {
-            [SitecoreChildren(IsLazy =  false)]
             public virtual IEnumerable<StubChild> Children { get; set; }
             public virtual Guid Id { get; set; }
         }

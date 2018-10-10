@@ -1,27 +1,8 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 
 using System;
 using System.Linq.Expressions;
-
-namespace Glass.Mapper.Sc.Configuration.Fluent
+using Sitecore.Data;
+namespace Glass.Mapper.Sc.Configuration.Fluent
 {
     /// <summary>
     /// Indicates that a query should be execute to load data into the property.
@@ -37,17 +18,9 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         /// <param name="ex">The ex.</param>
         public SitecoreQuery(Expression<Func<T, object>> ex):base(ex)
         {
-            Configuration.IsLazy = true;
         }
 
-        /// <summary>
-        /// Indicates that the results should be loaded lazily
-        /// </summary>
-        public SitecoreQuery<T> IsNotLazy()
-        {
-            Configuration.IsLazy = false;
-            return this;
-        }
+     
         /// <summary>
         /// Indicates the type should be inferred from the item template
         /// </summary>
@@ -57,15 +30,7 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
             Configuration.InferType = true;
             return this;
         }
-        /// <summary>
-        /// Use the Sitecore.Data.Query.QueryContext when querying for data
-        /// </summary>
-        /// <returns>SitecoreQuery{`0}.</returns>
-        public SitecoreQuery<T> UseQueryContext()
-        {
-            Configuration.UseQueryContext = true;
-            return this;
-        }
+       
         /// <summary>
         /// Indicates that the field is relative to the current item.
         /// </summary>
@@ -86,7 +51,19 @@ namespace Glass.Mapper.Sc.Configuration.Fluent
         }
 
 
-      
+        /// <summary>
+        /// Enforce a template when mapping the property.
+        /// </summary>
+        /// <param name="templateId">The ID of the template that the item must use.</param>
+        /// <param name="enforceTemplate">The type of template check to perform.</param>
+        /// <returns></returns>
+        public SitecoreQuery<T> TemplateId(ID templateId, SitecoreEnforceTemplate enforceTemplate)
+        {
+            Configuration.TemplateId = templateId;
+            Configuration.EnforceTemplate = enforceTemplate;
+            return this;
+        }
+
 
     }
 }

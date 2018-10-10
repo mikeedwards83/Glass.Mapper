@@ -20,7 +20,7 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
         [SetUp]
         public void Setup()
         {
-            _task = new CreateInterfaceTask();
+            _task = new CreateInterfaceTask(new LazyLoadingHelper());
         }
 
         [Test]
@@ -35,12 +35,16 @@ namespace Glass.Mapper.Tests.Pipelines.ObjectConstruction.Tasks.CreateInterface
             Context context = Context.Create(Substitute.For<IDependencyResolver>());
 
             AbstractTypeCreationContext abstractTypeCreationContext = Substitute.For<AbstractTypeCreationContext>();
-            abstractTypeCreationContext.RequestedType = typeof(IStubInterface);
+            abstractTypeCreationContext.Options = new GetOptions()
+            {
+                Type = typeof(IStubInterface)
+
+            };
 
             var configuration = Substitute.For<AbstractTypeConfiguration>();
             configuration.Type = type;
 
-            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service, new ModelCounter());
+            ObjectConstructionArgs args = new ObjectConstructionArgs(context, abstractTypeCreationContext, configuration, service);
 
             //Act
             _task.Execute(args);

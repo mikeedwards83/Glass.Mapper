@@ -4,10 +4,13 @@ using Glass.Mapper.Pipelines.DataMapperResolver.Tasks;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class DataMapperTaskConfigFactory : AbstractFinalisedConfigFactory<AbstractDataMapperResolverTask>
+    public class DataMapperTaskConfigFactory : AbstractConfigFactory<AbstractDataMapperResolverTask>
     {
-        public DataMapperTaskConfigFactory()
+        protected IDependencyResolver DependencyResolver { get; }
+
+        public DataMapperTaskConfigFactory(IDependencyResolver dependencyResolver)
         {
+            DependencyResolver = dependencyResolver;
             Init();
         }
 

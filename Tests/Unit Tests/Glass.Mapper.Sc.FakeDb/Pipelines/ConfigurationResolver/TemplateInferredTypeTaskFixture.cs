@@ -19,7 +19,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
         public void Execute_ResultNotNull_Returns()
         {
             //Arrange
-            var args = new ConfigurationResolverArgs(null, null, null, null);
+            var args = new ConfigurationResolverArgs(null, null, null);
             var task = new TemplateInferredTypeTask();
             var expected = new SitecoreTypeConfiguration();
             args.Result = expected;
@@ -35,9 +35,13 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
         public void Execute_NotInferred_ResultNull()
         {
             //Arrange
-            var args = new ConfigurationResolverArgs(null, new SitecoreTypeCreationContext(), null, null);
+            var args = new ConfigurationResolverArgs(null, new SitecoreTypeCreationContext(), null);
             var task = new TemplateInferredTypeTask();
-            args.AbstractTypeCreationContext.InferType = false;
+            args.AbstractTypeCreationContext.Options = new GetItemOptions
+            {
+                Type = typeof(IBase),
+                InferType = false
+            };
 
             //Act
             task.Execute(args);
@@ -64,12 +68,15 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
 
 
                 var typeContext = new SitecoreTypeCreationContext();
-                var args = new ConfigurationResolverArgs(context, typeContext, null, null);
+                var args = new ConfigurationResolverArgs(context, typeContext, null);
                 var task = new TemplateInferredTypeTask();
-                typeContext.InferType = true;
+
+                typeContext.Options = new GetItemOptions
+                {
+                    Type = typeof(IBase),
+                    InferType = true
+                };
                 typeContext.Item = database.GetItem(path);
-                typeContext.RequestedType = typeof(IBase);
-                args.RequestedType = typeof(IBase);
 
 
 
@@ -101,16 +108,16 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
 
 
                 var typeContext = new SitecoreTypeCreationContext();
-                var args1 = new ConfigurationResolverArgs(context, typeContext, null, null);
-                var args2 = new ConfigurationResolverArgs(context, typeContext, null, null);
+                var args1 = new ConfigurationResolverArgs(context, typeContext, null);
+                var args2 = new ConfigurationResolverArgs(context, typeContext, null);
                 var task = new TemplateInferredTypeTask();
-                typeContext.InferType = true;
+                typeContext.Options = new GetItemOptions
+                {
+                    Type = typeof(IBase),
+                    InferType = true
+                };
+
                 typeContext.Item = database.GetItem(path);
-                typeContext.RequestedType = typeof(IBase);
-                args1.RequestedType = typeof(IBase);
-                args2.RequestedType = typeof(IBase);
-
-
 
                 //Act
                 task.Execute(args1);

@@ -1,20 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
 
 using System;
 using System.Collections.Specialized;
@@ -36,7 +20,7 @@ namespace Glass.Mapper.Sc
         /// <value>
         /// The sitecore context.
         /// </value>
-        ISitecoreContext SitecoreContext { get; }
+        ISitecoreService SitecoreService { get; }
 
         /// <summary>
         /// Returns an Sitecore Edit Frame
@@ -126,7 +110,7 @@ namespace Glass.Mapper.Sc
         string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
-                                      object attributes = null, bool isEditable = false, bool alwaysRender = false);
+                                      object attributes = null, bool isEditable = false);
 
         /// <summary>
         /// Render HTML for a link
@@ -135,7 +119,7 @@ namespace Glass.Mapper.Sc
         /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
-                             bool isEditable = false, string contents = null, bool alwaysRender = false);
+                             bool isEditable = false, string contents = null);
 
 
         /// <summary>
@@ -178,11 +162,7 @@ namespace Glass.Mapper.Sc
         /// <returns></returns>
         T GetRenderingParameters<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class;
 
-
-#if (SC81 || SC80 || SC75 || SC82  || SC90)
         string ProtectMediaUrl(string url);
-#endif
-
 
         /// <summary>
         /// Allows you to get a compiled function form the lambda expression. Typically used with extension methods.

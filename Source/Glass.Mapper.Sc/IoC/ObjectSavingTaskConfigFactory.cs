@@ -4,10 +4,13 @@ using Glass.Mapper.Pipelines.ObjectSaving.Tasks;
 
 namespace Glass.Mapper.Sc.IoC
 {
-    public class ObjectSavingTaskConfigFactory : AbstractFinalisedConfigFactory<AbstractObjectSavingTask>
+    public class ObjectSavingTaskConfigFactory : AbstractConfigFactory<AbstractObjectSavingTask>
     {
-        public ObjectSavingTaskConfigFactory()
+        protected IDependencyResolver DependencyResolver { get; }
+
+        public ObjectSavingTaskConfigFactory(IDependencyResolver dependencyResolver)
         {
+            DependencyResolver = dependencyResolver;
             Init();
         }
         protected void Init()

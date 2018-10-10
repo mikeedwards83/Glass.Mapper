@@ -1,26 +1,11 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
 
 using System;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.IoC;
+using Glass.Mapper.Sc.Web.Mvc;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;
@@ -47,21 +32,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
         /// The model field
         /// </summary>
         public const string ModelField = "Model";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetModel"/> class.
-        /// </summary>
-        public GetModel() : this(IoC.SitecoreContextFactory.Default)
-        {
-        }
-
-        public GetModel(ISitecoreContextFactory sitecoreContextFactory)
-        {
-            SitecoreContextFactory = sitecoreContextFactory;
-        }
-
-        protected virtual ISitecoreContextFactory SitecoreContextFactory { get; private set; }
-
 
         /// <summary>
         /// Processes the specified args.
@@ -202,31 +172,39 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             if (type == null || renderingModelType.IsAssignableFrom(type))
                 return null;
-           
-            ISitecoreContext scContext = SitecoreContextFactory.GetSitecoreContext();
 
+            IMvcContext mvcContext = new MvcContext(new SitecoreService(Sitecore.Context.Database));
 
             //this is really aggressive
-            if (!scContext.GlassContext.TypeConfigurations.ContainsKey(type))
+            if (!mvcContext.SitecoreService.GlassContext.TypeConfigurations.ContainsKey(type))
             {
                 //if the config is null then it is probably an ondemand mapping so we have to load the ondemand part
 
                 IConfigurationLoader loader =
                     new OnDemandLoader<SitecoreTypeConfiguration>(type);
-                scContext.GlassContext.Load(loader);
+                mvcContext.SitecoreService.GlassContext.Load(loader);
 
             }
 
-            if (renderingItem.DataSource.IsNotNullOrEmpty())
+            if (renderingItem.DataSource.HasValue())
             {
-                var item = scContext.Database.GetItem(renderingItem.DataSource);
-                return scContext.CreateType(type, item, false, false, null);
+                var getOptions = new GetItemByPathOptions()
+                {
+                    Path = renderingItem.DataSource,
+                    Type = type
+                };
+
+                return mvcContext.SitecoreService.GetItem(getOptions);
             }
 
             if (renderingItem.RenderingItem.DataSource.HasValue())
             {
-                var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
-                return scContext.CreateType(type, item, false, false, null);
+                var getOptions = new GetItemByPathOptions()
+                {
+                    Path = renderingItem.RenderingItem.DataSource,
+                    Type = type
+                };
+                return mvcContext.SitecoreService.GetItem(getOptions);
             }
 
             /**
@@ -235,11 +213,24 @@ namespace Glass.Mapper.Sc.Pipelines.Response
              */
             if (renderingItem.Item != null)
             {
-                return scContext.CreateType(type, renderingItem.Item, false, false, null);
+                var getOptions = new GetItemByItemOptions()
+                {
+                    Item = renderingItem.Item,
+                    Type = type
+                };
+                return mvcContext.SitecoreService.GetItem(getOptions);
             }
+            else
+            {
 
-            return scContext.GetCurrentItem(type);
-
+                //TODO? shoudl we use the GetCurrentitem
+                var getOptions = new GetItemByItemOptions()
+                {
+                    Item = mvcContext.ContextItem,
+                    Type = type
+                };
+                return mvcContext.SitecoreService.GetItem(getOptions);
+            }
         }
     }
 }

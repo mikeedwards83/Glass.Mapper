@@ -13,7 +13,7 @@ namespace Glass.Mapper.Diagnostics
         public int _requestedCountBefore = 0;
         public int _cacheCount = 0;
         public bool _enabled;
-        private ModelCounter _counter;
+        public ModelCounter Counter { get; private set; }
 
         public int RequestCount { get; private set; }
         public int CacheCount { get; private set; }
@@ -30,15 +30,15 @@ namespace Glass.Mapper.Diagnostics
             _identifier = identifier;
             _threshold = threshold;
             _enabled = context.Config.Debug.Enabled;
-            _counter = context.DependencyResolver.GetModelCounter();
+            Counter = ModelCounter.Instance;
 
             RequestCount = -1;
             CacheCount = -1;
 
             if (_enabled)
             {
-                _requestedCountBefore = _counter.ModelsRequested;
-                _cacheCount = _counter.CachedModels;
+                _requestedCountBefore = Counter.ModelsRequested;
+                _cacheCount = Counter.CachedModels;
             }
         }
 
@@ -52,8 +52,8 @@ namespace Glass.Mapper.Diagnostics
         {
             if (_enabled)
             {
-                int endRequestCount = _counter.ModelsRequested;
-                int endCacheCount = _counter.CachedModels;
+                int endRequestCount = Counter.ModelsRequested;
+                int endCacheCount = Counter.CachedModels;
 
                 int diffRequest = endRequestCount - _requestedCountBefore;
                 int diffCache = endCacheCount - _cacheCount;

@@ -1,23 +1,4 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
-using System.Linq;
+﻿using System.Linq;
 using System.Xml;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -236,13 +217,13 @@ namespace Glass.Mapper.Sc.FakeDb
                 Sitecore.Context.Site = new SiteContext(
                     new SiteInfo(
                         doc.FirstChild
-                        )
-                    );
+                    )
+                );
                 //Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("GetHomeItem");
 
                 using (new SiteContextSwitcher(new SiteContext(new SiteInfo(
                     doc.FirstChild
-                    ))))
+                ))))
                 {
                     var scContext = new SitecoreContext();
 
@@ -380,10 +361,10 @@ namespace Glass.Mapper.Sc.FakeDb
         [SitecoreType]
         public class StubClass
         {
-            public string Param4 { get; set; }
-            public string Param3 { get; set; }
-            public string Param2 { get; set; }
-            public string Param1 { get; set; }
+            public virtual string Param4 { get; set; }
+            public virtual string Param3 { get; set; }
+            public virtual string Param2 { get; set; }
+            public virtual string Param1 { get; set; }
 
             public StubClass()
             {
@@ -414,13 +395,12 @@ namespace Glass.Mapper.Sc.FakeDb
             }
 
             [SitecoreId]
-            public ID Id { get; set; }
+            public virtual ID Id { get; set; }
         }
 
         #endregion
     }
 }
-
 
 
 

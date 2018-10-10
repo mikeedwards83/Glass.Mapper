@@ -1,21 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -80,6 +62,8 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreIgnoreMapper();
                 var config = new SitecoreIgnoreMapper();
+                var options= new GetItemOptionsParams();
+
 
                 using (new ItemEditing(item, true))
                 {
@@ -88,7 +72,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var stub = new StubClass();
                 stub.Field = propertyValue;
-                var context = new SitecoreDataMappingContext(stub, item, null);
+                var context = new SitecoreDataMappingContext(stub, item, null, options);
 
                 //Act
                 mapper.MapCmsToProperty(context);
@@ -181,6 +165,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreIgnoreMapper();
                 var config = new SitecoreIgnoreMapper();
+                var options = new GetItemOptionsParams();
 
                 using (new ItemEditing(item, true))
                 {
@@ -189,7 +174,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var stub = new StubClass();
                 stub.Field = propertyValue;
-                var context = new SitecoreDataMappingContext(stub, item, null);
+                var context = new SitecoreDataMappingContext(stub, item, null, options);
 
                 //Act
                 mapper.MapPropertyToCms(context);
@@ -213,7 +198,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         [SitecoreType(AutoMap = true)]
         public class StubClassNotIgnored
         {
-            public string Field { get; set; }
+            public virtual string Field { get; set; }
         }
 
         [SitecoreType(AutoMap = true)]

@@ -1,21 +1,3 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/
-//-CRE-
-
 using System;
 using System.Collections.Generic;
 
@@ -71,18 +53,7 @@ namespace Glass.Mapper
             return string.IsNullOrWhiteSpace(target);
         }
 
-        /// <summary>
-        /// Indicates whether the specified string is not null and isn't System.String.Empty
-        /// string.
-        /// </summary>
-        /// <param name="target">The string to test.</param>
-        /// <returns>flase if the value parameter is null or an empty string (""); otherwise, true.</returns>
-        [Obsolete("Use HasValue")]
-        public static bool IsNotNullOrEmpty(this string target)
-        {
-            return HasValue(target);
-        }
-
+       
         /// <summary>
         /// Indicates whether the specified string has a value, i.e. Not null or empty
         /// </summary>
@@ -107,11 +78,6 @@ namespace Glass.Mapper
             return val;
         }
 
-        [Obsolete("Use ToFloat instead")]
-        public static float ToFlaot(this string target)
-        {
-            return ToFloat(target);
-        }
         public static float ToFloat(this string target)
         {
             float val = 0;

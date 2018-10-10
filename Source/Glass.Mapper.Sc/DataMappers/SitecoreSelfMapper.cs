@@ -10,6 +10,7 @@ namespace Glass.Mapper.Sc.DataMappers
         {
             ReadOnly = true;
         }
+
         public override void MapToCms(AbstractDataMappingContext mappingContext)
         {
 
@@ -22,7 +23,15 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (scContext != null && scConfig != null)
             {
-                return scContext.Service.CreateType(scConfig.PropertyInfo.PropertyType, scContext.Item, scConfig.IsLazy, scConfig.InferType, null);
+
+                var options = new GetItemByItemOptions();
+                options.Copy(mappingContext.Options);
+                options.Item = scContext.Item;
+
+                scConfig.GetPropertyOptions(options);
+
+
+                return scContext.Service.GetItem(options);
             }
             return null;
         }

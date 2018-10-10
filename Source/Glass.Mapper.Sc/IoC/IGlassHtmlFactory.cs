@@ -2,6 +2,6 @@
 {
     public interface IGlassHtmlFactory
     {
-        IGlassHtml GetGlassHtml(ISitecoreContext sitecoreContext);
+        IGlassHtml GetGlassHtml(ISitecoreService sitecoreService);
     }
 }

@@ -21,10 +21,6 @@ namespace Glass.Mapper.Sc.Web.Mvc
             GlassHtml = glassHtml;
         }
 
-        public ISitecoreContext SitecoreContext
-        {
-            get { return GlassHtml.SitecoreContext; }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is in editing mode.
