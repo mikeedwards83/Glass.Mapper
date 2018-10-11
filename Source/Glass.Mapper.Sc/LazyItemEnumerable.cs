@@ -69,6 +69,11 @@ namespace Glass.Mapper.Sc
 
             var options = new GetItemByItemOptions();
             options.Copy(_options);
+            //we have to copy these properties to the sub item because
+            //normally they are not applied to the whole graph
+            options.TemplateId = _options.TemplateId;
+            options.EnforceTemplate = _options.EnforceTemplate;
+
 
             foreach (Item child in items)
             {

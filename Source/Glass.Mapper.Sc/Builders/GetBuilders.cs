@@ -1,6 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 
@@ -225,7 +226,17 @@ namespace Glass.Mapper.Sc.Builders
             return this as T;
         }
 
-      
+        public T TemplateId(Guid id)
+        {
+            _options.TemplateId = new ID(id);
+            return this as T;
+        }
+
+        public T TemplateId(ID id)
+        {
+            _options.TemplateId = id;
+            return this as T;
+        }
     }
 
 

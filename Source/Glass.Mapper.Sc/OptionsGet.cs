@@ -12,8 +12,11 @@ namespace Glass.Mapper.Sc
 {
     public class GetOptionsSc : GetOptions
     {
+        //instance
         public SitecoreEnforceTemplate EnforceTemplate { get; set; }
+        //graph
         public bool VersionCount { get; set; }
+        //instance
         public ID TemplateId { get; set; }
 
         public GetOptionsSc()
@@ -31,8 +34,8 @@ namespace Glass.Mapper.Sc
             var local = other as GetOptionsSc;
             if (local != null)
             {
-                this.TemplateId = local.TemplateId;
-                this.EnforceTemplate = local.EnforceTemplate;
+                 //this.TemplateId = local.TemplateId;
+               // this.EnforceTemplate = local.EnforceTemplate;
                 this.VersionCount = local.VersionCount;
             }
             base.Copy(other);
