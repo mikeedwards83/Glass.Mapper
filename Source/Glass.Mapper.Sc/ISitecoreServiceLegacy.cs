@@ -502,7 +502,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        T GetItem<T>(Guid id);
+        T GetItem<T>(Guid id) where T : class;
 
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.

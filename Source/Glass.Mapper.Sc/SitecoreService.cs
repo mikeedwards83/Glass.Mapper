@@ -911,6 +911,26 @@ namespace Glass.Mapper.Sc
 
         #region GetItem - Path
 
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <returns>
+        /// ``0.
+        /// </returns>
+        public T GetItem<T>(string path) where T : class
+        {
+            var options = new GetItemByPathOptions
+            {
+                Path = path,
+                ConstructorParameters = (new object[] { }).Select(x => new ConstructorParameter(x.GetType(), x)).ToArray(),
+            };
+            return this.GetItem<T>(options);
+        }
+
         /// <summary>
         /// Gets the item.
         /// </summary>
@@ -1375,6 +1395,24 @@ namespace Glass.Mapper.Sc
         #endregion
 
         #region GetItem - Guid
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
+        public T GetItem<T>(Guid id) where T : class
+        {
+            var options = new GetItemByIdOptions
+            {
+                Id = id,
+                ConstructorParameters = (new object[] { }).Select(x => new ConstructorParameter(x.GetType(), x)).ToArray(),
+            };
+            return this.GetItem<T>(options);
+        }
 
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
