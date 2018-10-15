@@ -199,6 +199,16 @@ namespace Glass.Mapper.Sc
 
         #region GetItem - Path
 
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <returns>
+        /// </returns>
+        T GetItem<T>(string path) where T : class;
+
         /// <summary>
         /// Gets the item.
         /// </summary>
@@ -207,7 +217,6 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
-        /// ``0.
         /// </returns>
         [Obsolete("User ISitecoreService.GetItem")]
         T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class;
@@ -224,7 +233,6 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
-        /// ``0.
         /// </returns>
         [Obsolete("User ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(string path, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
@@ -243,7 +251,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
-        /// ``0.
+       
         /// </returns>
         [Obsolete("User ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(string path, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
@@ -482,6 +490,19 @@ namespace Glass.Mapper.Sc
         #endregion
 
         #region GetItem - Guid
+
+
+        /// <summary>
+        /// Retrieve a Sitecore item as the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
+        /// <param name="id">The ID of the Sitecore item</param>
+        /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
+        /// <param name="inferType">if set to <c>true</c> [infer type].</param>
+        /// <returns>
+        /// The Sitecore item as the specified type
+        /// </returns>
+        T GetItem<T>(Guid id);
 
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
