@@ -575,7 +575,12 @@ namespace Glass.Mapper.Sc
                         }
 
                         renderFieldArgs.Parameters = dictionary;
-                        renderFieldArgs.DisableWebEdit = false;
+                        renderFieldArgs.DisableWebEdit = dictionary.ContainsKey(RenderParameterKeys.DisableWebEdit) && bool.Parse(dictionary[RenderParameterKeys.DisableWebEdit]);
+                        renderFieldArgs.EnclosingTag =
+                            dictionary.ContainsKey(RenderParameterKeys.EnclosingTag) ? dictionary[RenderParameterKeys.EnclosingTag] : string.Empty;
+
+                        renderFieldArgs.RenderParameters[RenderParameterKeys.ShowTitleWhenBlank] = dictionary.ContainsKey(RenderParameterKeys.ShowTitleWhenBlank) ? dictionary[RenderParameterKeys.ShowTitleWhenBlank] : "false";
+
 
                         CorePipeline.Run("renderField", (PipelineArgs)renderFieldArgs);
 
