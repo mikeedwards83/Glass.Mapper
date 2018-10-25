@@ -38,9 +38,11 @@ namespace Glass.Mapper.Sc.Web.Ui
         /// Initializes a new instance of the <see cref="GlassEditFrame"/> class.
         /// </summary>
         /// <param name="frame">The frame.</param>
-        public GlassEditFrame(EditFrame frame)
+        /// <param name="writer">The writer.</param>
+        public GlassEditFrame(EditFrame frame, TextWriter writer)
         {
             _frame = frame;
+            _writer = new HtmlTextWriter(writer);
         }
 
         /// <summary>
