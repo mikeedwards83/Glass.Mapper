@@ -31,7 +31,6 @@ namespace Glass.Mapper.Sc.Web.Ui
             _frame.Buttons = buttons;
             _frame.Title = title;
             _writer = new HtmlTextWriter(writer);
-
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
     public class GlassNullEditFrame : GlassEditFrame
     {
-        public GlassNullEditFrame() : base(null)
+        public GlassNullEditFrame() : base(null, null)
         {
         }
 
