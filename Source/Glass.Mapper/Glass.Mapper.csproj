@@ -111,11 +111,14 @@
     <Compile Include="FakePropertyInfo.cs" />
     <Compile Include="GlassLazy.cs" />
     <Compile Include="ILog.cs" />
+    <Compile Include="ILPropertyAccessorFactory.cs" />
     <Compile Include="IoC\AbstractConfigFactory.cs" />
     <Compile Include="IoC\IConfigFactory.cs" />
     <Compile Include="IoC\IDependencyResolver.cs" />
     <Compile Include="IGlassConfiguration.cs" />
     <Compile Include="LazyLoadSetting.cs" />
+    <Compile Include="IPropertyAccessorFactory.cs" />
+    <Compile Include="LambdaPropertyAccessorFactory.cs" />
     <Compile Include="MapperStackException.cs" />
     <Compile Include="Maps\AbstractGlassMap.cs" />
     <Compile Include="Maps\ConfigurationMap.cs" />

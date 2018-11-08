@@ -1,26 +1,9 @@
-/*
-   Copyright 2012 Michael Edwards
- 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- 
-*/ 
-//-CRE-
-
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Glass.Mapper.Caching;
+using Glass.Mapper.Configuration;
+using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using NUnit.Framework;
@@ -399,7 +382,7 @@ namespace Glass.Mapper.Sc.FakeDb
         [Test]
         [Timeout(120000)]
         [Repeat(10000)]
-        [Ignore("Performance Test Run Manually")]
+       // [Ignore("Performance Test Run Manually")]
         public void CastItems_LotsOfProperties_ServiceEveryTime(
             [Values(1000, 10000, 50000)] int count)
         {
@@ -661,6 +644,212 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
     }
+
+
+    [TestFixture]
+    public class PerformanceTestConfigurationLoading
+    {
+        [Test]
+      //  [Ignore("Performance Test Run Manually")]
+        public void LoadConfiguration()
+        {
+           var glassWatch = new Stopwatch();
+
+           var context = Context.Create(Utilities.CreateStandardResolver());
+
+            glassWatch.Start();
+
+
+            AbstractTypeConfiguration config;
+            Glass.Mapper.Utilities.PropertyAccessorFactory = new LambdaPropertyAccessorFactory();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassWithLotsOfProperties)));
+                context.TypeConfigurations.TryRemove(typeof(StubClassWithLotsOfProperties), out config);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+
+
+            glassWatch.Reset();
+            glassWatch.Start();
+
+            Glass.Mapper.Utilities.PropertyAccessorFactory = new ILPropertyAccessorFactory();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassWithLotsOfProperties)));
+                context.TypeConfigurations.TryRemove(typeof(StubClassWithLotsOfProperties), out config);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+
+        }
+
+
+        [Test]
+        [Sequential]
+        public void Compare_GetPropertySpeed(
+           )
+        {
+            var lambdaFactory = new LambdaPropertyAccessorFactory();
+            var ilFactory = new ILPropertyAccessorFactory();
+            var expected = "test value";
+
+            var instance = new StubClassWithLotsOfProperties();
+            instance.Field1 = expected;
+
+            var propertyInfo = instance.GetType().GetProperty("Field1");
+
+            var lamda = lambdaFactory.GetPropertyFunc(propertyInfo);
+            var il = ilFactory.GetPropertyFunc(propertyInfo);
+
+
+            var glassWatch = new Stopwatch();
+            glassWatch.Start();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                var lambdaResult = lamda(instance);
+                Assert.AreEqual(expected, lambdaResult);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test - lambda: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+
+            glassWatch.Reset();
+            glassWatch.Start();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                var lambdaResult = il(instance);
+                Assert.AreEqual(expected, lambdaResult);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test - il: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+        }
+
+        [Test]
+        [Sequential]
+        public void Compare_SetPropertySpeed(
+        )
+        {
+            var lambdaFactory = new LambdaPropertyAccessorFactory();
+            var ilFactory = new ILPropertyAccessorFactory();
+            var expected = "test value";
+
+            var instance = new StubClassWithLotsOfProperties();
+
+            var propertyInfo = instance.GetType().GetProperty("Field1");
+
+            var lamda = lambdaFactory.SetPropertyAction(propertyInfo);
+            var il = ilFactory.SetPropertyAction(propertyInfo);
+
+
+            var glassWatch = new Stopwatch();
+            glassWatch.Start();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                instance.Field1 = string.Empty;
+                lamda(instance, expected);
+                Assert.AreEqual(expected, instance.Field1);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test - lambda: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+
+            glassWatch.Reset();
+            glassWatch.Start();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                instance.Field1 = string.Empty;
+                 il(instance, expected);
+                Assert.AreEqual(expected, instance.Field1);
+            }
+
+            glassWatch.Stop();
+            Console.WriteLine("Performance Test - il: {0}".Formatted(glassWatch.ElapsedMilliseconds));
+        }
+
+
+
+
+        [SitecoreType]
+        public class StubClassWithLotsOfProperties
+        {
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field1 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field2 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field3 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field4 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field5 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field6 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field7 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field8 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field9 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field10 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field11 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field12 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field13 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field14 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field15 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field16 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field17 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field18 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field19 { get; set; }
+
+            [SitecoreField("Field", Setting = SitecoreFieldSettings.RichTextRaw)]
+            public virtual string Field20 { get; set; }
+
+
+            [SitecoreId]
+            public virtual Guid Id { get; set; }
+        }
+    }
+
+
 }
 
 
