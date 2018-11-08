@@ -18,6 +18,7 @@ namespace Glass.Mapper
         private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
             new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
+        public static IPropertyAccessorFactory PropertyAccessorFactory { get; set; } = new ILPropertyAccessorFactory();
 
 
         public static string[] SplitOnFirstOccurance(string value, char separator)
@@ -36,7 +37,7 @@ namespace Glass.Mapper
                 else
                 {
                     first = value.Substring(0, index);
-                    if (index+1 < value.Length)
+                    if (index + 1 < value.Length)
                     {
                         second = value.Substring(index + 1);
                     }
@@ -262,7 +263,7 @@ namespace Glass.Mapper
             return obj;
         }
 
-        public static ActivationManager.CompiledActivator<object> GetActivator(Type type, 
+        public static ActivationManager.CompiledActivator<object> GetActivator(Type type,
             Type[] arguments,
             params object[] parameters)
         {
@@ -287,7 +288,7 @@ namespace Glass.Mapper
             var count = types.Count();
             if (count == 1)
                 return types[0];
-            else if(count > 1)
+            else if (count > 1)
                 throw new MapperException("Type {0} has more than one generic argument".Formatted(type.FullName));
             else
                 throw new MapperException("The type {0} does not contain any generic arguments".Formatted(type.FullName));
@@ -352,42 +353,11 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a setter for</param>
         /// <returns>An action delegate</returns>
-        public static Func<PropertyInfo, Action<object, object>> SetPropertyAction = (PropertyInfo property) =>
+        public static Action<object, object> SetPropertyAction(PropertyInfo property)
         {
-            PropertyInfo propertyInfo = property;
-            Type type = property.DeclaringType;
+            return PropertyAccessorFactory.SetPropertyAction(property);
+        }
 
-            if (propertyInfo.CanWrite)
-            {
-                if (type == null)
-                {
-                    throw new InvalidOperationException(
-                        "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
-                }
-
-                Type propertyType = propertyInfo.PropertyType;
-
-                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
-                ParameterExpression valueParameter = Expression.Parameter(typeof(object), "value");
-
-                Expression<Action<object, object>> lambda = Expression.Lambda<Action<object, object>>(
-                    Expression.Assign(
-                        Expression.Property(Expression.Convert(instanceParameter, type), propertyInfo),
-                        Expression.Convert(valueParameter, propertyType)),
-                    instanceParameter,
-                    valueParameter
-                    );
-
-                return lambda.Compile();
-            }
-            else
-            {
-                return (object instance, object value) =>
-                {
-                    //does nothing
-                };
-            }
-        };
 
         /// <summary>
         /// Creates a function delegate that can be used to get a property's value
@@ -397,38 +367,20 @@ namespace Glass.Mapper
         /// </remarks>
         /// <param name="property">The property to create a getter for</param>
         /// <returns>A function delegate</returns>
-        public static Func<PropertyInfo, Func<object, object>> GetPropertyFunc = (PropertyInfo property) =>
+        public static Func<object, object> GetPropertyFunc(PropertyInfo property)
         {
-            PropertyInfo propertyInfo = property;
-            Type type = property.DeclaringType;
-
-            if (type == null)
-            {
-                throw new InvalidOperationException(
-                    "PropertyInfo 'property' must have a valid (non-null) DeclaringType.");
-            }
+            return PropertyAccessorFactory.GetPropertyFunc(property);
+        }
 
 
-            if (propertyInfo.CanWrite)
-            {
-                ParameterExpression instanceParameter = Expression.Parameter(typeof(object), "instance");
 
-                Expression<Func<object, object>> lambda = Expression.Lambda<Func<object, object>>(
-                    Expression.Convert(
-                        Expression.Property(
-                            Expression.Convert(instanceParameter, type),
-                            propertyInfo),
-                        typeof(object)),
-                    instanceParameter
-                    );
 
-                return lambda.Compile();
-            }
-            else
-            {
-                return (object instance) => { return null; };
-            }
-        };
+
+
+
+
+
+
 
         /// <summary>
         /// Gets the activator.
@@ -437,7 +389,7 @@ namespace Glass.Mapper
         /// <param name="parameterTypes">The parameter types.</param>
         /// <returns></returns>
         protected static ActivationManager.CompiledActivator<object> GetActivator(Type forType,
-            Type [] parameterTypes = null)
+            Type[] parameterTypes = null)
         {
             return Activators.GetOrAdd(forType, type => ActivationManager.GetActivator<object>(type, parameterTypes));
         }

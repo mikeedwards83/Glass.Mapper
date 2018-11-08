@@ -13,34 +13,58 @@ namespace Glass.Mapper.Configuration
     {
 		private PropertyInfo _propertyInfo;
 
-     
-		/// <summary>
-		/// Gets or sets the property info.
-		/// </summary>
-		/// <value>The property info.</value>
-		public PropertyInfo PropertyInfo
+        private Action<object, object> _propertySetter;
+        private Func<object, object> _propertyGetter;
+
+
+        /// <summary>
+        /// Gets or sets the property info.
+        /// </summary>
+        /// <value>The property info.</value>
+        public PropertyInfo PropertyInfo
 		{
 			get { return _propertyInfo; }
 			set
 			{
 				_propertyInfo = value;
-
-				PropertyGetter = Utilities.GetPropertyFunc(value);
-				PropertySetter = Utilities.SetPropertyAction(value);
-			}
+			    _propertyGetter = Utilities.GetPropertyFunc(PropertyInfo); ;
+			    _propertySetter = Utilities.SetPropertyAction(PropertyInfo);
+            }
 		}
 
-       
 
-		/// <summary>
-		/// Function to get the underlying property value
-		/// </summary>
-		public Func<object, object> PropertyGetter { get; private set; }
-		
-		/// <summary>
+
+        /// <summary>
+        /// Function to get the underlying property value
+        /// </summary>
+        public Func<object, object> PropertyGetter
+        {
+            get
+            {
+                if (_propertyGetter == null)
+                {
+                    _propertyGetter = Utilities.GetPropertyFunc(PropertyInfo);
+                }
+
+                return _propertyGetter;
+            }
+
+        }
+
+        /// <summary>
 		/// Action to set the underyling property value
 		/// </summary>
-		public Action<object, object> PropertySetter { get; private set; }
+		public Action<object, object> PropertySetter {
+            get
+            {
+                if (_propertySetter == null)
+                {
+                    _propertySetter = Utilities.SetPropertyAction(PropertyInfo);
+                }
+
+                return _propertySetter;
+            }
+        }
 
         /// <summary>
         /// Gets the mapper.

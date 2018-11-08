@@ -16,7 +16,6 @@ namespace Glass.Mapper.Sc.FakeDb.Configuation.Attributes
         }
 
         [Test]
-        [TestCase("IsLazy")]
         [TestCase("Path")]
         [TestCase("Id")]
         public void Does_SitecoreNodeAttributee_Have_Properties(string propertyName)
