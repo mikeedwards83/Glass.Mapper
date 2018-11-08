@@ -151,3 +151,6 @@ Tests/Unit Tests/Glass.Mapper.Sc.FakeDb.ThirdParty/license.xml
 Tests/Unit Tests/Glass.Mapper.Sc.FakeDb/license.xml
 licence.xml
 Depends/Sitecore/bin82/
+/Depends/Sitecore/bin90/
+/.vs
+license.xml
