@@ -18,7 +18,13 @@ namespace Glass.Mapper
         private static readonly ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>> Activators =
             new ConcurrentDictionary<Type, ActivationManager.CompiledActivator<object>>();
 
-        public static IPropertyAccessorFactory PropertyAccessorFactory { get; set; } = new ILPropertyAccessorFactory();
+        public static IPropertyAccessorFactory PropertyAccessorFactory { get; set; }
+
+
+        static Utilities()
+        {
+            PropertyAccessorFactory = new ILPropertyAccessorFactory();
+        }
 
         public static object GetDefault(Type type)
         {
