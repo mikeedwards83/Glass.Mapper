@@ -649,7 +649,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <param name="constructorParameters">Parameters to pass to the constructor of the new class. Must be in the order specified on the consturctor.</param>
         /// <returns>System.Object.</returns>
-        [Obsolete("Use this.GetItem()")]
+        [Obsolete("Use SitecoreService.GetItem()")]
         public object CreateType(Type type, Item item, bool isLazy, bool inferType, params object[] constructorParameters)
         {
             var options = new GetItemByItemOptions
@@ -672,7 +672,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T>()")]
+        [Obsolete("Use SitecoreService.GetItem<T>()")]
         public T CreateType<T>(Item item, bool isLazy = false,
             bool inferType = false) where T : class
         {
@@ -695,7 +695,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T>()")]
+        [Obsolete("Use SitecoreService.GetItem<T>()")]
         public T Cast<T>(Item item, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -717,7 +717,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T, TK>()")]
+        [Obsolete("Use SitecoreService.GetItem<T, TK>()")]
         public T CreateType<T, TK>(Item item, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -742,7 +742,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T, TK, TL>()")]
+        [Obsolete("Use SitecoreService.GetItem<T, TK, TL>()")]
         public T CreateType<T, TK, TL>(Item item, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -768,7 +768,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T, TK, TL, TM>()")]
+        [Obsolete("Use SitecoreService.GetItem<T, TK, TL, TM>()")]
         public T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -796,7 +796,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T, TK, TL, TM, TN>()")]
+        [Obsolete("Use SitecoreService.GetItem<T, TK, TL, TM, TN>()")]
         public T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByItemOptions
@@ -826,7 +826,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T, TK, TL, TM, TN, TO>()")]
+        [Obsolete("Use SitecoreService.GetItem<T, TK, TL, TM, TN, TO>()")]
         public T CreateType<T, TK, TL, TM, TN, TO>(Item item, TK param1,
             TL param2, TM param3, TN param4, TO param5, bool isLazy = false, bool inferType = false) where T : class
         {
@@ -848,7 +848,7 @@ namespace Glass.Mapper.Sc
         /// <param name="constructorParameters">The constructor parameters - maximum 10</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("Use this.GetItem<T>()")]
+        [Obsolete("Use SitecoreService.GetItem<T>()")]
         public T CreateType<T>(Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters) where T : class
         {
             var options = new GetItemByItemOptions
@@ -872,7 +872,7 @@ namespace Glass.Mapper.Sc
         /// <param name="type">The type to return</param>
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        [Obsolete("Use this.GetItems()")]
+        [Obsolete("Use SitecoreService.GetItems()")]
         public IEnumerable CreateTypes(Type type, Func<IEnumerable<Item>> getItems, bool isLazy = false,
             bool inferType = false)
         {
@@ -940,7 +940,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(string path, bool isLazy) where T : class
         {
             var options = new GetItemByPathOptions

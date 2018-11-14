@@ -69,7 +69,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T Cast<T>(Item item, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T, TK>(Item item, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T, TK, TL>(Item item, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T, TK, TL, TM>(Item item, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T, TK, TL, TM, TN>(Item item, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">If true creates a proxy for the class</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T, TK, TL, TM, TN, TO>(Item item, TK param1, TL param2, TM param3, TN param4, TO param5, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Glass.Mapper.Sc
         /// <param name="constructorParameters">The constructor parameters - maximum 10</param>
         /// <param name="inferType">Infer the type to be loaded from the template</param>
         /// <returns>The item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T CreateType<T>(Item item, bool isLazy = false, bool inferType = false, params object[] constructorParameters) where T : class;
 
         #endregion
@@ -180,7 +180,7 @@ namespace Glass.Mapper.Sc
         /// <param name="type">The type to return</param>
         /// <param name="getItems">A function that returns the list of items to load</param>
         /// <returns>An enumerable of the items as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItems")]
+        [Obsolete("Use ISitecoreService.GetItems")]
         IEnumerable CreateTypes(Type type, Func<IEnumerable<Item>> getItems, bool isLazy = false, bool inferType = false);
 
         #endregion
@@ -218,7 +218,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(string path, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Glass.Mapper.Sc
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(string path, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
        
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(string path, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(string path, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(string path, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         #endregion
@@ -307,7 +307,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(string path, Language language, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(string path, Language language, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(string path, Language language, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(string path, Language language, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(string path, Language language, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
 
@@ -404,7 +404,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(string path, Language language, Sitecore.Data.Version version, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(string path, Language language, Sitecore.Data.Version version, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
 
@@ -514,7 +514,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(Guid id, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(Guid id, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -565,7 +565,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(Guid id, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(Guid id, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
 
@@ -605,7 +605,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(Guid id, Language language, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(Guid id, Language language, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -639,7 +639,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(Guid id, Language language, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -659,7 +659,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(Guid id, Language language, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
 
@@ -704,7 +704,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T>(Guid id, Language language, Sitecore.Data.Version version, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK>(Guid id, Language language, Sitecore.Data.Version version, TK param1, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -740,7 +740,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -761,7 +761,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;
 
         /// <summary>
@@ -784,7 +784,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("User ISitecoreService.GetItem")]
+        [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class;
 
 
