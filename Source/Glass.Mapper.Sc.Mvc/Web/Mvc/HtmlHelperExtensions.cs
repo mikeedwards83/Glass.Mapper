@@ -161,9 +161,9 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public static GlassEditFrame BeginEditFrame(this HtmlHelper htmlHelper, EditFrame editFrame)
         {
-            var writter = new HtmlTextWriter(htmlHelper.ViewContext.Writer);
-            editFrame.RenderFirstPart(writter);
-            return new GlassEditFrame(editFrame);
+            var glassEditFrame = new GlassEditFrame(editFrame, htmlHelper.ViewContext.Writer);
+            glassEditFrame.RenderFirstPart();
+            return glassEditFrame;
         }
 
         public static GlassHtmlMvc<T> Glass<T>(this HtmlHelper<T> htmlHelper)
