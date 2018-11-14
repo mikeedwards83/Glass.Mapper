@@ -31,16 +31,17 @@ namespace Glass.Mapper.Sc.Web.Ui
             _frame.Buttons = buttons;
             _frame.Title = title;
             _writer = new HtmlTextWriter(writer);
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GlassEditFrame"/> class.
         /// </summary>
         /// <param name="frame">The frame.</param>
-        public GlassEditFrame(EditFrame frame)
+        /// <param name="writer">The writer.</param>
+        public GlassEditFrame(EditFrame frame, TextWriter writer)
         {
             _frame = frame;
+            _writer = new HtmlTextWriter(writer);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Glass.Mapper.Sc.Web.Ui
 
     public class GlassNullEditFrame : GlassEditFrame
     {
-        public GlassNullEditFrame() : base(null)
+        public GlassNullEditFrame() : base(null, null)
         {
         }
 
