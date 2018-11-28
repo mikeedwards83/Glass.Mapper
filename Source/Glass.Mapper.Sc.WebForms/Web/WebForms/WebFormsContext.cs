@@ -68,10 +68,10 @@ namespace Glass.Mapper.Sc.Web.WebForms
             if (control != null)
             {
                 WebControl parent = control.Parent as WebControl;
-                if (parent == null)
-                    path = string.Empty;
-                path = parent.DataSource;
-
+                if (parent != null)
+                {
+                    path = parent.DataSource;
+                }
             }
             if (path.HasValue())
             {
