@@ -25,7 +25,7 @@
     </dependencies>
 	<contentFiles>
 
-		<files include="/**/*.*" buildAction="Content" />
+		<files include="**/*.*" buildAction="Content" />
 
 		
   </contentFiles>
