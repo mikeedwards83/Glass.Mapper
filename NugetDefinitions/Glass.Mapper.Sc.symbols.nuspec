@@ -23,7 +23,12 @@
       <dependency id="Glass.Mapper.Sc.$scVersion$.Mvc" version="$version$" />
       <dependency id="Glass.Mapper.Sc.$scVersion$.WebForms" version="$version$" />
     </dependencies>
-	
+	<contentFiles>
+
+		<files include="/**/*.*" buildAction="Content" />
+
+		
+  </contentFiles>
   </metadata>
   <files>
 
