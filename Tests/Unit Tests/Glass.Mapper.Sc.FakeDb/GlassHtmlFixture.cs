@@ -3073,7 +3073,7 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.AreEqual(expected, result);
         }
 
-#if SC90
+#if SC90 || SC91
         [Test]
         public void RenderLink_BlankTarget_AddsNoOpener()
         {

@@ -54,7 +54,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             Assert.AreEqual(expected, result);
         }
 
-#if (SC80 || SC81 || SC82  || SC90)
+
 
         [Test]
         public void SitecoreTimeZoneDemo()
@@ -159,7 +159,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             Console.WriteLine(sw.ElapsedTicks);
         }
 
-#endif
+
 
         #endregion
 
@@ -169,11 +169,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         public void SetField_DateTimePassed_SetsFieldValue()
         {
             //Assign
-#if (SC80 || SC81 || SC82  || SC90)
+
             string expected = "20120101T010101Z";
-#else
-            string expected = "20120101T010101";
-#endif
+
             DateTime objectValue = new DateTime(2012, 01, 01, 01, 01, 01, DateTimeKind.Utc);
             var fieldId = Guid.NewGuid();
 

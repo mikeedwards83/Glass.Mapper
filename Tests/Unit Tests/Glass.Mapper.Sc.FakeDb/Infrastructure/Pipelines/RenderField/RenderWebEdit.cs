@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define SC91
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,7 +99,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
 
             return site != null 
                 && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary")
-#if SC82 || SC90
+#if SC82 || SC90 || SC91
                 && Sitecore.Context.PageMode.IsExperienceEditorEditing);
 #else
                 && Sitecore.Context.PageMode.IsPageEditorEditing);
