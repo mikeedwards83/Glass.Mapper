@@ -25,13 +25,13 @@
     </dependencies>
 	<contentFiles>
 
-		<file src="readme.txt" target="readme.txt" />
+		<files src="readme.txt" target="readme.txt" />
 
 		<!-- CONFIG FILES  -->
-		<file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
+		<files src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
 
 		<!-- PP FILES  -->
-		<file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
+		<files src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
   </contentFiles>
   </metadata>
