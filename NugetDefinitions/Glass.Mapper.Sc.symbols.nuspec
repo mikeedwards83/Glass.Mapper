@@ -23,17 +23,7 @@
       <dependency id="Glass.Mapper.Sc.$scVersion$.Mvc" version="$version$" />
       <dependency id="Glass.Mapper.Sc.$scVersion$.WebForms" version="$version$" />
     </dependencies>
-	<contentFiles>
-
-		<files include="readme.txt" buildAction="Content" />
-
-		<!-- CONFIG FILES  -->
-		<files include="..\Source\Glass.Mapper.Sc\App_Config\**" buildAction="Content" />
-
-		<!-- PP FILES  -->
-		<files include="..\Source\Glass.Mapper.Sc\App_Start\**" buildAction="Content" />
-
-  </contentFiles>
+	
   </metadata>
   <files>
 
