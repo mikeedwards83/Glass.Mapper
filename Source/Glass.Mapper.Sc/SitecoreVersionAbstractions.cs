@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+#if SC90 || SC91
 using Sitecore.Abstractions;
-using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
+#endif
+
+
+using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
 

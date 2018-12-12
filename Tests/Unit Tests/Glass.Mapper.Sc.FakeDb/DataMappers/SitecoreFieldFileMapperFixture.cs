@@ -6,11 +6,15 @@ using Glass.Mapper.Sc.DataMappers;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
-using Sitecore.Abstractions;
 using Sitecore.Data;
-using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
+
+#if SC90 || SC91
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
+
 
 namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {

@@ -4,12 +4,13 @@ using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
-using Sitecore.Abstractions;
+
+
+
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
 

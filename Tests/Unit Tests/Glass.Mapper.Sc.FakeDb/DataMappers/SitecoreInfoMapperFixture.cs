@@ -12,14 +12,18 @@ using Glass.Mapper.Sc.FakeDb.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using Sitecore;
-using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Query;
-using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
+
+#if SC90 || SC91
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
+
 
 namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {

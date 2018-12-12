@@ -9,12 +9,15 @@ using Glass.Mapper.Sc.FakeDb.Infrastructure;
 using Glass.Mapper.Sc.IoC;
 using NSubstitute;
 using NUnit.Framework;
-using Sitecore.Abstractions;
 using Sitecore.Data;
-using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Image = Glass.Mapper.Sc.Fields.Image;
+
+#if SC90 || SC91
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
 
 namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
