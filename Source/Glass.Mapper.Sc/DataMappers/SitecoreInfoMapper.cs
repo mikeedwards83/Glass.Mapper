@@ -4,10 +4,12 @@ using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
+using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
 
@@ -120,6 +122,26 @@ namespace Glass.Mapper.Sc.DataMappers
             return _getValue(item);
         }
 
+
+
+
+#if SC91
+        internal static  LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
+
+        public string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
+        {
+            return MediaManager.Value.GetMediaUrl(media, mediaUrlOptions);
+        }
+#else
+        public string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
+        {
+            return MediaManager.GetMediaUrl(media, mediaUrlOptions);
+        }
+#endif
+
+
+
+
         /// <summary>
         /// Sets up the data mapper for a particular property
         /// </summary>
@@ -158,7 +180,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                         var media = new MediaItem(item);
-                        return MediaManager.GetMediaUrl(media, mediaUrlOptions);
+                        return GetMediaUrl(media, mediaUrlOptions);
                     };
                     break;
                 case SitecoreInfoType.Path:

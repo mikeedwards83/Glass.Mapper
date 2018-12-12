@@ -12,9 +12,11 @@ using Glass.Mapper.Sc.FakeDb.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using Sitecore;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Query;
+using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
@@ -63,23 +65,36 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
             })
             {
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreInfoMapper.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == itemId), Arg.Any<MediaUrlOptions>())
+                    .Returns("/~/media/Test.ashx");
+
+#else
                 Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
                       .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == itemId), Arg.Any<MediaUrlOptions>())
                       .Returns("/~/media/Test.ashx");
 
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
-                    var item = database.GetItem("/sitecore/content/TestItem");
-                    Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-                    var dataContext = new SitecoreDataMappingContext(null, item, null, options);
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
 
-                    //Act
-                    var value = mapper.MapToProperty(dataContext);
+#endif
 
-                    //Assert
-                    Assert.AreEqual(expected, value);
-                }
+                var item = database.GetItem("/sitecore/content/TestItem");
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null, options);
+
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
             }
         }
 
@@ -236,7 +251,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         [TestCase(SitecoreInfoMediaUrlOptions.LowercaseUrls)]
         public void MapToProperty_MediaUrlWithFlag_ReturnsModifiedUrl(
             SitecoreInfoMediaUrlOptions option
-            
+
             )
         {
             //Assign
@@ -278,6 +293,21 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     }
                 };
 
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreInfoMapper.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(
+                        Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == itemId),
+                        Arg.Is<MediaUrlOptions>(x => pred(x))
+                    )
+                    .Returns(expected);
+
+#else
                 Sitecore.Resources.Media.MediaProvider mediaProvider =
                     Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
@@ -287,20 +317,20 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     )
                     .Returns(expected);
 
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
-                    var options = new GetItemOptionsParams();
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
 
-                    var item = database.GetItem("/sitecore/content/TestItem");
-                    Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
-                    var dataContext = new SitecoreDataMappingContext(null, item, null, options);
+                var options = new GetItemOptionsParams();
 
-                    //Act
-                    var value = mapper.MapToProperty(dataContext);
+                var item = database.GetItem("/sitecore/content/TestItem");
+                Assert.IsNotNull(item, "Item is null, check in Sitecore that item exists");
+                var dataContext = new SitecoreDataMappingContext(null, item, null, options);
 
-                    //Assert
-                    Assert.AreEqual(expected, value);
-                }
+                //Act
+                var value = mapper.MapToProperty(dataContext);
+
+                //Assert
+                Assert.AreEqual(expected, value);
             }
         }
 
@@ -421,7 +451,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 config.Type = type;
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
@@ -454,7 +484,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 config.Type = type;
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
@@ -485,7 +515,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var type = SitecoreInfoType.TemplateId;
 
                 var mapper = new SitecoreInfoMapper();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 var config = new SitecoreInfoConfiguration();
                 config.Type = type;
                 config.PropertyInfo = typeof(Stub).GetProperty("TemplateId");
@@ -527,7 +557,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 config.Type = type;
                 config.PropertyInfo = typeof(Stub).GetProperty("BaseTemplateIds");
 
@@ -570,7 +600,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 config.Type = type;
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
@@ -613,7 +643,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mapper = new SitecoreInfoMapper();
                 var config = new SitecoreInfoConfiguration();
-            var options = new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
                 config.Type = type;
                 mapper.Setup(new DataMapperResolverArgs(null, config));
 
