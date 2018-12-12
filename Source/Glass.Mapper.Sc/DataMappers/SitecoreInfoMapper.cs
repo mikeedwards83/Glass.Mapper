@@ -24,6 +24,11 @@ namespace Glass.Mapper.Sc.DataMappers
         private readonly IUrlOptionsResolver _urlOptionsResolver;
         private Func<Item, object> _getValue = item => null;
 
+
+
+
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
         /// </summary>
@@ -125,20 +130,6 @@ namespace Glass.Mapper.Sc.DataMappers
 
 
 
-#if SC91
-        internal static  LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
-
-        public string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
-        {
-            return MediaManager.Value.GetMediaUrl(media, mediaUrlOptions);
-        }
-#else
-        public string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
-        {
-            return MediaManager.GetMediaUrl(media, mediaUrlOptions);
-        }
-#endif
-
 
 
 
@@ -180,7 +171,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                         var media = new MediaItem(item);
-                        return GetMediaUrl(media, mediaUrlOptions);
+                        return SitecoreVersionAbstractions.GetMediaUrl(media, mediaUrlOptions);
                     };
                     break;
                 case SitecoreInfoType.Path:
@@ -209,7 +200,7 @@ namespace Glass.Mapper.Sc.DataMappers
                         {
                             urlOptions.Language = null;
                         }
-                        return LinkManager.GetItemUrl(item, urlOptions);
+                        return SitecoreVersionAbstractions.GetItemUrl(item, urlOptions);
                     };
                     break;
                 case SitecoreInfoType.Version:

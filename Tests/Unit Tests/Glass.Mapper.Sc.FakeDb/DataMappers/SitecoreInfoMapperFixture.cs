@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
-                SitecoreInfoMapper.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
 
                 mediaUrlProvider
                     .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == itemId), Arg.Any<MediaUrlOptions>())
@@ -298,7 +298,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
-                SitecoreInfoMapper.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
 
                 mediaUrlProvider
                     .GetMediaUrl(
