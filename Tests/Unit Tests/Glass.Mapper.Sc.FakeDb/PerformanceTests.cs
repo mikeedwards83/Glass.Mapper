@@ -350,7 +350,7 @@ namespace Glass.Mapper.Sc.FakeDb
         [Test]
         [Timeout(120000)]
         [Repeat(10000)]
-       // [Ignore("Performance Test Run Manually")]
+       [Ignore("Performance Test Run Manually")]
         public void CastItems_LotsOfProperties_ServiceEveryTime(
             [Values(1000, 10000, 50000)] int count)
         {

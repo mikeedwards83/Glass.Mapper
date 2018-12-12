@@ -7,7 +7,6 @@ using System.Xml;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.DataMappers;
-using Glass.Mapper.Sc.FakeDb.Issues.Issue311;
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.FakeDb;

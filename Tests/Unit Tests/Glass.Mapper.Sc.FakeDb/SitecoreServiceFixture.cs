@@ -1870,6 +1870,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
@@ -1917,6 +1918,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
@@ -2024,6 +2026,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
@@ -2129,6 +2132,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target"),
             })
             {
@@ -2179,6 +2183,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target", ID.NewID),
             })
             {
@@ -2235,6 +2240,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target"),
             })
             {
@@ -2285,6 +2291,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Assign
             using (Db database = new Db
             {
+                new DbTemplate("Test", new ID(StubClass.TemplateId)),
                 new Sitecore.FakeDb.DbItem("Target"),
             })
             {

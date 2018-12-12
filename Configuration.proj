@@ -4,6 +4,7 @@
   
    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'  Or '$(ScVersion)' == ''  ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin91\</ScDir>
+	<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">526</Mvc>
     <DebugSymbols>true</DebugSymbols>
@@ -16,6 +17,7 @@
   </PropertyGroup> 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin90\</ScDir>
+	<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.6.2</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
@@ -28,6 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
+	<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +43,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80'">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
+	<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc>51</Mvc>
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +56,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == 'sc81'  ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin81\</ScDir>
+	<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
