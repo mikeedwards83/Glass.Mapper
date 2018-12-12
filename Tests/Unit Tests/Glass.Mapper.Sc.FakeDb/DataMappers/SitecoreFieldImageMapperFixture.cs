@@ -9,7 +9,9 @@ using Glass.Mapper.Sc.FakeDb.Infrastructure;
 using Glass.Mapper.Sc.IoC;
 using NSubstitute;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
+using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Image = Glass.Mapper.Sc.Fields.Image;
@@ -17,7 +19,7 @@ using Image = Glass.Mapper.Sc.Fields.Image;
 namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
-    public class SitecoreFieldImageMapperFixture 
+    public class SitecoreFieldImageMapperFixture
     {
 
         protected const string FieldName = "Field";
@@ -50,33 +52,48 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             })
             {
 
-                Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
+                    .Returns("/~/media/Test.ashx");
+
+#else
+                Sitecore.Resources.Media.MediaProvider mediaProvider =
+                    Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
-                      .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
+                     .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
                       .Returns("/~/media/Test.ashx");
 
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
 
-                    var item = database.GetItem("/sitecore/content/TestItem");
-                    var field = item.Fields[FieldName];
-                    var mapper = new SitecoreFieldImageMapper();
 
-                    //Act
-                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Image;
 
-                    //Assert
-                    Assert.AreEqual("test alt", result.Alt);
-                    // Assert.Equals(null, result.Border);
-                    Assert.AreEqual(string.Empty, result.Class);
-                    Assert.AreEqual(15, result.HSpace);
-                    Assert.AreEqual(480, result.Height);
-                    Assert.AreEqual(new Guid("{D897833C-1F53-4FAE-B54B-BB5B11B8F851}"), result.MediaId);
-                    Assert.IsTrue(result.Src.EndsWith("/~/media/Test.ashx"));
-                    Assert.AreEqual(20, result.VSpace);
-                    Assert.AreEqual(640, result.Width);
-                    Assert.AreEqual(true, result.MediaExists);
-                }
+
+                var item = database.GetItem("/sitecore/content/TestItem");
+                var field = item.Fields[FieldName];
+                var mapper = new SitecoreFieldImageMapper();
+
+                //Act
+                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Image;
+
+                //Assert
+                Assert.AreEqual("test alt", result.Alt);
+                // Assert.Equals(null, result.Border);
+                Assert.AreEqual(string.Empty, result.Class);
+                Assert.AreEqual(15, result.HSpace);
+                Assert.AreEqual(480, result.Height);
+                Assert.AreEqual(new Guid("{D897833C-1F53-4FAE-B54B-BB5B11B8F851}"), result.MediaId);
+                Assert.IsTrue(result.Src.EndsWith("/~/media/Test.ashx"));
+                Assert.AreEqual(20, result.VSpace);
+                Assert.AreEqual(640, result.Width);
+                Assert.AreEqual(true, result.MediaExists);
             }
         }
 
@@ -97,16 +114,32 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                         Value = fieldValue
                     }
                 }
-               
+
             })
             {
-                Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
+                    .Returns("/~/media/Test.ashx");
+
+#else
+                Sitecore.Resources.Media.MediaProvider mediaProvider =
+                    Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
-                      .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
+                     .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId), Arg.Any<MediaUrlOptions>())
                       .Returns("/~/media/Test.ashx");
 
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
+
+
+             
 
                     var item = database.GetItem("/sitecore/content/TestItem");
                     var field = item.Fields[FieldName];
@@ -126,7 +159,6 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Assert.AreEqual(20, result.VSpace);
                     Assert.AreEqual(0, result.Width);
                     Assert.AreEqual(false, result.MediaExists);
-                }
             }
         }
 
@@ -136,30 +168,30 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             //Assign
             var fieldValue = string.Empty;
 
-		    using (Db database = new Db
-		    {
-		        new Sitecore.FakeDb.DbItem("TestItem")
-		        {
-		            new DbField(FieldName)
-		            {
-		                Value = fieldValue
-		            }
-		        }
-		    })
-		    {
-		        var item = database.GetItem("/sitecore/content/TestItem");
-		        var field = item.Fields[FieldName];
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("TestItem")
+                {
+                    new DbField(FieldName)
+                    {
+                        Value = fieldValue
+                    }
+                }
+            })
+            {
+                var item = database.GetItem("/sitecore/content/TestItem");
+                var field = item.Fields[FieldName];
 
-		        var context = Context.Create(new DependencyResolver(new Config()));
-		        var service = new SitecoreService(database.Database, context);
+                var context = Context.Create(new DependencyResolver(new Config()));
+                var service = new SitecoreService(database.Database, context);
 
-		        //Act
-		        var result =
-		            service.GetItem<StubImage>("/sitecore/content/TestItem");
+                //Act
+                var result =
+                    service.GetItem<StubImage>("/sitecore/content/TestItem");
 
-		        //Assert
-		        Assert.IsNull(result.Field);
-		    }
+                //Assert
+                Assert.IsNull(result.Field);
+            }
         }
 
         [Test]
@@ -179,11 +211,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
             })
             {
-		        var item = database.GetItem("/sitecore/content/TestItem");
+                var item = database.GetItem("/sitecore/content/TestItem");
                 var field = item.Fields[FieldName];
                 var mapper = new SitecoreFieldImageMapper();
                 var service = Substitute.For<ISitecoreService>();
-                var options= new GetItemOptionsParams();
+                var options = new GetItemOptionsParams();
 
                 service.Config = new Config();
 
@@ -286,8 +318,25 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
 
 
-                Sitecore.Resources.Media.MediaProvider mediaProvider = Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+              
 
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(
+                        Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId),
+                        Arg.Is<MediaUrlOptions>(x => pred(x))
+                    )
+                    .Returns(expected);
+
+#else
+                Sitecore.Resources.Media.MediaProvider mediaProvider =
+                    Substitute.For<Sitecore.Resources.Media.MediaProvider>();
                 mediaProvider
                     .GetMediaUrl(
                         Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaId),
@@ -295,8 +344,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     )
                     .Returns(expected);
 
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
+
 
                     var item = database.GetItem("/sitecore/content/TestItem");
                     var field = item.Fields[FieldName];
@@ -315,7 +365,6 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Assert.IsTrue(result.Src.EndsWith(expected));
                     Assert.AreEqual(20, result.VSpace);
                     Assert.AreEqual(640, result.Width);
-                }
             }
         }
 
