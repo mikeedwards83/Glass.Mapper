@@ -1,2 +1,0 @@
-F:\Glass\Glass.Mapper\bin\AutoTest.Net\_tmpIntermediateAT\Glass.Mapper.Website.csprojResolveAssemblyReference.cache
-F:\Glass\Glass.Mapper-Website\bin\AutoTest.Net\_tmpIntermediateAT\Glass.Mapper.Website.csprojResolveAssemblyReference.cache
