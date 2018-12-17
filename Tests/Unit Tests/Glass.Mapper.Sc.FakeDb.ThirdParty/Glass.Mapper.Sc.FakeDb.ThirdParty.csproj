@@ -45,8 +45,9 @@
       <HintPath>..\..\..\packages\SimpleInjector.3.2.2\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.FakeDb, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.FakeDb.1.4.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
+    <Reference Include="Sitecore.FakeDb">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore.FakeDb\$(ScFakeDBVersion)\Sitecore.FakeDb.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -78,8 +79,7 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="App.config.82">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

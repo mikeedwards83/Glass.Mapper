@@ -23,6 +23,12 @@
       <dependency id="Glass.Mapper.Sc.$scVersion$.Mvc" version="$version$" />
       <dependency id="Glass.Mapper.Sc.$scVersion$.WebForms" version="$version$" />
     </dependencies>
+	<contentFiles>
+
+		<files include="**/*.*" buildAction="Content" />
+
+		
+  </contentFiles>
   </metadata>
   <files>
 
@@ -35,4 +41,5 @@
     <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
   </files>
+
 </package>

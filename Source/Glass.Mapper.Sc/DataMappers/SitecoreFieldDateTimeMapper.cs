@@ -26,13 +26,10 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object GetFieldValue(string fieldValue, Configuration.SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             var isoDate = Sitecore.DateUtil.IsoDateToDateTime(fieldValue);
-#if (SC80 || SC81 || SC82 || SC90)
+
             return fieldValue.EndsWith("Z", StringComparison.OrdinalIgnoreCase) 
                 ? Sitecore.DateUtil.ToServerTime(isoDate) 
                 : isoDate;
-#else
-            return isoDate;
-#endif
         }
 
         /// <summary>
@@ -49,11 +46,8 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 DateTime date = (DateTime)value;
 
-#if (SC80 || SC81 || SC82 || SC90)
+
                 return global::Sitecore.DateUtil.ToIsoDate(date, false, true);
-#else
-                return global::Sitecore.DateUtil.ToIsoDate(date);
-#endif
             }
             else
                 throw new NotSupportedException("The value is not of type System.DateTime");

@@ -8,6 +8,11 @@ using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Links;
 
+#if SC90 || SC91
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
+
 namespace Glass.Mapper.Sc.FakeDb.DataMappers
 {
     [TestFixture]
@@ -16,7 +21,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         #region Method - GetField
 
-        
+
 
 
         [Test]
@@ -229,7 +234,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var fieldValue =
                     "<link text=\"Test description\" linktype=\"internal\" url=\"/Target.aspx\" anchor=\"testAnchor\" querystring=\"q=s\" title=\"test alternative\" class=\"testClass\" target=\"testTarget\" id=\"{0}\" />"
                         .Formatted(targetId);
-                    
+
                 Sitecore.Context.Site = null;
 
 
@@ -241,6 +246,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
+#if SC90 || SC91
+
+                var linkProvider = Substitute.For<BaseLinkManager>();
+                linkProvider
+                    .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
+                    .Returns("/target.aspx");
+
+                SitecoreVersionAbstractions.LinkManager = new LazyResetable<BaseLinkManager>(() => linkProvider);
+#else
+
                 Sitecore.Links.LinkProvider provider =
                      Substitute.For<Sitecore.Links.LinkProvider>();
                 provider
@@ -248,22 +263,22 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                   .Returns("/target.aspx");
 
 
-                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
-                {
-                    //Act
-                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+                new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
+#endif
 
-                    //Assert
-                    Assert.AreEqual("testAnchor", result.Anchor);
-                    Assert.AreEqual("testClass", result.Class);
-                    Assert.AreEqual("q=s", result.Query);
-                    Assert.AreEqual("testTarget", result.Target);
-                    Assert.AreEqual(targetId.Guid, result.TargetId);
-                    Assert.AreEqual("Test description", result.Text);
-                    Assert.AreEqual("test alternative", result.Title);
-                    Assert.AreEqual(LinkType.Internal, result.Type);
-                    Assert.AreEqual("/target.aspx", result.Url);
-                }
+                //Act
+                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+                //Assert
+                Assert.AreEqual("testAnchor", result.Anchor);
+                Assert.AreEqual("testClass", result.Class);
+                Assert.AreEqual("q=s", result.Query);
+                Assert.AreEqual("testTarget", result.Target);
+                Assert.AreEqual(targetId.Guid, result.TargetId);
+                Assert.AreEqual("Test description", result.Text);
+                Assert.AreEqual("test alternative", result.Title);
+                Assert.AreEqual(LinkType.Internal, result.Type);
+                Assert.AreEqual("/target.aspx", result.Url);
             }
         }
 
@@ -292,7 +307,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
                 var fieldValue = "/sitecore/content/Target";
-                        
+
                 Sitecore.Context.Site = null;
 
 
@@ -304,29 +319,43 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
-                Sitecore.Links.LinkProvider provider =
-                    Substitute.For<Sitecore.Links.LinkProvider>();
-                provider
+
+#if SC90 || SC91
+
+                var linkProvider = Substitute.For<BaseLinkManager>();
+                linkProvider
                     .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
                     .Returns("/target.aspx");
 
+                SitecoreVersionAbstractions.LinkManager = new LazyResetable<BaseLinkManager>(() => linkProvider);
+#else
 
-                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
-                {
-                    //Act
-                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+                Sitecore.Links.LinkProvider provider =
+                     Substitute.For<Sitecore.Links.LinkProvider>();
+                provider
+                  .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
+                  .Returns("/target.aspx");
 
-                    //Assert
-                    Assert.AreEqual(null, result.Anchor);
-                    Assert.AreEqual(null, result.Class);
-                    Assert.AreEqual(null, result.Query);
-                    Assert.AreEqual(null, result.Target);
-                    Assert.AreEqual(targetId.Guid, result.TargetId);
-                    Assert.AreEqual("Target", result.Text);
-                    Assert.AreEqual(null, result.Title);
-                    Assert.AreEqual(LinkType.Internal, result.Type);
-                    Assert.AreEqual("/target.aspx", result.Url);
-                }
+
+                new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
+#endif
+
+
+
+
+                //Act
+                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+                //Assert
+                Assert.AreEqual(null, result.Anchor);
+                Assert.AreEqual(null, result.Class);
+                Assert.AreEqual(null, result.Query);
+                Assert.AreEqual(null, result.Target);
+                Assert.AreEqual(targetId.Guid, result.TargetId);
+                Assert.AreEqual("Target", result.Text);
+                Assert.AreEqual(null, result.Title);
+                Assert.AreEqual(LinkType.Internal, result.Type);
+                Assert.AreEqual("/target.aspx", result.Url);
             }
         }
 
@@ -367,6 +396,16 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
+#if SC90 || SC91
+
+                var linkProvider = Substitute.For<BaseLinkManager>();
+                linkProvider
+                    .GetItemUrl(item, Arg.Any<Sitecore.Links.UrlOptions>())
+                    .Returns("/target.aspx");
+
+                SitecoreVersionAbstractions.LinkManager = new LazyResetable<BaseLinkManager>(() => linkProvider);
+#else
+
                 Sitecore.Links.LinkProvider provider =
                      Substitute.For<Sitecore.Links.LinkProvider>();
                 provider
@@ -374,22 +413,23 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                   .Returns("/target.aspx");
 
 
-                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
-                {
-                    //Act
-                    var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+                new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
+#endif
 
-                    //Assert
-                    Assert.AreEqual("testAnchor", result.Anchor);
-                    Assert.AreEqual("testClass", result.Class);
-                    Assert.AreEqual("q=s%3d", result.Query);
-                    Assert.AreEqual("testTarget", result.Target);
-                    Assert.AreEqual(targetId.Guid, result.TargetId);
-                    Assert.AreEqual("Test description", result.Text);
-                    Assert.AreEqual("test alternative", result.Title);
-                    Assert.AreEqual(LinkType.Internal, result.Type);
-                    Assert.AreEqual("/target.aspx", result.Url);
-                }
+                //Act
+                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+
+                //Assert
+                Assert.AreEqual("testAnchor", result.Anchor);
+                Assert.AreEqual("testClass", result.Class);
+                Assert.AreEqual("q=s%3d", result.Query);
+                Assert.AreEqual("testTarget", result.Target);
+                Assert.AreEqual(targetId.Guid, result.TargetId);
+                Assert.AreEqual("Test description", result.Text);
+                Assert.AreEqual("test alternative", result.Title);
+                Assert.AreEqual(LinkType.Internal, result.Type);
+                Assert.AreEqual("/target.aspx", result.Url);
+
             }
         }
 
@@ -481,31 +521,49 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
+
+#if SC90 || SC91
+
+                var linkProvider = Substitute.For<BaseLinkManager>();
+                linkProvider
+                    .GetItemUrl(item, Arg.Is<Sitecore.Links.UrlOptions>(x => x.LanguageEmbedding == LanguageEmbedding.Never))
+                    .Returns("/target.aspx");
+
+                SitecoreVersionAbstractions.LinkManager = new LazyResetable<BaseLinkManager>(() => linkProvider);
+#else
+
                 Sitecore.Links.LinkProvider provider =
-                   Substitute.For<Sitecore.Links.LinkProvider>();
+                     Substitute.For<Sitecore.Links.LinkProvider>();
                 provider
-                  .GetItemUrl(item, Arg.Is<Sitecore.Links.UrlOptions>(x=>x.LanguageEmbedding == LanguageEmbedding.Never))
+                  .GetItemUrl(item, Arg.Is<Sitecore.Links.UrlOptions>(x => x.LanguageEmbedding == LanguageEmbedding.Never))
                   .Returns("/target.aspx");
 
 
-                using (new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider))
-                {
+                new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
+#endif
 
-                    //Act
-                    var result = mapper.GetField(field, config, null) as Link;
 
-                    //Assert
-                    Assert.AreEqual("testAnchor", result.Anchor);
-                    Assert.AreEqual("testClass", result.Class);
-                    Assert.AreEqual("q=s", result.Query);
-                    Assert.AreEqual("testTarget", result.Target);
-                    Assert.AreEqual(targetId.Guid, result.TargetId);
-                    Assert.AreEqual("Test description", result.Text);
-                    Assert.AreEqual("test alternative", result.Title);
-                    Assert.AreEqual(LinkType.Internal, result.Type);
-                    Assert.AreEqual("/target.aspx",
-                        result.Url);
-                }
+
+
+
+
+
+
+
+                //Act
+                var result = mapper.GetField(field, config, null) as Link;
+
+                //Assert
+                Assert.AreEqual("testAnchor", result.Anchor);
+                Assert.AreEqual("testClass", result.Class);
+                Assert.AreEqual("q=s", result.Query);
+                Assert.AreEqual("testTarget", result.Target);
+                Assert.AreEqual(targetId.Guid, result.TargetId);
+                Assert.AreEqual("Test description", result.Text);
+                Assert.AreEqual("test alternative", result.Title);
+                Assert.AreEqual(LinkType.Internal, result.Type);
+                Assert.AreEqual("/target.aspx",
+                    result.Url);
             }
         }
 
@@ -585,30 +643,41 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 {
                     field.Value = fieldValue;
                 }
-                Sitecore.Resources.Media.MediaProvider mediaProvider =
-                    NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
 
-                mediaProvider
+
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == targetId))
+                    .Returns("Media.Aspx");
+#else
+                Sitecore.Resources.Media.MediaProvider mediaProvider =
+                    Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+                 mediaProvider
                     .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == targetId))
                     .Returns("Media.Aspx");
 
-                // substitute the original provider with the mocked one
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
-                    //Act
-                    var result = mapper.GetField(field, null, null) as Link;
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
 
-                    //Assert
-                    Assert.AreEqual("", result.Anchor);
-                    Assert.AreEqual("testClass", result.Class);
-                    Assert.AreEqual("", result.Query);
-                    Assert.AreEqual("_blank", result.Target);
-                    Assert.AreEqual(targetId.Guid, result.TargetId);
-                    Assert.AreEqual("Test description", result.Text);
-                    Assert.AreEqual("test alternative", result.Title);
-                    Assert.AreEqual(LinkType.Media, result.Type);
-                    Assert.AreEqual("Media.Aspx", result.Url);
-                }
+
+                //Act
+                var result = mapper.GetField(field, null, null) as Link;
+
+                //Assert
+                Assert.AreEqual("", result.Anchor);
+                Assert.AreEqual("testClass", result.Class);
+                Assert.AreEqual("", result.Query);
+                Assert.AreEqual("_blank", result.Target);
+                Assert.AreEqual(targetId.Guid, result.TargetId);
+                Assert.AreEqual("Test description", result.Text);
+                Assert.AreEqual("test alternative", result.Title);
+                Assert.AreEqual(LinkType.Media, result.Type);
+                Assert.AreEqual("Media.Aspx", result.Url);
             }
         }
 
@@ -768,7 +837,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
                 //Assert
-                AssertHtml.AreHtmlElementsEqual(expected, field.Value,"link");
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -794,7 +863,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 var expected =
                     "<link url=\"javascript:alert('hello world');\" text=\"Test description\" class=\"testClass\" title=\"test alternative\" linktype=\"javascript\" />";
 
-                var item =database.GetItem("/sitecore/content/Target");
+                var item = database.GetItem("/sitecore/content/Target");
                 var field = item.Fields[fieldName];
 
                 var value = new Link()
@@ -1154,25 +1223,36 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = string.Empty;
                 }
 
-                Sitecore.Resources.Media.MediaProvider mediaProvider =
-                  NSubstitute.Substitute.For<Sitecore.Resources.Media.MediaProvider>();
 
-                mediaProvider
+#if SC90 || SC91
+
+                var mediaUrlProvider = Substitute.For<BaseMediaManager>();
+
+                SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
+
+                mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == targetId))
+                    .Returns("Media.Aspx");
+#else
+                Sitecore.Resources.Media.MediaProvider mediaProvider =
+                    Substitute.For<Sitecore.Resources.Media.MediaProvider>();
+                 mediaProvider
                     .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == targetId))
                     .Returns("Media.Aspx");
 
-                // substitute the original provider with the mocked one
-                using (new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider))
-                {
-                    //Act
-                    using (new ItemEditing(item, true))
-                    {
-                        mapper.SetField(field, value, null, null);
-                    }
+                new Sitecore.FakeDb.Resources.Media.MediaProviderSwitcher(mediaProvider);
+#endif
 
-                    //Assert
-                    AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
+
+
+                //Act
+                using (new ItemEditing(item, true))
+                {
+                    mapper.SetField(field, value, null, null);
                 }
+
+                //Assert
+                AssertHtml.AreHtmlElementsEqual(expected, field.Value, "link");
             }
         }
 
@@ -1222,8 +1302,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 //Act
                 using (new ItemEditing(item, true))
                 {
-                    Assert.Throws<MapperException>(() => {
-                                                             mapper.SetField(field, value, null, null);
+                    Assert.Throws<MapperException>(() =>
+                    {
+                        mapper.SetField(field, value, null, null);
                     });
                 }
 

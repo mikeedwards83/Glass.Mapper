@@ -255,6 +255,7 @@
     <Compile Include="SitecoreContentContext.cs" />
     <Compile Include="SitecoreContext.cs" />
     <Compile Include="SitecoreDataMappingContext.cs" />
+    <Compile Include="SitecoreVersionAbstractions.cs" />
     <Compile Include="Web\IRequestContextExtensionMethods.cs" />
     <Compile Include="Web\IRequestContext.cs" />
     <Compile Include="Web\RequestContext.cs" />

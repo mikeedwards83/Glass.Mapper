@@ -33,7 +33,7 @@ namespace Glass.Mapper.Sc.DataMappers
             FileField fileField = new FileField(field);
             File file = new File();
             if (fileField.MediaItem != null)
-                file.Src = MediaManager.GetMediaUrl(fileField.MediaItem);
+                file.Src = SitecoreVersionAbstractions.GetMediaUrl(fileField.MediaItem);
             file.Id = fileField.MediaID.Guid;
 
             return file;
@@ -106,7 +106,8 @@ namespace Glass.Mapper.Sc.DataMappers
         public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             throw new NotImplementedException();
-        }
+        }
+
     }
 }
 

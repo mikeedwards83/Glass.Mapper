@@ -4,6 +4,9 @@ using System.Linq;
 using Glass.Mapper.Configuration;
 using Glass.Mapper.Pipelines.DataMapperResolver;
 using Glass.Mapper.Sc.Configuration;
+
+
+
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -21,6 +24,11 @@ namespace Glass.Mapper.Sc.DataMappers
         private readonly IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
         private readonly IUrlOptionsResolver _urlOptionsResolver;
         private Func<Item, object> _getValue = item => null;
+
+
+
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SitecoreInfoMapper"/> class.
@@ -120,6 +128,12 @@ namespace Glass.Mapper.Sc.DataMappers
             return _getValue(item);
         }
 
+
+
+
+
+
+
         /// <summary>
         /// Sets up the data mapper for a particular property
         /// </summary>
@@ -158,7 +172,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                         var media = new MediaItem(item);
-                        return MediaManager.GetMediaUrl(media, mediaUrlOptions);
+                        return SitecoreVersionAbstractions.GetMediaUrl(media, mediaUrlOptions);
                     };
                     break;
                 case SitecoreInfoType.Path:
@@ -187,7 +201,7 @@ namespace Glass.Mapper.Sc.DataMappers
                         {
                             urlOptions.Language = null;
                         }
-                        return LinkManager.GetItemUrl(item, urlOptions);
+                        return SitecoreVersionAbstractions.GetItemUrl(item, urlOptions);
                     };
                     break;
                 case SitecoreInfoType.Version:
@@ -223,7 +237,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.ItemUri:
                     _getValue = item => new ItemUri(item.ID, item.Language, item.Version, item.Database);
                     break;
-#if (SC82  || SC90)
+#if (SC82  || SC90 || SC91) 
                 case SitecoreInfoType.OriginalLanguage:
                     _getValue = item => item.OriginalLanguage;
                     break;

@@ -53,11 +53,12 @@
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.FakeDb, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.FakeDb.1.4.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
-    </Reference>
     <Reference Include="sitecore.nexus">
       <HintPath>..\$(ScDir)sitecore.nexus.dll</HintPath>
+    </Reference>
+	 <Reference Include="Sitecore.FakeDb">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Depends\Sitecore.FakeDb\$(ScFakeDBVersion)\Sitecore.FakeDb.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -77,22 +78,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Mvc)' == '4'">
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\..\Depends\System.Web.Mvc\v4\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages">
-      <HintPath>..\..\..\Depends\System.Web.WebPages\v2\System.Web.WebPages.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Mvc)' == '3'">
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\..\Depends\System.Web.Mvc\v3\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages">
-      <HintPath>..\..\..\Depends\System.Web.WebPages\v1\System.Web.WebPages.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '5'">
     <Reference Include="System.Web.Mvc">
@@ -116,6 +101,14 @@
     </Reference>
     <Reference Include="System.Web.WebPages">
       <HintPath>..\..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Mvc)' == '526'">
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\Depends\System.Web.Mvc\v526\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\..\Depends\System.Web.WebPages\v304\System.Web.WebPages.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

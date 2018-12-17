@@ -69,12 +69,15 @@ namespace Glass.Mapper.Sc.DataMappers
         protected void MapToLinkModel(Link link, InternalLinkField field, SitecoreFieldConfiguration config)
         {
             var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
-            link.Url = field.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(field.TargetItem, urlOptions);
+            link.Url = field.TargetItem == null ? string.Empty : SitecoreVersionAbstractions.GetItemUrl(field.TargetItem, urlOptions);
             link.Type = LinkType.Internal;
             link.TargetId = field.TargetItem == null ? Guid.Empty : field.TargetItem.ID.Guid;
             link.Text = field.TargetItem == null ? string.Empty : field.TargetItem.DisplayName;
 
         }
+
+
+
 
         protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config)
         {
@@ -111,14 +114,14 @@ namespace Glass.Mapper.Sc.DataMappers
                     {
                         global::Sitecore.Data.Items.MediaItem media =
                             new global::Sitecore.Data.Items.MediaItem(linkField.TargetItem);
-                        link.Url = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                        link.Url = SitecoreVersionAbstractions.GetMediaUrl(media);
                     }
                     link.Type = LinkType.Media;
                     link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
                     var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
-                    link.Url = linkField.TargetItem == null ? string.Empty : LinkManager.GetItemUrl(linkField.TargetItem, urlOptions);
+                    link.Url = linkField.TargetItem == null ? string.Empty : SitecoreVersionAbstractions.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
                     link.Text = linkField.Text.IsNullOrEmpty() ? (linkField.TargetItem == null ? string.Empty : linkField.TargetItem.DisplayName) : linkField.Text;
@@ -192,7 +195,7 @@ namespace Glass.Mapper.Sc.DataMappers
                                 linkField.TargetID = newId;
                                 ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                                 linkField.UpdateLink(nLink);
-                                linkField.Url = LinkManager.GetItemUrl(target);
+                                linkField.Url = SitecoreVersionAbstractions.GetItemUrl(target);
                             }
                             else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));
                         }
@@ -220,7 +223,7 @@ namespace Glass.Mapper.Sc.DataMappers
                                 linkField.TargetID = newId;
                                 ItemLink nLink = new ItemLink(item.Database.Name, item.ID, linkField.InnerField.ID, target.Database.Name, target.ID, target.Paths.FullPath);
                                 linkField.UpdateLink(nLink);
-                                var mediaUrl = global::Sitecore.Resources.Media.MediaManager.GetMediaUrl(media);
+                                var mediaUrl = SitecoreVersionAbstractions.GetMediaUrl(media);
                                 linkField.Url = mediaUrl;
                             }
                             else throw new MapperException("No item with ID {0}. Can not update Link linkField".Formatted(newId));

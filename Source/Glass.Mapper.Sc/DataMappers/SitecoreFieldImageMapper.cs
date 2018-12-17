@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (field.MediaItem != null)
             {
-                img.Src = MediaManager.GetMediaUrl(field.MediaItem, mediaUrlOptions);
+                img.Src = SitecoreVersionAbstractions.GetMediaUrl(field.MediaItem, mediaUrlOptions);
                 var fieldTitle = field.MediaItem.Fields["Title"];
                 if (fieldTitle != null)
                     img.Title = fieldTitle.Value;
@@ -102,7 +102,7 @@ namespace Glass.Mapper.Sc.DataMappers
             // img.Height = height;
             // img.HSpace = hSpace;
             img.MediaId = imageItem.ID.Guid;
-            img.Src = MediaManager.GetMediaUrl(imageItem);
+            img.Src = SitecoreVersionAbstractions.GetMediaUrl(imageItem);
             // img.VSpace = vSpace;
             // img.Width = width;
         }
