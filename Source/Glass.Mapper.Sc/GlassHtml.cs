@@ -468,14 +468,13 @@ namespace Glass.Mapper.Sc
         /// <param name="link">The link to render</param>
         /// <param name="attributes">Addtiional parameters to add. Do not include href or title</param>
         /// <param name="contents">Content to go in the link instead of the standard text</param>
-        /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Link link, SafeDictionary<string> attributes, string contents,
             TextWriter writer)
         {
             if (link == null)
             {
-                link = new Link();
+                return new RenderingResult(writer, string.Empty, string.Empty);
             }
 
             if (attributes == null) attributes = new SafeDictionary<string>();
