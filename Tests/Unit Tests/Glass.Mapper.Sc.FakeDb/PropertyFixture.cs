@@ -228,4 +228,67 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
     }
-}
+
+
+    /// <summary>
+    /// Test mapping of different property accessors.
+    /// </summary>
+    [TestFixture]
+    public class ProtectedPropertyFixture
+    {
+
+        [Test]
+        public void Protected_MapsDataToProtectedField()
+        {
+            //Arrange
+            Guid id = Guid.NewGuid();
+            string expected1 = "Field Value1";
+            string expected2 = "Field Value2";
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+                {
+                    {"Field1",expected1 },
+                    {"Field2",expected2 }
+                }
+            })
+            {
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var loader = new SitecoreFluentConfigurationLoader();
+                loader.Add(ProtectedModel.Load());
+                context.Load(loader);
+
+                var service = new SitecoreService(database.Database, context);
+
+                //Act
+                var result = service.GetItem<ProtectedModel>(id, x => { });
+
+                //Arrange
+                Assert.AreEqual(expected2, result.Field2);
+
+                Assert.AreEqual(expected1, result.Field1Public);
+
+
+            }
+
+        }
+
+        public class ProtectedModel
+        {
+            protected virtual string Field1 { get; set; }
+            public virtual string Field2 { get; protected set; }
+
+            public static SitecoreType<ProtectedModel> Load()
+            {
+                var config = new SitecoreType<ProtectedModel>();
+                config.Field(x => x.Field1);
+                config.Field(x => x.Field2);
+                return config;
+            }
+
+            public string Field1Public => Field1;
+        }
+
+    }
+    }
