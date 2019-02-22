@@ -82,8 +82,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
                     var property = _args == null ? null : _args.Configuration[name];
 
-                    if (property != null || Values.ContainsKey(name)
-                    ) //check values as well encase the object has already been deserialised
+                    if (ValidProperty(property) || Values.ContainsKey(name)) //check values as well encase the object has already been deserialised
                     {
                         if (method == "get_") //&& Values.ContainsKey(name))
                         {
@@ -107,6 +106,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
 
                 invocation.Proceed();
             }
+        }
+
+        protected virtual bool ValidProperty(AbstractPropertyConfiguration property)
+        {
+            return (property != null && property.Ignore == false && property.PropertyInfo.CanWrite);
         }
 
         #endregion

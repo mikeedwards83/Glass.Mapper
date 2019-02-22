@@ -274,10 +274,53 @@ namespace Glass.Mapper.Sc.FakeDb
 
         }
 
+
+        [Test]
+        public void Protected_MapsDataToProtectedFieldsIgnoresGetOnlyFields()
+        {
+            //Arrange
+            Guid id = Guid.NewGuid();
+            string expected1 = "V1";
+            string expected2 = "V2";
+            string expected3 = "V1V2";
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+                {
+                    {"Field1",expected1 },
+                    {"Field2",expected2 }
+                }
+            })
+            {
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                var loader = new SitecoreFluentConfigurationLoader();
+                loader.Add(ProtectedModel.Load());
+                context.Load(loader);
+
+                var service = new SitecoreService(database.Database, context);
+
+                //Act
+                var result = service.GetItem<ProtectedModel>(id, x => { });
+
+                //Arrange
+                Assert.AreEqual(expected2, result.Field2);
+
+                Assert.AreEqual(expected1, result.Field1Public);
+
+                Assert.AreEqual(expected3, result.Field3);
+
+
+            }
+
+        }
+
         public class ProtectedModel
         {
             protected virtual string Field1 { get; set; }
             public virtual string Field2 { get; protected set; }
+
+            public virtual string Field3 => Field1 + Field2;
 
             public static SitecoreType<ProtectedModel> Load()
             {

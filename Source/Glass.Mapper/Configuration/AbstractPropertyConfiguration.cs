@@ -86,6 +86,11 @@ namespace Glass.Mapper.Configuration
                                                                      PropertyInfo.ReflectedType.Assembly.FullName);
         }
 
+        /// <summary>
+        /// Indicates that the property should be ignored.
+        /// </summary>
+        public bool Ignore { get; set; }
+
         protected  abstract AbstractPropertyConfiguration CreateCopy();
 
         protected virtual void Copy(AbstractPropertyConfiguration copy)
