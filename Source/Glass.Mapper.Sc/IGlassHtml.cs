@@ -110,7 +110,7 @@ namespace Glass.Mapper.Sc
         string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false);
 
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
-                                      object attributes = null, bool isEditable = false);
+                                      object attributes = null, bool isEditable = false, bool alwaysRender = false);
 
         /// <summary>
         /// Render HTML for a link
@@ -119,7 +119,7 @@ namespace Glass.Mapper.Sc
         /// <param name="alwaysRender">Renders an A element even if the link is null</param>
         /// <returns>An "a" HTML element</returns>
         string RenderLink<T>(T model, Expression<Func<T, object>> field, object attributes = null,
-                             bool isEditable = false, string contents = null);
+                             bool isEditable = false, string contents = null, bool alwaysRender = false);
 
 
         /// <summary>

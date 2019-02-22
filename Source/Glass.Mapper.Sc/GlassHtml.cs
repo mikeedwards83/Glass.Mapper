@@ -320,7 +320,7 @@ namespace Glass.Mapper.Sc
 
 
 
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, bool alwaysRender = false)
         {
             NameValueCollection attrs;
 
@@ -345,7 +345,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), string.Empty, writer);
+                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), string.Empty, writer, alwaysRender);
             }
         }
 
@@ -382,7 +382,8 @@ namespace Glass.Mapper.Sc
             Expression<Func<T, object>> field,
             object attributes = null,
             bool isEditable = false,
-            string contents = null)
+            string contents = null,
+            bool alwaysRender = false)
         {
             NameValueCollection attrs;
 
@@ -423,7 +424,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), contents, writer
+                        GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), contents, writer, alwaysRender
                     );
             }
 
@@ -470,11 +471,18 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Link link, SafeDictionary<string> attributes, string contents,
-            TextWriter writer)
+            TextWriter writer, bool alwaysRender)
         {
             if (link == null)
             {
-                return new RenderingResult(writer, string.Empty, string.Empty);
+                if (alwaysRender)
+                {
+                    link = new Link();
+                }
+                else
+                {
+                    return new RenderingResult(writer, string.Empty, string.Empty);
+                }
             }
 
             if (attributes == null) attributes = new SafeDictionary<string>();
@@ -638,7 +646,7 @@ namespace Glass.Mapper.Sc
                     var link = target as Link;
                     var sb = new StringBuilder();
                     var linkWriter = new StringWriter(sb);
-                    var result = BeginRenderLink(link, dictionary, null, linkWriter);
+                    var result = BeginRenderLink(link, dictionary, null, linkWriter,false);
                     result.Dispose();
                     linkWriter.Flush();
                     linkWriter.Close();
