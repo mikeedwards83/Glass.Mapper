@@ -62,6 +62,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 options.Copy(mappingContext.Options);
 
                 options.Query = Sc.Query.New(query);
+                options.Language = scContext.Item.Language;
 
                 scConfig.GetPropertyOptions(options);
 
@@ -77,14 +78,16 @@ namespace Glass.Mapper.Sc.DataMappers
             {
                 var options = new GetItemByQueryOptions();
                 options.Copy(mappingContext.Options);
-
                 options.Query = Sc.Query.New(query);
+                options.Language = scContext.Item.Language;
+
                 scConfig.GetPropertyOptions(options);
 
                 if (scConfig.IsRelative)
                 {
                     options.RelativeItem = scContext.Item;
                 }
+
 
                 return scContext.Service.GetItem(options);
             }

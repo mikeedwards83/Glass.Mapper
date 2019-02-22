@@ -360,6 +360,76 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             }
         }
 
+
+        [Test]
+        public void MapToProperty_AbsoluteQueryMultiLanguages_ReturnsResults()
+        {
+            //Assign
+
+            var templateId = ID.NewID;
+
+
+            using (Db database = new Db
+            {
+
+                new Sitecore.FakeDb.DbItem("Target")
+                {
+                     new DbTemplate(templateId)
+                {
+                    {"title", ""}
+                },
+                    new Sitecore.FakeDb.DbItem("Child1", new ID(Guid.NewGuid()), templateId) {
+                        Fields =
+                        {
+                            new DbField("title")
+                            {
+                                {"en", "test en"},
+                                {"da", "test"}
+                            }
+                        }
+                    },
+                    new Sitecore.FakeDb.DbItem("Child2", new ID(Guid.NewGuid()), templateId)
+                    {
+                        Fields =
+                        {
+                            new DbField("title")
+                            {
+                                {"en", "test en"},
+                                {"da", "test1"}
+                            }
+                        },
+                    }
+                }
+            })
+            {
+                var config = new SitecoreQueryConfiguration();
+                config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
+
+                config.Query = "/sitecore/content/Target/Child2";
+                config.IsRelative = false;
+
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
+
+                var mapper = new SitecoreQueryMapper(null);
+                mapper.Setup(new DataMapperResolverArgs(context, config));
+
+                var source = database.GetItem("/sitecore/content/Target/child1", "da");
+                var service = new SitecoreService(database.Database, context);
+
+                var options = new GetItemOptionsParams();
+
+                //Act
+                var results =
+                    mapper.MapToProperty(new SitecoreDataMappingContext(null, source, service, options)) as
+                        IEnumerable<StubMapped>;
+
+                //Assert
+                Assert.AreEqual(1, results.Count());
+                Assert.AreEqual("test1", results.First().Title);
+            }
+        }
+
         [Test]
         public void MapToProperty_RelativeQuery_ReturnsSingleResults()
         {
@@ -500,7 +570,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
                 config.Query = "/sitecore/content/Target/*";
                 config.IsRelative = false;
-                
+
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
@@ -548,12 +618,12 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 config.PropertyInfo = typeof(StubClass).GetProperty("StubMappeds");
                 config.Query = "{path}/../Results/*";
                 config.IsRelative = false;
-               
+
 
                 var context = Context.Create(Utilities.CreateStandardResolver());
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubMapped)));
 
-                var mapper = new SitecoreQueryMapper(new[] {new ItemPathParameter()});
+                var mapper = new SitecoreQueryMapper(new[] { new ItemPathParameter() });
                 mapper.Setup(new DataMapperResolverArgs(context, config));
 
                 var source = database.GetItem("/sitecore/content/Target");
@@ -585,6 +655,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         {
             [SitecoreId]
             public virtual Guid Id { get; set; }
+
+            [SitecoreField]
+            public virtual string Title { get; set; }
         }
 
         public class StubNotMapped { }
