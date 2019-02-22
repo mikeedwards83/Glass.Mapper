@@ -1,29 +1,39 @@
 
 
-/*******************************/
+			/*******************************/
 
-Glass.Mapper.Sc V5
+				  Glass.Mapper.Sc V5
 
-/*******************************/
-
-Thank you for downloading Glass.Mapper.Sc V5, this is the latest and greatest version of Glass.Mapper.Sc.
+			/*******************************/
 
 
+  _______ _    _          _   _ _  __ __     ______  _    _     _ 
+ |__   __| |  | |   /\   | \ | | |/ / \ \   / / __ \| |  | |   | |
+    | |  | |__| |  /  \  |  \| | ' /   \ \_/ / |  | | |  | |   | |
+    | |  |  __  | / /\ \ | . ` |  <     \   /| |  | | |  | |   | |
+    | |  | |  | |/ ____ \| |\  | . \     | | | |__| | |__| |   |_|
+    |_|  |_|  |_/_/    \_\_| \_|_|\_\    |_|  \____/ \____/    (_)
 
 
-/****** LEARN MORE ABOUR GLASS ******/
+Glass.Mapper.Sc is made possible by the generous donations of our Patreon backers! Personally from myself a massive
+THANK YOU to all of you!! - Mike
 
-Get Glass.Mapper.Sc V5 Training here http://www.glass.lu/Training.
+To find out more about our backers visit https://www.glass.lu/rockstars.
 
+If you would like to add your name to this amazing list of people visit our Patreon page https://www.patreon.com/glassmappersc
+
+
+/****** LEARN MORE ABOUT GLASS ******/
+
+Learn how to use the framework by getting Glass.Mapper.Sc V5 Training here http://www.glass.lu/Training.
+
+For help and support visit https://www.glass.lu/support.
 
 -----------------------------------------------------------------------------------------------------
 
-For more information on how to use the framework please visit http://www.glass.lu/Mapper/Sc
-
+For more information on how to use the framework please visit http://www.glass.lu/Mapper
 
 Glass.Mapper.Sc is distributed under the Apache License 2.0 https://github.com/mikeedwards83/Glass.Mapper/blob/master/License.txt
-
-You can stay up to date with Glass.Mapper.Sc by signing up to receive our newsletter http://www.glass.lu/Signup
 
 We automatically generate a website contain help information which you can read at http://docs.glass.lu
 
