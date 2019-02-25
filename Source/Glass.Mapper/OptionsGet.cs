@@ -51,12 +51,7 @@ namespace Glass.Mapper
             if (Type == null)
             {
                 throw new NullReferenceException("No Type defined");
-            }
-
-            if (Cache.IsEnabled() && Lazy != LazyLoading.Disabled)
-            {
-                throw new NotSupportedException("Both Cache and IsLazy cannot be true. Cached models cannot lazy load.");
-            }
+            }                      
         }
 
         public virtual void Copy(GetOptions other)

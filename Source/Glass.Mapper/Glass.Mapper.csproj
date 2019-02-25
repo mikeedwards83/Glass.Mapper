@@ -63,6 +63,7 @@
     <Compile Include="AbstractTypeSavingContext.cs" />
     <Compile Include="ActivationManager.cs" />
     <Compile Include="Caching\AbstractCacheManager.cs" />
+    <Compile Include="Caching\CacheFactory.cs" />
     <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
     <Compile Include="Caching\HttpCache.cs" />
     <Compile Include="Caching\ICacheKeyGenerator.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
     <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
     <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperAttributeResolverTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAlwaysOnCheck\CacheAlwaysOnCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\DepthCheck\ModelDepthCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />

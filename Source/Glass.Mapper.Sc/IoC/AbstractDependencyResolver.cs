@@ -15,7 +15,6 @@ namespace Glass.Mapper.Sc.IoC
     {
         public Mapper.Config Config { get; set; }
         public ILog Log { get; set; }
-        public Func<ICacheManager> CacheManager { get; set; }
         public IConfigFactory<AbstractDataMapperResolverTask> DataMapperResolverFactory { get; set; }
         public IConfigFactory<AbstractDataMapper> DataMapperFactory { get; set; }
         public IConfigFactory<AbstractConfigurationResolverTask> ConfigurationResolverFactory { get; set; }
@@ -25,9 +24,7 @@ namespace Glass.Mapper.Sc.IoC
         public IGlassHtmlFactory GlassHtmlFactory { get; set; }
         public IConfigFactory<IGlassMap> ConfigurationMapFactory { get; set; }
         public LazyLoadingHelper LazyLoadingHelper { get; set; }
-
-        public abstract ICacheManager GetCacheManager();
-
+        public CacheFactory CacheFactory { get; set; }
 
         public abstract Mapper.Config GetConfig();
         public abstract ILog GetLog();

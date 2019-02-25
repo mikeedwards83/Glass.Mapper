@@ -10,7 +10,6 @@ namespace Glass.Mapper.Sc.IoC
             Config = config;
             LazyLoadingHelper = new LazyLoadingHelper();
             Log = new Log();
-            CacheManager = () => new NetMemoryCacheManager();
             QueryParameterFactory = new QueryParameterConfigFactory(this);
             DataMapperResolverFactory = new DataMapperTaskConfigFactory(this);
             DataMapperFactory = new DataMapperConfigFactory(this);
@@ -20,6 +19,7 @@ namespace Glass.Mapper.Sc.IoC
             ConfigurationMapFactory = new ConfigurationMapConfigFactory(this);
             GlassHtmlFactory = new GlassHtmlFactory(this);
             LazyLoadingHelper = new LazyLoadingHelper();
+            CacheFactory = new CacheFactory(() => new NetMemoryCacheManager());
         }
 
         public override Mapper.Config GetConfig()
@@ -33,9 +33,6 @@ namespace Glass.Mapper.Sc.IoC
         }
 
         
-        public override ICacheManager GetCacheManager()
-        {
-            return CacheManager();
-        }
+      
     }
 }

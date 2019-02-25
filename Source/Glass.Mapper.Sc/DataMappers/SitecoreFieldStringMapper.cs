@@ -7,6 +7,9 @@ using Sitecore.Pipelines.RenderField;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
+
+   
+
     /// <summary>
     /// Class SitecoreFieldStringMapper
     /// </summary>

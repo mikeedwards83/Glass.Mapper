@@ -4,9 +4,7 @@ namespace Glass.Mapper.Caching
 {
     public class InMemoryCache : AbstractCacheManager
     {
-        private readonly ConcurrentDictionary<string, object> _innerCache = new ConcurrentDictionary<string, object>();
-
-        protected ConcurrentDictionary<string, object> Cache { get { return _innerCache; } }
+        protected ConcurrentDictionary<string, object> Cache { get; } = new ConcurrentDictionary<string, object>();
 
 
         public override void ClearCache()

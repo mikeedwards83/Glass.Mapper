@@ -240,6 +240,7 @@
     <Compile Include="Pipelines\GetChromeData\EditFrameBuilder.cs" />
     <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheck.cs" />
     <Compile Include="Pipelines\ObjectConstruction\NullItemTask.cs" />
+    <Compile Include="Pipelines\ObjectConstruction\SitecoreCacheCheckTask.cs" />
     <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTask.cs" />
     <Compile Include="Pipelines\PostLoad\PostLoadPipeline.cs" />
     <Compile Include="Pipelines\PostLoad\PostLoadPipelineArgs.cs" />

@@ -35,7 +35,6 @@ namespace Glass.Mapper.Sc
             return Item.Paths.FullPath;
         }
 
-
         /// <summary>
         /// Creates the data mapping context.
         /// </summary>
@@ -51,7 +50,6 @@ namespace Glass.Mapper.Sc
             get { return SitecoreService.CacheEnabled 
                     && (Sitecore.Context.Site == null || Sitecore.Context.PageMode.IsNormal); }
         }
-
     }
 }
     
