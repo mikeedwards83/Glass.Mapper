@@ -13,11 +13,13 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
-using Sitecore.Abstractions;
+#if SC90 || SC91
+    using Sitecore.Abstractions;
+    using Sitecore.DependencyInjection;
+#endif
 using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
-using Sitecore.DependencyInjection;
 using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
