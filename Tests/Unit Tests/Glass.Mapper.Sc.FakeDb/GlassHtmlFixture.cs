@@ -2346,7 +2346,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -2371,7 +2371,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -2405,7 +2405,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "some'Alt";
             image.Width = 200;
@@ -2437,7 +2437,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "some\"Alt";
             image.Width = 200;
@@ -2466,7 +2466,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=126&amp;w=240' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreService>();
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -2490,7 +2490,7 @@ namespace Glass.Mapper.Sc.FakeDb
         {    //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' />";
             var scContext = Substitute.For<ISitecoreService>();
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -2515,7 +2515,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=450&amp;w=600' alt='someAlt' height='450' />";
             var scContext = Substitute.For<ISitecoreService>();
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -2540,7 +2540,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' alt='someAlt' height='105' class='someClass' width='200' />";
             var scContext = Substitute.For<ISitecoreService>();
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -2565,7 +2565,7 @@ namespace Glass.Mapper.Sc.FakeDb
             //Arrange
             var expected = "<img src='~/media/Images/Carousel/carousel-example.ashx?h=472&amp;as=True&amp;w=900' alt='someAlt' width='900' />";
             var scContext = Substitute.For<ISitecoreService>();
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             scContext.Config = new Config();
 
             var image = new Fields.Image();
@@ -2592,7 +2592,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var scContext = Substitute.For<ISitecoreService>();
             scContext.Config = new Config();
 
-            var html = new GlassHtml(scContext);
+            var html = new FakeGlassHtml(scContext);
             var image = new Fields.Image();
             image.Alt = "someAlt";
             image.Width = 200;
@@ -2687,29 +2687,33 @@ namespace Glass.Mapper.Sc.FakeDb
         [Test]
         public void RenderImage_ValidImageWithBorderHSpaceVSpace_RendersCorrectHtml()
         {
-            //Arrange
-            var expected =
-                "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
-            var scContext = Substitute.For<ISitecoreService>();
-            scContext.Config = new Config();
+            using (Db database = new Db())
+            {
+                //Arrange
+                var expected =
+                    "<img src='~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200' width='200' vspace='15' height='105' hspace='10' border='9' alt='someAlt' />";
+                var scContext = Substitute.For<ISitecoreService>();
+                scContext.Config = new Config();
 
-            var html = GetGlassHtml(scContext);
-            var image = new Fields.Image();
-            image.Alt = "someAlt";
-            image.Width = 200;
-            image.Height = 105;
-            image.HSpace = 10;
-            image.VSpace = 15;
-            image.Border = "9";
-            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
-            var model = new { Image = image };
+                var html = GetGlassHtml(scContext);
+                var image = new Fields.Image();
+                image.Alt = "someAlt";
+                image.Width = 200;
+                image.Height = 105;
+                image.HSpace = 10;
+                image.VSpace = 15;
+                image.Border = "9";
+                image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+                var model = new { Image = image };
 
-            //Act
-            var result = html.RenderImage(model, x => x.Image, null, true, true);
 
-            //Assert
-            AssertHtml.AreImgEqual(expected, result);
+                var result = html.RenderImage(model, x => x.Image, null, true, true);
 
+
+
+                //Assert
+                AssertHtml.AreImgEqual(expected, result);
+            }
         }
         [Test]
         public void RenderImage_ValidImageWithBorderHSpaceVSpaceW_RendersCorrectHtml()
@@ -2977,7 +2981,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderLink_LinkWithAllSetProperties()
         {
             //Arrange
-            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' title='mytitle' style='mystyle' >hello world</a>";
+            var expected = "<a href='/somewhere.aspx?temp=fred#aAnchor' target='_blank' class='myclass' rel=\"noopener noreferrer\" title='mytitle' style='mystyle' >hello world</a>";
             var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
@@ -3086,7 +3090,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var result = html.RenderLink(model, x => x.Link, alwaysRender:true);
 
             //Assert
-            Assert.AreEqual(expected, result);
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
         /// <summary>
@@ -3140,7 +3144,7 @@ namespace Glass.Mapper.Sc.FakeDb
         public void RenderLink_BlankTarget_AddsNoOpener()
         {
             //Arrange
-            var expected = "<a href='/somewhere.aspx' title='hello &amp; world' rel='noopener noreferrer' >hello &amp; world</a>";
+            var expected = "<a href='/somewhere.aspx' title='hello &amp; world' target='_blank' rel='noopener noreferrer' >hello &amp; world</a>";
             var scContext = Substitute.For<ISitecoreService>();
             var html = new GlassHtml(scContext);
             var link = new Fields.Link();
@@ -3403,8 +3407,27 @@ namespace Glass.Mapper.Sc.FakeDb
 
         private IGlassHtml GetGlassHtml(ISitecoreService SitecoreService)
         {
-            return new GlassHtml(SitecoreService);
+            return new FakeGlassHtml(SitecoreService);
         }
+
+
+        public class FakeGlassHtml : GlassHtml
+        {
+            public FakeGlassHtml(ISitecoreService sitecoreService) : base(sitecoreService)
+            {
+            }
+            /// <summary>
+            /// Overridding for now because of configuration load issues
+            /// </summary>
+            /// <param name="url"></param>
+            /// <returns></returns>
+            public override string ProtectMediaUrl(string url)
+            {
+                return url;
+            }
+        }
+
+
     }
 }
 
