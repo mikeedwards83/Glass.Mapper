@@ -413,7 +413,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                   .Returns("/target.aspx");
 
 
-                new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
+                  new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
 #endif
 
                 //Act

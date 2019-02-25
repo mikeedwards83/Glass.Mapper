@@ -27,6 +27,12 @@ namespace Glass.Mapper
 
         public DebugSettings Debug { get; private set; }
 
+        /// <summary>
+        /// Indicates that Glass's internal caching mechanism will also be used.
+        /// </summary>
+        public bool CacheAlwaysOn { get; set; }
+
+
         public Config()
         {
             Debug = new DebugSettings();

@@ -6,28 +6,39 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 {
     public class CacheCheckTask : AbstractObjectConstructionTask
     {
-        protected ICacheManager CacheManager { get; private set; }
+        protected CacheFactory CacheFactory { get; private set; }
 
         protected ICacheKeyGenerator CacheKeyGenerator { get; private set; }
 
-        public CacheCheckTask(ICacheManager cacheManager, ICacheKeyGenerator cacheKeyGenerator)
+        public CacheCheckTask(CacheFactory cacheFactory, ICacheKeyGenerator cacheKeyGenerator)
         {
-            CacheManager = cacheManager;
+            CacheFactory = cacheFactory;
             CacheKeyGenerator = cacheKeyGenerator;
             Name = "CacheCheckTask";
+        }
+
+        public virtual string GetCacheName(ObjectConstructionArgs args)
+        {
+            return "Default";
         }
 
         public override void Execute(ObjectConstructionArgs args)
         {
             if (args.Result == null
-                && args.AbstractTypeCreationContext.Options.Cache.IsEnabled()
-                && DisableCache.Current != Cache.Disabled
                 && args.AbstractTypeCreationContext.CacheEnabled
+                && DisableCache.Current != Cache.Disabled
+                && (args.Context.Config.CacheAlwaysOn 
+                    || (args.AbstractTypeCreationContext.Options.Cache.IsEnabled()
+                    )
+                )
             )
             {
+                var cachename = GetCacheName(args);
+                var cacheManager = CacheFactory.GetCache(cachename);
+
                 var key = CacheKeyGenerator.Generate(args);
 
-                var cacheItem = CacheManager.Get<object>(key);
+                var cacheItem = cacheManager.Get<object>(key);
                 if (cacheItem != null)
                 {
                     args.Result = cacheItem;
@@ -38,7 +49,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
                     base.Execute(args);
                 }
 
-                CacheManager.AddOrUpdate(key, args.Result);
+                cacheManager.AddOrUpdate(key, args.Result);
             }
             else
             {

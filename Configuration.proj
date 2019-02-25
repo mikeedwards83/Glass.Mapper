@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
   
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'  Or '$(ScVersion)' == ''  ">
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'    ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin91\</ScDir>
 	<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
@@ -15,7 +15,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutputPath>bin\91\</OutputPath>
   </PropertyGroup> 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90'">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin90\</ScDir>
 	<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.6.2</TargetFrameworkVersion>
@@ -28,7 +28,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutputPath>bin\90\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82' Or '$(ScVersion)' == ''  ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
 	<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>

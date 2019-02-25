@@ -13,11 +13,11 @@ namespace Glass.Mapper.Sc.Events.PublishEnd
             {
                 try
                 {
-                    var manager = context.Value.DependencyResolver.GetCacheManager();
-                    if (manager != null)
+                    var factory = context.Value.DependencyResolver.CacheFactory;
+                    if (factory != null)
                     {
                         Sitecore.Diagnostics.Log.Info("Started clearing Glass.Mapper cache for context {0}".Formatted(context.Key), this);
-                        manager.ClearCache();
+                        factory.ClearAll();
                         Sitecore.Diagnostics.Log.Info("Finished clearing Glass.Mapper cache for context {0}".Formatted(context.Key), this);
                     }
 

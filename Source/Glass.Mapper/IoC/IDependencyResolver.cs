@@ -15,7 +15,8 @@ namespace Glass.Mapper.IoC
     {
         Config GetConfig();
         ILog GetLog();
-        ICacheManager GetCacheManager();
+
+        CacheFactory CacheFactory { get; }
         IConfigFactory<AbstractDataMapperResolverTask> DataMapperResolverFactory { get; }
         IConfigFactory<AbstractDataMapper> DataMapperFactory { get; }
         IConfigFactory<AbstractConfigurationResolverTask> ConfigurationResolverFactory { get; }
