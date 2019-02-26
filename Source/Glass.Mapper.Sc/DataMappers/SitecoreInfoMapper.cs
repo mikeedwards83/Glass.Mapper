@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sc.DataMappers
     {
         private readonly IMediaUrlOptionsResolver _mediaUrlOptionsResolver;
         private readonly IUrlOptionsResolver _urlOptionsResolver;
-        private Func<Item, object> _getValue = item => null;
+        private Func<Item, GetOptionsSc, object> _getValue = (item, getOptions) => null;
 
 
 
@@ -125,7 +125,7 @@ namespace Glass.Mapper.Sc.DataMappers
             }
 
             var item = context.Item;
-            return _getValue(item);
+            return _getValue(item, mappingContext.Options as GetOptionsSc);
         }
 
 
@@ -153,22 +153,22 @@ namespace Glass.Mapper.Sc.DataMappers
             switch (scConfig.Type)
             {
                 case SitecoreInfoType.ContentPath:
-                    _getValue = item => item.Paths.ContentPath;
+                    _getValue = (item, getOptions) => item.Paths.ContentPath;
                     break;
                 case SitecoreInfoType.DisplayName:
-                    _getValue = item => item[Global.Fields.DisplayName];
+                    _getValue = (item, getOptions) => item[Global.Fields.DisplayName];
                     break;
                 case SitecoreInfoType.FullPath:
-                    _getValue = item => item.Paths.FullPath;
+                    _getValue = (item, getOptions) => item.Paths.FullPath;
                     break;
                 case SitecoreInfoType.Name:
-                    _getValue = item => item.Name;
+                    _getValue = (item, getOptions) => item.Name;
                     break;
                 case SitecoreInfoType.Key:
-                    _getValue = item => item.Key;
+                    _getValue = (item, getOptions) => item.Key;
                     break;
                 case SitecoreInfoType.MediaUrl:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
                         var mediaUrlOptions = _mediaUrlOptionsResolver.GetMediaUrlOptions(scConfig.MediaUrlOptions);
                         var media = new MediaItem(item);
@@ -176,10 +176,10 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.Path:
-                    _getValue = item => item.Paths.Path;
+                    _getValue = (item, getOptions) => item.Paths.Path;
                     break;
                 case SitecoreInfoType.TemplateId:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
                         if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(ID))
                             return item.TemplateID;
@@ -187,12 +187,12 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.TemplateName:
-                    _getValue = item => item.TemplateName;
+                    _getValue = (item, getOptions) => item.TemplateName;
                     break;
                 case SitecoreInfoType.Url:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
-                        var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions);
+                        var urlOptions = _urlOptionsResolver.CreateUrlOptions(scConfig.UrlOptions, getOptions);
                         if ((scConfig.UrlOptions & SitecoreInfoUrlOptions.UseItemLanguage ) == SitecoreInfoUrlOptions.UseItemLanguage)
                         {
                             urlOptions.Language = item.Language;
@@ -205,7 +205,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.Version:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
                         if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(string))
                         {
@@ -215,7 +215,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.Language:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
                         if (scConfig.PropertyInfo != null && scConfig.PropertyInfo.PropertyType == typeof(string))
                         {
@@ -225,7 +225,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.BaseTemplateIds:
-                    _getValue = item =>
+                    _getValue = (item, getOptions) =>
                     {
                         Template template = TemplateManager.GetTemplate(item.TemplateID, item.Database);
                         if (scConfig.PropertyInfo != null &&
@@ -235,14 +235,14 @@ namespace Glass.Mapper.Sc.DataMappers
                     };
                     break;
                 case SitecoreInfoType.ItemUri:
-                    _getValue = item => new ItemUri(item.ID, item.Language, item.Version, item.Database);
+                    _getValue = (item, getOptions) => new ItemUri(item.ID, item.Language, item.Version, item.Database);
                     break;
 #if (SC82  || SC90 || SC91) 
                 case SitecoreInfoType.OriginalLanguage:
-                    _getValue = item => item.OriginalLanguage;
+                    _getValue = (item, getOptions) => item.OriginalLanguage;
                     break;
                 case SitecoreInfoType.OriginatorId:
-                    _getValue = item => item.OriginatorId;
+                    _getValue = (item, getOptions) => item.OriginatorId;
                     break;
 #endif
                 default:

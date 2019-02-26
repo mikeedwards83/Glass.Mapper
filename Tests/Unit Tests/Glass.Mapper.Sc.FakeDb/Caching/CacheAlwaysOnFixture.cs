@@ -44,7 +44,46 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
 
                 //Assert
                 Assert.AreEqual(item1, item2);
-                            }
+            }
+
+        }
+
+        [Test]
+        public void Cache_AlwaysOnTrue_RecursiveModelLazyLoadingTest_ReturnsTheSameInstance()
+        {
+            //Arrange
+            string path = "/sitecore/content/target";
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target")
+                {
+                    new Sitecore.FakeDb.DbItem("Child")
+                    {
+
+                    }
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassRecursive)));
+                context.Config.Cache.AlwaysOn = true;
+
+                var service = new SitecoreService(database.Database);
+                var lang1 = Language.Parse("en");
+
+
+                //Act
+                var item1 = service.GetItem<StubClassRecursive>(path, x => x.Language(lang1));
+                var item2 = service.GetItem<StubClassRecursive>(path, x => x.Language(lang1));
+
+                var child = item1.Children.First();
+                var childParent = item1.Children.First().Parent;
+
+                //Assert
+                Assert.AreEqual(item1, item2);
+                Assert.AreEqual(item1, childParent);
+            }
 
         }
 
@@ -102,7 +141,7 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 var doc1 = new XmlDocument();
                 doc1.LoadXml(
                     "<site name='Site1' virtualFolder='/' physicalFolder='/' rootPath='/sitecore/content' startItem='/Target' database='master' domain='extranet' allowDebug='true' cacheHtml='true' htmlCacheSize='10MB' registryCacheSize='0' viewStateCacheSize='0' xslCacheSize='5MB' filteredItemsCacheSize='2MB' enablePreview='true' enableWebEdit='true' enableDebugger='true' disableClientData='false' />");
-                var siteContext1= new SiteContext(
+                var siteContext1 = new SiteContext(
                     new SiteInfo(
                         doc1.FirstChild
                     )
@@ -125,7 +164,7 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
 
                 Sitecore.Context.Site = siteContext1;
 
-                var item3= service.GetItem<StubClass>(path, x => x.Language(lang1));
+                var item3 = service.GetItem<StubClass>(path, x => x.Language(lang1));
 
                 //Assert
                 Assert.AreNotEqual(item1, item2);
@@ -364,12 +403,21 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
         }
 
 
-
         [SitecoreType]
         public class StubClass
         {
             [SitecoreChildren]
             public virtual IEnumerable<StubClass> Children { get; set; }
+        }
+
+        [SitecoreType]
+        public class StubClassRecursive
+        {
+            [SitecoreChildren]
+            public virtual IEnumerable<StubClassRecursive> Children { get; set; }
+
+            [SitecoreParent]
+            public virtual StubClassRecursive Parent { get; set; }
         }
     }
 }

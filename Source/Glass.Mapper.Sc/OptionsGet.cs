@@ -7,6 +7,7 @@ using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
+using Sitecore.Sites;
 
 namespace Glass.Mapper.Sc
 {
@@ -19,12 +20,12 @@ namespace Glass.Mapper.Sc
         //instance
         public ID TemplateId { get; set; }
 
-        public string SiteName { get; set; }
+        public SiteContext Site { get; set; }
 
         public GetOptionsSc()
         {
             VersionCount = true;
-            SiteName = Sitecore.Context.Site == null ? string.Empty : Sitecore.Context.Site.Name;
+            Site = Sitecore.Context.Site;
         }
 
         public virtual Item GetItem(Database database)
@@ -40,7 +41,7 @@ namespace Glass.Mapper.Sc
                  //this.TemplateId = local.TemplateId;
                // this.EnforceTemplate = local.EnforceTemplate;
                 this.VersionCount = local.VersionCount;
-                this.SiteName = local.SiteName;
+                this.Site = local.Site;
             }
             base.Copy(other);
         }

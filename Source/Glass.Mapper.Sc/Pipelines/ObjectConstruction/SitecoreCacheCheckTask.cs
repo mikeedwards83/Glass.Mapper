@@ -19,9 +19,9 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
         {
             var options = args.Options as GetOptionsSc;
 
-            if (options != null && options.SiteName.HasValue())
+            if (options != null && options.Site != null)
             {
-                return options.SiteName;
+                return options.Site.Name;
             }
 
             return base.GetCacheName(args);

@@ -4,6 +4,7 @@ using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data.Fields;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.RenderField;
+using Sitecore.Sites;
 
 namespace Glass.Mapper.Sc.DataMappers
 {
@@ -47,7 +48,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
             if (config.Setting == SitecoreFieldSettings.ForceRenderField)
             {
-                return RunPipeline(field);
+                return RunPipeline(field, context.Options as GetOptionsSc);
             }
 
             Guid fieldGuid = field.ID.Guid;
@@ -55,7 +56,7 @@ namespace Glass.Mapper.Sc.DataMappers
             // shortest route - we know whether or not its rich text
             if (isRichTextDictionary.ContainsKey(fieldGuid))
             {
-                return GetResult(field, isRichTextDictionary[fieldGuid]);
+                return GetResult(field, isRichTextDictionary[fieldGuid], context.Options as GetOptionsSc);
             }
 
             // we don't know - it might still be rich text
@@ -63,20 +64,23 @@ namespace Glass.Mapper.Sc.DataMappers
             isRichTextDictionary.TryAdd(fieldGuid, isRichText);
 
             // now we know it isn't rich text - return the raw result.
-            return GetResult(field, isRichText);
+            return GetResult(field, isRichText, context.Options as GetOptionsSc);
         }
 
-        protected virtual string RunPipeline(Field field)
+        protected virtual string RunPipeline(Field field, GetOptionsSc options)
         {
             RenderFieldArgs renderFieldArgs = new RenderFieldArgs
             {
                 Item = field.Item,
                 FieldName = field.ID.ToString(),
-                DisableWebEdit = true
+                DisableWebEdit = true,                
             };
             try
             {
-                CorePipeline.Run("renderField", renderFieldArgs);
+                using (new SiteContextSwitcher(options.Site))
+                {
+                    CorePipeline.Run("renderField", renderFieldArgs);
+                }
             }
             catch (Exception ex)
             {
@@ -86,14 +90,14 @@ namespace Glass.Mapper.Sc.DataMappers
             return renderFieldArgs.Result.FirstPart + renderFieldArgs.Result.LastPart;
         }
 
-        protected virtual string GetResult(Field field, bool isRichText)
+        protected virtual string GetResult(Field field, bool isRichText, GetOptionsSc getOptions)
         {
             if (!isRichText)
             {
                 return field.Value;
             }
 
-            return RunPipeline(field);
+            return RunPipeline(field, getOptions);
         }
 
 

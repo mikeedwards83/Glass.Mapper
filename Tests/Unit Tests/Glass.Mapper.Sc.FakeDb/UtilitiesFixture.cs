@@ -131,7 +131,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
             //Act
-            urlOptionsResolver.CreateUrlOptions(options, defaultOptions);
+            urlOptionsResolver.CreateUrlOptions(options, defaultOptions, new GetOptionsSc());
 
             //Assert
             Assert.AreEqual(addAspx, defaultOptions.AddAspxExtension);

@@ -19,15 +19,15 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="urlOptions">The URL options.</param>
         /// <returns>UrlOptions.</returns>
-        public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
+        public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, GetOptionsSc getOptions)
         {
             //We can test this because it throws an error due to config being missing
             UrlOptions defaultUrl = UrlOptions.DefaultOptions;
 
-            return CreateUrlOptions(urlOptions, defaultUrl);
+            return CreateUrlOptions(urlOptions, defaultUrl, getOptions);
         }
 
-        public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions)
+        public virtual UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions, GetOptionsSc getOptions)
         {
             if (urlOptions == 0) return defaultOptions;
 
@@ -55,6 +55,8 @@ namespace Glass.Mapper.Sc
                 defaultOptions.LanguageLocation = LanguageLocation.FilePath;
             else if (flagCheck(SitecoreInfoUrlOptions.LanguageLocationQueryString))
                 defaultOptions.LanguageLocation = LanguageLocation.QueryString;
+
+            defaultOptions.Site = getOptions.Site;
 
             return defaultOptions;
 

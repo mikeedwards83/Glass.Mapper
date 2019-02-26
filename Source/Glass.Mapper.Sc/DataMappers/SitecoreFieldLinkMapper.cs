@@ -66,9 +66,11 @@ namespace Glass.Mapper.Sc.DataMappers
             throw new NotImplementedException();
         }
 
-        protected void MapToLinkModel(Link link, InternalLinkField field, SitecoreFieldConfiguration config)
+
+        protected void MapToLinkModel(Link link, InternalLinkField field, SitecoreFieldConfiguration config, GetOptionsSc getOptions)
         {
-            var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
+            var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions, getOptions);
+
             link.Url = field.TargetItem == null ? string.Empty : SitecoreVersionAbstractions.GetItemUrl(field.TargetItem, urlOptions);
             link.Type = LinkType.Internal;
             link.TargetId = field.TargetItem == null ? Guid.Empty : field.TargetItem.ID.Guid;
@@ -79,7 +81,7 @@ namespace Glass.Mapper.Sc.DataMappers
 
 
 
-        protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config)
+        protected void MapToLinkModel(Link link, LinkField linkField, SitecoreFieldConfiguration config, GetOptionsSc getOptions)
         {
             link.Anchor = linkField.Anchor;
             link.Class = linkField.Class;
@@ -120,7 +122,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     link.TargetId = linkField.TargetID.Guid;
                     break;
                 case "internal":
-                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions);
+                    var urlOptions = _urlOptionsResolver.CreateUrlOptions(config.UrlOptions, getOptions);
                     link.Url = linkField.TargetItem == null ? string.Empty : SitecoreVersionAbstractions.GetItemUrl(linkField.TargetItem, urlOptions);
                     link.Type = LinkType.Internal;
                     link.TargetId = linkField.TargetID.Guid;
@@ -158,13 +160,13 @@ namespace Glass.Mapper.Sc.DataMappers
             if (isInternalLink)
             {
                 InternalLinkField internalLinkField = new Sitecore.Data.Fields.InternalLinkField(field);
-                MapToLinkModel(link, internalLinkField, config);
+                MapToLinkModel(link, internalLinkField, config, context.Options as GetOptionsSc);
             }
             else
             {
                 LinkField linkField = new LinkField(field);
 
-                MapToLinkModel(link, linkField, config);
+                MapToLinkModel(link, linkField, config, context.Options as GetOptionsSc);
             }
          
 

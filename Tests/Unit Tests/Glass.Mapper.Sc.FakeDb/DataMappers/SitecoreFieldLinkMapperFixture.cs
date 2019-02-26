@@ -1317,9 +1317,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
         public class FakeUrlOptionsResolver : UrlOptionsResolver
         {
-            public override UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions)
+            public override UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, GetOptionsSc options)
             {
-                return base.CreateUrlOptions(urlOptions, new UrlOptions());
+                return base.CreateUrlOptions(urlOptions, new UrlOptions(), options);
             }
         }
     }

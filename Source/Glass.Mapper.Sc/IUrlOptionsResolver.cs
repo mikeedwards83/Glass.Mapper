@@ -11,9 +11,9 @@ namespace Glass.Mapper.Sc
         /// </summary>
         /// <param name="urlOptions">The URL options.</param>
         /// <returns>UrlOptions.</returns>
-        UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions);
+        UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, GetOptionsSc getOptions);
 
-        UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions);
+        UrlOptions CreateUrlOptions(SitecoreInfoUrlOptions urlOptions, UrlOptions defaultOptions, GetOptionsSc getOptions);
 
     }
 }
