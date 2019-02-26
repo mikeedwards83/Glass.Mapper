@@ -116,7 +116,6 @@ namespace Glass.Mapper.Sc
             return compiled;
         }
 
-
         /// <summary>
         /// Gets the sitecore context.
         /// </summary>

@@ -7,6 +7,7 @@ using Glass.Mapper.Sc.DataMappers;
 using NSubstitute;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 
@@ -21,6 +22,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
         public void MapToProperty_ItemHasThreeChildren_ThreeObjectAreCreated()
         {
             //Assign
+            using(new EventDisabler())
             using (Db database = new Db
             {
                 new Sitecore.FakeDb.DbItem("TestItem")

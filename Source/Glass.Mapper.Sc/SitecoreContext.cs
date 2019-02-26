@@ -26,7 +26,7 @@ namespace Glass.Mapper.Sc
         public SitecoreContext(Context context)
             : base(Sitecore.Context.Database, context)
         {
-
+            CacheAlwaysOnCheck();
         }
 
         /// <summary>
@@ -42,7 +42,15 @@ namespace Glass.Mapper.Sc
         protected SitecoreContext(Database database, IGlassContextProvider glassContextProvider) : 
             base(database, glassContextProvider.GetContext())
         {
-            
+            CacheAlwaysOnCheck();
+        }
+
+        private void CacheAlwaysOnCheck()
+        {
+            if (Config.Cache.AlwaysOn)
+            {
+                throw new NotSupportedException("SitecoreContext and Cache.CacheAlwaysOn is not supported");
+            }
         }
     }
 }

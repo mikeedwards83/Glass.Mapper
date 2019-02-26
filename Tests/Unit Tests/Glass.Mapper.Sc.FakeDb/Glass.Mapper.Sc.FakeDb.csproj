@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHtml.cs" />
+    <Compile Include="Caching\CacheAlwaysOnFixture.cs" />
     <Compile Include="Caching\CacheFixtures.cs" />
     <Compile Include="Caching\NetMemoryCacheManagerTestFixture.cs" />
     <Compile Include="Configuation\Attributes\SitecoreAttributeConfigurationLoaderFixture.cs" />

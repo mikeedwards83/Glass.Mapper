@@ -14,6 +14,8 @@ namespace Glass.Mapper.Sc.Events.PublishEnd
                 try
                 {
                     var factory = context.Value.DependencyResolver.CacheFactory;
+                    
+
                     if (factory != null)
                     {
                         Sitecore.Diagnostics.Log.Info("Started clearing Glass.Mapper cache for context {0}".Formatted(context.Key), this);

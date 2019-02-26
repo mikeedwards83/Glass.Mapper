@@ -24,10 +24,11 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
 
         public override void Execute(ObjectConstructionArgs args)
         {
-            if (args.Result == null
-                && args.AbstractTypeCreationContext.CacheEnabled
-                && DisableCache.Current != Cache.Disabled
-                && (args.Context.Config.CacheAlwaysOn 
+            if (args.Result == null //if we already have a result don't do anything
+                && args.Options.Cache != Cache.Disabled //if the model has the cache explicitly  disabled
+                && args.AbstractTypeCreationContext.CacheEnabled //
+                && DisableCache.Current != Cache.Disabled //has the cache disabler been used?
+                && (args.Context.Config.Cache.AlwaysOn //is the cache always on
                     || (args.AbstractTypeCreationContext.Options.Cache.IsEnabled()
                     )
                 )
