@@ -3044,6 +3044,9 @@ namespace Glass.Mapper.Sc.FakeDb
 
             [SitecoreField]
             public virtual string Field { get; set; }
+
+            [SitecoreField]
+            public virtual StubClass FieldStub { get; set; }
         }
 
         [SitecoreType(TemplateId = StubClass.TemplateId, AutoMap = true)]
@@ -3147,6 +3150,86 @@ namespace Glass.Mapper.Sc.FakeDb
         #endregion
 
 
+        #region Method - Populate
+
+        [Test]
+        public void Populate_SimpleField_ReturnsItemPopulated()
+        {
+            //Assign
+            Guid id = Guid.NewGuid();
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+                {
+                    {"Field","Test" }
+                   
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+                var service = new SitecoreService(database.Database);
+
+                var language = LanguageManager.GetLanguage("en");
+
+                var instance = new StubClass();
+                instance.Id = id;
+
+                //Act
+                 service.Populate(instance);
+
+                //Assert
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(id, instance.Id);
+                Assert.AreEqual(language, instance.Language);
+                Assert.AreEqual("Test", instance.Field);
+            }
+        }
+        [Test]
+        public void Populate_RelatedItem_ReturnsItemPopulated()
+        {
+            //Assign
+            Guid id = Guid.NewGuid();
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+                {
+                    {"Field","Test" },
+                    {"FieldStub", id.ToString() }
+
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+                var service = new SitecoreService(database.Database);
+
+                var language = LanguageManager.GetLanguage("en");
+
+                var instance = new StubClass();
+                instance.Id = id;
+
+                //Act
+                service.Populate(instance);
+
+                //Assert
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(id, instance.Id);
+                Assert.AreEqual(language, instance.Language);
+                Assert.AreEqual("Test", instance.Field);
+
+                var related = instance.FieldStub;
+                Assert.IsNotNull(related);
+                Assert.AreEqual(id, related.Id);
+                Assert.AreEqual(language, related.Language);
+                Assert.AreEqual("Test", related.Field);
+            }
+        }
+
+
+        #endregion
 
 
 

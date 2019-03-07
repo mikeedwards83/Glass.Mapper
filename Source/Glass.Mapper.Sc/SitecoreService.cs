@@ -230,10 +230,10 @@ namespace Glass.Mapper.Sc
 
         public void Populate<T>(T target) where T : class
         {
-            Populate(target, new GetOptions());
+            Populate(target, new GetKnownOptions());
         }
 
-        public void Populate<T>(T target, GetOptions options) where T : class
+        public void Populate<T>(T target, GetKnownOptions options) where T : class
         {
 
             Assert.IsNotNull(options, "options must no be  null");
@@ -247,6 +247,8 @@ namespace Glass.Mapper.Sc
 
             if (item == null)
                 return;
+
+            options.Item = item;
 
             SitecoreTypeCreationContext creationContext = new SitecoreTypeCreationContext();
             creationContext.SitecoreService = this;

@@ -51,7 +51,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="T">The type to return</typeparam>
         /// <param name="target">The object to populate</param>
         /// <param name="options">Options for how the model will be retrieved</param>
-        void Populate<T>(T target, GetOptions options) where T : class;
+        void Populate<T>(T target, GetKnownOptions options) where T : class;
 
         /// <summary>
         /// Saves the object.
