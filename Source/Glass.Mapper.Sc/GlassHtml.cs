@@ -59,8 +59,8 @@ namespace Glass.Mapper.Sc
         /// <summary>
         /// The image tag format
         /// </summary>
-        public static string ImageTagFormat = "<img src={2}{0}{2} {1}/>";
-        public static string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
+        public const string ImageTagFormat = "<img src={2}{0}{2} {1}/>";
+        public const string LinkTagFormat = "<a href={3}{0}{3} {1}>{2}";
         public static string QuotationMark = "\"";
 
         public Func<T, string> GetCompiled<T>(Expression<Func<T, string>> expression)
@@ -319,7 +319,7 @@ namespace Glass.Mapper.Sc
 
 
 
-        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, bool alwaysRender = false)
+        public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer, object parameters = null, bool isEditable = false, bool alwaysRender = false, string aElementTemplate = LinkTagFormat)
         {
             NameValueCollection attrs;
 
@@ -344,7 +344,7 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), string.Empty, writer, alwaysRender);
+                return BeginRenderLink(GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), string.Empty, writer, alwaysRender, aElementTemplate);
             }
         }
 
@@ -382,7 +382,8 @@ namespace Glass.Mapper.Sc
             object attributes = null,
             bool isEditable = false,
             string contents = null,
-            bool alwaysRender = false)
+            bool alwaysRender = false,
+            string aElementTemplate = LinkTagFormat)
         {
             NameValueCollection attrs;
 
@@ -423,7 +424,7 @@ namespace Glass.Mapper.Sc
             else
             {
                 result = BeginRenderLink(
-                        GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), contents, writer, alwaysRender
+                        GetCompiled(field).Invoke(model) as Link, attrs.ToSafeDictionary(), contents, writer, alwaysRender, aElementTemplate
                     );
             }
 
@@ -470,7 +471,7 @@ namespace Glass.Mapper.Sc
         /// <param name="contents">Content to go in the link instead of the standard text</param>
         /// <returns>An "a" HTML element</returns>
         public static RenderingResult BeginRenderLink(Link link, SafeDictionary<string> attributes, string contents,
-            TextWriter writer, bool alwaysRender)
+            TextWriter writer, bool alwaysRender, string aElementTemplate)
         {
             if (link == null)
             {
@@ -509,10 +510,12 @@ namespace Glass.Mapper.Sc
                 AttributeCheck(attributes,"rel", "noopener noreferrer");
             }
 #endif
-            string firstPart = LinkTagFormat.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
+            string firstPart = aElementTemplate.Formatted(url, Utilities.ConvertAttributes(attributes, QuotationMark), contents, QuotationMark);
             string lastPart = "</a>";
             return new RenderingResult(writer, firstPart, lastPart);
         }
+
+        
 
         /// <summary>
         /// Makes the editable.
@@ -645,7 +648,7 @@ namespace Glass.Mapper.Sc
                     var link = target as Link;
                     var sb = new StringBuilder();
                     var linkWriter = new StringWriter(sb);
-                    var result = BeginRenderLink(link, dictionary, null, linkWriter,false);
+                    var result = BeginRenderLink(link, dictionary, null, linkWriter,false, LinkTagFormat);
                     result.Dispose();
                     linkWriter.Flush();
                     linkWriter.Close();
@@ -713,7 +716,8 @@ namespace Glass.Mapper.Sc
             Expression<Func<T, object>> field,
             object parameters = null,
             bool isEditable = false,
-            bool outputHeightWidth = false)
+            bool outputHeightWidth = false,
+            string imgElementTemplate = ImageTagFormat)
         {
 
             var attrs = Utilities.GetPropertiesCollection(parameters, true).ToSafeDictionary();
@@ -737,9 +741,14 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return RenderImage(GetCompiled(field).Invoke(model) as Image, parameters == null ? null : attrs, outputHeightWidth);
+                return RenderImage(GetCompiled(field).Invoke(model) as Image, parameters == null ? null : attrs, outputHeightWidth, ImageTagFormat);
             }
         }
+
+
+
+
+
 
         /// <summary>
         /// Renders HTML for an image
@@ -753,6 +762,18 @@ namespace Glass.Mapper.Sc
             SafeDictionary<string> attributes,
             bool outputHeightWidth = false
             )
+        {
+
+            return RenderImage(image, attributes, outputHeightWidth, ImageTagFormat);
+        }
+
+
+        public virtual string RenderImage(
+         Image image,
+         SafeDictionary<string> attributes,
+         bool outputHeightWidth,
+         string imgElementTemplate
+         )
         {
 
             if (image == null)
@@ -919,7 +940,9 @@ namespace Glass.Mapper.Sc
 
             mediaUrl = ProtectMediaUrl(mediaUrl);
             mediaUrl = HttpUtility.HtmlEncode(mediaUrl);
-            return ImageTagFormat.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
+
+            return imgElementTemplate.Formatted(mediaUrl, Utilities.ConvertAttributes(htmlParams, QuotationMark), QuotationMark);
+
         }
 
         public virtual string ProtectMediaUrl(string url)
