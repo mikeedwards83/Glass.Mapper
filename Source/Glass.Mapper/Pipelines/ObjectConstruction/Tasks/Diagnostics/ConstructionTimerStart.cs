@@ -38,9 +38,15 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Diagnostics
                 {
 
                     var key = _cacheKeyGenerator.Generate(args) + "stopwatch";
-                    var finaltType = args.Result.GetType();
 
-                    _log.Warn("Slow Glass Model - Time: {0} Cachable: {1} Type: {2} Key: {3}".Formatted(stopwatch.ElapsedMilliseconds, args.Options.Cache.IsEnabled(), finaltType.FullName, key));
+                    var finalTypeName = "NULL";
+                    
+                    if(args.Result != null)
+                    {
+                        finalTypeName = args.Result.GetType().FullName;
+                    }
+
+                    _log.Warn("Slow Glass Model - Time: {0} Cachable: {1} Type: {2} Key: {3}".Formatted(stopwatch.ElapsedMilliseconds, args.Options.Cache.IsEnabled(), finalTypeName, key));
                 }
             }
         }
