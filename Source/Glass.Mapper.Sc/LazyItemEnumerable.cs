@@ -67,11 +67,11 @@ namespace Glass.Mapper.Sc
 
             var results = new List<T>();
 
-            var options = new GetItemByItemOptions();
-            options.Copy(_options);
-
             foreach (Item child in items)
             {
+                var options = new GetItemByItemOptions();
+                options.Copy(_options);
+
                 options.Item = child;
                 //we have to copy these properties to the sub item because
                 //normally they are not applied to the whole graph
