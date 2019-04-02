@@ -153,6 +153,7 @@
     <Compile Include="Issues\Issue311\Issue311Fixture.cs" />
     <Compile Include="Issues\Issue370\Issue370Fixture.cs" />
     <Compile Include="Issues\Issue376\Issue376Fixture.cs" />
+    <Compile Include="LazyItemEnumerableFixture.cs" />
     <Compile Include="LazyLoadingFixture.cs" />
     <Compile Include="MediaUrlOptionsResolverFixture.cs" />
     <Compile Include="MiscFixture.cs" />
