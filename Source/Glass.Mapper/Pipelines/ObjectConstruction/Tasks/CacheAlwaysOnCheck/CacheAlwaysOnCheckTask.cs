@@ -23,24 +23,31 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CacheCheck
         }
         public override void Execute(ObjectConstructionArgs args)
         {
-
-            var cachename = GetCacheName(args);
-            var cacheManager = CacheFactory.GetCache(cachename);
-
-            var key = CacheKeyGenerator.Generate(args);
-
-            var cacheItem = cacheManager.Get<object>(key);
-            if (cacheItem != null)
+            if (args.Result == null 
+                && args.Options.Cache !=  Cache.Disabled)
             {
-                args.Result = cacheItem;
-                ModelCounter.Instance.CachedModels++;
+                var cachename = GetCacheName(args);
+                var cacheManager = CacheFactory.GetCache(cachename);
+
+                var key = CacheKeyGenerator.Generate(args);
+
+                var cacheItem = cacheManager.Get<object>(key);
+                if (cacheItem != null)
+                {
+                    args.Result = cacheItem;
+                    ModelCounter.Instance.CachedModels++;
+                }
+                else
+                {
+                    base.Execute(args);
+                }
+
+                cacheManager.AddOrUpdate(key, args.Result);
             }
             else
             {
                 base.Execute(args);
             }
-
-            cacheManager.AddOrUpdate(key, args.Result);
         }
     }
 }

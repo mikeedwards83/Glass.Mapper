@@ -16,6 +16,38 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
     public class CacheFixtures
     {
         [Test]
+        public void Cache_NotEnablecacheItemRequestedInTwoLanguagesThatDontHaveVersions_ReturnsDifferentinstances()
+        {
+            //Arrange
+            string path = "/sitecore/content/target";
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target")
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+                var service = new SitecoreService(database.Database);
+                var lang1 = Language.Parse("fr-Fr");
+
+                //Act
+                var langItem1 = service.GetItem<StubClass>(path, x => x.Language(lang1).VersionCountDisable());
+                var langItem2 = service.GetItem<StubClass>(path, x => x.Language(lang1).VersionCountDisable());
+                var langItem3 = service.GetItem<StubClass>(path, x => x.Language(lang1).VersionCountDisable());
+
+
+                //Assert
+                Assert.NotNull(langItem1);
+                Assert.NotNull(langItem2);
+                Assert.NotNull(langItem3);
+                Assert.AreNotEqual(langItem2, langItem3);
+                Assert.AreNotEqual(langItem2, langItem1);
+            }
+        }
+
+        [Test]
         public void Cache_CachableItemRequestedInTwoLanguagesThatDontHaveVersions_ReturnsTwoSeparateInstances()
         {
             //Arrange

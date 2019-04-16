@@ -30,9 +30,12 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
+                var config = new Config();
+                config.Cache.AlwaysOn = true;
+
+                var context = Context.Create(Utilities.CreateStandardResolver(config));
+
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = true;
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -65,8 +68,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 }
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassRecursive)));
+                    var config = new Config();
+                    config.Cache.AlwaysOn = true;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
+                    context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClassRecursive)));
                 context.Config.Cache.AlwaysOn = true;
 
                 var service = new SitecoreService(database.Database);
@@ -98,9 +104,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = true;
+                    var config = new Config();
+                    config.Cache.AlwaysOn = true;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
+                    context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -129,9 +137,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
-                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = true;
+                    var config = new Config();
+                    config.Cache.AlwaysOn = true;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
+                    context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -184,9 +194,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
+                var config = new Config();
+                config.Cache.AlwaysOn = false;
+
+                var context = Context.Create(Utilities.CreateStandardResolver(config));
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = false;
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -214,9 +226,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
+                var config = new Config();
+                config.Cache.AlwaysOn = false;
+
+                var context = Context.Create(Utilities.CreateStandardResolver(config));
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = false;
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -245,9 +259,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 new Sitecore.FakeDb.DbItem("Target")
             })
             {
-                var context = Context.Create(Utilities.CreateStandardResolver());
+                var config = new Config();
+                config.Cache.AlwaysOn = true;
+
+                var context = Context.Create(Utilities.CreateStandardResolver(config));
                 context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                context.Config.Cache.AlwaysOn = true;
 
                 var service = new SitecoreService(database.Database);
                 var lang1 = Language.Parse("en");
@@ -287,9 +303,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 }
             })
                 {
-                    var context = Context.Create(Utilities.CreateStandardResolver());
+                    var config = new Config();
+                    config.Cache.AlwaysOn = true;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
                     context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                    context.Config.Cache.AlwaysOn = true;
 
                     var service = new SitecoreService(database.Database);
                     var lang1 = Language.Parse("en");
@@ -330,9 +348,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 }
             })
                 {
-                    var context = Context.Create(Utilities.CreateStandardResolver());
+                    var config = new Config();
+                    config.Cache.AlwaysOn = true;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
                     context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                    context.Config.Cache.AlwaysOn = true;
 
                     var service = new SitecoreService(database.Database);
                     var lang1 = Language.Parse("en");
@@ -375,9 +395,11 @@ namespace Glass.Mapper.Sc.FakeDb.Caching
                 }
             })
                 {
-                    var context = Context.Create(Utilities.CreateStandardResolver());
+                    var config = new Config();
+                    config.Cache.AlwaysOn = false;
+
+                    var context = Context.Create(Utilities.CreateStandardResolver(config));
                     context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
-                    context.Config.Cache.AlwaysOn = false;
 
                     var service = new SitecoreService(database.Database);
                     var lang1 = Language.Parse("en");

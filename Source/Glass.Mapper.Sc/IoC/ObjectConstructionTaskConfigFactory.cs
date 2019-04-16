@@ -33,7 +33,15 @@ namespace Glass.Mapper.Sc.IoC
             Add(()=> new ModelDepthCheck());
             Add(()=>  new ItemVersionCountByRevisionTask());
             Add(() => new SitecoreItemTask());
-            Add(() => new SitecoreCacheCheckTask(DependencyResolver.CacheFactory, new CacheKeyGenerator()));
+
+            if (config.Cache.AlwaysOn)
+            {
+                Add(() => new SitecoreCacheAlwaysOnCheckTask(DependencyResolver.CacheFactory, new CacheKeyGenerator()));
+            }
+            else
+            {
+                Add(() => new SitecoreCacheCheckTask(DependencyResolver.CacheFactory, new CacheKeyGenerator()));
+            }
 
             if (config.Debug.Enabled)
             {
