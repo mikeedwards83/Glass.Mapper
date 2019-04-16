@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc
 
         private void CacheAlwaysOnCheck()
         {
-            if (Config.Cache.AlwaysOn)
+            if (Config != null && Config.Cache != null&& Config.Cache.AlwaysOn)
             {
                 throw new NotSupportedException("SitecoreContext and Cache.CacheAlwaysOn is not supported");
             }

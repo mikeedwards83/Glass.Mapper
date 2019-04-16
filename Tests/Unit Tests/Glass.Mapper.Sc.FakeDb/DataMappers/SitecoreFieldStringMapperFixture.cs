@@ -46,9 +46,10 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 {
                     field.Value = fieldValue;
                 }
+                var context = new SitecoreDataMappingContext(null, item, null, new GetItemByPathOptions());
 
                 //Act
-                var result = mapper.GetField(field, config, null) as string;
+                var result = mapper.GetField(field, config, context) as string;
 
                 //Assert
                 Assert.AreEqual(fieldValue, result);
@@ -92,9 +93,10 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     Sitecore.Context.Site = Sitecore.Configuration.Factory.GetSite("website");
                     Sitecore.Context.Site.SetDisplayMode(DisplayMode.Preview, DisplayModeDuration.Remember);
 
+                    var context = new SitecoreDataMappingContext(null, item, null, new GetItemByPathOptions());
 
                     //Act
-                    var result = mapper.GetField(field, config, null) as string;
+                    var result = mapper.GetField(field, config, context) as string;
 
                     //Assert
 
@@ -186,9 +188,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     }
 
 
+                    var context = new SitecoreDataMappingContext(null, item, null, new GetItemByPathOptions());
+
 
                     //Act
-                    var result = mapper.GetField(field, config, null) as string;
+                    var result = mapper.GetField(field, config, context) as string;
 
                     Sitecore.Context.Site = null;
 

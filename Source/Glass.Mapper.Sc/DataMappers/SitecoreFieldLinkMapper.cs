@@ -173,7 +173,7 @@ namespace Glass.Mapper.Sc.DataMappers
             return link;
         }
 
-        protected void MapToLinkField(Link link, LinkField linkField, SitecoreFieldConfiguration config)
+        protected void MapToLinkField(Link link, LinkField linkField)
         {
             var item = linkField.InnerField.Item;
 
@@ -332,7 +332,7 @@ namespace Glass.Mapper.Sc.DataMappers
                     return;
                 }
 
-                MapToLinkField(link, linkField, config);
+                MapToLinkField(link, linkField);
             }
         }
     }

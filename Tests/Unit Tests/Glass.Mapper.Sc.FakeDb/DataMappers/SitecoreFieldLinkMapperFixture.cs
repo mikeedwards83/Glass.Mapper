@@ -266,8 +266,11 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 new Sitecore.FakeDb.Links.LinkProviderSwitcher(provider);
 #endif
 
+
+                var context = new SitecoreDataMappingContext(null, item, null, new GetItemByPathOptions());
+
                 //Act
-                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), null) as Link;
+                var result = mapper.GetField(field, new SitecoreFieldConfiguration(), context) as Link;
 
                 //Assert
                 Assert.AreEqual("testAnchor", result.Anchor);
