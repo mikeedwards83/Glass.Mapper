@@ -18,6 +18,11 @@ namespace Glass.Mapper.Sc.RenderField
         public const string ALT = "alt";
 
         /// <summary>
+        /// The TITLE
+        /// </summary>
+        public const string TITLE = "title";
+
+        /// <summary>
         /// The BORDER
         /// </summary>
         public const string BORDER = "border";
