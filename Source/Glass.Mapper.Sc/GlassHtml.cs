@@ -795,7 +795,7 @@ namespace Glass.Mapper.Sc
             {
                 attributes[ImageParameterKeys.ALT] = image.Alt;
             }
-            if (!attributes.ContainsKey(ImageParameterKeys.TITLE) || attributes[ImageParameterKeys.TITLE].IsNullOrEmpty())
+            if (!attributes.ContainsKey(ImageParameterKeys.TITLE))
             {
                 if (!image.Title.IsNullOrEmpty())
                 {
