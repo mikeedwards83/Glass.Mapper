@@ -218,6 +218,11 @@ namespace Glass.Mapper
         public static NameValueCollection GetPropertiesCollection(object target, bool lowerCaseName = false,
             bool underscoreForHyphens = true)
         {
+            if (target != null && target is NameValueCollection)
+            {
+                return (NameValueCollection)target;
+            }
+
             NameValueCollection nameValues = new NameValueCollection();
             if (target != null)
             {
