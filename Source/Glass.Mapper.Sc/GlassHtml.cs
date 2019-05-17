@@ -795,6 +795,13 @@ namespace Glass.Mapper.Sc
             {
                 attributes[ImageParameterKeys.ALT] = image.Alt;
             }
+            if (!attributes.ContainsKey(ImageParameterKeys.TITLE) || attributes[ImageParameterKeys.TITLE].IsNullOrEmpty())
+            {
+                if (!image.Title.IsNullOrEmpty())
+                {
+                    attributes[ImageParameterKeys.TITLE] = image.Title;
+                }
+            }
             AttributeCheck(attributes, ImageParameterKeys.BORDER, image.Border);
             if (image.HSpace > 0)
                 AttributeCheck(attributes, ImageParameterKeys.HSPACE, image.HSpace.ToString(CultureInfo.InvariantCulture));
