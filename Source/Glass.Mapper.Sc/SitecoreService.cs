@@ -965,7 +965,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(string path, bool isLazy, bool inferType) where T : class
         {
             var options = new GetItemByPathOptions
@@ -992,7 +992,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(string path, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1020,7 +1020,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(string path, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1050,7 +1050,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(string path, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1074,7 +1074,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// ``0.
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(string path, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1101,7 +1101,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(string path, Language language, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1127,7 +1127,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(string path, Language language, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1155,7 +1155,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(string path, Language language, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1185,7 +1185,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(string path, Language language, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1217,7 +1217,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(string path,
             Language language, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false)
             where T : class
@@ -1251,7 +1251,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(string path, Language language, Sitecore.Data.Version version, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1280,7 +1280,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(string path, Language language, Sitecore.Data.Version version, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1311,7 +1311,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1341,7 +1341,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>The Sitecore item as the specified type</returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1376,7 +1376,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(string path, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByPathOptions
@@ -1426,7 +1426,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(Guid id, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1450,7 +1450,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(Guid id, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1476,7 +1476,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(Guid id, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1503,7 +1503,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(Guid id, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1533,7 +1533,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(Guid id, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1561,7 +1561,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(Guid id, Language language, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1588,7 +1588,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(Guid id, Language language, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1617,7 +1617,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(Guid id, Language language, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1648,7 +1648,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(Guid id, Language language, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1681,7 +1681,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1715,7 +1715,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T>(Guid id, Language language, Sitecore.Data.Version version, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1743,7 +1743,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK>(Guid id, Language language, Sitecore.Data.Version version, TK param1, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1773,7 +1773,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1805,7 +1805,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1839,7 +1839,7 @@ namespace Glass.Mapper.Sc
         /// <returns>
         /// The Sitecore item as the specified type
         /// </returns>
-        [Obsolete("Use ISitecorethis.GetItem with builder")]
+        [Obsolete("Use SitecoreService.GetItem with builder")]
         public T GetItem<T, TK, TL, TM, TN>(Guid id, Language language, Sitecore.Data.Version version, TK param1, TL param2, TM param3, TN param4, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByIdOptions
@@ -1868,7 +1868,7 @@ namespace Glass.Mapper.Sc
         /// <typeparam name="TK"></typeparam>
         /// <param name="item">The item.</param>
         /// <param name="newParent">The new parent.</param>
-        [Obsolete("Use ISitecorethis.MoveItem")]
+        [Obsolete("Use SitecoreService.MoveItem")]
         public void Move<T, TK>(T item, TK newParent)
         {
             var options = new MoveByModelOptions()
@@ -1892,7 +1892,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>Sitecore items as proxy classes of the specified type</returns>
-        [Obsolete("Use ISitecorethis.GetItemsByQuery with builder")]
+        [Obsolete("Use SitecoreService.GetItemsByQuery with builder")]
         public IEnumerable<T> Query<T>(string query, bool isLazy = false,
             bool inferType = false) where T : class
         {
@@ -1914,7 +1914,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>Sitecore items as proxy classes of the specified type</returns>
-        [Obsolete("Use ISitecorethis.GetItemsByQuery with builder")]
+        [Obsolete("Use SitecoreService.GetItemsByQuery with builder")]
         public IEnumerable<T> Query<T>(string query, Language language, bool isLazy = false, bool inferType = false)
             where T : class
         {
@@ -1939,7 +1939,7 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>Sitecore item as the specified type</returns>
-        [Obsolete("Use ISitecorethis.GetItemByQuery with builder")]
+        [Obsolete("Use SitecoreService.GetItemByQuery with builder")]
         public T QuerySingle<T>(string query, bool isLazy = false, bool inferType = false) where T : class
         {
             var options = new GetItemByQueryOptions()
@@ -1963,7 +1963,7 @@ namespace Glass.Mapper.Sc
         /// <param name="silent">If set to true, no events will be raised due to saving.</param>
         /// <typeparam name="T"></typeparam>
         /// <param name="target">The target.</param>
-        [Obsolete("Use ISitecorethis.SaveItem with builder")]
+        [Obsolete("Use SitecoreService.SaveItem with builder")]
         public void Save<T>(T target, bool updateStatistics = true,
             bool silent = false) where T : class
         {
@@ -1988,7 +1988,7 @@ namespace Glass.Mapper.Sc
         /// <param name="silent">If set to true, no events will be raised due to saving.</param>
         /// <param name="target">The object to read data from.</param>
         /// <param name="item">The item to write data to.</param>
-        [Obsolete("Use ISitecorethis.WriteToItem with builder")]
+        [Obsolete("Use SitecoreService.WriteToItem with builder")]
         public void WriteToItem<T>(T target, Item item, bool updateStatistics = true, bool silent = false) where T : class
         {
             this.WriteToItem(new WriteToItemOptions
