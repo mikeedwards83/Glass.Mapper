@@ -64,9 +64,15 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 {
                     modelType = GetModel(args, path);
 
+                    if (typeof(RenderingModel).IsAssignableFrom(modelType))
+                    {
+                        //convert RenderingModel to NullModel so it is ignored in the future.
+                        modelType = typeof(NullModel);
+                    }
+
                     modelCacheManager.Add(cacheKey, modelType);
 
-                    if (modelType == typeof(NullModel) || typeof(RenderingModel).IsAssignableFrom(modelType))
+                    if (modelType == typeof(NullModel))
                     {
                         // This is not the type we are looking for
                         return;
