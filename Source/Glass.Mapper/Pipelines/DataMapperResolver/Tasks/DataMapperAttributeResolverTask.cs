@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -65,8 +65,8 @@ namespace Glass.Mapper.Pipelines.DataMapperResolver.Tasks
                         "Specified data mapper {0} cannot handle this property. {1}".Formatted(mapperType.FullName, args.PropertyConfiguration));
                 }
 
-                args.Result= mapper;
-                return;
+                mapper.Setup(args);
+                args.Result = mapper;
             }
         }
 
