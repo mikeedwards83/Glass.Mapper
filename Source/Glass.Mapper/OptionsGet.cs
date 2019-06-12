@@ -30,7 +30,7 @@ namespace Glass.Mapper
             set
             {
                 _useCache = value;
-                if (value.IsEnabled() && DisabledLazyLoadingForCache)
+                if (value.IsEnabled() && DisableLazyLoadingForCache)
                 {
                     //If caching enabled then lazy loading is disabled.
                     Lazy = LazyLoading.Disabled;
