@@ -195,7 +195,7 @@ namespace Glass.Mapper.Sc.FakeDb
             {
                 var context = Context.Create(Utilities.CreateStandardResolver());
 
-                GetOptions.DisabledLazyLoadingForCache = false;
+                GetOptions.DisableLazyLoadingForCache = false;
 
                 var fluent = new SitecoreFluentConfigurationLoader();
                 var stub2Config = fluent.Add<Stub2>();
