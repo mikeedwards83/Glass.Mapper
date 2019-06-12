@@ -16,13 +16,21 @@ namespace Glass.Mapper
         public bool InferType { get; set; }
         public IList<ConstructorParameter> ConstructorParameters { get; set; }
 
+
+        /// <summary>
+        /// Indicates that if an object is cached then lazy loading should be disabled. Default is true.
+        /// This option can be set when you want objects in cache to be lazy loaded. See documentation about 
+        /// restrictions to this feature.
+        /// </summary>            
+        public static bool DisabledLazyLoadingForCache { get; set; } = true; 
+
         public Cache Cache
         {
             get { return _useCache; }
             set
             {
                 _useCache = value;
-                if (value.IsEnabled())
+                if (value.IsEnabled() && DisabledLazyLoadingForCache)
                 {
                     //If caching enabled then lazy loading is disabled.
                     Lazy = LazyLoading.Disabled;

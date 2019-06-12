@@ -183,6 +183,39 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 
         [Test]
+        public void LazyLoadingWithCaching_LazyEnabledForLegacyGettingParent_ReturnsConcrete()
+        {
+            //Arrange
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Parent") {
+                    new Sitecore.FakeDb.DbItem("Target")
+                }
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+
+                GetOptions.DisabledLazyLoadingForCache = false;
+
+                var fluent = new SitecoreFluentConfigurationLoader();
+                var stub2Config = fluent.Add<Stub2>();
+                var stub1Config = fluent.Add<Stub1>();
+                stub1Config.Parent(x => x.Stub2);
+                context.Load(fluent);
+
+                var service = new SitecoreService(database.Database, context);
+
+                //Act
+                var target = service.GetItem<Stub1>("/sitecore/content/parent/target", x => x.CacheEnabled());
+                var parent = target.Stub2;
+
+                //Assert
+                Assert.AreNotEqual(typeof(Stub2), parent.GetType());
+                Assert.True(parent is Stub2);
+            }
+        }
+
+        [Test]
         public void LazyLoadingWithCaching_LazyOnPrimaryDisabledButSecondaryEnabledGettingParent_ReturnsProxy()
         {
             //Arrange
