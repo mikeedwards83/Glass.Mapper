@@ -22,7 +22,7 @@ namespace Glass.Mapper
         /// This option can be set when you want objects in cache to be lazy loaded. See documentation about 
         /// restrictions to this feature.
         /// </summary>            
-        public static bool DisabledLazyLoadingForCache { get; set; } = true; 
+        public static bool DisableLazyLoadingForCache { get; set; } = true; 
 
         public Cache Cache
         {
