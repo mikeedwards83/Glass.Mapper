@@ -72,6 +72,30 @@ namespace Glass.Mapper.Sc.DataMappers
 
         }
 
+        public virtual IEnumerable<Item> GetItems(IEnumerable<Guid> ids)
+        {
+            //to we need this database?
+            var database = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach(var id in ids)
+            {
+                if (id != Guid.Empty)
+                {
+                    sb.Append(id);
+                }  
+            }
+
+            Sitecore.Diagnostics.Log.Debug($"IDs: {sb}");
+
+            foreach (var id in ids)
+            {
+                yield return database.GetItem(new ID(id));
+            }
+
+        }
+
 
         /// <summary>
         /// Indicates that the data mapper will mapper to and from the property

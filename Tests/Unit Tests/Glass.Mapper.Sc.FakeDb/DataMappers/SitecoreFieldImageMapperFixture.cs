@@ -14,7 +14,7 @@ using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Image = Glass.Mapper.Sc.Fields.Image;
 
-#if SC90 || SC91
+#if SC90 || SC91 || SC92
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -56,7 +56,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
 
 
-#if SC90 || SC91
+#if SC90 || SC91 || SC92
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -121,7 +121,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             })
             {
 
-#if SC90 || SC91
+#if SC90 || SC91 || SC92
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -321,10 +321,10 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
 
 
 
-              
 
 
-#if SC90 || SC91
+
+#if SC90 || SC91 || SC92
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 

@@ -23,7 +23,7 @@ namespace Glass.Mapper.Sc
         {
             get
             {
-#if SC82 || SC90 || SC91
+#if SC82 || SC90 || SC91  || SC92
                 return Sitecore.Context.PageMode.IsExperienceEditor;
 #else
                 return Sitecore.Context.PageMode.IsPageEditor;
@@ -37,8 +37,8 @@ namespace Glass.Mapper.Sc
 
         internal static Func<bool> GetIsPageEditorEditing = () =>
         {
-#if SC82 || SC90 || SC91
-                return Sitecore.Context.PageMode.IsExperienceEditorEditing;
+#if SC82 || SC90 || SC91 || SC92
+            return Sitecore.Context.PageMode.IsExperienceEditorEditing;
 #else
             return Sitecore.Context.PageMode.IsPageEditorEditing;
 #endif
