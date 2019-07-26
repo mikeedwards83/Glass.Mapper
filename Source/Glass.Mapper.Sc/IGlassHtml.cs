@@ -110,6 +110,15 @@ namespace Glass.Mapper.Sc
         string RenderImage<T>(T model, Expression<Func<T, object>> field, object parameters = null, bool isEditable = false, bool outputHeightWidth = false, string imgElementTemplate = GlassHtml.ImageTagFormat);
 
 
+        /// <summary>
+        /// Generates just an image URL for the given image.
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <returns></returns>
+        string RenderImageUrl<T>(T model, Expression<Func<T, object>> field, object parameters = null);
+
         RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field, TextWriter writer,
                                       object attributes = null, bool isEditable = false, bool alwaysRender = false, string aElementTemplate = GlassHtml.LinkTagFormat);
 

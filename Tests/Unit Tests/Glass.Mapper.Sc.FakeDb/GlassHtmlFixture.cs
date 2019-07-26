@@ -262,7 +262,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 var scControl = new Sitecore.Web.UI.WebControls.Image();
                 scControl.Item = item;
-                scControl.Field = "Image";
+                scControl.Field = "image";
                 scControl.Parameters = "mw=200";
 
                 var doc = new XmlDocument();
@@ -2861,6 +2861,35 @@ namespace Glass.Mapper.Sc.FakeDb
 
         }
 
+
+        #endregion
+
+        #region Method - RenderImageUrl
+
+        [Test]
+        public void RenderImageUrl_ValidImageWithClass_RendersCorrectHtml()
+        {
+            //Arrange
+            var expected = "~/media/Images/Carousel/carousel-example.ashx?h=105&amp;w=200";
+            var scContext = Substitute.For<ISitecoreService>();
+            scContext.Config = new Config();
+
+            var html = GetGlassHtml(scContext);
+            var image = new Fields.Image();
+            image.Alt = "someAlt";
+            image.Width = 200;
+            image.Height = 105;
+            image.Class = "AClass";
+            image.Src = "~/media/Images/Carousel/carousel-example.ashx";
+            var model = new { Image = image };
+
+            //Act
+            var result = html.RenderImageUrl(model, x => x.Image);
+
+            //Assert
+            Assert.AreEqual(expected, result);
+
+        }
 
         #endregion
 

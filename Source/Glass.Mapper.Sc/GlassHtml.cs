@@ -700,7 +700,26 @@ namespace Glass.Mapper.Sc
             return dictionary;
         }
 
-#endregion
+        #endregion
+
+
+
+
+        /// <summary>
+        /// Generates just an image URL for the given image.
+        /// </summary>
+        /// <typeparam name="T">The model type</typeparam>
+        /// <param name="model">The model that contains the image field</param>
+        /// <param name="parameters">Image parameters, e.g. width, height</param>
+        /// <returns></returns>
+        public virtual string RenderImageUrl<T>(T model,
+           Expression<Func<T, object>> field,
+            object parameters = null
+           )
+        {
+            return RenderImage(model, field, parameters, false, false, "{0}");
+        }
+
 
         /// <summary>
         /// Renders an image allowing simple page editor support
@@ -741,14 +760,13 @@ namespace Glass.Mapper.Sc
             }
             else
             {
-                return RenderImage(GetCompiled(field).Invoke(model) as Image, parameters == null ? null : attrs, outputHeightWidth, ImageTagFormat);
+                return RenderImage(GetCompiled(field).Invoke(model) as Image, parameters == null ? null : attrs, outputHeightWidth, imgElementTemplate);
             }
         }
 
 
 
-
-
+        
 
         /// <summary>
         /// Renders HTML for an image
