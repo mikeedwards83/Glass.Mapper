@@ -78,6 +78,19 @@ namespace Glass.Mapper.Sc.Mvc.Tests
             //Assert
             Assert.AreEqual(typeof(RegexTypeFinderFixture), result);
         }
+        
+        [Test]
+        public void GetType_GlobalNamespace_ReturnsType()
+        {
+            //Arrange
+            string contents = "@model global::Glass.Mapper.Sc.Mvc.Tests.RegexTypeFinderFixture";
+            var finder = new StubFinder();
+            //Act
+            var result = finder.GetType(contents);
+
+            //Assert
+            Assert.AreEqual(typeof(RegexTypeFinderFixture), result);
+        }
 
         [Test]
         public void GetType_MultiLine_ReturnsType()
