@@ -167,6 +167,7 @@
     <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
     <Compile Include="PropertyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScVersionTest.cs" />
     <Compile Include="SerializationFixture.cs" />
     <Compile Include="SitecoreContextFixture.cs" />
     <Compile Include="SitecoreServiceLegacyFixture.cs" />
