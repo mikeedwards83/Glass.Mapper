@@ -74,7 +74,7 @@ namespace Glass.Mapper.Sc
             StringBuilder sb = new StringBuilder();
             foreach (var pair in attributes)
             {
-                sb.AppendFormat("{0}={2}{1}{2} ".Formatted(pair.Key, pair.Value ??"", quotationMark));
+                sb.Append($"{pair.Key}={quotationMark}{pair.Value ?? ""}{quotationMark} ");
             }
 
             return sb.ToString();

@@ -3103,6 +3103,27 @@ namespace Glass.Mapper.Sc.FakeDb
             AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
+        [Test]
+        public void RenderLink_WithBracesInAttribute ()
+        {
+            //Arrange
+            var expected = "<a href='/somewhere.aspx?temp=fred' test='{test}' >hello &amp; world</a>";
+            var scContext = Substitute.For<ISitecoreService>();
+            var html = new GlassHtml(scContext);
+            var link = new Fields.Link();
+            link.Text = "hello & world";
+            link.Url = "/somewhere.aspx";
+            link.Query = "temp=fred";
+
+            var model = new { Link = link };
+
+            //Act
+            var result = html.RenderLink(model, x => x.Link, new {test = "{test}"});
+
+            //Assert
+            AssertHtml.AreHtmlElementsEqual(expected, result, "a");
+        }
+
         /// <summary>
         /// https://github.com/mikeedwards83/Glass.Mapper/issues/329
         /// </summary>
