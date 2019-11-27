@@ -12,6 +12,36 @@ namespace Glass.Mapper.Sc.V5.Tests
     {
 
         [Test]
+        public void GetItem_Cast_ReturnsItem()
+        {
+            //Assign
+
+
+            Guid id = Guid.NewGuid();
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+
+                var service = new SitecoreService(database.Database);
+
+                //Act
+                var db = database.Database;
+                var item = db.GetItem("/somepath");
+                 var result = service.GetItem<StubClass>(item);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(id, result.Id);
+            }
+        }
+
+        [Test]
         public void GetItem_UsingItemIdAsItem_ReturnsItem()
         {
             //Assign

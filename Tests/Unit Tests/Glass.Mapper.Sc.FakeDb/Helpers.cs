@@ -17,6 +17,7 @@ namespace Glass.Mapper.Sc.FakeDb
             var dic = new Dictionary<Guid, string>();
             dic.Add(fieldId, fieldValue);
             return Sc.Utilities.CreateFakeItem(dic, name);
+
         }
     
 

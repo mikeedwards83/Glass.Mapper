@@ -1,3 +1,4 @@
+using System;
 using System.Xml;
 using Glass.Mapper.Pipelines.ConfigurationResolver.Tasks.OnDemandResolver;
 using Glass.Mapper.Sc.Configuration;
@@ -400,6 +401,44 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         }
 
         #endregion
+
+
+        [Test]
+        public void GetItem_Cast_ReturnsItem()
+        {
+            //Assign
+
+
+            Guid id = Guid.NewGuid();
+
+            using (Db database = new Db
+            {
+                new Sitecore.FakeDb.DbItem("Target", new ID(id))
+            })
+            {
+                var context = Context.Create(Utilities.CreateStandardResolver());
+                context.Load(new OnDemandLoader<SitecoreTypeConfiguration>(typeof(StubClass)));
+
+
+                //      var service = new SitecoreService(database.Database);
+
+                //Act
+                var db = database.Database;
+
+                var item = db.GetItem("/somepath");
+
+                var service = new SitecoreService(database.Database);
+                var result = service.GetItem<StubClass>(item);
+
+                var mvcContext = new MvcContext();
+                var result1 = mvcContext.SitecoreService.GetItem<StubClass>(item);
+
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(id, result.Id);
+            }
+        }
     }
 }
 
