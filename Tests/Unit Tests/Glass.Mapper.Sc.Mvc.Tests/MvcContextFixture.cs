@@ -425,7 +425,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
                 //Act
                 var db = database.Database;
 
-                var item = db.GetItem("/somepath");
+                var item = db.GetItem("/sitecore/content/target");
 
                 var service = new SitecoreService(database.Database);
                 var result = service.GetItem<StubClass>(item);
