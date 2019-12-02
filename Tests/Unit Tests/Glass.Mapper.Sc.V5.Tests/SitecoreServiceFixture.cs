@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc.V5.Tests
 
                 //Act
                 var db = database.Database;
-                var item = db.GetItem("/somepath");
+                var item = db.GetItem("/sitecore/content/target");
                  var result = service.GetItem<StubClass>(item);
 
                 //Assert
