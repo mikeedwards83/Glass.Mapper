@@ -31,7 +31,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
     /// </summary>
     public class RenderWebEditing
     {
-        /// <summary>Gets the field value.</summary>
+        /// <summary>Gets the field value.</summary>'ApplyWordFieldStyle' 
         /// <param name="args">The arguments.</param>
         /// <contract>
         ///   <requires name="args" condition="none" />
@@ -66,7 +66,12 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
         private bool CanEditField(Field field)
         {
             Assert.ArgumentNotNull((object)field, "field");
+#if SC93
+            return true;
+
+#else
             return field.CanWrite;
+#endif
         }
 
         /// <summary>
@@ -98,7 +103,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
 
             return site != null 
                 && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary")
-#if SC82 || SC90 || SC91 || SC92
+#if SC82 || SC90 || SC91 || SC92 || SC93
                 && Sitecore.Context.PageMode.IsExperienceEditorEditing);
 #else
                 && Sitecore.Context.PageMode.IsPageEditorEditing);
@@ -165,8 +170,11 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
                 str =GetDefaultText(args);
             }
             this.AddParameters(fieldTag, args);
+#if !SC93
             if (args.FieldTypeKey.ToLowerInvariant() == "word document" && args.Parameters["editormode"] == "inline")
                 ApplyWordFieldStyle(fieldTag, args);
+#endif
+
             output.Write(fieldTag.Start());
             output.Write(str);
             args.Result.FirstPart = output.InnerWriter.ToString();
@@ -259,6 +267,8 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
             return args.FieldName;
         }
 
+#if !SC93 //removed in SC93
+
         /// <summary>Gets the word style string.</summary>
         /// <param name="tag">The tag.</param>
         /// <param name="args">The arguments.</param>
@@ -285,6 +295,8 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
             tag.Class += " scWordContainer";
             tag.Style = "width:{0}px;height:{1}px;padding:{2};".FormatWith((object)str4, (object)str5, (object)str3);
         }
+
+#endif
 
         /// <summary>Renders the buttons.</summary>
         /// <param name="commands">The commands.</param>
