@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.Pipelines.ObjectConstruction
                 && options != null
                 && options.VersionCount 
                 && scContext.Item != null
-                && (scContext.Item.Fields[FieldIDs.Revision].GetValue(false).IsNullOrEmpty()))
+                && (scContext.Item[FieldIDs.Revision].IsNullOrEmpty()))
             {
 
                 args.Result = null;
