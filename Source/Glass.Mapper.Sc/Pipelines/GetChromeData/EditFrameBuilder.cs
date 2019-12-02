@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Sitecore;
+#if SC93
+using Sitecore.Abstractions;
+#endif
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
