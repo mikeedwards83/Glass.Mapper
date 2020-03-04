@@ -22,7 +22,7 @@ To find out more about our backers visit https://www.glass.lu/rockstars.
 
 A special thank you to the following supporters of the Glass.Mapper.Sc project:
 
-						Konabos Consulting
+              Konabos Consulting              Swissworx
 
 							Dataweavers
 
@@ -30,6 +30,7 @@ Anis Chohan					Amir Setoudeh				Chaturanga Ranatunga
 Ishraq Al Fataftah			Dylan Young					Jason Wilkerson 
 Mohannad Alhasasneh			Neil Shack					Radoslaw Kozlowski 
 Eric Stafford				Matt Fletcher				Robbert Hock
+Steve McGill			    Floris Briolas
 
 
 If you would like to add your name to this amazing list of people visit our Patreon page https://www.patreon.com/glassmappersc
