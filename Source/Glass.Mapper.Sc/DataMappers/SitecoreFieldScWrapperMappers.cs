@@ -216,6 +216,9 @@ namespace Glass.Mapper.Sc.DataMappers
             return new ValueLookupField(field);
         }
     }
+
+#if !SC93 //removed in SC93
+
     public class SitecoreFieldScVersionLinkFieldMapper : SitecoreFieldScFieldBaseMapper<Sitecore.Data.Fields.VersionLinkField>
     {
         protected override VersionLinkField Create(Field field)
@@ -230,6 +233,6 @@ namespace Glass.Mapper.Sc.DataMappers
             return new WordDocumentField(field);
         }
     }
-
+#endif
 
 }

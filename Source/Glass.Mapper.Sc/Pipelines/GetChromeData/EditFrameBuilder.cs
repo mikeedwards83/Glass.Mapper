@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Sitecore;
+#if SC93
+using Sitecore.Abstractions;
+#endif
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -34,6 +37,13 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
         public static string Icon = "people/16x16/cubes_blue.png";
 
         private readonly Regex _titleRegex = new Regex("<title>(?<title>([^<]*))<title>");
+
+#if SC93
+        public EditFrameBuilder(BaseClient client) : base(client)
+        {
+
+        }
+#endif
 
         public override void Process(GetChromeDataArgs args)
         {
