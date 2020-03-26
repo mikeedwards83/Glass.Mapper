@@ -12,7 +12,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateConcrete
     public class CreateConcreteTask : AbstractObjectConstructionTask
     {
         private readonly LazyLoadingHelper _lazyLoadingHelper;
-        private static volatile  ProxyGenerator _generator;
+        private static readonly ProxyGenerator _generator;
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateConcreteTask"/> class.

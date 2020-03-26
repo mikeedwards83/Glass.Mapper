@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == 'sc93'  Or '$(ScVersion)' == '' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == 'sc93'   ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin93\</ScDir>
     <ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
@@ -14,7 +14,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutputPath>bin\93\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == 'sc92' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == 'sc92' Or '$(ScVersion)' == '' ">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin92\</ScDir>
     <ScFakeDBVersion>2.0.0</ScFakeDBVersion>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>

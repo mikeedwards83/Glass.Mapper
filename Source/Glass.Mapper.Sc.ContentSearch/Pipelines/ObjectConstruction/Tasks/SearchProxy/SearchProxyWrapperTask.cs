@@ -6,7 +6,7 @@ namespace Glass.Mapper.Sc.ContentSearch.Pipelines.ObjectConstruction.Tasks.Searc
 {
     public class SearchProxyWrapperTask : AbstractObjectConstructionTask
     {
-        private static volatile ProxyGenerator _generator = new ProxyGenerator();
+        private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
         static SearchProxyWrapperTask()
         {

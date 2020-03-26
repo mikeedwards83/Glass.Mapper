@@ -4,6 +4,7 @@ using System.Linq;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
 using Sitecore.Data;
+using Sitecore.Shell.Framework.Commands;
 
 namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 {
@@ -58,6 +59,7 @@ namespace Glass.Mapper.Sc.Pipelines.ConfigurationResolver
 
             base.Execute(args);
         }
+
 
     }
 }
