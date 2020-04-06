@@ -78,7 +78,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         protected virtual T GetContext<T>(GetKnownOptions options = null) where T : class
         {
-            return MvcContext.GetContextItem<T>(options);
+            return MvcContext.GetContextItem<T>(options ?? new GetKnownOptions());
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
             {
                 return null;
             }
-            return MvcContext.GetDataSourceItem<T>(options);
+            return MvcContext.GetDataSourceItem<T>(options ?? new GetKnownOptions());
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
         protected virtual T GetLayout<T>(GetKnownOptions options = null) where T : class
         {
             return MvcContext.HasDataSource 
-                ? GetDataSource<T>(options) 
-                : GetContext<T>(options);
+                ? GetDataSource<T>(options ?? new GetKnownOptions()) 
+                : GetContext<T>(options ?? new GetKnownOptions());
         }
 
 
