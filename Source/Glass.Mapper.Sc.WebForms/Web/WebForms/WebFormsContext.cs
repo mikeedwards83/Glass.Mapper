@@ -48,7 +48,7 @@ namespace Glass.Mapper.Sc.Web.WebForms
         /// <returns></returns>
         public T GetDataSourceItem<T>(Control control, GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = GetDataSourceItem(control);
             options.Item = item;

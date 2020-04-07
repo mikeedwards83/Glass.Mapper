@@ -32,7 +32,7 @@ namespace Glass.Mapper.Sc.Web
         /// <returns></returns>
         public virtual object GetContextItem(GetKnownOptions options) 
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Item = ContextItem;
 
@@ -47,7 +47,7 @@ namespace Glass.Mapper.Sc.Web
         /// <returns></returns>
         public virtual T GetContextItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Item = ContextItem;
 
@@ -73,7 +73,7 @@ namespace Glass.Mapper.Sc.Web
         /// <returns></returns>
         public virtual T GetHomeItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = SitecoreService.Database.GetItem(Sitecore.Context.Site.StartPath);
             options.Item = item;
@@ -102,7 +102,7 @@ namespace Glass.Mapper.Sc.Web
         /// <returns></returns>
         public virtual T GetRootItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = SitecoreService.Database.GetItem(Sitecore.Context.Site.RootPath);
             options.Item = item;
