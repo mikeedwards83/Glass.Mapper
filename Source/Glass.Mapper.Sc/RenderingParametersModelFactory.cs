@@ -14,42 +14,37 @@ namespace Glass.Mapper.Sc
             _sitecoreService = sitecoreService;
         }
 
-        public virtual T CreateModel<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T:class
+        public virtual T CreateModel<T>(NameValueCollection parameters, ID renderParametersTemplateId) where T : class
         {
             var item = Utilities.CreateFakeItem(null, renderParametersTemplateId, _sitecoreService.Database, "renderingParameters");
 
             using (new SecurityDisabler())
+            using (new EventDisabler())
             {
-                using (new EventDisabler())
+                if (parameters != null)
                 {
-                    if (parameters != null)
+                    item.Editing.BeginEdit();
+                    foreach (var key in parameters.AllKeys)
                     {
-                        item.Editing.BeginEdit();
-                        item.RuntimeSettings.Temporary = true;
-                        foreach (var key in parameters.AllKeys)
+                        var fld = item.Fields[key];
+                        if (fld != null)
                         {
-                            var fld = item.Fields[key];
-                            if (fld != null)
-                            {
-                                fld.SetValue(parameters[key], true);
-                            }
+                            fld.SetValue(parameters[key], true);
                         }
                     }
-
-                    var options = new GetItemByItemOptions
-                    {
-                        Item = item,
-                        //this must be only reference properties to force the fake item to be read before it is deleted
-                        //it isn't possible lazy load the top level
-                        Lazy = LazyLoading.OnlyReferenced,
-                        VersionCount = false
-                    };
-                    T obj = _sitecoreService.GetItem<T>(options);
-
-                    item.Editing.CancelEdit();
-                    item.Delete(); //added for clean up
-                    return obj;
                 }
+
+                var options = new GetItemByItemOptions
+                {
+                    Item = item,
+                    //this must be only reference properties to force the fake item to be read before it is deleted
+                    //it isn't possible lazy load the top level
+                    Lazy = LazyLoading.OnlyReferenced,
+                    VersionCount = false
+                };
+                T obj = _sitecoreService.GetItem<T>(options);
+
+                return obj;
             }
         }
     }
