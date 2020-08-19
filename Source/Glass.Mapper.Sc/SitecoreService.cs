@@ -1488,6 +1488,8 @@ namespace Glass.Mapper.Sc
             };
             return this.GetItem<T>(options);
         }
+
+        /// <summary>
         /// Retrieve a Sitecore item as the specified type.
         /// </summary>
         /// <typeparam name="T">The type to return the Sitecore item as</typeparam>
@@ -1515,6 +1517,7 @@ namespace Glass.Mapper.Sc
             };
             return this.GetItem<T>(options);
         }
+
         /// <summary>
         /// Retrieve a Sitecore item as the specified type.
         /// </summary>

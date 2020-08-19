@@ -237,7 +237,7 @@ namespace Glass.Mapper.Sc.DataMappers
                 case SitecoreInfoType.ItemUri:
                     _getValue = (item, getOptions) => new ItemUri(item.ID, item.Language, item.Version, item.Database);
                     break;
-#if (SC82  || SC90 || SC91 || SC92 || SC93) 
+#if SC82 || SC90 || SC91 || SC92 || SC93 || SC100
                 case SitecoreInfoType.OriginalLanguage:
                     _getValue = (item, getOptions) => item.OriginalLanguage;
                     break;

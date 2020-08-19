@@ -19,7 +19,7 @@ using Sitecore.FakeDb;
 using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -70,7 +70,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             })
             {
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -298,7 +298,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 };
 
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92 || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -586,9 +586,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             }
         }
 
-        #endregion
+#endregion
 
-        #region Method - MapToCms
+#region Method - MapToCms
 
         [Test]
         public void MapToCms_SavingDisplayName_UpdatesTheDisplayNameField()
@@ -675,9 +675,9 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             }
         }
 
-        #endregion
+#endregion
 
-        #region Stubs
+#region Stubs
 
         public class Stub
         {
@@ -686,7 +686,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             public string StringField { get; set; }
         }
 
-        #endregion
+#endregion
     }
 }
 

@@ -41,7 +41,7 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.True(true);
         }
 #endif
-#if SC92 
+#if SC92
         public void Sc92()
         {
             Assert.True(true);
@@ -55,5 +55,11 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 #endif
 
+#if SC100
+        public void Sc100()
+        {
+            Assert.True(true);
+        }
+#endif
     }
 }
