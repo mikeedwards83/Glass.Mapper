@@ -251,7 +251,6 @@ namespace Glass.Mapper.Sc
         /// <param name="isLazy">if set to <c>true</c> [is lazy].</param>
         /// <param name="inferType">if set to <c>true</c> [infer type].</param>
         /// <returns>
-       
         /// </returns>
         [Obsolete("Use ISitecoreService.GetItem")]
         T GetItem<T, TK, TL, TM>(string path, TK param1, TL param2, TM param3, bool isLazy = false, bool inferType = false) where T : class;

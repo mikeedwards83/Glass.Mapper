@@ -41,8 +41,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,12 +93,22 @@
       <HintPath>..\..\Depends\System.Web.WebPages\v3\System.Web.WebPages.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(Mvc)' != '526'">
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '526'">
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\Depends\System.Web.Mvc\v526\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages">
       <HintPath>..\..\Depends\System.Web.WebPages\v304\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\..\Depends\System.Web.WebPages\v304\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\..\Depends\System.Web.WebPages\v304\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

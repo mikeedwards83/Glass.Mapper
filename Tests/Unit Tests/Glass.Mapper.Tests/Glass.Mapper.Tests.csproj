@@ -90,6 +90,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' or '$(Configuration)|$(Platform)' == 'sc93|AnyCPU' or '$(Configuration)|$(Platform)' == 'sc92|AnyCPU'">
+    <Reference Include="Sitecore.ContentSearch.ContentExtraction">
+      <HintPath>..\$(ScDir)Sitecore.ContentSearch.ContentExtraction.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractServiceFixture.cs" />
     <Compile Include="Configuration\AbstractTypeConfigurationFixture.cs" />

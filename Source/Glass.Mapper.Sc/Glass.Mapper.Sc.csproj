@@ -61,6 +61,11 @@
       <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' or '$(Configuration)|$(Platform)' == 'sc93|AnyCPU' or '$(Configuration)|$(Platform)' == 'sc92|AnyCPU'">
+    <Reference Include="Sitecore.ContentSearch.ContentExtraction">
+      <HintPath>$(ScDir)Sitecore.ContentSearch.ContentExtraction.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractSitecoreContext.cs" />
     <Compile Include="Builders\CreateBuilders.cs" />
