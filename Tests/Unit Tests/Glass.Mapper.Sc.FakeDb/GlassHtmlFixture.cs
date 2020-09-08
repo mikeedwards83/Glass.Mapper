@@ -13,7 +13,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 using Sitecore.Abstractions;
     using Sitecore.DependencyInjection;
 #endif
@@ -223,7 +223,7 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -327,7 +327,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var html = GetGlassHtml(service);
 
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -427,7 +427,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -3191,7 +3191,7 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.AreEqual(expected, result);
         }
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
         [Test]
         public void RenderLink_BlankTarget_AddsNoOpener()
         {
