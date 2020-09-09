@@ -77,6 +77,11 @@
       <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(IncludeContentExtractionDll)' == 'true'">
+   <Reference Include="Sitecore.ContentSearch.ContentExtraction">
+      <HintPath>..\$(ScDir)Sitecore.ContentSearch.ContentExtraction.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

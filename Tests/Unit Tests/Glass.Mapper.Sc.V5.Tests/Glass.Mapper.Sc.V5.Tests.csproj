@@ -72,8 +72,13 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="sitecore.nexus">
-      <HintPath>..\$(ScDir)sitecore.nexus.dll</HintPath>
+    <Reference Include="Sitecore.Nexus">
+      <HintPath>..\$(ScDir)Sitecore.Nexus.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(IncludeContentExtractionDll)' == 'true'">
+   <Reference Include="Sitecore.ContentSearch.ContentExtraction">
+      <HintPath>..\$(ScDir)Sitecore.ContentSearch.ContentExtraction.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
