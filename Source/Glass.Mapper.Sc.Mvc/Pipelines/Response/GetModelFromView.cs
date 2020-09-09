@@ -79,49 +79,7 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                     }
                 }
 
-                IMvcContext mvcContext = new MvcContext(new SitecoreService(Sitecore.Context.Database));
-
-                Rendering renderingItem = args.Rendering;
-
-                object model = null;
-
-                if (renderingItem.DataSource.HasValue())
-                {
-                    var getOptions = new GetItemByPathOptions();
-                    getOptions.Type = modelType;
-                    getOptions.Path = renderingItem.DataSource;
-                    model = mvcContext.SitecoreService.GetItem(getOptions);
-                }
-                else if (renderingItem.RenderingItem.DataSource.HasValue())
-                {
-                    var getOptions = new GetItemByPathOptions();
-                    getOptions.Type = modelType;
-                    getOptions.Path = renderingItem.RenderingItem.DataSource;
-
-                    model = mvcContext.SitecoreService.GetItem(getOptions);
-                }
-                else if (renderingItem.Item != null)
-                {
-                    /**
-             * Issues #82:
-             * Check Item before defaulting to the current item.
-             */
-                    var getOptions = new GetItemByItemOptions();
-                    getOptions.Type = modelType;
-                    getOptions.Item = renderingItem.Item;
-
-                    model = mvcContext.SitecoreService.GetItem(getOptions);
-
-                }
-                else
-                {
-                    var getOptions = new GetItemByItemOptions();
-                    getOptions.Type = modelType;
-                    getOptions.Item = mvcContext.ContextItem;
-                    model = mvcContext.SitecoreService.GetItem(getOptions);
-                }
-
-                args.Result = model;
+                args.Result = GetDataSourceItem(args, modelType);
                 args.AbortPipeline();
             }
             finally
@@ -182,10 +140,53 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                    args.Rendering.RenderingType == String.Empty;
         }
 
+        protected virtual object GetDataSourceItem(GetModelArgs args, Type modelType)
+        {
+            IMvcContext mvcContext = new MvcContext(new SitecoreService(Sitecore.Context.Database));
+            Rendering renderingItem = args.Rendering;
 
-      
+            if (renderingItem.DataSource.HasValue())
+            {
+                var getOptions = new GetItemByPathOptions();
+                getOptions.Type = modelType;
+                getOptions.Path = renderingItem.DataSource;
+                return mvcContext.SitecoreService.GetItem(getOptions);
+            }
 
-       
+            if (renderingItem.RenderingItem.DataSource.HasValue())
+            {
+                var getOptions = new GetItemByPathOptions();
+                getOptions.Type = modelType;
+                getOptions.Path = renderingItem.RenderingItem.DataSource;
+
+                return mvcContext.SitecoreService.GetItem(getOptions);
+            }
+
+            if (renderingItem.Item != null)
+            {
+                /**
+         * Issues #82:
+         * Check Item before defaulting to the current item.
+         */
+                var getOptions = new GetItemByItemOptions();
+                getOptions.Type = modelType;
+                getOptions.Item = renderingItem.Item;
+
+                return mvcContext.SitecoreService.GetItem(getOptions);
+
+            }
+            else
+            {
+                var getOptions = new GetItemByItemOptions();
+                getOptions.Type = modelType;
+                getOptions.Item = mvcContext.ContextItem;
+                return mvcContext.SitecoreService.GetItem(getOptions);
+            }
+        }
+
+
+
+
 
     }
 

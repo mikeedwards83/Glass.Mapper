@@ -28,22 +28,7 @@ namespace $rootnamespace$.App_Start
 			return new IConfigurationLoader[]{};
 		}
 		public static void PostLoad(){
-			//Remove the comments to activate CodeFist
-			/* CODE FIRST START
-            var dbs = Sitecore.Configuration.Factory.GetDatabases();
-            foreach (var db in dbs)
-            {
-                var provider = db.GetDataProviders().FirstOrDefault(x => x is GlassDataProvider) as GlassDataProvider;
-                if (provider != null)
-                {
-                    using (new SecurityDisabler())
-                    {
-                        provider.Initialise(db);
-                    }
-                }
-            }
-             * CODE FIRST END
-             */
+			
 		}
 		public static void AddMaps(IConfigFactory<IGlassMap> mapsConfigFactory)
         {

@@ -41,6 +41,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
             //if lazy loading diabled load all values now
             if (!lazyLoadingHelper.IsEnabled(args.Options)) { 
                 LoadAllValues();
+                _mappingContext = null;
             }
         }
 

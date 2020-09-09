@@ -47,7 +47,12 @@ namespace Glass.Mapper.Sc
                     T obj = _sitecoreService.GetItem<T>(options);
 
                     item.Editing.CancelEdit();
-                    item.Delete(); //added for clean up
+
+                    if (_sitecoreService.Config.DeleteRenderingParameterItems)
+                    {
+                        item.Delete(); //added for clean up
+                    }
+
                     return obj;
                 }
             }

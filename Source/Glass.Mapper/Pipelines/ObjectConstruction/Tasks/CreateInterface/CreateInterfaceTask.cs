@@ -9,7 +9,7 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.CreateInterface
     public class CreateInterfaceTask : AbstractObjectConstructionTask
     {
         private readonly LazyLoadingHelper _lazyLoadingHelper;
-        private static volatile  ProxyGenerator _generator;
+        private static readonly ProxyGenerator _generator;
 
         /// <summary>
         /// Initializes static members of the <see cref="CreateInterfaceTask"/> class.

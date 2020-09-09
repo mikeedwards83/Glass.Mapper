@@ -13,8 +13,8 @@ namespace Glass.Mapper.Pipelines.ObjectConstruction.Tasks.Ioc
     {
         private readonly LazyLoadingHelper _lazyLoadingHelper;
         private static object _lock = new object();
-        private static volatile ProxyGenerator _generator;
-        private static volatile ProxyGenerationOptions _options;
+        private static readonly ProxyGenerator _generator;
+        private static readonly ProxyGenerationOptions _options;
 
         protected static ProxyGenerator Generator { get { return _generator; } }
         protected static ProxyGenerationOptions Options { get { return _options; } }

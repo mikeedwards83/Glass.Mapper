@@ -1,4 +1,5 @@
-﻿using Glass.Mapper.Configuration.Attributes;
+﻿using System;
+using Glass.Mapper.Configuration.Attributes;
 using Glass.Mapper.Pipelines.ConfigurationResolver;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -14,7 +15,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
     {
 
         #region Execute
-        
+
         [Test]
         public void Execute_ResultNotNull_Returns()
         {
@@ -45,10 +46,10 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
 
             //Act
             task.Execute(args);
-            
+
             //Assert
             Assert.IsNull(args.Result);
-            
+
         }
 
         [Test]
@@ -132,7 +133,7 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
                 Assert.AreEqual(typeof(StubInferred), args2.Result.Type);
             }
         }
-       
+
 
 
         #endregion
@@ -141,13 +142,35 @@ namespace Glass.Mapper.Sc.FakeDb.Pipelines.ConfigurationResolver
 
         public interface IBase
         {
-             
+
         }
 
         [SitecoreType(TemplateId = StubInferred.TemplateId)]
         public class StubInferred : IBase
         {
             public const string TemplateId = "{7FC4F278-ADDA-4683-944C-554D0913CB33}";
+        }
+
+        #endregion
+
+        #region MISC
+
+
+        [Test]
+        public void MiscCacheKeyComparison()
+        {
+
+            //Arrange
+
+            var context = Context.Create(FakeDb.Utilities.CreateStandardResolver());
+            var type = typeof(TemplateInferredTypeTaskFixture);
+            var id = ID.NewID;
+
+
+            var tuple1 = new Tuple<Context, Type, ID>(context, type, id);
+            var tuple2 = new Tuple<Context, Type, ID>(context, type, id);
+
+            Assert.AreEqual(tuple1, tuple2);
         }
 
         #endregion
