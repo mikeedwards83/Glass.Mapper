@@ -27,6 +27,11 @@ using Sitecore.Sites;
 using Sitecore.Web;
 using Site = System.Security.Policy.Site;
 
+
+#if SC100
+using Sitecore.Links.UrlBuilders;
+#endif
+
 namespace Glass.Mapper.Sc.FakeDb
 {
     [TestFixture]
@@ -229,9 +234,14 @@ namespace Glass.Mapper.Sc.FakeDb
 
                 SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
 
-                mediaUrlProvider
-                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlOptions>())
+#if SC100
+                mediaUrlProvider.GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlBuilderOptions>())
                     .Returns("/myimage");
+#else
+                 mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlOptions>())
+                  .Returns("/myimage");
+#endif
 
 #else
                 Sitecore.Resources.Media.MediaProvider mediaProvider =
