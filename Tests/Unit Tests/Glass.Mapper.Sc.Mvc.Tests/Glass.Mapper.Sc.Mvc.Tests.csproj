@@ -53,8 +53,8 @@
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="sitecore.nexus">
-      <HintPath>..\$(ScDir)sitecore.nexus.dll</HintPath>
+    <Reference Include="Sitecore.Nexus">
+      <HintPath>..\$(ScDir)Sitecore.Nexus.dll</HintPath>
     </Reference>
 	 <Reference Include="Sitecore.FakeDb">
       <SpecificVersion>False</SpecificVersion>
@@ -78,6 +78,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IncludeContentExtractionDll)' == 'true'">
+   <Reference Include="Sitecore.ContentSearch.ContentExtraction">
+      <HintPath>..\$(ScDir)Sitecore.ContentSearch.ContentExtraction.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '5'">
     <Reference Include="System.Web.Mvc">
