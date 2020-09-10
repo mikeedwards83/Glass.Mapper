@@ -71,7 +71,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.config">
       <SubType>Designer</SubType>
