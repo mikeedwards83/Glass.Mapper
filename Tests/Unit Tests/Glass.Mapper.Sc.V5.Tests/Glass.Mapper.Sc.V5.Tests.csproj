@@ -1,7 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F1095B93-944C-44FD-AB13-B952CD7E8E68}</ProjectGuid>
@@ -83,14 +81,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.xml" />

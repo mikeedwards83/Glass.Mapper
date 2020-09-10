@@ -1,6 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -205,17 +203,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+    <ProjectReference Include="..\..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

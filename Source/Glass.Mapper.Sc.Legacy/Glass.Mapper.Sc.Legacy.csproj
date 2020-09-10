@@ -1,7 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{91C079FD-1296-40DB-867A-BA43F20CDBE5}</ProjectGuid>
@@ -53,21 +51,11 @@
     <Compile Include="SitecoreContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper.Sc.Extensions\Glass.Mapper.Sc.Extensions.csproj">
-      <Project>{86800e9a-13f3-4ea3-9742-935b832eaa43}</Project>
-      <Name>Glass.Mapper.Sc.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper.Sc.Extensions\Glass.Mapper.Sc.Extensions.csproj" />
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

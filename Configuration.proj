@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == ''">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin100\</ScDir>
     <IncludeContentExtractionDll>true</IncludeContentExtractionDll>
     <ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.8</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">526</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC100</DefineConstants>
@@ -19,7 +17,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin93\</ScDir>
     <IncludeContentExtractionDll>true</IncludeContentExtractionDll>
     <ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">526</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC93</DefineConstants>
@@ -33,7 +31,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin92\</ScDir>
     <IncludeContentExtractionDll>true</IncludeContentExtractionDll>
     <ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">526</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC92</DefineConstants>
@@ -47,7 +45,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin91\</ScDir>
     <IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 	  <ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.7.1</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">526</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC91</DefineConstants>
@@ -61,7 +59,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin90\</ScDir>
     <IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 	  <ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.6.2</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net462</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC90</DefineConstants>
@@ -75,7 +73,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
     <IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 	  <ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net452</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC82</DefineConstants>
@@ -89,7 +87,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
     <IncludeContentExtractionDll>false</IncludeContentExtractionDll>
   	<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
     <Mvc>51</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC80</DefineConstants>
@@ -103,7 +101,7 @@
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin81\</ScDir>
     <IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 	  <ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' ">v4.5</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
     <Mvc Condition="'$(Mvc)' ==''">52</Mvc>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>SC81</DefineConstants>
@@ -113,8 +111,4 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutputPath>bin\81\</OutputPath>
   </PropertyGroup>
-  
- 
-  
-  
 </Project>
