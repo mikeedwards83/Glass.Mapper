@@ -76,13 +76,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Attributes\BasicTemplate.cs" />
-    <Compile Include="Configuration\Attributes\MiscFixture.cs" />
-    <Compile Include="Configuration\Fluent\BasicTemplate.cs" />
-    <Compile Include="Configuration\Fluent\MiscFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>

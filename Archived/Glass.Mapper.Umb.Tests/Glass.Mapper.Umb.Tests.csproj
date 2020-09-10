@@ -60,18 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Attributes\UmbracoInfoAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoaderFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoTypeAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoParentAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoChildrenAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoPropertyAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoIdAttributeFixture.cs" />
-    <Compile Include="Configuration\UmbracoMapConfigurationFixture.cs" />
-    <Compile Include="Configuration\UmbracoTypeConfigurationFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>

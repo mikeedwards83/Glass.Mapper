@@ -74,60 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\NetMemoryCacheManagerTestFixture.cs" />
-    <Compile Include="CodeFirst\GlassDataProviderFixture.cs" />
-    <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
-    <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
-    <Compile Include="ConnectionFixture.cs" />
-    <Compile Include="ContextFixture.cs" />
-    <Compile Include="DataMappers\AbstractMapperFixture.cs" />
-    <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldLinkMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreNodeMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreTypeConfigurationFixture.cs" />
-    <Compile Include="Dynamic\DynamicCollectionFixture.cs" />
-    <Compile Include="Dynamic\DynamicExtensions.cs" />
-    <Compile Include="Dynamic\DynamicItemFixture.cs" />
-    <Compile Include="GlassHtmlFixture.cs" />
-    <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
-    <Compile Include="Issues\Issue145\Issue145.cs" />
-    <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
-    <Compile Include="MiscFixture.cs" />
-    <Compile Include="PerformanceTests.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheckFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTaskFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\SitecoreTypeFieldHandler.cs" />
-    <Compile Include="SerializationFixture.cs" />
-    <Compile Include="SetupSitecoreForTesting.cs" />
-    <Compile Include="SitecoreContextFixture.cs" />
-    <Compile Include="SitecoreServiceFixture.cs" />
-    <Compile Include="Ui\Web\AbstractGlassUserControlFixture.cs" />
-    <Compile Include="Utilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\Commands.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

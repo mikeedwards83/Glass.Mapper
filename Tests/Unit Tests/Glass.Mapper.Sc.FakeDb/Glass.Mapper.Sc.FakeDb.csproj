@@ -70,105 +70,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertHtml.cs" />
-    <Compile Include="Caching\CacheAlwaysOnFixture.cs" />
-    <Compile Include="Caching\CacheFixtures.cs" />
-    <Compile Include="Caching\NetMemoryCacheManagerTestFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreAttributeConfigurationLoaderFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreChildrenAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreFieldAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreIdAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreInfoAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreLinkedAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreNodeAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreParentAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreQueryAttributeFixture.cs" />
-    <Compile Include="Configuation\Attributes\SitecoreTypeAttributeFixture.cs" />
-    <Compile Include="Configuation\Fluent\FluentGeneralFixture.cs" />
-    <Compile Include="Configuation\Fluent\SitecoreTypeFixture.cs" />
-    <Compile Include="Configuation\Management\ConfigManagementTests.cs" />
-    <Compile Include="Configuation\SitecoreMapConfigurationFixture.cs" />
-    <Compile Include="Configuation\SitecoreTypeConfigurationFixture.cs" />
-    <Compile Include="ContextFixture.cs" />
-    <Compile Include="DataMappers\AbstractMapperFixture.cs" />
-    <Compile Include="DataMappers\AbstractSitecoreFieldMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreChildrenMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldBooleanMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldDateTimeMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldDecimalMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldDoubleMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldEnumMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldFileMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldFloatMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldGuidMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldIdMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldIEnumerableMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldImageMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldIntegerMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldItemMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldLinkMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldLongMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldNameValueCollectionMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldNullableEnumMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldNullableMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldRulesMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldStreamMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldStringMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreFieldTypeMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreIdMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreIgnoreMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreInfoMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreItemMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreLinkedMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreNodeMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreParentMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryMapperFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemDateNowParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemEscapedPathParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdNoBracketsParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemIdParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreQueryParameters\ItemPathParameterFixture.cs" />
-    <Compile Include="DataMappers\SitecoreTypeConfigurationFixture.cs" />
-    <Compile Include="EnableWebEditMode.cs" />
-    <Compile Include="GlassHtmlFixture.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Infrastructure\FakeDbField.cs" />
-    <Compile Include="Infrastructure\FakeSite.cs" />
-    <Compile Include="Infrastructure\Pipelines\RenderField\RenderWebEdit.cs" />
-    <Compile Include="Infrastructure\Pipelines\RenderField\SimpleRenderField.cs" />
-    <Compile Include="Issues\AlexGriciucCreateItemIssue\AlexGriciucCreateItemIssueFixture.cs" />
-    <Compile Include="Issues\Issue145\Issue145.cs" />
-    <Compile Include="Issues\Issue154\Issue154Fixture.cs" />
-    <Compile Include="Issues\Issue247\Issue247.cs" />
-    <Compile Include="Issues\Issue299\Issue299Fixture.cs" />
-    <Compile Include="Issues\Issue311\Issue311Fixture.cs" />
-    <Compile Include="Issues\Issue370\Issue370Fixture.cs" />
-    <Compile Include="Issues\Issue376\Issue376Fixture.cs" />
-    <Compile Include="LazyItemEnumerableFixture.cs" />
-    <Compile Include="LazyLoadingFixture.cs" />
-    <Compile Include="MediaUrlOptionsResolverFixture.cs" />
-    <Compile Include="MiscFixture.cs" />
-    <Compile Include="PerformanceTests.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\SitecoreItemResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\TemplateInferredTypeTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ConstructionCreatedMonitorTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\EnforcedTemplateCheckFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ItemVersionCountByRevisionTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ModelCounterFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\SitecoreItemTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
-    <Compile Include="PropertyFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScVersionTest.cs" />
-    <Compile Include="SerializationFixture.cs" />
-    <Compile Include="SitecoreContextFixture.cs" />
-    <Compile Include="SitecoreServiceLegacyFixture.cs" />
-    <Compile Include="SitecoreServiceFixture.cs" />
-    <Compile Include="TestV5.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="UtilitiesFixture.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -190,6 +91,9 @@
     <PackageReference Include="NUnit">
       <Version>3.8.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

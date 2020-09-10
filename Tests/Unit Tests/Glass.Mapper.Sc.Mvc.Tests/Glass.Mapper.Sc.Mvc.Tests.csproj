@@ -93,15 +93,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DifferentTypedGlassController.cs" />
-    <Compile Include="RegexTypeFinderFixture.cs" />
-    <Compile Include="SingleTypedGlassController.cs" />
-    <Compile Include="GlassControllerTestFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MvcContextFixture.cs" />
-    <Compile Include="Utilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +118,9 @@
     <PackageReference Include="NUnit">
       <Version>3.8.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   
 </Project>

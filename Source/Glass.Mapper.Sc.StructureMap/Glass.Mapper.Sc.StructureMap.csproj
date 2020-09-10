@@ -45,11 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StructureMapSitecoreInstaller.cs" />
-    <Compile Include="StructureMapDependencyHandler.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>

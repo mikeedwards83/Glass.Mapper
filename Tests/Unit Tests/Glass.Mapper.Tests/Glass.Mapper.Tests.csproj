@@ -80,45 +80,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractServiceFixture.cs" />
-    <Compile Include="Configuration\AbstractTypeConfigurationFixture.cs" />
-    <Compile Include="Configuration\Attributes\AttributeConfigurationLoaderFixture.cs" />
-    <Compile Include="Configuration\Attributes\AbstractClassAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\AbstractPropertyAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\AttributeTypeLoaderFixture.cs" />
-    <Compile Include="Configuration\Attributes\ChildrenAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\FieldAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\IdAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\InfoAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\LinkedAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\NodeAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\ParentAttributeFixture.cs" />
-    <Compile Include="Configuration\Attributes\QueryAttributeFixture.cs" />
-    <Compile Include="AbstractDataMapperFixture.cs" />
-    <Compile Include="ContextFixture.cs" />
-    <Compile Include="DisableCacheFixture.cs" />
-    <Compile Include="ExtensionMethodFixture.cs" />
-    <Compile Include="GlassLazyTestFixture.cs" />
-    <Compile Include="IoC\AbstractConfigFactoryFixture.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\ConfigureOptionsForType.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\StandardResolver\ConfigurationStandardResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperAttributeResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperStandardResolverTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptorFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTaskFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptorFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfaceSerializationFixture.cs" />
-    <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTaskFixture.cs" />
-    <Compile Include="TestGetOptions.cs" />
-    <Compile Include="TestTypeCreationContext.cs" />
-    <Compile Include="UrlBuilderFixture.cs" />
-    <Compile Include="UtilitiesFixture.cs" />
-    <Compile Include="Pipelines\AbstractPipelineRunnerFixture.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTaskFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +92,9 @@
     <PackageReference Include="NUnit">
       <Version>3.8.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
