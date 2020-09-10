@@ -42,6 +42,17 @@
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
+  <ItemGroup>
+    <Compile Remove="Profilers\Pipelines\**" />
+    <EmbeddedResource Remove="Profilers\Pipelines\**" />
+    <None Remove="Profilers\Pipelines\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="PropertyOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Sitecore\Admin\GlassDump.aspx" />
+  </ItemGroup>
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />
