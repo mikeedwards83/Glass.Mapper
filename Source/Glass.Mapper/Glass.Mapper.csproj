@@ -44,6 +44,10 @@
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCalledMonitorTask.cs" />
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCreatedMonitorTask.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Castle.Core.xml" />
+    <None Remove="NewBuiltFiles_Debug.txt" />
+  </ItemGroup>
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />
