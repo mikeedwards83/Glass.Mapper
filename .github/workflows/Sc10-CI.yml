@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: 'Checkout Repository' 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
       - name: Add msbuild to PATH
@@ -27,4 +27,4 @@ jobs:
 
       - name: MSBuild
        #working-directory: src
-      - run: msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc100
+        run: msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc100
