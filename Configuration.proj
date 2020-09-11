@@ -1,4 +1,4 @@
-<Project>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == ''">
     <ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin100\</ScDir>
     <IncludeContentExtractionDll>true</IncludeContentExtractionDll>
