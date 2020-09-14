@@ -1,5 +1,6 @@
 IconCache/
 Tutorials/Depends/*
+MigrationBackup/
 
 #OS junk files
 [Tt]humbs.db
