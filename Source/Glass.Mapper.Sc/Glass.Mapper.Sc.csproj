@@ -9,12 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Glass.Mapper.Sc</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+	<FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+	<TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.Sc.XML</DocumentationFile>
     <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
   </PropertyGroup>
@@ -40,8 +38,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
   <!--Assign 'InternalsVisibleTo' to test projects -->
 	<ItemGroup>
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Tests" />
@@ -107,9 +103,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
-    <Message Importance="high" Text="ScVersion: $(ScVersion)" />
-    <Message Importance="high" Text="ScDir: $(ScDir)" />
-    <Message Importance="high" Text="TargetFramework: $(TargetFramework)" />
-  </Target>
+
 </Project>

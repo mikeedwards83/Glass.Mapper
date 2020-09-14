@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -147,12 +144,6 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  <Target Name="BeforeBuild">
-    <Message Importance="high" Text="ScKernel: $(ScKernel)" />
-    <Message Importance="high" Text="ScMvc: $(ScMvc)" />
-    <Message Importance="high" Text="Mvc: $(Mvc)" />
-    <Message Importance="high" Text="TargetFramework: $(TargetFramework)" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
  

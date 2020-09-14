@@ -50,9 +50,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">

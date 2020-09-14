@@ -29,9 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
@@ -65,4 +62,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
 </Project>

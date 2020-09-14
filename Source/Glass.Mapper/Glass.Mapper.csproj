@@ -38,8 +38,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
     <OutputPath>bin\Sc72\</OutputPath>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
   <ItemGroup>
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCalledMonitorTask.cs" />
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCreatedMonitorTask.cs" />
@@ -77,9 +75,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
-    <Message Importance="high" Text="TargetFramework: $(TargetFramework)" />
-  </Target>
+
   <PropertyGroup>
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
   </PropertyGroup>

@@ -29,8 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\..\Configuration.proj" />
   <ItemGroup>
     <Compile Remove="Dynamic\**" />
     <EmbeddedResource Remove="Dynamic\**" />
@@ -40,7 +38,6 @@
     <Compile Remove="FakeMediaConfig.cs" />
     <Compile Remove="GetOptionsScFixture.cs" />
   </ItemGroup>
-  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="Sitecore.FakeDb">
       <SpecificVersion>False</SpecificVersion>
