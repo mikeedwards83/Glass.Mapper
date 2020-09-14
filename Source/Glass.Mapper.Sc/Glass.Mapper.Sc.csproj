@@ -42,6 +42,14 @@
   </PropertyGroup>
   <!--Start: Must come after all PropertyGroups -->
   <Import Project="..\..\Configuration.proj" />
+  <!--Assign 'InternalsVisibleTo' to test projects -->
+	<ItemGroup>
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.Tests" />
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.FakeDb" />
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.Integration" />
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.Integration.Sc7" />
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.Explorables" />
+	</ItemGroup>
   <ItemGroup>
     <Compile Remove="Profilers\Pipelines\**" />
     <EmbeddedResource Remove="Profilers\Pipelines\**" />

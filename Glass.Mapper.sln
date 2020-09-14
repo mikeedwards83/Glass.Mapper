@@ -61,6 +61,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A01363A8-C28E-475D-9576-A1F75C1CAAA0}"
 	ProjectSection(SolutionItems) = preProject
 		Configuration.proj = Configuration.proj
+		Directory.Build.Props = Directory.Build.Props
 		Glass.Mapper.shfbproj = Glass.Mapper.shfbproj
 		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
 	EndProjectSection
