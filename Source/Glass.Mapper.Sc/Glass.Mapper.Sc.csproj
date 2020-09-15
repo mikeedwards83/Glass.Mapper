@@ -57,6 +57,7 @@
   <ItemGroup>
     <None Remove="Sitecore\Admin\GlassDump.aspx" />
   </ItemGroup>
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
     <Reference Include="System" />

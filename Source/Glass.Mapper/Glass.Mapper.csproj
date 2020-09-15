@@ -47,6 +47,7 @@
     <None Remove="NewBuiltFiles_Debug.txt" />
   </ItemGroup>
   <!--End: Must come after all PropertyGroups -->
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

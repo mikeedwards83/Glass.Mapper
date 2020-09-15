@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <ItemGroup>
     <Compile Remove="Dynamic\**" />
     <EmbeddedResource Remove="Dynamic\**" />

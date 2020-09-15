@@ -42,7 +42,7 @@
       <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />

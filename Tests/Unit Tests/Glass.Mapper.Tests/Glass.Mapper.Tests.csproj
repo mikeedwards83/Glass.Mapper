@@ -15,6 +15,7 @@
     <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
     <TargetFrameworkProfile />
   </PropertyGroup>
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>

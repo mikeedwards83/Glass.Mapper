@@ -1,5 +1,6 @@
 <Project>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == ''">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == '' or
+                     '$(ScVersion)' == '*undefined*'">
 		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin100\</ScDir>
 		<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
 		<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
@@ -137,5 +138,13 @@
 				<_Parameter1>$(AssemblyName)%(InternalsVisibleToSuffix.Identity)</_Parameter1>
 			</AssemblyAttribute>
 		</ItemGroup>
+	</Target>
+	<Target Name="Build">
+		<Message Text="$(DefineConstants)"/>
+		<MSBuild Projects="Glass.Mapper.csproj" Targets="Rebuild"  Properties="DefineConstants=$(DefineConstants)" />
+	</Target>
+	<Target Name="Build">
+		<Message Text="$(DefineConstants)"/>
+		<MSBuild Projects="Glass.Mapper.Sc.csproj" Targets="Rebuild"  Properties="DefineConstants=$(DefineConstants)" />
 	</Target>
 </Project>
