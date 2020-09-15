@@ -8,7 +8,8 @@
 				<NSubstituteVersion>4.2.1</NSubstituteVersion>
 				<CastleVersion>4.4.0</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC100</DefineConstants>
 				<DebugType>full</DebugType>
@@ -27,7 +28,8 @@
 				<NSubstituteVersion>4.2.1</NSubstituteVersion>
 				<CastleVersion>4.4.0</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC93</DefineConstants>
 				<DebugType>full</DebugType>
@@ -45,7 +47,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC92</DefineConstants>
 				<DebugType>full</DebugType>
@@ -63,7 +66,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC91</DefineConstants>
 				<DebugType>full</DebugType>
@@ -81,7 +85,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net462</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<AspNetMvcVersion>5.2.0</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.0</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC90</DefineConstants>
 				<DebugType>full</DebugType>
@@ -99,7 +104,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net452</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<AspNetMvcVersion>5.2.0</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.0</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC82</DefineConstants>
 				<DebugType>full</DebugType>
@@ -117,7 +123,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
-				<Mvc>51</Mvc>
+				<AspNetMvcVersion>5.1.0</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.1.0</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC80</DefineConstants>
 				<DebugType>full</DebugType>
@@ -135,7 +142,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
-				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<AspNetMvcVersion>5.2.0</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.0</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC81</DefineConstants>
 				<DebugType>full</DebugType>
