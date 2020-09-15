@@ -25,15 +25,15 @@ jobs:
       - name: MSBuild each Sitecore version
        #working-directory: src
         run: |
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc100
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc93
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc92
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc91
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc90
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc82
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc81
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc80
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc75
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc72
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc71
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Sc70
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc100
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc93
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc92
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc91
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc90
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc82
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc81
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc80
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc75
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc72
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc71
+          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc70
