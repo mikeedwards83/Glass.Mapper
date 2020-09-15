@@ -1,7 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F872CEFA-8F7B-4703-ADAB-49B8081B8EBE}</ProjectGuid>
@@ -12,6 +10,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
+  <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,9 +33,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -138,44 +135,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Web\Mvc\IMvcContext.cs" />
-    <Compile Include="ModelCache\IModelCacheManager.cs" />
-    <Compile Include="ModelCache\ModelCacheManager.cs" />
-    <Compile Include="Pipelines\Response\BuildManagerViewTypeResolver.cs" />
-    <Compile Include="Pipelines\Response\ChainedViewTypeResolverr.cs" />
-    <Compile Include="Pipelines\Response\GetModel.cs" />
-    <Compile Include="Pipelines\Response\GetModelFromView.cs" />
-    <Compile Include="Pipelines\Response\GetRenderer\GetViewRenderWithItemValidation.cs" />
-    <Compile Include="Pipelines\Response\IViewTypeResolver.cs" />
-    <Compile Include="Pipelines\Response\RegexViewTypeResolver.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\Mvc\GlassController.cs" />
-    <Compile Include="Web\Mvc\GlassHtmlMvc.cs" />
-    <Compile Include="Web\Mvc\GlassView.cs" />
-    <Compile Include="Web\Mvc\HtmlHelperExtensions.cs" />
-    <Compile Include="Web\Mvc\IMvcContextExtensionMethods.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
-    <Message Importance="high" Text="ScKernel: $(ScKernel)" />
-    <Message Importance="high" Text="ScMvc: $(ScMvc)" />
-    <Message Importance="high" Text="Mvc: $(Mvc)" />
-    <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
  
