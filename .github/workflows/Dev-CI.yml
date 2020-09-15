@@ -11,25 +11,21 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
 
-      # Runs a single command using the runners shell
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.1
-
-      - name: MSBuild each Sitecore version
+      - name: Dotnet build each Sitecore version
        #working-directory: src
         run: |
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc100
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc93
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc92
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc91
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc90
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc82
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc81
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc80
+          dotnet build --configuration Release -p:ScVersion=sc100
+          dotnet build --configuration Release -p:ScVersion=sc93
+          dotnet build --configuration Release -p:ScVersion=sc92
+          dotnet build --configuration Release -p:ScVersion=sc91
+          dotnet build --configuration Release -p:ScVersion=sc90
+          dotnet build --configuration Release -p:ScVersion=sc82
+          dotnet build --configuration Release -p:ScVersion=sc81
+          dotnet build --configuration Release -p:ScVersion=sc80
