@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
-    <OutputPath>bin\Sc72\</OutputPath>
-  </PropertyGroup>
   <!--Assign 'InternalsVisibleTo' to test projects -->
 	<ItemGroup>
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Tests" />
@@ -54,9 +51,6 @@
   <ItemGroup>
     <Compile Remove="PropertyOptions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Sitecore\Admin\GlassDump.aspx" />
-  </ItemGroup>
 	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
@@ -70,13 +64,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq">
-      <HintPath>$(ScDir)Sitecore.ContentSearch.Linq.dll</HintPath>
-    </Reference>
   </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
+		<PackageReference Include="Sitecore.ContentSearch.Linq" Version="$(ScVersion)" />
+	</ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\ContentResolver\" />
     <Folder Include="Pipelines\MappingPipeline\" />
@@ -92,7 +84,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
-    <Content Include="Sitecore\Admin\Dump.aspx" />
     <None Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
     <None Include="App_Start\GlassMapperSc.cs.pp" />
     <None Include="App_Start\GlassMapperScCustom.cs.pp" />

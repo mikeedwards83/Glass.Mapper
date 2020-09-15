@@ -38,11 +38,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
-    </Reference>
   </ItemGroup>
 	<Import Project="$(SolutionDir)CommonSettings.targets" />
+	<ItemGroup>
+		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />

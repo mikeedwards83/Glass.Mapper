@@ -43,13 +43,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>$(ScDir)Sitecore.Mvc.dll</HintPath>
-    </Reference>
   </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
+		<PackageReference Include="Sitecore.Mvc" Version="$(ScVersion)" />
+	</ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '4'">
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\Depends\System.Web.Mvc\v4\System.Web.Mvc.dll</HintPath>
@@ -121,8 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Mvc)' == '526'">
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\Depends\System.Web.Mvc\v526\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc"> <!-- Microsoft.AspNet.Mvc -->
+      <HintPath>..\..\Depends\System.Web.Mvc\v526\System.Web.Mvc</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages">
       <HintPath>..\..\Depends\System.Web.WebPages\v304\System.Web.WebPages.dll</HintPath>

@@ -1,124 +1,153 @@
 <Project>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == '' or
+	<Choose>
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == '' or
                      '$(ScVersion)' == '*undefined*'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin100\</ScDir>
-		<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
-		<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC100</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\100\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == 'sc93'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin93\</ScDir>
-		<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
-		<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC93</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\93\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == 'sc92'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin92\</ScDir>
-		<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
-		<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC92</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\92\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin91\</ScDir>
-		<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
-		<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC91</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\91\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin90\</ScDir>
-		<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
-		<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net462</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC90</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\90\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin82\</ScDir>
-		<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
-		<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net452</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC82</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\82\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin80\</ScDir>
-		<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
-		<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
-		<Mvc>51</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC80</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\80\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == 'sc81'">
-		<ScDir Condition="'$(ScDir)' ==''">..\..\Depends\Sitecore\bin81\</ScDir>
-		<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
-		<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
-		<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
-		<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
-		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>SC81</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-		<OutputPath>bin\81\</OutputPath>
-	</PropertyGroup>
-	<Target Name="BeforeBuild">
-		<Message Importance="high" Text="ScVersion: $(ScVersion)" />
-		<Message Importance="high" Text="ScKernel: $(ScKernel)" />
-		<Message Importance="high" Text="ScMvc: $(ScMvc)" />
-		<Message Importance="high" Text="Mvc: $(Mvc)" />
-		<Message Importance="high" Text="TargetFramework: $(TargetFramework)" />
-	</Target>
+			<PropertyGroup>
+				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
+				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
+				<NSubstituteVersion>4.2.1</NSubstituteVersion>
+				<CastleVersion>4.4.0</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC100</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\100\</OutputPath>
+				<ScVersion>10.0.0</ScVersion>
+			</PropertyGroup>
+		</When>
+
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == 'sc93'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
+				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
+				<NSubstituteVersion>4.2.1</NSubstituteVersion>
+				<CastleVersion>4.4.0</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC93</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\93\</OutputPath>
+				<ScVersion>9.3.0</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == 'sc92'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
+				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC92</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\92\</OutputPath>
+				<ScVersion>9.2.0</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
+				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">526</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC91</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\91\</OutputPath>
+				<ScVersion>9.1.1</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
+				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net462</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC90</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\90\</OutputPath>
+				<ScVersion>9.0.180604</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
+				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net452</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC82</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\82\</OutputPath>
+				<ScVersion>8.2.180406</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
+				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
+				<Mvc>51</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC80</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\80\</OutputPath>
+				<ScVersion>8.0.160115</ScVersion>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == 'sc81'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
+				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
+				<NSubstituteVersion>3.1.0</NSubstituteVersion>
+				<CastleVersion>4.2.1</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net45</TargetFramework>
+				<Mvc Condition="'$(Mvc)' ==''">52</Mvc>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC81</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\81\</OutputPath>
+				<ScVersion>8.1.160519</ScVersion>
+			</PropertyGroup>
+		</When>
+	</Choose>
+	
 	<Target Name="AddInternalsVisibleTo" BeforeTargets="BeforeCompile">
 		<!-- Add default suffix if there is no InternalsVisibleTo or InternalsVisibleToSuffix defined -->
 		<ItemGroup Condition="@(InternalsVisibleToSuffix->Count()) == 0 AND @(InternalsVisibleTo->Count()) == 0">
@@ -139,12 +168,5 @@
 			</AssemblyAttribute>
 		</ItemGroup>
 	</Target>
-	<Target Name="Build">
-		<Message Text="$(DefineConstants)"/>
-		<MSBuild Projects="Glass.Mapper.csproj" Targets="Rebuild"  Properties="DefineConstants=$(DefineConstants)" />
-	</Target>
-	<Target Name="Build">
-		<Message Text="$(DefineConstants)"/>
-		<MSBuild Projects="Glass.Mapper.Sc.csproj" Targets="Rebuild"  Properties="DefineConstants=$(DefineConstants)" />
-	</Target>
+
 </Project>
