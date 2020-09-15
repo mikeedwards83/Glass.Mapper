@@ -33,7 +33,3 @@ jobs:
           msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc82
           msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc81
           msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc80
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc75
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc72
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc71
-          msbuild Glass.Mapper.sln /t:Restore /p:Configuration=Release /p:ScVersion=sc70
