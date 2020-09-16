@@ -30,10 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 	<Import Project="$(SolutionDir)CommonSettings.targets" />
+	<ItemGroup>
+		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
+	</ItemGroup>
   <ItemGroup>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(ScDir)Sitecore.Kernel.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -48,9 +48,7 @@
     <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Castle.Core">
-      <Version>4.2.1</Version>
-    </PackageReference>
+	  <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
