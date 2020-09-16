@@ -21,11 +21,11 @@ jobs:
       - name: Dotnet build each Sitecore version
        #working-directory: src
         run: |
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc100
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc93
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc92
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc91
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc90
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc82
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc81
-          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=sc80
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=10.0.0
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=9.3.0
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=9.2.0
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=9.1.0
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=9.0.180604
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=8.2.180406
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=8.0.160115
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=8.1.160519
