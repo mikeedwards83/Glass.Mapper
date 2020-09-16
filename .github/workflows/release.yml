@@ -1,0 +1,33 @@
+# Glass NuGet Release
+name: NuGet Release
+
+on:
+  release:
+    types: [created]
+
+env:
+  NUGET_PACKAGE_PATH: './NuGetPackages'    # set this to your nuget package path
+  SC_V10_VERSION: '10.0.0'    # set this to your Sitecore version
+  NUGET_SC_V10_VERSION: '100' #set this to the Number for the Sitecore version on the NuGet package
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@master
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      
+      - name: Dotnet pack Sitecore v10.0
+        run: | 
+         - dotnet pack "./Source/Glass.Mapper.Sc/Glass.Mapper.Sc.csproj" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ steps.get_version.outputs.VERSION }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         - dotnet pack "./Source/Glass.Mapper.Sc.WebForms/Glass.Mapper.Sc.WebForms.csproj" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ steps.get_version.outputs.VERSION }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         - dotnet pack "./Source/Glass.Mapper.Sc.Mvc/Glass.Mapper.Sc.Mvc.csproj" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ steps.get_version.outputs.VERSION }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         - dotnet pack "./Source/Glass.Mapper/Glass.Mapper" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ steps.get_version.outputs.VERSION }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}'
