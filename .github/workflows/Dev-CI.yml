@@ -19,9 +19,10 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Install dependencies
-        run: dotnet restore Glass.Mapper.sln --configfile .nuget\NuGet.Config -p:ScVersion=10.0.0
+        run: dotnet restore Glass.Mapper.sln --configfile .nuget\NuGet.Config # -p:ScVersion=10.0.0
       
       - name: Dotnet build each Sitecore version
        #working-directory: src
         run: |
           dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=10.0.0
+          dotnet build Glass.Mapper.sln --configuration Release -p:ScVersion=9.0.180604
