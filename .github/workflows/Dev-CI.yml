@@ -18,6 +18,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@master
 
+      - name: Install dependencies
+        run: dotnet restore Glass.Mapper.sln
+      
       - name: Dotnet build each Sitecore version
        #working-directory: src
         run: |
