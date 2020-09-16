@@ -1,6 +1,6 @@
 <Project>
 	<Choose>
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == 'sc100' Or '$(ScVersion)' == '' or
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc100|AnyCPU' Or '$(ScVersion)' == '10.0.0' Or '$(ScVersion)' == '' or
                      '$(ScVersion)' == '*undefined*'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
@@ -21,7 +21,7 @@
 			</PropertyGroup>
 		</When>
 
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == 'sc93'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc93|AnyCPU' Or '$(ScVersion)' == '9.3.0'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
 				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
@@ -40,7 +40,7 @@
 				<ScVersion>9.3.0</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == 'sc92'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc92|AnyCPU' Or '$(ScVersion)' == '9.2.0'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
 				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
@@ -59,7 +59,7 @@
 				<ScVersion>9.2.0</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == 'sc91'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc91|AnyCPU' Or '$(ScVersion)' == '9.1.0'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
@@ -78,7 +78,7 @@
 				<ScVersion>9.1.1</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == 'sc90'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc90|AnyCPU' Or '$(ScVersion)' == '9.0.180604'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 				<ScFakeDBVersion>2.0.0</ScFakeDBVersion>
@@ -97,7 +97,7 @@
 				<ScVersion>9.0.180604</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == 'sc82'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc82|AnyCPU' Or '$(ScVersion)' == '8.2.180406'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
@@ -116,7 +116,7 @@
 				<ScVersion>8.2.180406</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == 'sc80'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc80|AnyCPU' Or '$(ScVersion)' == '8.0.160115'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
@@ -135,7 +135,7 @@
 				<ScVersion>8.0.160115</ScVersion>
 			</PropertyGroup>
 		</When>
-		<When Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == 'sc81'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'Sc81|AnyCPU' Or '$(ScVersion)' == '8.1.160519'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>false</IncludeContentExtractionDll>
 				<ScFakeDBVersion>1.4.1</ScFakeDBVersion>
