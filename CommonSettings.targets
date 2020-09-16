@@ -8,8 +8,8 @@
 				<NSubstituteVersion>4.2.1</NSubstituteVersion>
 				<CastleVersion>4.4.0</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
-				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
-				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
+				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC100</DefineConstants>
 				<DebugType>full</DebugType>
@@ -28,8 +28,8 @@
 				<NSubstituteVersion>4.2.1</NSubstituteVersion>
 				<CastleVersion>4.4.0</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
-				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
+				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC93</DefineConstants>
 				<DebugType>full</DebugType>
@@ -47,8 +47,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
-				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
+				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC92</DefineConstants>
 				<DebugType>full</DebugType>
@@ -66,8 +66,8 @@
 				<NSubstituteVersion>3.1.0</NSubstituteVersion>
 				<CastleVersion>4.2.1</CastleVersion>
 				<TargetFramework Condition="'$(TargetFramework)' == '' ">net471</TargetFramework>
-				<AspNetMvcVersion>5.2.6</AspNetMvcVersion>
-				<AspNetRazorWebVersion>3.2.6</AspNetRazorWebVersion>
+				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
 				<DefineConstants>SC91</DefineConstants>
 				<DebugType>full</DebugType>
