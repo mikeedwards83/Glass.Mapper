@@ -4,7 +4,7 @@ name: Dev CI
 # Controls when the action will run. Triggers the workflow on push
 # events but only for the develop branch
 on:
-  push:
+  pull_request:
     branches: [ develop ]
 
 jobs:
