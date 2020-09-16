@@ -18,14 +18,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@master
 
-      - name: Install dependencies v10.0.0
-        run: dotnet restore Glass.Mapper.sln --configfile .nuget\NuGet.Config -p:ScVersion=10.0.0
+      #- name: Install dependencies v10.0.0
+       # run: dotnet restore Glass.Mapper.sln --configfile .nuget\NuGet.Config -p:ScVersion=10.0.0
       
       - name: Dotnet build Sitecore v10
         run: dotnet build Glass.Mapper.sln --configfile .nuget\NuGet.Config --configuration Release -p:ScVersion=10.0.0
-        
-      - name: Install dependencies v9.0
-        run: dotnet restore Glass.Mapper.sln --configfile .nuget\NuGet.Config -p:ScVersion=9.0.180604
-      
-      - name: Dotnet build Sitecore v9.0
-        run: dotnet build Glass.Mapper.sln --configfile .nuget\NuGet.Config --configuration Release -p:ScVersion=9.0.180604
