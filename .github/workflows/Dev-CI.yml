@@ -23,3 +23,9 @@ jobs:
       
       - name: Dotnet build Sitecore v9.3
         run: dotnet build Glass.Mapper.sln --packages .\NuGetv93 --configfile .nuget\NuGet.Config -p:ScVersion=9.3.0
+        
+      - name: Dotnet build Sitecore v9.2
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv92 --configfile .nuget\NuGet.Config -p:ScVersion=9.2.0
+        
+      - name: Dotnet build Sitecore v9.1
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv91 --configfile .nuget\NuGet.Config -p:ScVersion=9.1.0
