@@ -13,6 +13,9 @@
     <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
   </PropertyGroup>
 	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+	<PropertyGroup>
 		<NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.WebForms.symbols.nuspec</NuspecFile>
 		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
