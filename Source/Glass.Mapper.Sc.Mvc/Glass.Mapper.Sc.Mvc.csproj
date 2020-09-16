@@ -8,10 +8,17 @@
     <RootNamespace>Glass.Mapper.Sc</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.Mvc</AssemblyName>
     <FileAlignment>512</FileAlignment>
+	<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.Sc.Mvc.XML</DocumentationFile>
   <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
   </PropertyGroup>
+	<PropertyGroup>
+		<NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.Mvc.symbols.nuspec</NuspecFile>
+		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);netVersion=$(TargetFramework)</NuspecProperties>
+	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>

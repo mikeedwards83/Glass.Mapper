@@ -30,14 +30,14 @@
     
     <!-- Glass.Mapper -->
     <!-- we take this from the minimum possible to ensure compatibility-->
-    <file src="..\Source\Glass.Mapper\bin\$scVersion$\Glass.Mapper.dll" target="lib\net$netVersion$\Glass.Mapper.dll" />
-    <file src="..\Source\Glass.Mapper\bin\$scVersion$\Glass.Mapper.pdb" target="lib\net$netVersion$\Glass.Mapper.pdb" />
-    <file src="..\Source\Glass.Mapper\bin\Glass.Mapper.xml" target="lib\net$netVersion$\Glass.Mapper.xml" />
+    <file src="..\Source\Glass.Mapper\bin\$scVersion$\$netVersion$\Glass.Mapper.dll" target="lib\$netVersion$\Glass.Mapper.dll" />
+    <file src="..\Source\Glass.Mapper\bin\$scVersion$\$netVersion$\Glass.Mapper.pdb" target="lib\$netVersion$\Glass.Mapper.pdb" />
+    <file src="..\Source\Glass.Mapper\bin\$scVersion$\$netVersion$\Glass.Mapper.xml" target="lib\$netVersion$\Glass.Mapper.xml" />
 
     <!-- Glass.Mapper.Sc-->
-	<file src="..\Source\Glass.Mapper.Sc\bin\$scVersion$\Glass.Mapper.Sc.dll" target="lib\net$netVersion$\Glass.Mapper.Sc.dll" />
-    <file src="..\Source\Glass.Mapper.Sc\bin\$scVersion$\Glass.Mapper.Sc.pdb" target="lib\net$netVersion$\Glass.Mapper.Sc.pdb" />
-    <file src="..\Source\Glass.Mapper.Sc\bin\Glass.Mapper.Sc.xml" target="lib\net$netVersion$\Glass.Mapper.Sc.xml" />
+	<file src="..\Source\Glass.Mapper.Sc\bin\$scVersion$\$netVersion$\Glass.Mapper.Sc.dll" target="lib\$netVersion$\Glass.Mapper.Sc.dll" />
+    <file src="..\Source\Glass.Mapper.Sc\bin\$scVersion$\$netVersion$\Glass.Mapper.Sc.pdb" target="lib\$netVersion$\Glass.Mapper.Sc.pdb" />
+    <file src="..\Source\Glass.Mapper.Sc\bin\$scVersion$\$netVersion$\Glass.Mapper.Sc.xml" target="lib\$netVersion$\Glass.Mapper.Sc.xml" />
 
   </files>
 </package>
