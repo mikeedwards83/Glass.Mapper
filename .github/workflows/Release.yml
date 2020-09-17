@@ -9,6 +9,7 @@ env:
   NUGET_PACKAGE_PATH: './NuGetPackages'    # set this to your nuget package path
   SC_V10_VERSION: '10.0.0'    # set this to your Sitecore version
   NUGET_SC_V10_VERSION: '100' #set this to the Number for the Sitecore version on the NuGet package
+  SOURCE_TAG = ${env:GITHUB_REF} -replace 'refs/tags/', ''
 
 jobs:
   # This workflow contains a single job called "build"
@@ -24,6 +25,15 @@ jobs:
       - name: Get the version
         id: get_version
         run: echo ${{github.ref}}
+        
+      - name: test the version name
+        id: get_version_name
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        
+       - name: test the version name 2
+        id: get_version_name_2
+        run: echo ::set-output name=VERSION::${{ env.SOURCE_TAG }}
+        
       
       - name: Dotnet pack Sitecore v10.0
         run: | 
