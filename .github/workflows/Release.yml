@@ -29,7 +29,7 @@ jobs:
          dotnet pack "./Source/Glass.Mapper/Glass.Mapper.csproj" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}'
          
       - name: Push to NuGet
-        run: dotnet nuget push '${{ env.NUGET_PACKAGE_PATH }}/*.nupkg' -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+        run: dotnet nuget push '${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg' -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
          
          
          
