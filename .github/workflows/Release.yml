@@ -28,10 +28,14 @@ jobs:
       - name: test the version name
         id: get_version_name
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        shell: bash
         
       - name: test the version name 2
         id: get_version_name_2
         run: echo ::set-output name=VERSION::${env:GITHUB_REF} -replace 'refs/tags/', ''
+        
+      - name: tag number
+        run : echo ${{ github.event.release.tag_name }}
         
       
       - name: Dotnet pack Sitecore v10.0
