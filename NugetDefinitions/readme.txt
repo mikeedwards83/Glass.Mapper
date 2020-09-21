@@ -12,6 +12,9 @@ If you are using package reference, you will need to include the files from the 
 folders found at '\obj\{Build-Configuration}\NuGet\{Guid}\Glass.Mapper.Sc.xx\{Version}' in your solution if they are
 not already present. 
 
+You will also be required to copy the Glass.Mapper.Sc.config file to your solution:
+https://github.com/mikeedwards83/Glass.Mapper/blob/master/Source/Glass.Mapper.Sc/App_Config/Include/Glass/Glass.Mapper.Sc.config
+
   _______ _    _          _   _ _  __ __     ______  _    _     _ 
  |__   __| |  | |   /\   | \ | | |/ / \ \   / / __ \| |  | |   | |
     | |  | |__| |  /  \  |  \| | ' /   \ \_/ / |  | | |  | |   | |
