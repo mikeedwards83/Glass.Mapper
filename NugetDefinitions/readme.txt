@@ -6,6 +6,11 @@
 
 			/*******************************/
 
+POST INSTALL (Glass.Mapper.Sc.xx package):
+
+If you are using package reference, you will need to include the files from the 'App_Start' and 'App_Config' 
+folders found at '\obj\{Build-Configuration}\NuGet\{Guid}\Glass.Mapper.Sc.xx\{Version}' in your solution if they are
+not already present. 
 
   _______ _    _          _   _ _  __ __     ______  _    _     _ 
  |__   __| |  | |   /\   | \ | | |/ / \ \   / / __ \| |  | |   | |
@@ -22,15 +27,14 @@ To find out more about our backers visit https://www.glass.lu/rockstars.
 
 A special thank you to the following supporters of the Glass.Mapper.Sc project:
 
-              Konabos Consulting              Swissworx
+                            Swissworx
 
 							Dataweavers
 
 Anis Chohan					Amir Setoudeh				Chaturanga Ranatunga 
 Ishraq Al Fataftah			Dylan Young					Jason Wilkerson 
-Mohannad Alhasasneh			Neil Shack					Radoslaw Kozlowski 
-Eric Stafford				Matt Fletcher				Robbert Hock
-Steve McGill			    Floris Briolas
+Mohannad Alhasasneh			Robbert Hock				Steve McGill
+Eric Stafford				Matt Fletcher				Floris Briolas
 
 
 If you would like to add your name to this amazing list of people visit our Patreon page https://www.patreon.com/glassmappersc
