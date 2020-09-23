@@ -174,11 +174,8 @@ namespace Glass.Mapper.Sc.Web.Mvc
             {
                 var dataSource = RenderingContext.CurrentOrNull.Rendering.DataSource;
 
-                Item item;
-                var itemUri = DataUri.Parse(dataSource);
-
-                item = dataSource.Contains("sitecore://") ? 
-                    Sitecore.Context.Database.GetItem(itemUri) : 
+                Item item = dataSource.Contains("sitecore://") ? 
+                    Sitecore.Context.Database.GetItem(DataUri.Parse(dataSource)) : 
                     MvcSettings.ItemLocator.GetItem(dataSource);
 
                 return item;
