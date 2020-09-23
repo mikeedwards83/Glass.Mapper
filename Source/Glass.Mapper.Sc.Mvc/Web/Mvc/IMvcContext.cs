@@ -4,6 +4,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Configuration;
 using Sitecore.Mvc.Presentation;
+using System;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
@@ -171,9 +172,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
             get
             {
                 var dataSource = RenderingContext.CurrentOrNull.Rendering.DataSource;
-               
 
-                var item = MvcSettings.ItemLocator.GetItem(dataSource);
+                // Switch to handle AB test datasources which contain Sitecore reference
+                // syntax
+                Item item = dataSource.StartsWith("sitecore://", StringComparison.Ordinal) ? 
+                    Sitecore.Context.Database.GetItem(DataUri.Parse(dataSource)) : 
+                    MvcSettings.ItemLocator.GetItem(dataSource);
+
                 return item;
             }
         }
