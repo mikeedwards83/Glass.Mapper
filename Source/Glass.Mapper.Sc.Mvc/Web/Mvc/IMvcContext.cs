@@ -176,7 +176,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
 
                 // Switch to handle AB test datasources which contain Sitecore reference
                 // syntax
-                Item item = dataSource.StartsWith("sitecore://") ? 
+                Item item = dataSource.StartsWith("sitecore://", StringComparison.Ordinal) ? 
                     Sitecore.Context.Database.GetItem(DataUri.Parse(dataSource)) : 
                     MvcSettings.ItemLocator.GetItem(dataSource);
 
