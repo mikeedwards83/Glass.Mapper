@@ -87,7 +87,7 @@ namespace Glass.Mapper.Sc.Configuration.Attributes
             }
             catch (Exception ex)
             {
-                throw new MapperException("Failed to convert BranchId for type {0}. Value was {1}".Formatted(type.FullName, this.TemplateId), ex);
+                throw new MapperException("Failed to convert BranchId for type {0}. Value was {1}".Formatted(type.FullName, this.BranchId), ex);
             }
 
             try
