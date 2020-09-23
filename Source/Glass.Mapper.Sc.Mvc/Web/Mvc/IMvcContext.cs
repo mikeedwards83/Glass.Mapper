@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Forms;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -172,9 +173,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
             get
             {
                 var dataSource = RenderingContext.CurrentOrNull.Rendering.DataSource;
+
+                Item item;
                 var itemUri = DataUri.Parse(dataSource);
 
-                var item = Sitecore.Context.Database.GetItem(itemUri);
+                item = dataSource.Contains("sitecore://") ? 
+                    Sitecore.Context.Database.GetItem(itemUri) : 
+                    MvcSettings.ItemLocator.GetItem(dataSource);
 
                 return item;
             }
