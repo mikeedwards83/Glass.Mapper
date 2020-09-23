@@ -104,7 +104,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetDataSourceItem<T>(GetKnownOptions options ) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = DataSourceItem;
             options.Item = item;
@@ -129,7 +129,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetPageContextItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = RenderingContext.CurrentOrNull.PageContext.Item;
             options.Item = item;
@@ -154,7 +154,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetRenderingItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = RenderingContext.CurrentOrNull.Rendering.Item;
             options.Item = item;

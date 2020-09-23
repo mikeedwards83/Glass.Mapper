@@ -172,7 +172,7 @@ namespace Glass.Mapper.Sc
         /// <param name="options">Options for how the model will be saved</param>
         public void SaveItem(SaveOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             //TODO: ME - this may not work with a proxy
             var config = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Model);
@@ -204,7 +204,7 @@ namespace Glass.Mapper.Sc
         public void WriteToItem(WriteToItemOptions options)
         {
 
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var config = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(options.Model);
 
@@ -236,7 +236,7 @@ namespace Glass.Mapper.Sc
         public void Populate<T>(T target, GetKnownOptions options) where T : class
         {
 
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var config = GlassContext.GetTypeConfiguration<SitecoreTypeConfiguration>(target);
 
@@ -289,7 +289,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The collection of items mapped to the requested type</returns>
         public IEnumerable<T> GetItems<T>(GetItemsOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Type = typeof(T);
             var results = GetItems(options) as IEnumerable<T>;
@@ -303,7 +303,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The collection of items mapped to the requested type</returns>
         public IEnumerable<object> GetItems(GetItemsOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Validate();
             return Utilities.CreateGenericType(typeof(LazyItemEnumerable<>), new[] { options.Type }, options, this, LazyLoadingHelper) as IEnumerable<object>;
@@ -317,7 +317,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item mapped to the requested type</returns>
         public T GetItem<T>(GetItemOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Type = typeof(T);
             return (T)GetItem(options);
@@ -331,7 +331,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The item mapped to the requested type</returns>
         public object GetItem(GetItemOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             options.Validate();
             Item item = options.GetItem(Database);
@@ -360,7 +360,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The new item mapped to the requested type</returns>
         public object CreateItem(CreateOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
             options.Validate();
 
             var byModel = options as CreateByModelOptions;
@@ -389,7 +389,7 @@ namespace Glass.Mapper.Sc
         public T CreateItem<T>(CreateOptions options)
             where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
             options.Type = typeof(T);
             return CreateItem(options) as T;
         }
@@ -402,7 +402,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The new item mapped to the requested type</returns>
         protected object CreateFromName(CreateByNameOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             SitecoreTypeConfiguration newItemConfig;
 
@@ -472,7 +472,7 @@ namespace Glass.Mapper.Sc
         /// <returns>The new item mapped to the requested type</returns>
         protected object CreateFromNewModel(CreateByModelOptions options)
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             SitecoreTypeConfiguration newItemConfig;
             try
