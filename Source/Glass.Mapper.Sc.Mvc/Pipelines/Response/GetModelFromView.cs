@@ -80,7 +80,6 @@ namespace Glass.Mapper.Sc.Pipelines.Response
                 }
 
                 args.Result = GetDataSourceItem(args, modelType);
-                args.AbortPipeline();
             }
             finally
             {
