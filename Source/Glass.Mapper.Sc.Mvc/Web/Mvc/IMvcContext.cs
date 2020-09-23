@@ -171,10 +171,16 @@ namespace Glass.Mapper.Sc.Web.Mvc
         {
             get
             {
+
+#if SC90 || SC91  || SC92  || SC93 || SC100
                 // Cannot use RenderingContext.CurrentOrNull.Rendering.DataSource as AB test items 
                 // do not reuturn Guid e.g. {0A275E4A-98DF-4CB3-8A7E-948F53010AE3} instead returning a
                 // string e.g. sitecore://{0A275E4A-98DF-4CB3-8A7E-948F53010AE3}?lang=en&ver=0
                 var dataSource = RenderingContext.CurrentOrNull?.Rendering?.Items?.FirstOrDefault()?.ID;
+
+#else
+                var dataSource = RenderingContext.CurrentOrNull.Rendering.DataSource;
+#endif
 
                 var item = MvcSettings.ItemLocator.GetItem(dataSource);
                 return item;
