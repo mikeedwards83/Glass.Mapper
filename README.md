@@ -1,5 +1,5 @@
 
-![Dev CI](https://github.com/mikeedwards83/Glass.Mapper/workflows/Dev%20CI/badge.svg?branch=develop)  
+![Dev CI](https://github.com/mikeedwards83/Glass.Mapper/workflows/Dev%20CI/badge.svg?branch=develop)  ![NuGet](https://img.shields.io/nuget/v/Glass.Mapper.Sc.100)
 
 Glass.Mapper
 ============  
