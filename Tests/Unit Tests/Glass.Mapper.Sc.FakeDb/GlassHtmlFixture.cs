@@ -13,7 +13,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92  || SC93 || SC100
 using Sitecore.Abstractions;
     using Sitecore.DependencyInjection;
 #endif
@@ -26,6 +26,11 @@ using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
 using Site = System.Security.Policy.Site;
+
+
+#if SC100
+using Sitecore.Links.UrlBuilders;
+#endif
 
 namespace Glass.Mapper.Sc.FakeDb
 {
@@ -142,9 +147,14 @@ namespace Glass.Mapper.Sc.FakeDb
                 string fieldValue =
                     "<link text='' linktype='internal' class='' title=''  querystring='foo=bar' id='{0}' />".Formatted(
                         item.ID.Guid.ToString("B"));
+
+#if SC93 || SC100
+                string expected =
+                    "<a href='/en/sitecore/content/Target?foo=bar' >Target</a>";
+#else
                 string expected =
                     "<a href='/en/sitecore/content/Target.aspx?foo=bar' >Target</a>";
-
+#endif
                 var field = item.Fields["StringField"];
 
                 using (new ItemEditing(item, true))
@@ -177,11 +187,11 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        #endregion
+#endregion
 
 
 
-        #region Method - RenderImage
+#region Method - RenderImage
 
 
         /// <summary>
@@ -223,15 +233,20 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92 || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
                 SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
 
-                mediaUrlProvider
-                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlOptions>())
+#if SC100
+                mediaUrlProvider.GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlBuilderOptions>())
                     .Returns("/myimage");
+#else
+                 mediaUrlProvider
+                    .GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlOptions>())
+                  .Returns("/myimage");
+#endif
 
 #else
                 Sitecore.Resources.Media.MediaProvider mediaProvider =
@@ -327,7 +342,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var html = GetGlassHtml(service);
 
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92 || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -427,7 +442,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92 || SC93 || SC100
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -495,8 +510,8 @@ namespace Glass.Mapper.Sc.FakeDb
 
         }
 
-        #endregion
-        #region Method - Editable
+#endregion
+#region Method - Editable
 
         [Test]
         public void Editable_InEditMode_StringFieldWithEditReturned()
@@ -2073,9 +2088,9 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        #endregion
+#endregion
 
-        #region Method - EditableIf
+#region Method - EditableIf
 
         [Test]
         public void EditableIf_InEditModeWithStandardOutputPredicateTrue_StringFieldWithEditReturned()
@@ -2224,9 +2239,9 @@ namespace Glass.Mapper.Sc.FakeDb
                 }
             }
         }
-        #endregion
+#endregion
 
-        #region RenderingParameters
+#region RenderingParameters
 
         [Test]
         public void RenderingParameters_StringPassedInWithParameters_ReturnsModelWithValues()
@@ -2336,9 +2351,9 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        #endregion
+#endregion
 
-        #region Method - RenderImage
+#region Method - RenderImage
 
         [Test]
         public void RenderImage_ValidImageWithParametersWidth_RendersCorrectHtml()
@@ -2862,9 +2877,9 @@ namespace Glass.Mapper.Sc.FakeDb
         }
 
 
-        #endregion
+#endregion
 
-        #region Method - RenderImageUrl
+#region Method - RenderImageUrl
 
         [Test]
         public void RenderImageUrl_ValidImageWithClass_RendersCorrectHtml()
@@ -2891,9 +2906,9 @@ namespace Glass.Mapper.Sc.FakeDb
 
         }
 
-        #endregion
+#endregion
 
-        #region Method - RenderLink
+#region Method - RenderLink
 
         /// <summary>
         /// Test for issue:https://github.com/mikeedwards83/Glass.Mapper/issues/112
@@ -3191,7 +3206,7 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.AreEqual(expected, result);
         }
 
-#if SC90 || SC91 || SC92  || SC93
+#if SC90 || SC91 || SC92 || SC93 || SC100
         [Test]
         public void RenderLink_BlankTarget_AddsNoOpener()
         {
@@ -3328,9 +3343,9 @@ namespace Glass.Mapper.Sc.FakeDb
             AssertHtml.AreHtmlElementsEqual(expected, result, "a");
         }
 
-        #endregion
+#endregion
 
-        #region Stubs
+#region Stubs
 
         public class RenderingTest
         {
@@ -3455,7 +3470,7 @@ namespace Glass.Mapper.Sc.FakeDb
             }
         }
 
-        #endregion
+#endregion
 
         private IGlassHtml GetGlassHtml(ISitecoreService SitecoreService)
         {

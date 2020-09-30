@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -15,7 +14,18 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.XML</DocumentationFile>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
   </PropertyGroup>
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.Core.symbols.nuspec</NuspecFile>
+		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);netVersion=$(TargetFramework)</NuspecProperties>
+	</PropertyGroup>
+	
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -35,16 +45,17 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sc72|AnyCPU'">
-    <OutputPath>bin\Sc72\</OutputPath>
-  </PropertyGroup>
-  <!--Start: Must come after all PropertyGroups -->
-  <Import Project="..\..\Configuration.proj" />
-  <!--End: Must come after all PropertyGroups -->
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
+    <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCalledMonitorTask.cs" />
+    <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCreatedMonitorTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Castle.Core.xml" />
+    <None Remove="NewBuiltFiles_Debug.txt" />
+  </ItemGroup>
+  <!--End: Must come after all PropertyGroups -->
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -57,137 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDataMapper.cs" />
-    <Compile Include="AbstractDataMappingContext.cs" />
-    <Compile Include="AbstractService.cs" />
-    <Compile Include="AbstractTypeSavingContext.cs" />
-    <Compile Include="ActivationManager.cs" />
-    <Compile Include="Caching\AbstractCacheManager.cs" />
-    <Compile Include="Caching\CacheFactory.cs" />
-    <Compile Include="Caching\ConcurrentDictionaryCacheManager.cs" />
-    <Compile Include="Caching\HttpCache.cs" />
-    <Compile Include="Caching\ICacheKeyGenerator.cs" />
-    <Compile Include="Caching\ICacheManager.cs" />
-    <Compile Include="Caching\InMemoryCache.cs" />
-    <Compile Include="Caching\NetMemoryCacheManager.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Configuration\AbstractNodePropertyConfiguration.cs" />
-    <Compile Include="Configuration\AbstractTypeConfiguration.cs" />
-    <Compile Include="Configuration\AbstractPropertyConfiguration.cs" />
-    <Compile Include="Configuration\Attributes\AttributeConfigurationLoader.cs" />
-    <Compile Include="Configuration\Attributes\AbstractPropertyAttribute.cs" />
-    <Compile Include="Configuration\Attributes\AttributeTypeLoader.cs" />
-    <Compile Include="Configuration\Attributes\ChildrenAttribute.cs" />
-    <Compile Include="Configuration\Attributes\AbstractTypeAttribute.cs" />
-    <Compile Include="Configuration\Attributes\DataMapperAttribute.cs" />
-    <Compile Include="Configuration\Attributes\IdAttribute.cs" />
-    <Compile Include="Configuration\Attributes\IgnoreAttribute.cs" />
-    <Compile Include="Configuration\Attributes\InfoAttribute.cs" />
-    <Compile Include="Configuration\Attributes\ItemAttribute.cs" />
-    <Compile Include="Configuration\Attributes\LinkedAttribute.cs" />
-    <Compile Include="Configuration\Attributes\NodeAttribute.cs" />
-    <Compile Include="Configuration\Attributes\ParentAttribute.cs" />
-    <Compile Include="Configuration\Attributes\FieldAttribute.cs" />
-    <Compile Include="Configuration\Attributes\QueryAttribute.cs" />
-    <Compile Include="Configuration\Cache.cs" />
-    <Compile Include="Configuration\ChildrenConfiguration.cs" />
-    <Compile Include="Configuration\ConfigurationException.cs" />
-    <Compile Include="Configuration\FieldConfiguration.cs" />
-    <Compile Include="Configuration\IConfigurationLoader.cs" />
-    <Compile Include="Configuration\IdConfiguration.cs" />
-    <Compile Include="Configuration\IgnoreConfiguration.cs" />
-    <Compile Include="Configuration\InfoConfiguration.cs" />
-    <Compile Include="Configuration\ItemConfiguration.cs" />
-    <Compile Include="Configuration\LinkedConfiguration.cs" />
-    <Compile Include="Configuration\NodeConfiguration.cs" />
-    <Compile Include="Configuration\ParentConfiguration.cs" />
-    <Compile Include="Configuration\QueryConfiguration.cs" />
-    <Compile Include="Configuration\SelfConfiguration.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="ConstructorParameter.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Diagnostics\GlassModelCounter.cs" />
-    <Compile Include="Diagnostics\ModelCounter.cs" />
-    <Compile Include="DisableCache.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="AbstractTypeCreationContext.cs" />
-    <Compile Include="FakePropertyInfo.cs" />
-    <Compile Include="GlassLazy.cs" />
-    <Compile Include="ILog.cs" />
-    <Compile Include="ILPropertyAccessorFactory.cs" />
-    <Compile Include="IoC\AbstractConfigFactory.cs" />
-    <Compile Include="IoC\IConfigFactory.cs" />
-    <Compile Include="IoC\IDependencyResolver.cs" />
-    <Compile Include="IGlassConfiguration.cs" />
-    <Compile Include="IPropertyAccessorFactory.cs" />
-    <Compile Include="LambdaPropertyAccessorFactory.cs" />
-    <Compile Include="LazyLoading.cs" />
-    <Compile Include="LazyLoadingHelper.cs" />
-    <Compile Include="MapperStackException.cs" />
-    <Compile Include="Maps\AbstractGlassMap.cs" />
-    <Compile Include="Maps\ConfigurationMap.cs" />
-    <Compile Include="Maps\GlassMapLoader.cs" />
-    <Compile Include="Maps\IConfigurationMap.cs" />
-    <Compile Include="Maps\IGlassMap.cs" />
-    <Compile Include="Maps\IMapProvider.cs" />
-    <Compile Include="NullLogger.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="OptionsGet.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\ConfigureOptionsForType\ConfigureOptionsForTypeTask.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\ConfigurationOnDemandResolverTask.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\Tasks\OnDemandResolver\OnDemandLoader.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperAttributeResolverTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheAlwaysOnCheck\CacheAlwaysOnCheckTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CacheCheck\CacheCheckTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\DepthCheck\ModelDepthCheck.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionTimerStart.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Diagnostics\ModelRequestedTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\IocTaskBase.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\Ioc\LazyObjectInterceptor.cs" />
-    <Compile Include="Profilers\AccmulatorProfiler.cs" />
-    <Compile Include="Profilers\BaseIndentingProfiler.cs" />
-    <Compile Include="Profilers\ChainedProfiler.cs" />
-    <Compile Include="Profilers\IPerformanceProfiler.cs" />
-    <Compile Include="MapperException.cs" />
-    <Compile Include="Pipelines\AbstractPipelineArgs.cs" />
-    <Compile Include="Pipelines\AbstractPipelineRunner.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolverArgs.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\ConfigurationResolver.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\AbstractConfigurationResolverTask.cs" />
-    <Compile Include="Pipelines\ConfigurationResolver\StandardResolver\ConfigurationStandardResolverTask.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperResolverArgs.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\DataMapperResolver.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\AbstractDataMapperResolverTask.cs" />
-    <Compile Include="Pipelines\DataMapperResolver\Tasks\DataMapperStandardResolverTask.cs" />
-    <Compile Include="Pipelines\AbstractPipelineTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\AbstractObjectConstructionTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionException.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ObjectConstruction.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\ObjectConstructionArgs.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\CreateConcreteTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectProxyHook.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateConcrete\LazyObjectInterceptor.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceProxyHook.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\CreateInterfaceTask.cs" />
-    <Compile Include="Pipelines\ObjectConstruction\Tasks\CreateInterface\InterfacePropertyInterceptor.cs" />
-    <Compile Include="Pipelines\ObjectSaving\AbstractObjectSavingTask.cs" />
-    <Compile Include="Pipelines\ObjectSaving\ObjectSaving.cs" />
-    <Compile Include="Pipelines\ObjectSaving\ObjectSavingArgs.cs" />
-    <Compile Include="Pipelines\ObjectSaving\Tasks\StandardSavingTask.cs" />
-    <Compile Include="Pipelines\PipelineException.cs" />
-    <Compile Include="Profilers\NullProfiler.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Profilers\SimpleProfiler.cs" />
-    <Compile Include="SettingStack.cs" />
-    <Compile Include="ThreadData.cs" />
-    <Compile Include="UrlBuilder.cs" />
-    <Compile Include="Utilities.cs" />
+	  <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -195,9 +81,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
-    <Message Importance="high" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" />
-  </Target>
+
   <PropertyGroup>
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
   </PropertyGroup>

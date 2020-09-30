@@ -1,0 +1,44 @@
+# Basic CI build
+name: Dev CI
+
+# Controls when the action will run. Triggers the workflow on push
+# events but only for the develop branch
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@master
+
+      - name: Dotnet build Sitecore v10.0
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:ScVersion=10.0.0
+      
+      - name: Dotnet build Sitecore v9.3
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv93 --configfile .nuget\NuGet.Config -p:ScVersion=9.3.0
+        
+      - name: Dotnet build Sitecore v9.2
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv92 --configfile .nuget\NuGet.Config -p:ScVersion=9.2.0
+        
+      - name: Dotnet build Sitecore v9.1
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv91 --configfile .nuget\NuGet.Config -p:ScVersion=9.1.0
+        
+      - name: Dotnet build Sitecore v9.0
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv90 --configfile .nuget\NuGet.Config -p:ScVersion=9.0.180604
+        
+      - name: Dotnet build Sitecore v8.2
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv82 --configfile .nuget\NuGet.Config -p:ScVersion=8.2.180406
+      
+      - name: Dotnet build Sitecore v8.1
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv81 --configfile .nuget\NuGet.Config -p:ScVersion=8.1.160519
+      
+      - name: Dotnet build Sitecore v8.0
+        run: dotnet build Glass.Mapper.sln --packages .\NuGetv80 --configfile .nuget\NuGet.Config -p:ScVersion=8.0.160115
+      

@@ -1,7 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{81CBC719-DC32-474A-96DB-8076E5C851BF}</ProjectGuid>
@@ -58,40 +56,21 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="sitecore.nexus">
-      <HintPath>..\$(ScDir)sitecore.nexus.dll</HintPath>
+    <Reference Include="Sitecore.Nexus">
+      <HintPath>..\$(ScDir)Sitecore.Nexus.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SitecoreContextFixture.cs" />
-    <Compile Include="SitecoreServiceFixture.cs" />
-    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Extensions\Glass.Mapper.Sc.Extensions.csproj">
-      <Project>{86800e9a-13f3-4ea3-9742-935b832eaa43}</Project>
-      <Name>Glass.Mapper.Sc.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Legacy\Glass.Mapper.Sc.Legacy.csproj">
-      <Project>{91c079fd-1296-40db-867a-ba43f20cdbe5}</Project>
-      <Name>Glass.Mapper.Sc.Legacy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj">
-      <Project>{0b8e0b06-46b8-4794-862f-73b391f8b1a1}</Project>
-      <Name>Glass.Mapper.Sc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Extensions\Glass.Mapper.Sc.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc.Legacy\Glass.Mapper.Sc.Legacy.csproj" />
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+    <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

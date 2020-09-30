@@ -3,7 +3,7 @@
   <metadata>
     <id>Glass.Mapper.Sc.$scVersion$</id>
     <version>$version$</version>
-    <authors>Michael Edwards, Nathanael Mann</authors>
+    <authors>Michael Edwards, Nathanael Mann, Neil Shack</authors>
     <owners>Michael Edwards</owners>
     <licenseUrl>https://github.com/mikeedwards83/Glass.Mapper/blob/develop/License.txt</licenseUrl>
     <projectUrl>http://glass.lu/</projectUrl>
@@ -24,21 +24,25 @@
       <dependency id="Glass.Mapper.Sc.$scVersion$.WebForms" version="$version$" />
     </dependencies>
 	<contentFiles>
-
 		<files include="**/*.*" buildAction="Content" />
-
-		
-  </contentFiles>
+	</contentFiles>
   </metadata>
   <files>
 
     <file src="readme.txt" target="readme.txt" />
 
     <!-- CONFIG FILES  -->
-    <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
+    <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="contentFiles\any\any\App_Config" />
 
     <!-- PP FILES  -->
-    <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
+    <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="contentFiles\any\any\App_Start" />
+
+
+	  <!-- CONFIG FILES  -->
+	  <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
+
+	  <!-- PP FILES  -->
+	  <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
   </files>
 

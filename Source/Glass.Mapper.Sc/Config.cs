@@ -64,5 +64,13 @@ namespace Glass.Mapper.Sc
         /// The revision number is blank when an item 
         /// </summary>
         public bool UseFastVesionCount { get; set; }
+
+
+        /// <summary>
+        /// Backward compatibility flag, default is false. If set to true, items used to create temporary rendering parameter items
+        /// by the RenderingParametersModelFactory will call the item.Delete() method. This has been disabled because in Sitecore 9.2+
+        /// it causes excessive logging by Sitecore, see issue https://github.com/mikeedwards83/Glass.Mapper/issues/402
+        /// </summary>
+        public bool DeleteRenderingParameterItems { get; set; }
     }
 }

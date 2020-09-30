@@ -77,7 +77,14 @@ namespace Glass.Mapper.Sc.DataMappers
             };
             try
             {
-                using (new SiteContextSwitcher(options.Site))
+                if (options.Site != null)
+                {
+                    using (new SiteContextSwitcher(options.Site))
+                    {
+                        CorePipeline.Run("renderField", renderFieldArgs);
+                    }
+                }
+                else
                 {
                     CorePipeline.Run("renderField", renderFieldArgs);
                 }

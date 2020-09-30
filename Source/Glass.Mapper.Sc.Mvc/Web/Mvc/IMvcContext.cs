@@ -4,6 +4,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Configuration;
 using Sitecore.Mvc.Presentation;
+using System;
 
 namespace Glass.Mapper.Sc.Web.Mvc
 {
@@ -103,7 +104,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetDataSourceItem<T>(GetKnownOptions options ) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = DataSourceItem;
             options.Item = item;
@@ -128,7 +129,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetPageContextItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = RenderingContext.CurrentOrNull.PageContext.Item;
             options.Item = item;
@@ -153,7 +154,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <returns></returns>
         public virtual T GetRenderingItem<T>(GetKnownOptions options) where T : class
         {
-            Assert.IsNotNull(options, "options must no be  null");
+            Assert.IsNotNull(options, "options must not be null");
 
             var item = RenderingContext.CurrentOrNull.Rendering.Item;
             options.Item = item;
@@ -171,9 +172,13 @@ namespace Glass.Mapper.Sc.Web.Mvc
             get
             {
                 var dataSource = RenderingContext.CurrentOrNull.Rendering.DataSource;
-               
 
-                var item = MvcSettings.ItemLocator.GetItem(dataSource);
+                // Switch to handle AB test datasources which contain Sitecore reference
+                // syntax
+                Item item = dataSource.StartsWith("sitecore://", StringComparison.Ordinal) ? 
+                    Sitecore.Context.Database.GetItem(DataUri.Parse(dataSource)) : 
+                    MvcSettings.ItemLocator.GetItem(dataSource);
+
                 return item;
             }
         }

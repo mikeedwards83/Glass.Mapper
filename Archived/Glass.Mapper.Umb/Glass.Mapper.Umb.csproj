@@ -1,7 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+ <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -204,98 +202,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\CacheKeyGenerator.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoAttributeConfigurationLoader.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoInfoAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoPropertyValueAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoTypeAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoParentAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoChildrenAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoPropertyAttribute.cs" />
-    <Compile Include="Configuration\Attributes\UmbracoIdAttribute.cs" />
-    <Compile Include="Configuration\Fluent\AbstractPropertyBuilder.cs" />
-    <Compile Include="Configuration\Fluent\IUmbracoClass.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoChildren.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoDelegate.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoProperty.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoFluentConfigurationLoader.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoId.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoInfo.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoParent.cs" />
-    <Compile Include="Configuration\Fluent\UmbracoType.cs" />
-    <Compile Include="Configuration\UmbracoDelegateConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoInfoConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoInfoType.cs" />
-    <Compile Include="Configuration\UmbracoPropertyValueConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoTypeConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoParentConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoChildrenConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoPropertyConfiguration.cs" />
-    <Compile Include="Configuration\UmbracoPropertySettings.cs" />
-    <Compile Include="Configuration\UmbracoPropertyType.cs" />
-    <Compile Include="Configuration\UmbracoIdConfiguration.cs" />
-    <Compile Include="DataMappers\AbstractUmbracoPropertyMapper.cs" />
-    <Compile Include="DataMappers\UmbracoDelegateMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyFileMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyIEnumerableMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyImageMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyNullableMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyEnumMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyLongMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyGuidMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyIntegerMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyFloatMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyDoubleMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyDecimalMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyDateTimeMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyBooleanMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyStringMapper.cs" />
-    <Compile Include="DataMappers\UmbracoPropertyTypeMapper.cs" />
-    <Compile Include="DataMappers\UmbracoInfoMapper.cs" />
-    <Compile Include="DataMappers\UmbracoChildrenMapper.cs" />
-    <Compile Include="DataMappers\UmbracoParentMapper.cs" />
-    <Compile Include="DataMappers\UmbracoIdMapper.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="IUmbracoContext.cs" />
-    <Compile Include="Maps\UmbracoGlassMap.cs" />
-    <Compile Include="PropertyTypes\File.cs" />
-    <Compile Include="PropertyTypes\Image.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="ContentExtensions.cs" />
-    <Compile Include="IUmbracoService.cs" />
-    <Compile Include="LazyContentEnumerable.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UmbracoContext.cs" />
-    <Compile Include="UmbracoPublishedContext.cs" />
-    <Compile Include="UmbracoPublishedService.cs" />
-    <Compile Include="UmbracoTypeSavingContext.cs" />
-    <Compile Include="UmbracoTypeCreationContext.cs" />
-    <Compile Include="UmbracoService.cs" />
-    <Compile Include="UmbracoDataMappingContext.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="Web\Mvc\GlassRenderMvcController.cs" />
-    <Compile Include="Web\Ui\GlassTemplatePage.cs" />
-    <Compile Include="Web\Ui\GlassViewPage.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Proxies\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj">
-      <Project>{566109ed-a88a-467e-bddb-bbf7f831a006}</Project>
-      <Name>Glass.Mapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
