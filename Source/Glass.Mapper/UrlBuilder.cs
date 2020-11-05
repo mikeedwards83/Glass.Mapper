@@ -90,7 +90,14 @@ namespace Glass.Mapper
             {
                 if (keyValuePair.Key.HasValue())
                 {
-                    sb.AppendFormat("{0}={1}{2}", keyValuePair.Key ?? string.Empty, keyValuePair.Value ?? string.Empty,QuerySeparator);
+                    if (keyValuePair.Value.HasValue())
+                    {
+                        sb.AppendFormat("{0}={1}{2}", keyValuePair.Key ?? string.Empty, keyValuePair.Value ?? string.Empty, QuerySeparator);
+                    }
+                    else
+                    {
+                        sb.AppendFormat("{0}{1}", keyValuePair.Key ?? string.Empty, QuerySeparator);
+                    }
                 }
             }
 
