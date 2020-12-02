@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{807C7850-7227-4CF9-8A83-46CA5E6A7DDF}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>Glass.Mapper.Sc</RootNamespace>
+		<AssemblyName>Glass.Mapper.Sc.Headless</AssemblyName>
+		<FileAlignment>512</FileAlignment>
+		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+		<TargetFrameworkProfile />
+		<DocumentationFile>bin\Glass.Mapper.Sc.Headless.XML</DocumentationFile>
+		<Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
+	</PropertyGroup>
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.Headless.symbols.nuspec</NuspecFile>
+		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
+		<NuspecProperties>$(NuspecProperties);netVersion=$(TargetFramework)</NuspecProperties>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<Prefer32Bit>false</Prefer32Bit>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<Prefer32Bit>false</Prefer32Bit>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)CommonSettings.targets" />
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Web" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
+		<PackageReference Include="Sitecore.LayoutService" Version="$(ScVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="App.config" />
+		<None Include="ReadMe.md" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Glass.Mapper.Sc\Glass.Mapper.Sc.csproj" />
+		<ProjectReference Include="..\Glass.Mapper\Glass.Mapper.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+ 
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
