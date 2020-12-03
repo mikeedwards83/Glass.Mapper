@@ -47,6 +47,7 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Tests" />
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.FakeDb" />
+		<InternalsVisibleTo Include="Glass.Mapper.Sc.Headless.Tests" />
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Integration" />
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Integration.Sc7" />
 		<InternalsVisibleTo Include="Glass.Mapper.Sc.Explorables" />
