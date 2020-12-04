@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Glass.Mapper.Sc.LayoutService.Extensions;
+using Glass.Mapper.Sc.LayoutService.Serialization.ItemSerializers;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Sitecore.Configuration;
+using Sitecore.DependencyInjection;
 using Sitecore.Mvc.Presentation;
-using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.LayoutService.Configuration;
 using Sitecore.LayoutService.ItemRendering.ContentsResolvers;
-using Sitecore.Sites;
 
 namespace Glass.Mapper.Sc.LayoutService
 {
@@ -19,12 +19,17 @@ namespace Glass.Mapper.Sc.LayoutService
     public class GlassRenderingContentsResolver<T> : IRenderingContentsResolver where T : class
     {
         ISitecoreService SitecoreService { get; }
-
+        private IGlassItemSerializer GlassItemSerializer { get; }
 
         public bool IncludeServerUrlInMediaUrls { get; set; } = true;
         public bool UseContextItem { get; set; }
         public string ItemSelectorQuery { get; set; }
         public NameValueCollection Parameters { get; set; } = new NameValueCollection(0);
+
+        public GlassRenderingContentsResolver() : this(new SitecoreService(Sitecore.Context.Database))
+        {
+            GlassItemSerializer = ServiceLocator.ServiceProvider.GetService<IGlassItemSerializer>();
+        }
 
         /// <summary>
         /// Glass Rendering Contents Resolver Constructor 
@@ -41,7 +46,7 @@ namespace Glass.Mapper.Sc.LayoutService
         {
             Assert.ArgumentNotNull((object)rendering, nameof(rendering));
             Assert.ArgumentNotNull((object)renderingConfig, nameof(renderingConfig));
-            T contextItem = this.GetContextItem<T>(rendering, renderingConfig);
+            T contextItem = this.GetContextItem(rendering, renderingConfig);
             if (contextItem == null)
                 return (object)null;
             if (string.IsNullOrWhiteSpace(this.ItemSelectorQuery))
@@ -74,7 +79,7 @@ namespace Glass.Mapper.Sc.LayoutService
         /// <param name="renderingConfig"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        protected virtual T GetContextItem<T>(Rendering rendering, IRenderingConfiguration renderingConfig) where T : class
+        protected virtual T GetContextItem(Rendering rendering, IRenderingConfiguration renderingConfig)
         {
             var options = new GetKnownOptions();
             if (this.UseContextItem)
@@ -113,7 +118,7 @@ namespace Glass.Mapper.Sc.LayoutService
         {
             Assert.ArgumentNotNull((object)item, nameof(item));
             using (new SettingsSwitcher("Media.AlwaysIncludeServerUrl", this.IncludeServerUrlInMediaUrls.ToString()))
-                return JObject.Parse(renderingConfig.GlassItemSerializer().Serialize(item));
+                return JObject.Parse(GlassItemSerializer.Serialize(item));
         }
 
     }

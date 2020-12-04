@@ -1,6 +1,6 @@
 ﻿using Sitecore.LayoutService.Serialization;
 
-namespace Glass.Mapper.Sc.Serialization.ItemSerializers
+namespace Glass.Mapper.Sc.LayoutService.Serialization.ItemSerializers
 {
     /// <summary>
     /// 

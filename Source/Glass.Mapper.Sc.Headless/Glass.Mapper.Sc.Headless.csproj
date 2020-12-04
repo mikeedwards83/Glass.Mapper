@@ -45,6 +45,12 @@
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)CommonSettings.targets" />
 	<ItemGroup>
+	  <None Remove="App_Config\Include\Glass\Glass.Mapper.Sc.Headless.config" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.Headless.config" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="System" />
 		<Reference Include="System.Core" />
 		<Reference Include="System.Web" />
@@ -55,6 +61,8 @@
 		<Reference Include="System.Xml" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Scrutor" Version="3.3.0" />
 		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
 		<PackageReference Include="Sitecore.LayoutService" Version="$(ScVersion)" />
 	</ItemGroup>
