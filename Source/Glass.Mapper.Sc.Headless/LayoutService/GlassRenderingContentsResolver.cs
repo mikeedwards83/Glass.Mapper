@@ -1,11 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Glass.Mapper.Sc.LayoutService.Serialization.ItemSerializers;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Sitecore.Configuration;
-using Sitecore.DependencyInjection;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Diagnostics;
 using Sitecore.LayoutService.Configuration;
@@ -19,7 +16,6 @@ namespace Glass.Mapper.Sc.LayoutService
     public class GlassRenderingContentsResolver<T> : IRenderingContentsResolver where T : class
     {
         ISitecoreService SitecoreService { get; }
-        private IGlassItemSerializer GlassItemSerializer { get; }
 
         public bool IncludeServerUrlInMediaUrls { get; set; } = true;
         public bool UseContextItem { get; set; }
@@ -28,7 +24,6 @@ namespace Glass.Mapper.Sc.LayoutService
 
         public GlassRenderingContentsResolver() : this(new SitecoreService(Sitecore.Context.Database))
         {
-            GlassItemSerializer = ServiceLocator.ServiceProvider.GetService<IGlassItemSerializer>();
         }
 
         /// <summary>
@@ -92,21 +87,23 @@ namespace Glass.Mapper.Sc.LayoutService
 
         protected virtual JArray ProcessItems<T>(
             IEnumerable<T> items,
-            Sitecore.Mvc.Presentation.Rendering rendering,
+            Rendering rendering,
             IRenderingConfiguration renderingConfig) where T : class
         {
             JArray jarray = new JArray();
             foreach (var obj in items)
             {
+                var scItem = SitecoreService.ResolveItem(obj);
+
                 JObject jobject1 = this.ProcessItem(obj, rendering, renderingConfig);
-                //JObject jobject2 = new JObject()
-                //{
-                //    ["id"] = (JToken)obj.ID.Guid.ToString(),
-                //    ["name"] = (JToken)obj.Name,
-                //    ["displayName"] = (JToken)obj.DisplayName,
-                //    ["fields"] = (JToken)jobject1
-                //};
-                jarray.Add((JToken)jobject1);
+                JObject jobject2 = new JObject()
+                {
+                    ["id"] = (JToken)scItem.ID.Guid.ToString(),
+                    ["name"] = (JToken)scItem.Name,
+                    ["displayName"] = (JToken)scItem.DisplayName,
+                    ["fields"] = (JToken)jobject1
+                };
+                jarray.Add((JToken)jobject2);
             }
             return jarray;
         }
@@ -118,7 +115,11 @@ namespace Glass.Mapper.Sc.LayoutService
         {
             Assert.ArgumentNotNull((object)item, nameof(item));
             using (new SettingsSwitcher("Media.AlwaysIncludeServerUrl", this.IncludeServerUrlInMediaUrls.ToString()))
-                return JObject.Parse(GlassItemSerializer.Serialize(item));
+            {
+                //return JObject.Parse(GlassItemSerializer.Serialize(item));
+                var scItem = SitecoreService.ResolveItem(item);
+                return JObject.Parse(renderingConfig.ItemSerializer.Serialize(scItem));
+            }
         }
 
     }

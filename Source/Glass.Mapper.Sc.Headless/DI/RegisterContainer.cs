@@ -9,10 +9,10 @@ namespace Glass.Mapper.Sc.DI
     {
         public void Configure(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<IGlassFieldService, GlassFieldService>();
+            //serviceCollection.AddTransient<IGlassFieldService, GlassFieldService>();
             
             //Glass Item Serializers
-            serviceCollection.AddTransient<IGlassItemSerializer, DefaultGlassItemSerializer>();
+            //serviceCollection.AddTransient<IGlassItemSerializer, DefaultGlassItemSerializer>();
             //serviceCollection.Decorate<IGlassItemSerializer, DefaultGlassItemSerializer>();
         }
     }

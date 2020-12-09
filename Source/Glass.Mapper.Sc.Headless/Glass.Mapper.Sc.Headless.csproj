@@ -61,7 +61,6 @@
 		<Reference Include="System.Xml" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Scrutor" Version="3.3.0" />
 		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
 		<PackageReference Include="Sitecore.LayoutService" Version="$(ScVersion)" />
