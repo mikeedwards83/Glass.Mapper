@@ -68,11 +68,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
+        /// <param name="alwaysRender">Always render an link tag, even when link has not been defined.</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink<T>(T model, Expression<Func<T, object>> field,
-            object attributes = null, bool isEditable = false)
+            object attributes = null, bool isEditable = false, bool alwaysRender = false)
         {
-            return GlassHtml.BeginRenderLink(model, field, Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(model, field, Output, attributes, isEditable, alwaysRender);
 
         }
 
@@ -253,11 +254,12 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
+        /// <param name="alwaysRender">Always render an link tag, even when link has not been defined.</param>
         /// <returns></returns>
         public virtual RenderingResult BeginRenderLink(Expression<Func<TK, object>> field,
-            object attributes = null, bool isEditable = false)
+            object attributes = null, bool isEditable = false, bool alwaysRender = false)
         {
-            return GlassHtml.BeginRenderLink(Model, field, Output, attributes, isEditable);
+            return GlassHtml.BeginRenderLink(Model, field, Output, attributes, isEditable, alwaysRender);
 
         }
 
@@ -269,7 +271,7 @@ namespace Glass.Mapper.Sc.Web.Mvc
         /// <param name="field">The link field to user</param>
         /// <param name="attributes">Any additional link attributes</param>
         /// <param name="isEditable">Make the link editable</param>
-        /// <param name="contents">Content to override the default decription or item name</param>
+        /// <param name="contents">Content to override the default description or item name</param>
         /// <returns></returns>
         public virtual HtmlString RenderLink(Expression<Func<TK, object>> field, object attributes = null,
             bool isEditable = false, string contents = null)
