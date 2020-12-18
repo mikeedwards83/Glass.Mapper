@@ -503,7 +503,7 @@ namespace Glass.Mapper.Sc
             AttributeCheck(attributes, "title", title);
             AttributeCheck(attributes, "style", link.Style);
 
-#if  SC90 || SC91|| SC92 || SC93 || SC100
+#if  SC90 || SC91|| SC92 || SC93 || SC100 || SC1001
 
             if (attributes["target"] == "_blank" && Settings.ProtectExternalLinksWithBlankTarget)
             {

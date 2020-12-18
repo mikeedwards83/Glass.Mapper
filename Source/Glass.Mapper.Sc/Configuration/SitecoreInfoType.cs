@@ -67,7 +67,7 @@ namespace Glass.Mapper.Sc.Configuration
         /// </summary>
         BaseTemplateIds=14,
 
-#if SC81 || SC82 || SC90 || SC91 || SC92 || SC93 || SC100
+#if SC81 || SC82 || SC90 || SC91 || SC92 || SC93 || SC100 || SC1001
         /// <summary>
         /// Gets  the original language.
         /// </summary>
