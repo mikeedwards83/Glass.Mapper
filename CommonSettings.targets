@@ -1,6 +1,6 @@
 <Project>
 	<Choose>
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc1001|AnyCPU' Or '$(ScVersion)' == '10.0.1' Or '$(ScVersion)' == '' or
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc101|AnyCPU' Or '$(ScVersionsc101)' == '10.1' Or '$(ScVersion)' == '' or
                      '$(ScVersion)' == '*undefined*'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
@@ -11,13 +11,13 @@
 				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
 				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
 				<DebugSymbols>true</DebugSymbols>
-				<DefineConstants>SC1001</DefineConstants>
+				<DefineConstants>SC101</DefineConstants>
 				<DebugType>full</DebugType>
 				<PlatformTarget>AnyCPU</PlatformTarget>
 				<ErrorReport>prompt</ErrorReport>
 				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-				<OutputPath>bin\1001\</OutputPath>
-				<ScVersion>10.0.1</ScVersion>
+				<OutputPath>bin\101\</OutputPath>
+				<ScVersion>10.1</ScVersion>
 			</PropertyGroup>
 		</When>
 		
