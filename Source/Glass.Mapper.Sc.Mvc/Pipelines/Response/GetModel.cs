@@ -188,9 +188,16 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             if (renderingItem.DataSource.HasValue())
             {
-                var getOptions = new GetItemByPathOptions()
+                // Switch to handle AB test datasources which contain Sitecore reference
+                // syntax 
+                //TODO: repeated code - refactor to a helper and use in IMvcContext 
+                var item = renderingItem.DataSource.StartsWith("sitecore://", StringComparison.Ordinal) ?
+                    Sitecore.Context.Database.GetItem(DataUri.Parse(renderingItem.DataSource)) :
+                    MvcSettings.ItemLocator.GetItem(renderingItem.DataSource);
+
+                var getOptions = new GetItemByItemOptions()
                 {
-                    Path = renderingItem.DataSource,
+                    Item = item,
                     Type = type
                 };
 
