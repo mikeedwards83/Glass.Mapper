@@ -92,9 +92,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
-	<Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
-	<Content Include="App_Start\GlassMapperSc.cs.pp" />
-    <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
