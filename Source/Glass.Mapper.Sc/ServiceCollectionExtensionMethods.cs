@@ -9,6 +9,7 @@ using Glass.Mapper.Sc.Configuration.Fluent;
 using Glass.Mapper.Sc.IoC;
 using Glass.Mapper.Sc.Pipelines.GetGlassLoaders;
 using Glass.Mapper.Sc.Pipelines.PostLoad;
+using Glass.Mapper.Sc.Web;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Glass.Mapper.Sc
@@ -16,7 +17,7 @@ namespace Glass.Mapper.Sc
     public static class ServiceCollectionExtensionMethods
     {
 
-        public static void  AddGlassMapper(this IServiceCollection collection, Action<GlassMapperScOptions> config =null)
+        public static void AddGlassContext(this IGlassServiceConfiguration glassConfig, string contextName, Action<GlassMapperScOptions> config = null)
         {
             var options = new GlassMapperScOptions();
             if (config != null)
@@ -26,7 +27,7 @@ namespace Glass.Mapper.Sc
 
             var resolver = new DependencyResolver(options.Config);
 
-            var context = Context.Create(resolver, options.ContextName, true);
+            var context = Context.Create(resolver, contextName, true);
 
             var dependencyResolver = resolver as DependencyResolver;
             if (dependencyResolver == null)
@@ -65,7 +66,30 @@ namespace Glass.Mapper.Sc
             };
 
             PostLoadPipeline.Run(postLoadArgs);
+
+            //should we register some things here?
+
+        }
+
+
+        public static IGlassServiceConfiguration AddGlassMapper(this IServiceCollection collection, Action<GlassMapperScOptions> config = null)
+        {
+            var glassConfig = new GlassServiceConfiguration();
+            glassConfig.ServiceCollection = collection;
+            glassConfig.AddGlassContext(Context.DefaultContextName, config);
+            return glassConfig;
+
+        }
+
+        public static IGlassServiceConfiguration AddRequestContext(
+            this IGlassServiceConfiguration glassConfig)
+        {
+            glassConfig.ServiceCollection.AddTransient<IRequestContext, RequestContext>();
+
+            return glassConfig;
         }
 
     }
+
+
 }

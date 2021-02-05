@@ -12,7 +12,6 @@ namespace Glass.Mapper.Sc
 {
     public class GlassMapperScOptions
     {
-        public string ContextName { get; set; } = Context.DefaultContextName;
         public IList<IConfigurationLoader> Loaders { get; } = new List<IConfigurationLoader>();
 
         public Glass.Mapper.Sc.Config Config { get; set; }= new Config();
