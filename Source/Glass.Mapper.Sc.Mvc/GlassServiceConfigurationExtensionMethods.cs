@@ -14,8 +14,7 @@ namespace Glass.Mapper.Sc
         public static IGlassServiceConfiguration AddMvcContext(
             this IGlassServiceConfiguration glassConfig)
         {
-            glassConfig.ServiceCollection.AddTransient<IMvcContext, MvcContext>();
-
+            glassConfig.ServiceCollection.AddTransient<IMvcContext>(p=>new MvcContext(glassConfig.ContextName));
             return glassConfig;
         }
     }

@@ -13,6 +13,13 @@ namespace Glass.Mapper.Sc.Web.WebForms
     {
         public IGlassHtml GlassHtml { get; set; }
 
+
+        public WebFormsContext(string contextName) 
+            : this(new SitecoreService(Sitecore.Context.Database, Context.Contexts[contextName]))
+        {
+
+        }
+
         public WebFormsContext() : this(new SitecoreService(Sitecore.Context.Database))
         {
 

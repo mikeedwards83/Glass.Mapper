@@ -17,36 +17,43 @@ namespace Glass.Mapper.Sc
     public static class ServiceCollectionExtensionMethods
     {
 
-        public static void AddGlassContext(this IGlassServiceConfiguration glassConfig, string contextName, Action<GlassMapperScOptions> config = null)
+        
+
+        public static IGlassServiceConfiguration AddGlassMapper(this IServiceCollection collection,  Action<GlassMapperScOptions> config = null)
         {
+            var glassConfig = new GlassServiceConfiguration();
+            glassConfig.ServiceCollection = collection;
+
             var options = new GlassMapperScOptions();
             if (config != null)
             {
                 config(options);
             }
 
+            glassConfig.ContextName = options.ContextName;
+
             var resolver = new DependencyResolver(options.Config);
 
-            var context = Context.Create(resolver, contextName, true);
+            options.ConfigureResolver(resolver);
+
+            var context = Context.Create(resolver, options.ContextName, true);
 
             var dependencyResolver = resolver as DependencyResolver;
-            if (dependencyResolver == null)
+            if (dependencyResolver != null)
             {
-                return;
-            }
-
-            if (dependencyResolver.ConfigurationMapFactory is ConfigurationMapConfigFactory)
-            {
-                foreach (var map in options.GlassMaps)
+                if (dependencyResolver.ConfigurationMapFactory is ConfigurationMapConfigFactory)
                 {
-                    dependencyResolver.ConfigurationMapFactory.Add(map);
+                    foreach (var map in options.GlassMaps)
+                    {
+                        dependencyResolver.ConfigurationMapFactory.Add(map);
+                    }
                 }
+
+                IConfigurationMap configurationMap = new ConfigurationMap(dependencyResolver);
+                SitecoreFluentConfigurationLoader configurationLoader =
+                    configurationMap.GetConfigurationLoader<SitecoreFluentConfigurationLoader>();
+                context.Load(configurationLoader);
             }
-
-            IConfigurationMap configurationMap = new ConfigurationMap(dependencyResolver);
-            SitecoreFluentConfigurationLoader configurationLoader = configurationMap.GetConfigurationLoader<SitecoreFluentConfigurationLoader>();
-            context.Load(configurationLoader);
-
 
             var getGlassLoadersArgs = new GetGlassLoadersPipelineArgs
             {
@@ -67,27 +74,12 @@ namespace Glass.Mapper.Sc
 
             PostLoadPipeline.Run(postLoadArgs);
 
-            //should we register some things here?
-
-        }
-
-
-        public static IGlassServiceConfiguration AddGlassMapper(this IServiceCollection collection, Action<GlassMapperScOptions> config = null)
-        {
-            var glassConfig = new GlassServiceConfiguration();
-            glassConfig.ServiceCollection = collection;
-            glassConfig.AddGlassContext(Context.DefaultContextName, config);
-            return glassConfig;
-
-        }
-
-        public static IGlassServiceConfiguration AddRequestContext(
-            this IGlassServiceConfiguration glassConfig)
-        {
-            glassConfig.ServiceCollection.AddTransient<IRequestContext, RequestContext>();
 
             return glassConfig;
+
         }
+
+  
 
     }
 

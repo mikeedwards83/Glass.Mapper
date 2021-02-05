@@ -10,8 +10,10 @@ namespace Glass.Mapper.Sc
     public interface IGlassServiceConfiguration
     {
          IServiceCollection ServiceCollection { get; }
+         string ContextName { get;  }
     }
     public class GlassServiceConfiguration: IGlassServiceConfiguration{
         public IServiceCollection ServiceCollection { get; set; }
+        public string ContextName { get; set; }
     }
 }

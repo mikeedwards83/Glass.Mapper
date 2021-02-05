@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc
         public static IGlassServiceConfiguration AddWebFormsContext(
             this IGlassServiceConfiguration glassConfig)
         {
-            glassConfig.ServiceCollection.AddTransient<IWebFormsContext, WebFormsContext>();
+            glassConfig.ServiceCollection.AddTransient<IWebFormsContext>(p=>new WebFormsContext(glassConfig.ContextName));
 
             return glassConfig;
         }

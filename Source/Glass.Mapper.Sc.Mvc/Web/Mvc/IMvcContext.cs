@@ -72,6 +72,11 @@ namespace Glass.Mapper.Sc.Web.Mvc
     {
         public IGlassHtml GlassHtml { get; set; }
 
+        public MvcContext(string contextName) 
+            : this(new SitecoreService(Sitecore.Context.Database, Context.Contexts[contextName]))
+        {
+
+        }
         public MvcContext() : this(new SitecoreService(Sitecore.Context.Database))
         {
             

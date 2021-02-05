@@ -14,7 +14,7 @@ namespace Glass.Mapper.Sc.Mvc.Tests
         {
             IServiceCollection collection = null;
 
-            collection.AddGlassMapper().AddMvcContext().AddRequestContext();
+            collection.AddGlassMapper().AddMvcContext();
         }
     }
 }
