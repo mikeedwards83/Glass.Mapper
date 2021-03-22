@@ -14,7 +14,7 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.XML</DocumentationFile>
-    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101</Configurations>
   </PropertyGroup>
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
