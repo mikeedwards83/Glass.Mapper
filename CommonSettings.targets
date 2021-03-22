@@ -17,7 +17,7 @@
 				<ErrorReport>prompt</ErrorReport>
 				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
 				<OutputPath>bin\101\</OutputPath>
-				<ScVersion>10.1</ScVersion>
+				<ScVersion>10.1.0</ScVersion>
 			</PropertyGroup>
 		</When>
 		
