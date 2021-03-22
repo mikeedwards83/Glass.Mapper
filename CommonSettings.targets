@@ -1,6 +1,6 @@
 <Project>
 	<Choose>
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc101|AnyCPU' Or '$(ScVersion)' == '10.1' Or '$(ScVersion)' == '' or
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc101|AnyCPU' Or '$(ScVersion)' == '10.1.0' Or '$(ScVersion)' == '' or
                      '$(ScVersion)' == '*undefined*'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
