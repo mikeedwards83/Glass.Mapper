@@ -1,0 +1,334 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Working with TDS and TFS in the cloud by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:24:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Working with TDS and TFS in the cloud.  - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Working with TDS and TFS in the cloud. 
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            20 Feb 2014
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <img src="../../-/media/Images/Blogs/Archive/TDSOnline-Projecta506a506.png?h=136&amp;w=200&amp;la=en&amp;hash=E897C75F20FD0868EC67939F0A1D93F9058DB6F0" class="pull-right img-responsive img-bordered margin-bottom-10 margin-left-10" alt="">
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p>Microsoft now supply the ability to have a Team Foundation Server in the cloud, this is called <a href="http://www.visualstudio.com/en-us/products/visual-studio-online-overview-vs.aspx">Visual Studio Online</a>. Starting from version 5 of Team Development for Sitecore support has been added to allow you to build projects using Visual Studio Online.
+
+There are a few steps that you will need to go through to make this work.
+
+First I have created a simple solution that contains a web application and a TDS project:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Project.html"><img class="alignnone size-full wp-image-587" title="TDSOnline-Project" src="../../-/media/Images/Blogs/Archive/TDSOnline-Project21252125.png?la=en" alt="" width="209" height="142"></a></div>
+I have added the project to source control as I would normally.
+
+With Visual Studio Online it isn't possible to run the TDS installer on the TFS build server, instead all the files we need must be part of our source control. Therefore the first thing we need to do is add the TDS build files to our solution, you can find these files in <strong>C:\Program Files (x86)\MSBuild\HedgehogDevelopment\SitecoreProject\v9.0</strong>. Copy them to a folder in the route of your solution, I have called mine <strong>TDSFiles</strong>.
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Build.html"><img class="alignnone size-full wp-image-588" title="TDSOnline-Build" src="../../-/media/Images/Blogs/Archive/TDSOnline-Build21252125.png?la=en" alt="" width="220" height="167"></a></div>
+You will also need the Sitecore files required by the TDS packager, I have copied these into the <strong>Sitecore</strong> folder:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Sitecore.html"><img class="alignnone size-full wp-image-589" title="TDSOnline-Sitecore" src="../../-/media/Images/Blogs/Archive/TDSOnline-Sitecore21252125.png?la=en" alt="" width="195" height="189"></a></div>
+Make sure that you add all these files to source control. When adding these files through TFS it will try to exclude the DLLs, make sure that all the files get added.
+
+We now need to configure our <strong>Release</strong> build in Visual Studio. Right click on the TDS Project and open the TDS Project Properties and switch to <strong>Release</strong>. In the <strong>Build</strong> tab ensure that nothing is configured, then click on the <strong>Update Package</strong> and configure the update package. In the <strong>Sitecore Assembly Path</strong> enter the relative path to the Sitecore assemblies you added to source control:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Package1.html"><img class="alignnone size-full wp-image-597" title="TDSOnline-Package1" src="../../-/media/Images/Blogs/Archive/TDSOnline-Package121252125.png?la=en" alt="" width="586" height="349"></a></div>
+Now create a TDS build that builds the <strong>Release</strong> configuration.
+
+If you try to build the solution at the moment you will receive the following error:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Error1.html"><img class="alignnone size-full wp-image-590" title="TDSOnline-Error1" src="../../-/media/Images/Blogs/Archive/TDSOnline-Error121252125.png?la=en" alt="" width="989" height="79"></a></div>
+To correct this we need to update the TDS project to point at the right location. In Visual Studio right click on the TDS Project and <strong>Unload Project</strong>. Right click on the project and edit it, you should now see the project XML. At the end of the XML there should be an import statement for the <strong>HedgehogDevelopment.SitecoreProject.targets</strong> file:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Project1.html"><img class="alignnone size-full wp-image-591" title="TDSOnline-Project1" src="../../-/media/Images/Blogs/Archive/TDSOnline-Project121252125.png?la=en" alt="" width="947" height="67"></a></div>
+This needs to be updated to use the project file uploaded to source control. This path must be relative:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Project2.html"><img class="alignnone size-full wp-image-592" title="TDSOnline-Project2" src="../../-/media/Images/Blogs/Archive/TDSOnline-Project221252125.png?la=en" alt="" width="559" height="68"></a></div>
+You can now reload this project. We also need to update the <strong>/TDSFiles/HedgehogDevelopment.SitecoreProject.targets</strong> file, open this file you should see lots of entries for <strong>$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll</strong>:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Targets1.html"><img class="alignnone size-full wp-image-593" title="TDSOnline-Targets1" src="../../-/media/Images/Blogs/Archive/TDSOnline-Targets121252125.png?la=en" alt="" width="982" height="113"></a></div>
+This needs to be changed to a relative path, this path is relative from the TDS Project importing the file, so we need to replace <strong>$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll</strong> with <strong>..\TDSFiles\HedgehogDevelopment.SitecoreProject.Tasks.dll</strong>:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Targets2.html"><img class="alignnone size-full wp-image-594" title="TDSOnline-Targets2" src="../../-/media/Images/Blogs/Archive/TDSOnline-Targets221252125.png?la=en" alt="" width="651" height="119"></a></div>
+If you now run the build you will receive another error, this time it is:
+<div><a href="../../www.experimentsincode.com/wp-content/uploads/2014/02/TDSOnline-Error2.html"><img class="alignnone size-full wp-image-595" title="TDSOnline-Error2" src="../../-/media/Images/Blogs/Archive/TDSOnline-Error221252125.png?la=en" alt="" width="1001" height="85"></a></div>
+This is caused because TDS can't find a license, to set this we need to go into the <strong>TDSFiles</strong> folder and open the file <strong>TDSLicence.config</strong>
+
+In this file we need to add a single XML rootÃ‚Â node with the <strong>Owner</strong> and <strong>Key</strong> attributes:
+<pre class="csharp">	&lt;license Owner="CompanyName" Key="AA00-A00-0A0-A000" /&gt;</pre>
+<div>Check everything in to source control and build run a build. The build should succeed and in your drop folder you should be able to find the Sitecore update file:</div>
+<div></div>
+<div></div>
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Working with TDS and TFS in the cloud by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:24:23 GMT -->
+</html>

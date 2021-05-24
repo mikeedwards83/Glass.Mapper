@@ -1,0 +1,544 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Sitecore MVC - Controller Renderings Part 2 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Sitecore MVC - Controller Renderings Part 2 - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Sitecore MVC - Controller Renderings Part 2
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            08 Sep 2012
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <img src="../../-/media/Images/Blogs/Archive/TestLayouts280a280a.png?h=65&amp;w=200&amp;la=en&amp;hash=4FEC0CE46CD131F148EC5465DA846758E5A051C3" class="pull-right img-responsive img-bordered margin-bottom-10 margin-left-10" alt="">
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p>I recently wrote a blog post about how to create a simple commenting component using <a href="http://www.experimentsincode.com/?p=407">Sitecore MVC and Controller Renderings</a>.
+
+While doing this work it came apparent that there might be some interesting side affects of combining multiple Controller Renderings onto a single item, in this blog post I will explorer this (yes I did say in the first one I would look at IOC however that will have to wait until the next post).
+
+So lets look at a potential problem, say we have the following two controllers:
+
+<pre class="brush:csharp">
+    public class TestController : SitecoreController
+    {
+        [HttpGet]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test1 Get");
+            return View("Index");
+
+        }
+        [HttpPost]
+        public  System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test1 Post");
+            return View("Index");
+
+        }
+    }
+
+    public class Test2Controller : SitecoreController
+    {
+        [HttpGet]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test2 Get");
+            return View("Index");
+        }
+
+        [HttpPost]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test2 Post");
+            return View("Index");
+        }
+    }
+</pre>
+
+Both controller are  straight forward and have method to handle different type os Http request. Now lets associate both controllers and index actions to an item in Sitecore:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestLayouts.html"><img src="../../-/media/Images/Blogs/Archive/TestLayouts21252125.png?la=en" alt="" title="TestLayouts" width="300" height="98" class="alignnone size-medium wp-image-426"></a>
+</div>
+
+In a standard MVC solution this typically doesn't occur, you normally map a single route to a single controller and action. However in Sitecore you don't have to do that, it will run both controllers and actions. This feature actually gives us some great flexibility:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestGet.html"><img src="../../-/media/Images/Blogs/Archive/TestGet21252125.png?la=en" alt="" title="TestGet" width="184" height="131" class="alignnone size-full wp-image-427"></a>
+</div>
+
+Notice that I have created a submit button for each view as well, if I click the "Test1 Submit" button I get the following output:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestPost.html"><img src="../../-/media/Images/Blogs/Archive/TestPost21252125.png?la=en" alt="" title="TestPost" width="160" height="125" class="alignnone size-full wp-image-428"></a>
+</div>
+
+Well we get something that we may not have expected, despite the forms being separate both Post actions were called on each controller. This means that if we have two forms on a page that use conditional renderings both will be submitted. Just imagine if you have a search form at the top of a page and contact form on the page,  both would be submitted.
+
+Ok so we need a way to tell which form was submitted and only allow that controller and action to run. Well first off, if we give each button a name we can look to see which button was clicked. To do this we just need to create a custom action that inherits from ActionMethodSelectorAttribute. It looks something like this:
+
+<pre class="brush:csharp">
+    public class FormButtonAttribute : ActionMethodSelectorAttribute  
+    {
+        string _name;
+
+        public FormButtonAttribute(string name)
+        {
+            _name = name;
+        }
+        public override bool IsValidForRequest(ControllerContext controllerContext, System.Reflection.MethodInfo methodInfo)
+        {
+            return !string.IsNullOrEmpty(controllerContext.HttpContext.Request.Form[_name]);
+        }
+    }
+</pre>
+
+Ok so this attribute will check the forms collection for a specific key and will only allow the method to run if the form value is exists. Lets update the controllers to use this new attribute:
+
+<pre class="brush:csharp">
+    public class TestController : SitecoreController
+    {
+        [HttpGet]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test1 Get");
+            return View("Index");
+
+        }
+        [HttpPost]
+        [FormButton("TestSubmit")]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test1 Post");
+            return View("Index");
+
+        }
+    }
+    public class Test2Controller : SitecoreController
+    {
+        [HttpGet]
+        
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test2 Get");
+            return View("Index");
+        }
+
+        [HttpPost]
+        [FormButton("Test2Submit")]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test2 Post");
+            return View("Index");
+        }
+    }
+</pre>
+
+Ok lets see what happens if we click the "Test Submit" button now:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestError.html"><img src="../../-/media/Images/Blogs/Archive/TestError21252125.png?la=en" alt="" title="TestError" width="600" class="alignnone size-medium wp-image-429"></a>
+</div>
+
+Ahh.. what happened here? Well because we clicked the first button and it was a HTTP Post we had no actions on the the Test2Controller that was authorised to run. Sitecore always want to run at least one method on a controller. Let see if we can get around this, lets update the controllers to remove the HttpGet attributes, this should ensure that they run every time:
+
+<pre class="brush:csharp">
+    public class TestController : SitecoreController
+    {
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test1 Get");
+            return View("Index");
+
+        }
+        [HttpPost]
+        [FormButton("TestSubmit")]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test1 Post");
+            return View("Index");
+
+        }
+    }
+    public class Test2Controller : SitecoreController
+    {
+      
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test2 Get");
+            return View("Index");
+        }
+
+        [HttpPost]
+        [FormButton("Test2Submit")]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test2 Post");
+            return View("Index");
+        }
+    }
+</pre>
+
+And with this we get the following result:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestSuccess.html"><img src="../../-/media/Images/Blogs/Archive/TestSuccess21252125.png?la=en" alt="" title="TestSuccess" width="162" height="132" class="alignnone size-full wp-image-430"></a>
+</div>
+
+Now this looks like it has succeed, however this isn't really what I was expecting to happen. I would have expected that both Index methods for TestController were called since they both match the request. Lets see if we can get two methods to run within a controller, lets update TestController to look like this:
+
+<pre class="brush:csharp">
+    public class TestController : SitecoreController
+    {
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            Response.Write("Hello from Test1 Get");
+            return View("Index");
+
+        }
+
+
+        [HttpPost]
+        [FormButton("TestSubmit")]
+        public System.Web.Mvc.ActionResult Index(string value)
+        {
+            Response.Write("Hello from Test1 Post Method 1");
+            return View("Index");
+        }
+
+        [HttpPost]
+        [FormButton("TestSubmit")]
+        public System.Web.Mvc.ActionResult Index(string value, string value2)
+        {
+            Response.Write("Hello from Test1 Post Method 2");
+            return View("Index");
+        }
+    }
+</pre>
+
+And if we run it
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2012/09/TestTwoMethods.html"><img src="../../-/media/Images/Blogs/Archive/TestTwoMethods21252125.png?la=en" alt="" title="TestTwoMethods" width="600" class="alignnone size-medium wp-image-431"></a>
+</div>
+
+Hum.. well that was a shame, it didn't work, it would have been awesome to call multiple methods on a single controller. So the question is, how does Sitecore decide which methods to call on a controller?
+
+Well this actually isn't controlled by Sitecore but is actually part of the standard .NET MVC library, in particular the System.Web.Mvc.RunSelectionFilters method:
+
+<pre class="brush:csharp">
+    private static List&lt;MethodInfo&gt; RunSelectionFilters(ControllerContext controllerContext, List&lt;MethodInfo&gt; methodInfos)
+    {
+      List&lt;MethodInfo&gt; list1 = new List&lt;MethodInfo&gt;();
+      List&lt;MethodInfo&gt; list2 = new List&lt;MethodInfo&gt;();
+      using (List&lt;MethodInfo&gt;.Enumerator enumerator = methodInfos.GetEnumerator())
+      {
+        while (enumerator.MoveNext())
+        {
+          MethodInfo methodInfo = enumerator.Current;
+          ICollection&lt;ActionMethodSelectorAttribute&gt; selectorAttributes = ReflectedAttributeCache.GetActionMethodSelectorAttributes(methodInfo);
+          if (selectorAttributes.Count == 0)
+            list2.Add(methodInfo);
+          else if (Enumerable.All&lt;ActionMethodSelectorAttribute&gt;((IEnumerable&lt;ActionMethodSelectorAttribute&gt;) selectorAttributes, (Func&lt;ActionMethodSelectorAttribute, bool&gt;) (attr =&gt; attr.IsValidForRequest(controllerContext, methodInfo))))
+            list1.Add(methodInfo);
+        }
+      }
+      if (list1.Count &lt;= 0)
+        return list2;
+      else
+        return list1;
+    }
+</pre>
+
+You can see that this method actually priorities methods that have ActionMethodSelectorAttributes over those methods that don't, this explains why in our earlier test we didn't get both methods firing.
+
+So what does this mean? Well it means that you should probably always have a method on you controller that doesn't have any attributes attached to it. This method will be the default method that will always run when no other method is matched, you can then use attributes to specify when another method should be run instead of the default method. 
+
+
+
+
+
+
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Sitecore MVC - Controller Renderings Part 2 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:12 GMT -->
+</html>

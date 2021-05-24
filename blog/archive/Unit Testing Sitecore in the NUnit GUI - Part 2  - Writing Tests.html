@@ -1,0 +1,514 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Unit Testing Sitecore in the NUnit GUI - Part 2  - Writing Tests by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Unit Testing Sitecore in the NUnit GUI - Part 2  - Writing Tests - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Unit Testing Sitecore in the NUnit GUI - Part 2  - Writing Tests
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            01 Sep 2010
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p>Posts in this series:
+<ul>
+	<li><a href="http://blog.experimentsincode.com/index.php/2010/08/30/232">Unit Testing Sitecore in the NUnit GUI Ã¢â‚¬â€œ Part 1 Ã¢â‚¬â€œ Setting Up</a></li>
+	<li><a href="http://blog.experimentsincode.com/index.php/2010/09/01/247">Unit Testing Sitecore in the NUnit GUI Ã¢â‚¬â€œ Part 2 Ã¢â‚¬â€œ Writing Tests</a></li>
+	<li><a href="http://blog.experimentsincode.com/index.php/2010/09/08/241">Unit Testing Sitecore in the NUnit GUI - Part 3 - Known Problems</a></li>
+</ul>
+So this is the second post on how to unit test Sitecore, in this post I look at how to restructure some simple code so that we can test the code via the NUnit GUI.
+
+For this example we will have a very simple sub-layout that contains a comment form, this form takes a comment, username and email address from the user and then adds this to the Sitecore database. So the code for out sub-layout looks like this:
+<pre class="brush:c#">public partial class AddComment : System.Web.UI.Page
+    {
+
+        protected override void OnInit(EventArgs e)
+        {
+            submit.Click += new EventHandler(submit_Click);
+            base.OnInit(e);
+        }
+
+        void submit_Click(object sender, EventArgs e)
+        {
+            //a few presets for a comment
+            Guid commentTemplate = new Guid("{73888B25-314C-4F93-8F7C-48E916C054C9}");
+            DateTime commentDate = DateTime.Now;
+            string commentName = string.Format("comment-{0}", commentDate.ToString("dd-MM-yyyy-hh-mm-ss"));
+
+            //create a new comment
+            Item parent = Sitecore.Context.Database.GetItem("/sitecore/content/home/news/interestingarticle");
+            Item newComment = parent.Add(commentName, new TemplateID(new ID(commentTemplate)));
+
+            //populate the comment
+
+            newComment.Editing.BeginEdit();
+
+            newComment["username"] = username.Text;
+            newComment["comment"] = comment.Text;
+            newComment["email"] = comment.Text;
+            newComment["date"] = DateUtil.ToIsoDate(commentDate);
+
+            newComment.Editing.EndEdit();
+
+        }
+    }</pre>
+<!--more-->
+
+So we can turn this into something testable using the MVP pattern. We can create a presenter and a view interface:
+<pre class="brush:c#">  public class CommentPresenter
+    {
+        ICommentView _view;
+        Database _database;
+
+        public CommentPresenter(ICommentView view, Database database)
+        {
+            _view = view;
+            _database = database;
+        }
+
+        public void SubmitComment()
+        {
+            try
+            {
+                //a few presets for a comment
+                Guid commentTemplate = new Guid("{73888B25-314C-4F93-8F7C-48E916C054C9}");
+                DateTime commentDate = DateTime.Now;
+                string commentName = string.Format("comment-{0}", commentDate.ToString("dd-MM-yyyy-hh-mm-ss"));
+
+                //create a new comment
+                Item parent = _database.GetItem(_view.ParentItem);
+
+                using (new SecurityDisabler())
+                {
+
+                    Item newComment = parent.Add(commentName, new TemplateID(new ID(commentTemplate)));
+
+                    //populate the comment
+
+                    newComment.Editing.BeginEdit();
+
+                    newComment["username"] = _view.Username;
+                    newComment["comment"] = _view.Comment;
+                    newComment["email"] = _view.Email;
+                    newComment["date"] = DateUtil.ToIsoDate(commentDate);
+
+                    newComment.Editing.EndEdit();
+                }
+
+                _view.Action(CommentViewAction.CommentAdded);
+            }
+            catch (Exception ex)
+            {
+                _view.ErrorMessage = ex.Message;
+                _view.Action(CommentViewAction.ErrorMessage);
+            }
+        }
+
+    }
+    public enum CommentViewAction
+    {
+        CommentAdded,
+        ErrorMessage
+    }
+
+    public interface ICommentView
+    {
+        string ParentItem { get;  }
+        string Comment { get;  }
+        string Username { get; }
+        string Email { get;  }
+        string ErrorMessage { set; }
+        void Action(CommentViewAction action);
+    }</pre>
+With these classes we can then modify the sub-layout to use the presenter. We change the sub-layout to inherit from the comment interface, then on the page load we instantiate the presenter passing in the sub-layout and the Sitecore context database into the presenter. The sub-layout then becomes very thin with all the logic in the presenter.
+<pre class="brush:c#">public partial class AddComment : System.Web.UI.Page, ICommentView
+    {
+        CommentPresenter _presenter;
+
+        protected override void OnInit(EventArgs e)
+        {
+            _presenter = new CommentPresenter(this, Sitecore.Context.Database);
+
+            submit.Click += new EventHandler(submit_Click);
+            base.OnInit(e);
+        }
+
+        void submit_Click(object sender, EventArgs e)
+        {
+            _presenter.SubmitComment();
+        }
+
+        #region ICommentView Members
+
+        public string ParentItem
+        {
+            get { return "/sitecore/content/home/news/interestingarticle"; }
+        }
+
+        public string Comment
+        {
+            get { return comment.Text; }
+        }
+
+        public string Username
+        {
+            get { return username.Text; }
+        }
+
+        public string Email
+        {
+            get { return email.Text; }
+        }
+
+        public string ErrorMessage
+        {
+            get;
+            set;
+        }
+
+        public void Action(CommentViewAction action)
+        {
+            switch (action)
+            {
+                    //Just quickly output the results
+                case CommentViewAction.CommentAdded:
+                    Response.Write("Comment has been added");
+                    break;
+                case CommentViewAction.ErrorMessage:
+                    Response.Write(string.Format("An error as occured, {0}", ErrorMessage));
+                    break;
+
+            }
+        }
+
+        #endregion
+    }</pre>
+Now we have aÃ‚Â separationÃ‚Â between presentation and logic we can test the logic in the presenter works how we think it should. Within the test project we can create the following test fixture:
+<pre class="brush:c#">    [TestFixture]
+    public class CommentPresenterFixture
+    {
+        [Test]
+        public void SubmitComment_CreatesAComment()
+        {
+            string comment = "testComment";
+            string email = "testEmail";
+            string username = "testUsername";
+            string parent = "/sitecore/content/home/news/interestingarticle";
+
+            Database db = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            Mock view = new Mock();
+            view.Setup(x =&gt; x.Comment).Returns(comment);
+            view.Setup(x =&gt; x.Email).Returns(email);
+            view.Setup(x =&gt; x.Username).Returns(username);
+            view.Setup(x =&gt; x.ParentItem).Returns(parent);
+
+            CommentPresenter presenter = new CommentPresenter(view.Object, db);
+            presenter.SubmitComment();
+
+            view.Verify(x =&gt; x.Action(CommentViewAction.CommentAdded));
+
+            view.VerifyAll();
+
+            Item parentItem = db.GetItem(parent);
+            //not the best line I admit, but there are limits to what we can do
+            Item newChild = parentItem.Children.Cast().Last();
+
+            Assert.AreEqual(comment, newChild["comment"]);
+            Assert.AreEqual(email, newChild["email"]);
+            Assert.AreEqual(username, newChild["username"]);
+
+        }
+    }</pre>
+So in this class we mock the view interface so that it returns my predefined values; for the mocking I have used <a href="http://code.google.com/p/moq/">Moq</a>. I also instantiate a Sitecore database using the Sitecore factory. Ã‚Â You can then see that the rest of the testing is quite straight forward. Running the test should hopefully return lots of green lights.
+
+The only line that I am not particularly happy with is the following:
+<pre class="brush:c#">Item newChild = parentItem.Children.Cast().Last();</pre>
+Unfortunately at the moment I can't think of a more sensible way to get the item that was created by Sitecore.
+
+So we now have system that give us red/green testing of modifications to Sitecore, we can now properly test our interactions with Sitecore. While doing this sort of testing you might want to setup a second instance of Sitecore Ã‚Â that your tests run against so that your development instance does not get polluted by test items. You could also add clean up code to the end of each tests, in the example above we could delete the comment item after we have finished the tests.
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Unit Testing Sitecore in the NUnit GUI - Part 2  - Writing Tests by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:43 GMT -->
+</html>

@@ -1,0 +1,434 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Sitecore Sublayout Parameters by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:26:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Sitecore Sublayout Parameters - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Sitecore Sublayout Parameters
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            25 Aug 2010
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p><div>
+
+<strong>This post has been migrated, original date 01 Oct 2008</strong>
+
+This article applies to Sitecore 5.3.
+
+Ok close on the heels of my previous post comes another useful extension  method (I might be getting carried away with these). This extension  method is to help those of you developing in Sitecore. I came up against  the problem today of needing to extract the parameters associated to  sub-layout.
+
+For those unclear on parameters and sub-layout these can be found by  going to a template in Sitecore (I am assuming Sitecore 5.3), click on  the Presentation tab and then click Layout. Click the Edit button  beneath a layout with a sub-layout. Click on the Sub-layout and in the  new popup select the parameters tag. You should see the following  screen:
+
+<img src="../../www.experimentsincode.com/imagee8d9e8d9.html?picture=2008%2f10%2f081001ParametersScreenShot.jpg" alt="">
+
+Parameters are useful because they allow you to pass in specific values  to a layout.Ok so the code I originally looked at was taken from that  given by Sitecore:
+
+<!--{\rtf1\ansi\ansicpg\lang1024\noproof65001\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green0\blue0;\red255\green255\blue255;\red43\green145\blue175;\red163\green21\blue21;\red0\green0\blue255;}??\fs20             \cf3 Database\cf0  db = Sitecore.\cf3 Context\cf0 .Database;\par ??            \cf3 Item\cf0  item = db.Items[\cf4 "/sitecore/templates/SC Printers/Section"\cf0 ];\par ??            \cf5 string\cf0  rend = item.Fields[\cf4 "__renderings"\cf0 ].Value;\par ??            \cf3 LayoutDefinition\cf0  layout = \cf3 LayoutDefinition\cf0 .Parse(rend);\par ??            \cf3 DeviceItem\cf0  dev = Sitecore.\cf3 Context\cf0 .Device;\par ??            \cf3 DeviceDefinition\cf0  device = layout.GetDevice(dev.ID.ToString());\par ??            \cf3 Item\cf0  mySublayout = db.Items[\cf4 "/sitecore/layout/Sublayouts/Two columns"\cf0 ];\par ??            \cf3 RenderingDefinition\cf0  rendering = device.GetRendering(mySublayout.ID.ToString());\par ??            Response.Write(\cf4 "Parameters: "\cf0  + rendering.Parameters);\par ??            Response.Write(\cf4 "&lt;br/&gt;"\cf0 );\par ??            Response.Write(\cf4 "DataSource: "\cf0  + rendering.Datasource);}-->
+<div>
+
+25Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Database db = Sitecore.Context.Database;
+
+26Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Item item = db.Items["/sitecore/templates/SC Printers/Section"];
+
+27Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  string rend = item.Fields["__renderings"].Value;
+
+28Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  LayoutDefinition layout = LayoutDefinition.Parse(rend);
+
+29Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  DeviceItem dev = Sitecore.Context.Device;
+
+30Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  DeviceDefinition device = layout.GetDevice(dev.ID.ToString());
+
+31Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Item mySublayout = db.Items["/sitecore/layout/Sublayouts/Two columns"];
+
+32Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  RenderingDefinition rendering = device.GetRendering(mySublayout.ID.ToString());
+
+33Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Response.Write("Parameters: " + rendering.Parameters);
+
+34Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Response.Write("&lt;br/&gt;");
+
+</div>
+35Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Response.Write("DataSource: " + rendering.Datasource);
+
+However there are several problems with this code. It assumes that the  item has a rendering specified and not inherited from a template and it  will also fail if the device that Sitecore picks up has not associated  layout; for example if I specify a device for Firefox users but then  don't specify and layouts for it it shoud fall back to the default  device, but this code doesn't. Another problem with the code is that it  returns the list of parameters as a string, if you have more than one  parameter they are all concantinated into one long string. I wanted to  seperate these out so that they were more usable. The solution is the  following code:
+
+<!--{\rtf1\ansi\ansicpg\lang1024\noproof65001\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green0\blue0;\red255\green255\blue255;\red0\green0\blue255;\red163\green21\blue21;\red43\green145\blue175;\red0\green128\blue0;}??\fs20         \cf3 private\cf0  \cf3 static\cf0  \cf3 readonly\cf0  \cf3 string\cf0  _renderingField = \cf4 "__renderings"\cf0 ;\par ??\par ??        \cf3 public\cf0  \cf3 static\cf0  \cf5 KeyValuePair\cf0 &lt;\cf3 string\cf0 ,\cf3 string\cf0 &gt; [] GetSubLayoutParameters(\cf3 this\cf0  \cf5 Item\cf0  item, \cf5 Guid\cf0  subLayoutId)\par ??        \{          \par ??         \par ??            \cf3 string\cf0  rend = item.Fields[_renderingField].Value;\par ??            \cf6 //if there are no renderings on the item use the template render\par ??\cf0             \cf3 if\cf0  (rend.IsNullOrEmpty())\par ??            \{\par ??                rend = item.Fields[_renderingField].InheritedValue;\par ??            \}\par ??            \cf5 LayoutDefinition\cf0  layout = \cf5 LayoutDefinition\cf0 .Parse(rend);\par ??            \cf5 DeviceItem\cf0  dev = Sitecore.\cf5 Context\cf0 .Device;\par ??            \cf5 DeviceDefinition\cf0  device;            \par ??\par ??            \cf6 //get the current device\par ??\cf0             device = layout.GetDevice(dev.ID.ToString());\par ??            \cf6 //if the current device has no layout fail back \par ??\cf0             \cf3 if\cf0  (device.Layout == \cf3 null\cf0 )\par ??            \{\par ??                dev = dev.FallbackDevice;\par ??                device = layout.GetDevice(dev.ID.ToString());\par ??            \}\par ??\par ??            \cf6 //get the rendering for the device\par ??\cf0             \cf5 RenderingDefinition\cf0  rendering = device.GetRendering(\cf3 new\cf0  \cf5 ID\cf0 (subLayoutId).ToString());\par ??            \par ??            \cf6 //create a list of key values\par ??\cf0             \cf5 List\cf0 &lt;\cf5 KeyValuePair\cf0 &lt;\cf3 string\cf0 , \cf3 string\cf0 &gt;&gt; parameters = \cf3 new\cf0  \cf5 List\cf0 &lt;\cf5 KeyValuePair\cf0 &lt;\cf3 string\cf0 , \cf3 string\cf0 &gt;&gt;();\par ??            \cf3 string\cf0  [] pairs = rendering.Parameters.Split(\cf4 '&amp;'\cf0 );\par ??           \par ??            \cf3 foreach\cf0 (\cf3 string\cf0  pair \cf3 in\cf0  pairs)\{\par ??                \cf3 if\cf0 (!pair.IsNullOrEmpty())\{\par ??                    \cf3 string\cf0  [] vals = pair.Split(\cf4 '='\cf0 );\par ??                    \cf3 if\cf0 (vals.Count() == 2)\{\par ??                        parameters.Add(\cf3 new\cf0  \cf5 KeyValuePair\cf0 &lt;\cf3 string\cf0 ,\cf3 string\cf0 &gt;(vals[0], vals[1]));\par ??                    \}\par ??                \}\par ??            \}\par ??\par ??            \cf3 return\cf0  parameters.ToArray();               \par ??            \par ??        \}}-->
+<div>
+
+21Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  private static readonly string _renderingField = "__renderings";
+
+22
+
+23Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  public static KeyValuePair&lt;string,string&gt; [] GetSubLayoutParameters(this Item item, Guid subLayoutId)
+
+24Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  {
+
+25
+
+26Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  string rend = item.Fields[_renderingField].Value;
+
+27Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  //if there are no renderings on the item use the template render
+
+28Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  if (rend.IsNullOrEmpty())
+
+29Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  {
+
+30Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  rend = item.Fields[_renderingField].InheritedValue;
+
+31Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+32Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  LayoutDefinition layout = LayoutDefinition.Parse(rend);
+
+33Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  DeviceItem dev = Sitecore.Context.Device;
+
+34Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  DeviceDefinition device;
+
+35
+
+36Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  //get the current device
+
+37Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  device = layout.GetDevice(dev.ID.ToString());
+
+38Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  //if the current device has no layout fail back
+
+39Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  if (device.Layout == null)
+
+40Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  {
+
+41Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  dev = dev.FallbackDevice;
+
+42Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  device = layout.GetDevice(dev.ID.ToString());
+
+43Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+44
+
+45Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  //get the rendering for the device
+
+46Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  RenderingDefinition rendering = device.GetRendering(new ID(subLayoutId).ToString());
+
+47
+
+48Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  //create a list of key values
+
+49Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  List&lt;KeyValuePair&lt;string, string&gt;&gt; parameters = new List&lt;KeyValuePair&lt;string, string&gt;&gt;();
+
+50Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  string [] pairs = rendering.Parameters.Split('&amp;');
+
+51
+
+52Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  foreach(string pair in pairs){
+
+53Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  if(!pair.IsNullOrEmpty()){
+
+54Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  string [] vals = pair.Split('=');
+
+55Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  if(vals.Count() == 2){
+
+56Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  parameters.Add(new KeyValuePair&lt;string,string&gt;(vals[0], vals[1]));
+
+57Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+58Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+59Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+60
+
+61Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  return parameters.ToArray();
+
+62
+
+</div>
+63Ã‚Â Ã‚Â Ã‚Â Ã‚Â  Ã‚Â Ã‚Â Ã‚Â  }
+
+You will notice that I have used a couple of the extension methods from myÃ‚Â <a href="http://www.experimentsincode.com/post/2008/09/24/Useful-Extensions-Methods-Part-1.aspx">Extension Method - Part 1 post</a>. I hope this makes getting parameters a little easier for everyone out there.
+
+Further reading: <a href="http://www.experimentsincode.com/post.aspx?id=772aa5c4-df9f-4228-92c9-b45baff1cfe8">How to find the currently executing sublayout in Sitecore</a>
+
+</div>
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Sitecore Sublayout Parameters by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:26:10 GMT -->
+</html>

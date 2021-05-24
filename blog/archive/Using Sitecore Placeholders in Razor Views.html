@@ -1,0 +1,481 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Using Sitecore Placeholders in Razor Views by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Using Sitecore Placeholders in Razor Views - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Using Sitecore Placeholders in Razor Views
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            25 Sep 2011
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p>At the Sitecore Bristol User Group last week I was chatting to Nick from True Clarity after his excellent presentation. We moved on to the subject of how I was using Razor views in Sitecore with the <a href="../../index-2.html">Glass.Sitecore.Mapper</a> framework; he referred to the Razor views as essentially being leaf nodes of the presentation layer. I hadn't really thought of visualising the presentation layer in Sitecore as  a tree structure but as soon as he said it, it made a lot of sense. This then got me thinking Ã‚Â "why are my Razor views leaf nodes?" can I somehow inject Placeholders into my Razor views? After some hacking and some help from both <a href="http://twitter.com/#!/KevinObee" target="_blank">Kevin Obee</a> and <a href="http://twitter.com/#!/techphoria414">Nick Wesselman</a> on the <a href="http://sdn.sitecore.net/forum//ShowPost.aspx?PostID=40024">SDN Forum</a> I have a solution. I will admit that this is a bit experimental but I have tested the solution with the following:
+<ul>
+	<li>Inserting another Razor view into the Placeholder using the Sitecore Layout Designer</li>
+	<li>Configured Placeholder Settings for the Placeholder in Sitecore</li>
+	<li>Dropping a Razor view and Sub-layout into the Placeholder using the Page Editor</li>
+	<li>Deleting a dropped in Razor view and Sub-layout using the Page Editor</li>
+</ul>
+If you have download the example project I created for the <a href="../../archives/249.html" target="_blank">Glass.Sitecore.MapperÃ‚Â demonstrationÃ‚Â at the Bristol User Group</a> then this will contain the classes need to get you started and you can modify these to get this example working.
+
+The first thing to look at is how a Razor view is constructed, they are similar in setup to the a ASCX page in that they comprise of the Razor template and code-behind class. The code behind might look something like this:
+<pre class="brush:csharp">    public class MainContent : RazorControl&lt;HomePage&gt;
+    {
+        public MainContent()
+        {
+            Placeholders = new[] { "RazorPlaceholder1","RazorPlaceholder2" };
+        }
+        protected override void OnLoad(EventArgs e)
+        {
+            ISitecoreContext context = new SitecoreContext();
+
+            this.Model = context.GetHomeItem&lt;HomePage&gt;();
+            base.OnLoad(e);
+        }
+    }</pre>
+The class inherits from the RazorControl class (which I explain below) and we pass it the type of model we are using in our Razor view. You can see that within the class constructor I define a couple of Razor placeholders keys and assign the to the Placeholders property, again this will be explained later. When the control loads I use the ISitecoreContext to load my model and assign that to the Model property on the base class.
+
+The Razor view looks like this:
+<pre class="brush:xml">@using Glass.Demo.Application.Models.Home
+@inherits Glass.Demo.Application.Web.TemplateBase&lt;HomePage&gt;
+&lt;div class="user_icon"&gt;
+    @Html.RenderImage(Model.MainImage, null)
+&lt;/div&gt;
+
+&lt;div&gt;
+     @RenderHolder("RazorPlaceholder1");
+&lt;/div&gt;
+&lt;div class="welcome_block"&gt;
+    &lt;h1&gt;@(Html.Editable&lt;HomePage&gt;(x=&gt;x.Title, Model))&lt;/h1&gt;
+    @Model.Text
+&lt;/div&gt;
+&lt;div&gt;
+     @RenderHolder("RazorPlaceholder2");
+&lt;/div&gt;</pre>
+Notice that in our view we have the RenderHolder method that takes the key of the Sitecore Placeholder we want to render in this position. This method exists on the TemplateBase class which is explained below. This is how simple it is to define the Sitecore Placeholders you want to use in a Razor view and then define where they should render.
+
+Now to see how this actually works. Lets start by looking at the RazorControl, this is the control that gets created when Sitecore encounters a Razor layout item (see the RazorRenderingType class in the demo project)Ã‚Â :
+<pre class="brush:csharp">    public class RazorControl&lt;T&gt; : WebControl, IRazorControl, global::Sitecore.Layouts.IExpandable
+    {
+
+        public IEnumerable&lt;string&gt; Placeholders
+        {
+            get;
+            set;
+        }
+
+        public string View
+        {
+            get;
+            set;
+        }
+        public string AssemblyName { get; set; }
+
+        public T Model
+        {
+            get;
+            set;
+        }
+
+        public NameValueCollection Form
+        {
+            get
+            {
+                return this.Context.Request.Form;
+            }
+        }
+
+        protected override void DoRender(HtmlTextWriter output)
+        {
+
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(View);
+            TextReader reader = new StringReader(new StreamReader(stream).ReadToEnd());
+            Razor.DefaultTemplateService.Namespaces.Add("Glass.Sitecore.Mapper.FieldTypes");
+
+            try
+            {
+
+                using (new global::Sitecore.SecurityModel.SecurityDisabler())
+                {
+                    var rzControl = this;
+
+                    TemplateModel&lt;T&gt; tModel = new TemplateModel&lt;T&gt;();
+                    tModel.RazorControl = this;
+                    tModel.Model = Model;
+
+                    string content = Razor.Parse&lt;TemplateModel&lt;T&gt;&gt;(reader.ReadToEnd(), tModel);
+
+                    output.Write(content);
+                }
+            }
+            catch (RazorEngine.Templating.TemplateCompilationException ex)
+            {
+                throw new Exception(ex.Errors.First().ErrorText, ex);
+            }
+        }
+
+        public void Expand()
+        {
+            if (Placeholders != null)
+            {
+                foreach (var placeHolderName in Placeholders)
+                {
+                    global::Sitecore.Web.UI.WebControls.Placeholder holder = new global::Sitecore.Web.UI.WebControls.Placeholder();
+                    holder.Key = placeHolderName.ToLower();
+                    this.Controls.Add(holder);
+                }
+            }
+
+            this.Controls.Cast&lt;Control&gt;().Where(x =&gt; x is global::Sitecore.Layouts.IExpandable)
+                .Cast&lt;global::Sitecore.Layouts.IExpandable&gt;().ToList().ForEach(x =&gt; x.Expand());
+        }
+    }</pre>
+The Expand method is probably the most import method here (thanks to Nick Wesselman for the Ã‚Â information on this). This iterates through the list of Placeholders we defined on our sub-class MainContent creating the actual Placeholder controls. It then iterates through all RazorControl child controls and calls their Expand method, this is important, without it the Placeholders that we just created won't have the correct ContextKey and the ContextKey is used by Sitecore to decided where other rendering components should be placed.
+
+Next lets look at the DoRender method, the first few lines simply read the Razor view from the current assembly (all the Razor views are embedded into the actual DLL so there aren't an cshtml files on the server). The next part down is where is starts to get interesting, the RazorControl class has a companion class called TemplateBase, the TemplateBase class is the class that represents the actual cshtml file. The TemplateBase class doesn't know anything about the RazorControl class so we have to somehow pass the RazorControl class and the Model across to the TemplateBase class, we do that using the TemplateModel class:
+<pre class="brush:csharp">    public class TemplateModel&lt;T&gt;
+    {
+        public RazorControl&lt;T&gt; RazorControl
+        {
+            get;
+            set;
+        }
+        public T Model { get; set; }
+    }</pre>
+This class simple allows us to move information in our RazorControl to our Razor view by passing it into the Razor parser as part of the model. Lets see what the TemplateBase class does with this:
+<pre class="brush:csharp">    public class TemplateBase&lt;T&gt;:RazorEngine.Templating.TemplateBase&lt;TemplateModel&lt;T&gt;&gt;
+    {
+        Html _html;
+        public TemplateBase()
+        {
+            _html = new Html(global::Sitecore.Context.Database);
+        }
+
+        public T Model
+        {
+            get
+            {
+                return base.Model.Model;
+            }
+            set
+            {
+                base.Model.Model = value;
+            }
+        }
+
+        public Html Html { get { return _html; } }
+
+        public string RenderHolder(string key)
+        {
+            key = key.ToLower();
+            var placeHolder = base.Model.RazorControl.Controls.Cast&lt;Control&gt;()
+                .Where(x =&gt; x is global::Sitecore.Web.UI.WebControls.Placeholder)
+                .Cast&lt;global::Sitecore.Web.UI.WebControls.Placeholder&gt;()
+                .FirstOrDefault(x =&gt; x.Key == key);
+
+            if (placeHolder == null)
+                return "No placeholder with key: {0}".Formatted(key);
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                placeHolder.RenderControl(new HtmlTextWriter(new StringWriter(sb)));
+                return sb.ToString();
+            }
+        }
+    }</pre>
+If you look back at our MainContent.cshtml file shown above we can see that the Razor view inherits from this class:
+<pre>@using Glass.Demo.Application.Models.Home
+@inherits Glass.Demo.Application.Web.TemplateBase&lt;HomePage&gt;</pre>
+Most of this class is straight forward but the most important method is the RenderHolder method. When you call this method passing in the Placeholder key you want to render it actually goes away and checks the list of Placeholders assigned to the RazorControl. If it finds a Placeholder on the RazorControl that matches the passed in key it then calls the RenderControl method on the Placeholder and returns this to the Razor view.
+
+So now that we have this setup I can start to assign Placeholder Settings to the Placeholders and give my editors all the functionality they would expect using Sublayouts but with a rendering system that is much nicer to work with than ASP.NET WebForms (No more hideous control trees).
+
+Not only is it awesome how much we can do with Razor in Sitecore but it is also awesome that Sitecore is designed in such an extensible way that it allows us to do this.
+
+PS. For those who prefer to use Spark (I have used Spark on a couple of Sitecore projects) then a similar solution should work.
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Using Sitecore Placeholders in Razor Views by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:14 GMT -->
+</html>

@@ -1,0 +1,818 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/TestingPipelines by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../content/css/style.css">
+    <link rel="stylesheet" href="../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../content/site.css">
+
+    <title>Testing Pipelines - Glass</title>
+
+    <link rel="shortcut icon" href="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../index.html">
+
+                            <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+Blog -                         Testing Pipelines
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row padding-bottom-20">
+        <p>
+            <strong>
+                <a href="../blog-2.html">&lt;&lt; Back to Blogs</a>
+            </strong>
+        </p>
+    </div>
+    <div class="row">
+
+
+        
+ 
+
+        
+<div>
+        <p class="lead text-center">The MVP challenge</p>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            13 Nov 2014
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<p>Last week we had an MVP meetup in London for the UK MVP's where we discussed how we normally test our Sitecore solutions. We discussed several different methods of unit testing and integration testing. The last task was to take an existing piece of pipeline code and try to create some tests for it. <br>
+<br>
+This pipeline task was a 404 handler in the HttpBeginRequest pipeline. These aren't normally easy classes to test because they have a parameterless constructor which means we can't use DI and they also work heavily with services that can't be mocked, e.g. Sitecore Database and the HttpContext.<br>
+<br>
+</p>
+<h3>The Challenge</h3>
+So the challenge was how can we alter some existing code to make it more testable? Unfortunately I don't have the original code we used at the MVP meetup so instead I will be using code written by <a href="https://gist.github.com/janhebnes/3962756">Jan Hebnes</a>&nbsp;as a base with a couple of changes. My starting &nbsp;code for the basic pipeline looks like this:
+<pre class="c#">    public class ItemNotFoundResolver : Sitecore.Pipelines.HttpRequest.HttpRequestProcessor
+    {
+        private static string _cached404 = null;
+
+        public override void Process(Sitecore.Pipelines.HttpRequest.HttpRequestArgs args)
+        {
+            Assert.ArgumentNotNull(args, "args");
+
+            if (Sitecore.Context.Item != null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            SiteContext site = Context.Site;
+            if (((site != null) &amp;&amp; !SiteManager.CanEnter(site.Name, Context.User)))
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            PageContext page = Context.Page;
+            Assert.IsNotNull(page, "No page context in processor.");
+            string filePath = page.FilePath;
+            if (filePath.Length &gt; 0)
+            {
+                if (WebUtil.IsExternalUrl(filePath))
+                {
+                    args.Context.Response.Redirect(filePath, true);
+                }
+                else
+                {
+                    args.Context.RewritePath(filePath, args.Context.Request.PathInfo, args.Url.QueryString, false);
+                }
+            }
+            else if (Context.Item == null)
+            {
+                this.HandleItemNotFound(args);
+            }
+        }
+
+        public void HandleItemNotFound(HttpRequestArgs args)
+        {
+            if (args.PermissionDenied)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            if (Context.Database == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            // Find context site root
+            var root = args.GetItem(Context.Site.StartPath);
+            if (root == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            // The 404 item is specified on the root item of the site
+            var field404 = new MultilistField(root.Fields["404"]);
+
+            var pageNotFound = field404.GetItems().FirstOrDefault();
+            if (pageNotFound != null)
+            {
+                Context.Item = pageNotFound;
+            }
+            else
+            {
+                if (_cached404 == null)
+                {
+                    //we use the standard item not found url for a static file
+                    var url = Settings.ItemNotFoundUrl;
+
+                    try
+                    {
+                        var client = new System.Net.WebClient();
+                        _cached404 = client.DownloadString(url);
+                    }
+                    catch
+                    {
+                        _cached404 = null;
+                    }
+                }
+                else
+                {
+                    args.Context.Response.Clear();
+                    args.Context.Response.Write(_cached404);
+                    args.Context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    args.Context.Response.TrySkipIisCustomErrors = true;
+                    args.Context.Response.End();
+
+                    args.AbortPipeline();
+                }
+            }
+        }
+    }
+</pre>
+<p>
+I normally find that it is easiest to start writing tests for existing code by looking at the methods that are deepest in the call stack and then start working back up. These methods normally have the fewest dependencies and allows you to get familiar with what the code base is doing. Therefore I am going to start by looking at the HandleItemNotFound method to see what parts of this method are going to make it difficult to write tests.
+</p>
+<h3>Wrapping the Args</h3>
+<p>
+The first road block is the HttpRequestArgs parameters that are passed into the method, we this problem we have only really two options:
+</p>
+<ol>
+    <li>Add any required information as parameters to method signature.</li>
+    <li>Create a wrapping class that implements and interface and pass this into the method.</li>
+</ol>
+<p>
+The first option is the simplest, however this creates two problem because our code requires method calls which aren't easy to pass in and we also will need to deal with the large number of calls to the Response object. Therefore I am going to go with option number 2. First I create the basic wrapping class and interface:</p>
+<p>
+</p>
+<pre class="csharp">    public interface IHttpRequestArgsWrapper
+    {
+        
+    }
+
+    public class HttpRequestArgsWrapper : IHttpRequestArgsWrapper
+    {
+        
+    }
+</pre>
+<p>
+I can then update the HandleItemNotFound method to take this:
+</p>
+<pre class="csharp">        public void HandleItemNotFound(IHttpRequestArgsWrapper args)
+        {
+</pre>
+<p>
+Now I need to add the properties and methods that the method required to my interface:
+</p>
+<pre class="csharp">    public interface IHttpRequestArgsWrapper
+    {
+        bool PermissionDenied { get; }
+        Item GetItem(string path);
+        void Write404Response(string content);
+        void AbortPipeline();
+    }
+</pre>
+<p>
+Notice that my interface has  only one method for writing the 404 response to the  Response object. It is easier to abstract away the entire code block with a single method rather than deal with each method call one at a time. My concrete implementation looks like this:
+</p>
+<pre class="csharp">    public class HttpRequestArgsWrapper : IHttpRequestArgsWrapper
+    {
+        private readonly HttpRequestArgs _args;
+
+        public HttpRequestArgsWrapper(HttpRequestArgs args)
+        {
+            _args = args;
+        }
+
+        public bool PermissionDenied
+        {
+            get { return _args.PermissionDenied; }
+        }
+
+        public Item GetItem(string path)
+        {
+           return _args.GetItem(path);
+        }
+
+        public void Write404Response(string content)
+        {
+            _args.Context.Response.Clear();
+            _args.Context.Response.Write(content);
+            _args.Context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            _args.Context.Response.TrySkipIisCustomErrors = true;
+            _args.Context.Response.End();
+        }
+
+        public void AbortPipeline()
+        {
+            _args.AbortPipeline();
+        }
+    }
+
+</pre>
+<p>
+And my updated HandleItemNotFound:
+</p>
+<pre class="csharp">        public void HandleItemNotFound(IHttpRequestArgsWrapper args)
+        {
+            if (args.PermissionDenied)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            if (Context.Database == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            // Find context site root
+            var root = args.GetItem(Context.Site.StartPath);
+            if (root == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            // The 404 item is specified on the root item of the site
+            var field404 = new MultilistField(root.Fields["404"]);
+
+            var pageNotFound = field404.GetItems().FirstOrDefault();
+            if (pageNotFound != null)
+            {
+                Context.Item = pageNotFound;
+            }
+            else
+            {
+                if (_cached404 == null)
+                {
+                    //we use the standard item not found url for a static file
+                    var url = Settings.ItemNotFoundUrl;
+
+                    try
+                    {
+                        var client = new System.Net.WebClient();
+                        _cached404 = client.DownloadString(url);
+                    }
+                    catch
+                    {
+                        _cached404 = null;
+                    }
+                }
+                else
+                {
+                    args.Write404Response(_cached404);
+                    args.AbortPipeline();
+                }
+            }
+        }
+    }
+</pre>
+<h3>Poor Mans DI</h3>
+<p>
+I am still left with the problem of the WebClient call which downloads my static content. I need to again abstract this away using an interface and concrete class which look like this:
+</p>
+<pre class="csharp">    public interface IWebClientWrapper
+    {
+        string DownloadString(string url );
+    }
+    public class WebClientWrapper : IWebClientWrapper
+    {
+        public string DownloadString(string url)
+        {
+            var client = new System.Net.WebClient();
+            return client.DownloadString(url);
+        }
+    }
+
+</pre>
+<p>
+So what is the best way of injecting this into my method? I don't think this should be passed in as part of the method call because it isn't data that has come from the calling method therefore I want to define it as a class property. However we can't use DI to inject it, the simplest solution is to use Poor Mans DI and have two constructors:
+</p>
+<pre class="csharp">        public ItemNotFoundResolver():this(new WebClientWrapper())
+        {
+            
+        }
+
+        public ItemNotFoundResolver(IWebClientWrapper webClientWrapper)
+        {
+            _webClientWrapper = webClientWrapper;
+        }
+</pre>
+<p>
+This works because it allows my unit tests to inject a mock object using the second constructor but Sitecore will instantiate the object using the first constructor.  We also need to use the same trick to abstract away the request to the Settings.ItemNotFoundUrl and the Context.Site.StartPath.
+</p>
+<h3>Friendly Items</h3>
+<p>
+The final large hurdle are the calls to get the Sitecore Items:
+</p>
+<pre class="csharp">            var root = args.GetItem(_settingsWrapper.SiteStartPath);
+            if (root == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+            
+            // The 404 item is specified on the root item of the site
+            var field404 = new MultilistField(root.Fields["404"]);
+
+            var pageNotFound = field404.GetItems().FirstOrDefault();
+            if (pageNotFound != null)
+            {
+                Context.Item = pageNotFound;
+            }
+</pre>
+<p>
+To remove these calls I am going to use Glass, my models will look like this:
+</p>
+<pre class="csharp">    public class Root
+    {
+        [SitecoreField("404")]
+        public virtual Page Item404 { get; set; }
+    }
+
+    public class Page
+    {
+        [SitecoreItem]
+        public virtual Item Item { get; set; }
+    }
+
+</pre>
+<p>
+The final code for the ItemNotFoundResolver class looks like this:
+</p>
+<pre class="csharp">        public class ItemNotFoundResolver : Sitecore.Pipelines.HttpRequest.HttpRequestProcessor
+    {
+        private static string _cached404 = null;
+        private readonly IWebClientWrapper _webClientWrapper;
+        private readonly ISettingsWrapper _settingsWrapper;
+        private readonly ISitecoreContext _context;
+
+        public ItemNotFoundResolver():this(new WebClientWrapper(), new SettingsWrapper(), new SitecoreContext())
+        {
+            
+        }
+
+        public ItemNotFoundResolver(IWebClientWrapper webClientWrapper, ISettingsWrapper settingsWrapper, ISitecoreContext context)
+        {
+            _webClientWrapper = webClientWrapper;
+            _settingsWrapper = settingsWrapper;
+            _context = context;
+        }
+
+        public override void Process(Sitecore.Pipelines.HttpRequest.HttpRequestArgs args)
+        {
+            Assert.ArgumentNotNull(args, "args");
+
+            if (Sitecore.Context.Item != null)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            SiteContext site = Context.Site;
+            if (((site != null) &amp;&amp; !SiteManager.CanEnter(site.Name, Context.User)))
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            PageContext page = Context.Page;
+            Assert.IsNotNull(page, "No page context in processor.");
+            string filePath = page.FilePath;
+            if (filePath.Length &gt; 0)
+            {
+                if (WebUtil.IsExternalUrl(filePath))
+                {
+                    args.Context.Response.Redirect(filePath, true);
+                }
+                else
+                {
+                    args.Context.RewritePath(filePath, args.Context.Request.PathInfo, args.Url.QueryString, false);
+                }
+            }
+            else if (Context.Item == null)
+            {
+                this.HandleItemNotFound(new HttpRequestArgsWrapper(args));
+            }
+        }
+
+        public void HandleItemNotFound(IHttpRequestArgsWrapper args)
+        {
+            if (args.PermissionDenied)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            if (!_settingsWrapper.DatabaseExists)
+            {
+                // Fall through to default handler
+                return;
+            }
+
+            // Find context site root
+            var root = _context.GetItem<root>(_settingsWrapper.SiteStartPath);
+            if (root == null)
+            {
+                // Fall through to default handler
+                return;
+            }
+            
+            // The 404 item is specified on the root item of the site
+            if (root.Item404 != null)
+            {
+                _settingsWrapper.SetContextItem(root.Item404);
+            }
+            else
+            {
+                if (_cached404 == null)
+                {
+                    //we use the standard item not found url for a static file
+                    var url = _settingsWrapper.ItemNotFoundUrl;
+
+                    try
+                    {
+                        _cached404 = _webClientWrapper.DownloadString(url);
+                    }
+                    catch
+                    {
+                        _cached404 = null;
+                    }
+                }
+                else
+                {
+                    args.Write404Response(_cached404);
+                    args.AbortPipeline();
+                }
+            }
+        }
+    }
+</root></pre>
+<h3>The Test</h3>
+<p>
+With all these changes made we can now write our first unit test to see if our code does what we expect it to:
+</p>
+<pre class="csharp">        [Test]
+        public void HandleItemNotFound_Permission_Denied()
+        {
+            //Assert
+            var client = Substitute.For&lt;IWebClientWrapper&gt;();
+            var settings = Substitute.For&lt;ISettingsWrapper&gt;();
+            var context = Substitute.For&lt;ISitecoreContext&gt;();
+            var args = Substitute.For&lt;IHttpRequestArgsWrapper&gt;();
+
+            settings.DatabaseExists.Returns(true);
+
+            var root = new Root();
+            root.Item404 = new Page();
+
+            settings.SiteStartPath.Returns("/sitecore/content/test");
+            context.GetItem&lt;Root&gt;("/sitecore/content/test").Returns(root);
+
+            var resolver = new ItemNotFoundResolver(client, settings, context);
+            
+            //Act
+            resolver.HandleItemNotFound(args);
+
+            //Assert
+            settings.Received(1).SetContextItem(root.Item404);
+        }
+</pre>
+<p>
+With our abstractions we are able to mock all the interactions that our code would normally do and create a full set of unit tests for this pipeline process. I would not go away and write a full set of tests that looks at all the different routes through the code and verifies them all.
+</p>
+<h3>Conclusion</h3>
+In this post I have managed to make the HandleItemNotFound method testable using a few simple guidelines:
+<ul>
+    <li>Start with a very small method that doesn't call any other methods in your code and then work back up the call stack.</li>
+    <li>When you create your abstractions try to think about how you might be able to reuse the abstraction in other classes.</li>
+    <li>Create abstractions that have related functions and not just one large abstraction class, i.e. an abstraction for WebClient, Settings, Context.</li>
+    <li>The methods in your abstractions should be as small as possible, do not put any business logic in your abstractions because you won't be able to test it.</li>
+    <li>Use Poor Mans DI in situations where you can't use a DI container.</li>
+</ul>
+<p>
+So we can see here how we can use make event the most difficult of classes testable it just involves a little effort. If you have any comments please leave them below. You can also signup to receive updates about Glass using the signup form <a href="../Archive/Mapper.html"></a><a href="../Signup.html">here</a>&nbsp;or if you like us to help you learn more about unit testing in Sitecore then contact our consultancy at <a href="mailto:hello@glass.lu">hello@glass.lu</a>.</p>
+
+    
+
+
+    </div>
+
+    <div class="row">
+        <div class="row">
+    <div class="devider devider-dashed margin-top-30 margin-bottom-30"></div>
+
+    <div class="col-md-8">
+
+        <div class="headline">
+            <h2 class="">Glass needs your support!</h2>
+        </div>
+
+        <p>
+            Glass.Mappper.Sc is supported by the generous donations of the Glass.Mapper.Sc community! Their donations help fund the time, effort and hosting for the project.
+        </p>
+        <p>
+            These supporters are <strong>AMAZING</strong> and a huge thank you to all of you. You can find our list of supporters on the <a href="../rockstars-2.html">Rockstars page</a>.
+        </p>
+        <p>
+            If <strong>you</strong> use Glass.Mapper.Sc and find it useful please consider supporting the project. Not only will you help the project but you could also get a discount on the
+            Glass.Mapper.Sc training and join the Rockstars page.
+        </p>
+
+        <p class="text-center">
+            <a href="https://www.patreon.com/glassmappersc" class="btn-u btn-u-lg" style="margin: 10px;">
+                <em class=" fa fa-star icon-bg-darker"></em>
+                Become a Rockstar
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="../Images/Blog/WeNeedYou.jpg" style="max-height:300px"/>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../index.html" class="">
+                                    <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/TestingPipelines by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:28 GMT -->
+</html>

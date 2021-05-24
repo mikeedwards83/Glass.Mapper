@@ -1,0 +1,140 @@
+/*Contacts Section
+------------------------------------*/
+.contacts-section {
+  color: #fff;
+  position: relative;
+  background: #333 url(../../img/bg/17.jpg) center fixed;
+}
+
+.contacts-section:after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; 
+  content: " ";
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+}
+
+.contacts-section:before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; 
+  content: " ";
+  position: absolute;
+  background: url(../../img/patterns/gridtile.png) repeat;
+}
+
+/*Contacts Title*/
+.contacts-section .title-v1 p,
+.contacts-section .title-v1 h2 {
+  color: #fff;
+}
+
+/*Contacts Content*/
+.contacts-in {
+  z-index: 1;
+  color: #fff;
+  position: relative;
+}
+
+.contacts-in h3 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.contacts-in ul {
+  margin-top: 20px;
+}
+
+.contacts-in li {
+  color: #fff;
+  margin: 15px 0;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.contacts-in li a {
+  color: #fff;
+}
+
+.contacts-in li i {
+  width: 35px;
+  padding: 8px;
+  font-size: 18px;
+  margin-right: 5px;
+  text-align: center;
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+}
+
+.contacts-in form label {
+  font-size: 14px; 
+  font-weight: 200;
+}
+
+.contacts-in form .form-control {
+  color: #fff;
+  box-shadow: none;
+  border-color: #eee;
+  background: rgba(0,0,0,0.2);
+}
+
+.contacts-in form .form-control:focus {
+  border-color: #bbb;
+  background: rgba(0,0,0,0.6);
+}
+
+.contacts-in form .btn-u.btn-brd.btn-u-dark {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(0,0,0,0.2);
+}
+
+.contacts-in form .btn-u.btn-brd.btn-u-dark:hover {
+  border-color: #bbb;
+  background: rgba(0,0,0,0.6) !important;
+}
+
+/*Copyright Section*/
+.copyright-section {
+  z-index: 1;
+  background: #fff;
+  position: relative;
+  text-align: center;
+  padding: 25px 0 20px;
+}
+
+.copyright-section p {
+  font-size: 14px;
+}
+
+.copyright-section p a {
+  color: #555;
+  text-decoration: underline;
+}
+
+.copyright-section p a:hover {
+  text-decoration: none;
+}
+
+.copyright-section ul.social-icons li {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.copyright-section i.back-to-top {
+  left: 50%;
+  top: -35px;
+  color: #555;
+  font-size: 20px;
+  background: #fff;
+  padding: 8px 10px;
+  margin-left: -15px;
+  position: absolute;
+}
+
+.copyright-section i.back-to-top:hover {
+  color: #72c02c;
+}

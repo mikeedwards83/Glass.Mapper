@@ -1,0 +1,536 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/CustomDataViews by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../content/css/style.css">
+    <link rel="stylesheet" href="../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../content/site.css">
+
+    <title>Custom Sitecore DataViews - Glass</title>
+
+    <link rel="shortcut icon" href="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../index.html">
+
+                            <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+Blog -                         Custom Sitecore DataViews
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row padding-bottom-20">
+        <p>
+            <strong>
+                <a href="../blog-2.html">&lt;&lt; Back to Blogs</a>
+            </strong>
+        </p>
+    </div>
+    <div class="row">
+
+
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            16 Jul 2015
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <img src="../-/media/Images/Blogs/NeverPublishc174c174.png?h=52&amp;w=200&amp;la=en&amp;hash=38343014815D6F4D1E9C7A68529211D3753C211E" class="pull-right img-responsive img-bordered margin-bottom-10 margin-left-10" alt="">
+    
+
+
+
+
+<p>If you have ever used Sitecore buckets you have probably wondered how it hides items in buckets from the Content Tree. In this blog post I will show you how you can make a similar feature in your solution.</p>
+<p>The aim of this solution will be to hide items that have been marked as never publish from the content tree and to indicate to the user that these items have been hidden as shown in the image below:</p>
+<p><img alt="" src="../-/media/Images/Blogs/NeverPublish32253225.png?h=78&amp;w=299&amp;la=en" style="height: 78px; width: 299px;"></p>
+<p>I will be using Sitecore 8 Update 4 for this demo.</p>
+<h3>The DataView</h3>
+<p>First thing to know is that the rendering of items in the Content Tree is controlled by a <strong>DataView</strong>&nbsp;and that for each<strong>&nbsp;</strong>Content Tree you can only have a single <strong>DataView,</strong>&nbsp;therefore we need to inherit the <strong>Sitecore.Buckets.Forms.</strong><strong>BasketDataView </strong>to avoid breaking the existing bucket features<strong>:&nbsp;</strong></p>
+<pre class="csharp">public class NeverPublishDataView : BucketDataView
+{
+
+}
+</pre>
+<p>
+This means that if you want to filter using many different conditions and keep the logic separate then you need to make a chain of inherited DataViews.
+</p>
+<p>
+Next we need to create some method of telling our DataView if it should display the Never Publish items or not. We will use the Sitecore registry to maintain this for us:
+</p>
+<pre class="csharp">public class NeverPublishDataView : BucketDataView
+{
+        public static bool ShowNeverPublishItems
+        {
+            get { return Registry.GetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", false); }
+            set { Registry.SetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", value); }
+        }
+}
+</pre>
+<p>
+Notice how we can set these registry values per a user, this pretty cool.</p>
+<p>
+Next we need a method that will create the temporary item that gets injected into the Content Tree to inform the user that items have been hidden, this is the item that says "There are hidden never publish items" in the above image:</p>
+<pre class="csharp">public class NeverPublishDataView : BucketDataView
+{
+        public static bool ShowNeverPublishItems
+        {
+            get { return Registry.GetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", false); }
+            set { Registry.SetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", value); }
+        }
+
+        private Item GetTempItem(Item parent)
+        {
+            ID newID = ID.NewID;
+            ItemDefinition definition = new ItemDefinition(newID, "There are hidden never publish items.",
+                TemplateIDs.Folder, ID.Null);
+            FieldList list2 = new FieldList();
+            list2.Add(FieldIDs.DisplayName, Translate.Text("There are hidden never publish items."));
+            list2.Add(FieldIDs.Icon, Images.GetThemedImageSource("Network/32x32/earth_delete.png"));
+            list2.Add(FieldIDs.UIStaticItem, "1");
+            FieldList fields = list2;
+            return new Item(newID, new ItemData(definition, Language.Invariant, Version.Latest, fields), parent.Database)
+            {
+                RuntimeSettings = {Temporary = true}
+            };
+        }
+}
+</pre>
+<p>
+Finally we need to bring these two things together, to do this we override the <strong>GetChildItems</strong> method:
+</p>
+<pre class="csharp">public class NeverPublishDataView : BucketDataView
+{
+        public static bool ShowNeverPublishItems
+        {
+            get { return Registry.GetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", false); }
+            set { Registry.SetBool("/Current_User/UserOptions.View.ShowNeverPublishItems", value); }
+        }
+
+        private Item GetTempItem(Item parent)
+        {
+            ID newID = ID.NewID;
+            ItemDefinition definition = new ItemDefinition(newID, "There are hidden never publish items.",
+                TemplateIDs.Folder, ID.Null);
+            FieldList list2 = new FieldList();
+            list2.Add(FieldIDs.DisplayName, Translate.Text("There are hidden never publish items."));
+            list2.Add(FieldIDs.Icon, Images.GetThemedImageSource("Network/32x32/earth_delete.png"));
+            list2.Add(FieldIDs.UIStaticItem, "1");
+            FieldList fields = list2;
+            return new Item(newID, new ItemData(definition, Language.Invariant, Version.Latest, fields), parent.Database)
+            {
+                RuntimeSettings = {Temporary = true}
+            };
+        }
+
+        protected override void GetChildItems(ItemCollection items, Item item)
+        {
+            base.GetChildItems(items, item);
+
+            var flag = false;
+
+            for (int i = items.Count - 1; i &gt;= 0; i--)
+            {
+                // add your condition logic here
+                if (items[i].Publishing.NeverPublish &amp;&amp; !ShowNeverPublishItems)
+                {
+                    flag = true;
+                    items.Remove(i);
+                }
+            }
+           
+            //if we have removed any items then add the temporary item
+            if (flag)
+            {
+                var tempItem = GetTempItem(item);
+                items.Insert(0, tempItem);
+            }
+        }
+}
+</pre>
+<p>
+This method is very straight forward, we just loop through the list of child items and any that have the "Never Publish" flag we remove from the list. If we remove an item we then inject the temporary item. This logic could be altered to fit almost any requirements. In previous projects I have used it to hide redirect items and data source items for components that were in the main Content Tree.
+</p>
+<p>
+The Data View is now complete, now to allow the user to toggle the button.
+</p>
+<h3>The Button</h3>
+<p>
+First start by creating a&nbsp;<strong>Small Button</strong> item at <strong>/sitecore/content/Applications/Content Editor/Ribbons/Chunks/Publish/Show Never Publish</strong> in the <strong>Core</strong> database.
+</p>
+<p>Set the <strong>Click</strong> field to <strong>contenteditor:neverPublish </strong>and fill in the <strong>Header, Icon </strong>and <strong>&nbsp;Tooltip </strong>fields.</p>
+<p>You should now see a <strong>Show Never Publish </strong>button in your <strong>Publish</strong>&nbsp;tab:<br>
+<br>
+</p>
+<p><img alt="" height="119" width="424" src="../-/media/Images/Blogs/NeverPublishButton5a3b5a3b.png?h=119&amp;w=424&amp;la=en" style="height: 119px; width: 424px;"></p>
+<p>Now to put some code behind it:</p>
+<pre class="csharp">    [Serializable]
+    public class ToggleNeverPublishView : Command
+    {
+        public override void Execute(CommandContext context)
+        {
+            bool flag = !NeverPublishDataView.ShowNeverPublishItems;
+            NeverPublishDataView.ShowNeverPublishItems = flag;
+
+            Item obj = context.Items[0];
+            if (obj != null &amp;&amp; flag)
+            {
+                UrlString urlString = new UrlString(WebUtil.GetRawUrl());
+                obj.Uri.AddToUrlString(urlString);
+                urlString["pa" + WebUtil.GetQueryString("pa", "0")] = obj.Uri.ToString();
+                urlString["ras"] = "PublishStrip";
+                SheerResponse.SetLocation(urlString.ToString());
+            }
+            else
+                SheerResponse.SetLocation(string.Empty);
+        }
+
+        public override CommandState QueryState(CommandContext context)
+        {
+            Assert.IsNotNull((object) context, "context is null");
+            return !NeverPublishDataView.ShowNeverPublishItems ? CommandState.Enabled : CommandState.Down;
+        }
+    }
+</pre>
+<p>
+Notice that this code simply toggles the <strong>ShowNeverPublishItems</strong> value. The second part also causes the Content Editor to refresh after button as been clicked.
+</p>
+<h3>Config</h3>
+<p>
+Finally we just need to update the Sitecore config to use our new DataView and Command:
+</p>
+<p>
+</p>
+<pre class="xml">&lt;configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:set="http://www.sitecore.net/xmlconfig/set/"&gt;
+  &lt;sitecore&gt;
+    &lt;commands&gt;
+      &lt;command name="contenteditor:neverPublished" type="Sc8.ToggleNeverPublishView, Sc8"/&gt;
+    &lt;/commands&gt;
+    &lt;dataviews&gt;
+      &lt;dataview name="Master" &gt;
+        &lt;patch:attribute name="assembly"&gt;Sc8&lt;/patch:attribute&gt;
+        &lt;patch:attribute name="type"&gt;Sc8.NeverPublishDataView&lt;/patch:attribute&gt;
+      &lt;/dataview&gt;
+    &lt;/dataviews&gt;
+  &lt;/sitecore&gt;
+&lt;/configuration&gt;
+</pre>
+<h3>Testing</h3>
+<p>
+If we build and deploy everything to out Sitecore solution we should now be able to toggle Never Publish items in our content tree.
+</p>
+<p>
+With the button pressed we can see everything (Item 2 is set to Never Publish):
+</p>
+<p><img alt="" height="265" width="530" src="../-/media/Images/Blogs/NeverPublishOff65546554.png?h=265&amp;w=530&amp;la=en" style="height: 265px; width: 530px;"></p>
+<p>If we toggle Show Never Published off then Item 2 is hidden and we get a prompt that there are hidden items:</p>
+<p><img alt="" height="284" width="544" src="../-/media/Images/Blogs/NeverPublishOn50e850e8.png?h=284&amp;w=544&amp;la=en" style="height: 284px; width: 544px;"></p>
+<p>This gives us a really easy and powerful way of controlling the items that the content editor sees. This logic could be much more complex to meet very complex business rules.</p>
+<p>One thing to remember is that this code is called when rendering any item in the content tree, if you make these rules too complex then you may cause a performance issue.</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p>
+</p>
+
+    
+
+
+    </div>
+
+    <div class="row">
+        <div class="row">
+    <div class="devider devider-dashed margin-top-30 margin-bottom-30"></div>
+
+    <div class="col-md-8">
+
+        <div class="headline">
+            <h2 class="">Glass needs your support!</h2>
+        </div>
+
+        <p>
+            Glass.Mappper.Sc is supported by the generous donations of the Glass.Mapper.Sc community! Their donations help fund the time, effort and hosting for the project.
+        </p>
+        <p>
+            These supporters are <strong>AMAZING</strong> and a huge thank you to all of you. You can find our list of supporters on the <a href="../rockstars-2.html">Rockstars page</a>.
+        </p>
+        <p>
+            If <strong>you</strong> use Glass.Mapper.Sc and find it useful please consider supporting the project. Not only will you help the project but you could also get a discount on the
+            Glass.Mapper.Sc training and join the Rockstars page.
+        </p>
+
+        <p class="text-center">
+            <a href="https://www.patreon.com/glassmappersc" class="btn-u btn-u-lg" style="margin: 10px;">
+                <em class=" fa fa-star icon-bg-darker"></em>
+                Become a Rockstar
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="../Images/Blog/WeNeedYou.jpg" style="max-height:300px"/>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../index.html" class="">
+                                    <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/CustomDataViews by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:19 GMT -->
+</html>

@@ -8,7 +8,7 @@
 <!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
 <!-- Added by HTTrack -->
 
-<!-- Mirrored from glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:16:57 GMT -->
+<!-- Mirrored from glass.lu/Mapper by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:20:24 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="Content/Site-Lessae52ae52.css?v=5" />
     <link rel="stylesheet" href="content/site.css">
 
-    <title>Home Page - Glass</title>
+    <title>Glass.Mapper.Sc - Glass</title>
 
     <link rel="shortcut icon" href="-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
     <!-- JS Global Compulsory -->
@@ -104,233 +104,279 @@
             <!-- End Navbar -->
         </div>
 
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Glass.Mapper.Sc
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
 
         
 
 
+<div class="container content">
+    <div class="row">
+        <div class="col-md-3">
+
+
+    <ul class="list-group sidebar-nav-v1" id="sidebar-nav">
+        <li class="list-group-item list-toggle active">
+
+            <a href="Mapper.html" class="collapsed">
+                <i class="fa "></i>
+                Glass.Mapper.Sc
+            </a>
+            <ul id="collapse-typography" class="sub-pages">
+                <li>
+                    <a href="Mapper/GettingStarted.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Getting Started
+
+                    </a>
+                </li>
+                <li>
+                    <a href="Training.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Training
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/CompatibilityChart.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Download
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/Contributing.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Contributing
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/Community.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Community
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/CompatibilityChart.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Compatibility Chart
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/Releases.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Releases
+                    </a>
+                </li>
+                <li>
+                    <a href="Mapper/Documentation.html">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        Documentation
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="thumbnails thumbnail-style ">
+
+        <img src="-/media/Images/Tiles/RDNS_Logo_WithText.png" style="width: 100%" class="img-responsive">
+
+        <div class="caption">
+            <hr style="margin: 5px 10px;">
+
+
+            <h4>
+                Glass.Mapper is supported by Refract DNS.
+            </h4>
+            <p>
+
+            </p>
+            <p>
+                <a class="btn-u btn-u-sm" href="http://bit.ly/2RGdyRj">Find out more &gt; &gt;</a>
+            </p>
+
+        </div>
+    </div>
+</div>
+        
+
+
+<div class="col-md-9">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>
+                <p class="lead text-center">The easiest way to map Sitecore data to code.</p>
+
+            </div>
+            <p>
+                Glass.Mapper.Sc allows you to move your data from Sitecore and into your code seamlessly using strongly typed objects.<br>
+                <br>
+                The framework allows you to map data on to c# classes and interfaces without any additional mark-up. As the data is mapped to your target objects it is converted to the target type. Take a look at this simple example:
+            </p>
+<pre class="prettyprint">    public class Demo
+    {
+        public virtual Guid Id { get; set; }
+
+        public virtual string Title { get; set; }
+
+        public virtual DateTime Date { get; set; }
+
+        public virtual string Url { get; set; }
+    }
+    
+    public class DemoController : Controller {
+    
+       public ActionResult Index(){
+          
+          var mvcContext = new MvcContext();
+          var model = mvcContext.GetCurrentItem&lt;Demo&gt;();
+          
+          var url = model.Url;
+          
+          return View(model);
+       }
+       
+    }
+</pre>
+            <p>&nbsp;To find out more about how to use Glass.Mapper.Sc view the free lectures from our <a href="Training.html">Training Course</a>.</p>
 
 
 
-<!--=== Slider ===-->
-<div class="large-text">
-    <div class="slider-inner">
-        <div id="da-slider" class="da-slider" style="background: url(%27/-/media/Images/Common/Web_Image_Resized.jpg); height:300px; background-repeat:no-repeat;">
-            <div class="da-slide">
-                <a href="#">
-                    <h2 class="maintitle">
-                        Glass
-                    </h2>
-                    <p  style="top:150px">
-                        Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.
-                    </p>
-                    <div class="da-img" style="top:0px">
-                        <img src="-/media/Images/Common/Horizon-Bordered-BlazeOrange-250b3fbb3fb.png?h=250&amp;w=250&amp;la=en&amp;hash=EE06CAB08F72FA2AFE420EBB41BC60015BC139A4" alt="" />
-                    </div>
-                </a>
+            <div class="row">
+                <div class="headline text-center">
+                    <h3></h3>
+                </div>
+                <div class="col-sm-6 content-boxes-v3 sm-margin-bottom-30">
 
+                </div>
+                <div class="col-sm-6 content-boxes-v3">
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="row">
+    <div class="headline text-center">
+        <h2>Glass.Mapper Features</h2>
+    </div>
+    <div class="col-sm-6 content-boxes-v3 content-boxes-v3-right sm-margin-bottom-30">
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa fa-graduation-cap icon-bg-darker"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Make your code unit testable</h2>
+                <p>
+                    Use your own models and Glass interfaced services to make your solutions more testable and resilient.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-retweet icon-bg-u"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Map to native .Net types</h2>
+                <p>
+                    Map directly to and from standard .Net types such as string, int and float, IEnumerable and your own types!
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-users icon-bg-darker"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Large Community </h2>
+                <p>
+                    Glass.Mapper has a large community of enthusiastic developers who contribute ideas and support each other.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-random icon-bg-u"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Customise using Pipelines</h2>
+                <p>
+                    Use Pipelines to customise how Glass.Mapper maps your data to your models. Giving you full flexibility in your solution.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa fa-thumbs-up icon-bg-darker"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Supports an amazing CMS</h2>
+                <p>
+                    Glass.Mapper is designed and optimised for Sitecore, helping you deliver bigger and better solutions.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6 content-boxes-v3">
+
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-code icon-bg-u"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Use Plain Old C# Objects</h2>
+                <p>
+                    Keep your models simple, clean and easy to read by making use of Plain Old C# objects.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-cogs icon-bg-darker"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Code Gen or No Code Gen</h2>
+                <p>
+                    Generate your models automatically using tools like TDS or write them by hand because they are so simple.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-clock-o icon-bg-u"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Mature Project</h2>
+                <p>
+                    Glass.Mapper is a mature project first released in 2013 and with nearly 1,000,000 downloads.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-check-square-o icon-bg-darker"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Tested to ensure Quality</h2>
+                <p>
+                    Glass.Mapper has over 750 unit tests to ensure the quality and stability of the solution.
+                </p>
+            </div>
+        </div>
+        <div class="margin-bottom-30">
+            <i class="icon-custom icon-sm rounded-x icon-line fa  fa-cubes icon-bg-u"></i>
+            <div class="content-boxes-in-v3">
+                <h2 class="heading-sm">Fully featured ORM</h2>
+                <p>
+                    A fully featured ORM that allows you to read and write data to your preferred CMS.
+                </p>
             </div>
         </div>
     </div>
-    <!--/slider-->
-    <!--=== End Slider ===-->
-
-    <section class="g-py-100">
-        <div class="container">
-            <div class="row margin-top-20">
-                <div class="col-lg-12 text-center">
-                    <h2>How can we help?</h2>
-                </div>
-            </div>
-            <div class="row margin-top-20">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-4 padding-side-30">
-                    <!-- Icon Blocks -->
-                    <div class="text-center">
-                        <a href="Training.html" class="no-decoration margin-bottom-10">
-                            <i class="icon-large rounded-x icon-line icon-with-hover fa  fa-graduation-cap icon-bg-darker "></i>
-                        </a>
-                        <a href="Training.html">
-                            <h3>LEARN</h3>
-                        </a>
-
-                        <p class="mb-0">
-                            Learn how to build Sitecore solutions using the ultimate ORM for Sitecore!
-                        </p>
-                    </div>
-                    <p class="text-center margin-top-20">
-                        <a class="btn-u btn-u-lg" href="Training.html">Start Learning!</a>
-                    </p>
-                    <!-- End Icon Blocks -->
-                </div>
-
-                <div class="col-lg-4 padding-side-30">
-                    <!-- Icon Blocks -->
-                    <div class="text-center">
-                        <a href="Support.html" class="no-decoration margin-bottom-10">
-
-                            <i class="icon-large rounded-x icon-line icon-line icon-with-hover fa  fa-users icon-bg-u "></i>
-                        </a>
-                        <a href="Support.html">
-                            <h3>SUPPORT</h3>
-                        </a>
-
-                        <p class="mb-0">
-                            Do you have a problem? Do you need a second pair of eyes?
-                            See how we can help.
-                        </p>
-                    </div>
-                    <p class="text-center margin-top-20">
-                        <a class="btn-orange btn-u   btn-u-lg" href="Support.html">Get Help!</a>
-                    </p>
-                    <!-- End Icon Blocks -->
-                </div>
-                
-            </div>
+</div>
         </div>
-        <div class="devider devider-dashed margin-top-20"></div>
-    </section>
-
-
-    <section class="g-py-100">        
-        <div class="container margin-top-20">
-            <div class="row">
-
-                <div class="col-md-4 text-center order-md-2">
-                    <h2>Community Supporters</h2>
-                    <div class="row">
-                        <div class="col-md-12 margin-top-20 ">
-                            <p class="text-justify">
-                                Glass.Mapper.Sc is made possible by the generous donations made by the community! Without the communities support this project would not be possible.
-                            </p>
-                            <p>
-                                A massive <strong>THANK YOU</strong> to everyone who contributes to the project.
-                            </p>
-                            <a href="Rockstars.html" class="btn-u  margin-top-20 ">
-                                <i class="fa fa-thumbs-up"></i>
-                                Start supporting today!
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center order-md-1">
-                    <a href="https://www.konabos.com/" target="_blank">
-                        <img src="-/media/logo_konabos_desktop31873187.png?db=master&amp;la=en&amp;vs=1&amp;ts=20181122T1528115102" style="max-height: 250px" />
-                    </a>
-                </div>
-                <div class="col-md-4 text-center order-md-3">
-                    <a href="https://www.swissworx.com/" target="_blank">
-                        <img src="Images/swissworx.png" style="max-height: 250px" />
-                    </a>
-                </div>
-            </div>
-
-        </div>
-        <div class="devider devider-dashed margin-top-30"></div>
-    </section>
-
-
-    <section class="g-py-100">
-        <div class="container margin-top-30">
-            <div class="row">
-                <div class="col-md-4">
-                    <div id="testimonials-2" class=" testimonials testimonials-v1">
-                        <div class="item ">
-                            <p class="rounded">
-                                I've used Glass in nearly every project in the past three years because it increases productivity, readability and maintainability of your Sitecore solution. Nothing else even comes close to Glass' potential.
-                            </p>
-                            <div class="testimonial-info">
-                                <img src="-/media/Images/Testimonials/Ruud8ce98ce9.jpg?h=191&amp;w=191&amp;la=en&amp;hash=F39EA4A39F5014EBAFFD03EEEC300E3F38107C31" class="rounded-x" alt="" />
-                                <span class="testimonial-author">
-                                    Ruud van Falier
-                                    <em>
-                                        Sitecore MVP
-                                    </em>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div id="testimonials-2" class=" testimonials testimonials-v1">
-                        <div class="item ">
-                            <p class="rounded">
-                                Glass Mapper is a must-have for every Sitecore solution. It's easy to implement, intuitive to use, and flexible to extend. Using Glass we are able to write clean, testable code efficiently and effectively.<br /><br />
-                            </p>
-                            <div class="testimonial-info">
-                                <img src="-/media/Images/Testimonials/SeanH19031903.png?h=117&amp;w=117&amp;la=en&amp;hash=20D2A3A6359533B5C3557E9626047335FA684F0E" class="rounded-x" alt="Sean Holmesby" />
-                                <span class="testimonial-author">
-                                    Sean Holmesby
-                                    <em>
-                                        Sitecore MVP
-                                    </em>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div id="testimonials-2" class=" testimonials testimonials-v1">
-                        <div class="item ">
-                            <p class="rounded">
-                                The only true ORM for Sitecore - cleanly decouples the Sitecore API from your code by hydrating simple POCOs thus making your code unit testable. No other frameworks which purport to be ORMs can offer this.
-                            </p>
-                            <div class="testimonial-info">
-                                <img src="-/media/Images/Testimonials/Michael-Reynolds_res6cd36cd3.jpg?h=150&amp;w=150&amp;la=en&amp;hash=F9D56DB2EB00A6CE8F07F323D768AE67F0F96E00" class="rounded-x" alt="Michael Reynolds" />
-                                <span class="testimonial-author">
-                                    Mike Reynolds
-                                    <em>
-                                        Sitecore MVP
-                                    </em>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="devider devider-dashed margin-top-30"></div>
-    </section>
-
-    <section class="g-py-100 margin-bottom-20">
-        <div class="container margin-top-20">
-            <div class="row">
-
-                <div class="col-md-8">
-                    <h2>Download Glass.Mapper now!</h2>
-                    <div class="row">
-                        <div class="col-md-12 margin-top-20 ">
-                            <p>
-                                Glass.Mapper.Sc is the only ORM you will need to improve your Sitecore development. It only takes a few minutes to setup and then you are ready to start using classes and interfaces in your project.
-                            </p>
-
-
-                            <a href="Mapper/Download.html" class="btn-u btn-u-lg btn-orange  margin-top-20" title="Download Now!">
-                                <i class="fa fa-cloud-download"></i>
-                                Download Now!
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <a href="Mapper/Download.html" target="_blank">
-                        <img src="Content/images/Horizon-Azure-250.png" class="bg-rounded-light rounded-x"  style="height:250px; width:250px"/>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-        
-    </section>
-
-
-
-
-
-   
+    </div>
 </div>
 
+    </div>
+</div>
 
         <div class="footer-v1">
             <div class="footer">
@@ -459,5 +505,5 @@
 </body>
 
 
-<!-- Mirrored from glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:17:12 GMT -->
+<!-- Mirrored from glass.lu/Mapper by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:20:26 GMT -->
 </html>

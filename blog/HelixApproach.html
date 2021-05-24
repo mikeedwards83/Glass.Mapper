@@ -1,0 +1,395 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/HelixApproach by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:21:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../content/css/style.css">
+    <link rel="stylesheet" href="../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../content/site.css">
+
+    <title>Working with Helix - Glass</title>
+
+    <link rel="shortcut icon" href="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../index.html">
+
+                            <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+Blog -                         Working with Helix
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row padding-bottom-20">
+        <p>
+            <strong>
+                <a href="../blog-2.html">&lt;&lt; Back to Blogs</a>
+            </strong>
+        </p>
+    </div>
+    <div class="row">
+
+
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            10 Oct 2018
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<p>In this blog post I am going to look  you can work with Glass.Mapper.Sc in a Helix styled solution, specifically I will look at how to load configuration in a Helix solution</p>
+<p>It is important to remember that Glass.Mapper.Sc provides multiple ways to load model configuration:</p>
+<ul>
+    <li>Attribute Loader</li>
+    <li>Fluent Loader</li>
+    <li>OnDemand</li>
+</ul>
+<p>Generally you shouldn't use on-demand mapping in a Helix solution, it is safer load your configuration when your application starts. We will therefore focus on loading attribute and fluent configuration when the application starts.</p>
+<h3>Nuget packages</h3>
+<p>
+First we need to decide which nuget packages should be installed in each layer of the helix solution, this is shown in the image below:</p>
+<div class="text-center">
+<img alt="" height="424" width="898" src="../-/media/Images/Blogs/Helix-Diagram83d483d4.png?h=424&amp;w=898&amp;la=en" style="height: 424px; width: 898px;">
+</div>
+<p>In the foundation layer you should create a separate ORM project to contain the Glass.Mapper.Sc initialisation files contained in the&nbsp;<strong>Glass.Mapper.Sc.{version}</strong>&nbsp;nuget package. It is important that the <strong>Glass.Mapper.Sc.{version}</strong> nuget package is only referenced by a single module. </p>
+<p>
+In the feature and project layers you must <strong>always</strong> reference Glass.Mapper.Sc.Core and optionally reference <strong>Glass.Mapper.Sc.Mvc</strong> if it is required.
+</p>
+<h3>Configuration Loading</h3>
+<p>Configuration can be loaded by using a new pipeline introduced in version 5.1 thanks to a contribution by <a href="https://github.com/coreyasmith" target="_blank">Corey Smith</a>.
+</p>
+<p>
+To take advantage of this feature your Helix module must added a processor to the&nbsp;<strong>glassMapper.getGlassLoaders</strong> pipeline that inherits the&nbsp;<strong>GetGlassLoadersProcessor</strong> abstract class.</p>
+<p>The processor below loads models from a module using attribute configuration:</p>
+<pre>public class FeatureGlassLoader : GetGlassLoadersProcessor {
+
+    public void Process(GetGlassLoadersPipelineArgs args){
+
+           var loader = new SitecoreAttributeConfigurationLoader("MyProject.Feature");
+           args.Loaders.Add(loader); 
+    }
+
+}
+</pre>
+<p>
+In the module's&nbsp;Sitecore configuration  the following&nbsp; configuration is added:
+</p>
+<pre>&lt;configuration xmlns:patch="http://www.sitecore.net/xmlconfig/"&gt;
+  &lt;sitecore&gt;
+    &lt;pipelines&gt;
+      &lt;glassMapper.getGlassLoaders&gt;
+	&lt;processor type="MyProject.Feature.FeatureGlassLoader , MyProject.Feature" /&gt;
+      &lt;/glassMapper.getGlassLoaders&gt;
+    &lt;/pipelines&gt;
+  &lt;/sitecore&gt;
+&lt;/configuration&gt;
+</pre>
+<p>Using this technique each module is responsible for loading it's own models without requiring any changes to the ORM module in the foundation layer.</p>
+<h3>Learn More</h3>
+<p>
+You can learn more about using Glass.Mapper.Sc in a helix solution in the the <a href="../Training.html">V5 Training Coursse</a>, the lectures also cover model design and avoiding type hijacking as well as loads other information on how to use the framework.</p>
+
+    
+
+
+    </div>
+
+    <div class="row">
+        <div class="row">
+    <div class="devider devider-dashed margin-top-30 margin-bottom-30"></div>
+
+    <div class="col-md-8">
+
+        <div class="headline">
+            <h2 class="">Glass needs your support!</h2>
+        </div>
+
+        <p>
+            Glass.Mappper.Sc is supported by the generous donations of the Glass.Mapper.Sc community! Their donations help fund the time, effort and hosting for the project.
+        </p>
+        <p>
+            These supporters are <strong>AMAZING</strong> and a huge thank you to all of you. You can find our list of supporters on the <a href="../rockstars-2.html">Rockstars page</a>.
+        </p>
+        <p>
+            If <strong>you</strong> use Glass.Mapper.Sc and find it useful please consider supporting the project. Not only will you help the project but you could also get a discount on the
+            Glass.Mapper.Sc training and join the Rockstars page.
+        </p>
+
+        <p class="text-center">
+            <a href="https://www.patreon.com/glassmappersc" class="btn-u btn-u-lg" style="margin: 10px;">
+                <em class=" fa fa-star icon-bg-darker"></em>
+                Become a Rockstar
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="../Images/Blog/WeNeedYou.jpg" style="max-height:300px"/>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../index.html" class="">
+                                    <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/HelixApproach by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:21:53 GMT -->
+</html>

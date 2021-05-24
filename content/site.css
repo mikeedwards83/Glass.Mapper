@@ -1,0 +1,88 @@
+﻿
+i.icon-large {
+    width: 90px;
+    height: 90px;
+    line-height:90px;
+    font-size:50px;
+}
+
+.padding-side-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.padding-side-30 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+i.icon-with-hover:hover {
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background: #333;
+   
+}
+a.no-decoration:hover{
+    text-decoration:none;
+}
+
+.btn-orange {
+    background: #FF6600;
+}
+
+.large-text p, .large-text a{
+    font-size: 16px;
+}
+p, li {
+    font-size: 14px;
+}
+li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.margin-top-30{
+    margin-top:30px;
+}
+.testimonials .testimonial-info:hover img {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+.bg-rounded-light {
+    padding: 15px 15px;
+    margin-bottom: 10px;
+    background: #fcfcfc;
+    border: solid 1px #e5e5e5;
+    height: 300px;
+    width: 300px
+}
+
+.bg-rounded-light:hover {
+    border: solid 1px #bbb;
+}
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {
+    font-size: 45px;
+    line-height: 36px;
+    color: #FF6600
+}
+.da-slide-current h2.maintitle {
+    top: 40px;
+    background: none;
+    color: #FF6600 !important;
+    font-size: 90px;
+    font-weight: bold;
+    font-family: GothamMedium, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.documentation table td, .documentation table th {
+    padding: 2px;
+    padding-right: 5px;
+}
+
+.documentation table thead, .documentation table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

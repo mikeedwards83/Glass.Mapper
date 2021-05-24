@@ -1,0 +1,496 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/archive/Using the Sitecore Debug Tool Part 2 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:24:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <link rel="stylesheet" href="../../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../../content/site.css">
+
+    <title>Using the Sitecore Debug Tool Part 2 - Glass</title>
+
+    <link rel="shortcut icon" href="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../index.html">
+
+                            <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+                        Using the Sitecore Debug Tool Part 2
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row">
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            04 Jul 2013
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <img src="../../-/media/Images/Blogs/Archive/Trace30f430f4.png?h=33&amp;w=200&amp;la=en&amp;hash=03084112FF9F4A965C53B08C1FA6BC2F3C76A5AB" class="pull-right img-responsive img-bordered margin-bottom-10 margin-left-10" alt="">
+    
+
+
+
+
+<p class='lead'>This post has been migrated from <strong>www.experimentsincode.com</strong>, we apologise if some of the images or content is missing</p>This is second part in using the Sitecore Debug tool. The <a href="http://www.experimentsincode.com/?p=462">first post </a> discussed using the Sitecore Profiler to output data to the Sitecore Debug screen.
+
+This post will discuss how we can use the Sitecore Tracer to output information to the debug screen.
+
+The Tracer lives at Sitecore.Diagnostics.Tracer and has a different setup to the Profiler. The Tracer allows you to output data to the Sitecore Trace section of the debug page:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/Trace.html"><img src="../../-/media/Images/Blogs/Archive/Trace21252125.png?la=en" alt="" title="Trace" width="762" height="126" class="alignnone size-full wp-image-481"></a>
+</div>
+
+Notice that Trace  outputs time as well but this is calculated in a different way to the Profiler. First lets look at how we write a message to the screen:
+
+<pre class="csharp">
+  Tracer.Info("I am here");
+</pre>
+
+This renders the following in the trace:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/IAmHEre.html"><img src="../../-/media/Images/Blogs/Archive/IAmHEre21252125.png?la=en" alt="" title="IAmHEre" width="729" height="121" class="alignnone size-full wp-image-482"></a>
+</div>
+
+Notice that Sitecore has added a time against the output, this the time since the last trace message was written. We can see this is if we update our code to have two traces and a delay:
+
+<pre class="csharp">
+Tracer.Info("I am here");
+
+Thread.Sleep(1000);
+
+Tracer.Info("I am also");
+</pre>
+
+From the output we can see the 1000ms delay has been noted against the "I am also" message:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/IAmAlso.html"><img src="../../-/media/Images/Blogs/Archive/IAmAlso21252125.png?la=en" alt="" title="IAmAlso" width="716" height="72" class="alignnone size-full wp-image-483"></a>
+</div>
+
+So now we can output different messages, but you may want to indent messages to create a hierarchy, this is achieved using the indent property and increasing and decreasing it:
+
+<pre class="csharp">
+            Tracer.Info("I am here");
+            Tracer.Indent++;
+
+            Thread.Sleep(1000);
+            Tracer.Info("I am in the middle");
+            Thread.Sleep(1000);
+
+            Tracer.Indent--;
+            Tracer.Info("I am also");
+</pre>
+
+Notice that I both increment and decrement the indent counter, you should ensure you do both otherwise you might have some weird output. Looking at the output we should see the "I am in the middle" message has been indented:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/InTheMiddle.html"><img src="../../-/media/Images/Blogs/Archive/InTheMiddle21252125.png?la=en" alt="" title="InTheMiddle" width="711" height="120" class="alignnone size-full wp-image-485"></a>
+</div>
+
+The Tracer is useful when you want to record the time a series on individuals tasks take to find out which task was the slowest:
+
+<pre class="csharp">
+Tracer.Info("Getting data started");
+
+var tweets = twitter.GetTweets("mikeedwards83");
+Tracer.Info("Retrieved Tweets");
+
+var facebook = facebook.GetPosts("mikeedwards");
+Tracer.Info("Retrieved Facebook");
+
+</pre>
+
+We could then use the Tracer to see if Twitter or Facebook were slower.
+
+<h2>Warning Levels</h2>
+
+The Tracer also allows you to indicate message severity and has the following levels:
+* Debug
+* Info
+* Warning
+* Error
+* Fatal
+
+Let see what we get if we output each one:
+<pre class="csharp">
+            Tracer.Debug("Debug me");
+
+            Tracer.Info("Info me");
+
+            Tracer.Warning("Warn me");
+
+            Tracer.Error("Error me");
+
+            Tracer.Fatal("Died");
+</pre>
+
+On the trace screen we can see the following, notice that Warning and Error are highlighted (I am not sure why fatal isn't):
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/WarningError.html"><img src="../../-/media/Images/Blogs/Archive/WarningError21252125.png?la=en" alt="" title="WarningError" width="765" height="166" class="alignnone size-full wp-image-486"></a>
+</div>
+
+<h2>Debug Information</h2>
+
+The DebugInfo method allows you to create output that contains additional data via the Packet class:
+<pre class="csharp">
+DebugInfo(string debugInfoID, Packet packet)
+</pre>
+
+The Packet class essentially represents an XML data structure, lets see this in use:
+
+<pre class="csharp">
+            var packet = new Packet();
+            packet.AddElement("service", "twitter");
+            packet.AddElement("username", "mikeedwards83");
+
+            Tracer.DebugInfo("Debug with packet", packet);
+</pre>
+
+If you look at the trace screen you will see that the message and data is missing. Instead to get access to this info you need to download the trace file by clicking the Download link:
+
+<div>
+<a href="../../www.experimentsincode.com/wp-content/uploads/2013/07/Download.html"><img src="../../-/media/Images/Blogs/Archive/Download21252125.png?la=en" alt="" title="Download" width="202" height="88" class="alignnone size-full wp-image-487"></a>
+</div>
+
+When you open the file you should get an XML output that contains the full trace and within that you should find the debug info:
+
+<pre class="xml">
+&lt;debuginfo indent="0" sincestart="953888" elapsed="3237" time="20130704T112427" id="Debug with packet"&gt;
+  &lt;message&gt;Collected debug information&lt;/message&gt;
+  &lt;sitecore&gt;
+    &lt;service&gt;twitter&lt;/service&gt;
+    &lt;username&gt;mikeedwards83&lt;/username&gt;
+  &lt;/sitecore&gt;
+&lt;/debuginfo&gt;
+</pre>
+
+<h2>Syntactic Sugar</h2>
+
+I would like a simpler way to write a message, add an indent and then remove the indent, this is where a using statement comes to the rescue. I have created the following wrapper class for the Tracer:
+
+<pre class="csharp">
+    public class SugaryTracer : IDisposable
+    {
+        private readonly string _name;
+        private readonly bool _endMessage;
+
+        public SugaryTracer(string name, bool endMessage = false)
+        {
+            _name = name;
+            _endMessage = endMessage;
+            Tracer.Info(_name+" start");
+            Tracer.Indent++;
+        }
+
+        public void Info(string message)
+        {
+            Tracer.Info(message);
+        }
+        public void Warning(string message)
+        {
+            Tracer.Warning(message);
+        }
+        public void Error(string message)
+        {
+            Tracer.Error(message);
+        }
+        public void Fatal(string message)
+        {
+            Tracer.Fatal(message);
+        }
+
+        public void Debug(string message)
+        {
+            Tracer.Debug(message);
+        }
+        public void DebugInfo(string message, Packet packet)
+        {
+            Tracer.DebugInfo(message, packet);
+        }
+
+        public void Dispose()
+        {
+            Tracer.Indent--;
+
+            if(_endMessage)
+                Tracer.Info(_name+" end ");
+        }
+</pre>
+
+I can then update my code to use a using statement and make indented messages like so:
+
+<pre class="csharp">
+            using (var tracer = new SugaryTracer("I have stated to do something"))
+            {
+               tracer.Info("This is an indented message");
+            }
+</pre>
+
+If you haven't yet, check out Using the <a href="http://www.experimentsincode.com/?p=462">Sitecore Debug Tool Part 1</a>.
+
+    
+
+    </div>
+</div>
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../../index.html" class="">
+                                    <img src="../../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/archive/Using the Sitecore Debug Tool Part 2 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:25:01 GMT -->
+</html>

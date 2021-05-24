@@ -1,0 +1,393 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/GlassCast by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../content/css/style.css">
+    <link rel="stylesheet" href="../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../content/site.css">
+
+    <title>The Curse of GlassCast - Glass</title>
+
+    <link rel="shortcut icon" href="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../index.html">
+
+                            <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+Blog -                         The Curse of GlassCast
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row padding-bottom-20">
+        <p>
+            <strong>
+                <a href="../blog-2.html">&lt;&lt; Back to Blogs</a>
+            </strong>
+        </p>
+    </div>
+    <div class="row">
+
+
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            01 Feb 2016
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+    
+
+
+
+
+<h2>The Curse Of GlassCast</h2>
+<h3>Background</h3>
+<p>.NET introduced the ability to create extension methods on existing classes. This feature allows us to easily add our own methods to exist classes without the need to create a sub-type. </p>
+<p>With all the excitement of a kid with a new toy I created the GlassCast extension method to extend the standard <strong>Sitecore.Data.Items.Item</strong> class. The idea was that I wanted to create a really easy way to get a strongly typed representation of an item in situations where passing in an ISitecoreService might be difficult or where a one of conversion was needed, e.g. workflow, events, pipelines.</p>
+<p>This is a decision I now regret and a great example of bad coding practice. In this blog post I will look at the problems it creates.</p>
+<h3>The Problem</h3>
+<p>The problem with GlassCast is that it hides some very important implementation details from the developer, let take a look at the method:</p>
+<pre class="csharp">   public static T GlassCast&lt;T&gt;(this Item item, bool isLazy = false, bool inferType = false) where T : class
+    {
+        var service = new SitecoreService(item.Database);
+        return item.GlassCast&lt;T&gt;(service, isLazy, inferType);
+    }
+</pre>
+<p>Although simple in the middle the method we create an instance of the <strong>SitecoreService</strong>. This causes a problem because the SitecoreService has a lot of dependencies, if the application creates a single instance that is reused within a thread or request then this overhead is minimal. If however the application  makes excessive use of GlassCast then we have a lot of instantiations which cause a lot of overhead. All this is hidden from the developer who simply writes the following an is none the wiser (not good):</p>
+<pre><code>var item = Sitecore.Context.Item;
+var model = item.GlassCast&lt;MyModel&gt;();
+</code></pre>
+<p>From some basic performance tests we can see that for 10000 item requests that using one SitecoreService to get an item takes around 94ms vs 164ms when using GlassCast! That is a big difference.</p>
+<h3>The Solution</h3>
+<p>So how do we resolve the problem of GlassCast? Unfortunately we can't remove it from the Glass.Mapper.Sc code base without breaking a lots of solutions. </p>
+<p>Therefore it means that those using Glass.Mapper should remove it from their solutions. Luckily this is very simple, if a block of code makes heavy use of GlassCast you can simply create an instance of SitecoreService and pass it in:</p>
+<pre class="csharp">var sitecoreService = new SitecoreService("web");
+var item = Sitecore.Context.Item;
+var model1 = item.GlassCast&lt;MyModel&gt;(sitecoreService);
+var model2 = item.GlassCast&lt;MyModel2&gt;(sitecoreService);
+</pre>
+<p>Personally I think it is better to remove GlassCast completely and use a method on the service itself:</p>
+<pre class="csharp">var sitecoreService = new SitecoreService("web");
+var item = Sitecore.Context.Item;
+var model1 = sitecoreService.CreateType&lt;MyModel&gt;(item);
+var model2 = sitecoreService.CreateType&lt;MyModel2&gt;(item);
+</pre>
+<p>SitecoreService also contains a cast method:</p>
+<pre class="csharp">var sitecoreService = new SitecoreService("web");
+var item = Sitecore.Context.Item;
+var model1 = sitecoreService.Cast&lt;MyModel&gt;(item);
+var model2 = sitecoreService.Cast&lt;MyModel2&gt;(item);
+</pre>
+<p>All solutions allow you to decided when the SitecoreService class is instantiated (i.e. in a controller, using IOC or other solution) and gives you more control over the lifetime of the service.</p>
+<p><strong>This code changes are not compulsory and are here as a best practice recommendation.</strong></p>
+<h2>Summary</h2>
+<p>Where possible you should avoid using GlassCast and use the appropriate method on the SitecoreService for the following reasons:</p>
+<ol>
+    <li>Slower </li>
+    <li>Hides the instantiation of SitecoreService</li>
+    <li>Lose the ability to control the lifecycle of the SitecoreService.</li>
+    <li>Can easily be abused.</li>
+</ol>
+<p>If you have any questions about this please contact me on Slack.</p>
+
+    
+
+
+    </div>
+
+    <div class="row">
+        <div class="row">
+    <div class="devider devider-dashed margin-top-30 margin-bottom-30"></div>
+
+    <div class="col-md-8">
+
+        <div class="headline">
+            <h2 class="">Glass needs your support!</h2>
+        </div>
+
+        <p>
+            Glass.Mappper.Sc is supported by the generous donations of the Glass.Mapper.Sc community! Their donations help fund the time, effort and hosting for the project.
+        </p>
+        <p>
+            These supporters are <strong>AMAZING</strong> and a huge thank you to all of you. You can find our list of supporters on the <a href="../rockstars-2.html">Rockstars page</a>.
+        </p>
+        <p>
+            If <strong>you</strong> use Glass.Mapper.Sc and find it useful please consider supporting the project. Not only will you help the project but you could also get a discount on the
+            Glass.Mapper.Sc training and join the Rockstars page.
+        </p>
+
+        <p class="text-center">
+            <a href="https://www.patreon.com/glassmappersc" class="btn-u btn-u-lg" style="margin: 10px;">
+                <em class=" fa fa-star icon-bg-darker"></em>
+                Become a Rockstar
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="../Images/Blog/WeNeedYou.jpg" style="max-height:300px"/>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../index.html" class="">
+                                    <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/GlassCast by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:03 GMT -->
+</html>

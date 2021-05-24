@@ -1,0 +1,440 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.glass.lu/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Jan 2019 10:13:45 GMT -->
+<!-- Added by HTTrack -->
+
+<!-- Mirrored from glass.lu/blog/TemplateVsRendering by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="../content/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../content/css/style.css">
+    <link rel="stylesheet" href="../content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../content/css/theme-colors/default.css">
+    <link rel="stylesheet" href="../content/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css">
+
+    <link rel="stylesheet" href="../content/plugins/parallax-slider/css/parallax-slider.css">
+
+    <link rel="stylesheet" href="../Content/Site-Lessae52ae52.css?v=5" />
+    <link rel="stylesheet" href="../content/site.css">
+
+    <title>Template Models vs Rendering Models - Glass</title>
+
+    <link rel="shortcut icon" href="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-250.png">
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="../content/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="../content/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/Site.js"></script>
+    <script src="../google-code-prettify.googlecode.com/svn/loader/run_prettify.html"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="../content/plugins/parallax-slider/js/jquery.cslider.js"></script>
+
+
+</head>
+
+
+<body class="metro  mvc ">
+
+    <div class="wrapper">
+
+        <div class="header header-sticky header-fixed-shrink">
+            <div class="topbar">
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar navbar-default mega-menu" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="../index.html">
+
+                            <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                            <span style="vertical-align: middle;">Glass</span>
+
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li class="">
+
+                                <a href="../Support.html">Support</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Training.html">Training</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Blog.html">Blog</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Mapper.html">Glass.Mapper.Sc</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../Rockstars.html">Our Backers</a>
+                            </li>
+                            <li class="">
+
+                                <a href="../About.html">About</a>
+                            </li>
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+
+            <div class="breadcrumbs">
+                <div class="container">
+                    <h1 class="pull-left">
+
+Blog -                         Template Models vs Rendering Models
+
+                    </h1>
+
+                </div><!--/container-->
+            </div>
+
+        
+
+
+<div class="container content">
+    <div class="row padding-bottom-20">
+        <p>
+            <strong>
+                <a href="../blog-2.html">&lt;&lt; Back to Blogs</a>
+            </strong>
+        </p>
+    </div>
+    <div class="row">
+
+
+        
+ 
+
+        
+<div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="blog margin-bottom-40">
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info pull-right">
+                    <li>
+                        <h3>
+                            <i class="fa fa-calendar"></i>
+                            01 Jan 2015
+                        </h3>
+                    </li>
+
+                        <li>
+                            <h3>
+                                <a href="../About/Mike.html">
+                                    <i class="fa fa-pencil"></i>
+                                    Mike
+                                </a>
+                            </h3>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <img src="../-/media/Images/Blogs/TemplateWithFieldsc2d0c2d0.png?h=256&amp;w=200&amp;la=en&amp;hash=8384F111AFA78CFB9D7BE99174DE1EFF3F352E93" class="pull-right img-responsive img-bordered margin-bottom-10 margin-left-10" alt="">
+    
+
+
+
+
+One of the most common questions asked about Glass is about code generation. Although Glass does not have it's own way of generating templates you can easily use third party tools such as <a href="http://teamdevelopmentforsitecore.com/">Team Development for Sitecore</a> to generate your models.<br>
+<br>
+Code generation is great because it simplifies the process of generating your models. It also ensures that your models contain the correct fields and avoids the situation where a field is deleted but the property still exists in your code.&nbsp;<br>
+<br>
+Models that are based on the templates and generated by code generation I term&nbsp;<strong>Template Models</strong>, but there is also another type of model which I term&nbsp;<strong>Rendering Models</strong>. Rather than represent the data source <strong>Rendering Models </strong>represent the data that is need by view (a user control, or Razor view) . In this blog post I will explore the advantages of each an when you might want to use one rather then other.<br>
+<br>
+<h3>Template Models</h3>
+I will start with Template Models because most developers will probably start with these. Template Models are literally as the name states, the model maps all the fields that the template contains. For example if I had the following template:<br>
+<br>
+<img alt="" src="../-/media/Images/Blogs/TemplateWithFieldsd8afd8af.png?h=202&amp;w=158&amp;la=en" style="height: 202px; width: 158px;">&nbsp;<br>
+<br>
+My model will contains all the fields as properties:<br>
+<pre>    public partial interface IPageTitles : IGlassBase 
+    {
+        bool DisplayInMenu  {get; set;}
+	bool Dropdown  {get; set;}			
+	string Icon  {get; set;}
+	string LongTitle  {get; set;}			
+	string ShortTitle  {get; set;}
+	string StrapLine  {get; set;}
+    }
+
+</pre>
+This makes it very easy to find the model you want to use because you just have to look at the name of the template and then find the matching class.<br>
+<br>
+One issue to overcome is the multiple inheritance of templates. This is easily solved by making use of interfaces as we have done above. A model of a sub-template can easily inherit the interfaces of the super-templates. For example if I have a content page that inherits my IPageTitles template and a IMetadata template then my Content interface can inherit both:<br>
+<pre>public interfacet Content : IPageTitles, IMetadata{
+}
+
+</pre>
+<p>
+Template Models are easy for new developers to understand and it is easy to trace where the data is coming from however it does have certain limitations:</p>
+<ol>
+    <li>It requires a lot of code to be written and maintained and this is why developers opt to use code generation tools. Trying to write all this code by hand would be tedious and time consuming.</li>
+    <li>To accurately replicate the multiple inheritance of Sitecore templates the solution must use interfaces for all the models. This forces your models to be <a href="http://en.wikipedia.org/wiki/Anemic_domain_model" target="_blank">Anemic Domain Models</a>&nbsp;and reduces the flexibility of your model. It is possible to add some functionality via extensions methods but this would be an awkward solution.</li>
+    <li>All the fields are mapped even if you are only using one. Take for example a template that has 50 different fields, your code might only use the Title field but the other 49 fields had to be mapped as well, this isn't very efficient.</li>
+</ol>
+<p>There are several scenarios when Template Models have a clear advantage:</p>
+<ul>
+    <li>Saving or creating items in Sitecore.</li>
+    <li>The template fields map one to one with the rendering, e.g. templates used as data sources for rendering components</li>
+    <li>Rendering parameters</li>
+    <li>Code generation</li>
+</ul>
+<h3>Rendering Models</h3>
+<p>Rendering Models are models that are designed to contain just the properties that required by a rendering. For example lets create a model that represents the breadcrumb at the top of this page:</p>
+<pre>    public class Breadcrumb
+    {     
+        [SitecoreQuery("ancestor::*[@displayinbreadcrumb='1']", IsRelative = true)]
+        public virtual IEnumerable&lt;Breadcrumb&gt; Ancestors { get; set; }
+        
+        public virtual string ShortTitle { get; set; }
+
+        public virtual string Url { get; set; }
+    }
+</pre>
+<p>
+You can see that this model contains just the properties we need to render the breadcrumb. The model is also responsible for retrieving the ancestor items removing the need for any additional code. My model has now become a bit smarter and part of the logic that I might have had to put into a controller or web control is now in the model.</p>
+<p>As a result of not having to represent Sitecore's multiple template inheritance I am now free to use a class. This allows me to start adding logic and methods to my model, for example I am going to update my Breadcrumb title so that it checks if a ShortTitle has been supplied and if it hasn't then use the item's name:</p>
+<pre>    public class Breadcrumb
+    {
+        [SitecoreQuery("ancestor::*[@displayinbreadcrumb='1']", IsRelative = true)]
+        public virtual IEnumerable&lt;Breadcrumb&gt; Ancestors { get; set; }
+
+        protected virtual string ShortTitle { get; set; }
+
+        protected virtual string Name { get; set; }
+
+        public virtual string Url { get; set; }
+
+        public string Title
+        {
+            get { return string.IsNullOrWhiteSpace(ShortTitle) ? Name : ShortTitle; }
+        }
+
+    }
+</pre>
+<p>
+Notice that I have made the ShortTitle and Name properties protected and exposed the Title property, by doing this I make it clearer to anyone using the class which property should be used for rendering.
+</p>
+<p>We can see that the Rendering Model gives a lot more flexibility in how we map our data and also in how we manipulate it. Rendering Models can easily pull in data from other items in Sitecore using configuration such as SitecoreQuery, SitecoreNode, SitecoreChildren and SitecoreLinked. The properties that you expose via the Rendering Model also make it clearer what information should be available to the rendering when another developer looks at the model.</p>
+<p>However Rendering Models still have some limitations:</p>
+<ul>
+    <li>It is difficult to link properties to the fields in Sitecore. One solution is to use code generation to create a list of field name constants and then use attribute or fluent configuration to link these names to the properties on your view models but this is more labour intensive.&nbsp;</li>
+    <li>Fields are duplicated in multiple models, for example I have the Breadcrumb model above which contains the ShortTitle field but I might also have a PageHeadings model that has a ShortTitle property as well.</li>
+    <li>Must be hand-coded, this is both a positive and a negative. Personally I don't mind crafting my models myself but I know that this isn't the same for everyone.</li>
+    <li>Some people may not like logic being pushed onto the model, for example the query shown in the Breadcrumb example.</li>
+</ul>
+<p>Despite these limitations Rendering Models have the advantage that they can be used everywhere. Almost all the code you will write in a solution is a view of your data in one manor or another.</p>
+<p><br>
+</p>
+<h3>Summary</h3>
+<div>When thinking about your Sitecore models don't just think of them as having to match you template. One of the major advantages of Glass is it's flexibility to allow you to craft your models in a way that suits your solution with relatively few lines of code.&nbsp;</div>
+<div><br>
+</div>
+<div>As you start to make use of Rendering Models instead of Template Models you will quickly find that much of the backend code that you wrote to manipulate the data into a sensible manor is no longer need because the model does this for you.</div>
+
+    
+
+
+    </div>
+
+    <div class="row">
+        <div class="row">
+    <div class="devider devider-dashed margin-top-30 margin-bottom-30"></div>
+
+    <div class="col-md-8">
+
+        <div class="headline">
+            <h2 class="">Glass needs your support!</h2>
+        </div>
+
+        <p>
+            Glass.Mappper.Sc is supported by the generous donations of the Glass.Mapper.Sc community! Their donations help fund the time, effort and hosting for the project.
+        </p>
+        <p>
+            These supporters are <strong>AMAZING</strong> and a huge thank you to all of you. You can find our list of supporters on the <a href="../rockstars-2.html">Rockstars page</a>.
+        </p>
+        <p>
+            If <strong>you</strong> use Glass.Mapper.Sc and find it useful please consider supporting the project. Not only will you help the project but you could also get a discount on the
+            Glass.Mapper.Sc training and join the Rockstars page.
+        </p>
+
+        <p class="text-center">
+            <a href="https://www.patreon.com/glassmappersc" class="btn-u btn-u-lg" style="margin: 10px;">
+                <em class=" fa fa-star icon-bg-darker"></em>
+                Become a Rockstar
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="../Images/Blog/WeNeedYou.jpg" style="max-height:300px"/>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+
+        <div class="footer-v1">
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- About -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="row text-center margin-bottom-10 margin-top-20">
+                                <a href="../index.html" class="">
+                                    <img src="../-/media/Images/Common/Horizon-Bordered-BlazeOrange-2503ca73ca7.png?h=50&amp;w=50&amp;la=en&amp;hash=C5F3C6D5FCB00EBE826D80BE26742A4D078D12D4" id="logo-header" alt="" />
+                                </a>
+                            </div>
+
+                            <p>Glass is home to the #1 ORM for Sitecore. Glass.Mapper is the easiest way to map data from your Sitecore solution to your code.</p>
+                        </div><!--/col-md-3-->
+                        <!-- End About -->
+                        <!-- Latest -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Sponsored by</h2>
+                            </div>
+                            <a href="https://refractdns.com/">
+                                <img src="../-/media/Images/Tiles/RDNS_Logo_WithTextWhite.png" style="width: 100%" class="img-responsive">
+                            </a>
+                        </div><!--/col-md-3-->
+                        <!-- End Latest -->
+                        <!-- Link List -->
+                        <div class="col-md-3 md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Useful Links</h2>
+                            </div>
+                            <ul class="list-unstyled link-list">
+                                <li><a href="../Blog.html">Blog</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Training.html">Training</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Mapper.html">Glass.Mapper.Sc</a><i class="fa fa-angle-right"></i></li>
+                                <li><a href="../Support.html">Support</a><i class="fa fa-angle-right"></i></li>
+                            </ul>
+                        </div><!--/col-md-3-->
+                        <!-- End Link List -->
+                        <!-- Address -->
+                        <div class="col-md-3 map-img md-margin-bottom-40">
+                            <div class="headline">
+                                <h2>Contact Us</h2>
+                            </div>
+                            <address class="md-margin-bottom-40">
+                                Twitter: <a class="element brand" href="http://twitter.com/@glasslu" target="_blank">@glasslu</a><br>
+                                Email: <a class="element brand" href="mailto:hello@glass.lu">hello@glass.lu</a> <br />
+                                M C Edwards Ltd trading as Glass<br />
+                                Company No.:08641300 <br />
+                            </address>
+                        </div><!--/col-md-3-->
+                        <!-- End Address -->
+                    </div>
+                </div>
+
+            </div><!--/footer-->
+        </div>
+        <!-- 1/10/2019 8:47:53 AM -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '../www.google-analytics.com/analytics.html', 'ga');
+
+            ga('create', 'UA-55731850-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+        <div class="footer-v1">
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                2019 &copy; All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+
+                            <p>
+                                <a href="../-/media/Files/Privacy_Policy_and_Cookie_Policy_Europe.pdf">Privacy Policy</a> | <a href="../-/media/Files/Website_TCs_Template.pdf">Terms and Conditions</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/copyright-->
+        </div>
+
+        <div class="hidden" id="perfResults">
+            <li class="topbar-devider"></li>
+            <li>
+                <i class="fa fa-clock-o" title="Page Render Time"></i> 30
+            </li>
+            <li>
+                <img src="content/icon-bbbbbb-16.html" title="Glass Time" style="width: 8px;"> 3
+            </li>
+            <li>
+                <i class="fa fa-pencil-square-o" title="Glass items requested"></i> 13
+            </li>
+            <li>
+                <i class="fa fa-cloud" title="Glass items from cache"></i> 10
+            </li>
+        </div>
+        <script>
+            (function ($) {
+
+                $(function () {
+                    var results = $("#perfResults");
+                    var placeholder = $("#resultsReplaces");
+
+                    var html = results.html();
+                    placeholder.replaceWith(html);
+                });
+            })(jQuery);
+        </script>
+
+
+
+
+    </div>
+</body>
+
+
+<!-- Mirrored from glass.lu/blog/TemplateVsRendering by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 May 2021 11:22:25 GMT -->
+</html>
