@@ -42,6 +42,18 @@ Eric Stafford				Matt Fletcher				Floris Briolas
 
 If you would like to add your name to this amazing list of people visit our Patreon page https://www.patreon.com/glassmappersc
 
+/******* GETTING STARTED ********/
+
+To register Glass.Mapper.Sc in your application during service configuration call AddGlassMapper:
+
+using  Glass.Mapper.Sc;
+
+public void ConfigureServices(IServiceCollection services)
+{
+        services.AddGlassMapper();
+}
+
+
 
 /****** LEARN MORE ABOUT GLASS ******/
 

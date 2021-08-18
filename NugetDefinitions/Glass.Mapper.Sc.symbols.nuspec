@@ -34,15 +34,9 @@
     <!-- CONFIG FILES  -->
     <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="contentFiles\any\any\App_Config" />
 
-    <!-- PP FILES  -->
-    <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="contentFiles\any\any\App_Start" />
-
-
 	  <!-- CONFIG FILES  -->
 	  <file src="..\Source\Glass.Mapper.Sc\App_Config\**" target="content\App_Config" />
 
-	  <!-- PP FILES  -->
-	  <file src="..\Source\Glass.Mapper.Sc\App_Start\**" target="content\App_Start" />
 
   </files>
 

@@ -13,6 +13,13 @@ A key feature of the implementation is the introduction of pipelines for most of
 ## Setup Instructions
 Glass can be installed as a NuGet package. Simply install the package that is relevant to your platform version e.g. Glass.Mapper.Sc.100. 
 
-If you are using PackageReference format, following installation you will need to include the files from the 'App_Start' and 'App_Config' folders found at _'\obj\\{Build-Configuration}\NuGet\\{Guid}\Glass.Mapper.Sc.xx\\{Version}'_ in your solution if they are not already present. You will also be required to copy the [Glass.Mapper.Sc.config](https://github.com/mikeedwards83/Glass.Mapper/blob/master/Source/Glass.Mapper.Sc/App_Config/Include/Glass/Glass.Mapper.Sc.config) file to your solution.
+To register Glass.Mapper.Sc in your application during service configuration call AddGlassMapper:
 
-You can install the 'core' package if you do not wish to overwrite the App_Config and App_Start folders. e.g. Glass.Mapper.Sc.100.Core 
+    using  Glass.Mapper.Sc;
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddGlassMapper();
+    }
+
+
