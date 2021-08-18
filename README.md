@@ -22,4 +22,4 @@ To register Glass.Mapper.Sc in your application during service configuration cal
         services.AddGlassMapper();
     }
 
-
+If you are upgrading from a legacy Glass.Mapper.Sc setup you can continue to use the files in the App_Start folder.
