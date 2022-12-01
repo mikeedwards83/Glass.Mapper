@@ -7,6 +7,15 @@ on:
 
 env:
   NUGET_PACKAGE_PATH: '.\NuGetPackages'    # set this to your nuget package path
+
+  SC_V103_VERSION: '10.3.0'    # set this to your Sitecore dll version for v10.3.0
+  NUGET_SC_V103_VERSION: '103' #set this to the Number for the Sitecore version on the NuGet package
+
+  SC_V102_VERSION: '10.2.0'    # set this to your Sitecore dll version for v10.2.0
+  NUGET_SC_V102_VERSION: '102' #set this to the Number for the Sitecore version on the NuGet package
+
+  SC_V101_VERSION: '10.1.0'    # set this to your Sitecore dll version for v10.1.0
+  NUGET_SC_V101_VERSION: '101' #set this to the Number for the Sitecore version on the NuGet package
   
   SC_V10_VERSION: '10.0.0'    # set this to your Sitecore dll version for v10
   NUGET_SC_V10_VERSION: '100' #set this to the Number for the Sitecore version on the NuGet package
@@ -41,8 +50,30 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@master        
+      - uses: actions/checkout@master   
+
+      - name: Dotnet pack Sitecore v10.3.0
+        run: | 
+         dotnet pack "./Source/Glass.Mapper.Sc/Glass.Mapper.Sc.csproj" --packages .\NuGetv103 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V103_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V103_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.WebForms/Glass.Mapper.Sc.WebForms.csproj" --packages .\NuGetv103 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V103_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V103_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.Mvc/Glass.Mapper.Sc.Mvc.csproj" --packages .\NuGetv103 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V103_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V103_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper/Glass.Mapper.csproj" --packages .\NuGetv103 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V103_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V103_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}'
+ 
       
+      - name: Dotnet pack Sitecore v10.2.0
+        run: | 
+         dotnet pack "./Source/Glass.Mapper.Sc/Glass.Mapper.Sc.csproj" --packages .\NuGetv102 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V102_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V102_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.WebForms/Glass.Mapper.Sc.WebForms.csproj" --packages .\NuGetv102 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V102_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V102_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.Mvc/Glass.Mapper.Sc.Mvc.csproj" --packages .\NuGetv102 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V102_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V102_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper/Glass.Mapper.csproj" --packages .\NuGetv102 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V102_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V102_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}'
+
+      - name: Dotnet pack Sitecore v10.1.0
+        run: | 
+         dotnet pack "./Source/Glass.Mapper.Sc/Glass.Mapper.Sc.csproj" --packages .\NuGetv101 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V101_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V101_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.WebForms/Glass.Mapper.Sc.WebForms.csproj" --packages .\NuGetv101 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V101_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V101_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper.Sc.Mvc/Glass.Mapper.Sc.Mvc.csproj" --packages .\NuGetv101 --configfile .nuget\NuGet.Config  -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V101_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V101_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 
+         dotnet pack "./Source/Glass.Mapper/Glass.Mapper.csproj" --packages .\NuGetv101 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V101_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V101_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}'
+     
       - name: Dotnet pack Sitecore v10.0
         run: | 
          dotnet pack "./Source/Glass.Mapper.Sc/Glass.Mapper.Sc.csproj" --packages .\NuGetv100 --configfile .nuget\NuGet.Config -p:Version=${{ github.event.release.tag_name }} -p:ScVersion=${{ env.SC_V10_VERSION }} -p:PackageScVersion=${{ env.NUGET_SC_V10_VERSION }} -p:TargetFramework=net48 -o:'${{ env.NUGET_PACKAGE_PATH }}' 

@@ -14,7 +14,7 @@
     <RestorePackages>true</RestorePackages>
 	<TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.Sc.XML</DocumentationFile>
-    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70</Configurations>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103</Configurations>
   </PropertyGroup>
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
@@ -25,6 +25,16 @@
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
 	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc103|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -92,9 +102,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Config\Include\Glass\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
-	<None Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
-	<None Include="App_Start\GlassMapperSc.cs.pp" />
-    <None Include="App_Start\GlassMapperScCustom.cs.pp" />
+	<Content Include="App_Config\Include\Glass\Glass.Mapper.Sc.Start.config.pp" />
+	<Content Include="App_Start\GlassMapperSc.cs.pp" />
+    <Content Include="App_Start\GlassMapperScCustom.cs.pp" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

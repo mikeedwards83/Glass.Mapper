@@ -49,7 +49,7 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\$(ScDir)Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Nexus">
+    <Reference Include="Sitecore.Nexus" Condition="'$(ScVersion)' != '10.2.0'">
       <HintPath>..\..\$(ScDir)Sitecore.Nexus.dll</HintPath>
     </Reference>
     <Reference Include="sitecore.contentsearch">
