@@ -8,7 +8,7 @@ using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Links;
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -258,7 +258,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var linkProvider = Substitute.For<BaseLinkManager>();
                 linkProvider
@@ -335,7 +335,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var linkProvider = Substitute.For<BaseLinkManager>();
                 linkProvider
@@ -411,7 +411,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                     field.Value = fieldValue;
                 }
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var linkProvider = Substitute.For<BaseLinkManager>();
                 linkProvider
@@ -543,7 +543,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var linkProvider = Substitute.For<BaseLinkManager>();
                 linkProvider
@@ -670,7 +670,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
 
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -1001,7 +1001,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
             {
                 var mapper = new SitecoreFieldLinkMapper(new FakeUrlOptionsResolver());
 
-#if SC93 || SC100 || SC101 || SC102
+#if SC93 || SC100 || SC101 || SC102 || SC103
                 var expected =
                     "<link target=\"testTarget\" title=\"test alternative\" querystring=\"q%3ds\" linktype=\"internal\" id=\"{0}\" anchor=\"testAnchor\" url=\"/en/sitecore/content/Target\" class=\"testClass\" text=\"Test description\" />"
                         .Formatted(targetId.Guid.ToString("B").ToUpperInvariant());
@@ -1261,7 +1261,7 @@ namespace Glass.Mapper.Sc.FakeDb.DataMappers
                 }
 
 
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 

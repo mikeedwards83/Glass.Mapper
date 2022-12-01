@@ -66,7 +66,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
         private bool CanEditField(Field field)
         {
             Assert.ArgumentNotNull((object)field, "field");
-#if SC93 || SC100 || SC101 || SC102
+#if SC93 || SC100 || SC101 || SC102 || SC103
             return true;
 
 #else
@@ -103,7 +103,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
 
             return site != null 
                 && site.DisplayMode == DisplayMode.Edit && (!(WebUtil.GetQueryString("sc_duration") == "temporary")
-#if SC82 || SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC82 || SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
                 && Sitecore.Context.PageMode.IsExperienceEditorEditing);
 #else
                 && Sitecore.Context.PageMode.IsPageEditorEditing);
@@ -170,7 +170,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
                 str =GetDefaultText(args);
             }
             this.AddParameters(fieldTag, args);
-#if !SC93 && !SC100 && !SC101 && !SC102
+#if !SC93 && !SC100 && !SC101 && !SC102 && !SC103
             if (args.FieldTypeKey.ToLowerInvariant() == "word document" && args.Parameters["editormode"] == "inline")
                 ApplyWordFieldStyle(fieldTag, args);
 #endif
@@ -267,7 +267,7 @@ namespace Glass.Mapper.Sc.FakeDb.Infrastructure.Pipelines.RenderField
             return args.FieldName;
         }
 
-#if !SC93 && !SC100 && !SC101 && !SC102 //removed in SC93 & SC100
+#if !SC93 && !SC100 && !SC101 && !SC102 && !SC103 //removed in SC93 & SC100
 
         /// <summary>Gets the word style string.</summary>
         /// <param name="tag">The tag.</param>

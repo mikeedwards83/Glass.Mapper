@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Sitecore;
-#if SC93 || SC100 || SC101 || SC102
+#if SC93 || SC100 || SC101 || SC102 || SC103
 using Sitecore.Abstractions;
 #endif
 using Sitecore.Configuration;
@@ -38,7 +38,7 @@ namespace Glass.Mapper.Sc.Pipelines.GetChromeData
 
         private readonly Regex _titleRegex = new Regex("<title>(?<title>([^<]*))<title>");
 
-#if SC93 || SC100 || SC101 || SC102
+#if SC93 || SC100 || SC101 || SC102 || SC103
         public EditFrameBuilder(BaseClient client) : base(client)
         {
 

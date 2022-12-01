@@ -1,7 +1,27 @@
 <Project>
 	<Choose>
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc102|AnyCPU' Or '$(ScVersion)' == '10.2.0' Or '$(ScVersion)' == '' or
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc103|AnyCPU' Or '$(ScVersion)' == '10.3.0' Or '$(ScVersion)' == '' or
                      '$(ScVersion)' == '*undefined*'">
+			<PropertyGroup>
+				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
+				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
+				<NSubstituteVersion>4.2.1</NSubstituteVersion>
+				<CastleVersion>4.4.0</CastleVersion>
+				<TargetFramework Condition="'$(TargetFramework)' == '' ">net48</TargetFramework>
+				<AspNetMvcVersion>5.2.4</AspNetMvcVersion>
+				<AspNetRazorWebVersion>3.2.4</AspNetRazorWebVersion>
+				<DebugSymbols>true</DebugSymbols>
+				<DefineConstants>SC103</DefineConstants>
+				<DebugType>full</DebugType>
+				<PlatformTarget>AnyCPU</PlatformTarget>
+				<ErrorReport>prompt</ErrorReport>
+				<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+				<OutputPath>bin\103\</OutputPath>
+				<ScVersion>10.3.0</ScVersion>
+			</PropertyGroup>
+		</When>
+		
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc102|AnyCPU' Or '$(ScVersion)' == '10.2.0'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
 				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
@@ -21,8 +41,7 @@
 			</PropertyGroup>
 		</When>
 
-		<When Condition="'$(Configuration)|$(Platform)' == 'sc101|AnyCPU' Or '$(ScVersion)' == '10.1.0' Or '$(ScVersion)' == '' or
-                     '$(ScVersion)' == '*undefined*'">
+		<When Condition="'$(Configuration)|$(Platform)' == 'sc101|AnyCPU' Or '$(ScVersion)' == '10.1.0'">
 			<PropertyGroup>
 				<IncludeContentExtractionDll>true</IncludeContentExtractionDll>
 				<ScFakeDBVersion>3.0.0-alpha1</ScFakeDBVersion>
