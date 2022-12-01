@@ -54,7 +54,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
-		<PackageReference Include="Sitecore.Nexus" Version="$(ScVersion)" Condition="'$(ScVersion)' != '10.2.0'" />
+		<PackageReference Include="Sitecore.Nexus" Version="$(ScVersion)" Condition="'$(ScVersion)' != '10.2.0' and '$(ScVersion)' != '10.3.0'" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(IncludeContentExtractionDll)' == 'true'">
 		<PackageReference Include="Sitecore.ContentSearch.ContentExtraction" Version="$(ScVersion)" />
