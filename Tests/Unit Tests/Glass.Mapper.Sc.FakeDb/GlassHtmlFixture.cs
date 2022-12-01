@@ -13,7 +13,7 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Fields;
 using NSubstitute;
 using NUnit.Framework;
-#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 using Sitecore.Abstractions;
     using Sitecore.DependencyInjection;
 #endif
@@ -28,7 +28,7 @@ using Sitecore.Web;
 using Site = System.Security.Policy.Site;
 
 
-#if SC100 || SC101 || SC102
+#if SC100 || SC101 || SC102 || SC103
 using Sitecore.Links.UrlBuilders;
 #endif
 
@@ -233,13 +233,13 @@ namespace Glass.Mapper.Sc.FakeDb
 
 
 
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
                 SitecoreVersionAbstractions.MediaManager = new LazyResetable<BaseMediaManager>(() => mediaUrlProvider);
 
-#if SC100 || SC101 || SC102
+#if SC100 || SC101 || SC102 || SC103
                 mediaUrlProvider.GetMediaUrl(Arg.Is<Sitecore.Data.Items.MediaItem>(i => i.ID == mediaID), Arg.Any<MediaUrlBuilderOptions>())
                     .Returns("/myimage");
 #else
@@ -342,7 +342,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var html = GetGlassHtml(service);
 
 
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -442,7 +442,7 @@ namespace Glass.Mapper.Sc.FakeDb
                 var service = new SitecoreService(database.Database);
                 var html = GetGlassHtml(service);
 
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
 
                 var mediaUrlProvider = Substitute.For<BaseMediaManager>();
 
@@ -3206,7 +3206,7 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.AreEqual(expected, result);
         }
 
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
         [Test]
         public void RenderLink_BlankTarget_AddsNoOpener()
         {

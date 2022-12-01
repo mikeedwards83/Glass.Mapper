@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -18,7 +18,7 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreVersionAbstractions
     {
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
 
         internal static LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
         internal static LazyResetable<BaseLinkManager> LinkManager = ServiceLocator.GetRequiredResetableService<BaseLinkManager>();
