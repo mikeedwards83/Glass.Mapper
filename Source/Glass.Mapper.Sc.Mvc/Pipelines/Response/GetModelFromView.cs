@@ -146,6 +146,15 @@ namespace Glass.Mapper.Sc.Pipelines.Response
 
             if (renderingItem.DataSource.HasValue())
             {
+                // Handle A/B testing ItemUri datasource
+                if (renderingItem.DataSource.StartsWith("sitecore://", StringComparison.Ordinal))
+                {
+                    var item = Sitecore.Context.Database.GetItem(DataUri.Parse(renderingItem.DataSource));
+                    var getItemOptions = new GetItemByItemOptions(item);
+                    getItemOptions.Type = modelType;
+                    return mvcContext.SitecoreService.GetItem(getItemOptions);
+                }
+
                 var getOptions = new GetItemByPathOptions();
                 getOptions.Type = modelType;
                 getOptions.Path = renderingItem.DataSource;
