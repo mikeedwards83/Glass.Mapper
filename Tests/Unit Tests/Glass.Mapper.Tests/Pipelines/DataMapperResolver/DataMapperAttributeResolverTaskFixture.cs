@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,6 +78,26 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
             Assert.AreEqual(mapper, args.Result);
         }
 
+        [Test]
+        public void Execute_DataMapperAttribute_InvokesSetupMethod()
+        {
+            //Assign
+            var task = new DataMapperAttributeResolverTask();
+            var configuration = Substitute.For<AbstractPropertyConfiguration>();
+            configuration.PropertyInfo = typeof(StubClass).GetProperty("StubMapperProperty");
+
+            var args = new DataMapperResolverArgs(null, configuration);
+            args.DataMappers = Enumerable.Empty<AbstractDataMapper>();
+
+            //Act
+            task.Execute(args);
+
+            //Assert
+            var mapper = args.Result as StubMapper;
+            Assert.IsNotNull(mapper);
+            Assert.IsTrue(mapper.SetupInvoked);
+        }
+
         public class StubClass
         {
             [DataMapper(typeof(StubMapper))]
@@ -100,6 +120,8 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
         {
             public AbstractDataMappingContext MappingContext { get; set; }
 
+            public bool SetupInvoked { get; private set; }
+
             public override void MapToCms(AbstractDataMappingContext mappingContext)
             {
                 throw new NotImplementedException();
@@ -113,6 +135,12 @@ namespace Glass.Mapper.Tests.Pipelines.DataMapperResolver
             public override bool CanHandle(AbstractPropertyConfiguration configuration, Context context)
             {
                 return true;
+            }
+
+            public override void Setup(DataMapperResolverArgs args)
+            {
+                base.Setup(args);
+                SetupInvoked = true;
             }
         }
 
