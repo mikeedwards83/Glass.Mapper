@@ -75,11 +75,6 @@
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="license.xml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
 	  <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
     <PackageReference Include="FluentAssertions">
       <Version>4.0.0</Version>
