@@ -8,7 +8,8 @@
     <RootNamespace>Glass.Mapper.Sc.WebForms.FakeDb</RootNamespace>
     <AssemblyName>Glass.Mapper.Sc.WebForms.FakeDb</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103</Configurations>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103;Sc104</Configurations>
+    <TargetFramework>net481</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,7 +20,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc103|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc104|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -54,7 +55,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Sitecore.Kernel" Version="$(ScVersion)" />
-		<PackageReference Include="Sitecore.Nexus" Version="$(ScVersion)" Condition="'$(ScVersion)' != '10.2.0' and '$(ScVersion)' != '10.3.0'" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(IncludeContentExtractionDll)' == 'true'">
 		<PackageReference Include="Sitecore.ContentSearch.ContentExtraction" Version="$(ScVersion)" />

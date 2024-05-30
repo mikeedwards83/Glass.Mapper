@@ -82,5 +82,11 @@ namespace Glass.Mapper.Sc.FakeDb
             Assert.True(true);
         }
 #endif
+#if SC103
+        public void Sc104()
+        {
+            Assert.True(true);
+        }
+#endif
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
+#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102 || SC103 || SC104
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -18,12 +18,12 @@ namespace Glass.Mapper.Sc
 {
     public class SitecoreVersionAbstractions
     {
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103 || SC104
 
         internal static LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
         internal static LazyResetable<BaseLinkManager> LinkManager = ServiceLocator.GetRequiredResetableService<BaseLinkManager>();
 
-
+        internal static string renderingParamKey = "renderingParameters";
         public static string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
         {
             return MediaManager.Value.GetMediaUrl(media, mediaUrlOptions);
@@ -35,6 +35,13 @@ namespace Glass.Mapper.Sc
 
         public static string GetItemUrl(Item item, UrlOptions urlOptions)
         {
+            //Added check for when rendering paramater request comes as Sitecore.Links.UrlBuilders.Helpers.ItemPathBuilder.GetRelativePath
+            //implementation has been changed in Sitecore 10.4
+            //below changes will return only url when requested for a item 
+            if (item.Name == renderingParamKey)
+            {
+                return "/renderingparameters";
+            }
             return LinkManager.Value.GetItemUrl(item, urlOptions);
         }
 

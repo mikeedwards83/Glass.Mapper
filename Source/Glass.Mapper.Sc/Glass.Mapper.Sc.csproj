@@ -14,7 +14,7 @@
     <RestorePackages>true</RestorePackages>
 	<TargetFrameworkProfile />
     <DocumentationFile>bin\Glass.Mapper.Sc.XML</DocumentationFile>
-    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103</Configurations>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103;Sc104</Configurations>
   </PropertyGroup>
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
@@ -23,6 +23,7 @@
 	    <NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.symbols.nuspec</NuspecFile>
 		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
+		<TargetFramework>net481</TargetFramework>
 	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc103|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc104|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
