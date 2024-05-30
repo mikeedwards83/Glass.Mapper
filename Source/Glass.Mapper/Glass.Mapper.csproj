@@ -57,6 +57,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\PublishProfiles\**" />
+    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
+    <None Remove="Properties\PublishProfiles\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCalledMonitorTask.cs" />
     <Compile Remove="Pipelines\ObjectConstruction\Tasks\Diagnostics\ConstructionCreatedMonitorTask.cs" />
   </ItemGroup>
@@ -83,7 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

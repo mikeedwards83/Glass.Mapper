@@ -93,7 +93,6 @@
     <Folder Include="Pipelines\MappingPipeline\" />
     <Folder Include="Pipelines\TypeResolver\" />
     <Folder Include="Properties\" />
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Proxies\" />
   </ItemGroup>
   <ItemGroup>
