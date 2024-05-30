@@ -21,7 +21,7 @@
 		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);netVersion=$(TargetFramework)</NuspecProperties>
-		<TargetFramework>net481</TargetFramework>
+		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

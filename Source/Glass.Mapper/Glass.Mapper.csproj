@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -95,7 +96,7 @@
 
   <PropertyGroup>
     <SHFBROOT>C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder</SHFBROOT>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
   <!-- Target Name="AfterBuild">
     < Build source code docs >
