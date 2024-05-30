@@ -74,6 +74,9 @@
     <ProjectReference Include="..\..\..\Source\Glass.Mapper\Glass.Mapper.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="license.xml" />
+  </ItemGroup>
+  <ItemGroup>
 	  <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
     <PackageReference Include="NUnit">
       <Version>3.8.1</Version>
