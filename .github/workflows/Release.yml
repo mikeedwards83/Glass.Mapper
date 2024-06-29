@@ -8,8 +8,8 @@ on:
 env:
   NUGET_PACKAGE_PATH: '.\NuGetPackages'    # set this to your nuget package path
   
-  SC_V103_VERSION: '10.4.0'    # set this to your Sitecore dll version for v10.4.0
-  NUGET_SC_V103_VERSION: '104' #set this to the Number for the Sitecore version on the NuGet package
+  SC_V104_VERSION: '10.4.0'    # set this to your Sitecore dll version for v10.4.0
+  NUGET_SC_V104_VERSION: '104' #set this to the Number for the Sitecore version on the NuGet package
 
   SC_V103_VERSION: '10.3.0'    # set this to your Sitecore dll version for v10.3.0
   NUGET_SC_V103_VERSION: '103' #set this to the Number for the Sitecore version on the NuGet package
