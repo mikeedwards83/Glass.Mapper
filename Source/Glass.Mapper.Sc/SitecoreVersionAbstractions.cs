@@ -35,6 +35,7 @@ namespace Glass.Mapper.Sc
 
         public static string GetItemUrl(Item item, UrlOptions urlOptions)
         {
+#if SC104
             //Added check for when rendering paramater request comes as Sitecore.Links.UrlBuilders.Helpers.ItemPathBuilder.GetRelativePath
             //implementation has been changed in Sitecore 10.4
             //below changes will return only url when requested for a item 
@@ -42,6 +43,7 @@ namespace Glass.Mapper.Sc
             {
                 return "/renderingparameters";
             }
+#endif
             return LinkManager.Value.GetItemUrl(item, urlOptions);
         }
 
