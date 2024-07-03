@@ -39,7 +39,7 @@ namespace Glass.Mapper.Sc
             //Added check for when rendering paramater request comes as Sitecore.Links.UrlBuilders.Helpers.ItemPathBuilder.GetRelativePath
             //implementation has been changed in Sitecore 10.4
             //below changes will return only url when requested for a item 
-            if (item.Name == renderingParamKey)
+            if (item != null && item.Name != null && item.Name == renderingParamKey)
             {
                 return "/renderingparameters";
             }
