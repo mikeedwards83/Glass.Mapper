@@ -20,7 +20,6 @@
 		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);netVersion=$(TargetFramework)</NuspecProperties>
-		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

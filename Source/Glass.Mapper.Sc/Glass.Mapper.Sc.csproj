@@ -23,7 +23,6 @@
 	    <NuspecFile>$(SolutionDir)/NugetDefinitions/Glass.Mapper.Sc.symbols.nuspec</NuspecFile>
 		<NuspecProperties>$(NuspecProperties);version=$(Version)</NuspecProperties>
 		<NuspecProperties>$(NuspecProperties);scVersion=$(PackageScVersion)</NuspecProperties>
-		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
