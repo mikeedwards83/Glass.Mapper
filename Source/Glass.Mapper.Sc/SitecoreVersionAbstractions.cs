@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102 || SC103
+#if SC90 || SC91  || SC92  || SC93 || SC100 || SC101 || SC102 || SC103 || SC104
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 #endif
@@ -13,16 +13,16 @@ using Sitecore.DependencyInjection;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
+using Castle.Core.Internal;
 
 namespace Glass.Mapper.Sc
 {
     public class SitecoreVersionAbstractions
     {
-#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103
+#if SC90 || SC91 || SC92 || SC93 || SC100 || SC101 || SC102 || SC103 || SC104
 
         internal static LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
         internal static LazyResetable<BaseLinkManager> LinkManager = ServiceLocator.GetRequiredResetableService<BaseLinkManager>();
-
 
         public static string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
         {
@@ -35,6 +35,12 @@ namespace Glass.Mapper.Sc
 
         public static string GetItemUrl(Item item, UrlOptions urlOptions)
         {
+#if SC104
+            if (item?.Paths == null || item.Paths.GetPathParts(urlOptions?.UseDisplayName == true ? ItemPathType.DisplayName : ItemPathType.Name).IsNullOrEmpty())
+            {
+                return string.Empty;
+            }
+#endif
             return LinkManager.Value.GetItemUrl(item, urlOptions);
         }
 
