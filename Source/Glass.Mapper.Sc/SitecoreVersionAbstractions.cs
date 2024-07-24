@@ -13,6 +13,7 @@ using Sitecore.DependencyInjection;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
+using Castle.Core.Internal;
 
 namespace Glass.Mapper.Sc
 {
@@ -23,7 +24,6 @@ namespace Glass.Mapper.Sc
         internal static LazyResetable<BaseMediaManager> MediaManager = ServiceLocator.GetRequiredResetableService<BaseMediaManager>();
         internal static LazyResetable<BaseLinkManager> LinkManager = ServiceLocator.GetRequiredResetableService<BaseLinkManager>();
 
-        internal static string renderingParamKey = "renderingParameters";
         public static string GetMediaUrl(MediaItem media, MediaUrlOptions mediaUrlOptions)
         {
             return MediaManager.Value.GetMediaUrl(media, mediaUrlOptions);
@@ -36,12 +36,9 @@ namespace Glass.Mapper.Sc
         public static string GetItemUrl(Item item, UrlOptions urlOptions)
         {
 #if SC104
-            //Added check for when rendering paramater request comes as Sitecore.Links.UrlBuilders.Helpers.ItemPathBuilder.GetRelativePath
-            //implementation has been changed in Sitecore 10.4
-            //below changes will return only url when requested for a item 
-            if (item != null && item.Name != null && item.Name == renderingParamKey)
+            if (item?.Paths == null || item.Paths.GetPathParts(urlOptions?.UseDisplayName == true ? ItemPathType.DisplayName : ItemPathType.Name).IsNullOrEmpty())
             {
-                return "/renderingparameters";
+                return string.Empty;
             }
 #endif
             return LinkManager.Value.GetItemUrl(item, urlOptions);
