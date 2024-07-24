@@ -12,8 +12,9 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103</Configurations>
+    <Configurations>Debug;Release;sc100;sc93;sc92;sc91;sc90;sc82;sc81;sc80;sc75;sc72;sc71;sc70;sc101;sc102;Sc103;Sc104</Configurations>
     <TargetFrameworkProfile />
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 	<Import Project="$(SolutionDir)CommonSettings.targets" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -25,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc103|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sc104|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>

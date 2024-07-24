@@ -217,7 +217,7 @@ namespace Glass.Mapper.Sc.DataMappers
         }
     }
 
-#if !SC93 && !SC100 && !SC101 && !SC102 && !SC103 //removed in > SC93
+#if !SC93 && !SC100 && !SC101 && !SC102 && !SC103 && !SC104 //removed in > SC93
 
     public class SitecoreFieldScVersionLinkFieldMapper : SitecoreFieldScFieldBaseMapper<Sitecore.Data.Fields.VersionLinkField>
     {
