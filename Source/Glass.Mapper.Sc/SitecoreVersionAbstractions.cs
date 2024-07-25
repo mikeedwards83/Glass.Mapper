@@ -13,7 +13,6 @@ using Sitecore.DependencyInjection;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
-using Castle.Core.Internal;
 
 namespace Glass.Mapper.Sc
 {
@@ -36,7 +35,9 @@ namespace Glass.Mapper.Sc
         public static string GetItemUrl(Item item, UrlOptions urlOptions)
         {
 #if SC104
-            if (item?.Paths == null || item.Paths.GetPathParts(urlOptions?.UseDisplayName == true ? ItemPathType.DisplayName : ItemPathType.Name).IsNullOrEmpty())
+            if (item?.Paths == null) return string.Empty;
+            var paths = item.Paths.GetPathParts(urlOptions?.UseDisplayName == true ? ItemPathType.DisplayName : ItemPathType.Name);
+            if(paths == null || paths.Length == 0)
             {
                 return string.Empty;
             }
