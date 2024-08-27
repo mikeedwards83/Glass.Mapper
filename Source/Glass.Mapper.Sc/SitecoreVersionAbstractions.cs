@@ -36,7 +36,7 @@ namespace Glass.Mapper.Sc
         {
 #if SC104
             if (item?.Paths == null) return string.Empty;
-            if (item?.Paths.FullPath.Contains("orphan")) return string.Empty;
+            if (item.Paths.FullPath.Contains("[orphan]") && item.Parent == null) return string.Empty;
             var paths = item.Paths.GetPathParts(urlOptions?.UseDisplayName == true ? ItemPathType.DisplayName : ItemPathType.Name);
             if (paths == null || paths.Length == 0)
             {
